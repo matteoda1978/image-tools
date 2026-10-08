@@ -6,281 +6,242 @@
 
 <title>Image Tools - Strumenti gratuiti per immagini</title>
 
-<meta name="description" content="Strumenti online gratuiti per modificare, comprimere, ridimensionare, convertire, analizzare e creare immagini.">
+<meta name="description" content="Strumenti gratuiti online per modificare, comprimere, ridimensionare, convertire, analizzare e creare immagini.">
+
+<meta name="robots" content="index, follow">
 
 <style>
+*{box-sizing:border-box}
 
-*{
-  box-sizing:border-box;
+:root{
+  --bg:#07090d;
+  --panel:#10141b;
+  --panel2:#151a22;
+  --border:#252c38;
+  --text:#f5f7fa;
+  --muted:#9ba5b4;
+  --accent:#7c5cff;
+  --accent2:#9a82ff;
+  --green:#38d996;
 }
 
 body{
   margin:0;
-  font-family:Inter,Arial,Helvetica,sans-serif;
-  background:#f5f7fb;
-  color:#172033;
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:
+    radial-gradient(circle at 50% -15%,#211c42 0,#07090d 48%);
+  color:var(--text);
+  min-height:100vh;
 }
 
 header{
-  background:#111827;
-  color:white;
-  padding:22px 20px;
-}
-
-.header-inner{
-  max-width:1180px;
-  margin:auto;
+  height:68px;
+  border-bottom:1px solid var(--border);
   display:flex;
-  justify-content:space-between;
   align-items:center;
-  gap:20px;
+  padding:0 28px;
+  background:rgba(7,9,13,.88);
+  backdrop-filter:blur(15px);
+  position:sticky;
+  top:0;
+  z-index:10;
 }
 
 .logo{
-  font-size:22px;
-  font-weight:800;
-  letter-spacing:-.5px;
+  color:white;
+  text-decoration:none;
+  font-size:21px;
+  font-weight:850;
 }
 
-.header-text{
-  color:#cbd5e1;
-  font-size:13px;
-}
+.logo span{color:var(--accent2)}
 
 main{
   max-width:1180px;
   margin:auto;
-  padding:55px 20px 70px;
+  padding:70px 22px 80px;
 }
 
 .hero{
   text-align:center;
-  max-width:780px;
-  margin:0 auto 48px;
+  max-width:820px;
+  margin:auto;
 }
 
-.hero h1{
-  font-size:44px;
-  line-height:1.08;
-  letter-spacing:-2px;
-  margin:0;
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  border:1px solid #342e58;
+  background:#121026;
+  color:#b9adff;
+  padding:7px 13px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:800;
+  margin-bottom:18px;
+}
+
+.badge i{
+  width:7px;
+  height:7px;
+  background:#8f79ff;
+  border-radius:50%;
+  box-shadow:0 0 10px #8f79ff;
+}
+
+h1{
+  font-size:clamp(40px,7vw,70px);
+  line-height:.98;
+  letter-spacing:-3px;
+  margin:0 0 20px;
 }
 
 .hero p{
-  color:#64748b;
-  font-size:17px;
-  line-height:1.6;
-  margin:17px auto 0;
+  color:var(--muted);
+  font-size:18px;
+  line-height:1.65;
+  margin:0 auto;
+  max-width:690px;
 }
 
-.hero-badge{
-  display:inline-block;
-  background:#e8edf3;
-  color:#475569;
-  font-size:12px;
-  font-weight:800;
-  padding:7px 12px;
-  border-radius:999px;
-  margin-bottom:15px;
+.tools{
+  margin-top:55px;
 }
 
 .section-title{
-  font-size:24px;
-  letter-spacing:-.6px;
-  margin:0 0 8px;
+  font-size:13px;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  color:#7f8998;
+  font-weight:800;
+  margin-bottom:16px;
 }
 
-.section-description{
-  margin:0 0 22px;
-  color:#64748b;
-  font-size:14px;
-}
-
-.tools-grid{
+.grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:18px;
+  gap:14px;
 }
 
-.tool-card{
-  display:block;
-  text-decoration:none;
-  color:inherit;
-  background:white;
-  border:1px solid #e5e7eb;
-  border-radius:18px;
-  padding:23px;
+.card{
+  display:flex;
+  flex-direction:column;
   min-height:205px;
-  transition:.2s ease;
-  box-shadow:0 6px 25px rgba(15,23,42,.045);
-}
-
-.tool-card:hover{
-  transform:translateY(-3px);
-  border-color:#cbd5e1;
-  box-shadow:0 14px 35px rgba(15,23,42,.09);
-}
-
-.tool-icon{
-  width:48px;
-  height:48px;
-  border-radius:14px;
-  background:#111827;
+  padding:22px;
+  border:1px solid var(--border);
+  background:rgba(16,20,27,.92);
+  border-radius:18px;
+  text-decoration:none;
   color:white;
+  transition:.22s ease;
+  position:relative;
+  overflow:hidden;
+}
+
+.card:hover{
+  transform:translateY(-3px);
+  border-color:#41396b;
+  background:#131820;
+}
+
+.icon{
+  width:45px;
+  height:45px;
+  border-radius:13px;
+  background:#19162e;
+  border:1px solid #302a4e;
   display:flex;
   align-items:center;
   justify-content:center;
   font-size:21px;
-  margin-bottom:18px;
+  margin-bottom:17px;
 }
 
-.tool-card h3{
-  margin:0 0 8px;
+.card h2{
   font-size:17px;
+  margin:0 0 8px;
 }
 
-.tool-card p{
+.card p{
   margin:0;
-  color:#64748b;
+  color:var(--muted);
   font-size:13px;
   line-height:1.55;
 }
 
-.tool-arrow{
-  display:block;
-  margin-top:17px;
-  font-size:12px;
+.arrow{
+  margin-top:auto;
+  padding-top:17px;
+  color:#a99aff;
+  font-size:13px;
   font-weight:800;
-  color:#334155;
 }
 
 .feature{
-  margin:52px 0;
-  background:#111827;
-  color:white;
-  border-radius:24px;
-  padding:35px;
+  margin-top:50px;
+  border:1px solid #322c55;
+  border-radius:22px;
+  padding:30px;
+  background:
+    radial-gradient(circle at 100% 0,#211a48 0,transparent 45%),
+    #111020;
   display:grid;
-  grid-template-columns:1.2fr .8fr;
-  gap:35px;
+  grid-template-columns:1.5fr 1fr;
+  gap:25px;
   align-items:center;
 }
 
 .feature-label{
-  display:inline-block;
+  color:#a99aff;
   font-size:11px;
-  font-weight:800;
+  font-weight:850;
+  letter-spacing:.12em;
   text-transform:uppercase;
-  letter-spacing:1px;
-  color:#cbd5e1;
-  margin-bottom:12px;
+  margin-bottom:10px;
 }
 
 .feature h2{
-  margin:0 0 12px;
-  font-size:30px;
-  letter-spacing:-1px;
+  margin:0 0 10px;
+  font-size:29px;
 }
 
 .feature p{
-  color:#cbd5e1;
-  line-height:1.6;
+  color:#a9afba;
+  line-height:1.65;
   font-size:14px;
   margin:0;
 }
 
 .feature-button{
-  display:inline-block;
-  margin-top:22px;
-  padding:12px 18px;
-  border-radius:11px;
-  background:white;
-  color:#111827;
+  justify-self:end;
   text-decoration:none;
+  color:white;
+  background:linear-gradient(135deg,var(--accent),#6245e9);
+  padding:13px 19px;
+  border-radius:11px;
   font-size:13px;
   font-weight:800;
 }
 
-.feature-preview{
-  min-height:210px;
-  border-radius:18px;
-  background:
-    linear-gradient(135deg,#334155,#1e293b);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  position:relative;
-  overflow:hidden;
-}
-
-.preview-grid{
-  width:220px;
-  height:170px;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-  transform:rotate(-4deg);
-}
-
-.preview-grid div{
-  border-radius:10px;
-  background:#64748b;
-}
-
-.preview-grid div:nth-child(2){
-  background:#94a3b8;
-}
-
-.preview-grid div:nth-child(3){
-  background:#475569;
-}
-
-.preview-grid div:nth-child(4){
-  background:#cbd5e1;
-}
-
-.popular{
-  margin-top:52px;
-}
-
-.small-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:18px;
-}
-
 .about{
   margin-top:55px;
-  padding-top:35px;
-  border-top:1px solid #e2e8f0;
-}
-
-.about h2{
-  margin:0 0 12px;
-  font-size:23px;
-}
-
-.about p{
-  max-width:780px;
-  color:#64748b;
-  font-size:14px;
+  text-align:center;
+  color:var(--muted);
+  font-size:13px;
   line-height:1.7;
 }
 
 footer{
+  border-top:1px solid var(--border);
+  padding:28px 20px;
   text-align:center;
-  color:#94a3b8;
+  color:#687180;
   font-size:12px;
-  margin-top:45px;
 }
 
-@media(max-width:900px){
-
-  .tools-grid{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .small-grid{
+@media(max-width:850px){
+  .grid{
     grid-template-columns:repeat(2,1fr);
   }
 
@@ -288,422 +249,187 @@ footer{
     grid-template-columns:1fr;
   }
 
+  .feature-button{
+    justify-self:start;
+  }
 }
 
-@media(max-width:600px){
-
-  main{
-    padding:38px 15px 55px;
+@media(max-width:560px){
+  header{
+    padding:0 16px;
   }
 
-  .hero h1{
-    font-size:34px;
+  main{
+    padding:50px 14px 60px;
+  }
+
+  h1{
+    letter-spacing:-2px;
   }
 
   .hero p{
-    font-size:15px;
+    font-size:16px;
   }
 
-  .tools-grid,
-  .small-grid{
+  .grid{
     grid-template-columns:1fr;
   }
 
+  .card{
+    min-height:180px;
+  }
+
   .feature{
-    padding:25px;
-    border-radius:18px;
+    padding:23px;
   }
 
   .feature h2{
-    font-size:25px;
+    font-size:24px;
   }
-
-  .header-text{
-    display:none;
-  }
-
 }
-
 </style>
 </head>
 
 <body>
 
 <header>
-
-  <div class="header-inner">
-
-    <div class="logo">
-      Image Tools
-    </div>
-
-    <div class="header-text">
-      Free online image tools
-    </div>
-
-  </div>
-
+  <a class="logo" href="index.html">
+    Image <span>Tools</span>
+  </a>
 </header>
 
 <main>
 
-  <section class="hero">
+<section class="hero">
 
-    <div class="hero-badge">
-      GRATIS • ONLINE • SENZA INSTALLAZIONE
+  <div class="badge">
+    <i></i>
+    FREE ONLINE IMAGE TOOLS
+  </div>
+
+  <h1>
+    Tutti gli strumenti<br>
+    per le tue immagini.
+  </h1>
+
+  <p>
+    Modifica, comprimi, ridimensiona, converti e crea immagini
+    direttamente dal browser. Semplice, veloce e gratuito.
+  </p>
+
+</section>
+
+<section class="tools">
+
+  <div class="section-title">
+    Strumenti disponibili
+  </div>
+
+  <div class="grid">
+
+    <a class="card" href="image-optimizer.html">
+      <div class="icon">⚡</div>
+      <h2>Image Optimizer</h2>
+      <p>Ottimizza le immagini mantenendo un'elevata qualità.</p>
+      <div class="arrow">Apri strumento →</div>
+    </a>
+
+    <a class="card" href="image-compressor.html">
+      <div class="icon">🗜️</div>
+      <h2>Image Compressor</h2>
+      <p>Riduci rapidamente il peso delle tue immagini.</p>
+      <div class="arrow">Apri strumento →</div>
+    </a>
+
+    <a class="card" href="image-resizer.html">
+      <div class="icon">↔️</div>
+      <h2>Image Resizer</h2>
+      <p>Ridimensiona le immagini in pochi secondi.</p>
+      <div class="arrow">Apri strumento →</div>
+    </a>
+
+    <a class="card" href="image-converter.html">
+      <div class="icon">🔄</div>
+      <h2>Image Converter</h2>
+      <p>Converti le immagini tra i formati più comuni.</p>
+      <div class="arrow">Apri strumento →</div>
+    </a>
+
+    <a class="card" href="image-analyzer.html">
+      <div class="icon">🔎</div>
+      <h2>Image Analyzer</h2>
+      <p>Analizza dimensioni, formato, peso e caratteristiche.</p>
+      <div class="arrow">Apri strumento →</div>
+    </a>
+
+    <a class="card" href="image-smart.html">
+      <div class="icon">✨</div>
+      <h2>Smart Image Fix</h2>
+      <p>Migliora automaticamente una foto direttamente dal browser.</p>
+      <div class="arrow">Apri strumento →</div>
+    </a>
+
+    <a class="card" href="image-social.html">
+      <div class="icon">📱</div>
+      <h2>Social Image Maker</h2>
+      <p>Crea immagini ottimizzate per social e contenuti online.</p>
+      <div class="arrow">Apri strumento →</div>
+    </a>
+
+    <a class="card" href="image-collage.html">
+      <div class="icon">▦</div>
+      <h2>Photo Collage Maker</h2>
+      <p>Crea collage professionali con più fotografie.</p>
+      <div class="arrow">Apri strumento →</div>
+    </a>
+
+    <a class="card" href="image-object-remover.html">
+      <div class="icon">✦</div>
+      <h2>Object Remover</h2>
+      <p>Seleziona e prepara la rimozione di oggetti indesiderati dalle foto.</p>
+      <div class="arrow">Apri strumento →</div>
+    </a>
+
+  </div>
+
+</section>
+
+<section class="feature">
+
+  <div>
+    <div class="feature-label">
+      Nuovo
     </div>
 
-    <h1>
-      Strumenti semplici per le tue immagini
-    </h1>
+    <h2>Object Remover</h2>
 
     <p>
-      Comprimi, ridimensiona, converti, analizza e modifica
-      le tue immagini direttamente dal browser.
+      Uno strumento avanzato per eliminare persone, oggetti
+      e dettagli indesiderati dalle fotografie.
+      La base è già pronta per il futuro motore AI.
     </p>
+  </div>
 
-  </section>
+  <a class="feature-button" href="image-object-remover.html">
+    Prova Object Remover →
+  </a>
 
+</section>
 
-  <section>
+<section class="about">
 
-    <h2 class="section-title">
-      Tutti gli strumenti
-    </h2>
+  <p>
+    Image Tools raccoglie strumenti semplici e veloci per lavorare
+    con le immagini direttamente online.
+  </p>
 
-    <p class="section-description">
-      Scegli lo strumento che ti serve e inizia subito.
-    </p>
-
-
-    <div class="tools-grid">
-
-
-      <a class="tool-card" href="image-optimizer.html">
-
-        <div class="tool-icon">
-          ⚡
-        </div>
-
-        <h3>
-          Image Optimizer
-        </h3>
-
-        <p>
-          Ottimizza le immagini riducendo il peso
-          mantenendo una buona qualità.
-        </p>
-
-        <span class="tool-arrow">
-          Apri strumento →
-        </span>
-
-      </a>
-
-
-      <a class="tool-card" href="image-compressor.html">
-
-        <div class="tool-icon">
-          ◉
-        </div>
-
-        <h3>
-          Image Compressor
-        </h3>
-
-        <p>
-          Comprimi rapidamente JPG, PNG e altre immagini
-          direttamente nel browser.
-        </p>
-
-        <span class="tool-arrow">
-          Apri strumento →
-        </span>
-
-      </a>
-
-
-      <a class="tool-card" href="image-resizer.html">
-
-        <div class="tool-icon">
-          ↔
-        </div>
-
-        <h3>
-          Image Resizer
-        </h3>
-
-        <p>
-          Ridimensiona le immagini scegliendo larghezza
-          e altezza desiderate.
-        </p>
-
-        <span class="tool-arrow">
-          Apri strumento →
-        </span>
-
-      </a>
-
-
-      <a class="tool-card" href="image-converter.html">
-
-        <div class="tool-icon">
-          ⇄
-        </div>
-
-        <h3>
-          Image Converter
-        </h3>
-
-        <p>
-          Converti le tue immagini tra diversi formati
-          in modo semplice e veloce.
-        </p>
-
-        <span class="tool-arrow">
-          Apri strumento →
-        </span>
-
-      </a>
-
-
-      <a class="tool-card" href="image-analyzer.html">
-
-        <div class="tool-icon">
-          ⓘ
-        </div>
-
-        <h3>
-          Image Analyzer
-        </h3>
-
-        <p>
-          Analizza dimensioni, formato, peso e caratteristiche
-          principali di un'immagine.
-        </p>
-
-        <span class="tool-arrow">
-          Apri strumento →
-        </span>
-
-      </a>
-
-
-      <a class="tool-card" href="image-smart.html">
-
-        <div class="tool-icon">
-          ✦
-        </div>
-
-        <h3>
-          Smart Image Fix
-        </h3>
-
-        <p>
-          Ottimizza automaticamente un'immagine in base
-          all'utilizzo che devi farne.
-        </p>
-
-        <span class="tool-arrow">
-          Apri strumento →
-        </span>
-
-      </a>
-
-
-      <a class="tool-card" href="image-social.html">
-
-        <div class="tool-icon">
-          ◎
-        </div>
-
-        <h3>
-          Social Image Maker
-        </h3>
-
-        <p>
-          Prepara le immagini per Instagram, Facebook,
-          LinkedIn e X con le dimensioni corrette.
-        </p>
-
-        <span class="tool-arrow">
-          Apri strumento →
-        </span>
-
-      </a>
-
-
-      <a class="tool-card" href="image-collage.html">
-
-        <div class="tool-icon">
-          ▦
-        </div>
-
-        <h3>
-          Photo Collage Maker
-        </h3>
-
-        <p>
-          Crea collage professionali con 2, 3, 4, 6
-          o 9 fotografie e diversi formati.
-        </p>
-
-        <span class="tool-arrow">
-          Apri strumento →
-        </span>
-
-      </a>
-
-
-    </div>
-
-  </section>
-
-
-  <section class="feature">
-
-    <div>
-
-      <span class="feature-label">
-        Strumento consigliato
-      </span>
-
-      <h2>
-        Smart Image Fix
-      </h2>
-
-      <p>
-        Carica una foto e lascia che lo strumento
-        la ottimizzi automaticamente per web,
-        social, email o utilizzo generale.
-      </p>
-
-      <a class="feature-button" href="image-smart.html">
-        Prova Smart Image Fix →
-      </a>
-
-    </div>
-
-
-    <div class="feature-preview">
-
-      <div class="preview-grid">
-
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <section class="popular">
-
-    <h2 class="section-title">
-      Crea e modifica
-    </h2>
-
-    <p class="section-description">
-      Strumenti pensati per le esigenze più comuni.
-    </p>
-
-
-    <div class="small-grid">
-
-
-      <a class="tool-card" href="image-social.html">
-
-        <div class="tool-icon">
-          ◎
-        </div>
-
-        <h3>
-          Social Image Maker
-        </h3>
-
-        <p>
-          Dimensioni pronte per i principali social network.
-        </p>
-
-        <span class="tool-arrow">
-          Crea immagine →
-        </span>
-
-      </a>
-
-
-      <a class="tool-card" href="image-collage.html">
-
-        <div class="tool-icon">
-          ▦
-        </div>
-
-        <h3>
-          Photo Collage Maker
-        </h3>
-
-        <p>
-          Unisci più fotografie in un unico collage.
-        </p>
-
-        <span class="tool-arrow">
-          Crea collage →
-        </span>
-
-      </a>
-
-
-      <a class="tool-card" href="image-converter.html">
-
-        <div class="tool-icon">
-          ⇄
-        </div>
-
-        <h3>
-          Image Converter
-        </h3>
-
-        <p>
-          Cambia formato alle tue immagini gratuitamente.
-        </p>
-
-        <span class="tool-arrow">
-          Converti immagine →
-        </span>
-
-      </a>
-
-
-    </div>
-
-  </section>
-
-
-  <section class="about">
-
-    <h2>
-      Image Tools
-    </h2>
-
-    <p>
-      Image Tools raccoglie strumenti online gratuiti per lavorare
-      con le immagini senza installare programmi. Le operazioni
-      vengono eseguite direttamente nel browser quando possibile,
-      rendendo il processo semplice e veloce.
-    </p>
-
-  </section>
-
-
-  <footer>
-    © 2026 Image Tools • Strumenti gratuiti per immagini
-  </footer>
+</section>
 
 </main>
+
+<footer>
+  © 2026 Image Tools · Free online image tools
+</footer>
 
 </body>
 </html>
