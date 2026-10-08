@@ -4,388 +4,392 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Object Remover - Remove Objects from Photos | Image Tools</title>
-
-<meta name="description" content="Remove unwanted objects from photos online for free. Paint over people, objects and distractions and download your cleaned photo.">
+<title>AI Object Remover - Rimuovi oggetti dalle foto | Image Tools</title>
+<meta name="description" content="Rimuovi oggetti indesiderati dalle tue foto con il nostro strumento avanzato Object Remover. Gratis, veloce e direttamente dal browser.">
+<meta name="robots" content="index, follow">
 
 <style>
-*{
-  box-sizing:border-box;
+*{box-sizing:border-box}
+
+:root{
+  --bg:#07090d;
+  --panel:#10141b;
+  --panel2:#151a22;
+  --border:#252c38;
+  --text:#f5f7fa;
+  --muted:#9ba5b4;
+  --accent:#7c5cff;
+  --accent2:#9a82ff;
+  --danger:#ff5d6c;
+  --green:#38d996;
 }
 
 body{
   margin:0;
-  font-family:Inter,Arial,Helvetica,sans-serif;
-  background:#f5f7fb;
-  color:#172033;
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:
+    radial-gradient(circle at 50% -20%,#1a1830 0,#07090d 48%);
+  color:var(--text);
+  min-height:100vh;
 }
 
 header{
-  background:#111827;
-  color:white;
-  padding:20px;
-}
-
-.header-inner{
-  max-width:1180px;
-  margin:auto;
+  height:68px;
+  border-bottom:1px solid var(--border);
   display:flex;
-  justify-content:space-between;
   align-items:center;
+  padding:0 28px;
+  background:rgba(7,9,13,.88);
+  backdrop-filter:blur(15px);
+  position:sticky;
+  top:0;
+  z-index:20;
 }
 
 .logo{
-  font-size:21px;
+  font-size:20px;
   font-weight:800;
+  text-decoration:none;
+  color:white;
 }
 
-.back{
-  color:#cbd5e1;
-  text-decoration:none;
-  font-size:13px;
-}
+.logo span{color:var(--accent2)}
 
 main{
-  max-width:1180px;
+  max-width:1250px;
   margin:auto;
-  padding:42px 20px 65px;
+  padding:42px 22px 70px;
 }
 
 .hero{
   text-align:center;
-  margin-bottom:30px;
+  max-width:760px;
+  margin:0 auto 38px;
 }
 
 .badge{
-  display:inline-block;
-  background:#e9edf3;
-  color:#475569;
-  font-size:11px;
-  font-weight:800;
-  letter-spacing:.7px;
-  padding:7px 11px;
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  padding:7px 12px;
+  border:1px solid #322d54;
   border-radius:999px;
-  margin-bottom:13px;
-}
-
-h1{
-  margin:0;
-  font-size:40px;
-  letter-spacing:-1.5px;
-}
-
-.hero p{
-  color:#64748b;
-  max-width:650px;
-  margin:10px auto 0;
-  line-height:1.6;
-  font-size:15px;
-}
-
-.workspace{
-  display:grid;
-  grid-template-columns:280px 1fr;
-  gap:22px;
-  align-items:start;
-}
-
-.panel,
-.preview{
-  background:white;
-  border:1px solid #e5e7eb;
-  border-radius:20px;
-  box-shadow:0 8px 30px rgba(15,23,42,.055);
-}
-
-.panel{
-  padding:20px;
-}
-
-.panel-title{
-  font-size:16px;
-  font-weight:800;
+  background:#121026;
+  color:#b9adff;
+  font-size:12px;
+  font-weight:700;
   margin-bottom:16px;
 }
 
+.badge i{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#8e78ff;
+  box-shadow:0 0 10px #8e78ff;
+}
+
+h1{
+  font-size:clamp(34px,6vw,58px);
+  line-height:1;
+  letter-spacing:-2px;
+  margin:0 0 16px;
+}
+
+.hero p{
+  color:var(--muted);
+  font-size:17px;
+  line-height:1.6;
+  margin:0;
+}
+
+.app{
+  display:grid;
+  grid-template-columns:290px 1fr;
+  gap:18px;
+}
+
+.sidebar{
+  background:rgba(16,20,27,.94);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:18px;
+  height:max-content;
+}
+
+.section{
+  padding-bottom:18px;
+  margin-bottom:18px;
+  border-bottom:1px solid var(--border);
+}
+
+.section:last-child{
+  border-bottom:0;
+  margin-bottom:0;
+  padding-bottom:0;
+}
+
+.section-title{
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  color:#7f8998;
+  font-weight:800;
+  margin-bottom:12px;
+}
+
 .upload{
-  display:block;
-  border:2px dashed #cbd5e1;
-  border-radius:15px;
-  padding:20px 12px;
+  width:100%;
+  border:1px dashed #3b4352;
+  background:#141922;
+  color:white;
+  border-radius:13px;
+  padding:16px 12px;
   text-align:center;
   cursor:pointer;
-  background:#fafbfc;
   transition:.2s;
+  font-weight:700;
 }
 
 .upload:hover{
-  border-color:#64748b;
-  background:#f8fafc;
+  border-color:var(--accent);
+  background:#171a2a;
 }
 
-.upload-icon{
-  width:46px;
-  height:46px;
-  margin:0 auto 10px;
-  border-radius:13px;
-  background:#111827;
-  color:white;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:21px;
-}
-
-.upload strong{
+.upload small{
   display:block;
-  font-size:14px;
-}
-
-.upload span{
-  display:block;
-  color:#94a3b8;
-  font-size:11px;
+  color:var(--muted);
   margin-top:5px;
+  font-weight:500;
 }
 
-#fileInput{
-  display:none;
+input[type=file]{display:none}
+
+button{
+  border:0;
+  cursor:pointer;
+  font:inherit;
 }
 
-.controls{
-  margin-top:22px;
+.tool-btn{
+  width:100%;
+  min-height:44px;
+  border-radius:11px;
+  background:#1a202a;
+  color:white;
+  margin-top:9px;
+  border:1px solid #29313e;
+  font-weight:700;
+  transition:.2s;
 }
 
-.control-label{
+.tool-btn:hover{
+  background:#222a36;
+}
+
+.tool-btn.primary{
+  background:linear-gradient(135deg,var(--accent),#6245e9);
+  border-color:transparent;
+}
+
+.tool-btn.primary:hover{
+  filter:brightness(1.08);
+}
+
+.tool-btn.danger{
+  color:#ff8b95;
+}
+
+.tool-btn:disabled{
+  opacity:.4;
+  cursor:not-allowed;
+}
+
+label{
+  display:block;
+  color:#c9ced7;
+  font-size:13px;
+  margin-bottom:8px;
+}
+
+.range-row{
   display:flex;
   justify-content:space-between;
   align-items:center;
+  color:#cdd2da;
   font-size:13px;
-  font-weight:800;
-  margin-bottom:9px;
 }
 
 .value{
-  color:#64748b;
-  font-size:12px;
-  font-weight:600;
+  color:#a99aff;
+  font-weight:800;
 }
 
-input[type="range"]{
+input[type=range]{
   width:100%;
-  accent-color:#111827;
+  margin-top:9px;
+  accent-color:var(--accent);
 }
 
-.tip{
-  margin-top:20px;
-  padding:13px;
-  border-radius:12px;
-  background:#f8fafc;
-  color:#64748b;
-  font-size:11px;
-  line-height:1.55;
+.workspace{
+  min-width:0;
 }
 
-.actions{
-  margin-top:20px;
-  display:grid;
-  gap:9px;
-}
-
-button{
-  font-family:inherit;
-}
-
-.action{
-  border:0;
-  border-radius:11px;
-  padding:12px;
-  font-size:13px;
-  font-weight:800;
-  cursor:pointer;
-}
-
-.undo{
-  background:#f1f5f9;
-  color:#334155;
-}
-
-.remove{
-  background:#111827;
-  color:white;
-}
-
-.reset{
-  background:#f8fafc;
-  border:1px solid #e2e8f0;
-  color:#475569;
-}
-
-.action:disabled{
-  opacity:.4;
-  cursor:not-allowed;
-}
-
-.preview{
-  padding:18px;
-}
-
-.preview-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:15px;
-  margin-bottom:15px;
-}
-
-.preview-title{
-  font-size:16px;
-  font-weight:800;
-}
-
-.status{
-  color:#64748b;
-  font-size:12px;
-}
-
-.canvas-area{
-  min-height:590px;
-  border-radius:15px;
-  background:
-    linear-gradient(45deg,#eef1f5 25%,transparent 25%),
-    linear-gradient(-45deg,#eef1f5 25%,transparent 25%),
-    linear-gradient(45deg,transparent 75%,#eef1f5 75%),
-    linear-gradient(-45deg,transparent 75%,#eef1f5 75%);
-  background-size:20px 20px;
-  background-position:0 0,0 10px,10px -10px,-10px 0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-  padding:20px;
-}
-
-.canvas-wrap{
+.canvas-box{
   position:relative;
-  display:inline-block;
-  max-width:100%;
-  max-height:550px;
-}
-
-canvas{
-  display:block;
-  max-width:100%;
-  max-height:550px;
-  border-radius:7px;
-  box-shadow:0 16px 40px rgba(15,23,42,.18);
-  cursor:crosshair;
+  min-height:650px;
+  border:1px solid var(--border);
+  border-radius:20px;
+  overflow:hidden;
+  background:
+    linear-gradient(45deg,#171b22 25%,transparent 25%),
+    linear-gradient(-45deg,#171b22 25%,transparent 25%),
+    linear-gradient(45deg,transparent 75%,#171b22 75%),
+    linear-gradient(-45deg,transparent 75%,#171b22 75%);
+  background-size:28px 28px;
+  background-position:0 0,0 14px,14px -14px,-14px 0;
 }
 
 .empty{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  color:var(--muted);
   text-align:center;
-  color:#94a3b8;
+  padding:25px;
 }
 
 .empty-icon{
-  font-size:48px;
-  margin-bottom:10px;
+  width:74px;
+  height:74px;
+  border-radius:20px;
+  background:#171c25;
+  border:1px solid #2a313d;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:31px;
+  margin-bottom:18px;
 }
 
 .empty strong{
-  display:block;
-  color:#64748b;
+  color:white;
+  font-size:18px;
+  margin-bottom:7px;
 }
 
-.empty span{
+#canvas{
   display:block;
-  margin-top:6px;
-  font-size:12px;
+  max-width:100%;
+  max-height:700px;
+  margin:auto;
+  cursor:none;
 }
+
+.workspace-top{
+  position:absolute;
+  left:14px;
+  right:14px;
+  top:14px;
+  z-index:5;
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  pointer-events:none;
+}
+
+.status{
+  padding:8px 11px;
+  background:rgba(7,9,13,.82);
+  border:1px solid #303744;
+  border-radius:10px;
+  font-size:12px;
+  color:#c9ced7;
+  backdrop-filter:blur(10px);
+}
+
+.actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  pointer-events:auto;
+}
+
+.small-btn{
+  min-height:38px;
+  padding:0 12px;
+  border-radius:9px;
+  background:#151a22;
+  color:white;
+  border:1px solid #303744;
+  font-size:12px;
+  font-weight:700;
+}
+
+.small-btn:hover{background:#202631}
 
 .brush{
-  position:absolute;
-  border:2px solid white;
-  box-shadow:0 0 0 1px #111827,0 3px 10px rgba(0,0,0,.3);
-  border-radius:50%;
+  position:fixed;
   pointer-events:none;
+  width:50px;
+  height:50px;
+  border:2px solid white;
+  border-radius:50%;
+  z-index:100;
   display:none;
-  transform:translate(-50%,-50%);
+  box-shadow:0 0 0 1px rgba(0,0,0,.7);
 }
 
-.download{
-  margin-top:15px;
-  width:100%;
-  border:0;
-  border-radius:12px;
-  padding:13px;
-  background:#111827;
-  color:white;
-  font-weight:800;
-  cursor:pointer;
+.bottom-bar{
+  margin-top:14px;
+  padding:13px 15px;
+  background:#10141b;
+  border:1px solid var(--border);
+  border-radius:15px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
 }
 
-.download:disabled{
-  opacity:.4;
-  cursor:not-allowed;
-}
-
-.notice{
-  margin-top:13px;
-  text-align:center;
-  font-size:11px;
-  color:#94a3b8;
-}
-
-footer{
-  text-align:center;
-  color:#94a3b8;
+.help{
+  color:var(--muted);
   font-size:12px;
-  margin-top:35px;
+  line-height:1.5;
 }
 
-@media(max-width:800px){
-
-  .workspace{
-    grid-template-columns:1fr;
-  }
-
-  .panel{
-    order:2;
-  }
-
-  .preview{
-    order:1;
-  }
-
-  .canvas-area{
-    min-height:350px;
-  }
-
-  canvas{
-    max-height:500px;
-  }
+.ai-note{
+  margin-top:18px;
+  padding:14px 16px;
+  border:1px solid #302b50;
+  background:#111022;
+  border-radius:14px;
+  color:#b9b0e9;
+  font-size:12px;
+  line-height:1.55;
 }
 
-@media(max-width:520px){
+.ai-note strong{color:white}
 
-  main{
-    padding:30px 14px 50px;
-  }
+@media(max-width:850px){
+  header{padding:0 16px}
+  main{padding:28px 13px 50px}
+  .app{grid-template-columns:1fr}
+  .sidebar{order:2}
+  .workspace{order:1}
+  .canvas-box{min-height:430px}
+  #canvas{max-height:520px}
+  .hero{margin-bottom:25px}
+}
 
-  h1{
-    font-size:32px;
-  }
-
-  .preview,
-  .panel{
-    border-radius:16px;
-  }
-
-  .canvas-area{
-    padding:10px;
-    min-height:280px;
-  }
-
+@media(max-width:500px){
+  h1{letter-spacing:-1.3px}
+  .hero p{font-size:15px}
+  .canvas-box{min-height:350px}
+  .bottom-bar{align-items:flex-start;flex-direction:column}
 }
 </style>
 </head>
@@ -393,666 +397,555 @@ footer{
 <body>
 
 <header>
-  <div class="header-inner">
-    <div class="logo">Image Tools</div>
-    <a class="back" href="index.html">← Tutti gli strumenti</a>
-  </div>
+  <a class="logo" href="index.html">Image <span>Tools</span></a>
 </header>
 
 <main>
 
-  <section class="hero">
+<section class="hero">
+  <div class="badge"><i></i> ADVANCED PHOTO TOOL</div>
+  <h1>Rimuovi oggetti<br>in modo intelligente</h1>
+  <p>
+    Seleziona una persona, un oggetto o un elemento indesiderato
+    e prepara la foto per la rimozione automatica.
+  </p>
+</section>
 
-    <div class="badge">
-      PHOTO EDITING
+<div class="app">
+
+  <aside class="sidebar">
+
+    <div class="section">
+      <div class="section-title">1 · Foto</div>
+
+      <label class="upload" for="fileInput">
+        ＋ Carica una foto
+        <small>JPG, PNG, WEBP fino a 20 MB</small>
+      </label>
+
+      <input id="fileInput" type="file" accept="image/jpeg,image/png,image/webp">
+
+      <button class="tool-btn" id="resetBtn" disabled>
+        ↺ Ricomincia
+      </button>
     </div>
 
-    <h1>
-      Object Remover
-    </h1>
+    <div class="section">
+      <div class="section-title">2 · Selezione</div>
 
-    <p>
-      Rimuovi persone, oggetti e dettagli indesiderati dalle tue foto.
-      Dipingi sopra ciò che vuoi eliminare e scarica il risultato.
-    </p>
+      <div class="range-row">
+        <span>Dimensione pennello</span>
+        <span class="value" id="brushValue">60 px</span>
+      </div>
+
+      <input id="brushSize" type="range" min="10" max="180" value="60">
+
+      <button class="tool-btn" id="undoBtn" disabled>
+        ↶ Annulla
+      </button>
+
+      <button class="tool-btn" id="clearMaskBtn" disabled>
+        Cancella selezione
+      </button>
+    </div>
+
+    <div class="section">
+      <div class="section-title">3 · Rimozione</div>
+
+      <button class="tool-btn primary" id="removeBtn" disabled>
+        ✨ Rimuovi con AI
+      </button>
+
+      <button class="tool-btn" id="downloadBtn" disabled>
+        ↓ Scarica risultato
+      </button>
+
+      <div class="ai-note">
+        <strong>AI ready</strong><br>
+        Il pulsante è predisposto per il futuro motore AI.
+        La chiave API non viene inserita nel codice pubblico.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Suggerimento</div>
+
+      <div class="help">
+        Dipingi completamente sopra l'oggetto da eliminare.
+        Per risultati migliori includi anche una piccola area
+        intorno all'oggetto.
+      </div>
+    </div>
+
+  </aside>
+
+  <section class="workspace">
+
+    <div class="canvas-box" id="canvasBox">
+
+      <div class="workspace-top">
+        <div class="status" id="status">
+          Nessuna immagine
+        </div>
+
+        <div class="actions">
+          <button class="small-btn" id="zoomOut">−</button>
+          <button class="small-btn" id="zoomReset">100%</button>
+          <button class="small-btn" id="zoomIn">+</button>
+        </div>
+      </div>
+
+      <div class="empty" id="empty">
+        <div class="empty-icon">✦</div>
+        <strong>Carica una foto per iniziare</strong>
+        <span>La tua immagine rimane nel browser durante questa fase.</span>
+      </div>
+
+      <canvas id="canvas"></canvas>
+
+    </div>
+
+    <div class="bottom-bar">
+      <div class="help">
+        🖌️ Disegna sopra ciò che vuoi rimuovere
+      </div>
+
+      <div class="help" id="selectionInfo">
+        Selezione: 0 px
+      </div>
+    </div>
 
   </section>
 
-  <div class="workspace">
-
-    <aside class="panel">
-
-      <div class="panel-title">
-        Modifica foto
-      </div>
-
-      <label class="upload" for="fileInput">
-
-        <div class="upload-icon">
-          ＋
-        </div>
-
-        <strong>
-          Carica una foto
-        </strong>
-
-        <span>
-          JPG, PNG o WEBP
-        </span>
-
-      </label>
-
-      <input
-        id="fileInput"
-        type="file"
-        accept="image/*"
-      >
-
-      <div class="controls">
-
-        <div class="control-label">
-
-          <span>
-            Dimensione pennello
-          </span>
-
-          <span id="brushValue" class="value">
-            40 px
-          </span>
-
-        </div>
-
-        <input
-          id="brushSize"
-          type="range"
-          min="10"
-          max="180"
-          value="40"
-        >
-
-      </div>
-
-      <div class="tip">
-        <strong>Come funziona</strong><br>
-        Dipingi sopra l'oggetto da rimuovere.
-        Cerca di coprire completamente la parte indesiderata.
-        Poi premi "Rimuovi oggetto".
-      </div>
-
-      <div class="actions">
-
-        <button
-          id="undo"
-          class="action undo"
-          type="button"
-          disabled
-        >
-          ↶ Annulla
-        </button>
-
-        <button
-          id="remove"
-          class="action remove"
-          type="button"
-          disabled
-        >
-          ✨ Rimuovi oggetto
-        </button>
-
-        <button
-          id="reset"
-          class="action reset"
-          type="button"
-          disabled
-        >
-          ↻ Ripristina foto
-        </button>
-
-      </div>
-
-    </aside>
-
-    <section class="preview">
-
-      <div class="preview-top">
-
-        <div class="preview-title">
-          Anteprima
-        </div>
-
-        <div id="status" class="status">
-          Carica una foto per iniziare
-        </div>
-
-      </div>
-
-      <div class="canvas-area">
-
-        <div id="empty" class="empty">
-
-          <div class="empty-icon">
-            ✦
-          </div>
-
-          <strong>
-            La tua foto apparirà qui
-          </strong>
-
-          <span>
-            Carica un'immagine per iniziare
-          </span>
-
-        </div>
-
-        <div id="canvasWrap" class="canvas-wrap" hidden>
-
-          <canvas id="canvas"></canvas>
-
-          <div id="brush" class="brush"></div>
-
-        </div>
-
-      </div>
-
-      <button
-        id="download"
-        class="download"
-        type="button"
-        disabled
-      >
-        Scarica immagine
-      </button>
-
-      <div class="notice">
-        L'elaborazione avviene direttamente nel browser.
-      </div>
-
-    </section>
-
-  </div>
-
-  <footer>
-    Image Tools • Object Remover
-  </footer>
+</div>
 
 </main>
 
-<script>
+<div class="brush" id="brush"></div>
 
+<script>
 const fileInput = document.getElementById("fileInput");
 const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d", {willReadFrequently:true});
+const ctx = canvas.getContext("2d", { willReadFrequently:true });
 
 const empty = document.getElementById("empty");
-const canvasWrap = document.getElementById("canvasWrap");
-const brush = document.getElementById("brush");
+const canvasBox = document.getElementById("canvasBox");
+const status = document.getElementById("status");
 
 const brushSize = document.getElementById("brushSize");
 const brushValue = document.getElementById("brushValue");
+const brush = document.getElementById("brush");
 
-const undoButton = document.getElementById("undo");
-const removeButton = document.getElementById("remove");
-const resetButton = document.getElementById("reset");
-const downloadButton = document.getElementById("download");
+const resetBtn = document.getElementById("resetBtn");
+const undoBtn = document.getElementById("undoBtn");
+const clearMaskBtn = document.getElementById("clearMaskBtn");
+const removeBtn = document.getElementById("removeBtn");
+const downloadBtn = document.getElementById("downloadBtn");
 
-const status = document.getElementById("status");
+const zoomIn = document.getElementById("zoomIn");
+const zoomOut = document.getElementById("zoomOut");
+const zoomReset = document.getElementById("zoomReset");
 
-let originalImage = null;
-let originalData = null;
-let currentData = null;
+const selectionInfo = document.getElementById("selectionInfo");
 
-let mask = null;
+let image = new Image();
+let loaded = false;
 let drawing = false;
-let hasMask = false;
+let zoom = 1;
+
+let maskCanvas = document.createElement("canvas");
+let maskCtx = maskCanvas.getContext("2d");
 
 let history = [];
 
-fileInput.addEventListener("change", loadImage);
+function updateButtons(){
+  resetBtn.disabled = !loaded;
+  undoBtn.disabled = history.length === 0;
+  clearMaskBtn.disabled = !loaded;
+  removeBtn.disabled = !loaded || history.length === 0;
+  downloadBtn.disabled = !loaded;
+}
 
-brushSize.addEventListener("input", () => {
-  brushValue.textContent = brushSize.value + " px";
-  updateBrushSize();
-});
+function fitCanvas(){
+  if(!loaded) return;
 
-undoButton.addEventListener("click", undo);
+  const maxW = canvasBox.clientWidth - 20;
+  const maxH = Math.min(window.innerHeight * .72, 700);
 
-resetButton.addEventListener("click", resetImage);
+  const ratio = Math.min(
+    maxW / image.naturalWidth,
+    maxH / image.naturalHeight,
+    1
+  );
 
-removeButton.addEventListener("click", removeObject);
+  canvas.style.width = (image.naturalWidth * ratio * zoom) + "px";
+  canvas.style.height = (image.naturalHeight * ratio * zoom) + "px";
+}
 
-downloadButton.addEventListener("click", downloadImage);
+function drawBase(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.drawImage(image,0,0);
 
-function loadImage(){
+  if(history.length){
+    ctx.save();
+    ctx.globalAlpha=.35;
+    ctx.drawImage(maskCanvas,0,0);
+    ctx.restore();
+  }
+}
 
-  const file = fileInput.files && fileInput.files[0];
+function saveHistory(){
+  history.push(maskCtx.getImageData(
+    0,0,maskCanvas.width,maskCanvas.height
+  ));
 
-  if(!file) return;
+  if(history.length > 20) history.shift();
 
-  if(!file.type.startsWith("image/")){
-    status.textContent = "File non valido";
+  updateButtons();
+}
+
+function restoreMask(){
+  maskCtx.clearRect(0,0,maskCanvas.width,maskCanvas.height);
+
+  if(history.length){
+    maskCtx.putImageData(history[history.length-1],0,0);
+  }
+
+  drawBase();
+  updateSelectionInfo();
+}
+
+function updateSelectionInfo(){
+  if(!loaded){
+    selectionInfo.textContent="Selezione: 0 px";
     return;
   }
 
-  const reader = new FileReader();
+  const data = maskCtx.getImageData(
+    0,0,maskCanvas.width,maskCanvas.height
+  ).data;
 
-  reader.onload = function(event){
+  let count=0;
 
-    const img = new Image();
+  for(let i=3;i<data.length;i+=4){
+    if(data[i] > 30) count++;
+  }
 
-    img.onload = function(){
+  const total=maskCanvas.width*maskCanvas.height;
+  const percent=((count/total)*100).toFixed(1);
 
-      originalImage = img;
+  selectionInfo.textContent =
+    "Selezione: " + percent + "%";
+}
 
-      canvas.width = img.naturalWidth;
-      canvas.height = img.naturalHeight;
+fileInput.addEventListener("change",function(){
 
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      ctx.drawImage(img,0,0);
+  const file=this.files[0];
 
-      originalData = ctx.getImageData(
-        0,
-        0,
-        canvas.width,
-        canvas.height
+  if(!file) return;
+
+  if(file.size > 20 * 1024 * 1024){
+    alert("La foto è troppo grande. Massimo 20 MB.");
+    this.value="";
+    return;
+  }
+
+  const reader=new FileReader();
+
+  reader.onload=function(e){
+
+    image.onload=function(){
+
+      canvas.width=image.naturalWidth;
+      canvas.height=image.naturalHeight;
+
+      maskCanvas.width=image.naturalWidth;
+      maskCanvas.height=image.naturalHeight;
+
+      maskCtx.clearRect(
+        0,0,
+        maskCanvas.width,
+        maskCanvas.height
       );
 
-      currentData = new ImageData(
-        new Uint8ClampedArray(originalData.data),
-        originalData.width,
-        originalData.height
-      );
+      history=[];
 
-      mask = new Uint8Array(
-        canvas.width * canvas.height
-      );
-
-      history = [];
-
-      hasMask = false;
-
-      empty.hidden = true;
-      canvasWrap.hidden = false;
-
-      undoButton.disabled = true;
-      removeButton.disabled = true;
-      resetButton.disabled = false;
-      downloadButton.disabled = false;
+      loaded=true;
+      empty.style.display="none";
 
       status.textContent =
-        "Dipingi sopra l'oggetto da rimuovere";
+        image.naturalWidth+" × "+image.naturalHeight;
 
-      updateBrushSize();
+      drawBase();
+      fitCanvas();
+      updateSelectionInfo();
+      updateButtons();
     };
 
-    img.src = event.target.result;
+    image.src=e.target.result;
   };
 
   reader.readAsDataURL(file);
-}
-
-function updateBrushSize(){
-
-  const rect = canvas.getBoundingClientRect();
-
-  if(!rect.width) return;
-
-  const scale =
-    rect.width / canvas.width;
-
-  const size =
-    Number(brushSize.value) * scale;
-
-  brush.style.width = size + "px";
-  brush.style.height = size + "px";
-}
-
-canvas.addEventListener("pointermove", event => {
-
-  if(!originalImage) return;
-
-  const rect = canvas.getBoundingClientRect();
-
-  const x = event.clientX - rect.left;
-  const y = event.clientY - rect.top;
-
-  brush.style.display = "block";
-  brush.style.left = x + "px";
-  brush.style.top = y + "px";
-
-  if(drawing){
-    paintMask(event);
-  }
-
 });
 
-canvas.addEventListener("pointerenter", () => {
-
-  if(originalImage){
-    brush.style.display = "block";
-  }
-
+brushSize.addEventListener("input",function(){
+  brushValue.textContent=this.value+" px";
+  brush.style.width=this.value+"px";
+  brush.style.height=this.value+"px";
 });
 
-canvas.addEventListener("pointerleave", () => {
+function pointerPosition(e){
 
-  brush.style.display = "none";
+  const rect=canvas.getBoundingClientRect();
 
-});
-
-canvas.addEventListener("pointerdown", event => {
-
-  if(!originalImage) return;
-
-  event.preventDefault();
-
-  drawing = true;
-
-  canvas.setPointerCapture(event.pointerId);
-
-  saveMaskHistory();
-
-  paintMask(event);
-
-});
-
-canvas.addEventListener("pointerup", event => {
-
-  drawing = false;
-
-  try{
-    canvas.releasePointerCapture(event.pointerId);
-  }catch(e){}
-
-});
-
-function paintMask(event){
-
-  const rect = canvas.getBoundingClientRect();
-
-  const scaleX =
+  const x=(e.clientX-rect.left) *
     canvas.width / rect.width;
 
-  const scaleY =
+  const y=(e.clientY-rect.top) *
     canvas.height / rect.height;
 
-  const x =
-    (event.clientX - rect.left) * scaleX;
-
-  const y =
-    (event.clientY - rect.top) * scaleY;
-
-  const radius =
-    Number(brushSize.value) / 2;
-
-  const minX =
-    Math.max(0,Math.floor(x-radius));
-
-  const maxX =
-    Math.min(canvas.width-1,Math.ceil(x+radius));
-
-  const minY =
-    Math.max(0,Math.floor(y-radius));
-
-  const maxY =
-    Math.min(canvas.height-1,Math.ceil(y+radius));
-
-  for(let py=minY;py<=maxY;py++){
-
-    for(let px=minX;px<=maxX;px++){
-
-      const dx=px-x;
-      const dy=py-y;
-
-      if(dx*dx+dy*dy<=radius*radius){
-
-        mask[py*canvas.width+px]=1;
-
-      }
-
-    }
-
-  }
-
-  hasMask = true;
-
-  drawMaskOverlay();
-
-  removeButton.disabled = false;
+  return {x,y};
 }
 
-function drawMaskOverlay(){
+canvas.addEventListener("pointerdown",function(e){
 
-  if(!currentData) return;
+  if(!loaded) return;
 
-  const display =
-    new ImageData(
-      new Uint8ClampedArray(currentData.data),
-      currentData.width,
-      currentData.height
-    );
+  drawing=true;
+  canvas.setPointerCapture(e.pointerId);
 
-  const data = display.data;
+  saveHistory();
 
-  for(let i=0;i<mask.length;i++){
+  paint(e);
+});
 
-    if(mask[i]){
+canvas.addEventListener("pointermove",function(e){
 
-      const p=i*4;
+  if(!loaded) return;
 
-      data[p]=255;
-      data[p+1]=70;
-      data[p+2]=70;
-      data[p+3]=170;
+  const rect=canvas.getBoundingClientRect();
 
-    }
+  brush.style.display="block";
+  brush.style.left=(e.clientX - brush.offsetWidth/2)+"px";
+  brush.style.top=(e.clientY - brush.offsetHeight/2)+"px";
 
-  }
+  if(drawing) paint(e);
+});
 
-  ctx.putImageData(display,0,0);
+canvas.addEventListener("pointerup",function(){
+  drawing=false;
+});
+
+canvas.addEventListener("pointerleave",function(){
+  brush.style.display="none";
+});
+
+function paint(e){
+
+  const p=pointerPosition(e);
+
+  const scale=canvas.width /
+    canvas.getBoundingClientRect().width;
+
+  const size=parseInt(brushSize.value)*scale;
+
+  maskCtx.save();
+
+  maskCtx.fillStyle="rgba(124,92,255,.95)";
+  maskCtx.beginPath();
+  maskCtx.arc(p.x,p.y,size/2,0,Math.PI*2);
+  maskCtx.fill();
+
+  maskCtx.restore();
+
+  drawBase();
+
+  ctx.save();
+  ctx.globalAlpha=.36;
+  ctx.drawImage(maskCanvas,0,0);
+  ctx.restore();
+
+  updateSelectionInfo();
 }
 
-function saveMaskHistory(){
+undoBtn.addEventListener("click",function(){
 
-  history.push(
-    new Uint8Array(mask)
+  if(history.length < 1) return;
+
+  history.pop();
+
+  maskCtx.clearRect(
+    0,0,
+    maskCanvas.width,
+    maskCanvas.height
   );
 
-  if(history.length>10){
-    history.shift();
-  }
-
-  undoButton.disabled = false;
-}
-
-function undo(){
-
-  if(history.length===0) return;
-
-  mask =
-    history.pop();
-
-  hasMask =
-    mask.some(value => value===1);
-
-  drawMaskOverlay();
-
-  removeButton.disabled =
-    !hasMask;
-
-  undoButton.disabled =
-    history.length===0;
-}
-
-function resetImage(){
-
-  if(!originalData) return;
-
-  currentData =
-    new ImageData(
-      new Uint8ClampedArray(originalData.data),
-      originalData.width,
-      originalData.height
-    );
-
-  mask =
-    new Uint8Array(
-      canvas.width * canvas.height
-    );
-
-  history=[];
-
-  hasMask=false;
-
-  ctx.putImageData(currentData,0,0);
-
-  undoButton.disabled=true;
-  removeButton.disabled=true;
-
-  status.textContent =
-    "Dipingi sopra l'oggetto da rimuovere";
-}
-
-function removeObject(){
-
-  if(!hasMask || !currentData) return;
-
-  status.textContent =
-    "Rimozione in corso...";
-
-  removeButton.disabled=true;
-
-  setTimeout(() => {
-
-    const result =
-      inpaint(
-        currentData,
-        mask,
-        canvas.width,
-        canvas.height
-      );
-
-    currentData=result;
-
-    ctx.putImageData(
-      currentData,
+  if(history.length){
+    maskCtx.putImageData(
+      history[history.length-1],
       0,
       0
     );
-
-    mask =
-      new Uint8Array(
-        canvas.width * canvas.height
-      );
-
-    hasMask=false;
-
-    status.textContent =
-      "Oggetto rimosso";
-
-    undoButton.disabled=true;
-
-  },30);
-}
-
-function inpaint(source,mask,width,height){
-
-  const src =
-    new Uint8ClampedArray(
-      source.data
-    );
-
-  const work =
-    new Uint8ClampedArray(src);
-
-  const filled =
-    new Uint8Array(mask);
-
-  const maxIterations=25;
-
-  for(let iteration=0;iteration<maxIterations;iteration++){
-
-    let changed=0;
-
-    for(let y=1;y<height-1;y++){
-
-      for(let x=1;x<width-1;x++){
-
-        const index=y*width+x;
-
-        if(!filled[index]) continue;
-
-        let r=0;
-        let g=0;
-        let b=0;
-        let count=0;
-
-        const neighbors=[
-          index-1,
-          index+1,
-          index-width,
-          index+width
-        ];
-
-        for(const n of neighbors){
-
-          if(!filled[n]){
-
-            const p=n*4;
-
-            r+=work[p];
-            g+=work[p+1];
-            b+=work[p+2];
-
-            count++;
-          }
-
-        }
-
-        if(count>0){
-
-          const p=index*4;
-
-          work[p]=r/count;
-          work[p+1]=g/count;
-          work[p+2]=b/count;
-
-          filled[index]=0;
-
-          changed++;
-        }
-
-      }
-
-    }
-
-    if(changed===0) break;
   }
 
-  return new ImageData(
-    work,
-    width,
-    height
+  drawBase();
+  updateSelectionInfo();
+  updateButtons();
+});
+
+clearMaskBtn.addEventListener("click",function(){
+
+  if(!loaded) return;
+
+  saveHistory();
+
+  maskCtx.clearRect(
+    0,
+    0,
+    maskCanvas.width,
+    maskCanvas.height
   );
-}
 
-function downloadImage(){
+  drawBase();
+  updateSelectionInfo();
+  updateButtons();
+});
 
-  if(!currentData) return;
+resetBtn.addEventListener("click",function(){
+
+  if(!loaded) return;
+
+  loaded=false;
+  history=[];
+
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  maskCtx.clearRect(0,0,maskCanvas.width,maskCanvas.height);
+
+  canvas.width=0;
+  canvas.height=0;
+
+  empty.style.display="flex";
+  status.textContent="Nessuna immagine";
+
+  fileInput.value="";
+
+  updateSelectionInfo();
+  updateButtons();
+});
+
+zoomIn.addEventListener("click",function(){
+  if(!loaded) return;
+
+  zoom=Math.min(zoom+.1,2.5);
+  fitCanvas();
+});
+
+zoomOut.addEventListener("click",function(){
+  if(!loaded) return;
+
+  zoom=Math.max(zoom-.1,.5);
+  fitCanvas();
+});
+
+zoomReset.addEventListener("click",function(){
+  zoom=1;
+  fitCanvas();
+});
+
+removeBtn.addEventListener("click",async function(){
+
+  if(!loaded || history.length===0) return;
+
+  /*
+    IMPORTANTISSIMO:
+
+    Qui verrà collegato il vero backend AI.
+
+    Il browser NON contiene API key.
+    Il backend riceverà:
+      - immagine
+      - maschera
+    e restituirà l'immagine ricostruita.
+
+    Endpoint previsto:
+
+      POST /api/remove-object
+
+    Formato:
+      multipart/form-data
+        image
+        mask
+
+    Risposta:
+      immagine PNG/JPEG
+
+    Fino a quando il backend non viene collegato,
+    non fingiamo che questo sia un motore AI.
+  */
+
+  status.textContent="Preparazione della rimozione AI…";
+
+  const hasBackend=false;
+
+  if(!hasBackend){
+
+    setTimeout(function(){
+
+      status.textContent="AI non ancora collegata";
+
+      alert(
+        "La nuova interfaccia è pronta per il vero motore AI. " +
+        "Il collegamento verrà aggiunto tramite backend sicuro, " +
+        "senza esporre API key nel sito pubblico."
+      );
+
+    },500);
+
+    return;
+  }
+
+  /*
+    Codice che useremo quando il backend sarà pronto:
+
+    const form = new FormData();
+
+    canvas.toBlob(blob=>{
+      form.append("image",blob,"image.png");
+
+      maskCanvas.toBlob(mask=>{
+        form.append("mask",mask,"mask.png");
+
+        fetch("/api/remove-object",{
+          method:"POST",
+          body:form
+        })
+        .then(r=>r.blob())
+        .then(result=>{
+          image.src=URL.createObjectURL(result);
+        });
+      },"image/png");
+    },"image/png");
+  */
+});
+
+downloadBtn.addEventListener("click",function(){
+
+  if(!loaded) return;
 
   const link=document.createElement("a");
 
-  link.download="object-removed.png";
-
-  link.href=
-    canvas.toDataURL(
-      "image/png"
-    );
+  link.download="image-tools-object-remover.png";
+  link.href=canvas.toDataURL("image/png");
 
   link.click();
-}
+});
 
-window.addEventListener("resize",updateBrushSize);
+window.addEventListener("resize",fitCanvas);
 
+brush.style.width=brushSize.value+"px";
+brush.style.height=brushSize.value+"px";
+
+updateButtons();
 </script>
 
 </body>
