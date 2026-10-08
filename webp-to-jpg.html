@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WebP to JPG Converter Online Free | Image Tools</title>
+
+<meta name="description" content="Converti WebP in JPG online gratuitamente. Convertitore WebP to JPG veloce, semplice e sicuro. Le immagini vengono elaborate direttamente nel browser.">
+
+<meta name="robots" content="index,follow">
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+:root{
+  --bg:#080d18;
+  --card:#111827;
+  --card2:#0d1422;
+  --border:#263249;
+  --text:#f5f7fb;
+  --muted:#93a0b5;
+  --accent:#7c9cff;
+}
+
+body{
+  margin:0;
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+.container{
+  width:min(920px,calc(100% - 28px));
+  margin:auto;
+}
+
+header{
+  border-bottom:1px solid #1e293b;
+}
+
+.nav{
+  height:70px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.logo{
+  font-size:20px;
+  font-weight:800;
+  letter-spacing:-.5px;
+}
+
+.home{
+  color:var(--muted);
+  font-size:14px;
+}
+
+.hero{
+  text-align:center;
+  padding:48px 0 30px;
+}
+
+.badge{
+  display:inline-flex;
+  padding:7px 12px;
+  border:1px solid var(--border);
+  border-radius:999px;
+  color:#b7c2d5;
+  font-size:12px;
+  margin-bottom:18px;
+}
+
+h1{
+  margin:0;
+  font-size:clamp(34px,7vw,52px);
+  line-height:1.03;
+  letter-spacing:-2px;
+}
+
+.hero p{
+  max-width:650px;
+  margin:16px auto 0;
+  color:var(--muted);
+  font-size:16px;
+  line-height:1.6;
+}
+
+.tool{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:22px;
+  margin-bottom:50px;
+}
+
+.upload{
+  display:block;
+  text-align:center;
+  border:1.5px dashed #43516b;
+  border-radius:17px;
+  padding:40px 18px;
+  background:var(--card2);
+  cursor:pointer;
+  transition:.2s ease;
+}
+
+.upload:hover{
+  border-color:#6d7e9e;
+  background:#101a2b;
+}
+
+.upload-icon{
+  width:58px;
+  height:58px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:0 auto 15px;
+  border-radius:16px;
+  background:#18233a;
+  font-size:27px;
+}
+
+.upload strong{
+  display:block;
+  font-size:18px;
+  margin-bottom:7px;
+}
+
+.upload span{
+  color:var(--muted);
+  font-size:13px;
+}
+
+#fileInput{
+  display:none;
+}
+
+.file-list{
+  display:grid;
+  gap:8px;
+  margin-top:15px;
+}
+
+.file{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:11px 13px;
+  border:1px solid var(--border);
+  border-radius:11px;
+  background:var(--card2);
+}
+
+.file-icon{
+  width:34px;
+  height:34px;
+  flex:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:9px;
+  background:#18233a;
+}
+
+.file-info{
+  min-width:0;
+  flex:1;
+}
+
+.file-name{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  font-size:13px;
+  font-weight:600;
+}
+
+.file-size{
+  color:#77859b;
+  font-size:11px;
+  margin-top:3px;
+}
+
+.settings{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:15px;
+}
+
+.setting{
+  background:var(--card2);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:15px;
+}
+
+.setting-label{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:10px;
+  font-size:13px;
+  font-weight:700;
+}
+
+select,
+input[type="range"]{
+  width:100%;
+}
+
+select{
+  height:43px;
+  border:1px solid #354258;
+  border-radius:9px;
+  background:#111a2b;
+  color:var(--text);
+  padding:0 11px;
+  font-size:14px;
+}
+
+input[type="range"]{
+  accent-color:var(--accent);
+}
+
+.value{
+  color:#b7c2d5;
+}
+
+.actions{
+  display:flex;
+  gap:10px;
+  margin-top:15px;
+}
+
+button{
+  height:48px;
+  border:0;
+  border-radius:11px;
+  padding:0 18px;
+  font-size:14px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.primary{
+  flex:1;
+  background:var(--accent);
+  color:#08101d;
+}
+
+.secondary{
+  background:#202b40;
+  color:#e8edf6;
+}
+
+button:disabled{
+  opacity:.45;
+  cursor:not-allowed;
+}
+
+.status{
+  display:none;
+  margin-top:14px;
+  padding:13px 15px;
+  border:1px solid var(--border);
+  border-radius:11px;
+  background:var(--card2);
+  color:#aeb9cb;
+  font-size:13px;
+  line-height:1.5;
+}
+
+.result{
+  display:none;
+  margin-top:14px;
+  padding:17px;
+  border:1px solid var(--border);
+  border-radius:14px;
+  background:var(--card2);
+}
+
+.result-title{
+  font-size:14px;
+  font-weight:800;
+  margin-bottom:12px;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:9px;
+}
+
+.stat{
+  background:#111827;
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:12px;
+}
+
+.stat small{
+  display:block;
+  color:#78869b;
+  font-size:10px;
+  margin-bottom:5px;
+}
+
+.stat strong{
+  font-size:16px;
+}
+
+.download{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:44px;
+  margin-top:11px;
+  border-radius:10px;
+  background:var(--accent);
+  color:#08101d;
+  font-size:13px;
+  font-weight:800;
+}
+
+.info{
+  padding-bottom:65px;
+}
+
+.info h2{
+  margin:0 0 12px;
+  font-size:25px;
+  letter-spacing:-.6px;
+}
+
+.info p{
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.75;
+}
+
+.features{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin-top:20px;
+}
+
+.feature{
+  padding:17px;
+  border:1px solid var(--border);
+  border-radius:13px;
+  background:var(--card2);
+}
+
+.feature strong{
+  display:block;
+  margin-bottom:6px;
+  font-size:14px;
+}
+
+.feature span{
+  color:#8794a9;
+  font-size:12px;
+  line-height:1.55;
+}
+
+footer{
+  border-top:1px solid #1e293b;
+  padding:24px 0;
+  text-align:center;
+  color:#6f7d93;
+  font-size:12px;
+}
+
+@media(max-width:680px){
+
+  .container{
+    width:min(100% - 20px,920px);
+  }
+
+  .nav{
+    height:62px;
+  }
+
+  .hero{
+    padding:38px 0 24px;
+  }
+
+  h1{
+    font-size:37px;
+    letter-spacing:-1.5px;
+  }
+
+  .hero p{
+    font-size:14px;
+  }
+
+  .tool{
+    padding:14px;
+    border-radius:18px;
+  }
+
+  .upload{
+    padding:34px 14px;
+  }
+
+  .settings{
+    grid-template-columns:1fr;
+  }
+
+  .features{
+    grid-template-columns:1fr;
+  }
+
+  .actions{
+    flex-direction:column;
+  }
+
+  .stats{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="container nav">
+    <a href="index.html" class="logo">Image Tools</a>
+    <a href="index.html" class="home">← Tutti gli strumenti</a>
+  </div>
+</header>
+
+<main class="container">
+
+<section class="hero">
+
+  <div class="badge">
+    Free WebP to JPG converter
+  </div>
+
+  <h1>Convert WebP to JPG</h1>
+
+  <p>
+    Converti immagini WebP in JPG online gratuitamente.
+    Veloce, semplice e senza caricare le immagini su un server.
+  </p>
+
+</section>
+
+<section class="tool">
+
+  <label class="upload" for="fileInput">
+
+    <div class="upload-icon">🔄</div>
+
+    <strong>Seleziona file WebP</strong>
+
+    <span>
+      Puoi selezionare una o più immagini WebP
+    </span>
+
+  </label>
+
+  <input
+    id="fileInput"
+    type="file"
+    accept="image/webp,.webp"
+    multiple
+  >
+
+  <div id="fileList" class="file-list"></div>
+
+  <div class="settings">
+
+    <div class="setting">
+
+      <div class="setting-label">
+        <span>Qualità JPG</span>
+        <span id="qualityValue" class="value">90%</span>
+      </div>
+
+      <input
+        id="quality"
+        type="range"
+        min="20"
+        max="100"
+        value="90"
+      >
+
+    </div>
+
+    <div class="setting">
+
+      <div class="setting-label">
+        <span>Larghezza massima</span>
+      </div>
+
+      <select id="width">
+        <option value="original">Originale</option>
+        <option value="4000">4000 px</option>
+        <option value="3000">3000 px</option>
+        <option value="2500">2500 px</option>
+        <option value="2000">2000 px</option>
+        <option value="1600">1600 px</option>
+        <option value="1200">1200 px</option>
+        <option value="800">800 px</option>
+      </select>
+
+    </div>
+
+  </div>
+
+  <div class="actions">
+
+    <button
+      id="convertBtn"
+      class="primary"
+      disabled
+    >
+      Converti in JPG
+    </button>
+
+    <button
+      id="clearBtn"
+      class="secondary"
+      type="button"
+    >
+      Cancella
+    </button>
+
+  </div>
+
+  <div
+    id="status"
+    class="status"
+    aria-live="polite"
+  ></div>
+
+  <div id="result" class="result">
+
+    <div class="result-title">
+      Conversione completata
+    </div>
+
+    <div class="stats">
+
+      <div class="stat">
+        <small>ORIGINALE</small>
+        <strong id="before">—</strong>
+      </div>
+
+      <div class="stat">
+        <small>JPG</small>
+        <strong id="after">—</strong>
+      </div>
+
+      <div class="stat">
+        <small>FILE</small>
+        <strong id="count">—</strong>
+      </div>
+
+    </div>
+
+    <a
+      id="download"
+      class="download"
+      href="#"
+      download
+    >
+      Scarica JPG
+    </a>
+
+  </div>
+
+</section>
+
+<section class="info">
+
+  <h2>WebP to JPG online</h2>
+
+  <p>
+    WebP è un formato moderno molto utilizzato sul web.
+    Convertirlo in JPG può essere utile quando devi utilizzare
+    un'immagine con programmi, dispositivi o servizi che richiedono
+    il formato JPEG.
+  </p>
+
+  <p>
+    Questo convertitore esegue la trasformazione direttamente nel browser.
+    Le immagini non vengono inviate a un server durante la conversione.
+  </p>
+
+  <div class="features">
+
+    <div class="feature">
+      <strong>🔒 Privacy</strong>
+      <span>
+        I file vengono elaborati localmente sul dispositivo.
+      </span>
+    </div>
+
+    <div class="feature">
+      <strong>⚡ Veloce</strong>
+      <span>
+        Nessun upload necessario per convertire WebP in JPG.
+      </span>
+    </div>
+
+    <div class="feature">
+      <strong>📱 Mobile</strong>
+      <span>
+        Funziona anche da smartphone e tablet.
+      </span>
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+<footer>
+  Image Tools · Free online image tools
+</footer>
+
+<script>
+const fileInput=document.getElementById("fileInput");
+const fileList=document.getElementById("fileList");
+const quality=document.getElementById("quality");
+const qualityValue=document.getElementById("qualityValue");
+const width=document.getElementById("width");
+const convertBtn=document.getElementById("convertBtn");
+const clearBtn=document.getElementById("clearBtn");
+const status=document.getElementById("status");
+const result=document.getElementById("result");
+
+const before=document.getElementById("before");
+const after=document.getElementById("after");
+const count=document.getElementById("count");
+const download=document.getElementById("download");
+
+let files=[];
+
+function formatBytes(bytes){
+
+  if(!Number.isFinite(bytes)||bytes<0){
+    return "0 B";
+  }
+
+  if(bytes<1024){
+    return bytes+" B";
+  }
+
+  if(bytes<1024*1024){
+    return (bytes/1024).toFixed(1)+" KB";
+  }
+
+  return (bytes/(1024*1024)).toFixed(2)+" MB";
+}
+
+function showStatus(message){
+
+  status.style.display="block";
+  status.textContent=message;
+}
+
+function renderFiles(){
+
+  fileList.innerHTML="";
+
+  files.forEach(file=>{
+
+    const row=document.createElement("div");
+    row.className="file";
+
+    const icon=document.createElement("div");
+    icon.className="file-icon";
+    icon.textContent="WEBP";
+
+    const info=document.createElement("div");
+    info.className="file-info";
+
+    const name=document.createElement("div");
+    name.className="file-name";
+    name.textContent=file.name;
+
+    const size=document.createElement("div");
+    size.className="file-size";
+    size.textContent=formatBytes(file.size);
+
+    info.appendChild(name);
+    info.appendChild(size);
+
+    row.appendChild(icon);
+    row.appendChild(info);
+
+    fileList.appendChild(row);
+  });
+
+  convertBtn.disabled=files.length===0;
+}
+
+fileInput.addEventListener("change",()=>{
+
+  files=Array.from(fileInput.files||[]);
+
+  result.style.display="none";
+  status.style.display="none";
+
+  renderFiles();
+});
+
+quality.addEventListener("input",()=>{
+
+  qualityValue.textContent=
+    quality.value+"%";
+});
+
+clearBtn.addEventListener("click",()=>{
+
+  files=[];
+  fileInput.value="";
+  fileList.innerHTML="";
+  result.style.display="none";
+  status.style.display="none";
+  convertBtn.disabled=true;
+});
+
+function loadImage(file){
+
+  return new Promise((resolve,reject)=>{
+
+    const url=URL.createObjectURL(file);
+    const img=new Image();
+
+    img.onload=()=>{
+
+      URL.revokeObjectURL(url);
+
+      resolve(img);
+    };
+
+    img.onerror=()=>{
+
+      URL.revokeObjectURL(url);
+
+      reject(
+        new Error("Immagine non leggibile")
+      );
+    };
+
+    img.src=url;
+  });
+}
+
+function canvasToJpg(canvas,q){
+
+  return new Promise((resolve,reject)=>{
+
+    canvas.toBlob(
+      blob=>{
+
+        if(blob){
+          resolve(blob);
+        }else{
+          reject(
+            new Error("Conversione non riuscita")
+          );
+        }
+
+      },
+      "image/jpeg",
+      q
+    );
+  });
+}
+
+async function convertOne(file){
+
+  const img=await loadImage(file);
+
+  let maxWidth=img.naturalWidth;
+
+  if(width.value!=="original"){
+
+    const requested=Number(width.value);
+
+    if(
+      Number.isFinite(requested)&&
+      requested>0
+    ){
+      maxWidth=Math.min(
+        img.naturalWidth,
+        requested
+      );
+    }
+  }
+
+  const scale=
+    maxWidth/img.naturalWidth;
+
+  const canvas=
+    document.createElement("canvas");
+
+  canvas.width=Math.max(
+    1,
+    Math.round(
+      img.naturalWidth*scale
+    )
+  );
+
+  canvas.height=Math.max(
+    1,
+    Math.round(
+      img.naturalHeight*scale
+    )
+  );
+
+  const ctx=
+    canvas.getContext("2d");
+
+  if(!ctx){
+    throw new Error(
+      "Canvas non disponibile"
+    );
+  }
+
+  /*
+    JPG non supporta la trasparenza.
+    Usiamo uno sfondo bianco per evitare
+    risultati neri quando il WebP ha alpha.
+  */
+
+  ctx.fillStyle="#ffffff";
+
+  ctx.fillRect(
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+
+  ctx.drawImage(
+    img,
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+
+  let q=
+    Number(quality.value)/100;
+
+  if(!Number.isFinite(q)){
+    q=.9;
+  }
+
+  q=Math.min(
+    1,
+    Math.max(.2,q)
+  );
+
+  return await canvasToJpg(
+    canvas,
+    q
+  );
+}
+
+convertBtn.addEventListener(
+  "click",
+  async()=>{
+
+    if(files.length===0){
+
+      showStatus(
+        "Seleziona almeno un file WebP."
+      );
+
+      return;
+    }
+
+    convertBtn.disabled=true;
+    clearBtn.disabled=true;
+
+    result.style.display="none";
+
+    let totalBefore=0;
+    let totalAfter=0;
+    let firstBlob=null;
+    let firstName="image";
+
+    try{
+
+      for(
+        let i=0;
+        i<files.length;
+        i++
+      ){
+
+        const file=files[i];
+
+        showStatus(
+          "Conversione "+
+          (i+1)+
+          " di "+
+          files.length+
+          "…"
+        );
+
+        const blob=
+          await convertOne(file);
+
+        totalBefore+=file.size;
+        totalAfter+=blob.size;
+
+        if(!firstBlob){
+
+          firstBlob=blob;
+
+          firstName=
+            file.name
+            .replace(
+              /\.[^/.]+$/,
+              ""
+            );
+        }
+      }
+
+      before.textContent=
+        formatBytes(totalBefore);
+
+      after.textContent=
+        formatBytes(totalAfter);
+
+      count.textContent=
+        files.length+
+        (files.length===1
+          ?" file"
+          :" file");
+
+      if(firstBlob){
+
+        const url=
+          URL.createObjectURL(
+            firstBlob
+          );
+
+        download.href=url;
+
+        download.download=
+          firstName+
+          ".jpg";
+
+        download.textContent=
+          files.length>1
+          ?"Scarica il primo JPG"
+          :"Scarica JPG";
+      }
+
+      result.style.display="block";
+
+      showStatus(
+        files.length===1
+        ?"Conversione completata."
+        :"Conversione completata per "+
+         files.length+
+         " immagini."
+      );
+
+    }catch(error){
+
+      showStatus(
+        "La conversione non è riuscita. "+
+        "Verifica che il file sia un'immagine WebP valida."
+      );
+
+    }finally{
+
+      convertBtn.disabled=
+        files.length===0;
+
+      clearBtn.disabled=false;
+    }
+  }
+);
+</script>
+
+</body>
+</html>
