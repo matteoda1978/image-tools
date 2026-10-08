@@ -70,7 +70,29 @@
     <div id="result"></div>
 
   </div>
+  <div class="tool">
 
+    <h2>Comprimi immagine</h2>
+
+    <input type="file" id="compressInput" accept="image/*">
+
+    <br>
+
+    <label>
+      Qualità:
+      <input type="range" id="qualityInput" min="10" max="100" value="70">
+      <span id="qualityValue">70</span>%
+    </label>
+
+    <br>
+
+    <button id="compressButton">
+      Comprimi immagine
+    </button>
+
+    <div id="compressResult"></div>
+
+  </div>
   <script>
     const imageInput = document.getElementById("imageInput");
     const widthInput = document.getElementById("widthInput");
@@ -130,7 +152,52 @@
 
       image.src = URL.createObjectURL(file);
     });
-  </script>
+const compressInput = document.getElementById("compressInput");
+const qualityInput = document.getElementById("qualityInput");
+const qualityValue = document.getElementById("qualityValue");
+const compressButton = document.getElementById("compressButton");
+const compressResult = document.getElementById("compressResult");
+
+qualityInput.addEventListener("input", function () {
+  qualityValue.textContent = qualityInput.value;
+});
+
+compressButton.addEventListener("click", function () {
+
+  if (!compressInput.files.length) {
+    compressResult.textContent = "Seleziona prima un'immagine.";
+    return;
+  }
+
+  const file = compressInput.files[0];
+  const image = new Image();
+
+  image.onload = function () {
+
+    const canvas = document.createElement("canvas");
+    canvas.width = image.width;
+    canvas.height = image.height;
+
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(image, 0, 0);
+
+    canvas.toBlob(function (blob) {
+
+      const url = URL.createObjectURL(blob);
+
+      const download = document.createElement("a");
+      download.href = url;
+      download.download = "immagine-compressa.jpg";
+      download.textContent = "Scarica immagine compressa";
+
+      compressResult.innerHTML = "";
+      compressResult.appendChild(download);
+
+    }, "image/jpeg", Number(qualityInput.value) / 100);
+  };
+
+  image.src = URL.createObjectURL(file);
+});  </script>
 
 </body>
 </html>
