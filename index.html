@@ -187,7 +187,36 @@ a {
     <div id="compressResult"></div>
 
   </div>
-  <script>
+   </div>
+
+  <div class="tool">
+
+    <h2>🔄 Converti immagine</h2>
+
+    <input type="file" id="convertInput" accept="image/*">
+
+    <br>
+
+    <label>
+      Formato:
+      <select id="formatInput">
+        <option value="image/jpeg">JPG</option>
+        <option value="image/png">PNG</option>
+        <option value="image/webp">WebP</option>
+      </select>
+    </label>
+
+    <br>
+
+    <button id="convertButton">
+      Converti immagine
+    </button>
+
+    <div id="convertResult"></div>
+
+  </div>
+
+  <script> <script>
     const imageInput = document.getElementById("imageInput");
     const widthInput = document.getElementById("widthInput");
     const resizeButton = document.getElementById("resizeButton");
@@ -291,7 +320,58 @@ compressButton.addEventListener("click", function () {
   };
 
   image.src = URL.createObjectURL(file);
-});  </script>
+}); const convertInput = document.getElementById("convertInput");
+const formatInput = document.getElementById("formatInput");
+const convertButton = document.getElementById("convertButton");
+const convertResult = document.getElementById("convertResult");
+
+convertButton.addEventListener("click", function () {
+
+  if (!convertInput.files.length) {
+    convertResult.textContent = "Seleziona prima un'immagine.";
+    return;
+  }
+
+  const file = convertInput.files[0];
+  const image = new Image();
+
+  image.onload = function () {
+
+    const canvas = document.createElement("canvas");
+    canvas.width = image.width;
+    canvas.height = image.height;
+
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(image, 0, 0);
+
+    canvas.toBlob(function (blob) {
+
+      const url = URL.createObjectURL(blob);
+      const format = formatInput.value;
+
+      let extension = "jpg";
+
+      if (format === "image/png") {
+        extension = "png";
+      }
+
+      if (format === "image/webp") {
+        extension = "webp";
+      }
+
+      const download = document.createElement("a");
+      download.href = url;
+      download.download = "immagine-convertita." + extension;
+      download.textContent = "Scarica immagine convertita";
+
+      convertResult.innerHTML = "";
+      convertResult.appendChild(download);
+
+    }, formatInput.value, 0.9);
+  };
+
+  image.src = URL.createObjectURL(file);
+}); </script>
 
 </body>
 </html>
