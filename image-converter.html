@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Converti immagini online gratis | Image Tools</title>
+
+  <meta
+    name="description"
+    content="Converti immagini online gratis tra JPG, PNG, WEBP e altri formati. Strumento semplice, veloce e utilizzabile direttamente dal browser."
+  >
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #172033;
+    }
+
+    header {
+      background: #111827;
+      color: white;
+      text-align: center;
+      padding: 35px 20px;
+    }
+
+    header h1 {
+      margin: 0 0 10px;
+      font-size: 34px;
+    }
+
+    header p {
+      margin: 0;
+      color: #cbd5e1;
+    }
+
+    nav {
+      text-align: center;
+      padding: 18px 15px;
+      background: white;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    nav a {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: bold;
+      margin: 0 8px;
+    }
+
+    main {
+      max-width: 850px;
+      margin: 0 auto;
+      padding: 30px 20px 60px;
+    }
+
+    .tool {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    }
+
+    .upload {
+      border: 2px dashed #94a3b8;
+      border-radius: 14px;
+      padding: 35px 20px;
+      text-align: center;
+      margin-bottom: 25px;
+      background: #f8fafc;
+    }
+
+    input[type="file"] {
+      width: 100%;
+      max-width: 450px;
+      font-size: 16px;
+    }
+
+    label {
+      display: block;
+      margin: 18px 0 8px;
+      font-weight: bold;
+    }
+
+    select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 9px;
+      font-size: 16px;
+      background: white;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 22px;
+      padding: 14px;
+      border: 0;
+      border-radius: 10px;
+      background: #2563eb;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    button:disabled {
+      background: #94a3b8;
+      cursor: not-allowed;
+    }
+
+    .result {
+      display: none;
+      margin-top: 25px;
+      padding: 20px;
+      background: #f8fafc;
+      border-radius: 12px;
+    }
+
+    .result h2 {
+      margin-top: 0;
+      font-size: 21px;
+    }
+
+    .info {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .info div {
+      background: white;
+      border: 1px solid #e5e7eb;
+      padding: 12px;
+      border-radius: 8px;
+    }
+
+    .download {
+      display: inline-block;
+      margin-top: 18px;
+      padding: 12px 18px;
+      background: #16a34a;
+      color: white;
+      text-decoration: none;
+      border-radius: 9px;
+      font-weight: bold;
+    }
+
+    .download:hover {
+      background: #15803d;
+    }
+
+    .preview {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .preview img {
+      max-width: 100%;
+      max-height: 400px;
+      border-radius: 10px;
+      border: 1px solid #e5e7eb;
+    }
+
+    .error {
+      display: none;
+      margin-top: 15px;
+      padding: 12px;
+      background: #fee2e2;
+      color: #991b1b;
+      border-radius: 8px;
+    }
+
+    .content {
+      background: white;
+      margin-top: 25px;
+      padding: 28px;
+      border-radius: 16px;
+      border: 1px solid #e5e7eb;
+    }
+
+    .content h2 {
+      margin-top: 0;
+    }
+
+    .content h3 {
+      margin-top: 25px;
+    }
+
+    .content p,
+    .content li {
+      color: #475569;
+      line-height: 1.7;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 28px;
+      }
+
+      main {
+        padding: 20px 15px 45px;
+      }
+
+      .tool {
+        padding: 20px;
+      }
+
+      .info {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Converti immagini online gratis</h1>
+  <p>Converti rapidamente le tue immagini direttamente dal browser</p>
+</header>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="image-optimizer.html">Ottimizza</a>
+  <a href="image-compressor.html">Comprimi</a>
+  <a href="image-resizer.html">Ridimensiona</a>
+</nav>
+
+<main>
+
+  <section class="tool">
+
+    <h2>🔄 Convertitore immagini</h2>
+
+    <div class="upload">
+      <p><strong>Seleziona un'immagine</strong></p>
+      <p>JPG, PNG, WEBP e altri formati supportati dal browser</p>
+
+      <input
+        type="file"
+        id="fileInput"
+        accept="image/*"
+      >
+    </div>
+
+    <label for="format">Formato di destinazione</label>
+
+    <select id="format">
+      <option value="image/jpeg">JPG</option>
+      <option value="image/png">PNG</option>
+      <option value="image/webp">WEBP</option>
+    </select>
+
+    <button id="convertBtn" disabled>
+      🔄 Converti immagine
+    </button>
+
+    <div id="error" class="error"></div>
+
+    <div id="result" class="result">
+
+      <h2>Conversione completata</h2>
+
+      <div class="info">
+        <div>
+          <strong>Formato originale</strong><br>
+          <span id="originalFormat">-</span>
+        </div>
+
+        <div>
+          <strong>Nuovo formato</strong><br>
+          <span id="newFormat">-</span>
+        </div>
+
+        <div>
+          <strong>Dimensioni</strong><br>
+          <span id="dimensions">-</span>
+        </div>
+
+        <div>
+          <strong>Nuova dimensione</strong><br>
+          <span id="newSize">-</span>
+        </div>
+      </div>
+
+      <div class="preview">
+        <h3>Anteprima</h3>
+        <img id="preview" alt="Anteprima immagine convertita">
+      </div>
+
+      <a id="download" class="download" download>
+        ⬇️ Scarica immagine convertita
+      </a>
+
+    </div>
+
+  </section>
+
+  <section class="content">
+
+    <h2>Convertire immagini online</h2>
+
+    <p>
+      Con Image Tools puoi convertire rapidamente le immagini
+      direttamente dal browser senza installare programmi.
+    </p>
+
+    <h3>Quali formati puoi utilizzare?</h3>
+
+    <p>
+      Puoi convertire le immagini nei formati JPG, PNG e WEBP.
+      La scelta del formato dipende dall'utilizzo che devi fare
+      dell'immagine.
+    </p>
+
+    <h3>JPG</h3>
+
+    <p>
+      Il formato JPG è molto utilizzato per fotografie e immagini
+      dove è importante ottenere file relativamente leggeri.
+    </p>
+
+    <h3>PNG</h3>
+
+    <p>
+      PNG è particolarmente utile quando vuoi mantenere una qualità
+      elevata o utilizzare immagini con trasparenza.
+    </p>
+
+    <h3>WEBP</h3>
+
+    <p>
+      WEBP è un formato moderno pensato per il web e permette
+      spesso di ottenere immagini più leggere mantenendo una buona qualità.
+    </p>
+
+    <h3>Le immagini vengono caricate su un server?</h3>
+
+    <p>
+      No. La conversione viene eseguita direttamente nel browser
+      utilizzando le funzionalità disponibili sul dispositivo.
+    </p>
+
+  </section>
+
+  <section class="content">
+
+    <h2>Domande frequenti</h2>
+
+    <h3>È gratuito?</h3>
+
+    <p>
+      Sì, il convertitore può essere utilizzato gratuitamente.
+    </p>
+
+    <h3>Devo installare un programma?</h3>
+
+    <p>
+      No. È sufficiente aprire la pagina e selezionare l'immagine
+      da convertire.
+    </p>
+
+    <h3>Posso convertire immagini dal telefono?</h3>
+
+    <p>
+      Sì. La pagina è progettata per funzionare anche su smartphone
+      e tablet.
+    </p>
+
+  </section>
+
+</main>
+
+<footer>
+  © 2026 Image Tools
+</footer>
+
+<script>
+  const fileInput = document.getElementById("fileInput");
+  const formatSelect = document.getElementById("format");
+  const convertBtn = document.getElementById("convertBtn");
+  const result = document.getElementById("result");
+  const error = document.getElementById("error");
+  const preview = document.getElementById("preview");
+  const download = document.getElementById("download");
+
+  const originalFormat = document.getElementById("originalFormat");
+  const newFormat = document.getElementById("newFormat");
+  const dimensions = document.getElementById("dimensions");
+  const newSize = document.getElementById("newSize");
+
+  let selectedFile = null;
+
+  fileInput.addEventListener("change", function () {
+    selectedFile = fileInput.files[0] || null;
+
+    result.style.display = "none";
+    error.style.display = "none";
+
+    convertBtn.disabled = !selectedFile;
+  });
+
+  function formatBytes(bytes) {
+    if (bytes < 1024) {
+      return bytes + " B";
+    }
+
+    if (bytes < 1024 * 1024) {
+      return (bytes / 1024).toFixed(1) + " KB";
+    }
+
+    return (bytes / (1024 * 1024)).toFixed(2) + " MB";
+  }
+
+  function formatName(type) {
+    if (type === "image/jpeg") return "JPG";
+    if (type === "image/png") return "PNG";
+    if (type === "image/webp") return "WEBP";
+    return type.replace("image/", "").toUpperCase();
+  }
+
+  convertBtn.addEventListener("click", function () {
+
+    if (!selectedFile) {
+      return;
+    }
+
+    error.style.display = "none";
+    result.style.display = "none";
+
+    const image = new Image();
+    const objectUrl = URL.createObjectURL(selectedFile);
+
+    image.onload = function () {
+
+      const canvas = document.createElement("canvas");
+
+      canvas.width = image.naturalWidth;
+      canvas.height = image.naturalHeight;
+
+      const ctx = canvas.getContext("2d");
+
+      if (!ctx) {
+        error.textContent = "Il browser non supporta la conversione.";
+        error.style.display = "block";
+        URL.revokeObjectURL(objectUrl);
+        return;
+      }
+
+      /*
+       * JPG non supporta la trasparenza.
+       * Usiamo uno sfondo bianco quando il formato di destinazione è JPG.
+       */
+      if (formatSelect.value === "image/jpeg") {
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
+
+      ctx.drawImage(image, 0, 0);
+
+      let quality = 0.92;
+
+      if (formatSelect.value === "image/webp") {
+        quality = 0.90;
+      }
+
+      canvas.toBlob(function (blob) {
+
+        URL.revokeObjectURL(objectUrl);
+
+        if (!blob) {
+          error.textContent =
+            "Impossibile convertire questa immagine. Prova un altro formato.";
+          error.style.display = "block";
+          return;
+        }
+
+        const convertedUrl = URL.createObjectURL(blob);
+
+        originalFormat.textContent =
+          formatName(selectedFile.type);
+
+        newFormat.textContent =
+          formatName(formatSelect.value);
+
+        dimensions.textContent =
+          image.naturalWidth + " × " + image.naturalHeight + " px";
+
+        newSize.textContent =
+          formatBytes(blob.size);
+
+        preview.src = convertedUrl;
+
+        const extension =
+          formatSelect.value === "image/jpeg"
+            ? "jpg"
+            : formatSelect.value === "image/png"
+              ? "png"
+              : "webp";
+
+        const originalName =
+          selectedFile.name.replace(/\.[^/.]+$/, "");
+
+        download.href = convertedUrl;
+
+        download.download =
+          originalName + "-converted." + extension;
+
+        result.style.display = "block";
+
+      }, formatSelect.value, quality);
+
+    };
+
+    image.onerror = function () {
+      URL.revokeObjectURL(objectUrl);
+
+      error.textContent =
+        "Impossibile leggere questa immagine. Prova con un altro file.";
+
+      error.style.display = "block";
+    };
+
+    image.src = objectUrl;
+  });
+</script>
+
+</body>
+</html>
