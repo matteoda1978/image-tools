@@ -4,19 +4,133 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Image Tools - Strumenti gratuiti per immagini</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    .tool {
+      border: 1px solid #ddd;
+      padding: 20px;
+      margin-top: 30px;
+      border-radius: 10px;
+    }
+
+    input, button {
+      padding: 10px;
+      margin-top: 10px;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    #result {
+      margin-top: 20px;
+    }
+  </style>
 </head>
 
 <body>
 
   <h1>Strumenti gratuiti per immagini</h1>
 
-  <p>Ridimensiona, comprimi e converti le tue immagini direttamente nel browser.</p>
+  <p>
+    Ridimensiona le tue immagini direttamente nel browser.
+  </p>
 
-  <button>Ridimensiona immagine</button>
+  <div class="tool">
 
-  <button>Comprimi immagine</button>
+    <h2>Ridimensiona immagine</h2>
 
-  <button>Converti immagine</button>
+    <input type="file" id="imageInput" accept="image/*">
+
+    <br>
+
+    <label>
+      Nuova larghezza:
+      <input type="number" id="widthInput" value="800" min="1">
+      px
+    </label>
+
+    <br>
+
+    <button id="resizeButton">
+      Ridimensiona immagine
+    </button>
+
+    <div id="result"></div>
+
+  </div>
+
+  <script>
+    const imageInput = document.getElementById("imageInput");
+    const widthInput = document.getElementById("widthInput");
+    const resizeButton = document.getElementById("resizeButton");
+    const result = document.getElementById("result");
+
+    resizeButton.addEventListener("click", function () {
+
+      if (!imageInput.files.length) {
+        result.textContent = "Seleziona prima un'immagine.";
+        return;
+      }
+
+      const newWidth = Number(widthInput.value);
+
+      if (!newWidth || newWidth < 1) {
+        result.textContent = "Inserisci una larghezza valida.";
+        return;
+      }
+
+      const file = imageInput.files[0];
+      const image = new Image();
+
+      image.onload = function () {
+
+        const ratio = newWidth / image.width;
+        const newHeight = Math.round(image.height * ratio);
+
+        const canvas = document.createElement("canvas");
+        canvas.width = newWidth;
+        canvas.height = newHeight;
+
+        const ctx = canvas.getContext("2d");
+
+        ctx.drawImage(
+          image,
+          0,
+          0,
+          newWidth,
+          newHeight
+        );
+
+        canvas.toBlob(function (blob) {
+
+          const url = URL.createObjectURL(blob);
+
+          const download = document.createElement("a");
+          download.href = url;
+          download.download = "immagine-ridimensionata.jpg";
+          download.textContent = "Scarica immagine ridimensionata";
+
+          result.innerHTML = "";
+          result.appendChild(download);
+
+        }, "image/jpeg", 0.90);
+      };
+
+      image.src = URL.createObjectURL(file);
+    });
+  </script>
 
 </body>
 </html>
