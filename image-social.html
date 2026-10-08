@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Social Image Maker - Crea immagini per social | Image Tools</title>
+
+  <meta
+    name="description"
+    content="Prepara automaticamente le tue immagini per Instagram, Facebook e LinkedIn. Ridimensiona e adatta le foto online gratuitamente."
+  >
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #172033;
+    }
+
+    header {
+      background: #111827;
+      color: white;
+      text-align: center;
+      padding: 42px 20px;
+    }
+
+    header h1 {
+      margin: 0 0 10px;
+      font-size: 34px;
+    }
+
+    header p {
+      margin: 0;
+      color: #cbd5e1;
+    }
+
+    nav {
+      background: white;
+      border-bottom: 1px solid #e5e7eb;
+      text-align: center;
+      padding: 16px 10px;
+    }
+
+    nav a {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: bold;
+      margin: 0 7px;
+    }
+
+    main {
+      max-width: 900px;
+      margin: auto;
+      padding: 30px 20px 60px;
+    }
+
+    .intro,
+    .tool,
+    .content {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: 0 5px 20px rgba(0,0,0,.05);
+    }
+
+    .intro {
+      text-align: center;
+      margin-bottom: 22px;
+    }
+
+    .intro h2 {
+      margin-top: 0;
+    }
+
+    .intro p,
+    .content p,
+    .content li {
+      color: #475569;
+      line-height: 1.7;
+    }
+
+    .upload {
+      border: 2px dashed #94a3b8;
+      border-radius: 14px;
+      padding: 35px 20px;
+      text-align: center;
+      background: #f8fafc;
+    }
+
+    input[type="file"] {
+      width: 100%;
+      max-width: 450px;
+      font-size: 16px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin: 22px 0 8px;
+    }
+
+    select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 9px;
+      font-size: 16px;
+      background: white;
+    }
+
+    .status {
+      display: none;
+      margin-top: 18px;
+      padding: 14px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      border-radius: 10px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .error {
+      display: none;
+      margin-top: 15px;
+      padding: 12px;
+      background: #fee2e2;
+      color: #991b1b;
+      border-radius: 8px;
+    }
+
+    .result {
+      display: none;
+      margin-top: 25px;
+    }
+
+    .info {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 20px;
+    }
+
+    .info h3 {
+      margin-top: 0;
+      color: #1d4ed8;
+    }
+
+    .preview {
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 18px;
+      text-align: center;
+    }
+
+    .preview h3 {
+      margin-top: 0;
+    }
+
+    .preview img {
+      max-width: 100%;
+      max-height: 550px;
+      object-fit: contain;
+      border-radius: 10px;
+      background: white;
+      border: 1px solid #e5e7eb;
+    }
+
+    .download {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 13px 20px;
+      background: #16a34a;
+      color: white;
+      text-decoration: none;
+      border-radius: 9px;
+      font-weight: bold;
+    }
+
+    .download:hover {
+      background: #15803d;
+    }
+
+    .content {
+      margin-top: 22px;
+      box-shadow: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 28px;
+      }
+
+      main {
+        padding: 20px 15px 45px;
+      }
+
+      .intro,
+      .tool,
+      .content {
+        padding: 20px;
+      }
+
+      nav a {
+        display: inline-block;
+        margin: 5px 4px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>📱 Social Image Maker</h1>
+  <p>Prepara automaticamente le immagini per i social</p>
+</header>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="image-smart.html">Smart Fix</a>
+  <a href="image-optimizer.html">Ottimizza</a>
+  <a href="image-compressor.html">Comprimi</a>
+  <a href="image-resizer.html">Ridimensiona</a>
+  <a href="image-converter.html">Converti</a>
+  <a href="image-analyzer.html">Analizza</a>
+</nav>
+
+<main>
+
+  <section class="intro">
+
+    <h2>Crea automaticamente un'immagine pronta per i social</h2>
+
+    <p>
+      Carica una foto, scegli il social network e
+      Social Image Maker creerà automaticamente
+      un'immagine con le proporzioni adatte.
+    </p>
+
+  </section>
+
+  <section class="tool">
+
+    <div class="upload">
+
+      <p>
+        <strong>📷 Scegli la tua foto</strong>
+      </p>
+
+      <input
+        type="file"
+        id="fileInput"
+        accept="image/*"
+      >
+
+      <p>
+        L'elaborazione parte automaticamente.
+      </p>
+
+    </div>
+
+    <label for="platform">
+      Dove vuoi utilizzare l'immagine?
+    </label>
+
+    <select id="platform">
+
+      <option value="instagram-square">
+        Instagram — Post quadrato 1080 × 1080
+      </option>
+
+      <option value="instagram-portrait">
+        Instagram — Post verticale 1080 × 1350
+      </option>
+
+      <option value="instagram-story">
+        Instagram — Story 1080 × 1920
+      </option>
+
+      <option value="facebook">
+        Facebook — Post 1200 × 630
+      </option>
+
+      <option value="linkedin">
+        LinkedIn — Post 1200 × 627
+      </option>
+
+      <option value="twitter">
+        X / Twitter — Post 1600 × 900
+      </option>
+
+    </select>
+
+    <div id="status" class="status">
+      ⚡ Creazione immagine in corso...
+    </div>
+
+    <div id="error" class="error"></div>
+
+    <div id="result" class="result">
+
+      <div class="info">
+
+        <h3>✅ Immagine pronta</h3>
+
+        <p id="resultText"></p>
+
+      </div>
+
+      <div class="preview">
+
+        <h3>Anteprima</h3>
+
+        <img
+          id="preview"
+          alt="Anteprima immagine per social"
+        >
+
+        <br>
+
+        <a
+          id="download"
+          class="download"
+          download
+        >
+          ⬇️ Scarica immagine
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="content">
+
+    <h2>Immagini ottimizzate per i social</h2>
+
+    <p>
+      Ogni piattaforma utilizza proporzioni diverse.
+      Social Image Maker adatta automaticamente la tua foto
+      al formato selezionato.
+    </p>
+
+    <ul>
+
+      <li>
+        Instagram quadrato: 1080 × 1080 px
+      </li>
+
+      <li>
+        Instagram verticale: 1080 × 1350 px
+      </li>
+
+      <li>
+        Instagram Story: 1080 × 1920 px
+      </li>
+
+      <li>
+        Facebook: 1200 × 630 px
+      </li>
+
+      <li>
+        LinkedIn: 1200 × 627 px
+      </li>
+
+      <li>
+        X / Twitter: 1600 × 900 px
+      </li>
+
+    </ul>
+
+    <h2>Come funziona?</h2>
+
+    <p>
+      Seleziona una foto e scegli il formato desiderato.
+      L'immagine viene ridimensionata e ritagliata
+      automaticamente per adattarsi alle proporzioni
+      della piattaforma.
+    </p>
+
+    <p>
+      L'elaborazione avviene direttamente nel browser
+      senza caricare la foto su un server.
+    </p>
+
+  </section>
+
+</main>
+
+<footer>
+  © 2026 Image Tools
+</footer>
+
+<script>
+
+  const fileInput =
+    document.getElementById("fileInput");
+
+  const platform =
+    document.getElementById("platform");
+
+  const status =
+    document.getElementById("status");
+
+  const error =
+    document.getElementById("error");
+
+  const result =
+    document.getElementById("result");
+
+  const resultText =
+    document.getElementById("resultText");
+
+  const preview =
+    document.getElementById("preview");
+
+  const download =
+    document.getElementById("download");
+
+  let selectedFile = null;
+
+  let outputUrl = null;
+
+
+  const formats = {
+
+    "instagram-square": {
+      width: 1080,
+      height: 1080,
+      name: "Instagram Post quadrato"
+    },
+
+    "instagram-portrait": {
+      width: 1080,
+      height: 1350,
+      name: "Instagram Post verticale"
+    },
+
+    "instagram-story": {
+      width: 1080,
+      height: 1920,
+      name: "Instagram Story"
+    },
+
+    "facebook": {
+      width: 1200,
+      height: 630,
+      name: "Facebook"
+    },
+
+    "linkedin": {
+      width: 1200,
+      height: 627,
+      name: "LinkedIn"
+    },
+
+    "twitter": {
+      width: 1600,
+      height: 900,
+      name: "X / Twitter"
+    }
+
+  };
+
+
+  function createSocialImage() {
+
+    if (!selectedFile) {
+      return;
+    }
+
+    status.style.display = "block";
+    error.style.display = "none";
+    result.style.display = "none";
+
+    const url =
+      URL.createObjectURL(selectedFile);
+
+    const image =
+      new Image();
+
+    image.onload = function () {
+
+      const format =
+        formats[platform.value];
+
+      if (!format) {
+
+        URL.revokeObjectURL(url);
+
+        status.style.display = "none";
+
+        error.textContent =
+          "Formato non disponibile.";
+
+        error.style.display = "block";
+
+        return;
+      }
+
+      const canvas =
+        document.createElement("canvas");
+
+      canvas.width =
+        format.width;
+
+      canvas.height =
+        format.height;
+
+      const ctx =
+        canvas.getContext("2d");
+
+      if (!ctx) {
+
+        URL.revokeObjectURL(url);
+
+        status.style.display = "none";
+
+        error.textContent =
+          "Il browser non supporta questa funzione.";
+
+        error.style.display = "block";
+
+        return;
+      }
+
+
+      /*
+        Calcola il fattore necessario
+        per riempire completamente
+        il formato scelto.
+      */
+
+      const scale =
+        Math.max(
+          format.width / image.naturalWidth,
+          format.height / image.naturalHeight
+        );
+
+
+      const scaledWidth =
+        image.naturalWidth * scale;
+
+      const scaledHeight =
+        image.naturalHeight * scale;
+
+
+      const x =
+        (format.width - scaledWidth) / 2;
+
+      const y =
+        (format.height - scaledHeight) / 2;
+
+
+      /*
+        Sfondo bianco per gestire
+        correttamente eventuale trasparenza.
+      */
+
+      ctx.fillStyle = "#ffffff";
+
+      ctx.fillRect(
+        0,
+        0,
+        format.width,
+        format.height
+      );
+
+
+      ctx.drawImage(
+        image,
+        x,
+        y,
+        scaledWidth,
+        scaledHeight
+      );
+
+
+      canvas.toBlob(function(blob) {
+
+        URL.revokeObjectURL(url);
+
+        status.style.display = "none";
+
+        if (!blob) {
+
+          error.textContent =
+            "Non è stato possibile creare l'immagine.";
+
+          error.style.display = "block";
+
+          return;
+        }
+
+
+        if (outputUrl) {
+          URL.revokeObjectURL(outputUrl);
+        }
+
+
+        outputUrl =
+          URL.createObjectURL(blob);
+
+
+        preview.src =
+          outputUrl;
+
+
+        resultText.textContent =
+          format.name +
+          " — " +
+          format.width +
+          " × " +
+          format.height +
+          " px";
+
+
+        const baseName =
+          selectedFile.name
+            .replace(/\.[^/.]+$/, "");
+
+
+        download.href =
+          outputUrl;
+
+
+        download.download =
+          baseName +
+          "-" +
+          platform.value +
+          ".jpg";
+
+
+        result.style.display =
+          "block";
+
+
+      }, "image/jpeg", 0.90);
+
+    };
+
+
+    image.onerror = function() {
+
+      URL.revokeObjectURL(url);
+
+      status.style.display = "none";
+
+      error.textContent =
+        "Non è stato possibile leggere questa immagine.";
+
+      error.style.display = "block";
+
+    };
+
+
+    image.src =
+      url;
+
+  }
+
+
+  fileInput.addEventListener(
+    "change",
+    function() {
+
+      selectedFile =
+        fileInput.files[0] || null;
+
+      result.style.display = "none";
+      error.style.display = "none";
+
+      if (selectedFile) {
+        createSocialImage();
+      }
+
+    }
+  );
+
+
+  platform.addEventListener(
+    "change",
+    function() {
+
+      if (selectedFile) {
+        createSocialImage();
+      }
+
+    }
+  );
+
+</script>
+
+</body>
+</html>
