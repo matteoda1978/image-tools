@@ -53,6 +53,22 @@
       font-size: 13px;
     }
 
+    .optimizer-link {
+      display: inline-block;
+      margin-top: 18px;
+      padding: 11px 18px;
+      background: #2563eb;
+      color: white;
+      text-decoration: none;
+      border-radius: 9px;
+      font-weight: bold;
+      font-size: 15px;
+    }
+
+    .optimizer-link:hover {
+      background: #1d4ed8;
+    }
+
     main {
       max-width: 1100px;
       margin: 35px auto;
@@ -279,6 +295,12 @@
 
   </div>
 
+  <a
+    class="optimizer-link"
+    href="image-optimizer.html">
+    ⚡ Ottimizza immagini online
+  </a>
+
 </header>
 
 
@@ -416,8 +438,6 @@
         class="quality-info">
       </div>
 
-
-      <!-- PRIMA / DOPO -->
 
       <div class="comparison">
 
@@ -884,10 +904,6 @@
       }
 
 
-      /*
-       * CALCOLO DEL RISPARMIO
-       */
-
       const savedBytes =
         Math.max(
           0,
@@ -916,10 +932,6 @@
           blob
         );
 
-
-      /*
-       * DATI
-       */
 
       document.getElementById(
         "originalSize"
@@ -960,10 +972,6 @@
         newHeight;
 
 
-      /*
-       * MESSAGGIO RISPARMIO
-       */
-
       document.getElementById(
         "savingBox"
       ).textContent =
@@ -983,10 +991,6 @@
         "ℹ️ L'immagine era già molto ottimizzata.";
 
 
-      /*
-       * INFORMAZIONI PRESET
-       */
-
       document.getElementById(
         "qualityInfo"
       ).textContent =
@@ -1004,10 +1008,6 @@
         " px";
 
 
-      /*
-       * PRIMA
-       */
-
       const before =
         document.getElementById(
           "beforeImage"
@@ -1021,10 +1021,6 @@
       before.style.display =
         "block";
 
-
-      /*
-       * DOPO
-       */
 
       const after =
         document.getElementById(
@@ -1040,10 +1036,6 @@
         "block";
 
 
-      /*
-       * DOWNLOAD
-       */
-
       const download =
         document.getElementById(
           "downloadOptimized"
@@ -1057,10 +1049,6 @@
       download.download =
         "immagine-ottimizzata.jpg";
 
-
-      /*
-       * MOSTRA RISULTATO
-       */
 
       result.style.display =
         "block";
