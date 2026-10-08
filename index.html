@@ -8,7 +8,7 @@
 
   <meta
     name="description"
-    content="Strumenti gratuiti per ridimensionare, comprimere, convertire, analizzare e ottimizzare immagini online."
+    content="Strumenti gratuiti per ridimensionare, comprimere, convertire, analizzare, ottimizzare e preparare immagini per i social."
   >
 
   <style>
@@ -37,7 +37,7 @@
 
     header p {
       margin: 0 auto;
-      max-width: 700px;
+      max-width: 720px;
       color: #cbd5e1;
       line-height: 1.6;
       font-size: 17px;
@@ -77,39 +77,63 @@
       padding: 30px 20px 60px;
     }
 
+    .smart,
+    .social {
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 22px;
+    }
+
     .smart {
       background: linear-gradient(135deg, #eff6ff, #ffffff);
       border: 2px solid #93c5fd;
-      border-radius: 20px;
-      padding: 30px;
-      margin-bottom: 30px;
       box-shadow: 0 7px 25px rgba(37, 99, 235, .10);
     }
 
-    .smart h2 {
+    .social {
+      background: linear-gradient(135deg, #fdf2f8, #ffffff);
+      border: 2px solid #f9a8d4;
+      box-shadow: 0 7px 25px rgba(219, 39, 119, .08);
+    }
+
+    .smart h2,
+    .social h2 {
       margin-top: 0;
       font-size: 28px;
     }
 
-    .smart p {
+    .smart p,
+    .social p {
       color: #475569;
       line-height: 1.6;
-      max-width: 760px;
+      max-width: 780px;
     }
 
-    .smart-button {
+    .smart-button,
+    .social-button {
       display: inline-block;
       margin-top: 10px;
       padding: 13px 20px;
-      background: #2563eb;
       color: white;
       text-decoration: none;
       border-radius: 9px;
       font-weight: bold;
     }
 
+    .smart-button {
+      background: #2563eb;
+    }
+
     .smart-button:hover {
       background: #1d4ed8;
+    }
+
+    .social-button {
+      background: #db2777;
+    }
+
+    .social-button:hover {
+      background: #be185d;
     }
 
     .section-title {
@@ -127,8 +151,8 @@
 
     .featured {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 12px;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 10px;
       margin-bottom: 30px;
     }
 
@@ -138,10 +162,11 @@
       background: white;
       border: 1px solid #e5e7eb;
       border-radius: 12px;
-      padding: 15px 8px;
+      padding: 15px 7px;
       text-decoration: none;
       color: #1e293b;
       font-weight: bold;
+      font-size: 14px;
     }
 
     .featured a:hover {
@@ -206,287 +231,4 @@
     footer {
       text-align: center;
       padding: 30px 20px;
-      color: #64748b;
-      font-size: 14px;
-    }
-
-    @media (max-width: 850px) {
-      .featured {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .tools {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 600px) {
-      header {
-        padding: 40px 18px;
-      }
-
-      header h1 {
-        font-size: 32px;
-      }
-
-      main {
-        padding: 22px 15px 45px;
-      }
-
-      .smart {
-        padding: 23px;
-      }
-
-      .featured,
-      .tools {
-        grid-template-columns: 1fr;
-      }
-
-      .tool p {
-        min-height: auto;
-      }
-
-      nav a {
-        display: inline-block;
-        margin: 5px 4px;
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-<header>
-
-  <h1>Image Tools</h1>
-
-  <p>
-    Strumenti gratuiti per lavorare con le tue immagini
-    direttamente online.
-  </p>
-
-  <div class="chips">
-    <span class="chip">Gratis</span>
-    <span class="chip">Online</span>
-    <span class="chip">Semplice</span>
-    <span class="chip">Senza installazione</span>
-  </div>
-
-</header>
-
-<nav>
-
-  <a href="index.html">Home</a>
-  <a href="image-smart.html">Smart Fix</a>
-  <a href="image-optimizer.html">Ottimizza</a>
-  <a href="image-compressor.html">Comprimi</a>
-  <a href="image-resizer.html">Ridimensiona</a>
-  <a href="image-converter.html">Converti</a>
-  <a href="image-analyzer.html">Analizza</a>
-
-</nav>
-
-<main>
-
-  <!-- SMART IMAGE FIX -->
-
-  <section class="smart">
-
-    <h2>⚡ Smart Image Fix</h2>
-
-    <p>
-      Non sai quali impostazioni usare?
-      Carica semplicemente la tua foto e Smart Image Fix
-      analizzerà automaticamente l'immagine e creerà
-      una versione ottimizzata.
-    </p>
-
-    <p>
-      Puoi scegliere se ottimizzare l'immagine per il web,
-      i social, l'email oppure per un uso generale.
-    </p>
-
-    <a
-      class="smart-button"
-      href="image-smart.html"
-    >
-      ⚡ Ottimizza automaticamente
-    </a>
-
-  </section>
-
-
-  <!-- STRUMENTI IN EVIDENZA -->
-
-  <div class="section-title">
-
-    <h2>Strumenti per immagini</h2>
-
-    <p>
-      Scegli lo strumento che ti serve.
-    </p>
-
-  </div>
-
-  <section class="featured">
-
-    <a href="image-optimizer.html">
-      ⚡ Ottimizza
-    </a>
-
-    <a href="image-compressor.html">
-      📦 Comprimi
-    </a>
-
-    <a href="image-resizer.html">
-      🖼️ Ridimensiona
-    </a>
-
-    <a href="image-converter.html">
-      🔄 Converti
-    </a>
-
-    <a href="image-analyzer.html">
-      🔍 Analizza
-    </a>
-
-  </section>
-
-
-  <!-- TUTTI GLI STRUMENTI -->
-
-  <section class="tools">
-
-    <article class="tool">
-
-      <h3>⚡ Ottimizza immagine</h3>
-
-      <p>
-        Riduci il peso dell'immagine mantenendo
-        un buon equilibrio tra qualità e dimensioni.
-      </p>
-
-      <a href="image-optimizer.html">
-        Apri strumento →
-      </a>
-
-    </article>
-
-
-    <article class="tool">
-
-      <h3>📦 Comprimi immagine</h3>
-
-      <p>
-        Comprimi JPG, PNG e altre immagini
-        direttamente dal browser.
-      </p>
-
-      <a href="image-compressor.html">
-        Apri strumento →
-      </a>
-
-    </article>
-
-
-    <article class="tool">
-
-      <h3>🖼️ Ridimensiona immagine</h3>
-
-      <p>
-        Modifica larghezza e altezza delle immagini
-        in pochi secondi.
-      </p>
-
-      <a href="image-resizer.html">
-        Apri strumento →
-      </a>
-
-    </article>
-
-
-    <article class="tool">
-
-      <h3>🔄 Converti immagine</h3>
-
-      <p>
-        Converti le immagini tra diversi formati
-        in modo semplice e veloce.
-      </p>
-
-      <a href="image-converter.html">
-        Apri strumento →
-      </a>
-
-    </article>
-
-
-    <article class="tool">
-
-      <h3>🔍 Analizza immagine</h3>
-
-      <p>
-        Controlla formato, dimensioni, peso,
-        tipo di file e altre informazioni.
-      </p>
-
-      <a href="image-analyzer.html">
-        Apri strumento →
-      </a>
-
-    </article>
-
-
-    <article class="tool">
-
-      <h3>⚡ Smart Image Fix</h3>
-
-      <p>
-        Lascia scegliere automaticamente allo strumento
-        le impostazioni più adatte alla tua immagine.
-      </p>
-
-      <a href="image-smart.html">
-        Prova Smart Fix →
-      </a>
-
-    </article>
-
-  </section>
-
-
-  <!-- ABOUT -->
-
-  <section class="about">
-
-    <h2>Image Tools: strumenti online gratuiti</h2>
-
-    <p>
-      Image Tools raccoglie strumenti semplici e gratuiti
-      per lavorare con le immagini direttamente dal browser.
-      Non è necessario installare programmi.
-    </p>
-
-    <p>
-      Puoi ridimensionare, comprimere, convertire e analizzare
-      le tue immagini oppure utilizzare Smart Image Fix per
-      ottenere automaticamente una versione ottimizzata.
-    </p>
-
-    <p>
-      Gli strumenti sono pensati per essere veloci,
-      semplici da utilizzare e accessibili anche da smartphone.
-    </p>
-
-  </section>
-
-</main>
-
-<footer>
-
-  © 2026 Image Tools
-
-</footer>
-
-</body>
-</html>
+      color: #
