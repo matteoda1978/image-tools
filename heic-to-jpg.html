@@ -258,8 +258,20 @@
       font-weight: 600;
     }
 
+    .file-format {
+      display: inline-block;
+      margin-top: 5px;
+      padding: 3px 7px;
+      border-radius: 6px;
+      background: rgba(34,197,94,.12);
+      border: 1px solid rgba(34,197,94,.22);
+      color: #86efac;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
     .file-status {
-      margin-top: 4px;
+      margin-top: 5px;
       color: #94a3b8;
       font-size: 12px;
     }
@@ -477,12 +489,6 @@
 
     </div>
 
-    <!--
-      image/* è importante su Android:
-      permette alla galleria di mostrare le immagini HEIC
-      anche quando il dispositivo non restituisce un MIME type
-      HEIC standard.
-    -->
     <input
       type="file"
       id="fileInput"
@@ -623,6 +629,10 @@
       </li>
 
       <li>
+        Controlla il formato rilevato.
+      </li>
+
+      <li>
         Scegli la qualità JPG.
       </li>
 
@@ -684,13 +694,9 @@
 
 </footer>
 
-
-<!-- HEIC DECODER -->
 <script src="https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js"></script>
 
-<!-- ZIP -->
 <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
-
 
 <script>
 
@@ -736,10 +742,6 @@
   let convertedFiles = [];
 
 
-  /*
-    QUALITÀ
-  */
-
   quality.addEventListener("input", () => {
 
     qualityValue.textContent =
@@ -747,10 +749,6 @@
 
   });
 
-
-  /*
-    APERTURA GALLERIA
-  */
 
   dropzone.addEventListener("click", () => {
 
@@ -775,10 +773,6 @@
   });
 
 
-  /*
-    SELEZIONE FILE
-  */
-
   fileInput.addEventListener("change", () => {
 
     const files =
@@ -788,10 +782,6 @@
 
   });
 
-
-  /*
-    DRAG & DROP
-  */
 
   ["dragenter", "dragover"].forEach(eventName => {
 
@@ -838,6 +828,54 @@
 
 
   /*
+    RICONOSCIMENTO DEL FORMATO
+  */
+
+  function detectFormat(file) {
+
+    const name =
+      file.name.toLowerCase();
+
+    const type =
+      (file.type || "").toLowerCase();
+
+
+    if (
+      name.endsWith(".heic") ||
+      name.endsWith(".heif") ||
+      type === "image/heic" ||
+      type === "image/heif" ||
+      type === "image/heic-sequence" ||
+      type === "image/heif-sequence"
+    ) {
+
+      if (name.endsWith(".heif")) {
+        return "HEIF";
+      }
+
+      return "HEIC";
+
+    }
+
+
+    if (type === "image/jpeg" || name.endsWith(".jpg") || name.endsWith(".jpeg")) {
+      return "JPG";
+    }
+
+    if (type === "image/png" || name.endsWith(".png")) {
+      return "PNG";
+    }
+
+    if (type === "image/webp" || name.endsWith(".webp")) {
+      return "WEBP";
+    }
+
+    return "Immagine";
+
+  }
+
+
+  /*
     AGGIUNTA FILE
   */
 
@@ -853,21 +891,15 @@
     }
 
 
-    /*
-      Accettiamo HEIC / HEIF.
-      Se Android restituisce MIME type strani,
-      controlliamo anche l'estensione.
-    */
-
     const heicFiles =
       files.filter(file => {
 
-        const name =
-          file.name.toLowerCase();
+        const format =
+          detectFormat(file);
 
         return (
-          name.endsWith(".heic") ||
-          name.endsWith(".heif")
+          format === "HEIC" ||
+          format === "HEIF"
         );
 
       });
@@ -876,7 +908,7 @@
     if (!heicFiles.length) {
 
       message.textContent =
-        "Seleziona una foto HEIC o HEIF.";
+        "Questa pagina converte solo file HEIC o HEIF.";
 
       return;
 
@@ -906,8 +938,8 @@
       selectedFiles.length +
       (
         selectedFiles.length === 1
-          ? " foto selezionata."
-          : " foto selezionate."
+          ? " foto HEIC pronta."
+          : " foto HEIC pronte."
       );
 
   }
@@ -952,7 +984,7 @@
           "thumb";
 
         thumb.textContent =
-          "HEIC";
+          detectFormat(file);
 
 
         const info =
@@ -972,6 +1004,17 @@
           file.name;
 
 
+        const format =
+          document.createElement("div");
+
+        format.className =
+          "file-format";
+
+        format.textContent =
+          "Formato rilevato: " +
+          detectFormat(file);
+
+
         const status =
           document.createElement("div");
 
@@ -982,10 +1025,13 @@
           "status-" + index;
 
         status.textContent =
+          "Dimensione: " +
           formatBytes(file.size);
 
 
         info.appendChild(name);
+
+        info.appendChild(format);
 
         info.appendChild(status);
 
@@ -1003,10 +1049,6 @@
   }
 
 
-  /*
-    AGGIORNA STATO
-  */
-
   function updateStatus(index, text) {
 
     const element =
@@ -1023,10 +1065,6 @@
 
   }
 
-
-  /*
-    CONVERSIONE
-  */
 
   async function convertOne(file, index) {
 
@@ -1112,7 +1150,7 @@
 
     updateStatus(
       index,
-      "✓ " +
+      "✓ JPG creato · " +
       formatBytes(finalBlob.size)
     );
 
@@ -1129,10 +1167,6 @@
 
   }
 
-
-  /*
-    RIDIMENSIONAMENTO
-  */
 
   function resizeImage(
     blob,
@@ -1284,10 +1318,6 @@
   }
 
 
-  /*
-    CONVERTI TUTTO
-  */
-
   convertBtn.addEventListener(
     "click",
     async () => {
@@ -1340,7 +1370,7 @@
 
           updateStatus(
             i,
-            "✕ Errore"
+            "✕ Errore durante la conversione"
           );
 
         }
@@ -1365,13 +1395,6 @@
           false;
 
 
-        /*
-          Se c'è una sola immagine,
-          scarica il pulsante singolo.
-          Il file viene mostrato anche
-          tramite il nuovo pulsante.
-        */
-
         if (
           convertedFiles.length === 1
         ) {
@@ -1394,10 +1417,6 @@
     }
   );
 
-
-  /*
-    DOWNLOAD SINGOLO
-  */
 
   function showSingleDownload() {
 
@@ -1501,10 +1520,6 @@
 
   }
 
-
-  /*
-    DOWNLOAD ZIP
-  */
 
   downloadZipBtn.addEventListener(
     "click",
@@ -1616,10 +1631,6 @@
   );
 
 
-  /*
-    CANCELLA TUTTO
-  */
-
   clearBtn.addEventListener(
     "click",
     () => {
@@ -1670,10 +1681,6 @@
     }
   );
 
-
-  /*
-    FORMATO FILE
-  */
 
   function formatBytes(bytes) {
 
