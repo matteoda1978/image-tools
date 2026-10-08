@@ -6,36 +6,106 @@
   <title>Image Tools - Strumenti gratuiti per immagini</title>
 
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      max-width: 800px;
-      margin: 40px auto;
-      padding: 20px;
-    }
+   * {
+  box-sizing: border-box;
+}
 
-    h1 {
-      margin-bottom: 10px;
-    }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f6f8fb;
+  color: #172033;
+}
 
-    .tool {
-      border: 1px solid #ddd;
-      padding: 20px;
-      margin-top: 30px;
-      border-radius: 10px;
-    }
+header {
+  text-align: center;
+  padding: 55px 20px 35px;
+}
 
-    input, button {
-      padding: 10px;
-      margin-top: 10px;
-    }
+header h1 {
+  font-size: 42px;
+  margin: 0 0 15px;
+  letter-spacing: -1px;
+}
 
-    button {
-      cursor: pointer;
-    }
+header p {
+  font-size: 18px;
+  color: #667085;
+  margin: 0;
+}
 
-    #result {
-      margin-top: 20px;
-    }
+.tool {
+  max-width: 720px;
+  margin: 25px auto;
+  padding: 30px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+}
+
+.tool h2 {
+  margin-top: 0;
+  font-size: 24px;
+}
+
+input[type="file"] {
+  width: 100%;
+  padding: 14px;
+  margin: 15px 0;
+  border: 2px dashed #d0d5dd;
+  border-radius: 12px;
+  background: #fafafa;
+}
+
+input[type="number"] {
+  padding: 10px;
+  border: 1px solid #d0d5dd;
+  border-radius: 8px;
+  width: 120px;
+}
+
+input[type="range"] {
+  width: 180px;
+  vertical-align: middle;
+}
+
+button {
+  border: 0;
+  border-radius: 10px;
+  padding: 13px 20px;
+  background: #2563eb;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+button:hover {
+  background: #1d4ed8;
+}
+
+#result,
+#compressResult {
+  margin-top: 20px;
+}
+
+a {
+  color: #2563eb;
+  font-weight: bold;
+}
+
+@media (max-width: 600px) {
+  header h1 {
+    font-size: 32px;
+  }
+
+  .tool {
+    margin: 20px 15px;
+    padding: 22px;
+  }
+}
   </style>
 </head>
 
