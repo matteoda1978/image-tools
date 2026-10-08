@@ -4,9 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Image Tools – Ridimensiona, comprimi e ottimizza immagini</title>
-
-  <meta name="description" content="Strumenti gratuiti online per ridimensionare, comprimere, convertire, analizzare e ottimizzare immagini.">
+  <title>Image Tools - Strumenti gratuiti per immagini</title>
+  <meta name="description" content="Strumenti gratuiti per ridimensionare, comprimere, convertire, analizzare e ottimizzare immagini online.">
 
   <style>
     * {
@@ -17,233 +16,242 @@
       margin: 0;
       font-family: Arial, sans-serif;
       background: #f5f7fb;
-      color: #1f2937;
+      color: #172033;
     }
 
     header {
       background: #111827;
       color: white;
-      padding: 28px 20px;
+      padding: 34px 20px;
       text-align: center;
     }
 
     header h1 {
-      margin: 0 0 8px;
-      font-size: 34px;
+      margin: 0 0 10px;
+      font-size: 36px;
     }
 
     header p {
       margin: 0;
-      color: #d1d5db;
-      font-size: 16px;
-    }
-
-    .hero {
-      max-width: 1000px;
-      margin: 35px auto 20px;
-      padding: 0 20px;
-      text-align: center;
-    }
-
-    .hero h2 {
-      font-size: 28px;
-      margin-bottom: 10px;
-    }
-
-    .hero p {
-      color: #6b7280;
-      margin-bottom: 20px;
+      color: #cbd5e1;
+      font-size: 17px;
     }
 
     .chips {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 8px;
+      margin-top: 20px;
     }
 
     .chip {
-      background: white;
-      border: 1px solid #e5e7eb;
-      padding: 9px 15px;
+      background: #1f2937;
+      border: 1px solid #374151;
+      padding: 7px 12px;
       border-radius: 20px;
-      font-size: 14px;
+      font-size: 13px;
     }
 
-    .tools {
-      max-width: 1000px;
-      margin: 30px auto 60px;
-      padding: 0 20px;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
+    main {
+      max-width: 1100px;
+      margin: 35px auto;
+      padding: 0 18px 50px;
     }
 
     .tool {
       background: white;
-      border-radius: 14px;
-      padding: 24px;
-      border: 1px solid #e5e7eb;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+      border-radius: 16px;
+      padding: 25px;
+      margin-bottom: 22px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.06);
     }
 
-    .tool h3 {
+    .tool h2 {
       margin-top: 0;
-      font-size: 20px;
+      font-size: 23px;
     }
 
     .tool p {
-      color: #6b7280;
+      color: #64748b;
       line-height: 1.5;
     }
 
     .featured {
-      grid-column: 1 / -1;
       border: 2px solid #2563eb;
     }
 
-    .featured-badge {
-      display: inline-block;
-      background: #2563eb;
-      color: white;
-      padding: 5px 10px;
-      border-radius: 15px;
-      font-size: 12px;
-      font-weight: bold;
-      margin-bottom: 10px;
+    .featured h2 {
+      color: #1d4ed8;
     }
 
-    input,
+    .controls {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-top: 18px;
+    }
+
+    input[type="file"],
     select,
-    button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 10px;
-      border-radius: 8px;
+    input[type="number"] {
+      padding: 11px;
+      border: 1px solid #cbd5e1;
+      border-radius: 9px;
+      background: white;
       font-size: 15px;
     }
 
-    input,
-    select {
-      border: 1px solid #d1d5db;
-      background: white;
-    }
-
-    button {
+    button,
+    .download {
+      display: inline-block;
+      padding: 11px 17px;
       border: none;
+      border-radius: 9px;
       background: #2563eb;
       color: white;
+      font-size: 15px;
       cursor: pointer;
-      font-weight: bold;
+      text-decoration: none;
     }
 
-    button:hover {
+    button:hover,
+    .download:hover {
       background: #1d4ed8;
     }
 
     .result {
-      margin-top: 15px;
-      padding: 14px;
-      border-radius: 8px;
-      background: #f3f4f6;
-      line-height: 1.6;
-      word-break: break-word;
-    }
-
-    .result strong {
-      color: #111827;
-    }
-
-    .success {
-      background: #ecfdf5;
-      color: #065f46;
-    }
-
-    .warning {
-      background: #fffbeb;
-      color: #92400e;
-    }
-
-    .error {
-      background: #fef2f2;
-      color: #991b1b;
-    }
-
-    .analysis-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px 20px;
-    }
-
-    .analysis-item {
-      padding: 6px 0;
-      border-bottom: 1px solid #e5e7eb;
-    }
-
-    .recommendation {
-      margin-top: 15px;
-      padding: 12px;
-      border-radius: 8px;
-      background: #eff6ff;
-      color: #1e40af;
-    }
-
-    .optimization-box {
+      margin-top: 20px;
+      padding: 18px;
+      border-radius: 12px;
       background: #f8fafc;
-      border-radius: 10px;
-      padding: 15px;
-      margin-top: 15px;
-    }
-
-    .optimization-box label {
-      display: block;
-      font-weight: bold;
-      margin-top: 10px;
+      border: 1px solid #e2e8f0;
+      display: none;
     }
 
     .stats {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
       margin-top: 15px;
     }
 
     .stat {
       background: white;
-      border: 1px solid #dbe3ef;
-      border-radius: 8px;
-      padding: 10px;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 14px;
       text-align: center;
     }
 
     .stat strong {
       display: block;
-      font-size: 18px;
+      font-size: 20px;
+      margin-bottom: 5px;
+    }
+
+    .stat span {
+      color: #64748b;
+      font-size: 13px;
+    }
+
+    .comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 20px;
+    }
+
+    .preview {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .preview h3 {
+      margin: 0;
+      padding: 12px 15px;
+      font-size: 15px;
+      background: #f1f5f9;
+    }
+
+    .preview img {
+      width: 100%;
+      max-height: 380px;
+      object-fit: contain;
+      display: block;
+      background:
+        linear-gradient(45deg, #eee 25%, transparent 25%),
+        linear-gradient(-45deg, #eee 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #eee 75%),
+        linear-gradient(-45deg, transparent 75%, #eee 75%);
+      background-size: 20px 20px;
+      background-position: 0 0, 0 10px, 10px -10px, -10px 0;
+    }
+
+    .saving {
+      margin-top: 18px;
+      padding: 15px;
+      border-radius: 10px;
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      color: #065f46;
+      font-size: 17px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .quality-info {
+      margin-top: 12px;
+      padding: 12px;
+      background: #eff6ff;
+      border-radius: 9px;
+      color: #1e40af;
+      font-size: 14px;
+    }
+
+    .message {
+      margin-top: 12px;
+      color: #475569;
     }
 
     footer {
       text-align: center;
-      padding: 30px 20px;
-      color: #6b7280;
+      padding: 25px;
+      color: #64748b;
       font-size: 14px;
     }
 
     @media (max-width: 700px) {
-      .tools {
-        grid-template-columns: 1fr;
-      }
-
-      .featured {
-        grid-column: auto;
-      }
-
-      .analysis-grid,
-      .stats {
-        grid-template-columns: 1fr;
-      }
-
       header h1 {
-        font-size: 28px;
+        font-size: 29px;
+      }
+
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .comparison {
+        grid-template-columns: 1fr;
+      }
+
+      .tool {
+        padding: 19px;
+      }
+
+      .controls {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      input[type="file"],
+      select,
+      input[type="number"],
+      button,
+      .download {
+        width: 100%;
       }
     }
   </style>
@@ -254,16 +262,6 @@
 <header>
   <h1>Image Tools</h1>
   <p>Strumenti gratuiti e semplici per modificare le tue immagini online.</p>
-</header>
-
-<section class="hero">
-
-  <h2>Modifica e ottimizza le tue immagini</h2>
-
-  <p>
-    Ridimensiona, comprimi, converti, analizza e ottimizza le tue immagini
-    direttamente dal browser.
-  </p>
 
   <div class="chips">
     <div class="chip">🖼️ Ridimensiona</div>
@@ -272,1092 +270,618 @@
     <div class="chip">🔍 Analizza</div>
     <div class="chip">⚡ Ottimizza</div>
   </div>
+</header>
 
-</section>
+<main>
 
-<main class="tools">
-
-  <!-- OTTIMIZZATORE AUTOMATICO -->
-
+  <!-- OTTIMIZZATORE -->
   <section class="tool featured">
-
-    <span class="featured-badge">NUOVO</span>
-
-    <h3>⚡ Ottimizza automaticamente</h3>
+    <h2>⚡ Ottimizza automaticamente</h2>
 
     <p>
-      Carica un'immagine e lascia che lo strumento scelga automaticamente
-      dimensioni e compressione in base all'utilizzo.
+      Carica un'immagine e scegli l'utilizzo. Image Tools ridurrà automaticamente
+      il peso mantenendo una buona qualità.
     </p>
 
-    <input
-      type="file"
-      id="optimizeInput"
-      accept="image/*"
-    >
+    <div class="controls">
+      <input type="file" id="optimizerFile" accept="image/*">
 
-    <div class="optimization-box">
-
-      <label for="optimizationType">
-        Come vuoi utilizzare l'immagine?
-      </label>
-
-      <select id="optimizationType">
-
-        <option value="web">
-          🌐 Sito web
-        </option>
-
-        <option value="social">
-          📱 Social media
-        </option>
-
-        <option value="email">
-          ✉️ Email
-        </option>
-
+      <select id="optimizerPreset">
+        <option value="web">🌐 Sito web</option>
+        <option value="social">📱 Social media</option>
+        <option value="email">✉️ Email</option>
       </select>
-
     </div>
 
-    <button id="optimizeButton">
-      ⚡ Ottimizza immagine
-    </button>
+    <div id="optimizerMessage" class="message"></div>
 
-    <div id="optimizeResult" class="result">
-      Seleziona un'immagine per iniziare.
+    <div id="optimizerResult" class="result">
+
+      <div class="stats">
+        <div class="stat">
+          <strong id="originalSize">-</strong>
+          <span>Peso originale</span>
+        </div>
+
+        <div class="stat">
+          <strong id="optimizedSize">-</strong>
+          <span>Peso ottimizzato</span>
+        </div>
+
+        <div class="stat">
+          <strong id="savedPercent">-</strong>
+          <span>Spazio risparmiato</span>
+        </div>
+
+        <div class="stat">
+          <strong id="dimensions">-</strong>
+          <span>Dimensioni</span>
+        </div>
+      </div>
+
+      <div id="savingBox" class="saving"></div>
+
+      <div id="qualityInfo" class="quality-info"></div>
+
+      <div class="comparison">
+
+        <div class="preview">
+          <h3>🖼️ Prima</h3>
+          <img id="beforeImage" alt="Immagine originale">
+        </div>
+
+        <div class="preview">
+          <h3>⚡ Dopo</h3>
+          <img id="afterImage" alt="Immagine ottimizzata">
+        </div>
+
+      </div>
+
+      <div style="margin-top:20px;text-align:center;">
+        <a id="downloadOptimized" class="download" download="immagine-ottimizzata.jpg">
+          ⬇️ Scarica immagine ottimizzata
+        </a>
+      </div>
+
     </div>
-
   </section>
 
 
   <!-- RIDIMENSIONA -->
-
   <section class="tool">
-
-    <h3>🖼️ Ridimensiona immagine</h3>
+    <h2>🖼️ Ridimensiona immagine</h2>
 
     <p>
-      Cambia la larghezza della tua immagine mantenendo automaticamente
-      le proporzioni.
+      Modifica larghezza e altezza della tua immagine direttamente nel browser.
     </p>
 
-    <input
-      type="file"
-      id="resizeInput"
-      accept="image/*"
-    >
-
-    <input
-      type="number"
-      id="widthInput"
-      placeholder="Nuova larghezza in pixel"
-      min="1"
-    >
-
-    <button id="resizeButton">
-      Ridimensiona
-    </button>
-
-    <div id="resizeResult" class="result">
-      Seleziona un'immagine per iniziare.
+    <div class="controls">
+      <input type="file" id="resizeFile" accept="image/*">
+      <input type="number" id="resizeWidth" placeholder="Larghezza px">
+      <button id="resizeButton">Ridimensiona</button>
     </div>
 
+    <div id="resizeResult" class="result"></div>
   </section>
 
 
   <!-- COMPRIMI -->
-
   <section class="tool">
-
-    <h3>📦 Comprimi immagine</h3>
+    <h2>📦 Comprimi immagine</h2>
 
     <p>
-      Riduci il peso dell'immagine per caricarla più velocemente sul web.
+      Riduci il peso dell'immagine mantenendo una buona qualità.
     </p>
 
-    <input
-      type="file"
-      id="compressInput"
-      accept="image/*"
-    >
+    <div class="controls">
+      <input type="file" id="compressFile" accept="image/*">
 
-    <label for="qualityInput">
-      Qualità:
-      <strong>
-        <span id="qualityValue">80</span>%
-      </strong>
-    </label>
+      <select id="compressQuality">
+        <option value="0.9">Qualità alta</option>
+        <option value="0.75" selected>Qualità media</option>
+        <option value="0.55">Qualità bassa</option>
+      </select>
 
-    <input
-      type="range"
-      id="qualityInput"
-      min="10"
-      max="100"
-      value="80"
-    >
-
-    <button id="compressButton">
-      Comprimi immagine
-    </button>
-
-    <div id="compressResult" class="result">
-      Seleziona un'immagine per iniziare.
+      <button id="compressButton">Comprimi</button>
     </div>
 
+    <div id="compressResult" class="result"></div>
   </section>
 
 
   <!-- CONVERTI -->
-
   <section class="tool">
-
-    <h3>🔄 Converti immagine</h3>
+    <h2>🔄 Converti immagine</h2>
 
     <p>
-      Converti rapidamente la tua immagine in JPG, PNG o WebP.
+      Converti un'immagine in JPG, PNG o WebP.
     </p>
 
-    <input
-      type="file"
-      id="convertInput"
-      accept="image/*"
-    >
+    <div class="controls">
+      <input type="file" id="convertFile" accept="image/*">
 
-    <select id="formatInput">
+      <select id="convertFormat">
+        <option value="image/jpeg">JPG</option>
+        <option value="image/png">PNG</option>
+        <option value="image/webp">WebP</option>
+      </select>
 
-      <option value="image/jpeg">
-        JPG
-      </option>
-
-      <option value="image/png">
-        PNG
-      </option>
-
-      <option value="image/webp">
-        WebP
-      </option>
-
-    </select>
-
-    <button id="convertButton">
-      Converti immagine
-    </button>
-
-    <div id="convertResult" class="result">
-      Seleziona un'immagine per iniziare.
+      <button id="convertButton">Converti</button>
     </div>
 
+    <div id="convertResult" class="result"></div>
   </section>
 
 
   <!-- ANALIZZA -->
-
   <section class="tool">
-
-    <h3>🔍 Analizza immagine</h3>
+    <h2>🔍 Analizza immagine</h2>
 
     <p>
-      Scopri dimensioni, formato, peso, proporzioni e informazioni utili
-      sulla tua immagine.
+      Controlla formato, dimensioni e peso del file.
     </p>
 
-    <input
-      type="file"
-      id="analyzeInput"
-      accept="image/*"
-    >
-
-    <button id="analyzeButton">
-      Analizza immagine
-    </button>
-
-    <div id="analyzeResult" class="result">
-      Seleziona un'immagine per iniziare.
+    <div class="controls">
+      <input type="file" id="analyzeFile" accept="image/*">
     </div>
 
+    <div id="analyzeResult" class="result"></div>
   </section>
 
 </main>
 
 <footer>
-  Image Tools — Strumenti gratuiti per le tue immagini.
+  Image Tools — strumenti gratuiti per immagini online
 </footer>
 
 
 <script>
 
-/* =====================================================
-   OTTIMIZZATORE AUTOMATICO
-   ===================================================== */
+  function formatBytes(bytes) {
+    if (bytes < 1024) {
+      return bytes + " B";
+    }
 
-const optimizeInput =
-  document.getElementById("optimizeInput");
+    if (bytes < 1024 * 1024) {
+      return (bytes / 1024).toFixed(1) + " KB";
+    }
 
-const optimizationType =
-  document.getElementById("optimizationType");
-
-const optimizeButton =
-  document.getElementById("optimizeButton");
-
-const optimizeResult =
-  document.getElementById("optimizeResult");
-
-
-optimizeButton.addEventListener("click", function () {
-
-  const file = optimizeInput.files[0];
-
-  if (!file) {
-
-    optimizeResult.className = "result error";
-
-    optimizeResult.textContent =
-      "Seleziona prima un'immagine.";
-
-    return;
+    return (bytes / (1024 * 1024)).toFixed(2) + " MB";
   }
 
-  const img = new Image();
 
-  img.onload = function () {
+  function loadImage(file) {
+    return new Promise((resolve, reject) => {
+      const url = URL.createObjectURL(file);
 
-    const originalWidth = img.width;
-    const originalHeight = img.height;
+      const img = new Image();
 
-    let maxWidth;
-    let quality;
-    let description;
+      img.onload = () => {
+        URL.revokeObjectURL(url);
+        resolve(img);
+      };
 
-    const type = optimizationType.value;
+      img.onerror = reject;
+      img.src = url;
+    });
+  }
 
 
-    if (type === "web") {
+  function canvasToBlob(canvas, quality) {
+    return new Promise(resolve => {
+      canvas.toBlob(resolve, "image/jpeg", quality);
+    });
+  }
 
-      maxWidth = 1920;
-      quality = 0.80;
 
-      description =
-        "Ottimizzata per siti web e pagine online.";
+  /*
+   * OTTIMIZZATORE AUTOMATICO
+   */
 
+  const optimizerFile = document.getElementById("optimizerFile");
+  const optimizerPreset = document.getElementById("optimizerPreset");
+
+  optimizerFile.addEventListener("change", optimizeImage);
+  optimizerPreset.addEventListener("change", () => {
+    if (optimizerFile.files.length > 0) {
+      optimizeImage();
+    }
+  });
+
+
+  async function optimizeImage() {
+
+    const file = optimizerFile.files[0];
+
+    if (!file) {
+      return;
     }
 
-    else if (type === "social") {
+    const result = document.getElementById("optimizerResult");
+    const message = document.getElementById("optimizerMessage");
 
-      maxWidth = 1600;
-      quality = 0.82;
+    message.textContent = "Ottimizzazione in corso...";
 
-      description =
-        "Ottimizzata per social media e condivisione.";
+    try {
 
-    }
+      const img = await loadImage(file);
 
-    else {
+      let maxWidth;
+      let quality;
+      let presetName;
 
-      maxWidth = 1200;
-      quality = 0.70;
+      if (optimizerPreset.value === "web") {
 
-      description =
-        "Ottimizzata per email e allegati più leggeri.";
+        maxWidth = 1920;
+        quality = 0.80;
+        presetName = "Sito web";
 
-    }
+      } else if (optimizerPreset.value === "social") {
 
+        maxWidth = 1600;
+        quality = 0.82;
+        presetName = "Social media";
 
-    let newWidth = originalWidth;
-    let newHeight = originalHeight;
+      } else {
 
-
-    if (originalWidth > maxWidth) {
-
-      newWidth = maxWidth;
-
-      newHeight =
-        Math.round(
-          originalHeight *
-          (newWidth / originalWidth)
-        );
-
-    }
-
-
-    const canvas =
-      document.createElement("canvas");
-
-    const ctx =
-      canvas.getContext("2d");
-
-
-    canvas.width = newWidth;
-    canvas.height = newHeight;
-
-
-    ctx.drawImage(
-      img,
-      0,
-      0,
-      newWidth,
-      newHeight
-    );
-
-
-    canvas.toBlob(function (blob) {
-
-      const url =
-        URL.createObjectURL(blob);
-
-
-      const originalSize =
-        file.size;
-
-
-      const newSize =
-        blob.size;
-
-
-      const saved =
-        Math.max(
-          0,
-          Math.round(
-            (1 - newSize / originalSize) * 100
-          )
-        );
-
-
-      function formatSize(bytes) {
-
-        if (bytes < 1024) {
-
-          return bytes + " B";
-
-        }
-
-        if (bytes < 1024 * 1024) {
-
-          return (
-            bytes / 1024
-          ).toFixed(1) + " KB";
-
-        }
-
-        return (
-          bytes /
-          (1024 * 1024)
-        ).toFixed(2) + " MB";
+        maxWidth = 1200;
+        quality = 0.70;
+        presetName = "Email";
 
       }
 
 
-      optimizeResult.className =
-        "result success";
+      let newWidth = img.width;
+      let newHeight = img.height;
 
 
-      optimizeResult.innerHTML =
+      if (img.width > maxWidth) {
 
-        "<strong>⚡ Ottimizzazione completata!</strong><br>" +
+        newWidth = maxWidth;
+        newHeight = Math.round(img.height * (maxWidth / img.width));
 
-        description +
+      }
 
-        '<div class="stats">' +
 
-          '<div class="stat">' +
-            "<strong>" +
-            formatSize(originalSize) +
-            "</strong>" +
-            "Prima" +
-          "</div>" +
+      const canvas = document.createElement("canvas");
 
-          '<div class="stat">' +
-            "<strong>" +
-            formatSize(newSize) +
-            "</strong>" +
-            "Dopo" +
-          "</div>" +
+      canvas.width = newWidth;
+      canvas.height = newHeight;
 
-          '<div class="stat">' +
-            "<strong>" +
-            saved +
-            "%</strong>" +
-            "Risparmiato" +
-          "</div>" +
-
-        "</div>" +
-
-        "<br>" +
-
-        "Dimensioni: " +
-        newWidth +
-        " × " +
-        newHeight +
-        " px" +
-
-        "<br><br>" +
-
-        '<a href="' +
-        url +
-        '" download="optimized-image.jpg">' +
-        "⬇️ Scarica immagine ottimizzata" +
-        "</a>";
-
-    }, "image/jpeg", quality);
-
-  };
-
-
-  img.onerror = function () {
-
-    optimizeResult.className =
-      "result error";
-
-    optimizeResult.textContent =
-      "Non è stato possibile leggere questa immagine.";
-
-  };
-
-
-  img.src =
-    URL.createObjectURL(file);
-
-});
-
-
-/* =====================================================
-   RIDIMENSIONA
-   ===================================================== */
-
-const resizeInput =
-  document.getElementById("resizeInput");
-
-const widthInput =
-  document.getElementById("widthInput");
-
-const resizeButton =
-  document.getElementById("resizeButton");
-
-const resizeResult =
-  document.getElementById("resizeResult");
-
-
-resizeButton.addEventListener("click", function () {
-
-  const file =
-    resizeInput.files[0];
-
-  const newWidth =
-    parseInt(widthInput.value);
-
-
-  if (!file) {
-
-    resizeResult.className =
-      "result error";
-
-    resizeResult.textContent =
-      "Seleziona prima un'immagine.";
-
-    return;
-  }
-
-
-  if (!newWidth || newWidth < 1) {
-
-    resizeResult.className =
-      "result error";
-
-    resizeResult.textContent =
-      "Inserisci una larghezza valida.";
-
-    return;
-  }
-
-
-  const img =
-    new Image();
-
-
-  img.onload = function () {
-
-    const ratio =
-      img.height / img.width;
-
-    const newHeight =
-      Math.round(newWidth * ratio);
-
-
-    const canvas =
-      document.createElement("canvas");
-
-    const ctx =
-      canvas.getContext("2d");
-
-
-    canvas.width =
-      newWidth;
-
-    canvas.height =
-      newHeight;
-
-
-    ctx.drawImage(
-      img,
-      0,
-      0,
-      newWidth,
-      newHeight
-    );
-
-
-    canvas.toBlob(function (blob) {
-
-      const url =
-        URL.createObjectURL(blob);
-
-
-      resizeResult.className =
-        "result success";
-
-
-      resizeResult.innerHTML =
-
-        "<strong>Immagine pronta!</strong><br>" +
-
-        newWidth +
-        " × " +
-        newHeight +
-        " px<br><br>" +
-
-        '<a href="' +
-        url +
-        '" download="resized-image.jpg">' +
-        "⬇️ Scarica immagine" +
-        "</a>";
-
-    }, "image/jpeg", 0.92);
-
-  };
-
-
-  img.src =
-    URL.createObjectURL(file);
-
-});
-
-
-/* =====================================================
-   COMPRIMI
-   ===================================================== */
-
-const compressInput =
-  document.getElementById("compressInput");
-
-const qualityInput =
-  document.getElementById("qualityInput");
-
-const qualityValue =
-  document.getElementById("qualityValue");
-
-const compressButton =
-  document.getElementById("compressButton");
-
-const compressResult =
-  document.getElementById("compressResult");
-
-
-qualityInput.addEventListener(
-  "input",
-  function () {
-
-    qualityValue.textContent =
-      qualityInput.value;
-
-  }
-);
-
-
-compressButton.addEventListener(
-  "click",
-  function () {
-
-    const file =
-      compressInput.files[0];
-
-
-    if (!file) {
-
-      compressResult.className =
-        "result error";
-
-      compressResult.textContent =
-        "Seleziona prima un'immagine.";
-
-      return;
-    }
-
-
-    const img =
-      new Image();
-
-
-    img.onload = function () {
-
-      const canvas =
-        document.createElement("canvas");
-
-      const ctx =
-        canvas.getContext("2d");
-
-
-      canvas.width =
-        img.width;
-
-      canvas.height =
-        img.height;
-
+      const ctx = canvas.getContext("2d");
 
       ctx.drawImage(
         img,
         0,
-        0
+        0,
+        newWidth,
+        newHeight
       );
 
 
-      const quality =
-        parseInt(
-          qualityInput.value
-        ) / 100;
+      const blob = await canvasToBlob(canvas, quality);
+
+      if (!blob) {
+        throw new Error("Impossibile creare l'immagine.");
+      }
 
 
-      canvas.toBlob(function (blob) {
-
-        const url =
-          URL.createObjectURL(blob);
-
-
-        const oldSize =
-          file.size / 1024;
-
-        const newSize =
-          blob.size / 1024;
+      const saved = Math.max(
+        0,
+        ((file.size - blob.size) / file.size) * 100
+      );
 
 
-        const reduction =
-          Math.max(
-            0,
-            Math.round(
-              (1 - blob.size / file.size) *
-              100
-            )
-          );
+      const beforeUrl = URL.createObjectURL(file);
+      const afterUrl = URL.createObjectURL(blob);
 
 
-        compressResult.className =
-          "result success";
+      document.getElementById("originalSize").textContent =
+        formatBytes(file.size);
+
+      document.getElementById("optimizedSize").textContent =
+        formatBytes(blob.size);
+
+      document.getElementById("savedPercent").textContent =
+        saved.toFixed(0) + "%";
+
+      document.getElementById("dimensions").textContent =
+        newWidth + " × " + newHeight;
 
 
-        compressResult.innerHTML =
-
-          "<strong>Compressione completata!</strong><br>" +
-
-          "Peso originale: " +
-          oldSize.toFixed(1) +
-          " KB<br>" +
-
-          "Nuovo peso: " +
-          newSize.toFixed(1) +
-          " KB<br>" +
-
-          "Riduzione: " +
-          reduction +
-          "%<br><br>" +
-
-          '<a href="' +
-          url +
-          '" download="compressed-image.jpg">' +
-          "⬇️ Scarica immagine" +
-          "</a>";
-
-      }, "image/jpeg", quality);
-
-    };
+      document.getElementById("savingBox").textContent =
+        saved > 0
+          ? "🎉 Hai ridotto il peso dell'immagine del " + saved.toFixed(0) + "%."
+          : "L'immagine era già molto ottimizzata.";
 
 
-    img.src =
-      URL.createObjectURL(file);
+      document.getElementById("qualityInfo").textContent =
+        "Preset: " + presetName +
+        " • Qualità JPEG: " + Math.round(quality * 100) + "%" +
+        " • Larghezza massima: " + maxWidth + " px";
 
+
+      document.getElementById("beforeImage").src = beforeUrl;
+      document.getElementById("afterImage").src = afterUrl;
+
+
+      const download = document.getElementById("downloadOptimized");
+
+      download.href = afterUrl;
+      download.download = "immagine-ottimizzata.jpg";
+
+
+      result.style.display = "block";
+
+      message.textContent =
+        "Ottimizzazione completata.";
+
+    } catch (error) {
+
+      console.error(error);
+
+      message.textContent =
+        "Si è verificato un errore durante l'ottimizzazione.";
+
+    }
   }
-);
 
 
-/* =====================================================
-   CONVERTI
-   ===================================================== */
+  /*
+   * RIDIMENSIONAMENTO
+   */
 
-const convertInput =
-  document.getElementById("convertInput");
+  document.getElementById("resizeButton").addEventListener("click", async () => {
 
-const formatInput =
-  document.getElementById("formatInput");
+    const file = document.getElementById("resizeFile").files[0];
+    const width = parseInt(document.getElementById("resizeWidth").value);
+    const result = document.getElementById("resizeResult");
 
-const convertButton =
-  document.getElementById("convertButton");
-
-const convertResult =
-  document.getElementById("convertResult");
-
-
-convertButton.addEventListener(
-  "click",
-  function () {
-
-    const file =
-      convertInput.files[0];
-
-
-    if (!file) {
-
-      convertResult.className =
-        "result error";
-
-      convertResult.textContent =
-        "Seleziona prima un'immagine.";
-
+    if (!file || !width || width <= 0) {
+      result.textContent = "Seleziona un'immagine e inserisci una larghezza valida.";
+      result.style.display = "block";
       return;
     }
 
+    try {
 
-    const img =
-      new Image();
+      const img = await loadImage(file);
 
+      const height = Math.round(
+        img.height * (width / img.width)
+      );
 
-    img.onload = function () {
+      const canvas = document.createElement("canvas");
 
-      const canvas =
-        document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
 
-      const ctx =
-        canvas.getContext("2d");
-
-
-      canvas.width =
-        img.width;
-
-      canvas.height =
-        img.height;
-
-
-      ctx.drawImage(
+      canvas.getContext("2d").drawImage(
         img,
         0,
-        0
+        0,
+        width,
+        height
       );
 
+      canvas.toBlob(blob => {
 
-      const format =
-        formatInput.value;
+        const url = URL.createObjectURL(blob);
 
-
-      canvas.toBlob(function (blob) {
-
-        const url =
-          URL.createObjectURL(blob);
-
-
-        let extension =
-          "jpg";
-
-
-        if (format === "image/png") {
-
-          extension =
-            "png";
-
-        }
-
-
-        if (format === "image/webp") {
-
-          extension =
-            "webp";
-
-        }
-
-
-        convertResult.className =
-          "result success";
-
-
-        convertResult.innerHTML =
-
-          "<strong>Conversione completata!</strong><br>" +
-
-          "Formato: " +
-          extension.toUpperCase() +
-          "<br><br>" +
-
-          '<a href="' +
-          url +
-          '" download="converted-image.' +
-          extension +
-          '">' +
-          "⬇️ Scarica immagine" +
-          "</a>";
-
-      }, format, 0.92);
-
-    };
-
-
-    img.src =
-      URL.createObjectURL(file);
-
-  }
-);
-
-
-/* =====================================================
-   ANALIZZA
-   ===================================================== */
-
-const analyzeInput =
-  document.getElementById("analyzeInput");
-
-const analyzeButton =
-  document.getElementById("analyzeButton");
-
-const analyzeResult =
-  document.getElementById("analyzeResult");
-
-
-analyzeButton.addEventListener(
-  "click",
-  function () {
-
-    const file =
-      analyzeInput.files[0];
-
-
-    if (!file) {
-
-      analyzeResult.className =
-        "result error";
-
-      analyzeResult.textContent =
-        "Seleziona prima un'immagine.";
-
-      return;
-    }
-
-
-    const img =
-      new Image();
-
-
-    img.onload = function () {
-
-      const width =
-        img.width;
-
-      const height =
-        img.height;
-
-
-      const ratio =
-        width / height;
-
-
-      const ratioText =
-        ratio.toFixed(2) + ":1";
-
-
-      let use = "";
-
-
-      if (ratio > 1.7) {
-
-        use =
-          "Formato panoramico — utile per banner e copertine.";
-
-      }
-
-      else if (ratio > 1.2) {
-
-        use =
-          "Formato orizzontale — adatto a molte immagini web.";
-
-      }
-
-      else if (ratio > 0.9) {
-
-        use =
-          "Formato quasi quadrato — utile per profili e social.";
-
-      }
-
-      else if (ratio > 0.6) {
-
-        use =
-          "Formato verticale — utile per contenuti mobile.";
-
-      }
-
-      else {
-
-        use =
-          "Formato molto verticale — utile per contenuti a sviluppo verticale.";
-
-      }
-
-
-      const megapixels =
-        (
-          width *
-          height /
-          1000000
-        ).toFixed(2);
-
-
-      let fileSize;
-
-
-      if (file.size < 1024) {
-
-        fileSize =
-          file.size + " B";
-
-      }
-
-      else if (
-        file.size <
-        1024 * 1024
-      ) {
-
-        fileSize =
-          (
-            file.size / 1024
-          ).toFixed(1) +
-          " KB";
-
-      }
-
-      else {
-
-        fileSize =
-          (
-            file.size /
-            (1024 * 1024)
-          ).toFixed(2) +
-          " MB";
-
-      }
-
-
-      let recommendation = "";
-
-
-      if (
-        file.size >
-        3 * 1024 * 1024
-      ) {
-
-        recommendation =
-          "💡 Questa immagine è piuttosto pesante. Prova lo strumento Ottimizza automaticamente.";
-
-      }
-
-      else if (
-        width > 2500 ||
-        height > 2500
-      ) {
-
-        recommendation =
-          "💡 L'immagine ha una risoluzione elevata. Potresti ottimizzarla per il web.";
-
-      }
-
-      else {
-
-        recommendation =
-          "✅ Le dimensioni sembrano adatte a un normale utilizzo web.";
-
-      }
-
-
-      analyzeResult.className =
-        "result success";
-
-
-      analyzeResult.innerHTML =
-
-        "<strong>Analisi completata</strong>" +
-
-        '<div class="analysis-grid">' +
-
-          '<div class="analysis-item">' +
-          "<strong>Nome:</strong><br>" +
-          file.name +
-          "</div>" +
-
-          '<div class="analysis-item">' +
-          "<strong>Formato:</strong><br>" +
-          (file.type || "Non rilevato") +
-          "</div>" +
-
-          '<div class="analysis-item">' +
-          "<strong>Dimensioni:</strong><br>" +
+        result.innerHTML =
+          "Nuove dimensioni: <strong>" +
           width +
           " × " +
           height +
-          " px" +
-          "</div>" +
+          " px</strong><br><br>" +
+          "<a class='download' href='" +
+          url +
+          "' download='immagine-ridimensionata.jpg'>" +
+          "⬇️ Scarica immagine" +
+          "</a>";
 
-          '<div class="analysis-item">' +
-          "<strong>Peso:</strong><br>" +
-          fileSize +
-          "</div>" +
+        result.style.display = "block";
 
-          '<div class="analysis-item">' +
-          "<strong>Megapixel:</strong><br>" +
-          megapixels +
-          " MP" +
-          "</div>" +
+      }, "image/jpeg", 0.90);
 
-          '<div class="analysis-item">' +
-          "<strong>Rapporto:</strong><br>" +
-          ratioText +
-          "</div>" +
+    } catch (error) {
 
-        "</div>" +
+      result.textContent = "Errore durante il ridimensionamento.";
+      result.style.display = "block";
 
-        '<div class="recommendation">' +
+    }
 
-        "<strong>💡 Utilizzo:</strong><br>" +
+  });
 
-        use +
 
+  /*
+   * COMPRESSIONE
+   */
+
+  document.getElementById("compressButton").addEventListener("click", async () => {
+
+    const file = document.getElementById("compressFile").files[0];
+    const quality = parseFloat(
+      document.getElementById("compressQuality").value
+    );
+
+    const result = document.getElementById("compressResult");
+
+    if (!file) {
+      result.textContent = "Seleziona un'immagine.";
+      result.style.display = "block";
+      return;
+    }
+
+    try {
+
+      const img = await loadImage(file);
+
+      const canvas = document.createElement("canvas");
+
+      canvas.width = img.width;
+      canvas.height = img.height;
+
+      canvas.getContext("2d").drawImage(img, 0, 0);
+
+      canvas.toBlob(blob => {
+
+        const url = URL.createObjectURL(blob);
+
+        const saved = Math.max(
+          0,
+          ((file.size - blob.size) / file.size) * 100
+        );
+
+        result.innerHTML =
+          "Peso originale: <strong>" +
+          formatBytes(file.size) +
+          "</strong><br>" +
+          "Peso compresso: <strong>" +
+          formatBytes(blob.size) +
+          "</strong><br>" +
+          "Risparmio: <strong>" +
+          saved.toFixed(0) +
+          "%</strong><br><br>" +
+          "<a class='download' href='" +
+          url +
+          "' download='immagine-compressa.jpg'>" +
+          "⬇️ Scarica immagine compressa" +
+          "</a>";
+
+        result.style.display = "block";
+
+      }, "image/jpeg", quality);
+
+    } catch (error) {
+
+      result.textContent = "Errore durante la compressione.";
+      result.style.display = "block";
+
+    }
+
+  });
+
+
+  /*
+   * CONVERSIONE
+   */
+
+  document.getElementById("convertButton").addEventListener("click", async () => {
+
+    const file = document.getElementById("convertFile").files[0];
+
+    const format =
+      document.getElementById("convertFormat").value;
+
+    const result =
+      document.getElementById("convertResult");
+
+    if (!file) {
+
+      result.textContent = "Seleziona un'immagine.";
+      result.style.display = "block";
+
+      return;
+    }
+
+    try {
+
+      const img = await loadImage(file);
+
+      const canvas = document.createElement("canvas");
+
+      canvas.width = img.width;
+      canvas.height = img.height;
+
+      canvas.getContext("2d").drawImage(img, 0, 0);
+
+      canvas.toBlob(blob => {
+
+        const url = URL.createObjectURL(blob);
+
+        let extension = "jpg";
+
+        if (format === "image/png") {
+          extension = "png";
+        }
+
+        if (format === "image/webp") {
+          extension = "webp";
+        }
+
+        result.innerHTML =
+          "Conversione completata.<br><br>" +
+          "<a class='download' href='" +
+          url +
+          "' download='immagine-convertita." +
+          extension +
+          "'>" +
+          "⬇️ Scarica immagine" +
+          "</a>";
+
+        result.style.display = "block";
+
+      }, format, 0.90);
+
+    } catch (error) {
+
+      result.textContent = "Errore durante la conversione.";
+      result.style.display = "block";
+
+    }
+
+  });
+
+
+  /*
+   * ANALISI
+   */
+
+  document.getElementById("analyzeFile").addEventListener("change", async event => {
+
+    const file = event.target.files[0];
+
+    const result =
+      document.getElementById("analyzeResult");
+
+    if (!file) {
+      return;
+    }
+
+    try {
+
+      const img = await loadImage(file);
+
+      result.innerHTML =
+        "<strong>Nome:</strong> " +
+        file.name +
         "<br><br>" +
 
-        recommendation +
+        "<strong>Formato:</strong> " +
+        file.type +
+        "<br><br>" +
 
-        "</div>";
+        "<strong>Peso:</strong> " +
+        formatBytes(file.size) +
+        "<br><br>" +
 
-    };
+        "<strong>Dimensioni:</strong> " +
+        img.width +
+        " × " +
+        img.height +
+        " px";
 
+      result.style.display = "block";
 
-    img.onerror = function () {
+    } catch (error) {
 
-      analyzeResult.className =
-        "result error";
+      result.textContent = "Impossibile analizzare l'immagine.";
+      result.style.display = "block";
 
-      analyzeResult.textContent =
-        "Non è stato possibile leggere questa immagine.";
+    }
 
-    };
-
-
-    img.src =
-      URL.createObjectURL(file);
-
-  }
-);
+  });
 
 </script>
 
