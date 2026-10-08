@@ -132,7 +132,7 @@
 
     .stats {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       gap: 12px;
       margin-top: 15px;
     }
@@ -155,8 +155,6 @@
       color: #64748b;
       font-size: 13px;
     }
-
-    /* PRIMA / DOPO */
 
     .comparison {
       display: flex;
@@ -221,6 +219,12 @@
       font-size: 14px;
     }
 
+    @media (max-width: 900px) {
+      .stats {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
     @media (max-width: 700px) {
 
       header h1 {
@@ -258,19 +262,28 @@
 <body>
 
 <header>
+
   <h1>Image Tools</h1>
-  <p>Strumenti gratuiti e semplici per modificare le tue immagini online.</p>
+
+  <p>
+    Strumenti gratuiti e semplici per modificare le tue immagini online.
+  </p>
 
   <div class="chips">
+
     <div class="chip">🖼️ Ridimensiona</div>
     <div class="chip">📦 Comprimi</div>
     <div class="chip">🔄 Converti</div>
     <div class="chip">🔍 Analizza</div>
     <div class="chip">⚡ Ottimizza</div>
+
   </div>
+
 </header>
 
+
 <main>
+
 
   <!-- OTTIMIZZATORE -->
 
@@ -309,43 +322,94 @@
 
     </div>
 
+
     <div
       id="optimizerMessage"
       class="message">
     </div>
 
+
     <div
       id="optimizerResult"
       class="result">
 
+
       <div class="stats">
 
-        <div class="stat">
-          <strong id="originalSize">-</strong>
-          <span>Peso originale</span>
-        </div>
 
         <div class="stat">
-          <strong id="optimizedSize">-</strong>
-          <span>Peso ottimizzato</span>
+
+          <strong id="originalSize">
+            -
+          </strong>
+
+          <span>
+            Peso originale
+          </span>
+
         </div>
 
-        <div class="stat">
-          <strong id="savedPercent">-</strong>
-          <span>Spazio risparmiato</span>
-        </div>
 
         <div class="stat">
-          <strong id="dimensions">-</strong>
-          <span>Dimensioni finali</span>
+
+          <strong id="optimizedSize">
+            -
+          </strong>
+
+          <span>
+            Peso ottimizzato
+          </span>
+
         </div>
+
+
+        <div class="stat">
+
+          <strong id="savedPercent">
+            -
+          </strong>
+
+          <span>
+            Risparmio %
+          </span>
+
+        </div>
+
+
+        <div class="stat">
+
+          <strong id="savedSize">
+            -
+          </strong>
+
+          <span>
+            Spazio risparmiato
+          </span>
+
+        </div>
+
+
+        <div class="stat">
+
+          <strong id="dimensions">
+            -
+          </strong>
+
+          <span>
+            Dimensioni finali
+          </span>
+
+        </div>
+
 
       </div>
+
 
       <div
         id="savingBox"
         class="saving">
       </div>
+
 
       <div
         id="qualityInfo"
@@ -356,6 +420,7 @@
       <!-- PRIMA / DOPO -->
 
       <div class="comparison">
+
 
         <div class="preview">
 
@@ -384,6 +449,7 @@
 
         </div>
 
+
       </div>
 
 
@@ -400,6 +466,7 @@
         </a>
 
       </div>
+
 
     </div>
 
@@ -421,12 +488,14 @@
       <input
         type="file"
         id="resizeFile"
-        accept="image/*">
+        accept="image/*"
+      >
 
       <input
         type="number"
         id="resizeWidth"
-        placeholder="Larghezza px">
+        placeholder="Larghezza px"
+      >
 
       <button id="resizeButton">
         Ridimensiona
@@ -457,7 +526,8 @@
       <input
         type="file"
         id="compressFile"
-        accept="image/*">
+        accept="image/*"
+      >
 
       <select id="compressQuality">
 
@@ -506,7 +576,8 @@
       <input
         type="file"
         id="convertFile"
-        accept="image/*">
+        accept="image/*"
+      >
 
       <select id="convertFormat">
 
@@ -553,7 +624,8 @@
       <input
         type="file"
         id="analyzeFile"
-        accept="image/*">
+        accept="image/*"
+      >
 
     </div>
 
@@ -564,7 +636,9 @@
 
   </section>
 
+
 </main>
+
 
 <footer>
   Image Tools — strumenti gratuiti per immagini online
@@ -572,6 +646,7 @@
 
 
 <script>
+
 
   function formatBytes(bytes) {
 
@@ -584,6 +659,7 @@
     }
 
     return (bytes / (1024 * 1024)).toFixed(2) + " MB";
+
   }
 
 
@@ -591,9 +667,11 @@
 
     return new Promise((resolve, reject) => {
 
-      const url = URL.createObjectURL(file);
+      const url =
+        URL.createObjectURL(file);
 
-      const img = new Image();
+      const img =
+        new Image();
 
       img.onload = () => {
 
@@ -628,14 +706,19 @@
 
 
   /*
-   * OTTIMIZZATORE
+   * OTTIMIZZATORE AUTOMATICO
    */
 
   const optimizerFile =
-    document.getElementById("optimizerFile");
+    document.getElementById(
+      "optimizerFile"
+    );
+
 
   const optimizerPreset =
-    document.getElementById("optimizerPreset");
+    document.getElementById(
+      "optimizerPreset"
+    );
 
 
   optimizerFile.addEventListener(
@@ -648,8 +731,12 @@
     "change",
     () => {
 
-      if (optimizerFile.files.length > 0) {
+      if (
+        optimizerFile.files.length > 0
+      ) {
+
         optimizeImage();
+
       }
 
     }
@@ -661,23 +748,30 @@
     const file =
       optimizerFile.files[0];
 
+
     if (!file) {
       return;
     }
 
 
     const result =
-      document.getElementById("optimizerResult");
+      document.getElementById(
+        "optimizerResult"
+      );
+
 
     const message =
-      document.getElementById("optimizerMessage");
+      document.getElementById(
+        "optimizerMessage"
+      );
 
 
     message.textContent =
       "⏳ Ottimizzazione in corso...";
 
 
-    result.style.display = "none";
+    result.style.display =
+      "none";
 
 
     try {
@@ -691,7 +785,9 @@
       let presetName;
 
 
-      if (optimizerPreset.value === "web") {
+      if (
+        optimizerPreset.value === "web"
+      ) {
 
         maxWidth = 1920;
         quality = 0.80;
@@ -699,7 +795,9 @@
 
       }
 
-      else if (optimizerPreset.value === "social") {
+      else if (
+        optimizerPreset.value === "social"
+      ) {
 
         maxWidth = 1600;
         quality = 0.82;
@@ -719,14 +817,18 @@
       let newWidth =
         img.width;
 
+
       let newHeight =
         img.height;
 
 
-      if (img.width > maxWidth) {
+      if (
+        img.width > maxWidth
+      ) {
 
         newWidth =
           maxWidth;
+
 
         newHeight =
           Math.round(
@@ -738,18 +840,23 @@
 
 
       const canvas =
-        document.createElement("canvas");
+        document.createElement(
+          "canvas"
+        );
 
 
       canvas.width =
         newWidth;
+
 
       canvas.height =
         newHeight;
 
 
       const ctx =
-        canvas.getContext("2d");
+        canvas.getContext(
+          "2d"
+        );
 
 
       ctx.drawImage(
@@ -769,43 +876,80 @@
 
 
       if (!blob) {
+
         throw new Error(
           "Impossibile creare il file."
         );
+
       }
+
+
+      /*
+       * CALCOLO DEL RISPARMIO
+       */
+
+      const savedBytes =
+        Math.max(
+          0,
+          file.size - blob.size
+        );
 
 
       const saved =
         Math.max(
           0,
-          ((file.size - blob.size) /
-          file.size) * 100
+          (
+            savedBytes /
+            file.size
+          ) * 100
         );
 
 
       const beforeUrl =
-        URL.createObjectURL(file);
+        URL.createObjectURL(
+          file
+        );
+
 
       const afterUrl =
-        URL.createObjectURL(blob);
+        URL.createObjectURL(
+          blob
+        );
 
+
+      /*
+       * DATI
+       */
 
       document.getElementById(
         "originalSize"
       ).textContent =
-        formatBytes(file.size);
+        formatBytes(
+          file.size
+        );
 
 
       document.getElementById(
         "optimizedSize"
       ).textContent =
-        formatBytes(blob.size);
+        formatBytes(
+          blob.size
+        );
 
 
       document.getElementById(
         "savedPercent"
       ).textContent =
-        saved.toFixed(0) + "%";
+        saved.toFixed(0) +
+        "%";
+
+
+      document.getElementById(
+        "savedSize"
+      ).textContent =
+        formatBytes(
+          savedBytes
+        );
 
 
       document.getElementById(
@@ -816,30 +960,52 @@
         newHeight;
 
 
+      /*
+       * MESSAGGIO RISPARMIO
+       */
+
       document.getElementById(
         "savingBox"
       ).textContent =
-        saved > 0
-        ? "🎉 Hai ridotto il peso dell'immagine del " +
-          saved.toFixed(0) +
-          "%."
-        : "ℹ️ L'immagine era già molto ottimizzata.";
 
+        saved > 0
+
+        ?
+
+        "🎉 Hai risparmiato " +
+        formatBytes(savedBytes) +
+        " (" +
+        saved.toFixed(0) +
+        "%) di spazio."
+
+        :
+
+        "ℹ️ L'immagine era già molto ottimizzata.";
+
+
+      /*
+       * INFORMAZIONI PRESET
+       */
 
       document.getElementById(
         "qualityInfo"
       ).textContent =
+
         "Preset: " +
         presetName +
+
         " • Qualità: " +
-        Math.round(quality * 100) +
+        Math.round(
+          quality * 100
+        ) +
+
         "% • Larghezza massima: " +
         maxWidth +
         " px";
 
 
       /*
-       * QUI MOSTRIAMO LE DUE IMMAGINI
+       * PRIMA
        */
 
       const before =
@@ -847,25 +1013,36 @@
           "beforeImage"
         );
 
+
+      before.src =
+        beforeUrl;
+
+
+      before.style.display =
+        "block";
+
+
+      /*
+       * DOPO
+       */
+
       const after =
         document.getElementById(
           "afterImage"
         );
 
 
-      before.src =
-        beforeUrl;
-
       after.src =
         afterUrl;
 
 
-      before.style.display =
-        "block";
-
       after.style.display =
         "block";
 
+
+      /*
+       * DOWNLOAD
+       */
 
       const download =
         document.getElementById(
@@ -876,9 +1053,14 @@
       download.href =
         afterUrl;
 
+
       download.download =
         "immagine-ottimizzata.jpg";
 
+
+      /*
+       * MOSTRA RISULTATO
+       */
 
       result.style.display =
         "block";
@@ -940,8 +1122,10 @@
         result.textContent =
           "Seleziona un'immagine e inserisci una larghezza valida.";
 
+
         result.style.display =
           "block";
+
 
         return;
 
@@ -951,7 +1135,9 @@
       try {
 
         const img =
-          await loadImage(file);
+          await loadImage(
+            file
+          );
 
 
         const height =
@@ -969,6 +1155,7 @@
 
         canvas.width =
           width;
+
 
         canvas.height =
           height;
@@ -989,15 +1176,22 @@
           blob => {
 
             const url =
-              URL.createObjectURL(blob);
+              URL.createObjectURL(
+                blob
+              );
 
 
             result.innerHTML =
-              "Nuove dimensioni: <strong>" +
+
+              "Nuove dimensioni: " +
+
+              "<strong>" +
               width +
               " × " +
               height +
-              " px</strong><br><br>" +
+              " px</strong>" +
+
+              "<br><br>" +
 
               "<a class='download' href='" +
               url +
@@ -1022,6 +1216,7 @@
 
         result.textContent =
           "Errore durante il ridimensionamento.";
+
 
         result.style.display =
           "block";
@@ -1067,8 +1262,10 @@
         result.textContent =
           "Seleziona un'immagine.";
 
+
         result.style.display =
           "block";
+
 
         return;
 
@@ -1078,7 +1275,9 @@
       try {
 
         const img =
-          await loadImage(file);
+          await loadImage(
+            file
+          );
 
 
         const canvas =
@@ -1089,6 +1288,7 @@
 
         canvas.width =
           img.width;
+
 
         canvas.height =
           img.height;
@@ -1107,29 +1307,47 @@
           blob => {
 
             const url =
-              URL.createObjectURL(blob);
+              URL.createObjectURL(
+                blob
+              );
 
 
             const saved =
               Math.max(
                 0,
-                ((file.size - blob.size) /
-                file.size) * 100
+                (
+                  (file.size - blob.size) /
+                  file.size
+                ) * 100
               );
 
 
             result.innerHTML =
-              "Peso originale: <strong>" +
+
+              "Peso originale: " +
+
+              "<strong>" +
               formatBytes(file.size) +
-              "</strong><br>" +
+              "</strong>" +
 
-              "Peso compresso: <strong>" +
+              "<br>" +
+
+              "Peso compresso: " +
+
+              "<strong>" +
               formatBytes(blob.size) +
-              "</strong><br>" +
+              "</strong>" +
 
-              "Risparmio: <strong>" +
+              "<br>" +
+
+              "Risparmio: " +
+
+              "<strong>" +
               saved.toFixed(0) +
-              "%</strong><br><br>" +
+              "%" +
+              "</strong>" +
+
+              "<br><br>" +
 
               "<a class='download' href='" +
               url +
@@ -1154,6 +1372,7 @@
 
         result.textContent =
           "Errore durante la compressione.";
+
 
         result.style.display =
           "block";
@@ -1197,8 +1416,10 @@
         result.textContent =
           "Seleziona un'immagine.";
 
+
         result.style.display =
           "block";
+
 
         return;
 
@@ -1208,7 +1429,9 @@
       try {
 
         const img =
-          await loadImage(file);
+          await loadImage(
+            file
+          );
 
 
         const canvas =
@@ -1219,6 +1442,7 @@
 
         canvas.width =
           img.width;
+
 
         canvas.height =
           img.height;
@@ -1237,7 +1461,9 @@
           blob => {
 
             const url =
-              URL.createObjectURL(blob);
+              URL.createObjectURL(
+                blob
+              );
 
 
             let extension =
@@ -1248,8 +1474,10 @@
               format ===
               "image/png"
             ) {
+
               extension =
                 "png";
+
             }
 
 
@@ -1257,13 +1485,18 @@
               format ===
               "image/webp"
             ) {
+
               extension =
                 "webp";
+
             }
 
 
             result.innerHTML =
-              "Conversione completata.<br><br>" +
+
+              "Conversione completata." +
+
+              "<br><br>" +
 
               "<a class='download' href='" +
               url +
@@ -1290,6 +1523,7 @@
 
         result.textContent =
           "Errore durante la conversione.";
+
 
         result.style.display =
           "block";
@@ -1328,7 +1562,9 @@
       try {
 
         const img =
-          await loadImage(file);
+          await loadImage(
+            file
+          );
 
 
         result.innerHTML =
@@ -1364,6 +1600,7 @@
 
         result.textContent =
           "Impossibile analizzare l'immagine.";
+
 
         result.style.display =
           "block";
