@@ -33,7 +33,23 @@ header p {
   color: #667085;
   margin: 0;
 }
+.hero-tools {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 25px;
+}
 
+.hero-tools span {
+  background: white;
+  border: 1px solid #e5e7eb;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: bold;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
 .tool {
   max-width: 720px;
   margin: 25px auto;
@@ -111,11 +127,19 @@ a {
 
 <body>
 
-  <h1>Strumenti gratuiti per immagini</h1>
+  <header>
+  <h1>Image Tools</h1>
 
   <p>
-    Ridimensiona le tue immagini direttamente nel browser.
+    Strumenti gratuiti e semplici per modificare le tue immagini online.
   </p>
+
+  <div class="hero-tools">
+    <span>🖼️ Ridimensiona</span>
+    <span>📦 Comprimi</span>
+    <span>🔄 Converti</span>
+  </div>
+</header>
 
   <div class="tool">
 
