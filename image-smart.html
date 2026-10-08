@@ -8,7 +8,7 @@
 
   <meta
     name="description"
-    content="Ottimizza automaticamente le immagini online. Smart Image Fix sceglie dimensioni, formato e compressione in base all'utilizzo."
+    content="Ottimizza automaticamente le immagini online. Smart Image Fix analizza dimensioni, formato e peso e crea una versione ottimizzata."
   >
 
   <style>
@@ -113,26 +113,15 @@
       background: white;
     }
 
-    button {
-      width: 100%;
+    .status {
+      display: none;
+      margin-top: 18px;
       padding: 14px;
-      margin-top: 22px;
-      border: 0;
+      background: #eff6ff;
+      color: #1d4ed8;
       border-radius: 10px;
-      background: #2563eb;
-      color: white;
-      font-size: 16px;
+      text-align: center;
       font-weight: bold;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #1d4ed8;
-    }
-
-    button:disabled {
-      background: #94a3b8;
-      cursor: not-allowed;
     }
 
     .error {
@@ -293,12 +282,11 @@
 <main>
 
   <section class="hero">
-    <h2>Lascia scegliere all'immagine le impostazioni giuste</h2>
+    <h2>Carica una foto e lascia fare tutto a Smart Image Fix</h2>
 
     <p>
-      Carica una foto e Smart Image Fix analizza dimensioni,
-      formato e peso del file per scegliere automaticamente
-      una configurazione adatta all'utilizzo selezionato.
+      Seleziona un'immagine: lo strumento la analizzerà
+      automaticamente e creerà una versione ottimizzata.
     </p>
   </section>
 
@@ -307,11 +295,11 @@
     <div class="upload">
 
       <p>
-        <strong>Seleziona un'immagine</strong>
+        <strong>📷 Seleziona un'immagine</strong>
       </p>
 
       <p>
-        L'elaborazione avviene direttamente nel browser.
+        L'ottimizzazione parte automaticamente.
       </p>
 
       <input
@@ -323,7 +311,7 @@
     </div>
 
     <label for="useSelect">
-      Come vuoi utilizzare l'immagine?
+      Utilizzo dell'immagine
     </label>
 
     <select id="useSelect">
@@ -333,9 +321,9 @@
       <option value="general">⭐ Uso generale</option>
     </select>
 
-    <button id="optimizeBtn" disabled>
-      ⚡ Analizza e ottimizza automaticamente
-    </button>
+    <div id="status" class="status">
+      ⚡ Analisi e ottimizzazione in corso...
+    </div>
 
     <div id="error" class="error"></div>
 
@@ -343,7 +331,7 @@
 
       <div class="recommendation">
 
-        <h3>🎯 Impostazioni consigliate</h3>
+        <h3>🎯 Ottimizzazione completata</h3>
 
         <p id="recommendationText"></p>
 
@@ -414,30 +402,30 @@
     <h2>Come funziona Smart Image Fix?</h2>
 
     <p>
-      Lo strumento analizza automaticamente l'immagine e applica
-      impostazioni differenti in base all'utilizzo scelto.
+      Smart Image Fix analizza automaticamente l'immagine
+      selezionata e sceglie dimensioni e compressione in base
+      all'utilizzo indicato.
     </p>
 
     <ul>
-      <li><strong>Sito web:</strong> punta a un buon equilibrio tra qualità e peso.</li>
-      <li><strong>Social media:</strong> mantiene dimensioni adatte alla condivisione.</li>
-      <li><strong>Email:</strong> privilegia file più leggeri.</li>
-      <li><strong>Uso generale:</strong> mantiene una qualità più elevata.</li>
+      <li><strong>Sito web:</strong> equilibrio tra qualità e peso.</li>
+      <li><strong>Social media:</strong> dimensioni adatte alla condivisione.</li>
+      <li><strong>Email:</strong> maggiore riduzione del peso.</li>
+      <li><strong>Uso generale:</strong> maggiore attenzione alla qualità.</li>
     </ul>
 
-    <h2>Perché utilizzare l'ottimizzazione automatica?</h2>
+    <h2>Prima e dopo</h2>
 
     <p>
-      Non è necessario conoscere il livello di compressione ideale.
-      Smart Image Fix parte dalle caratteristiche del file e applica
-      automaticamente una configurazione coerente con l'utilizzo scelto.
+      Dopo l'elaborazione puoi confrontare direttamente l'immagine
+      originale con quella ottimizzata e vedere quanto spazio è stato
+      risparmiato.
     </p>
 
     <h2>Le immagini vengono caricate su un server?</h2>
 
     <p>
-      No. L'elaborazione viene eseguita direttamente nel browser
-      del dispositivo.
+      No. L'elaborazione viene eseguita direttamente nel browser.
     </p>
 
   </section>
@@ -451,8 +439,8 @@
 <script>
   const fileInput = document.getElementById("fileInput");
   const useSelect = document.getElementById("useSelect");
-  const optimizeBtn = document.getElementById("optimizeBtn");
 
+  const status = document.getElementById("status");
   const error = document.getElementById("error");
   const result = document.getElementById("result");
 
@@ -490,16 +478,6 @@
   let beforeUrl = null;
   let afterUrl = null;
 
-  fileInput.addEventListener("change", function () {
-
-    selectedFile = fileInput.files[0] || null;
-
-    result.style.display = "none";
-    error.style.display = "none";
-
-    optimizeBtn.disabled = !selectedFile;
-  });
-
   function formatBytes(bytes) {
 
     if (bytes < 1024) {
@@ -513,7 +491,7 @@
     return (bytes / (1024 * 1024)).toFixed(2) + " MB";
   }
 
-  function getSettings(type, width, height) {
+  function getSettings(type, width) {
 
     let maxWidth;
     let quality;
@@ -525,7 +503,7 @@
       quality = 0.82;
 
       text =
-        "Per il web abbiamo scelto una larghezza massima di 1920 px e una compressione equilibrata.";
+        "Per il web abbiamo scelto un massimo di 1920 px e una compressione equilibrata.";
 
     } else if (type === "social") {
 
@@ -533,7 +511,7 @@
       quality = 0.84;
 
       text =
-        "Per i social abbiamo scelto una dimensione adatta alla condivisione mantenendo una buona qualità.";
+        "Per i social abbiamo scelto dimensioni adatte alla condivisione mantenendo una buona qualità.";
 
     } else if (type === "email") {
 
@@ -541,7 +519,7 @@
       quality = 0.72;
 
       text =
-        "Per l'email abbiamo privilegiato un file più leggero, mantenendo comunque una buona qualità.";
+        "Per l'email abbiamo privilegiato un file più leggero.";
 
     } else {
 
@@ -549,14 +527,10 @@
       quality = 0.90;
 
       text =
-        "Per l'uso generale abbiamo privilegiato la qualità, riducendo comunque il peso quando possibile.";
+        "Per l'uso generale abbiamo privilegiato la qualità riducendo comunque il peso quando possibile.";
     }
 
-    /*
-     * Non ingrandiamo mai un'immagine più piccola
-     * della dimensione consigliata.
-     */
-    if (width <= maxWidth) {
+    if (width < maxWidth) {
       maxWidth = width;
     }
 
@@ -567,29 +541,13 @@
     };
   }
 
-  function getOutputSize(width, height, maxWidth) {
-
-    if (width <= maxWidth) {
-      return {
-        width,
-        height
-      };
-    }
-
-    const scale = maxWidth / width;
-
-    return {
-      width: Math.max(1, Math.round(width * scale)),
-      height: Math.max(1, Math.round(height * scale))
-    };
-  }
-
-  optimizeBtn.addEventListener("click", function () {
+  function optimizeImage() {
 
     if (!selectedFile) {
       return;
     }
 
+    status.style.display = "block";
     error.style.display = "none";
     result.style.display = "none";
 
@@ -607,31 +565,39 @@
 
         URL.revokeObjectURL(objectUrl);
 
+        status.style.display = "none";
+
         error.textContent =
-          "Non è stato possibile leggere le dimensioni dell'immagine.";
+          "Non è stato possibile leggere l'immagine.";
 
         error.style.display = "block";
 
         return;
       }
 
-      const settings = getSettings(
-        useSelect.value,
-        width,
-        height
-      );
+      const settings =
+        getSettings(useSelect.value, width);
 
-      const output = getOutputSize(
-        width,
-        height,
-        settings.maxWidth
-      );
+      let outputWidth = width;
+      let outputHeight = height;
+
+      if (width > settings.maxWidth) {
+
+        const scale =
+          settings.maxWidth / width;
+
+        outputWidth =
+          Math.max(1, Math.round(width * scale));
+
+        outputHeight =
+          Math.max(1, Math.round(height * scale));
+      }
 
       const canvas =
         document.createElement("canvas");
 
-      canvas.width = output.width;
-      canvas.height = output.height;
+      canvas.width = outputWidth;
+      canvas.height = outputHeight;
 
       const ctx =
         canvas.getContext("2d");
@@ -640,20 +606,18 @@
 
         URL.revokeObjectURL(objectUrl);
 
+        status.style.display = "none";
+
         error.textContent =
-          "Il browser non supporta l'ottimizzazione.";
+          "Il browser non supporta questa funzione.";
 
         error.style.display = "block";
 
         return;
       }
 
-      /*
-       * JPG viene utilizzato come formato finale perché
-       * permette una buona riduzione delle fotografie.
-       * Lo sfondo bianco evita problemi con la trasparenza.
-       */
       ctx.fillStyle = "#ffffff";
+
       ctx.fillRect(
         0,
         0,
@@ -665,13 +629,15 @@
         image,
         0,
         0,
-        output.width,
-        output.height
+        outputWidth,
+        outputHeight
       );
 
       canvas.toBlob(function (blob) {
 
         URL.revokeObjectURL(objectUrl);
+
+        status.style.display = "none";
 
         if (!blob) {
 
@@ -697,7 +663,7 @@
         afterUrl =
           URL.createObjectURL(blob);
 
-        const saved =
+        let saved =
           selectedFile.size - blob.size;
 
         let reductionPercent = 0;
@@ -707,10 +673,6 @@
             (saved / selectedFile.size) * 100;
         }
 
-        /*
-         * Se il file ottimizzato risulta più grande,
-         * mostriamo correttamente 0% di riduzione.
-         */
         if (reductionPercent < 0) {
           reductionPercent = 0;
         }
@@ -722,7 +684,7 @@
           width + " × " + height + " px";
 
         newDimensions.textContent =
-          output.width + " × " + output.height + " px";
+          outputWidth + " × " + outputHeight + " px";
 
         originalSize.textContent =
           formatBytes(selectedFile.size);
@@ -746,4 +708,54 @@
           selectedFile.name
             .replace(/\.[^/.]+$/, "");
 
-       
+        download.href =
+          afterUrl;
+
+        download.download =
+          baseName + "-smart-optimized.jpg";
+
+        result.style.display = "block";
+
+      }, "image/jpeg", settings.quality);
+    };
+
+    image.onerror = function () {
+
+      URL.revokeObjectURL(objectUrl);
+
+      status.style.display = "none";
+
+      error.textContent =
+        "Impossibile leggere questa immagine. Prova con un'altra foto.";
+
+      error.style.display = "block";
+    };
+
+    image.src = objectUrl;
+  }
+
+  fileInput.addEventListener("change", function () {
+
+    selectedFile =
+      fileInput.files[0] || null;
+
+    result.style.display = "none";
+    error.style.display = "none";
+
+    if (!selectedFile) {
+      return;
+    }
+
+    optimizeImage();
+  });
+
+  useSelect.addEventListener("change", function () {
+
+    if (selectedFile) {
+      optimizeImage();
+    }
+  });
+</script>
+
+</body>
+</html>
