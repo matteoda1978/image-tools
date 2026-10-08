@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Analizza immagini online gratis | Image Tools</title>
+
+  <meta
+    name="description"
+    content="Analizza immagini online gratis. Controlla formato, dimensioni, peso, rapporto d'aspetto e altre informazioni direttamente dal browser."
+  >
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #172033;
+    }
+
+    header {
+      background: #111827;
+      color: white;
+      text-align: center;
+      padding: 35px 20px;
+    }
+
+    header h1 {
+      margin: 0 0 10px;
+      font-size: 34px;
+    }
+
+    header p {
+      margin: 0;
+      color: #cbd5e1;
+    }
+
+    nav {
+      text-align: center;
+      padding: 18px 15px;
+      background: white;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    nav a {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: bold;
+      margin: 0 8px;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 30px 20px 60px;
+    }
+
+    .tool {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .upload {
+      border: 2px dashed #94a3b8;
+      border-radius: 14px;
+      padding: 35px 20px;
+      text-align: center;
+      background: #f8fafc;
+    }
+
+    input[type="file"] {
+      width: 100%;
+      max-width: 450px;
+      font-size: 16px;
+    }
+
+    .result {
+      display: none;
+      margin-top: 25px;
+    }
+
+    .result h2 {
+      margin-top: 0;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .stat {
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      padding: 15px;
+      border-radius: 10px;
+    }
+
+    .stat strong {
+      display: block;
+      color: #64748b;
+      font-size: 13px;
+      margin-bottom: 5px;
+    }
+
+    .stat span {
+      font-size: 17px;
+      font-weight: bold;
+    }
+
+    .preview {
+      margin-top: 25px;
+      text-align: center;
+    }
+
+    .preview img {
+      max-width: 100%;
+      max-height: 450px;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+    }
+
+    .error {
+      display: none;
+      margin-top: 15px;
+      padding: 12px;
+      background: #fee2e2;
+      color: #991b1b;
+      border-radius: 8px;
+    }
+
+    .content {
+      background: white;
+      margin-top: 25px;
+      padding: 28px;
+      border-radius: 16px;
+      border: 1px solid #e5e7eb;
+    }
+
+    .content h2 {
+      margin-top: 0;
+    }
+
+    .content h3 {
+      margin-top: 25px;
+    }
+
+    .content p {
+      color: #475569;
+      line-height: 1.7;
+    }
+
+    .content li {
+      color: #475569;
+      line-height: 1.8;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 28px;
+      }
+
+      main {
+        padding: 20px 15px 45px;
+      }
+
+      .tool {
+        padding: 20px;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Analizza immagini online gratis</h1>
+  <p>Controlla rapidamente le caratteristiche di qualsiasi immagine</p>
+</header>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="image-optimizer.html">Ottimizza</a>
+  <a href="image-compressor.html">Comprimi</a>
+  <a href="image-resizer.html">Ridimensiona</a>
+  <a href="image-converter.html">Converti</a>
+</nav>
+
+<main>
+
+  <section class="tool">
+
+    <h2>🔍 Analizzatore immagini</h2>
+
+    <div class="upload">
+      <p>
+        <strong>Seleziona un'immagine per analizzarla</strong>
+      </p>
+
+      <p>
+        L'analisi viene eseguita direttamente nel browser.
+      </p>
+
+      <input
+        type="file"
+        id="fileInput"
+        accept="image/*"
+      >
+    </div>
+
+    <div id="error" class="error"></div>
+
+    <div id="result" class="result">
+
+      <h2>Informazioni immagine</h2>
+
+      <div class="stats">
+
+        <div class="stat">
+          <strong>Nome file</strong>
+          <span id="fileName">-</span>
+        </div>
+
+        <div class="stat">
+          <strong>Formato</strong>
+          <span id="format">-</span>
+        </div>
+
+        <div class="stat">
+          <strong>Dimensioni</strong>
+          <span id="dimensions">-</span>
+        </div>
+
+        <div class="stat">
+          <strong>Peso file</strong>
+          <span id="fileSize">-</span>
+        </div>
+
+        <div class="stat">
+          <strong>Rapporto d'aspetto</strong>
+          <span id="ratio">-</span>
+        </div>
+
+        <div class="stat">
+          <strong>Pixel totali</strong>
+          <span id="pixels">-</span>
+        </div>
+
+        <div class="stat">
+          <strong>Orientamento</strong>
+          <span id="orientation">-</span>
+        </div>
+
+        <div class="stat">
+          <strong>Trasparenza</strong>
+          <span id="transparency">-</span>
+        </div>
+
+      </div>
+
+      <div class="preview">
+        <h3>Anteprima</h3>
+        <img id="preview" alt="Anteprima dell'immagine analizzata">
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="content">
+
+    <h2>Analizza un'immagine online</h2>
+
+    <p>
+      L'analizzatore di Image Tools permette di controllare
+      rapidamente le principali caratteristiche di un'immagine
+      senza installare programmi.
+    </p>
+
+    <h3>Quali informazioni vengono visualizzate?</h3>
+
+    <ul>
+      <li>Nome del file</li>
+      <li>Formato dell'immagine</li>
+      <li>Larghezza e altezza in pixel</li>
+      <li>Dimensione del file</li>
+      <li>Rapporto d'aspetto</li>
+      <li>Numero totale di pixel</li>
+      <li>Orientamento dell'immagine</li>
+      <li>Presenza di trasparenza</li>
+    </ul>
+
+    <h3>Perché controllare le dimensioni?</h3>
+
+    <p>
+      Conoscere dimensioni e peso di un'immagine è utile prima
+      di pubblicarla su un sito web, sui social network o di
+      inviarla tramite email.
+    </p>
+
+    <h3>Le immagini vengono caricate online?</h3>
+
+    <p>
+      No. L'analisi viene effettuata direttamente nel browser
+      sul dispositivo utilizzato.
+    </p>
+
+  </section>
+
+  <section class="content">
+
+    <h2>Domande frequenti</h2>
+
+    <h3>È gratuito?</h3>
+
+    <p>
+      Sì, l'analizzatore può essere utilizzato gratuitamente.
+    </p>
+
+    <h3>Funziona da smartphone?</h3>
+
+    <p>
+      Sì. Puoi selezionare un'immagine direttamente dalla galleria
+      del tuo smartphone o tablet.
+    </p>
+
+    <h3>Posso analizzare fotografie molto grandi?</h3>
+
+    <p>
+      Il funzionamento dipende dalle capacità del browser e del
+      dispositivo. L'elaborazione viene eseguita localmente.
+    </p>
+
+  </section>
+
+</main>
+
+<footer>
+  © 2026 Image Tools
+</footer>
+
+<script>
+  const fileInput = document.getElementById("fileInput");
+
+  const result = document.getElementById("result");
+  const error = document.getElementById("error");
+
+  const preview = document.getElementById("preview");
+
+  const fileName = document.getElementById("fileName");
+  const format = document.getElementById("format");
+  const dimensions = document.getElementById("dimensions");
+  const fileSize = document.getElementById("fileSize");
+  const ratio = document.getElementById("ratio");
+  const pixels = document.getElementById("pixels");
+  const orientation = document.getElementById("orientation");
+  const transparency = document.getElementById("transparency");
+
+  let previewUrl = null;
+
+  function formatBytes(bytes) {
+    if (bytes < 1024) {
+      return bytes + " B";
+    }
+
+    if (bytes < 1024 * 1024) {
+      return (bytes / 1024).toFixed(1) + " KB";
+    }
+
+    return (bytes / (1024 * 1024)).toFixed(2) + " MB";
+  }
+
+  function formatName(type) {
+    if (type === "image/jpeg") return "JPG";
+    if (type === "image/png") return "PNG";
+    if (type === "image/webp") return "WEBP";
+    if (type === "image/gif") return "GIF";
+    if (type === "image/avif") return "AVIF";
+
+    if (type && type.startsWith("image/")) {
+      return type.replace("image/", "").toUpperCase();
+    }
+
+    return "Sconosciuto";
+  }
+
+  function detectTransparency(image, width, height) {
+
+    /*
+     * Per evitare di analizzare milioni di pixel inutilmente,
+     * limitiamo il controllo a una versione ridotta dell'immagine.
+     */
+    const maxSize = 300;
+
+    const scale = Math.min(
+      1,
+      maxSize / Math.max(width, height)
+    );
+
+    const canvas = document.createElement("canvas");
+
+    canvas.width = Math.max(1, Math.round(width * scale));
+    canvas.height = Math.max(1, Math.round(height * scale));
+
+    const ctx = canvas.getContext("2d", {
+      willReadFrequently: true
+    });
+
+    if (!ctx) {
+      return "Non rilevabile";
+    }
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    ctx.drawImage(
+      image,
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
+
+    try {
+
+      const data = ctx.getImageData(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      ).data;
+
+      for (let i = 3; i < data.length; i += 4) {
+        if (data[i] < 255) {
+          return "Sì";
+        }
+      }
+
+      return "No";
+
+    } catch (e) {
+      return "Non rilevabile";
+    }
+  }
+
+  fileInput.addEventListener("change", function () {
+
+    const file = fileInput.files[0];
+
+    result.style.display = "none";
+    error.style.display = "none";
+
+    if (!file) {
+      return;
+    }
+
+    if (!file.type.startsWith("image/")) {
+      error.textContent =
+        "Seleziona un file immagine valido.";
+
+      error.style.display = "block";
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(file);
+
+    const image = new Image();
+
+    image.onload = function () {
+
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl);
+      }
+
+      previewUrl = objectUrl;
+
+      const width = image.naturalWidth;
+      const height = image.naturalHeight;
+
+      if (!width || !height) {
+        error.textContent =
+          "Non è stato possibile leggere le dimensioni dell'immagine.";
+
+        error.style.display = "block";
+
+        URL.revokeObjectURL(objectUrl);
+
+        return;
+      }
+
+      const totalPixels = width * height;
+
+      const aspectRatio = width / height;
+
+      let orientationText = "Quadrata";
+
+      if (width > height) {
+        orientationText = "Orizzontale";
+      } else if (height > width) {
+        orientationText = "Verticale";
+      }
+
+      fileName.textContent = file.name;
+
+      format.textContent = formatName(file.type);
+
+      dimensions.textContent =
+        width + " × " + height + " px";
+
+      fileSize.textContent =
+        formatBytes(file.size);
+
+      ratio.textContent =
+        aspectRatio.toFixed(2) + ":1";
+
+      pixels.textContent =
+        totalPixels.toLocaleString("it-IT");
+
+      orientation.textContent =
+        orientationText;
+
+      transparency.textContent =
+        detectTransparency(image, width, height);
+
+      preview.src = objectUrl;
+
+      result.style.display = "block";
+    };
+
+    image.onerror = function () {
+
+      URL.revokeObjectURL(objectUrl);
+
+      error.textContent =
+        "Impossibile leggere questa immagine. Prova con un altro file.";
+
+      error.style.display = "block";
+    };
+
+    image.src = objectUrl;
+  });
+</script>
+
+</body>
+</html>
