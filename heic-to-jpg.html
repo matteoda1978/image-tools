@@ -5,202 +5,351 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>HEIC to JPG Converter – Convert HEIC Images to JPG Online</title>
-<meta name="description" content="Converti immagini HEIC e HEIF in JPG online. Conversione gratuita, veloce e privata direttamente dal browser. Supporto per conversione multipla.">
+<meta name="description" content="Converti immagini HEIC e HEIF in JPG online. Conversione gratuita, veloce e privata direttamente dal browser.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://matteoda1978.github.io/image-tools/heic-to-jpg.html">
 
 <style>
 *{box-sizing:border-box}
+
 body{
   margin:0;
   font-family:Arial,Helvetica,sans-serif;
-  background:#0b1020;
+  background:#0a0f1d;
   color:#f5f7ff;
 }
+
 .container{
-  width:min(1000px,92%);
+  width:min(920px,92%);
   margin:auto;
 }
+
 header{
-  padding:28px 0 10px;
+  padding:24px 0;
 }
+
 .logo{
-  font-size:22px;
+  font-size:21px;
   font-weight:800;
+  letter-spacing:-.3px;
 }
-.logo span{color:#6ea8ff}
+
+.logo span{
+  color:#6ea8ff;
+}
+
 .hero{
   text-align:center;
-  padding:35px 0 25px;
+  padding:35px 0 30px;
 }
+
 .hero h1{
-  font-size:clamp(30px,5vw,48px);
-  margin:0 0 14px;
+  margin:0;
+  font-size:clamp(32px,6vw,48px);
+  line-height:1.1;
+  letter-spacing:-1px;
 }
+
 .hero p{
-  color:#aeb7ca;
-  max-width:700px;
-  margin:auto;
-  line-height:1.6;
+  max-width:680px;
+  margin:17px auto 0;
+  color:#9da8bd;
+  line-height:1.65;
+  font-size:16px;
 }
-.card{
-  background:#121a2e;
-  border:1px solid #26314a;
-  border-radius:20px;
+
+.tool{
+  background:#11192b;
+  border:1px solid #26324a;
+  border-radius:22px;
   padding:24px;
-  margin:20px 0;
 }
+
 .upload{
-  border:2px dashed #40506f;
-  border-radius:18px;
-  padding:42px 20px;
+  display:block;
+  border:1.5px dashed #465775;
+  border-radius:17px;
+  padding:38px 20px;
   text-align:center;
   cursor:pointer;
   transition:.2s;
 }
+
 .upload:hover{
   border-color:#6ea8ff;
-  background:#151f36;
+  background:#141e34;
 }
+
 .upload-icon{
-  font-size:45px;
-  margin-bottom:12px;
+  width:58px;
+  height:58px;
+  margin:0 auto 15px;
+  border-radius:16px;
+  background:#18243b;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:28px;
 }
-.upload strong{
-  display:block;
-  font-size:20px;
-  margin-bottom:8px;
-}
-.muted{
-  color:#9da8bd;
-  font-size:14px;
-}
-input[type=file]{display:none}
 
-.options{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:18px;
-  margin-top:20px;
-}
-.option{
-  background:#0d1425;
-  border:1px solid #26314a;
-  border-radius:14px;
-  padding:16px;
-}
-.option label{
-  display:block;
-  font-size:14px;
-  color:#b8c1d3;
-  margin-bottom:9px;
-}
-select,input[type=range]{
-  width:100%;
-}
-select{
-  background:#172137;
-  color:white;
-  border:1px solid #34415c;
-  border-radius:10px;
-  padding:12px;
-}
-input[type=range]{accent-color:#6ea8ff}
-
-.file-list{
-  margin-top:20px;
-  display:grid;
-  gap:10px;
-}
-.file{
-  background:#0d1425;
-  border:1px solid #26314a;
-  border-radius:12px;
-  padding:13px;
-}
-.file-name{
+.upload-title{
+  font-size:19px;
   font-weight:700;
-  word-break:break-word;
+  margin-bottom:7px;
 }
-.file-info{
-  color:#9da8bd;
+
+.upload-subtitle{
+  color:#8995aa;
   font-size:13px;
-  margin-top:5px;
 }
-.detected{
-  display:inline-block;
-  margin-top:8px;
-  padding:5px 8px;
-  border-radius:7px;
-  background:#172137;
-  color:#9fc5ff;
+
+input[type=file]{
+  display:none;
+}
+
+.files{
+  margin-top:18px;
+  display:grid;
+  gap:9px;
+}
+
+.file{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:12px 14px;
+  background:#0c1323;
+  border:1px solid #202c43;
+  border-radius:12px;
+  min-width:0;
+}
+
+.file-icon{
+  width:38px;
+  height:38px;
+  flex:0 0 38px;
+  border-radius:9px;
+  background:#18243b;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.file-main{
+  min-width:0;
+  flex:1;
+}
+
+.file-name{
+  font-size:14px;
+  font-weight:700;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.file-info{
+  margin-top:4px;
+  color:#7f8ba0;
   font-size:12px;
 }
+
+.detected{
+  flex-shrink:0;
+  padding:6px 9px;
+  border-radius:7px;
+  background:#15233a;
+  color:#9fc5ff;
+  font-size:11px;
+  font-weight:700;
+  white-space:nowrap;
+}
+
+.settings{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:18px;
+}
+
+.setting{
+  background:#0c1323;
+  border:1px solid #202c43;
+  border-radius:13px;
+  padding:15px;
+}
+
+.setting-label{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:11px;
+  color:#aeb8ca;
+  font-size:13px;
+}
+
+.setting-label strong{
+  color:#fff;
+}
+
+select{
+  width:100%;
+  background:#151f34;
+  color:#fff;
+  border:1px solid #33415c;
+  border-radius:9px;
+  padding:11px 12px;
+  font-size:14px;
+  outline:none;
+}
+
+input[type=range]{
+  width:100%;
+  accent-color:#6ea8ff;
+}
+
 .status{
   margin-top:18px;
-  padding:13px;
-  border-radius:10px;
-  background:#0d1425;
-  color:#b9c3d6;
-  min-height:20px;
+  padding:12px 14px;
+  background:#0c1323;
+  border:1px solid #202c43;
+  border-radius:11px;
+  color:#9da8bd;
+  font-size:13px;
+  line-height:1.4;
 }
+
 .actions{
   display:flex;
-  gap:12px;
-  flex-wrap:wrap;
-  margin-top:20px;
+  gap:10px;
+  margin-top:12px;
 }
+
 button{
   border:0;
   border-radius:11px;
   padding:13px 18px;
+  font-size:14px;
   font-weight:700;
   cursor:pointer;
-  font-size:15px;
 }
+
 .primary{
+  flex:1;
   background:#6ea8ff;
-  color:#07101f;
+  color:#07101d;
 }
+
 .secondary{
-  background:#202c45;
-  color:white;
-}
-button:disabled{
-  opacity:.45;
-  cursor:not-allowed;
-}
-.privacy{
-  text-align:center;
-  color:#8f9ab0;
-  font-size:13px;
-  line-height:1.6;
-  margin:22px 0;
-}
-.seo{
-  line-height:1.7;
-  color:#b5bed0;
-}
-.seo h2{
+  background:#202c43;
   color:#fff;
 }
+
+button:disabled{
+  opacity:.4;
+  cursor:not-allowed;
+}
+
+.privacy{
+  text-align:center;
+  margin:18px auto 0;
+  max-width:680px;
+  color:#778398;
+  font-size:12px;
+  line-height:1.6;
+}
+
+.info{
+  margin-top:28px;
+  padding:22px 0 40px;
+}
+
+.info h2{
+  margin:0 0 12px;
+  font-size:21px;
+}
+
+.info p{
+  margin:0 0 18px;
+  color:#9da8bd;
+  line-height:1.7;
+  font-size:14px;
+}
+
 .links{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-  gap:10px;
-  margin-top:15px;
+  grid-template-columns:repeat(4,1fr);
+  gap:9px;
+  margin-top:12px;
 }
+
 .links a{
+  display:block;
+  padding:11px;
+  border-radius:9px;
+  border:1px solid #202c43;
+  background:#0c1323;
   color:#9fc5ff;
   text-decoration:none;
-  background:#0d1425;
-  border:1px solid #26314a;
-  padding:12px;
-  border-radius:10px;
+  text-align:center;
+  font-size:12px;
 }
+
 @media(max-width:650px){
-  .options{grid-template-columns:1fr}
-  .card{padding:17px}
+
+  .container{
+    width:min(94%,560px);
+  }
+
+  header{
+    padding:19px 0;
+  }
+
+  .hero{
+    padding:28px 0 24px;
+  }
+
+  .hero h1{
+    font-size:34px;
+  }
+
+  .hero p{
+    font-size:14px;
+  }
+
+  .tool{
+    padding:15px;
+    border-radius:18px;
+  }
+
+  .upload{
+    padding:30px 15px;
+  }
+
+  .settings{
+    grid-template-columns:1fr;
+  }
+
+  .file{
+    align-items:flex-start;
+  }
+
+  .detected{
+    display:none;
+  }
+
+  .actions{
+    flex-direction:column;
+  }
+
+  .primary,
+  .secondary{
+    width:100%;
+  }
+
+  .links{
+    grid-template-columns:1fr 1fr;
+  }
 }
 </style>
 </head>
@@ -217,63 +366,84 @@ button:disabled{
   <h1>HEIC to JPG Converter</h1>
   <p>
     Converti immagini HEIC e HEIF in JPG direttamente dal browser.
-    Nessuna registrazione e nessun caricamento obbligatorio sul server.
+    Veloce, semplice e senza registrazione.
   </p>
 </section>
 
-<section class="card">
+<section class="tool">
 
-<label class="upload" for="fileInput">
-  <div class="upload-icon">🖼️</div>
-  <strong>Seleziona immagini</strong>
-  <div class="muted">
-    HEIC, HEIF, JPG, JPEG, PNG, WebP e altri formati immagine
+  <label class="upload" for="fileInput">
+    <div class="upload-icon">🖼️</div>
+
+    <div class="upload-title">
+      Seleziona immagini
+    </div>
+
+    <div class="upload-subtitle">
+      HEIC, HEIF, JPG, JPEG, PNG, WebP e altri formati
+    </div>
+  </label>
+
+  <input
+    id="fileInput"
+    type="file"
+    accept="image/*,.heic,.heif"
+    multiple
+  >
+
+  <div id="fileList" class="files"></div>
+
+  <div class="settings">
+
+    <div class="setting">
+
+      <div class="setting-label">
+        <span>Qualità JPG</span>
+        <strong><span id="qualityValue">90</span>%</strong>
+      </div>
+
+      <input
+        id="quality"
+        type="range"
+        min="50"
+        max="100"
+        value="90"
+      >
+
+    </div>
+
+    <div class="setting">
+
+      <div class="setting-label">
+        <span>Dimensione massima</span>
+      </div>
+
+      <select id="resize">
+        <option value="original">Mantieni originale</option>
+        <option value="4096">Massimo 4096 px</option>
+        <option value="3000">Massimo 3000 px</option>
+        <option value="2000">Massimo 2000 px</option>
+      </select>
+
+    </div>
+
   </div>
-</label>
 
-<input
-  id="fileInput"
-  type="file"
-  accept="image/*,.heic,.heif"
-  multiple
->
-
-<div id="fileList" class="file-list"></div>
-
-<div class="options">
-
-  <div class="option">
-    <label for="quality">
-      Qualità JPG: <strong id="qualityValue">90</strong>%
-    </label>
-    <input id="quality" type="range" min="50" max="100" value="90">
+  <div id="status" class="status">
+    Nessuna immagine selezionata.
   </div>
 
-  <div class="option">
-    <label for="resize">Dimensione massima</label>
-    <select id="resize">
-      <option value="original">Mantieni originale</option>
-      <option value="4096">Massimo 4096 px</option>
-      <option value="3000">Massimo 3000 px</option>
-      <option value="2000">Massimo 2000 px</option>
-    </select>
+  <div class="actions">
+
+    <button id="convertBtn" class="primary" disabled>
+      Converti in JPG
+    </button>
+
+    <button id="clearBtn" class="secondary" disabled>
+      Cancella
+    </button>
+
   </div>
-
-</div>
-
-<div id="status" class="status">
-  Nessuna immagine selezionata.
-</div>
-
-<div class="actions">
-  <button id="convertBtn" class="primary" disabled>
-    Converti in JPG
-  </button>
-
-  <button id="clearBtn" class="secondary" disabled>
-    Cancella
-  </button>
-</div>
 
 </section>
 
@@ -282,40 +452,30 @@ button:disabled{
   Non è necessario creare un account.
 </div>
 
-<section class="card seo">
+<section class="info">
 
-<h2>Converti HEIC in JPG online</h2>
+  <h2>Converti HEIC in JPG online</h2>
 
-<p>
-HEIC è un formato utilizzato frequentemente dagli smartphone moderni,
-in particolare per le fotografie ad alta efficienza. Il formato JPG è
-invece supportato praticamente da tutti i dispositivi, programmi,
-browser e servizi online.
-</p>
+  <p>
+    HEIC è un formato utilizzato frequentemente dagli smartphone moderni.
+    JPG è invece supportato praticamente da tutti i dispositivi,
+    programmi e servizi online.
+  </p>
 
-<p>
-Questo strumento permette di convertire immagini HEIC e HEIF in JPG.
-Puoi anche selezionare più immagini contemporaneamente.
-</p>
+  <p>
+    Se carichi un'immagine HEIC o HEIF viene utilizzato il decoder HEIC.
+    Se invece carichi un JPG, PNG o WebP, il file viene elaborato
+    direttamente senza passare dal decoder HEIC.
+  </p>
 
-<h2>Conversione direttamente dal browser</h2>
+  <h2>Altri strumenti</h2>
 
-<p>
-Quando il formato è già compatibile, come JPG, PNG o WebP, il file viene
-elaborato direttamente senza passare dal decoder HEIC. Il decoder HEIC
-viene utilizzato solamente quando il file viene effettivamente
-riconosciuto come HEIC o HEIF.
-</p>
-
-<h2>Altri strumenti</h2>
-
-<div class="links">
-  <a href="image-compressor.html">Compress Image</a>
-  <a href="image-resizer.html">Resize Image</a>
-  <a href="image-converter.html">Image Converter</a>
-  <a href="image-optimizer.html">Image Optimizer</a>
-  <a href="image-analyzer.html">Image Analyzer</a>
-</div>
+  <div class="links">
+    <a href="image-compressor.html">Compress Image</a>
+    <a href="image-resizer.html">Resize Image</a>
+    <a href="image-converter.html">Image Converter</a>
+    <a href="image-optimizer.html">Image Optimizer</a>
+  </div>
 
 </section>
 
@@ -325,130 +485,120 @@ riconosciuto come HEIC o HEIF.
 <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 
 <script>
-const fileInput = document.getElementById("fileInput");
-const fileList = document.getElementById("fileList");
-const convertBtn = document.getElementById("convertBtn");
-const clearBtn = document.getElementById("clearBtn");
-const statusBox = document.getElementById("status");
-const quality = document.getElementById("quality");
-const qualityValue = document.getElementById("qualityValue");
-const resize = document.getElementById("resize");
+const fileInput=document.getElementById("fileInput");
+const fileList=document.getElementById("fileList");
+const convertBtn=document.getElementById("convertBtn");
+const clearBtn=document.getElementById("clearBtn");
+const statusBox=document.getElementById("status");
+const quality=document.getElementById("quality");
+const qualityValue=document.getElementById("qualityValue");
+const resize=document.getElementById("resize");
 
-let files = [];
+let files=[];
 
-quality.addEventListener("input", () => {
-  qualityValue.textContent = quality.value;
+quality.addEventListener("input",()=>{
+  qualityValue.textContent=quality.value;
 });
 
-fileInput.addEventListener("change", () => {
-  const selected = Array.from(fileInput.files || []);
+fileInput.addEventListener("change",()=>{
+  const selected=Array.from(fileInput.files||[]);
 
-  if (!selected.length) return;
+  if(!selected.length)return;
 
-  files = selected;
+  files=selected;
   renderFiles();
 
-  convertBtn.disabled = false;
-  clearBtn.disabled = false;
+  convertBtn.disabled=false;
+  clearBtn.disabled=false;
 
-  statusBox.textContent =
-    files.length === 1
-      ? "Foto ricevuta. Pronta per la conversione."
-      : files.length + " immagini ricevute. Pronte per la conversione.";
+  statusBox.textContent=
+    files.length===1
+    ?"Foto ricevuta. Pronta per la conversione."
+    :files.length+" immagini ricevute. Pronte per la conversione.";
 });
 
-clearBtn.addEventListener("click", () => {
-  files = [];
-  fileInput.value = "";
-  fileList.innerHTML = "";
-  convertBtn.disabled = true;
-  clearBtn.disabled = true;
-  statusBox.textContent = "Nessuna immagine selezionata.";
+clearBtn.addEventListener("click",()=>{
+  files=[];
+  fileInput.value="";
+  fileList.innerHTML="";
+  convertBtn.disabled=true;
+  clearBtn.disabled=true;
+  statusBox.textContent="Nessuna immagine selezionata.";
 });
 
-function getExtension(file) {
-  const name = file.name || "";
-  const dot = name.lastIndexOf(".");
-
-  if (dot !== -1) {
-    return name.substring(dot + 1).toLowerCase();
-  }
-
-  return "";
+function getExtension(file){
+  const name=file.name||"";
+  const dot=name.lastIndexOf(".");
+  return dot!==-1
+    ?name.substring(dot+1).toLowerCase()
+    :"";
 }
 
-function detectFormat(file) {
-  const ext = getExtension(file);
-  const type = (file.type || "").toLowerCase();
+function detectFormat(file){
+  const ext=getExtension(file);
+  const type=(file.type||"").toLowerCase();
 
-  if (ext === "heic" || ext === "heif") {
+  if(ext==="heic"||ext==="heif"||
+     type==="image/heic"||type==="image/heif")
     return "HEIC / HEIF";
-  }
 
-  if (type === "image/heic" || type === "image/heif") {
-    return "HEIC / HEIF";
-  }
-
-  if (ext === "jpg" || ext === "jpeg" || type === "image/jpeg") {
+  if(ext==="jpg"||ext==="jpeg"||type==="image/jpeg")
     return "JPG / JPEG";
-  }
 
-  if (ext === "png" || type === "image/png") {
+  if(ext==="png"||type==="image/png")
     return "PNG";
-  }
 
-  if (ext === "webp" || type === "image/webp") {
+  if(ext==="webp"||type==="image/webp")
     return "WebP";
-  }
 
-  if (ext) {
-    return ext.toUpperCase();
-  }
+  if(ext)return ext.toUpperCase();
 
-  if (type) {
-    return type;
-  }
+  if(type)return type;
 
-  return "Formato non identificato";
+  return "Non identificato";
 }
 
-function isHeic(file) {
-  const ext = getExtension(file);
-  const type = (file.type || "").toLowerCase();
+function isHeic(file){
+  const ext=getExtension(file);
+  const type=(file.type||"").toLowerCase();
 
-  return (
-    ext === "heic" ||
-    ext === "heif" ||
-    type === "image/heic" ||
-    type === "image/heif"
+  return(
+    ext==="heic"||
+    ext==="heif"||
+    type==="image/heic"||
+    type==="image/heif"
   );
 }
 
-function renderFiles() {
-  fileList.innerHTML = "";
+function renderFiles(){
 
-  files.forEach((file, index) => {
-    const item = document.createElement("div");
-    item.className = "file";
+  fileList.innerHTML="";
 
-    const sizeMB = file.size
-      ? (file.size / 1024 / 1024).toFixed(2)
-      : "0";
+  files.forEach((file,index)=>{
 
-    const format = detectFormat(file);
+    const item=document.createElement("div");
+    item.className="file";
 
-    item.innerHTML = `
-      <div class="file-name">
-        ${index + 1}. ${escapeHtml(file.name || "immagine")}
-      </div>
+    const sizeMB=file.size
+      ?(file.size/1024/1024).toFixed(2)
+      :"0";
 
-      <div class="file-info">
-        ${sizeMB} MB
-        ${file.type ? " • " + escapeHtml(file.type) : ""}
+    item.innerHTML=`
+      <div class="file-icon">🖼️</div>
+
+      <div class="file-main">
+        <div class="file-name">
+          ${escapeHtml(file.name||"immagine")}
+        </div>
+
+        <div class="file-info">
+          ${sizeMB} MB
+          ${file.type?" • "+escapeHtml(file.type):""}
+        </div>
       </div>
 
       <div class="detected">
-        FORMATO RILEVATO: ${escapeHtml(format)}
+        ${escapeHtml(detectFormat(file))}
       </div>
     `;
 
@@ -456,212 +606,205 @@ function renderFiles() {
   });
 }
 
-function escapeHtml(value) {
+function escapeHtml(value){
   return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
 }
 
-async function convertImage(file) {
+async function convertImage(file){
 
-  let sourceBlob = file;
+  let sourceBlob=file;
 
-  /*
-   * IMPORTANTE:
-   * HEIC/HEIF -> decoder HEIC
-   * JPG/PNG/WebP -> nessun decoder HEIC
-   */
+  if(isHeic(file)){
 
-  if (isHeic(file)) {
-
-    if (typeof window.heic2any !== "function") {
+    if(typeof window.heic2any!=="function"){
       throw new Error("Motore HEIC non disponibile.");
     }
 
-    statusBox.textContent =
+    statusBox.textContent=
       "Formato HEIC/HEIF rilevato. Decodifica in corso...";
 
-    const result = await window.heic2any({
-      blob: file,
-      toType: "image/jpeg",
-      quality: Number(quality.value) / 100
+    const result=await window.heic2any({
+      blob:file,
+      toType:"image/jpeg",
+      quality:Number(quality.value)/100
     });
 
-    sourceBlob = Array.isArray(result)
-      ? result[0]
-      : result;
+    sourceBlob=Array.isArray(result)
+      ?result[0]
+      :result;
 
-  } else {
+  }else{
 
-    statusBox.textContent =
-      "Formato già compatibile. Conversione JPG in corso...";
+    statusBox.textContent=
+      "Formato compatibile. Conversione JPG in corso...";
   }
 
-  const imageUrl = URL.createObjectURL(sourceBlob);
+  const imageUrl=URL.createObjectURL(sourceBlob);
 
-  try {
+  try{
 
-    const img = new Image();
+    const img=new Image();
 
-    await new Promise((resolve, reject) => {
+    await new Promise((resolve,reject)=>{
 
-      img.onload = resolve;
+      img.onload=resolve;
 
-      img.onerror = () =>
-        reject(new Error("Impossibile leggere l'immagine."));
+      img.onerror=()=>{
+        reject(
+          new Error("Impossibile leggere l'immagine.")
+        );
+      };
 
-      img.src = imageUrl;
+      img.src=imageUrl;
     });
 
-    let width = img.naturalWidth;
-    let height = img.naturalHeight;
+    let width=img.naturalWidth;
+    let height=img.naturalHeight;
 
-    const maxSize = resize.value;
+    if(resize.value!=="original"){
 
-    if (maxSize !== "original") {
+      const max=Number(resize.value);
 
-      const max = Number(maxSize);
+      if(width>max||height>max){
 
-      if (width > max || height > max) {
-
-        const ratio = Math.min(
-          max / width,
-          max / height
+        const ratio=Math.min(
+          max/width,
+          max/height
         );
 
-        width = Math.max(1, Math.round(width * ratio));
-        height = Math.max(1, Math.round(height * ratio));
+        width=Math.max(1,Math.round(width*ratio));
+        height=Math.max(1,Math.round(height*ratio));
       }
     }
 
-    const canvas = document.createElement("canvas");
+    const canvas=document.createElement("canvas");
 
-    canvas.width = width;
-    canvas.height = height;
+    canvas.width=width;
+    canvas.height=height;
 
-    const ctx = canvas.getContext("2d", {
-      alpha: false
+    const ctx=canvas.getContext("2d",{
+      alpha:false
     });
 
-    if (!ctx) {
+    if(!ctx){
       throw new Error("Canvas non disponibile.");
     }
 
-    ctx.drawImage(img, 0, 0, width, height);
+    ctx.drawImage(
+      img,
+      0,
+      0,
+      width,
+      height
+    );
 
-    const output = await new Promise((resolve, reject) => {
+    return await new Promise((resolve,reject)=>{
 
       canvas.toBlob(
-        blob => {
-          if (blob) {
-            resolve(blob);
-          } else {
-            reject(new Error("Impossibile creare il JPG."));
-          }
+        blob=>{
+          if(blob)resolve(blob);
+          else reject(
+            new Error("Impossibile creare il JPG.")
+          );
         },
         "image/jpeg",
-        Number(quality.value) / 100
+        Number(quality.value)/100
       );
 
     });
 
-    return output;
-
-  } finally {
+  }finally{
 
     URL.revokeObjectURL(imageUrl);
 
   }
 }
 
-function createFileName(name) {
+function createFileName(name){
 
-  const clean = name || "image";
+  const clean=name||"image";
 
-  const withoutExtension =
-    clean.replace(/\.[^/.]+$/, "");
-
-  return withoutExtension + ".jpg";
+  return clean.replace(/\.[^/.]+$/,"")+".jpg";
 }
 
-function downloadBlob(blob, filename) {
+function downloadBlob(blob,filename){
 
-  const url = URL.createObjectURL(blob);
+  const url=URL.createObjectURL(blob);
 
-  const link = document.createElement("a");
+  const link=document.createElement("a");
 
-  link.href = url;
-  link.download = filename;
+  link.href=url;
+  link.download=filename;
 
   document.body.appendChild(link);
-
   link.click();
-
   link.remove();
 
-  setTimeout(() => {
+  setTimeout(()=>{
     URL.revokeObjectURL(url);
-  }, 1000);
+  },1000);
 }
 
-convertBtn.addEventListener("click", async () => {
+convertBtn.addEventListener("click",async()=>{
 
-  if (!files.length) return;
+  if(!files.length)return;
 
-  convertBtn.disabled = true;
-  clearBtn.disabled = true;
+  convertBtn.disabled=true;
+  clearBtn.disabled=true;
 
-  try {
+  try{
 
-    const results = [];
+    const results=[];
 
-    for (let i = 0; i < files.length; i++) {
+    for(let i=0;i<files.length;i++){
 
-      statusBox.textContent =
-        "Conversione " +
-        (i + 1) +
-        " di " +
-        files.length +
+      statusBox.textContent=
+        "Conversione "+
+        (i+1)+
+        " di "+
+        files.length+
         "...";
 
-      const blob = await convertImage(files[i]);
+      const blob=await convertImage(files[i]);
 
       results.push({
         blob,
-        name: createFileName(files[i].name)
+        name:createFileName(files[i].name)
       });
     }
 
-    if (results.length === 1) {
+    if(results.length===1){
 
       downloadBlob(
         results[0].blob,
         results[0].name
       );
 
-      statusBox.textContent =
+      statusBox.textContent=
         "✓ JPG creato e scaricato.";
 
-    } else {
+    }else{
 
-      if (typeof JSZip === "undefined") {
+      if(typeof JSZip==="undefined"){
         throw new Error("Motore ZIP non disponibile.");
       }
 
-      statusBox.textContent =
+      statusBox.textContent=
         "Creazione archivio ZIP...";
 
-      const zip = new JSZip();
+      const zip=new JSZip();
 
-      results.forEach(result => {
-        zip.file(result.name, result.blob);
+      results.forEach(result=>{
+        zip.file(result.name,result.blob);
       });
 
-      const zipBlob = await zip.generateAsync({
-        type: "blob"
+      const zipBlob=await zip.generateAsync({
+        type:"blob"
       });
 
       downloadBlob(
@@ -669,28 +812,28 @@ convertBtn.addEventListener("click", async () => {
         "converted-images.zip"
       );
 
-      statusBox.textContent =
-        "✓ " +
-        results.length +
+      statusBox.textContent=
+        "✓ "+
+        results.length+
         " JPG creati e inseriti nello ZIP.";
     }
 
-  } catch (error) {
+  }catch(error){
 
-    console.error("Conversion error:", error);
+    console.error("Conversion error:",error);
 
-    statusBox.textContent =
-      "⚠️ Conversione non riuscita: " +
+    statusBox.textContent=
+      "⚠️ Conversione non riuscita: "+
       (
-        error && error.message
-          ? error.message
-          : "errore sconosciuto"
+        error&&error.message
+        ?error.message
+        :"errore sconosciuto"
       );
 
-  } finally {
+  }finally{
 
-    convertBtn.disabled = false;
-    clearBtn.disabled = false;
+    convertBtn.disabled=false;
+    clearBtn.disabled=false;
 
   }
 });
