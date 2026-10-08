@@ -27,121 +27,171 @@
       background: #111827;
       color: white;
       text-align: center;
-      padding: 42px 20px 35px;
+      padding: 50px 20px 42px;
     }
 
     header h1 {
       margin: 0 0 12px;
-      font-size: 38px;
+      font-size: 40px;
     }
 
     header p {
-      margin: 0;
+      margin: 0 auto;
+      max-width: 700px;
       color: #cbd5e1;
+      line-height: 1.6;
       font-size: 17px;
     }
 
     .chips {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 20px;
+      margin-top: 22px;
     }
 
     .chip {
+      display: inline-block;
       background: #1f2937;
-      border: 1px solid #374151;
+      color: #dbeafe;
       padding: 7px 12px;
       border-radius: 20px;
+      margin: 4px;
       font-size: 13px;
     }
 
+    nav {
+      background: white;
+      border-bottom: 1px solid #e5e7eb;
+      text-align: center;
+      padding: 16px 10px;
+    }
+
+    nav a {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: bold;
+      margin: 0 7px;
+    }
+
     main {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 35px 20px 60px;
+      max-width: 1050px;
+      margin: auto;
+      padding: 30px 20px 60px;
+    }
+
+    .smart {
+      background: linear-gradient(135deg, #eff6ff, #ffffff);
+      border: 2px solid #93c5fd;
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 7px 25px rgba(37, 99, 235, .10);
+    }
+
+    .smart h2 {
+      margin-top: 0;
+      font-size: 28px;
+    }
+
+    .smart p {
+      color: #475569;
+      line-height: 1.6;
+      max-width: 760px;
+    }
+
+    .smart-button {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 13px 20px;
+      background: #2563eb;
+      color: white;
+      text-decoration: none;
+      border-radius: 9px;
+      font-weight: bold;
+    }
+
+    .smart-button:hover {
+      background: #1d4ed8;
+    }
+
+    .section-title {
+      text-align: center;
+      margin: 35px 0 20px;
+    }
+
+    .section-title h2 {
+      margin-bottom: 8px;
+    }
+
+    .section-title p {
+      color: #64748b;
     }
 
     .featured {
-      background: linear-gradient(135deg, #2563eb, #4f46e5);
-      color: white;
-      border-radius: 18px;
-      padding: 28px;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
       margin-bottom: 30px;
+    }
+
+    .featured a {
+      display: block;
       text-align: center;
-    }
-
-    .featured h2 {
-      margin-top: 0;
-      margin-bottom: 10px;
-    }
-
-    .featured p {
-      margin-bottom: 20px;
-      color: #e0e7ff;
-    }
-
-    .optimizer-link {
-      display: inline-block;
       background: white;
-      color: #1d4ed8;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 15px 8px;
       text-decoration: none;
-      padding: 12px 18px;
-      border-radius: 10px;
+      color: #1e293b;
       font-weight: bold;
-      margin: 5px;
     }
 
-    .optimizer-link:hover {
-      background: #eff6ff;
+    .featured a:hover {
+      border-color: #93c5fd;
+      background: #f8fbff;
     }
 
     .tools {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
     }
 
     .tool {
       background: white;
       border: 1px solid #e5e7eb;
       border-radius: 16px;
-      padding: 24px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+      padding: 23px;
+      box-shadow: 0 4px 15px rgba(0,0,0,.04);
     }
 
-    .tool h2 {
+    .tool h3 {
       margin-top: 0;
-      font-size: 21px;
+      font-size: 20px;
     }
 
     .tool p {
       color: #64748b;
-      line-height: 1.55;
-      min-height: 70px;
+      line-height: 1.6;
+      min-height: 75px;
     }
 
     .tool a {
       display: inline-block;
+      margin-top: 8px;
+      color: #2563eb;
       text-decoration: none;
-      background: #2563eb;
-      color: white;
-      padding: 10px 15px;
-      border-radius: 9px;
       font-weight: bold;
     }
 
     .tool a:hover {
-      background: #1d4ed8;
+      text-decoration: underline;
     }
 
     .about {
       background: white;
-      border-radius: 16px;
+      border: 1px solid #e5e7eb;
+      border-radius: 18px;
       padding: 28px;
       margin-top: 30px;
-      border: 1px solid #e5e7eb;
     }
 
     .about h2 {
@@ -160,21 +210,45 @@
       font-size: 14px;
     }
 
+    @media (max-width: 850px) {
+      .featured {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .tools {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
     @media (max-width: 600px) {
+      header {
+        padding: 40px 18px;
+      }
+
       header h1 {
-        font-size: 30px;
+        font-size: 32px;
       }
 
       main {
-        padding: 25px 15px 45px;
+        padding: 22px 15px 45px;
       }
 
-      .featured {
-        padding: 22px 18px;
+      .smart {
+        padding: 23px;
       }
 
-      .tool {
-        padding: 20px;
+      .featured,
+      .tools {
+        grid-template-columns: 1fr;
+      }
+
+      .tool p {
+        min-height: auto;
+      }
+
+      nav a {
+        display: inline-block;
+        margin: 5px 4px;
       }
     }
   </style>
@@ -183,132 +257,225 @@
 <body>
 
 <header>
+
   <h1>Image Tools</h1>
-  <p>Strumenti gratuiti per lavorare con le tue immagini online</p>
+
+  <p>
+    Strumenti gratuiti per lavorare con le tue immagini
+    direttamente online.
+  </p>
 
   <div class="chips">
     <span class="chip">Gratis</span>
     <span class="chip">Online</span>
     <span class="chip">Semplice</span>
-    <span class="chip">Browser-based</span>
+    <span class="chip">Senza installazione</span>
   </div>
+
 </header>
+
+<nav>
+
+  <a href="index.html">Home</a>
+  <a href="image-smart.html">Smart Fix</a>
+  <a href="image-optimizer.html">Ottimizza</a>
+  <a href="image-compressor.html">Comprimi</a>
+  <a href="image-resizer.html">Ridimensiona</a>
+  <a href="image-converter.html">Converti</a>
+  <a href="image-analyzer.html">Analizza</a>
+
+</nav>
 
 <main>
 
-  <section class="featured">
+  <!-- SMART IMAGE FIX -->
 
-    <h2>⚡ Ottimizza le immagini automaticamente</h2>
+  <section class="smart">
+
+    <h2>⚡ Smart Image Fix</h2>
 
     <p>
-      Riduci il peso delle immagini mantenendo una buona qualità.
-      Scegli il tipo di utilizzo e lascia fare tutto allo strumento.
+      Non sai quali impostazioni usare?
+      Carica semplicemente la tua foto e Smart Image Fix
+      analizzerà automaticamente l'immagine e creerà
+      una versione ottimizzata.
     </p>
 
-    <a class="optimizer-link" href="image-optimizer.html">
-      ⚡ Ottimizza immagini online
-    </a>
+    <p>
+      Puoi scegliere se ottimizzare l'immagine per il web,
+      i social, l'email oppure per un uso generale.
+    </p>
 
-    <a class="optimizer-link" href="image-compressor.html">
-      📦 Comprimi immagini online
-    </a>
-
-    <a class="optimizer-link" href="image-resizer.html">
-      📐 Ridimensiona immagini online
-    </a>
-
-    <a class="optimizer-link" href="image-converter.html">
-      🔄 Converti immagini online
-    </a>
-
-    <a class="optimizer-link" href="image-analyzer.html">
-      🔍 Analizza immagini online
+    <a
+      class="smart-button"
+      href="image-smart.html"
+    >
+      ⚡ Ottimizza automaticamente
     </a>
 
   </section>
+
+
+  <!-- STRUMENTI IN EVIDENZA -->
+
+  <div class="section-title">
+
+    <h2>Strumenti per immagini</h2>
+
+    <p>
+      Scegli lo strumento che ti serve.
+    </p>
+
+  </div>
+
+  <section class="featured">
+
+    <a href="image-optimizer.html">
+      ⚡ Ottimizza
+    </a>
+
+    <a href="image-compressor.html">
+      📦 Comprimi
+    </a>
+
+    <a href="image-resizer.html">
+      🖼️ Ridimensiona
+    </a>
+
+    <a href="image-converter.html">
+      🔄 Converti
+    </a>
+
+    <a href="image-analyzer.html">
+      🔍 Analizza
+    </a>
+
+  </section>
+
+
+  <!-- TUTTI GLI STRUMENTI -->
 
   <section class="tools">
 
-    <div class="tool">
-      <h2>📐 Ridimensiona immagine</h2>
+    <article class="tool">
+
+      <h3>⚡ Ottimizza immagine</h3>
 
       <p>
-        Cambia larghezza e altezza delle immagini mantenendo,
-        se vuoi, le proporzioni originali.
-      </p>
-
-      <a href="image-resizer.html">
-        Ridimensiona
-      </a>
-    </div>
-
-    <div class="tool">
-      <h2>📦 Comprimi immagine</h2>
-
-      <p>
-        Riduci le dimensioni del file scegliendo tra alta qualità,
-        compressione equilibrata e massima compressione.
-      </p>
-
-      <a href="image-compressor.html">
-        Comprimi
-      </a>
-    </div>
-
-    <div class="tool">
-      <h2>🔄 Converti immagine</h2>
-
-      <p>
-        Converti rapidamente le immagini tra JPG, PNG e WEBP
-        direttamente dal browser.
-      </p>
-
-      <a href="image-converter.html">
-        Converti
-      </a>
-    </div>
-
-    <div class="tool">
-      <h2>🔍 Analizza immagine</h2>
-
-      <p>
-        Controlla dimensioni, formato, peso, rapporto d'aspetto
-        e altre informazioni del file immagine.
-      </p>
-
-      <a href="image-analyzer.html">
-        Analizza
-      </a>
-    </div>
-
-    <div class="tool">
-      <h2>⚡ Ottimizza automaticamente</h2>
-
-      <p>
-        Ottimizza automaticamente un'immagine in base al suo
-        utilizzo: Web, Social o Email.
+        Riduci il peso dell'immagine mantenendo
+        un buon equilibrio tra qualità e dimensioni.
       </p>
 
       <a href="image-optimizer.html">
-        Ottimizza
+        Apri strumento →
       </a>
-    </div>
+
+    </article>
+
+
+    <article class="tool">
+
+      <h3>📦 Comprimi immagine</h3>
+
+      <p>
+        Comprimi JPG, PNG e altre immagini
+        direttamente dal browser.
+      </p>
+
+      <a href="image-compressor.html">
+        Apri strumento →
+      </a>
+
+    </article>
+
+
+    <article class="tool">
+
+      <h3>🖼️ Ridimensiona immagine</h3>
+
+      <p>
+        Modifica larghezza e altezza delle immagini
+        in pochi secondi.
+      </p>
+
+      <a href="image-resizer.html">
+        Apri strumento →
+      </a>
+
+    </article>
+
+
+    <article class="tool">
+
+      <h3>🔄 Converti immagine</h3>
+
+      <p>
+        Converti le immagini tra diversi formati
+        in modo semplice e veloce.
+      </p>
+
+      <a href="image-converter.html">
+        Apri strumento →
+      </a>
+
+    </article>
+
+
+    <article class="tool">
+
+      <h3>🔍 Analizza immagine</h3>
+
+      <p>
+        Controlla formato, dimensioni, peso,
+        tipo di file e altre informazioni.
+      </p>
+
+      <a href="image-analyzer.html">
+        Apri strumento →
+      </a>
+
+    </article>
+
+
+    <article class="tool">
+
+      <h3>⚡ Smart Image Fix</h3>
+
+      <p>
+        Lascia scegliere automaticamente allo strumento
+        le impostazioni più adatte alla tua immagine.
+      </p>
+
+      <a href="image-smart.html">
+        Prova Smart Fix →
+      </a>
+
+    </article>
 
   </section>
 
+
+  <!-- ABOUT -->
+
   <section class="about">
 
-    <h2>Strumenti immagini online gratuiti</h2>
+    <h2>Image Tools: strumenti online gratuiti</h2>
 
     <p>
-      Image Tools raccoglie strumenti semplici e gratuiti per
-      ridimensionare, comprimere, convertire, analizzare e
-      ottimizzare immagini.
+      Image Tools raccoglie strumenti semplici e gratuiti
+      per lavorare con le immagini direttamente dal browser.
+      Non è necessario installare programmi.
     </p>
 
     <p>
-      Le immagini vengono elaborate direttamente nel browser,
-      senza bisogno di installare programmi.
+      Puoi ridimensionare, comprimere, convertire e analizzare
+      le tue immagini oppure utilizzare Smart Image Fix per
+      ottenere automaticamente una versione ottimizzata.
+    </p>
+
+    <p>
+      Gli strumenti sono pensati per essere veloci,
+      semplici da utilizzare e accessibili anche da smartphone.
     </p>
 
   </section>
@@ -316,7 +483,9 @@
 </main>
 
 <footer>
+
   © 2026 Image Tools
+
 </footer>
 
 </body>
