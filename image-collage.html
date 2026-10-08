@@ -1,187 +1,629 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Photo Collage Maker - Crea collage di foto online</title>
-  <meta name="description" content="Crea bellissimi collage di foto online gratuitamente. Scegli il layout, aggiungi le tue immagini e scarica il collage in JPG o PNG.">
+<title>Photo Collage Maker</title>
+<meta name="description" content="Crea collage di foto online gratuitamente.">
 
-  <style>
-    * {
-      box-sizing: border-box;
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f6f8;
+  color: #172033;
+}
+
+header {
+  background: #111827;
+  color: white;
+  text-align: center;
+  padding: 28px 15px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 30px;
+}
+
+header p {
+  margin: 8px 0 0;
+  color: #cbd5e1;
+}
+
+main {
+  max-width: 1100px;
+  margin: 25px auto;
+  padding: 0 15px 40px;
+}
+
+.box {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 18px rgba(0,0,0,.06);
+}
+
+.upload {
+  border: 2px dashed #9ca3af;
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  cursor: pointer;
+  background: #f8fafc;
+}
+
+.upload:hover {
+  background: #eef4ff;
+  border-color: #2563eb;
+}
+
+.upload strong {
+  display: block;
+  font-size: 19px;
+  margin-bottom: 8px;
+}
+
+.upload span {
+  color: #64748b;
+  font-size: 14px;
+}
+
+#files {
+  display: none;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.control label {
+  display: block;
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 7px;
+}
+
+select,
+input[type="range"],
+input[type="text"],
+input[type="color"] {
+  width: 100%;
+}
+
+select,
+input[type="text"] {
+  padding: 11px;
+  border: 1px solid #d1d5db;
+  border-radius: 9px;
+  background: white;
+}
+
+input[type="color"] {
+  height: 42px;
+}
+
+.preview {
+  text-align: center;
+}
+
+.preview h2 {
+  margin-top: 0;
+}
+
+canvas {
+  display: none;
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 5px 25px rgba(0,0,0,.15);
+}
+
+.empty {
+  padding: 60px 20px;
+  color: #64748b;
+  background: #f8fafc;
+  border-radius: 12px;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+button {
+  border: 0;
+  border-radius: 9px;
+  padding: 12px 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.primary {
+  background: #2563eb;
+  color: white;
+}
+
+.secondary {
+  background: #e5e7eb;
+  color: #172033;
+}
+
+button:disabled {
+  opacity: .45;
+}
+
+.photos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.photo {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+@media (max-width: 700px) {
+  .controls {
+    grid-template-columns: 1fr;
+  }
+
+  header h1 {
+    font-size: 25px;
+  }
+
+  .buttons {
+    flex-direction: column;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Photo Collage Maker</h1>
+  <p>Crea il tuo collage di foto gratuitamente</p>
+</header>
+
+<main>
+
+<div class="box">
+
+<label class="upload" for="files">
+  <strong>📷 Aggiungi le tue foto</strong>
+  <span>Seleziona più immagini contemporaneamente</span>
+</label>
+
+<input id="files" type="file" accept="image/*" multiple>
+
+<div class="controls">
+
+  <div class="control">
+    <label>Layout</label>
+    <select id="layout">
+      <option value="2">2 foto</option>
+      <option value="3">3 foto</option>
+      <option value="4" selected>4 foto</option>
+      <option value="6">6 foto</option>
+      <option value="9">9 foto</option>
+    </select>
+  </div>
+
+  <div class="control">
+    <label>Formato</label>
+    <select id="format">
+      <option value="square">Quadrato</option>
+      <option value="portrait">Verticale</option>
+      <option value="landscape">Orizzontale</option>
+      <option value="story">Story</option>
+    </select>
+  </div>
+
+  <div class="control">
+    <label>Spazio: <span id="spaceValue">10 px</span></label>
+    <input id="space" type="range" min="0" max="40" value="10">
+  </div>
+
+  <div class="control">
+    <label>Sfondo</label>
+    <input id="background" type="color" value="#ffffff">
+  </div>
+
+  <div class="control">
+    <label>Testo opzionale</label>
+    <input id="text" type="text" maxlength="50" placeholder="Scrivi una frase">
+  </div>
+
+</div>
+
+<div class="photos" id="photos"></div>
+
+</div>
+
+
+<div class="box preview">
+
+<h2>Anteprima</h2>
+
+<div class="empty" id="empty">
+  Carica almeno 2 foto per creare il collage.
+</div>
+
+<canvas id="canvas"></canvas>
+
+<div class="buttons">
+
+<button id="jpg" class="primary" disabled>
+  Scarica JPG
+</button>
+
+<button id="png" class="secondary" disabled>
+  Scarica PNG
+</button>
+
+</div>
+
+</div>
+
+</main>
+
+
+<script>
+
+const files = document.getElementById("files");
+const layout = document.getElementById("layout");
+const format = document.getElementById("format");
+const space = document.getElementById("space");
+const spaceValue = document.getElementById("spaceValue");
+const background = document.getElementById("background");
+const text = document.getElementById("text");
+
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+const empty = document.getElementById("empty");
+const photos = document.getElementById("photos");
+
+const jpg = document.getElementById("jpg");
+const png = document.getElementById("png");
+
+let images = [];
+
+
+files.addEventListener("change", function() {
+
+  images = [];
+
+  const selected = Array.from(files.files);
+
+  if (selected.length === 0) {
+    return;
+  }
+
+  let loaded = 0;
+
+  selected.forEach(function(file) {
+
+    if (!file.type.startsWith("image/")) {
+      return;
     }
 
-    :root {
-      --bg: #f4f6f9;
-      --card: #ffffff;
-      --text: #172033;
-      --muted: #667085;
-      --border: #e2e6ed;
-      --primary: #2563eb;
-      --primary-dark: #1d4ed8;
-      --soft: #eef4ff;
-    }
+    const reader = new FileReader();
 
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-    }
+    reader.onload = function(e) {
 
-    header {
-      background: #111827;
-      color: white;
-      padding: 28px 20px 30px;
-      text-align: center;
-    }
+      const img = new Image();
 
-    header h1 {
-      margin: 0;
-      font-size: 30px;
-      letter-spacing: -0.5px;
-    }
+      img.onload = function() {
 
-    header p {
-      margin: 8px 0 0;
-      color: #cbd5e1;
-      font-size: 15px;
-    }
+        images.push(img);
+        loaded++;
 
-    main {
-      width: 100%;
-      max-width: 1120px;
-      margin: 28px auto;
-      padding: 0 18px 50px;
-    }
+        if (loaded === selected.length) {
+          showPhotos();
+          makeCollage();
+        }
 
-    .workspace {
-      display: grid;
-      grid-template-columns: 330px 1fr;
-      gap: 22px;
-      align-items: start;
-    }
+      };
 
-    .panel {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 20px;
-    }
+      img.src = e.target.result;
 
-    .panel h2 {
-      margin: 0 0 18px;
-      font-size: 18px;
-    }
+    };
 
-    .upload {
-      border: 2px dashed #b7c0ce;
-      background: #f8fafc;
-      border-radius: 14px;
-      padding: 25px 15px;
-      text-align: center;
-      cursor: pointer;
-      transition: 0.2s;
-    }
+    reader.readAsDataURL(file);
 
-    .upload:hover {
-      border-color: var(--primary);
-      background: var(--soft);
-    }
+  });
 
-    .upload-icon {
-      font-size: 34px;
-      margin-bottom: 8px;
-    }
+});
 
-    .upload strong {
-      display: block;
-      font-size: 16px;
-    }
 
-    .upload span {
-      display: block;
-      margin-top: 6px;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.4;
-    }
+layout.addEventListener("change", makeCollage);
+format.addEventListener("change", makeCollage);
 
-    #fileInput {
-      display: none;
-    }
+space.addEventListener("input", function() {
 
-    .section {
-      margin-top: 22px;
-    }
+  spaceValue.textContent = space.value + " px";
 
-    .section-title {
-      font-size: 13px;
-      font-weight: bold;
-      margin-bottom: 9px;
-      color: #344054;
-    }
+  makeCollage();
 
-    .layout-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-    }
+});
 
-    .layout-btn {
-      border: 1px solid var(--border);
-      background: white;
-      border-radius: 10px;
-      min-height: 62px;
-      padding: 7px;
-      cursor: pointer;
-      font-size: 11px;
-      color: #475467;
-    }
+background.addEventListener("input", makeCollage);
+text.addEventListener("input", makeCollage);
 
-    .layout-btn.active {
-      border: 2px solid var(--primary);
-      background: var(--soft);
-      color: var(--primary);
-      font-weight: bold;
-    }
 
-    .mini-layout {
-      width: 100%;
-      height: 32px;
-      display: grid;
-      gap: 2px;
-      margin-bottom: 5px;
-    }
+function showPhotos() {
 
-    .mini-layout span {
-      background: #94a3b8;
-      border-radius: 2px;
-    }
+  photos.innerHTML = "";
 
-    .layout-btn.active .mini-layout span {
-      background: var(--primary);
-    }
+  images.forEach(function(img) {
 
-    .two {
-      grid-template-columns: 1fr 1fr;
-    }
+    const image = document.createElement("img");
 
-    .three {
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1fr 1fr;
-    }
+    image.src = img.src;
+    image.className = "photo";
 
-    .three span:first-child {
-      grid-row: 1 / 3;
-    }
+    photos.appendChild(image);
 
-    .four {
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1fr 1fr;
-    }
+  });
 
-    .six {
-      grid-template-columns: repeat(3, 1fr);
-      grid-template-rows:
+}
+
+
+function getSize() {
+
+  if (format.value === "portrait") {
+    return [1080, 1350];
+  }
+
+  if (format.value === "landscape") {
+    return [1200, 800];
+  }
+
+  if (format.value === "story") {
+    return [1080, 1920];
+  }
+
+  return [1080, 1080];
+
+}
+
+
+function makeCollage() {
+
+  if (images.length < 2) {
+
+    canvas.style.display = "none";
+    empty.style.display = "block";
+
+    jpg.disabled = true;
+    png.disabled = true;
+
+    return;
+  }
+
+  canvas.style.display = "block";
+  empty.style.display = "none";
+
+  jpg.disabled = false;
+  png.disabled = false;
+
+  const size = getSize();
+
+  canvas.width = size[0];
+  canvas.height = size[1];
+
+  ctx.fillStyle = background.value;
+
+  ctx.fillRect(
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+
+  let columns = 2;
+  let rows = 1;
+
+  const selectedLayout = Number(layout.value);
+
+  if (selectedLayout === 2) {
+    columns = 2;
+    rows = 1;
+  }
+
+  if (selectedLayout === 3) {
+    columns = 2;
+    rows = 2;
+  }
+
+  if (selectedLayout === 4) {
+    columns = 2;
+    rows = 2;
+  }
+
+  if (selectedLayout === 6) {
+    columns = 3;
+    rows = 2;
+  }
+
+  if (selectedLayout === 9) {
+    columns = 3;
+    rows = 3;
+  }
+
+  const gap = Number(space.value);
+
+  const cellWidth =
+    (canvas.width - gap * (columns + 1)) / columns;
+
+  const cellHeight =
+    (canvas.height - gap * (rows + 1)) / rows;
+
+  const total =
+    Math.min(selectedLayout, images.length);
+
+  for (let i = 0; i < total; i++) {
+
+    const col = i % columns;
+    const row = Math.floor(i / columns);
+
+    const x =
+      gap + col * (cellWidth + gap);
+
+    const y =
+      gap + row * (cellHeight + gap);
+
+    drawImage(
+      images[i],
+      x,
+      y,
+      cellWidth,
+      cellHeight
+    );
+
+  }
+
+  if (text.value.trim() !== "") {
+
+    const message = text.value.trim();
+
+    ctx.font = "bold 42px Arial";
+    ctx.textAlign = "center";
+
+    const x = canvas.width / 2;
+    const y = canvas.height - 50;
+
+    ctx.fillStyle = "rgba(0,0,0,.55)";
+
+    ctx.fillRect(
+      0,
+      canvas.height - 90,
+      canvas.width,
+      90
+    );
+
+    ctx.fillStyle = "#ffffff";
+
+    ctx.fillText(
+      message,
+      x,
+      y
+    );
+
+  }
+
+}
+
+
+function drawImage(img, x, y, width, height) {
+
+  const imageRatio =
+    img.width / img.height;
+
+  const boxRatio =
+    width / height;
+
+  let sourceWidth = img.width;
+  let sourceHeight = img.height;
+
+  let sourceX = 0;
+  let sourceY = 0;
+
+  if (imageRatio > boxRatio) {
+
+    sourceWidth =
+      img.height * boxRatio;
+
+    sourceX =
+      (img.width - sourceWidth) / 2;
+
+  } else {
+
+    sourceHeight =
+      img.width / boxRatio;
+
+    sourceY =
+      (img.height - sourceHeight) / 2;
+
+  }
+
+  ctx.drawImage(
+    img,
+    sourceX,
+    sourceY,
+    sourceWidth,
+    sourceHeight,
+    x,
+    y,
+    width,
+    height
+  );
+
+}
+
+
+function download(type) {
+
+  if (images.length < 2) {
+    return;
+  }
+
+  const mime =
+    type === "jpg"
+      ? "image/jpeg"
+      : "image/png";
+
+  const extension =
+    type === "jpg"
+      ? "jpg"
+      : "png";
+
+  canvas.toBlob(function(blob) {
+
+    const url =
+      URL.createObjectURL(blob);
+
+    const link =
+      document.createElement("a");
+
+    link.href = url;
+    link.download =
+      "photo-collage." + extension;
+
+    link.click();
+
+    URL.revokeObjectURL(url);
+
+  }, mime, 0.92);
+
+}
+
+
+jpg.addEventListener("click", function() {
+  download("jpg");
+});
+
+png.addEventListener("click", function() {
+  download("png");
+});
+
+</script>
+
+</body>
+</html>
