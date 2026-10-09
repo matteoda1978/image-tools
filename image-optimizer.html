@@ -2,16 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Free Image Optimizer Online – Reduce Image Size</title>
   <meta name="description" content="Optimize images online for websites, social media and email. Reduce JPEG file size, compare before and after, and download your optimized image for free.">
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://matteoda1978.github.io/image-tools/image-optimizer.html">
-
-  <meta property="og:title" content="Free Image Optimizer Online">
-  <meta property="og:description" content="Reduce image file size online and download optimized images for free.">
-  <meta property="og:type" content="website">
 
   <style>
     :root {
@@ -39,14 +35,14 @@
     }
 
     header {
-      background: #ffffff;
+      background: #fff;
       border-bottom: 1px solid var(--border);
       padding: 17px 16px;
     }
 
     .header-inner {
       max-width: 1050px;
-      margin: 0 auto;
+      margin: auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -79,7 +75,7 @@
 
     main {
       max-width: 1000px;
-      margin: 0 auto;
+      margin: auto;
       padding: 30px 16px 48px;
     }
 
@@ -97,7 +93,7 @@
 
     .hero p {
       max-width: 650px;
-      margin: 0 auto;
+      margin: auto;
       color: var(--muted);
     }
 
@@ -143,7 +139,7 @@
       display: block;
       width: 100%;
       max-width: 360px;
-      margin: 0 auto;
+      margin: auto;
       padding: 10px;
       background: #fff;
       border: 1px solid var(--border);
@@ -168,13 +164,16 @@
       font: inherit;
     }
 
-    .preset strong {
+    .preset strong,
+    .preset span {
       display: block;
+    }
+
+    .preset strong {
       margin-bottom: 4px;
     }
 
     .preset span {
-      display: block;
       font-size: 12px;
       color: var(--muted);
     }
@@ -339,6 +338,7 @@
       text-align: center;
     }
 
+    /* Clean image preview: no border, padding, outline or background */
     .preview img {
       display: block;
       width: auto;
@@ -346,7 +346,10 @@
       max-height: 350px;
       height: auto;
       margin: 10px auto;
-      border: 0;
+      padding: 0;
+      border: none;
+      outline: none;
+      box-shadow: none;
       border-radius: 0;
       background: transparent;
       object-fit: contain;
@@ -514,14 +517,7 @@
         <span id="qualityValue" class="quality-value">80%</span>
       </div>
 
-      <input
-        id="quality"
-        type="range"
-        min="10"
-        max="100"
-        value="80"
-        step="5"
-      >
+      <input id="quality" type="range" min="10" max="100" value="80" step="5">
 
       <div class="range-labels">
         <span>Smaller file</span>
@@ -537,7 +533,6 @@
         <button id="optimizeBtn" class="action primary" type="button">
           Optimize Image
         </button>
-
         <button id="resetBtn" class="action secondary" type="button">
           Reset
         </button>
@@ -554,12 +549,10 @@
           <span class="stat-label">Original size</span>
           <span id="originalSize" class="stat-value">—</span>
         </div>
-
         <div class="stat">
           <span class="stat-label">Optimized size</span>
           <span id="optimizedSize" class="stat-value">—</span>
         </div>
-
         <div class="stat">
           <span class="stat-label">Size change</span>
           <span id="savingValue" class="stat-value saving">—</span>
@@ -617,25 +610,17 @@
 
       <div class="faq">
         <h3>Which image formats are supported?</h3>
-        <p>
-          You can upload JPEG, PNG and WebP images. The optimized
-          download is saved in JPEG format.
-        </p>
+        <p>You can upload JPEG, PNG and WebP images. The optimized download is saved in JPEG format.</p>
       </div>
 
       <div class="faq">
         <h3>Will image quality change?</h3>
-        <p>
-          JPEG optimization can reduce image quality. Higher quality
-          settings usually preserve more detail but produce larger files.
-        </p>
+        <p>JPEG optimization can reduce image quality. Higher quality settings usually preserve more detail but produce larger files.</p>
       </div>
 
       <div class="faq">
         <h3>Are my images uploaded to a server?</h3>
-        <p>
-          No. The image is processed locally in your browser.
-        </p>
+        <p>No. The image is processed locally in your browser.</p>
       </div>
     </section>
   </main>
@@ -682,9 +667,7 @@
 
       function formatBytes(bytes) {
         if (bytes < 1024) return bytes + " B";
-        if (bytes < 1024 * 1024) {
-          return (bytes / 1024).toFixed(1) + " KB";
-        }
+        if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
         return (bytes / (1024 * 1024)).toFixed(2) + " MB";
       }
 
@@ -713,6 +696,7 @@
         beforeImage.removeAttribute("src");
         beforeInfo.textContent = "";
         afterInfo.textContent = "";
+        savingValue.classList.add("saving");
       }
 
       function clearAll() {
@@ -730,11 +714,7 @@
       }
 
       function isSupported(file) {
-        return [
-          "image/jpeg",
-          "image/png",
-          "image/webp"
-        ].includes(file.type);
+        return ["image/jpeg", "image/png", "image/webp"].includes(file.type);
       }
 
       imageInput.addEventListener("change", () => {
@@ -751,9 +731,7 @@
 
         selectedFile = file;
         originalUrl = URL.createObjectURL(file);
-
-        fileInfo.textContent =
-          file.name + " · " + formatBytes(file.size);
+        fileInfo.textContent = file.name + " · " + formatBytes(file.size);
         fileInfo.hidden = false;
 
         showStatus("Image ready. Choose a preset and click Optimize Image.", "success");
@@ -761,12 +739,8 @@
 
       quality.addEventListener("input", () => {
         qualityValue.textContent = quality.value + "%";
-
         presetButtons.forEach(button => {
-          button.classList.toggle(
-            "active",
-            button.dataset.quality === quality.value
-          );
+          button.classList.toggle("active", button.dataset.quality === quality.value);
         });
       });
 
@@ -789,6 +763,7 @@
 
         const version = imageVersion;
         const file = selectedFile;
+        const sourceUrl = originalUrl;
         const qualitySetting = Number(quality.value) / 100;
 
         optimizeBtn.disabled = true;
@@ -801,10 +776,8 @@
 
           await new Promise((resolve, reject) => {
             img.onload = resolve;
-            img.onerror = () => reject(
-              new Error("The selected image could not be opened.")
-            );
-            img.src = originalUrl;
+            img.onerror = () => reject(new Error("The selected image could not be opened."));
+            img.src = sourceUrl;
           });
 
           if (version !== imageVersion) return;
@@ -822,8 +795,6 @@
             throw new Error("Your browser could not create the image canvas.");
           }
 
-          // JPEG does not support transparency.
-          // Fill with white before drawing transparent PNG/WebP images.
           context.fillStyle = "#ffffff";
           context.fillRect(0, 0, canvas.width, canvas.height);
           context.drawImage(img, 0, 0);
@@ -841,29 +812,23 @@
           optimizedBlob = blob;
           optimizedUrl = URL.createObjectURL(blob);
 
-          beforeImage.src = originalUrl;
+          beforeImage.src = sourceUrl;
           afterImage.src = optimizedUrl;
 
           originalSize.textContent = formatBytes(file.size);
           optimizedSize.textContent = formatBytes(blob.size);
 
           const difference = file.size - blob.size;
-          const percentage = file.size > 0
-            ? (difference / file.size) * 100
-            : 0;
+          const percentage = file.size > 0 ? difference / file.size * 100 : 0;
+
+          savingValue.classList.toggle("saving", difference >= 0);
 
           if (difference > 0) {
             savingValue.textContent = percentage.toFixed(1) + "% smaller";
           } else if (difference < 0) {
-            savingValue.textContent =
-              Math.abs(percentage).toFixed(1) + "% larger";
-            savingValue.classList.remove("saving");
+            savingValue.textContent = Math.abs(percentage).toFixed(1) + "% larger";
           } else {
             savingValue.textContent = "Same size";
-          }
-
-          if (difference > 0) {
-            savingValue.classList.add("saving");
           }
 
           beforeInfo.textContent =
@@ -879,8 +844,7 @@
             showStatus("Optimization complete. Your image is smaller.", "success");
           } else {
             showStatus(
-              "Optimization complete, but this JPEG is not smaller than the original. Try a lower quality setting.",
-              ""
+              "Optimization complete, but this file is not smaller than the original. Try a lower quality setting."
             );
           }
 
@@ -888,10 +852,7 @@
 
         } catch (error) {
           if (version === imageVersion) {
-            showStatus(
-              error.message || "Something went wrong. Please try another image.",
-              "error"
-            );
+            showStatus(error.message || "Something went wrong. Please try another image.", "error");
           }
         } finally {
           if (version === imageVersion) {
@@ -922,10 +883,7 @@
         qualityValue.textContent = "80%";
 
         presetButtons.forEach(button => {
-          button.classList.toggle(
-            "active",
-            button.dataset.quality === "80"
-          );
+          button.classList.toggle("active", button.dataset.quality === "80");
         });
 
         showStatus("Reset complete. Select an image to start again.");
