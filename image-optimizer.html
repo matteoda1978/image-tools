@@ -1,256 +1,324 @@
+
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Ottimizza immagini online gratis | Image Tools</title>
-
-  <meta
-    name="description"
-    content="Ottimizza e comprimi immagini online gratis. Riduci il peso delle immagini mantenendo una buona qualità, direttamente dal browser."
-  >
-
-  <meta name="robots" content="index, follow">
+  <title>Image Optimizer Online Free – Free Image Tools</title>
+  <meta name="description" content="Optimize images online for free. Reduce image file sizes for websites, social media and email. Compare results and download your optimized image directly in your browser.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://matteoda1978.github.io/image-tools/image-optimizer.html">
 
   <style>
-    * {
-      box-sizing: border-box;
+    * { box-sizing: border-box; }
+
+    :root {
+      color-scheme: dark;
+      --bg: #0b1020;
+      --panel: #151d30;
+      --panel2: #0f1729;
+      --border: #293650;
+      --text: #f1f5f9;
+      --muted: #aab7cc;
+      --accent: #8ba5ff;
+      --accent-dark: #617bc9;
+      --green: #32c77b;
     }
 
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
-      background: #f5f7fb;
-      color: #1f2937;
+      background: var(--bg);
+      color: var(--text);
       line-height: 1.6;
     }
 
     header {
-      background: #111827;
-      color: white;
-      padding: 18px 20px;
-    }
-
-    header .header-inner {
-      max-width: 1000px;
-      margin: auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
+      text-align: center;
+      padding: 28px 16px;
+      background: #111a2d;
+      border-bottom: 1px solid var(--border);
     }
 
     header a {
-      color: white;
+      color: var(--text);
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 19px;
+    }
+
+    header h1 {
+      margin: 18px 0 8px;
+      font-size: clamp(27px, 5vw, 38px);
+      line-height: 1.2;
+    }
+
+    header p {
+      color: var(--muted);
+      margin: 0 auto;
+      max-width: 680px;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px 22px;
+      padding: 14px;
+      background: var(--panel);
+      border-bottom: 1px solid var(--border);
+    }
+
+    nav a, .text-link {
+      color: var(--accent);
       text-decoration: none;
       font-weight: bold;
     }
 
-    .logo {
-      font-size: 21px;
-    }
-
-    nav a {
-      margin-left: 18px;
-      font-size: 14px;
+    nav a:hover, .text-link:hover {
+      text-decoration: underline;
     }
 
     main {
-      max-width: 1000px;
+      max-width: 920px;
       margin: auto;
-      padding: 45px 20px 70px;
+      padding: 25px 16px 50px;
     }
 
-    .hero {
-      text-align: center;
-      margin-bottom: 35px;
-    }
-
-    .hero h1 {
-      font-size: 40px;
-      margin: 0 0 15px;
-      color: #111827;
-    }
-
-    .hero p {
-      max-width: 720px;
-      margin: auto;
-      font-size: 18px;
-      color: #5b6472;
-    }
-
-    .tool-card {
-      background: white;
+    .tool-card, .content-section {
+      background: var(--panel);
+      border: 1px solid var(--border);
       border-radius: 18px;
-      padding: 30px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.07);
-      margin-bottom: 40px;
+      padding: 26px;
+      margin-bottom: 22px;
     }
 
-    .tool-card h2 {
+    .tool-card h2, .content-section h2 {
       margin-top: 0;
-      font-size: 25px;
     }
 
     .upload-area {
-      border: 2px dashed #cbd5e1;
-      border-radius: 14px;
-      padding: 35px 20px;
+      border: 2px dashed #526483;
+      border-radius: 15px;
+      padding: 28px 16px;
       text-align: center;
-      background: #f8fafc;
+      background: var(--panel2);
       margin: 20px 0;
     }
 
     input[type="file"] {
-      max-width: 100%;
+      width: 100%;
+      max-width: 450px;
       font-size: 16px;
+      color: var(--text);
+      margin-top: 8px;
+    }
+
+    input[type="file"]::file-selector-button {
+      padding: 10px 13px;
+      margin-right: 10px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: #263552;
+      color: white;
+      cursor: pointer;
+    }
+
+    .info {
+      color: var(--muted);
+      font-size: 14px;
+      overflow-wrap: anywhere;
+    }
+
+    label {
+      display: block;
+      margin: 20px 0 8px;
+      font-weight: bold;
     }
 
     select {
       width: 100%;
-      max-width: 400px;
-      padding: 13px;
-      border: 1px solid #cbd5e1;
+      min-height: 52px;
+      padding: 12px;
+      border: 1px solid #526483;
       border-radius: 10px;
+      background: var(--panel2);
+      color: var(--text);
       font-size: 16px;
-      background: white;
     }
 
-    .option {
-      margin-bottom: 20px;
-    }
+    button { cursor: pointer; font-family: inherit; }
 
-    .option label {
+    .primary {
       display: block;
-      font-weight: bold;
-      margin-bottom: 8px;
+      width: 100%;
+      min-height: 66px;
+      margin-top: 22px;
+      padding: 16px 20px;
+      border: 0;
+      border-radius: 14px;
+      background: var(--accent);
+      color: #08101d;
+      font-size: 19px;
+      font-weight: 850;
+      box-shadow: 0 4px 0 var(--accent-dark);
     }
 
-    button {
-      border: 0;
-      border-radius: 10px;
-      padding: 13px 20px;
+    .primary:hover { background: #a5b8ff; }
+
+    .primary:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .secondary {
+      width: 100%;
+      min-height: 52px;
+      margin-top: 16px;
+      padding: 12px;
+      border: 1px solid #526483;
+      border-radius: 11px;
+      background: transparent;
+      color: var(--text);
       font-size: 16px;
       font-weight: bold;
-      cursor: pointer;
-      background: #2563eb;
-      color: white;
     }
 
-    button:hover {
-      background: #1d4ed8;
+    .secondary:hover { background: #202d45; }
+
+    .status {
+      display: none;
+      margin-top: 18px;
+      padding: 13px 15px;
+      border-radius: 10px;
+      overflow-wrap: anywhere;
     }
 
-    button:disabled {
-      background: #94a3b8;
-      cursor: not-allowed;
+    .error {
+      background: #451f2a;
+      border: 1px solid #8d384b;
+      color: #ffd6dd;
+    }
+
+    .success {
+      background: #123729;
+      border: 1px solid #267a50;
+      color: #c6f7d9;
     }
 
     .results {
       display: none;
-      margin-top: 30px;
+      margin-top: 28px;
     }
 
     .stats {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 12px;
-      margin-bottom: 25px;
+      margin-bottom: 20px;
     }
 
     .stat {
-      background: #f8fafc;
-      border: 1px solid #e5e7eb;
+      min-width: 0;
+      background: var(--panel2);
+      border: 1px solid var(--border);
       border-radius: 12px;
       padding: 15px;
       text-align: center;
+      overflow-wrap: anywhere;
     }
 
     .stat strong {
       display: block;
       font-size: 20px;
-      color: #111827;
-      margin-top: 4px;
+      margin-top: 5px;
     }
 
     .stat span {
+      color: var(--muted);
       font-size: 13px;
-      color: #64748b;
     }
 
     .saving-box {
-      background: #ecfdf5;
-      border: 1px solid #a7f3d0;
+      background: #123729;
+      border: 1px solid #267a50;
       border-radius: 12px;
       padding: 16px;
       margin-bottom: 25px;
       text-align: center;
       font-weight: bold;
-      color: #065f46;
+      color: #c6f7d9;
+      overflow-wrap: anywhere;
+    }
+
+    .saving-box.neutral {
+      background: #1d2b43;
+      border-color: #526483;
+      color: var(--text);
     }
 
     .comparison {
-      display: flex;
-      flex-direction: column;
-      gap: 25px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
     }
 
     .preview {
+      min-width: 0;
       text-align: center;
+      background: var(--panel2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
     }
 
-    .preview h3 {
-      margin-bottom: 10px;
-    }
+    .preview h3 { margin-top: 0; }
 
     .preview img {
+      display: block;
       max-width: 100%;
-      max-height: 450px;
-      border-radius: 10px;
-      border: 1px solid #e5e7eb;
-    }
-
-    .download {
-      text-align: center;
-      margin-top: 25px;
-    }
-
-    .info {
-      color: #64748b;
-      font-size: 14px;
-      margin-top: 10px;
-    }
-
-    .content-section {
+      max-height: 350px;
+      height: auto;
+      margin: 10px auto;
+      border: 1px solid var(--border);
+      border-radius: 9px;
       background: white;
-      border-radius: 16px;
-      padding: 30px;
-      margin-bottom: 25px;
+      object-fit: contain;
     }
 
-    .content-section h2 {
-      color: #111827;
-      margin-top: 0;
+    .download { margin-top: 24px; }
+
+    .download a {
+      display: block;
+      width: 100%;
+      padding: 16px;
+      background: var(--green);
+      color: #062316;
+      text-align: center;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 850;
+      font-size: 17px;
     }
 
-    .content-section h3 {
-      margin-bottom: 5px;
-    }
+    .content-section h3 { margin-top: 24px; }
 
-    .content-section p {
-      color: #4b5563;
+    .content-section p, .content-section li {
+      color: var(--muted);
     }
 
     .benefits {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 15px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
     }
 
     .benefit {
-      background: #f8fafc;
-      padding: 20px;
+      background: var(--panel2);
+      border: 1px solid var(--border);
+      padding: 16px;
       border-radius: 12px;
     }
 
@@ -261,55 +329,22 @@
 
     footer {
       text-align: center;
-      padding: 30px 20px;
-      color: #64748b;
+      padding: 25px 15px;
+      color: var(--muted);
       font-size: 14px;
+      border-top: 1px solid var(--border);
     }
 
-    footer a {
-      color: #2563eb;
-      text-decoration: none;
-    }
+    @media (max-width: 600px) {
+      main { padding: 18px 12px 35px; }
 
-    @media (max-width: 800px) {
-      .stats {
-        grid-template-columns: repeat(2, 1fr);
-      }
+      .tool-card, .content-section { padding: 19px; }
 
-      .benefits {
-        grid-template-columns: 1fr;
-      }
+      .comparison, .benefits { grid-template-columns: 1fr; }
 
-      .hero h1 {
-        font-size: 32px;
-      }
-    }
+      .primary { min-height: 68px; }
 
-    @media (max-width: 500px) {
-      header .header-inner {
-        flex-direction: column;
-      }
-
-      nav a {
-        margin: 0 8px;
-      }
-
-      main {
-        padding: 30px 14px 50px;
-      }
-
-      .tool-card,
-      .content-section {
-        padding: 20px;
-      }
-
-      .stats {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .stat strong {
-        font-size: 17px;
-      }
+      .stat strong { font-size: 18px; }
     }
   </style>
 </head>
@@ -317,262 +352,225 @@
 <body>
 
 <header>
-  <div class="header-inner">
-    <a href="index.html" class="logo">🖼️ Image Tools</a>
-
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="image-optimizer.html">Ottimizza immagini</a>
-    </nav>
-  </div>
+  <a href="index.html">🖼️ Free Image Tools</a>
+  <h1>Free Online Image Optimizer</h1>
+  <p>Reduce image file sizes for websites, social media and email — directly in your browser.</p>
 </header>
+
+<nav aria-label="Main navigation">
+  <a href="index.html">All tools</a>
+  <a href="image-compressor.html">Image Compressor</a>
+  <a href="image-resizer.html">Image Resizer</a>
+  <a href="image-converter.html">Image Converter</a>
+</nav>
 
 <main>
 
-  <section class="hero">
-    <h1>Ottimizza immagini online gratis</h1>
-
-    <p>
-      Riduci il peso delle tue immagini mantenendo una buona qualità.
-      Ottimizza foto e immagini direttamente dal browser, senza installare programmi.
-    </p>
-  </section>
-
-
   <section class="tool-card">
-
-    <h2>⚡ Ottimizzatore automatico</h2>
-
-    <p>
-      Carica un'immagine e scegli dove vuoi utilizzarla.
-      Lo strumento applicherà automaticamente impostazioni adatte al tuo utilizzo.
-    </p>
+    <h2>⚡ Optimize your image</h2>
+    <p>Select an image and choose how you want to use it. The tool will resize it when necessary and apply JPEG compression settings for your chosen purpose.</p>
 
     <div class="upload-area">
+      <label for="imageInput">Choose an image</label>
       <input type="file" id="imageInput" accept="image/*">
-      <p class="info">
-        L'immagine viene elaborata direttamente nel tuo browser.
-      </p>
+      <p class="info">Processing takes place locally in your browser. Images are not intentionally uploaded to a server.</p>
     </div>
 
-    <div class="option">
-      <label for="preset">Ottimizza per:</label>
+    <label for="preset">Optimize for</label>
+    <select id="preset">
+      <option value="web">🌐 Website</option>
+      <option value="social">📱 Social media</option>
+      <option value="email">✉️ Email</option>
+    </select>
 
-      <select id="preset">
-        <option value="web">🌐 Sito web</option>
-        <option value="social">📱 Social media</option>
-        <option value="email">✉️ Email</option>
-      </select>
-    </div>
-
-    <button id="optimizeBtn" disabled>
-      ⚡ Ottimizza immagine
+    <button type="button" id="optimizeBtn" class="primary" disabled>
+      ⚡ Optimize Image
     </button>
 
+    <button type="button" id="clearBtn" class="secondary">
+      Clear and start again
+    </button>
+
+    <div id="error" class="status error" role="alert"></div>
+    <div id="message" class="status success" role="status"></div>
+
     <div class="results" id="results">
+      <h2>Optimization results</h2>
 
       <div class="stats">
-
         <div class="stat">
-          <span>Dimensione originale</span>
-          <strong id="originalSize">-</strong>
+          <span>Original file size</span>
+          <strong id="originalSize">—</strong>
         </div>
 
         <div class="stat">
-          <span>Dimensione ottimizzata</span>
-          <strong id="optimizedSize">-</strong>
+          <span>Optimized file size</span>
+          <strong id="optimizedSize">—</strong>
         </div>
 
         <div class="stat">
-          <span>Risparmio</span>
-          <strong id="savedPercent">-</strong>
+          <span>File size change</span>
+          <strong id="savedPercent">—</strong>
         </div>
 
         <div class="stat">
-          <span>Spazio risparmiato</span>
-          <strong id="savedSize">-</strong>
+          <span>Space saved</span>
+          <strong id="savedSize">—</strong>
         </div>
 
         <div class="stat">
-          <span>Dimensioni finali</span>
-          <strong id="dimensions">-</strong>
+          <span>Output dimensions</span>
+          <strong id="dimensions">—</strong>
         </div>
 
+        <div class="stat">
+          <span>Output format</span>
+          <strong id="outputFormat">—</strong>
+        </div>
       </div>
 
       <div class="saving-box" id="savingBox"></div>
 
       <div class="comparison">
-
         <div class="preview">
-          <h3>Prima</h3>
-          <img id="beforeImage" alt="Immagine originale">
+          <h3>Before</h3>
+          <img id="beforeImage" alt="Original image preview">
+          <p class="info" id="beforeInfo"></p>
         </div>
 
         <div class="preview">
-          <h3>Dopo</h3>
-          <img id="afterImage" alt="Immagine ottimizzata">
+          <h3>After</h3>
+          <img id="afterImage" alt="Optimized image preview">
+          <p class="info" id="afterInfo"></p>
         </div>
-
       </div>
 
       <div class="download">
-        <button id="downloadBtn">
-          ⬇️ Scarica immagine ottimizzata
-        </button>
-
+        <a id="downloadLink" href="#" download="optimized-image.jpg">
+          ⬇ Download Optimized Image
+        </a>
         <p class="info" id="qualityInfo"></p>
       </div>
-
     </div>
-
   </section>
 
-
   <section class="content-section">
-
-    <h2>Perché ottimizzare le immagini?</h2>
-
-    <p>
-      Le immagini troppo pesanti possono rallentare il caricamento di un sito,
-      aumentare il consumo di dati e peggiorare l'esperienza degli utenti.
-      Ottimizzare un'immagine significa ridurne il peso mantenendo un livello
-      di qualità adeguato al suo utilizzo.
-    </p>
+    <h2>Why optimize images?</h2>
+    <p>Large image files can slow down websites, use more mobile data and take longer to share. Image optimization can reduce file sizes and help improve loading performance, depending on the original image and the result.</p>
 
     <div class="benefits">
-
       <div class="benefit">
-        <strong>🚀 Siti più veloci</strong>
-        Riduci il peso delle immagini utilizzate nelle pagine web.
+        <strong>🚀 Website performance</strong>
+        Prepare lighter images for web pages.
       </div>
-
       <div class="benefit">
-        <strong>📱 File più leggeri</strong>
-        Prepara immagini più adatte alla condivisione sui social.
+        <strong>📱 Easier sharing</strong>
+        Create smaller files for social media and messages.
       </div>
-
       <div class="benefit">
-        <strong>💾 Meno spazio</strong>
-        Riduci le dimensioni dei file prima di archiviarli o inviarli.
+        <strong>💾 Less storage</strong>
+        Reduce file sizes before storing or sending images.
       </div>
-
     </div>
-
   </section>
 
-
   <section class="content-section">
+    <h2>How to optimize an image</h2>
 
-    <h2>Come funziona l'ottimizzazione?</h2>
+    <h3>1. Select an image</h3>
+    <p>Choose an image that your browser can open.</p>
 
-    <h3>1. Carica la tua immagine</h3>
-    <p>
-      Seleziona una foto o un'immagine dal tuo dispositivo.
-    </p>
+    <h3>2. Choose a preset</h3>
+    <p>Website, social media and email presets use different maximum widths and JPEG quality settings.</p>
 
-    <h3>2. Scegli l'utilizzo</h3>
-    <p>
-      Puoi scegliere tra sito web, social media ed email.
-    </p>
+    <h3>3. Optimize the image</h3>
+    <p>The tool may resize the image and converts it to JPEG. The original image is not overwritten.</p>
 
-    <h3>3. Ottimizza automaticamente</h3>
-    <p>
-      Image Tools ridimensiona l'immagine quando necessario e applica una
-      compressione JPEG adatta al preset scelto.
-    </p>
+    <h3>4. Compare and download</h3>
+    <p>Review the output dimensions and file size, then download the optimized image.</p>
 
-    <h3>4. Controlla il risultato</h3>
-    <p>
-      Puoi confrontare l'immagine originale con quella ottimizzata e vedere
-      quanto spazio hai risparmiato.
-    </p>
-
+    <p><strong>Important:</strong> This tool produces JPEG files. Transparent backgrounds are not preserved, and images that are already well optimized may become larger after conversion.</p>
   </section>
 
-
   <section class="content-section">
+    <h2>Frequently asked questions</h2>
 
-    <h2>Domande frequenti</h2>
+    <h3>Is the image optimizer free?</h3>
+    <p>Yes. You can use this tool for free in your browser.</p>
 
-    <h3>È gratis?</h3>
-    <p>
-      Sì. Questo strumento può essere utilizzato gratuitamente.
-    </p>
+    <h3>Do I need to install anything?</h3>
+    <p>No installation is required. Processing uses your browser and device.</p>
 
-    <h3>Devo installare un programma?</h3>
-    <p>
-      No. L'ottimizzazione avviene direttamente nel browser.
-    </p>
+    <h3>Are my images uploaded to a server?</h3>
+    <p>No image upload is required for this tool. The selected file is processed locally in your browser.</p>
 
-    <h3>La mia immagine viene caricata su un server?</h3>
-    <p>
-      L'elaborazione viene effettuata direttamente nel browser del dispositivo.
-      Non è necessario caricare l'immagine su un server per eseguire
-      l'ottimizzazione.
-    </p>
+    <h3>How much space can I save?</h3>
+    <p>The result depends on the original image, its dimensions and its compression. The tool reports the actual file size difference after processing.</p>
 
-    <h3>Quanto spazio posso risparmiare?</h3>
-    <p>
-      Dipende dal formato, dalle dimensioni e dal contenuto dell'immagine.
-      Dopo l'elaborazione puoi vedere esattamente la dimensione originale,
-      quella ottimizzata e lo spazio effettivamente risparmiato.
-    </p>
+    <h3>Does optimization preserve transparency?</h3>
+    <p>No. The current optimizer converts the output to JPEG, which does not support transparent backgrounds. Use the <a class="text-link" href="image-converter.html">Image Converter</a> if you need to create PNG or WebP output.</p>
 
+    <h3>What if the optimized image is larger?</h3>
+    <p>Some images are already highly compressed. The optimizer shows when the output is larger instead of claiming a saving that did not occur.</p>
+
+    <h3>Can I use this tool on my phone?</h3>
+    <p>Yes. It is designed for smartphones, tablets and computers. Very large images may take longer to process.</p>
+
+    <h3>More free image tools</h3>
+    <ul>
+      <li><a class="text-link" href="image-compressor.html">Compress images</a></li>
+      <li><a class="text-link" href="image-resizer.html">Resize images</a></li>
+      <li><a class="text-link" href="image-converter.html">Convert image formats</a></li>
+    </ul>
   </section>
 
 </main>
 
 <footer>
-  <p>
-    <a href="index.html">← Torna a Image Tools</a>
-  </p>
-
-  <p>
-    Image Tools — strumenti gratuiti per le immagini online.
-  </p>
+  <p><a class="text-link" href="index.html">← Back to Free Image Tools</a></p>
+  <p>© 2026 Free Image Tools · Free online image utilities</p>
 </footer>
-
 
 <script>
   const imageInput = document.getElementById("imageInput");
   const preset = document.getElementById("preset");
   const optimizeBtn = document.getElementById("optimizeBtn");
+  const clearBtn = document.getElementById("clearBtn");
 
   const results = document.getElementById("results");
+  const error = document.getElementById("error");
+  const message = document.getElementById("message");
 
   const originalSizeEl = document.getElementById("originalSize");
   const optimizedSizeEl = document.getElementById("optimizedSize");
   const savedPercentEl = document.getElementById("savedPercent");
   const savedSizeEl = document.getElementById("savedSize");
   const dimensionsEl = document.getElementById("dimensions");
+  const outputFormatEl = document.getElementById("outputFormat");
 
   const savingBox = document.getElementById("savingBox");
   const beforeImage = document.getElementById("beforeImage");
   const afterImage = document.getElementById("afterImage");
-
-  const downloadBtn = document.getElementById("downloadBtn");
+  const beforeInfo = document.getElementById("beforeInfo");
+  const afterInfo = document.getElementById("afterInfo");
+  const downloadLink = document.getElementById("downloadLink");
   const qualityInfo = document.getElementById("qualityInfo");
 
   let selectedFile = null;
+  let originalUrl = null;
+  let optimizedUrl = null;
   let optimizedBlob = null;
+  let jobId = 0;
 
+  const MAX_PIXELS = 40000000;
 
   function formatBytes(bytes) {
-    if (bytes < 1024) {
-      return bytes + " B";
-    }
-
-    if (bytes < 1024 * 1024) {
-      return (bytes / 1024).toFixed(1) + " KB";
-    }
-
+    if (bytes < 1024) return bytes + " B";
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
     return (bytes / (1024 * 1024)).toFixed(2) + " MB";
   }
 
-
   function getPresetSettings(value) {
-
     if (value === "social") {
       return {
         maxWidth: 1600,
@@ -592,158 +590,247 @@
     return {
       maxWidth: 1920,
       quality: 0.80,
-      label: "Sito web"
+      label: "Website"
     };
   }
 
-
-  imageInput.addEventListener("change", function() {
-
-    selectedFile = imageInput.files[0];
-
+  function clearOutput() {
     results.style.display = "none";
+
+    if (originalUrl) {
+      URL.revokeObjectURL(originalUrl);
+      originalUrl = null;
+    }
+
+    if (optimizedUrl) {
+      URL.revokeObjectURL(optimizedUrl);
+      optimizedUrl = null;
+    }
+
     optimizedBlob = null;
 
-    if (!selectedFile) {
-      optimizeBtn.disabled = true;
+    beforeImage.removeAttribute("src");
+    afterImage.removeAttribute("src");
+    downloadLink.removeAttribute("href");
+  }
+
+  function hideMessages() {
+    error.style.display = "none";
+    message.style.display = "none";
+  }
+
+  function showError(text) {
+    error.textContent = text;
+    error.style.display = "block";
+  }
+
+  function resetButton() {
+    optimizeBtn.disabled = !selectedFile;
+    optimizeBtn.textContent = "⚡ Optimize Image";
+  }
+
+  imageInput.addEventListener("change", function() {
+    jobId++;
+    clearOutput();
+    hideMessages();
+
+    selectedFile = imageInput.files[0] || null;
+    resetButton();
+
+    if (!selectedFile) return;
+
+    if (selectedFile.type && !selectedFile.type.startsWith("image/")) {
+      selectedFile = null;
+      imageInput.value = "";
+      resetButton();
+      showError("Please select a valid image file.");
       return;
     }
 
-    optimizeBtn.disabled = false;
-
-    const originalUrl = URL.createObjectURL(selectedFile);
+    originalUrl = URL.createObjectURL(selectedFile);
     beforeImage.src = originalUrl;
+    beforeInfo.textContent = "Original: " + formatBytes(selectedFile.size);
+
+    message.textContent = "Image selected: " + selectedFile.name;
+    message.style.display = "block";
   });
 
+  clearBtn.addEventListener("click", function() {
+    jobId++;
+    selectedFile = null;
+    imageInput.value = "";
+    preset.value = "web";
+
+    clearOutput();
+    hideMessages();
+    resetButton();
+  });
 
   optimizeBtn.addEventListener("click", function() {
+    if (!selectedFile) return;
 
-    if (!selectedFile) {
-      return;
-    }
+    const file = selectedFile;
+    const settings = getPresetSettings(preset.value);
+    const currentJob = ++jobId;
+
+    clearOutput();
+    hideMessages();
 
     optimizeBtn.disabled = true;
-    optimizeBtn.textContent = "⏳ Ottimizzazione...";
+    optimizeBtn.textContent = "⏳ Optimizing...";
 
-    const settings = getPresetSettings(preset.value);
-
+    const sourceUrl = URL.createObjectURL(file);
     const img = new Image();
 
+    function finish() {
+      URL.revokeObjectURL(sourceUrl);
+
+      if (currentJob === jobId) {
+        resetButton();
+      }
+    }
+
     img.onload = function() {
-
-      let width = img.naturalWidth;
-      let height = img.naturalHeight;
-
-      if (width > settings.maxWidth) {
-
-        const ratio = settings.maxWidth / width;
-
-        width = settings.maxWidth;
-        height = Math.round(height * ratio);
+      if (currentJob !== jobId) {
+        finish();
+        return;
       }
 
-      const canvas = document.createElement("canvas");
+      try {
+        const originalWidth = img.naturalWidth;
+        const originalHeight = img.naturalHeight;
 
-      canvas.width = width;
-      canvas.height = height;
-
-      const ctx = canvas.getContext("2d");
-
-      ctx.drawImage(img, 0, 0, width, height);
-
-      canvas.toBlob(function(blob) {
-
-        if (!blob) {
-          optimizeBtn.disabled = false;
-          optimizeBtn.textContent = "⚡ Ottimizza immagine";
+        if (
+          !originalWidth ||
+          !originalHeight ||
+          originalWidth * originalHeight > MAX_PIXELS
+        ) {
+          finish();
+          showError("This image is too large to process safely in your browser. Please try a smaller image.");
           return;
         }
 
-        optimizedBlob = blob;
+        let width = originalWidth;
+        let height = originalHeight;
 
-        const originalBytes = selectedFile.size;
-        const optimizedBytes = blob.size;
-
-        let savedBytes = originalBytes - optimizedBytes;
-
-        if (savedBytes < 0) {
-          savedBytes = 0;
+        if (width > settings.maxWidth) {
+          const ratio = settings.maxWidth / width;
+          width = settings.maxWidth;
+          height = Math.max(1, Math.round(height * ratio));
         }
 
-        let savedPercent = 0;
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
 
-        if (originalBytes > 0) {
-          savedPercent = ((originalBytes - optimizedBytes) / originalBytes) * 100;
+        const ctx = canvas.getContext("2d");
 
-          if (savedPercent < 0) {
-            savedPercent = 0;
+        if (!ctx) {
+          finish();
+          showError("Your browser could not prepare this image. Please try another browser.");
+          return;
+        }
+
+        /* JPEG does not support transparency, so use a white background. */
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, width, height);
+        ctx.drawImage(img, 0, 0, width, height);
+
+        canvas.toBlob(function(blob) {
+          finish();
+
+          if (currentJob !== jobId) return;
+
+          if (!blob || blob.type !== "image/jpeg") {
+            showError("Image optimization failed. Please try another image.");
+            return;
           }
+
+          optimizedBlob = blob;
+          optimizedUrl = URL.createObjectURL(blob);
+          afterImage.src = optimizedUrl;
+
+          const originalBytes = file.size;
+          const outputBytes = blob.size;
+          const difference = originalBytes - outputBytes;
+          const percent = originalBytes > 0
+            ? (difference / originalBytes) * 100
+            : 0;
+
+          originalSizeEl.textContent = formatBytes(originalBytes);
+          optimizedSizeEl.textContent = formatBytes(outputBytes);
+          savedSizeEl.textContent = formatBytes(Math.abs(difference));
+          savedPercentEl.textContent =
+            (difference > 0 ? "" : difference < 0 ? "+" : "") +
+            Math.abs(percent).toFixed(1) + "%";
+
+          dimensionsEl.textContent = width + " × " + height + " px";
+          outputFormatEl.textContent = "JPEG";
+
+          savingBox.classList.remove("neutral");
+
+          if (difference > 0) {
+            savingBox.textContent =
+              "You saved " + formatBytes(difference) +
+              " (" + percent.toFixed(1) + "%) compared with the original file.";
+          } else if (difference < 0) {
+            savingBox.classList.add("neutral");
+            savingBox.textContent =
+              "The output is " + formatBytes(Math.abs(difference)) +
+              " (" + Math.abs(percent).toFixed(1) +
+              "%) larger than the original. The image may already be well compressed.";
+          } else {
+            savingBox.classList.add("neutral");
+            savingBox.textContent =
+              "The original and optimized files have the same file size.";
+          }
+
+          beforeInfo.textContent =
+            "Original dimensions: " + originalWidth + " × " +
+            originalHeight + " px";
+
+          afterInfo.textContent =
+            "Optimized dimensions: " + width + " × " + height + " px";
+
+          downloadLink.href = optimizedUrl;
+
+          const baseName = file.name.replace(/\.[^/.]+$/, "") || "image";
+          downloadLink.download = baseName + "-optimized.jpg";
+
+          qualityInfo.textContent =
+            "Preset: " + settings.label +
+            " · JPEG quality setting: " +
+            Math.round(settings.quality * 100) + "%" +
+            " · Maximum width: " + settings.maxWidth + " px";
+
+          results.style.display = "block";
+          message.textContent = "Optimization complete. Review the result before downloading.";
+          message.style.display = "block";
+
+          results.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+        }, "image/jpeg", settings.quality);
+
+      } catch (err) {
+        finish();
+
+        if (currentJob === jobId) {
+          showError("Something went wrong while optimizing this image. Please try a smaller file.");
         }
-
-        originalSizeEl.textContent = formatBytes(originalBytes);
-        optimizedSizeEl.textContent = formatBytes(optimizedBytes);
-        savedPercentEl.textContent = savedPercent.toFixed(1) + "%";
-        savedSizeEl.textContent = formatBytes(savedBytes);
-        dimensionsEl.textContent = width + " × " + height;
-
-        if (savedBytes > 0) {
-          savingBox.textContent =
-            "🎉 Hai risparmiato " +
-            formatBytes(savedBytes) +
-            " (" +
-            savedPercent.toFixed(1) +
-            "%) di spazio.";
-        } else {
-          savingBox.textContent =
-            "ℹ️ Questa immagine era già molto ottimizzata.";
-        }
-
-        const optimizedUrl = URL.createObjectURL(blob);
-
-        afterImage.src = optimizedUrl;
-
-        qualityInfo.textContent =
-          "Preset: " +
-          settings.label +
-          " • Qualità JPEG: " +
-          Math.round(settings.quality * 100) +
-          "% • Larghezza massima: " +
-          settings.maxWidth +
-          " px";
-
-        results.style.display = "block";
-
-        optimizeBtn.disabled = false;
-        optimizeBtn.textContent = "⚡ Ottimizza immagine";
-
-      }, "image/jpeg", settings.quality);
-
+      }
     };
 
-    img.src = URL.createObjectURL(selectedFile);
-  });
+    img.onerror = function() {
+      finish();
 
+      if (currentJob === jobId) {
+        showError("The browser could not open this image. Please try another file.");
+      }
+    };
 
-  downloadBtn.addEventListener("click", function() {
-
-    if (!optimizedBlob) {
-      return;
-    }
-
-    const url = URL.createObjectURL(optimizedBlob);
-
-    const link = document.createElement("a");
-
-    link.href = url;
-    link.download = "immagine-ottimizzata.jpg";
-
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-
-    setTimeout(function() {
-      URL.revokeObjectURL(url);
-    }, 1000);
+    img.src = sourceUrl;
   });
 </script>
 
