@@ -1,501 +1,556 @@
+```html
 <!DOCTYPE html>
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Photo Collage Maker - Image Tools</title>
-<meta name="description" content="Crea collage fotografici online gratis. Unisci 2, 3, 4, 6 o 9 immagini con layout moderni e scarica il risultato.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Photo Collage Maker - Crea collage online gratis | Image Tools</title>
+<meta name="description" content="Crea collage fotografici online gratis. Unisci 2, 3, 4, 6 o 9 immagini con layout personalizzati e scarica il risultato in JPG o PNG.">
+<meta name="robots" content="index, follow">
+
+<script src="menu.js" defer></script>
 
 <style>
-*{
-  box-sizing:border-box;
+* {
+  box-sizing: border-box;
 }
 
-body{
-  margin:0;
-  font-family:Inter,Arial,Helvetica,sans-serif;
-  background:#f5f7fb;
-  color:#172033;
+:root {
+  --bg: #0a0f1d;
+  --card: #11192b;
+  --card2: #0c1323;
+  --border: #26324a;
+  --text: #f5f7ff;
+  --muted: #9da8bd;
+  --accent: #6ea8ff;
+  --accent-hover: #8bbaff;
 }
 
-header{
-  background:#111827;
-  color:white;
-  padding:20px 24px;
+body {
+  margin: 0;
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
 }
 
-.header-inner{
-  max-width:1180px;
-  margin:auto;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:20px;
+.container {
+  width: min(1180px, 92%);
+  margin: auto;
 }
 
-.logo{
-  font-size:21px;
-  font-weight:800;
-  letter-spacing:-.4px;
+header {
+  padding: 24px 0;
+  border-bottom: 1px solid #1e293b;
 }
 
-.header-link{
-  color:#cbd5e1;
-  text-decoration:none;
-  font-size:14px;
+.logo {
+  font-size: 23px;
+  font-weight: 800;
+  letter-spacing: -.5px;
 }
 
-.header-link:hover{
-  color:white;
+.logo span {
+  color: var(--accent);
 }
 
-main{
-  max-width:1180px;
-  margin:0 auto;
-  padding:42px 20px 70px;
+main {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 38px 20px 60px;
 }
 
-.hero{
-  text-align:center;
-  margin-bottom:30px;
+.hero {
+  text-align: center;
+  margin-bottom: 34px;
 }
 
-.hero h1{
-  margin:0;
-  font-size:38px;
-  letter-spacing:-1.5px;
+.hero h1 {
+  margin: 0;
+  font-size: clamp(32px, 5vw, 46px);
+  line-height: 1.15;
+  letter-spacing: -1px;
 }
 
-.hero p{
-  margin:10px auto 0;
-  color:#64748b;
-  max-width:650px;
-  font-size:16px;
+.hero p {
+  margin: 14px auto 0;
+  color: var(--muted);
+  max-width: 680px;
+  font-size: 16px;
 }
 
-.workspace{
-  display:grid;
-  grid-template-columns:340px 1fr;
-  gap:24px;
-  align-items:start;
+.workspace {
+  display: grid;
+  grid-template-columns: 340px minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
 }
 
-.panel{
-  background:white;
-  border:1px solid #e5e7eb;
-  border-radius:20px;
-  padding:22px;
-  box-shadow:0 8px 30px rgba(15,23,42,.06);
+.panel,
+.preview-panel,
+.content {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 22px;
 }
 
-.panel-title{
-  font-size:17px;
-  font-weight:800;
-  margin-bottom:18px;
+.panel-title,
+.preview-title {
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 18px;
 }
 
-.upload{
-  border:2px dashed #cbd5e1;
-  border-radius:16px;
-  padding:22px 16px;
-  text-align:center;
-  cursor:pointer;
-  transition:.2s;
-  background:#fafbfc;
+.upload {
+  display: block;
+  border: 2px dashed #465775;
+  border-radius: 16px;
+  padding: 24px 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: .2s;
+  background: var(--card2);
 }
 
-.upload:hover{
-  border-color:#64748b;
-  background:#f8fafc;
+.upload:hover {
+  border-color: var(--accent);
+  background: #101b30;
 }
 
-.upload-icon{
-  width:48px;
-  height:48px;
-  border-radius:14px;
-  background:#111827;
-  color:white;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin:0 auto 12px;
-  font-size:23px;
+.upload-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: var(--accent);
+  color: #081326;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+  font-size: 25px;
 }
 
-.upload strong{
-  display:block;
-  font-size:15px;
+.upload strong {
+  display: block;
+  font-size: 15px;
 }
 
-.upload span{
-  display:block;
-  color:#94a3b8;
-  font-size:12px;
-  margin-top:5px;
+.upload span {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 5px;
 }
 
-#fileInput{
-  display:none;
+#fileInput {
+  display: none;
 }
 
-.section{
-  margin-top:24px;
+.section {
+  margin-top: 25px;
 }
 
-.section-label{
-  font-size:12px;
-  font-weight:800;
-  text-transform:uppercase;
-  letter-spacing:.7px;
-  color:#64748b;
-  margin-bottom:10px;
+.section-label {
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .7px;
+  color: var(--muted);
+  margin-bottom: 11px;
 }
 
-.layout-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;
+.layout-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
 }
 
-.layout-btn{
-  border:1px solid #e2e8f0;
-  background:#f8fafc;
-  border-radius:12px;
-  padding:10px 5px;
-  cursor:pointer;
-  color:#475569;
-  transition:.18s;
+.layout-btn {
+  min-width: 0;
+  border: 1px solid var(--border);
+  background: var(--card2);
+  border-radius: 12px;
+  padding: 10px 4px;
+  cursor: pointer;
+  color: var(--muted);
+  transition: .18s;
 }
 
-.layout-btn:hover{
-  border-color:#94a3b8;
+.layout-btn:hover,
+.format-btn:hover {
+  border-color: var(--accent);
 }
 
-.layout-btn.active{
-  border-color:#111827;
-  background:#111827;
-  color:white;
+.layout-btn.active {
+  border-color: var(--accent);
+  background: #1a2b49;
+  color: var(--text);
 }
 
-.layout-preview{
-  height:32px;
-  width:44px;
-  margin:0 auto 7px;
-  display:grid;
-  gap:2px;
+.layout-preview {
+  height: 32px;
+  width: 44px;
+  margin: 0 auto 7px;
+  display: grid;
+  gap: 2px;
 }
 
-.layout-preview span{
-  background:currentColor;
-  opacity:.75;
-  border-radius:2px;
+.layout-preview span {
+  background: currentColor;
+  opacity: .8;
+  border-radius: 2px;
 }
 
-.l2{
-  grid-template-columns:1fr 1fr;
+.l2 {
+  grid-template-columns: 1fr 1fr;
 }
 
-.l2 span:nth-child(1),
-.l2 span:nth-child(2){
-  grid-row:1;
+.l3 {
+  grid-template-columns: 1.4fr 1fr;
+  grid-template-rows: 1fr 1fr;
 }
 
-.l3{
-  grid-template-columns:1.4fr 1fr;
-  grid-template-rows:1fr 1fr;
+.l3 span:first-child {
+  grid-row: 1 / 3;
 }
 
-.l3 span:first-child{
-  grid-row:1 / 3;
+.l4 {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
 }
 
-.l4{
-  grid-template-columns:1fr 1fr;
-  grid-template-rows:1fr 1fr;
+.l6 {
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1fr 1fr;
 }
 
-.l6{
-  grid-template-columns:repeat(3,1fr);
-  grid-template-rows:1fr 1fr;
+.l9 {
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
 }
 
-.l9{
-  grid-template-columns:repeat(3,1fr);
-  grid-template-rows:repeat(3,1fr);
+.layout-name {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
 }
 
-.layout-name{
-  display:block;
-  font-size:11px;
-  font-weight:700;
+.format-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
 }
 
-.format-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
+.format-btn {
+  border: 1px solid var(--border);
+  background: var(--card2);
+  border-radius: 10px;
+  padding: 10px 6px;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 700;
 }
 
-.format-btn{
-  border:1px solid #e2e8f0;
-  background:#f8fafc;
-  border-radius:10px;
-  padding:10px;
-  cursor:pointer;
-  font-size:12px;
-  color:#475569;
-  font-weight:700;
+.format-btn.active {
+  background: #1a2b49;
+  border-color: var(--accent);
+  color: var(--text);
 }
 
-.format-btn.active{
-  background:#111827;
-  border-color:#111827;
-  color:white;
+.control {
+  margin-top: 18px;
 }
 
-.control{
-  margin-top:17px;
+.control-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
 }
 
-.control-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:8px;
+.control-top label {
+  font-size: 13px;
+  font-weight: 700;
 }
 
-.control-top label{
-  font-size:13px;
-  font-weight:700;
+.value {
+  font-size: 12px;
+  color: var(--muted);
 }
 
-.value{
-  font-size:12px;
-  color:#64748b;
+input[type="range"] {
+  width: 100%;
+  accent-color: var(--accent);
+  cursor: pointer;
 }
 
-input[type="range"]{
-  width:100%;
-  accent-color:#111827;
+.color-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.color-row{
-  display:flex;
-  align-items:center;
-  gap:10px;
+#bgColor {
+  width: 44px;
+  height: 38px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  padding: 3px;
+  background: var(--card2);
+  cursor: pointer;
 }
 
-#bgColor{
-  width:44px;
-  height:38px;
-  border:1px solid #dbe1e8;
-  border-radius:9px;
-  padding:3px;
-  background:white;
-  cursor:pointer;
+.color-info {
+  font-size: 12px;
+  color: var(--muted);
 }
 
-.color-info{
-  font-size:12px;
-  color:#64748b;
+.text-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 13px;
+  outline: none;
+  background: var(--card2);
+  color: var(--text);
 }
 
-.text-input{
-  width:100%;
-  padding:11px 12px;
-  border:1px solid #dbe1e8;
-  border-radius:10px;
-  font-size:13px;
-  outline:none;
+.text-input::placeholder {
+  color: #778398;
 }
 
-.text-input:focus{
-  border-color:#64748b;
+.text-input:focus {
+  border-color: var(--accent);
 }
 
-.photo-list{
-  margin-top:18px;
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
+.photo-list {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
 }
 
-.photo-thumb{
-  width:52px;
-  height:52px;
-  border-radius:10px;
-  object-fit:cover;
-  border:2px solid #e2e8f0;
+.photo-thumb {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 9px;
+  object-fit: cover;
+  border: 1px solid var(--border);
 }
 
-.photo-count{
-  font-size:12px;
-  color:#64748b;
-  margin-top:9px;
+.photo-count {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 9px;
 }
 
-.preview-panel{
-  background:white;
-  border:1px solid #e5e7eb;
-  border-radius:20px;
-  padding:20px;
-  box-shadow:0 8px 30px rgba(15,23,42,.06);
+.preview-panel {
+  min-width: 0;
 }
 
-.preview-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:16px;
-  gap:10px;
+.preview-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 10px;
 }
 
-.preview-title{
-  font-size:17px;
-  font-weight:800;
+.preview-title {
+  margin: 0;
 }
 
-.shuffle{
-  border:1px solid #e2e8f0;
-  background:white;
-  border-radius:10px;
-  padding:9px 13px;
-  font-size:12px;
-  font-weight:800;
-  cursor:pointer;
+.shuffle {
+  border: 1px solid var(--border);
+  background: var(--card2);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 9px 12px;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
 }
 
-.shuffle:hover{
-  background:#f8fafc;
+.shuffle:hover {
+  border-color: var(--accent);
 }
 
-.canvas-wrap{
-  background:
-    linear-gradient(45deg,#eef1f5 25%,transparent 25%),
-    linear-gradient(-45deg,#eef1f5 25%,transparent 25%),
-    linear-gradient(45deg,transparent 75%,#eef1f5 75%),
-    linear-gradient(-45deg,transparent 75%,#eef1f5 75%);
-  background-size:20px 20px;
-  background-position:0 0,0 10px,10px -10px,-10px 0;
-  border-radius:16px;
-  padding:20px;
-  min-height:500px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+.canvas-wrap {
+  background-color: var(--card2);
+  background-image:
+    linear-gradient(45deg, #1a2538 25%, transparent 25%),
+    linear-gradient(-45deg, #1a2538 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #1a2538 75%),
+    linear-gradient(-45deg, transparent 75%, #1a2538 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  min-height: 360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
 }
 
-#canvas{
-  max-width:100%;
-  max-height:650px;
-  width:auto;
-  height:auto;
-  display:block;
-  border-radius:4px;
-  box-shadow:0 18px 45px rgba(15,23,42,.18);
+#canvas {
+  max-width: 100%;
+  max-height: 650px;
+  width: auto;
+  height: auto;
+  display: block;
+  border-radius: 4px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, .3);
 }
 
-.empty-preview{
-  color:#94a3b8;
-  text-align:center;
-  padding:50px 20px;
+.empty-preview {
+  color: var(--muted);
+  text-align: center;
+  padding: 50px 20px;
 }
 
-.empty-preview-icon{
-  font-size:48px;
-  margin-bottom:10px;
+.empty-preview-icon {
+  font-size: 48px;
+  margin-bottom: 10px;
 }
 
-.downloads{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-top:16px;
+.downloads {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 16px;
 }
 
-.download-btn{
-  border:0;
-  border-radius:12px;
-  padding:13px;
-  font-weight:800;
-  cursor:pointer;
-  font-size:13px;
+.download-btn {
+  border: 0;
+  border-radius: 12px;
+  padding: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  font-size: 13px;
+  transition: .2s;
 }
 
-.download-jpg{
-  background:#111827;
-  color:white;
+.download-jpg {
+  background: var(--accent);
+  color: #081326;
 }
 
-.download-png{
-  background:#e2e8f0;
-  color:#172033;
+.download-png {
+  background: #253149;
+  color: var(--text);
+  border: 1px solid #394761;
 }
 
-.download-btn:hover{
-  opacity:.9;
+.download-btn:hover {
+  opacity: .9;
 }
 
-.download-btn:disabled{
-  opacity:.45;
-  cursor:not-allowed;
+.download-btn:disabled {
+  opacity: .4;
+  cursor: not-allowed;
 }
 
-footer{
-  text-align:center;
-  color:#94a3b8;
-  font-size:12px;
-  margin-top:38px;
+.content {
+  margin-top: 24px;
 }
 
-@media(max-width:850px){
-  .workspace{
-    grid-template-columns:1fr;
+.content h2 {
+  margin-top: 0;
+}
+
+.content h3 {
+  margin-top: 24px;
+}
+
+.content p,
+.content li {
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.content strong {
+  color: var(--text);
+}
+
+footer {
+  border-top: 1px solid #1e293b;
+  text-align: center;
+  color: #778398;
+  font-size: 13px;
+  margin-top: 35px;
+  padding: 25px 15px;
+}
+
+footer a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+@media(max-width: 850px) {
+  .workspace {
+    grid-template-columns: 1fr;
   }
 
-  .panel{
-    order:2;
+  .panel {
+    order: 2;
   }
 
-  .preview-panel{
-    order:1;
+  .preview-panel {
+    order: 1;
   }
 
-  .canvas-wrap{
-    min-height:360px;
+  .canvas-wrap {
+    min-height: 300px;
   }
 
-  #canvas{
-    max-height:520px;
+  #canvas {
+    max-height: 520px;
   }
 }
 
-@media(max-width:520px){
-  main{
-    padding:28px 14px 50px;
+@media(max-width: 520px) {
+  main {
+    padding: 28px 14px 45px;
   }
 
-  .hero h1{
-    font-size:30px;
+  .hero h1 {
+    font-size: 30px;
   }
 
-  .hero p{
-    font-size:14px;
+  .hero p {
+    font-size: 14px;
   }
 
   .panel,
-  .preview-panel{
-    padding:16px;
-    border-radius:16px;
+  .preview-panel,
+  .content {
+    padding: 16px;
+    border-radius: 16px;
   }
 
-  .canvas-wrap{
-    padding:12px;
-    min-height:300px;
+  .canvas-wrap {
+    padding: 10px;
+    min-height: 250px;
   }
 
-  .downloads{
-    grid-template-columns:1fr;
+  .downloads {
+    grid-template-columns: 1fr;
+  }
+
+  .preview-top {
+    align-items: flex-start;
+    flex-wrap: wrap;
   }
 }
 </style>
@@ -503,18 +558,22 @@ footer{
 
 <body>
 
-<header>
-  <div class="header-inner">
-    <div class="logo">Image Tools</div>
-    <a class="header-link" href="index.html">← Tutti gli strumenti</a>
-  </div>
-</header>
+<div class="container">
+  <header>
+    <div class="logo">
+      <a href="index.html" style="color:inherit;text-decoration:none;">
+        Image <span>Tools</span>
+      </a>
+    </div>
+    <nav aria-label="Main navigation"></nav>
+  </header>
+</div>
 
 <main>
 
   <section class="hero">
     <h1>Photo Collage Maker</h1>
-    <p>Crea un collage professionale dalle tue foto in pochi secondi.</p>
+    <p>Crea un collage professionale dalle tue foto in pochi secondi. Scegli il layout, personalizza il formato e scarica il risultato.</p>
   </section>
 
   <div class="workspace">
@@ -526,7 +585,7 @@ footer{
       <label class="upload" for="fileInput">
         <div class="upload-icon">＋</div>
         <strong>Aggiungi foto</strong>
-        <span>JPG, PNG, WEBP • più immagini</span>
+        <span>JPG, PNG, WEBP · massimo 9 immagini</span>
       </label>
 
       <input id="fileInput" type="file" accept="image/*" multiple>
@@ -540,40 +599,27 @@ footer{
         <div class="layout-grid">
 
           <button class="layout-btn active" data-layout="2" type="button">
-            <div class="layout-preview l2">
-              <span></span><span></span>
-            </div>
+            <div class="layout-preview l2"><span></span><span></span></div>
             <span class="layout-name">2 foto</span>
           </button>
 
           <button class="layout-btn" data-layout="3" type="button">
-            <div class="layout-preview l3">
-              <span></span><span></span><span></span>
-            </div>
+            <div class="layout-preview l3"><span></span><span></span><span></span></div>
             <span class="layout-name">3 foto</span>
           </button>
 
           <button class="layout-btn" data-layout="4" type="button">
-            <div class="layout-preview l4">
-              <span></span><span></span><span></span><span></span>
-            </div>
+            <div class="layout-preview l4"><span></span><span></span><span></span><span></span></div>
             <span class="layout-name">4 foto</span>
           </button>
 
           <button class="layout-btn" data-layout="6" type="button">
-            <div class="layout-preview l6">
-              <span></span><span></span><span></span>
-              <span></span><span></span><span></span>
-            </div>
+            <div class="layout-preview l6"><span></span><span></span><span></span><span></span><span></span><span></span></div>
             <span class="layout-name">6 foto</span>
           </button>
 
           <button class="layout-btn" data-layout="9" type="button">
-            <div class="layout-preview l9">
-              <span></span><span></span><span></span>
-              <span></span><span></span><span></span>
-              <span></span><span></span><span></span>
-            </div>
+            <div class="layout-preview l9"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
             <span class="layout-name">9 foto</span>
           </button>
 
@@ -584,75 +630,44 @@ footer{
         <div class="section-label">Formato</div>
 
         <div class="format-grid">
-
-          <button class="format-btn active" data-format="square" type="button">
-            Quadrato
-          </button>
-
-          <button class="format-btn" data-format="portrait" type="button">
-            Verticale
-          </button>
-
-          <button class="format-btn" data-format="story" type="button">
-            Story
-          </button>
-
-          <button class="format-btn" data-format="landscape" type="button">
-            Orizzontale
-          </button>
-
+          <button class="format-btn active" data-format="square" type="button">Quadrato</button>
+          <button class="format-btn" data-format="portrait" type="button">Verticale</button>
+          <button class="format-btn" data-format="story" type="button">Story</button>
+          <button class="format-btn" data-format="landscape" type="button">Orizzontale</button>
         </div>
       </div>
 
       <div class="control">
-
         <div class="control-top">
           <label for="spacing">Spaziatura</label>
           <span class="value" id="spacingValue">12 px</span>
         </div>
-
         <input id="spacing" type="range" min="0" max="40" value="12">
-
       </div>
 
       <div class="control">
-
         <div class="control-top">
-          <label for="radius">Angoli</label>
+          <label for="radius">Angoli arrotondati</label>
           <span class="value" id="radiusValue">12 px</span>
         </div>
-
         <input id="radius" type="range" min="0" max="40" value="12">
-
       </div>
 
       <div class="control">
-
         <div class="control-top">
-          <label>Sfondo</label>
+          <label for="bgColor">Colore dello sfondo</label>
         </div>
-
         <div class="color-row">
           <input id="bgColor" type="color" value="#ffffff">
-          <span class="color-info">Colore degli spazi</span>
+          <span class="color-info">Colore degli spazi tra le foto</span>
         </div>
-
       </div>
 
       <div class="control">
-
         <div class="control-top">
-          <label for="caption">Testo</label>
+          <label for="caption">Testo sul collage</label>
         </div>
-
-        <input
-          id="caption"
-          class="text-input"
-          type="text"
-          maxlength="80"
-          placeholder="Aggiungi una scritta..."
-        >
-
+        <input id="caption" class="text-input" type="text" maxlength="80" placeholder="Aggiungi una scritta...">
       </div>
 
     </aside>
@@ -661,57 +676,65 @@ footer{
 
       <div class="preview-top">
         <div class="preview-title">Anteprima</div>
-
-        <button id="shuffle" class="shuffle" type="button">
-          🔀 Cambia ordine
-        </button>
+        <button id="shuffle" class="shuffle" type="button">🔀 Cambia ordine</button>
       </div>
 
       <div class="canvas-wrap">
-
         <div id="emptyPreview" class="empty-preview">
           <div class="empty-preview-icon">▧</div>
           <strong>Il tuo collage apparirà qui</strong>
-          <div style="margin-top:6px;font-size:13px;">
-            Aggiungi almeno 2 foto per iniziare
-          </div>
+          <div style="margin-top:6px;font-size:13px;">Seleziona almeno 2 foto per iniziare</div>
         </div>
-
         <canvas id="canvas" hidden></canvas>
-
       </div>
 
       <div class="downloads">
-
-        <button
-          id="downloadJpg"
-          class="download-btn download-jpg"
-          type="button"
-          disabled
-        >
-          Scarica JPG
-        </button>
-
-        <button
-          id="downloadPng"
-          class="download-btn download-png"
-          type="button"
-          disabled
-        >
-          Scarica PNG
-        </button>
-
+        <button id="downloadJpg" class="download-btn download-jpg" type="button" disabled>Scarica JPG</button>
+        <button id="downloadPng" class="download-btn download-png" type="button" disabled>Scarica PNG</button>
       </div>
+
+      <p id="status" class="muted" role="status" aria-live="polite"></p>
 
     </section>
 
   </div>
 
-  <footer>
-    Image Tools • Photo Collage Maker
-  </footer>
+  <section class="content">
+    <h2>Come creare un collage di foto</h2>
+    <ol>
+      <li>Seleziona le immagini dal computer o dal telefono.</li>
+      <li>Scegli un layout da 2, 3, 4, 6 o 9 foto.</li>
+      <li>Personalizza il formato, lo spazio, gli angoli e il colore.</li>
+      <li>Se vuoi, aggiungi una scritta al collage.</li>
+      <li>Scarica il risultato in formato JPG o PNG.</li>
+    </ol>
+    <p>Le immagini vengono elaborate direttamente nel browser: non è necessario installare programmi.</p>
+  </section>
+
+  <section class="content">
+    <h2>Domande frequenti</h2>
+
+    <h3>Il Photo Collage Maker è gratuito?</h3>
+    <p>Sì, puoi creare e scaricare collage senza registrazione.</p>
+
+    <h3>Quali formati posso usare?</h3>
+    <p>Puoi selezionare immagini compatibili con il browser, come JPG, PNG e WebP. Il risultato può essere salvato in JPG o PNG.</p>
+
+    <h3>Le immagini vengono caricate su un server?</h3>
+    <p>Questo strumento elabora le immagini localmente nel browser e non contiene codice per inviarle a un server.</p>
+  </section>
 
 </main>
+
+<footer>
+  <p>© 2026 Image Tools · Strumenti gratuiti per le immagini</p>
+  <p>
+    <a href="index.html">Home</a> ·
+    <a href="image-resizer.html">Ridimensiona immagini</a> ·
+    <a href="image-compressor.html">Comprimi immagini</a> ·
+    <a href="image-analyzer.html">Analizza immagini</a>
+  </p>
+</footer>
 
 <script>
 const fileInput = document.getElementById("fileInput");
@@ -721,6 +744,7 @@ const ctx = canvas.getContext("2d");
 const emptyPreview = document.getElementById("emptyPreview");
 const photoList = document.getElementById("photoList");
 const photoCount = document.getElementById("photoCount");
+const status = document.getElementById("status");
 
 const spacingInput = document.getElementById("spacing");
 const radiusInput = document.getElementById("radius");
@@ -737,6 +761,7 @@ const shuffleButton = document.getElementById("shuffle");
 let images = [];
 let selectedLayout = 2;
 let selectedFormat = "square";
+let renderVersion = 0;
 
 const formats = {
   square: { width: 1080, height: 1080 },
@@ -745,62 +770,85 @@ const formats = {
   landscape: { width: 1200, height: 800 }
 };
 
-fileInput.addEventListener("change", () => {
-  const files = Array.from(fileInput.files || []);
+function showStatus(message) {
+  status.textContent = message;
+}
 
+fileInput.addEventListener("change", async () => {
+  const files = Array.from(fileInput.files || [])
+    .filter(file => file.type.startsWith("image/"))
+    .slice(0, 9);
+
+  renderVersion++;
   images = [];
+  renderThumbnails();
+  drawCollage();
 
-  files.slice(0, 9).forEach(file => {
-    if (!file.type.startsWith("image/")) return;
+  if (files.length < 2) {
+    showStatus("Seleziona almeno 2 immagini.");
+    return;
+  }
 
-    const reader = new FileReader();
+  showStatus("Caricamento delle immagini...");
 
-    reader.onload = event => {
-      const img = new Image();
+  const loadedImages = await Promise.all(files.map(file => {
+    return new Promise(resolve => {
+      const reader = new FileReader();
 
-      img.onload = () => {
-        images.push(img);
-        renderThumbnails();
-        drawCollage();
+      reader.onload = event => {
+        const img = new Image();
+
+        img.onload = () => resolve({
+          image: img,
+          name: file.name
+        });
+
+        img.onerror = () => resolve(null);
+        img.src = event.target.result;
       };
 
-      img.src = event.target.result;
-    };
+      reader.onerror = () => resolve(null);
+      reader.readAsDataURL(file);
+    });
+  }));
 
-    reader.readAsDataURL(file);
-  });
+  images = loadedImages.filter(Boolean);
+
+  renderThumbnails();
+  drawCollage();
+
+  if (images.length < 2) {
+    showStatus("Non è stato possibile caricare almeno 2 immagini valide.");
+  } else {
+    showStatus(
+      images.length + " immagini pronte." +
+      (files.length > images.length ? " Alcuni file non sono stati caricati." : "")
+    );
+  }
 });
 
 document.querySelectorAll(".layout-btn").forEach(button => {
-
   button.addEventListener("click", () => {
-
     selectedLayout = Number(button.dataset.layout);
 
     document.querySelectorAll(".layout-btn")
       .forEach(btn => btn.classList.remove("active"));
 
     button.classList.add("active");
-
     drawCollage();
   });
-
 });
 
 document.querySelectorAll(".format-btn").forEach(button => {
-
   button.addEventListener("click", () => {
-
     selectedFormat = button.dataset.format;
 
     document.querySelectorAll(".format-btn")
       .forEach(btn => btn.classList.remove("active"));
 
     button.classList.add("active");
-
     drawCollage();
   });
-
 });
 
 spacingInput.addEventListener("input", () => {
@@ -817,7 +865,6 @@ bgColor.addEventListener("input", drawCollage);
 caption.addEventListener("input", drawCollage);
 
 shuffleButton.addEventListener("click", () => {
-
   for (let i = images.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [images[i], images[j]] = [images[j], images[i]];
@@ -827,198 +874,109 @@ shuffleButton.addEventListener("click", () => {
   drawCollage();
 });
 
-function renderThumbnails(){
+function renderThumbnails() {
+  photoList.replaceChildren();
 
-  photoList.innerHTML = "";
-
-  images.forEach(img => {
-
+  images.forEach((item, index) => {
     const thumb = document.createElement("img");
-
-    thumb.src = img.src;
+    thumb.src = item.image.src;
     thumb.className = "photo-thumb";
-    thumb.alt = "Foto del collage";
-
+    thumb.alt = "Foto " + (index + 1) + ": " + item.name;
+    thumb.title = item.name;
     photoList.appendChild(thumb);
   });
 
-  if(images.length === 0){
-    photoCount.textContent = "Nessuna foto selezionata";
-  }else{
-    photoCount.textContent =
-      images.length +
-      (images.length === 1 ? " foto selezionata" : " foto selezionate");
-  }
+  photoCount.textContent = images.length === 0
+    ? "Nessuna foto selezionata"
+    : images.length + (images.length === 1
+      ? " foto selezionata"
+      : " foto selezionate");
 }
 
-function getCells(){
-
-  if(selectedLayout === 2){
-    return [
-      {x:0,y:0,w:1,h:1},
-      {x:1,y:0,w:1,h:1}
-    ];
-  }
-
-  if(selectedLayout === 3){
-    return [
-      {x:0,y:0,w:1.5,h:2},
-      {x:1.5,y:0,w:1,h:1},
-      {x:1.5,y:1,w:1,h:1}
-    ];
-  }
-
-  if(selectedLayout === 4){
-    return [
-      {x:0,y:0,w:1,h:1},
-      {x:1,y:0,w:1,h:1},
-      {x:0,y:1,w:1,h:1},
-      {x:1,y:1,w:1,h:1}
-    ];
-  }
-
-  if(selectedLayout === 6){
-    return [
-      {x:0,y:0,w:1,h:1},
-      {x:1,y:0,w:1,h:1},
-      {x:2,y:0,w:1,h:1},
-      {x:0,y:1,w:1,h:1},
-      {x:1,y:1,w:1,h:1},
-      {x:2,y:1,w:1,h:1}
-    ];
-  }
-
-  return [
-    {x:0,y:0,w:1,h:1},
-    {x:1,y:0,w:1,h:1},
-    {x:2,y:0,w:1,h:1},
-    {x:0,y:1,w:1,h:1},
-    {x:1,y:1,w:1,h:1},
-    {x:2,y:1,w:1,h:1},
-    {x:0,y:2,w:1,h:1},
-    {x:1,y:2,w:1,h:1},
-    {x:2,y:2,w:1,h:1}
-  ];
-}
-
-function drawImageCover(img, x, y, w, h, radius){
-
-  if(!img) return;
-
-  ctx.save();
-
-  roundedRect(x, y, w, h, radius);
-  ctx.clip();
-
-  const imageRatio = img.width / img.height;
-  const boxRatio = w / h;
-
-  let drawWidth;
-  let drawHeight;
-  let drawX;
-  let drawY;
-
-  if(imageRatio > boxRatio){
-
-    drawHeight = h;
-    drawWidth = h * imageRatio;
-    drawX = x - (drawWidth - w) / 2;
-    drawY = y;
-
-  }else{
-
-    drawWidth = w;
-    drawHeight = w / imageRatio;
-    drawX = x;
-    drawY = y - (drawHeight - h) / 2;
-
-  }
-
-  ctx.drawImage(
-    img,
-    drawX,
-    drawY,
-    drawWidth,
-    drawHeight
-  );
-
-  ctx.restore();
-}
-
-function roundedRect(x,y,w,h,r){
-
-  r = Math.min(r, w / 2, h / 2);
+function roundedRect(x, y, w, h, r) {
+  r = Math.max(0, Math.min(r, w / 2, h / 2));
 
   ctx.beginPath();
-
-  ctx.moveTo(x+r,y);
-  ctx.lineTo(x+w-r,y);
-  ctx.quadraticCurveTo(x+w,y,x+w,y+r);
-
-  ctx.lineTo(x+w,y+h-r);
-  ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
-
-  ctx.lineTo(x+r,y+h);
-  ctx.quadraticCurveTo(x,y+h,x,y+h-r);
-
-  ctx.lineTo(x,y+r);
-  ctx.quadraticCurveTo(x,y,x+r,y);
-
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
   ctx.closePath();
 }
 
-function drawCaption(width,height){
-
-  const text = caption.value.trim();
-
-  if(!text) return;
-
-  const fontSize = Math.max(32, Math.round(width / 28));
-
+function drawImageCover(img, x, y, w, h, radius) {
   ctx.save();
+  roundedRect(x, y, w, h, radius);
+  ctx.clip();
 
-  ctx.font = "800 " + fontSize + "px Arial";
-  ctx.textAlign = "center";
-  ctx.textBaseline = "bottom";
+  const imageRatio = img.naturalWidth / img.naturalHeight;
+  const boxRatio = w / h;
 
-  const x = width / 2;
-  const y = height - Math.max(35, height * 0.035);
+  let sx = 0;
+  let sy = 0;
+  let sw = img.naturalWidth;
+  let sh = img.naturalHeight;
 
-  const metrics = ctx.measureText(text);
+  if (imageRatio > boxRatio) {
+    sw = img.naturalHeight * boxRatio;
+    sx = (img.naturalWidth - sw) / 2;
+  } else {
+    sh = img.naturalWidth / boxRatio;
+    sy = (img.naturalHeight - sh) / 2;
+  }
 
-  const paddingX = 28;
-  const boxW = metrics.width + paddingX * 2;
-  const boxH = fontSize + 26;
-
-  ctx.fillStyle = "rgba(0,0,0,.55)";
-
-  roundedRect(
-    x - boxW / 2,
-    y - boxH + 8,
-    boxW,
-    boxH,
-    16
-  );
-
-  ctx.fill();
-
-  ctx.fillStyle = "#ffffff";
-
-  ctx.fillText(text, x, y);
-
+  ctx.drawImage(img, sx, sy, sw, sh, x, y, w, h);
   ctx.restore();
 }
 
-function drawCollage(){
+function drawCaption(width, height) {
+  const text = caption.value.trim();
+  if (!text) return;
 
-  if(images.length < 2){
+  const fontSize = Math.max(24, Math.round(width / 28));
 
+  ctx.save();
+  ctx.font = "800 " + fontSize + "px Arial";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+
+  const x = width / 2;
+  const y = height - Math.max(45, height * 0.06);
+  const maxTextWidth = width * 0.88;
+
+  let displayText = text;
+
+  while (ctx.measureText(displayText).width > maxTextWidth &&
+         displayText.length > 3) {
+    displayText = displayText.slice(0, -2) + "…";
+  }
+
+  const textWidth = ctx.measureText(displayText).width;
+  const boxW = Math.min(width - 30, textWidth + 44);
+  const boxH = fontSize + 28;
+
+  ctx.fillStyle = "rgba(0,0,0,.62)";
+  roundedRect(x - boxW / 2, y - boxH / 2, boxW, boxH, 14);
+  ctx.fill();
+
+  ctx.fillStyle = "#ffffff";
+  ctx.fillText(displayText, x, y, maxTextWidth);
+  ctx.restore();
+}
+
+function drawCollage() {
+  const version = ++renderVersion;
+
+  if (images.length < 2) {
     canvas.hidden = true;
     emptyPreview.hidden = false;
-
     downloadJpg.disabled = true;
     downloadPng.disabled = true;
-
     return;
   }
 
@@ -1026,104 +984,111 @@ function drawCollage(){
   emptyPreview.hidden = true;
 
   const format = formats[selectedFormat];
-
   canvas.width = format.width;
   canvas.height = format.height;
 
   ctx.fillStyle = bgColor.value;
-  ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  const cells = getCells();
-
-  const gridColumns =
-    selectedLayout === 2 ? 2 :
-    selectedLayout === 3 ? 2 :
-    selectedLayout === 4 ? 2 :
-    3;
-
-  const gridRows =
-    selectedLayout === 2 ? 1 :
-    selectedLayout === 3 ? 2 :
-    selectedLayout === 4 ? 2 :
-    selectedLayout === 6 ? 2 :
-    3;
-
+  const count = Math.min(selectedLayout, images.length);
   const gap = Number(spacingInput.value);
   const radius = Number(radiusInput.value);
 
-  const usableWidth = canvas.width - gap * (gridColumns - 1);
-  const usableHeight = canvas.height - gap * (gridRows - 1);
+  let columns;
+  let rows;
 
-  const cellWidth = usableWidth / gridColumns;
-  const cellHeight = usableHeight / gridRows;
+  if (selectedLayout === 2) {
+    columns = 2;
+    rows = 1;
+  } else if (selectedLayout === 3) {
+    columns = 2;
+    rows = 2;
+  } else if (selectedLayout === 4) {
+    columns = 2;
+    rows = 2;
+  } else if (selectedLayout === 6) {
+    columns = 3;
+    rows = 2;
+  } else {
+    columns = 3;
+    rows = 3;
+  }
 
-  cells.forEach((cell,index) => {
+  const usableWidth = canvas.width - gap * (columns + 1);
+  const usableHeight = canvas.height - gap * (rows + 1);
+  const cellWidth = usableWidth / columns;
+  const cellHeight = usableHeight / rows;
 
-    const img = images[index % images.length];
-
+  for (let i = 0; i < count; i++) {
     let x;
     let y;
     let w;
     let h;
 
-    if(selectedLayout === 3 && index === 0){
+    if (selectedLayout === 3) {
+      if (i === 0) {
+        x = gap;
+        y = gap;
+        w = cellWidth;
+        h = usableHeight;
+      } else {
+        x = gap * 2 + cellWidth;
+        w = cellWidth;
+        h = (usableHeight - gap) / 2;
+        y = i === 1 ? gap : gap * 2 + h;
+      }
+    } else {
+      const col = i % columns;
+      const row = Math.floor(i / columns);
 
-      x = 0;
-      y = 0;
-      w = canvas.width * 0.6 - gap / 2;
-      h = canvas.height;
-
-    }else if(selectedLayout === 3){
-
-      x = canvas.width * 0.6 + gap / 2;
-      w = canvas.width * 0.4 - gap / 2;
-
-      h = (canvas.height - gap) / 2;
-
-      y = index === 1 ? 0 : h + gap;
-
-    }else{
-
-      x = cell.x * (cellWidth + gap);
-      y = cell.y * (cellHeight + gap);
-
-      w = cell.w * cellWidth + (cell.w - 1) * gap;
-      h = cell.h * cellHeight + (cell.h - 1) * gap;
+      x = gap + col * (cellWidth + gap);
+      y = gap + row * (cellHeight + gap);
+      w = cellWidth;
+      h = cellHeight;
     }
 
-    drawImageCover(img,x,y,w,h,radius);
-  });
+    drawImageCover(images[i].image, x, y, w, h, radius);
+  }
 
-  drawCaption(canvas.width,canvas.height);
+  drawCaption(canvas.width, canvas.height);
 
   downloadJpg.disabled = false;
   downloadPng.disabled = false;
+
+  showStatus(
+    "Anteprima aggiornata · " + count + " foto · " +
+    canvas.width + " × " + canvas.height + " px"
+  );
 }
 
-downloadJpg.addEventListener("click", () => {
+function downloadCanvas(format) {
+  if (images.length < 2) return;
 
-  if(images.length < 2) return;
+  const mime = format === "jpg" ? "image/jpeg" : "image/png";
 
-  const link = document.createElement("a");
+  canvas.toBlob(blob => {
+    if (!blob) {
+      showStatus("Non è stato possibile esportare il collage. Prova con meno immagini.");
+      return;
+    }
 
-  link.download = "photo-collage.jpg";
-  link.href = canvas.toDataURL("image/jpeg",0.92);
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
 
-  link.click();
-});
+    link.href = url;
+    link.download = "photo-collage." + format;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
 
-downloadPng.addEventListener("click", () => {
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }, mime, format === "jpg" ? 0.92 : undefined);
+}
 
-  if(images.length < 2) return;
-
-  const link = document.createElement("a");
-
-  link.download = "photo-collage.png";
-  link.href = canvas.toDataURL("image/png");
-
-  link.click();
-});
+downloadJpg.addEventListener("click", () => downloadCanvas("jpg"));
+downloadPng.addEventListener("click", () => downloadCanvas("png"));
 </script>
 
 </body>
 </html>
+```
