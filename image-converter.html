@@ -1,27 +1,27 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Image Converter Online Free – JPG, PNG & WebP | Free Image Tools</title>
+  <title>Free Image Converter Online – JPG, PNG & WebP | Free Image Tools</title>
   <meta name="description" content="Convert images online for free to JPG, PNG or WebP. Preview and download converted images directly in your browser. No uploads or installation required.">
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://matteoda1978.github.io/image-tools/image-converter.html">
+  <meta name="theme-color" content="#080d18">
 
   <style>
     * { box-sizing: border-box; }
 
     :root {
       color-scheme: dark;
-      --bg: #0b1020;
-      --panel: #151d30;
-      --panel2: #0f1729;
-      --border: #293650;
-      --text: #f1f5f9;
-      --muted: #aab7cc;
-      --accent: #8ba5ff;
+      --bg: #080d18;
+      --card: #111827;
+      --card2: #0d1422;
+      --border: #263249;
+      --text: #f5f7fb;
+      --muted: #a0abc0;
+      --accent: #91aaff;
       --accent-dark: #617bc9;
       --green: #32c77b;
     }
@@ -37,7 +37,7 @@
     header {
       text-align: center;
       padding: 30px 18px;
-      background: #111a2d;
+      background: var(--card);
       border-bottom: 1px solid var(--border);
     }
 
@@ -58,7 +58,7 @@
       flex-wrap: wrap;
       gap: 12px 22px;
       padding: 14px;
-      background: var(--panel);
+      background: var(--card);
       border-bottom: 1px solid var(--border);
     }
 
@@ -68,7 +68,9 @@
       font-weight: bold;
     }
 
-    nav a:hover, .text-link:hover { text-decoration: underline; }
+    nav a:hover, .text-link:hover {
+      text-decoration: underline;
+    }
 
     main {
       width: 100%;
@@ -78,21 +80,21 @@
     }
 
     .tool, .content {
-      background: var(--panel);
+      background: var(--card);
       border: 1px solid var(--border);
       border-radius: 18px;
       padding: 26px;
       margin-bottom: 22px;
     }
 
-    .tool h2 { margin-top: 0; }
+    .tool h2, .content h2 { margin-top: 0; }
 
     .upload {
       border: 2px dashed #526483;
       border-radius: 15px;
       padding: 28px 16px;
       text-align: center;
-      background: var(--panel2);
+      background: var(--card2);
       margin: 20px 0;
     }
 
@@ -128,20 +130,17 @@
       padding: 12px;
       border: 1px solid #526483;
       border-radius: 10px;
-      background: var(--panel2);
+      background: var(--card2);
       color: var(--text);
       font-size: 17px;
     }
 
-    button {
-      cursor: pointer;
-      font-family: inherit;
-    }
+    button { cursor: pointer; font-family: inherit; }
 
     .primary {
       display: block;
       width: 100%;
-      min-height: 66px;
+      min-height: 62px;
       margin-top: 22px;
       padding: 16px 20px;
       border: 0;
@@ -200,7 +199,7 @@
       display: none;
       margin-top: 25px;
       padding: 20px;
-      background: var(--panel2);
+      background: var(--card2);
       border: 1px solid var(--border);
       border-radius: 14px;
     }
@@ -217,7 +216,7 @@
     .info div {
       min-width: 0;
       padding: 13px;
-      background: var(--panel);
+      background: var(--card);
       border: 1px solid var(--border);
       border-radius: 10px;
       overflow-wrap: anywhere;
@@ -256,12 +255,8 @@
       font-size: 17px;
     }
 
-    .content h2 { margin-top: 0; }
-
     .content h3 { margin-top: 25px; }
-
     .content p, .content li { color: var(--muted); }
-
     .content a { overflow-wrap: anywhere; }
 
     footer {
@@ -274,22 +269,15 @@
 
     @media (max-width: 600px) {
       header { padding: 25px 15px; }
-
       main { padding: 18px 12px 35px; }
-
       .tool, .content { padding: 19px; }
-
       .info { grid-template-columns: 1fr; }
-
-      .primary { min-height: 68px; font-size: 19px; }
-
       nav { gap: 10px 16px; }
     }
   </style>
 </head>
 
 <body>
-
 <header>
   <h1>Free Image Converter Online</h1>
   <p>Convert images to JPG, PNG or WebP directly in your browser.</p>
@@ -309,7 +297,7 @@
 
     <div class="upload">
       <p><strong>Select an image from your device</strong></p>
-      <p>Choose a file that your browser can open.</p>
+      <p>Choose an image your browser can open.</p>
       <input type="file" id="fileInput" accept="image/*">
     </div>
 
@@ -335,22 +323,10 @@
       <h2>Conversion complete!</h2>
 
       <div class="info">
-        <div>
-          <strong>Original format</strong><br>
-          <span id="originalFormat">—</span>
-        </div>
-        <div>
-          <strong>Output format</strong><br>
-          <span id="newFormat">—</span>
-        </div>
-        <div>
-          <strong>Image dimensions</strong><br>
-          <span id="dimensions">—</span>
-        </div>
-        <div>
-          <strong>Converted file size</strong><br>
-          <span id="newSize">—</span>
-        </div>
+        <div><strong>Original format</strong><br><span id="originalFormat">—</span></div>
+        <div><strong>Output format</strong><br><span id="newFormat">—</span></div>
+        <div><strong>Image dimensions</strong><br><span id="dimensions">—</span></div>
+        <div><strong>Converted file size</strong><br><span id="newSize">—</span></div>
       </div>
 
       <div class="preview">
@@ -366,37 +342,19 @@
 
   <section class="content">
     <h2>Convert images online for free</h2>
-    <p>
-      Free Image Tools lets you convert images to JPG, PNG and WebP
-      without installing software. Choose your image, select a format
-      and download the result.
-    </p>
+    <p>Free Image Tools lets you convert images to JPG, PNG and WebP without installing software. Select an image, choose a format and download the result.</p>
 
     <h3>JPG conversion</h3>
-    <p>
-      JPG is widely used for photographs and everyday images.
-      It uses lossy compression and does not support transparent backgrounds.
-      Transparent areas are filled with white when converting to JPG.
-    </p>
+    <p>JPG is widely used for photographs. It uses lossy compression and does not support transparent backgrounds. Transparent areas are filled with white when converting to JPG.</p>
 
     <h3>PNG conversion</h3>
-    <p>
-      PNG is useful for graphics, screenshots and images that need
-      transparency. PNG files can be larger than JPG files.
-    </p>
+    <p>PNG is useful for graphics, screenshots and images that need transparency. PNG files can be larger than JPG files.</p>
 
     <h3>WebP conversion</h3>
-    <p>
-      WebP is a modern image format designed for the web. It can offer
-      good image quality with smaller files, depending on the image
-      and compression settings.
-    </p>
+    <p>WebP is a modern image format designed for the web. It can offer good image quality with smaller files, depending on the image and compression settings.</p>
 
     <h3>Are my images uploaded?</h3>
-    <p>
-      No. This tool processes images locally in your browser.
-      Your selected image is not intentionally uploaded to our server.
-    </p>
+    <p>This tool processes images locally in your browser. The selected image is not intentionally uploaded to our server.</p>
 
     <h3>More free image tools</h3>
     <ul>
@@ -413,13 +371,13 @@
     <p>Yes. You can use this image converter for free in your browser.</p>
 
     <h3>Can I convert images on my phone?</h3>
-    <p>Yes. The page is designed to work on smartphones, tablets and computers. Large images may take longer to process.</p>
+    <p>Yes. The page is designed for smartphones, tablets and computers. Large images may take longer to process.</p>
 
     <h3>Can I convert an image to JPG, PNG or WebP?</h3>
     <p>Yes, provided your browser can open the selected image and supports the chosen output format.</p>
 
     <h3>Will converting an image reduce its quality?</h3>
-    <p>JPG and WebP conversions may use lossy compression. PNG conversion uses a lossless output format, but converting from an already compressed image cannot restore lost detail.</p>
+    <p>JPG and WebP conversions may use lossy compression. PNG uses a lossless output format, but converting an already compressed image cannot restore lost detail.</p>
 
     <h3>Why does my converted image have a white background?</h3>
     <p>JPG does not support transparency. Transparent areas are filled with white when converting to JPG.</p>
@@ -446,12 +404,12 @@
   const dimensions = document.getElementById("dimensions");
   const newSize = document.getElementById("newSize");
 
+  const MAX_PIXELS = 40000000;
+
   let selectedFile = null;
   let previewUrl = null;
-  let conversionUrl = null;
   let conversionId = 0;
-
-  const MAX_PIXELS = 40000000;
+  let isConverting = false;
 
   function formatBytes(bytes) {
     if (bytes < 1024) return bytes + " B";
@@ -482,19 +440,9 @@
       previewUrl = null;
     }
 
-    if (conversionUrl) {
-      URL.revokeObjectURL(conversionUrl);
-      conversionUrl = null;
-    }
-
     preview.removeAttribute("src");
     download.removeAttribute("href");
     download.removeAttribute("download");
-  }
-
-  function showError(text) {
-    error.textContent = text;
-    error.style.display = "block";
   }
 
   function hideMessages() {
@@ -502,32 +450,64 @@
     message.style.display = "none";
   }
 
+  function showError(text) {
+    error.textContent = text;
+    error.style.display = "block";
+  }
+
+  function finishConversion(id) {
+    if (id !== conversionId) return;
+
+    isConverting = false;
+    convertBtn.disabled = !selectedFile;
+    convertBtn.textContent = "🔄 Convert Image";
+  }
+
   fileInput.addEventListener("change", function () {
     conversionId++;
+    isConverting = false;
     clearOutput();
     hideMessages();
 
-    selectedFile = fileInput.files[0] || null;
-    convertBtn.disabled = !selectedFile;
-    convertBtn.textContent = "🔄 Convert Image";
+    selectedFile = fileInput.files && fileInput.files[0]
+      ? fileInput.files[0]
+      : null;
 
-    if (selectedFile && selectedFile.type &&
-        !selectedFile.type.startsWith("image/")) {
+    convertBtn.textContent = "🔄 Convert Image";
+    convertBtn.disabled = !selectedFile;
+
+    if (!selectedFile) return;
+
+    if (selectedFile.type && !selectedFile.type.startsWith("image/")) {
       selectedFile = null;
       fileInput.value = "";
       convertBtn.disabled = true;
-      showError("Please select an image file.");
+      showError("Please select a valid image file.");
       return;
     }
 
+    message.textContent = "Image selected: " + selectedFile.name;
+    message.style.display = "block";
+  });
+
+  formatSelect.addEventListener("change", function () {
+    conversionId++;
+    isConverting = false;
+    clearOutput();
+    hideMessages();
+
+    convertBtn.textContent = "🔄 Convert Image";
+    convertBtn.disabled = !selectedFile;
+
     if (selectedFile) {
-      message.textContent = "Image selected: " + selectedFile.name;
+      message.textContent = "Output format changed. Convert the image again.";
       message.style.display = "block";
     }
   });
 
   clearBtn.addEventListener("click", function () {
     conversionId++;
+    isConverting = false;
     selectedFile = null;
     fileInput.value = "";
     formatSelect.value = "image/jpeg";
@@ -538,7 +518,7 @@
   });
 
   convertBtn.addEventListener("click", function () {
-    if (!selectedFile) return;
+    if (!selectedFile || isConverting) return;
 
     const file = selectedFile;
     const targetFormat = formatSelect.value;
@@ -546,18 +526,20 @@
 
     clearOutput();
     hideMessages();
+
+    isConverting = true;
     convertBtn.disabled = true;
     convertBtn.textContent = "Converting…";
 
     const objectUrl = URL.createObjectURL(file);
     const image = new Image();
+    let finished = false;
 
     function finish() {
+      if (finished) return;
+      finished = true;
       URL.revokeObjectURL(objectUrl);
-      if (currentId === conversionId) {
-        convertBtn.disabled = !selectedFile;
-        convertBtn.textContent = "🔄 Convert Image";
-      }
+      finishConversion(currentId);
     }
 
     image.onload = function () {
@@ -566,18 +548,18 @@
         return;
       }
 
-      try {
-        const width = image.naturalWidth;
-        const height = image.naturalHeight;
+      const width = image.naturalWidth;
+      const height = image.naturalHeight;
 
-        if (!width || !height || width * height > MAX_PIXELS) {
-          finish();
-          showError(
-            "This image is too large to process safely in your browser. Please try a smaller image."
-          );
-          return;
+      if (!width || !height || width * height > MAX_PIXELS) {
+        finish();
+        if (currentId === conversionId) {
+          showError("This image is too large to process safely. Please try a smaller image.");
         }
+        return;
+      }
 
+      try {
         const canvas = document.createElement("canvas");
         canvas.width = width;
         canvas.height = height;
@@ -606,32 +588,23 @@
 
           if (currentId !== conversionId) return;
 
-          if (!blob || !blob.type.startsWith("image/")) {
-            showError("Conversion failed. Please try another image or format.");
+          if (!blob || blob.type !== targetFormat) {
+            showError("Conversion failed or this format is not supported by your browser. Please try another format.");
             return;
           }
 
-          if (blob.type !== targetFormat) {
-            showError(
-              "Your browser does not support this output format. Please select another format."
-            );
-            return;
-          }
-
-          conversionUrl = URL.createObjectURL(blob);
+          previewUrl = URL.createObjectURL(blob);
 
           originalFormat.textContent = formatName(file.type);
           newFormat.textContent = formatName(blob.type);
           dimensions.textContent = width + " × " + height + " px";
           newSize.textContent = formatBytes(blob.size);
 
-          previewUrl = conversionUrl;
           preview.src = previewUrl;
 
           const originalName = file.name.replace(/\.[^/.]+$/, "");
-          download.href = conversionUrl;
-          download.download =
-            originalName + "-converted." + extensionFor(blob.type);
+          download.href = previewUrl;
+          download.download = originalName + "-converted." + extensionFor(blob.type);
 
           result.style.display = "block";
           message.textContent = "Your image has been converted successfully.";
@@ -643,7 +616,7 @@
       } catch (err) {
         finish();
         if (currentId === conversionId) {
-          showError("Something went wrong while converting the image. Try a smaller file.");
+          showError("Something went wrong while converting the image. Please try a smaller file.");
         }
       }
     };
@@ -651,15 +624,12 @@
     image.onerror = function () {
       finish();
       if (currentId === conversionId) {
-        showError(
-          "The browser could not open this image. Please try another file or format."
-        );
+        showError("The browser could not open this image. Please try another file.");
       }
     };
 
     image.src = objectUrl;
   });
 </script>
-
 </body>
 </html>
