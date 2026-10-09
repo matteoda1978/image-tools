@@ -27,7 +27,11 @@
       position: relative;
       display: flex;
       align-items: center;
+      justify-content: flex-start;
       gap: 12px;
+      width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
     }
 
     .tools-dropdown .tools-toggle {
@@ -35,6 +39,7 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
+      max-width: 100%;
       padding: 11px 16px;
       border: 1px solid #334155;
       border-radius: 10px;
@@ -43,6 +48,7 @@
       font: inherit;
       font-weight: 600;
       cursor: pointer;
+      box-sizing: border-box;
     }
 
     .tools-dropdown .tools-toggle:hover {
@@ -54,25 +60,28 @@
       transition: transform 0.2s ease;
     }
 
-    .tools-dropdown .tools-toggle[aria-expanded="true"]
-      .tools-arrow {
+    .tools-dropdown .tools-toggle[aria-expanded="true"] .tools-arrow {
       transform: rotate(180deg);
     }
 
     .tools-dropdown .tools-menu {
       position: absolute;
       top: calc(100% + 8px);
-      right: 0;
-      z-index: 9999;
+      left: 0;
+      right: auto;
+      z-index: 99999;
       display: none;
-      width: min(280px, calc(100vw - 32px));
-      max-height: min(70vh, 480px);
+      width: 280px;
+      max-width: calc(100vw - 32px);
+      max-height: 70vh;
+      overflow-x: hidden;
       overflow-y: auto;
       padding: 8px;
       border: 1px solid #334155;
       border-radius: 12px;
       background: #101b2e;
       box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+      box-sizing: border-box;
     }
 
     .tools-dropdown .tools-menu.open {
@@ -81,12 +90,15 @@
 
     .tools-dropdown .tools-menu a {
       display: block;
+      width: 100%;
       padding: 11px 12px;
       border-radius: 7px;
       color: #e2e8f0;
       text-decoration: none;
       font-size: 14px;
       line-height: 1.4;
+      overflow-wrap: anywhere;
+      box-sizing: border-box;
     }
 
     .tools-dropdown .tools-menu a:hover {
@@ -110,10 +122,14 @@
       }
 
       .tools-dropdown .tools-menu {
-        right: 0;
+        left: 0;
+        right: auto;
+        width: min(280px, calc(100vw - 32px));
+        max-height: 65vh;
       }
     }
   `;
+
   document.head.appendChild(style);
 
   nav.classList.add("tools-dropdown");
