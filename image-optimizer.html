@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,9 +23,7 @@
       --radius: 16px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -57,11 +56,7 @@
       text-decoration: none;
     }
 
-    nav {
-      display: flex;
-      gap: 15px;
-      flex-wrap: wrap;
-    }
+    nav { display: flex; gap: 15px; flex-wrap: wrap; }
 
     nav a {
       color: var(--text);
@@ -69,9 +64,7 @@
       text-decoration: none;
     }
 
-    nav a:hover {
-      color: var(--primary);
-    }
+    nav a:hover { color: var(--primary); }
 
     main {
       max-width: 1000px;
@@ -79,10 +72,7 @@
       padding: 30px 16px 48px;
     }
 
-    .hero {
-      text-align: center;
-      margin-bottom: 25px;
-    }
+    .hero { text-align: center; margin-bottom: 25px; }
 
     h1 {
       font-size: clamp(28px, 5vw, 42px);
@@ -103,19 +93,11 @@
       border-radius: var(--radius);
       padding: 22px;
       margin-bottom: 20px;
-      box-shadow: 0 5px 20px rgba(15, 23, 42, 0.035);
+      box-shadow: 0 5px 20px rgba(15, 23, 42, .035);
     }
 
-    h2 {
-      font-size: 21px;
-      line-height: 1.3;
-      margin: 0 0 14px;
-    }
-
-    h3 {
-      font-size: 17px;
-      margin: 0 0 10px;
-    }
+    h2 { font-size: 21px; line-height: 1.3; margin: 0 0 14px; }
+    h3 { font-size: 17px; margin: 0 0 10px; }
 
     .upload-area {
       border: 2px dashed #b8c8df;
@@ -125,10 +107,7 @@
       text-align: center;
     }
 
-    .upload-icon {
-      font-size: 36px;
-      margin-bottom: 4px;
-    }
+    .upload-icon { font-size: 36px; margin-bottom: 4px; }
 
     .upload-area p {
       color: var(--muted);
@@ -164,19 +143,9 @@
       font: inherit;
     }
 
-    .preset strong,
-    .preset span {
-      display: block;
-    }
-
-    .preset strong {
-      margin-bottom: 4px;
-    }
-
-    .preset span {
-      font-size: 12px;
-      color: var(--muted);
-    }
+    .preset strong, .preset span { display: block; }
+    .preset strong { margin-bottom: 4px; }
+    .preset span { font-size: 12px; color: var(--muted); }
 
     .preset.active {
       border: 2px solid var(--primary);
@@ -193,9 +162,7 @@
       margin: 18px 0 8px;
     }
 
-    .setting-row label {
-      font-weight: 700;
-    }
+    .setting-row label { font-weight: 700; }
 
     .quality-value {
       color: var(--primary);
@@ -247,19 +214,11 @@
       flex: 1 1 200px;
     }
 
-    .primary:hover {
-      background: var(--primary-dark);
-    }
+    .primary:hover { background: var(--primary-dark); }
 
-    .secondary {
-      background: #e8eef7;
-      color: var(--text);
-    }
+    .secondary { background: #e8eef7; color: var(--text); }
 
-    button:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
+    button:disabled { opacity: .5; cursor: not-allowed; }
 
     .status {
       display: none;
@@ -271,19 +230,9 @@
       overflow-wrap: anywhere;
     }
 
-    .status.error {
-      background: #fef2f2;
-      color: #b91c1c;
-    }
-
-    .status.success {
-      background: #f0fdf4;
-      color: var(--success);
-    }
-
-    .results {
-      display: none;
-    }
+    .status.error { background: #fef2f2; color: #b91c1c; }
+    .status.success { background: #f0fdf4; color: var(--success); }
+    .results { display: none; }
 
     .stats {
       display: grid;
@@ -315,9 +264,7 @@
       overflow-wrap: anywhere;
     }
 
-    .saving {
-      color: var(--success);
-    }
+    .saving { color: var(--success); }
 
     .comparison {
       display: grid;
@@ -334,11 +281,8 @@
       background: #fff;
     }
 
-    .preview h3 {
-      text-align: center;
-    }
+    .preview h3 { text-align: center; }
 
-    /* Clean image preview: no border, padding, outline or background */
     .preview img {
       display: block;
       width: auto;
@@ -347,8 +291,8 @@
       height: auto;
       margin: 10px auto;
       padding: 0;
-      border: none;
-      outline: none;
+      border: 0;
+      outline: 0;
       box-shadow: none;
       border-radius: 0;
       background: transparent;
@@ -363,33 +307,12 @@
       margin-top: 10px;
     }
 
-    .info-section p {
-      color: #475569;
-      margin: 8px 0;
-    }
+    .info-section p, .faq p { color: #475569; margin: 8px 0; }
+    .info-section ul { padding-left: 22px; color: #475569; }
 
-    .info-section ul {
-      padding-left: 22px;
-      color: #475569;
-    }
-
-    .faq {
-      border-top: 1px solid var(--border);
-      padding: 15px 0;
-    }
-
-    .faq:last-child {
-      padding-bottom: 0;
-    }
-
-    .faq h3 {
-      margin-bottom: 5px;
-    }
-
-    .faq p {
-      margin: 0;
-      color: #475569;
-    }
+    .faq { border-top: 1px solid var(--border); padding: 15px 0; }
+    .faq:last-child { padding-bottom: 0; }
+    .faq h3 { margin-bottom: 5px; }
 
     footer {
       text-align: center;
@@ -399,27 +322,13 @@
       font-size: 13px;
     }
 
-    footer a {
-      color: var(--primary);
-      text-decoration: none;
-    }
-
-    [hidden] {
-      display: none !important;
-    }
+    footer a { color: var(--primary); text-decoration: none; }
+    [hidden] { display: none !important; }
 
     @media (max-width: 600px) {
-      main {
-        padding: 22px 12px 35px;
-      }
-
-      .card {
-        padding: 16px;
-      }
-
-      .presets {
-        grid-template-columns: 1fr;
-      }
+      main { padding: 22px 12px 35px; }
+      .card { padding: 16px; }
+      .presets { grid-template-columns: 1fr; }
 
       .preset {
         display: flex;
@@ -429,26 +338,11 @@
         text-align: left;
       }
 
-      .preset strong,
-      .preset span {
-        display: inline;
-      }
-
-      .stats {
-        gap: 7px;
-      }
-
-      .stat {
-        padding: 12px 5px;
-      }
-
-      .comparison {
-        grid-template-columns: 1fr;
-      }
-
-      nav {
-        gap: 10px;
-      }
+      .preset strong, .preset span { display: inline; }
+      .stats { gap: 7px; }
+      .stat { padding: 12px 5px; }
+      .comparison { grid-template-columns: 1fr; }
+      nav { gap: 10px; }
     }
   </style>
 </head>
@@ -500,12 +394,10 @@
           <strong>🌐 Website</strong>
           <span>Balanced quality and size</span>
         </button>
-
         <button class="preset" type="button" data-quality="85">
           <strong>📱 Social Media</strong>
           <span>High visual quality</span>
         </button>
-
         <button class="preset" type="button" data-quality="65">
           <strong>✉️ Email</strong>
           <span>Smaller file size</span>
@@ -568,13 +460,13 @@
 
         <div class="preview">
           <h3>After</h3>
-          <img id="afterImage" alt="Optimized JPEG image">
-          <div id="afterInfo" class="file-info"></div>
+          <img id="afterImage" alt="Optimized JPEG image" hidden>
+          <div id="afterInfo" class="file-info">Optimize the image to see the result.</div>
         </div>
       </div>
 
       <div class="buttons">
-        <button id="downloadBtn" class="action primary" type="button">
+        <button id="downloadBtn" class="action primary" type="button" disabled>
           Download Optimized Image
         </button>
       </div>
@@ -691,24 +583,39 @@
         revokeUrl(optimizedUrl);
         optimizedUrl = null;
         optimizedBlob = null;
-        results.style.display = "none";
+
         afterImage.removeAttribute("src");
-        beforeImage.removeAttribute("src");
-        beforeInfo.textContent = "";
-        afterInfo.textContent = "";
+        afterImage.hidden = true;
+        afterInfo.textContent = "Optimize the image to see the result.";
+
+        originalSize.textContent = selectedFile ? formatBytes(selectedFile.size) : "—";
+        optimizedSize.textContent = "—";
+        savingValue.textContent = "—";
         savingValue.classList.add("saving");
+
+        downloadBtn.disabled = true;
       }
 
       function clearAll() {
         imageVersion++;
         selectedFile = null;
+
         revokeUrl(originalUrl);
         originalUrl = null;
+
         clearResults();
+
+        beforeImage.removeAttribute("src");
+        beforeImage.hidden = false;
+        beforeInfo.textContent = "";
+
         imageInput.value = "";
         fileInfo.textContent = "";
         fileInfo.hidden = true;
+
+        results.style.display = "none";
         clearStatus();
+
         optimizeBtn.disabled = false;
         optimizeBtn.textContent = "Optimize Image";
       }
@@ -718,29 +625,59 @@
       }
 
       imageInput.addEventListener("change", () => {
-        clearAll();
-
+        // IMPORTANT: save the selected file BEFORE clearing the old state.
         const file = imageInput.files && imageInput.files[0];
         if (!file) return;
 
+        clearAll();
+
         if (!isSupported(file)) {
           showStatus("Please select a JPEG, PNG or WebP image.", "error");
-          imageInput.value = "";
           return;
         }
 
         selectedFile = file;
         originalUrl = URL.createObjectURL(file);
+
+        // Show the selected image immediately, before optimization.
+        beforeImage.onload = () => {
+          if (originalUrl && beforeImage.src === originalUrl) {
+            beforeInfo.textContent =
+              file.name + " · " + formatBytes(file.size) + " · " +
+              beforeImage.naturalWidth + " × " + beforeImage.naturalHeight;
+          }
+        };
+
+        beforeImage.onerror = () => {
+          showStatus("The selected image could not be displayed. Please try another image.", "error");
+        };
+
+        beforeImage.src = originalUrl;
+        beforeImage.alt = "Original image: " + file.name;
+        beforeImage.hidden = false;
+
         fileInfo.textContent = file.name + " · " + formatBytes(file.size);
         fileInfo.hidden = false;
+
+        beforeInfo.textContent = file.name + " · " + formatBytes(file.size);
+        originalSize.textContent = formatBytes(file.size);
+        optimizedSize.textContent = "—";
+        savingValue.textContent = "—";
+
+        results.style.display = "block";
+        clearStatus();
 
         showStatus("Image ready. Choose a preset and click Optimize Image.", "success");
       });
 
       quality.addEventListener("input", () => {
         qualityValue.textContent = quality.value + "%";
+
         presetButtons.forEach(button => {
-          button.classList.toggle("active", button.dataset.quality === quality.value);
+          button.classList.toggle(
+            "active",
+            button.dataset.quality === quality.value
+          );
         });
       });
 
@@ -776,7 +713,9 @@
 
           await new Promise((resolve, reject) => {
             img.onload = resolve;
-            img.onerror = () => reject(new Error("The selected image could not be opened."));
+            img.onerror = () => reject(
+              new Error("The selected image could not be opened.")
+            );
             img.src = sourceUrl;
           });
 
@@ -791,6 +730,7 @@
           canvas.height = img.naturalHeight;
 
           const context = canvas.getContext("2d");
+
           if (!context) {
             throw new Error("Your browser could not create the image canvas.");
           }
@@ -813,13 +753,18 @@
           optimizedUrl = URL.createObjectURL(blob);
 
           beforeImage.src = sourceUrl;
+          beforeImage.hidden = false;
+
           afterImage.src = optimizedUrl;
+          afterImage.hidden = false;
 
           originalSize.textContent = formatBytes(file.size);
           optimizedSize.textContent = formatBytes(blob.size);
 
           const difference = file.size - blob.size;
-          const percentage = file.size > 0 ? difference / file.size * 100 : 0;
+          const percentage = file.size > 0
+            ? (difference / file.size) * 100
+            : 0;
 
           savingValue.classList.toggle("saving", difference >= 0);
 
@@ -832,13 +777,15 @@
           }
 
           beforeInfo.textContent =
-            file.name + " · " + img.naturalWidth + " × " + img.naturalHeight;
+            file.name + " · " + formatBytes(file.size) + " · " +
+            img.naturalWidth + " × " + img.naturalHeight;
 
           afterInfo.textContent =
             formatBytes(blob.size) + " · JPEG · " +
             img.naturalWidth + " × " + img.naturalHeight;
 
           results.style.display = "block";
+          downloadBtn.disabled = false;
 
           if (difference > 0) {
             showStatus("Optimization complete. Your image is smaller.", "success");
@@ -852,7 +799,10 @@
 
         } catch (error) {
           if (version === imageVersion) {
-            showStatus(error.message || "Something went wrong. Please try another image.", "error");
+            showStatus(
+              error.message || "Something went wrong. Please try another image.",
+              "error"
+            );
           }
         } finally {
           if (version === imageVersion) {
@@ -863,15 +813,17 @@
       });
 
       downloadBtn.addEventListener("click", () => {
-        if (!optimizedBlob || !optimizedUrl) {
+        if (!optimizedBlob || !optimizedUrl || !selectedFile) {
           showStatus("Please optimize an image before downloading.", "error");
           return;
         }
 
         const baseName = selectedFile.name.replace(/\.[^.]+$/, "");
         const link = document.createElement("a");
+
         link.href = optimizedUrl;
         link.download = baseName + "-optimized.jpg";
+
         document.body.appendChild(link);
         link.click();
         link.remove();
@@ -879,6 +831,7 @@
 
       resetBtn.addEventListener("click", () => {
         clearAll();
+
         quality.value = 80;
         qualityValue.textContent = "80%";
 
