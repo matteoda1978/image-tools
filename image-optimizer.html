@@ -12,14 +12,14 @@
 
   <style>
     :root {
-      --primary: #2563eb;
-      --primary-dark: #1d4ed8;
-      --background: #f4f7fb;
-      --card: #ffffff;
-      --text: #172033;
-      --muted: #64748b;
-      --border: #dbe3ef;
-      --success: #15803d;
+      --primary: #91aaff;
+      --primary-dark: #a9baff;
+      --background: #080d18;
+      --card: #111827;
+      --text: #f5f7fb;
+      --muted: #a0abc0;
+      --border: #263249;
+      --success: #70d99a;
       --radius: 16px;
     }
 
@@ -34,8 +34,8 @@
     }
 
     header {
-      background: #fff;
-      border-bottom: 1px solid var(--border);
+      background: #080d18;
+      border-bottom: 1px solid #1e293b;
       padding: 17px 16px;
     }
 
@@ -93,15 +93,15 @@
       border-radius: var(--radius);
       padding: 22px;
       margin-bottom: 20px;
-      box-shadow: 0 5px 20px rgba(15, 23, 42, .035);
+      box-shadow: 0 5px 20px rgba(0, 0, 0, .15);
     }
 
     h2 { font-size: 21px; line-height: 1.3; margin: 0 0 14px; }
     h3 { font-size: 17px; margin: 0 0 10px; }
 
     .upload-area {
-      border: 2px dashed #b8c8df;
-      background: #f8fbff;
+      border: 2px dashed #43516b;
+      background: #0d1422;
       border-radius: 13px;
       padding: 28px 16px;
       text-align: center;
@@ -120,8 +120,9 @@
       max-width: 360px;
       margin: auto;
       padding: 10px;
-      background: #fff;
-      border: 1px solid var(--border);
+      background: #111a2b;
+      color: var(--text);
+      border: 1px solid #354258;
       border-radius: 9px;
     }
 
@@ -136,7 +137,7 @@
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 15px 10px;
-      background: #fff;
+      background: #0d1422;
       color: var(--text);
       text-align: center;
       cursor: pointer;
@@ -150,7 +151,7 @@
     .preset.active {
       border: 2px solid var(--primary);
       padding: 14px 9px;
-      background: #eff6ff;
+      background: #202b40;
     }
 
     .setting-row {
@@ -210,13 +211,16 @@
 
     .primary {
       background: var(--primary);
-      color: #fff;
+      color: #08101d;
       flex: 1 1 200px;
     }
 
     .primary:hover { background: var(--primary-dark); }
 
-    .secondary { background: #e8eef7; color: var(--text); }
+    .secondary {
+      background: #202b40;
+      color: #e8edf6;
+    }
 
     button:disabled { opacity: .5; cursor: not-allowed; }
 
@@ -225,13 +229,22 @@
       margin-top: 15px;
       padding: 12px 14px;
       border-radius: 10px;
-      background: #eff6ff;
-      color: #1e40af;
+      background: #0d1422;
+      color: #c5d0e2;
+      border: 1px solid var(--border);
       overflow-wrap: anywhere;
     }
 
-    .status.error { background: #fef2f2; color: #b91c1c; }
-    .status.success { background: #f0fdf4; color: var(--success); }
+    .status.error {
+      background: #2b151d;
+      color: #ffb4bd;
+    }
+
+    .status.success {
+      background: #10251f;
+      color: var(--success);
+    }
+
     .results { display: none; }
 
     .stats {
@@ -242,7 +255,7 @@
     }
 
     .stat {
-      background: #f8fafc;
+      background: #0d1422;
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 15px 10px;
@@ -278,7 +291,7 @@
       padding: 14px;
       min-width: 0;
       overflow: hidden;
-      background: #fff;
+      background: #111827;
     }
 
     .preview h3 { text-align: center; }
@@ -307,22 +320,37 @@
       margin-top: 10px;
     }
 
-    .info-section p, .faq p { color: #475569; margin: 8px 0; }
-    .info-section ul { padding-left: 22px; color: #475569; }
+    .info-section p, .faq p {
+      color: var(--muted);
+      margin: 8px 0;
+    }
 
-    .faq { border-top: 1px solid var(--border); padding: 15px 0; }
+    .info-section ul {
+      padding-left: 22px;
+      color: var(--muted);
+    }
+
+    .faq {
+      border-top: 1px solid var(--border);
+      padding: 15px 0;
+    }
+
     .faq:last-child { padding-bottom: 0; }
     .faq h3 { margin-bottom: 5px; }
 
     footer {
       text-align: center;
-      border-top: 1px solid var(--border);
+      border-top: 1px solid #1e293b;
       padding: 24px 16px;
-      color: var(--muted);
+      color: #8491a6;
       font-size: 13px;
     }
 
-    footer a { color: var(--primary); text-decoration: none; }
+    footer a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
     [hidden] { display: none !important; }
 
     @media (max-width: 600px) {
@@ -588,7 +616,10 @@
         afterImage.hidden = true;
         afterInfo.textContent = "Optimize the image to see the result.";
 
-        originalSize.textContent = selectedFile ? formatBytes(selectedFile.size) : "—";
+        originalSize.textContent = selectedFile
+          ? formatBytes(selectedFile.size)
+          : "—";
+
         optimizedSize.textContent = "—";
         savingValue.textContent = "—";
         savingValue.classList.add("saving");
@@ -621,11 +652,15 @@
       }
 
       function isSupported(file) {
-        return ["image/jpeg", "image/png", "image/webp"].includes(file.type);
+        return [
+          "image/jpeg",
+          "image/png",
+          "image/webp"
+        ].includes(file.type);
       }
 
       imageInput.addEventListener("change", () => {
-        // IMPORTANT: save the selected file BEFORE clearing the old state.
+        // Save the new file before clearing the previous state.
         const file = imageInput.files && imageInput.files[0];
         if (!file) return;
 
@@ -639,27 +674,37 @@
         selectedFile = file;
         originalUrl = URL.createObjectURL(file);
 
-        // Show the selected image immediately, before optimization.
+        const thisUrl = originalUrl;
+
         beforeImage.onload = () => {
-          if (originalUrl && beforeImage.src === originalUrl) {
+          if (originalUrl === thisUrl) {
             beforeInfo.textContent =
               file.name + " · " + formatBytes(file.size) + " · " +
-              beforeImage.naturalWidth + " × " + beforeImage.naturalHeight;
+              beforeImage.naturalWidth + " × " +
+              beforeImage.naturalHeight;
           }
         };
 
         beforeImage.onerror = () => {
-          showStatus("The selected image could not be displayed. Please try another image.", "error");
+          if (originalUrl === thisUrl) {
+            showStatus(
+              "The selected image could not be displayed. Please try another image.",
+              "error"
+            );
+          }
         };
 
         beforeImage.src = originalUrl;
         beforeImage.alt = "Original image: " + file.name;
         beforeImage.hidden = false;
 
-        fileInfo.textContent = file.name + " · " + formatBytes(file.size);
+        fileInfo.textContent =
+          file.name + " · " + formatBytes(file.size);
         fileInfo.hidden = false;
 
-        beforeInfo.textContent = file.name + " · " + formatBytes(file.size);
+        beforeInfo.textContent =
+          file.name + " · " + formatBytes(file.size);
+
         originalSize.textContent = formatBytes(file.size);
         optimizedSize.textContent = "—";
         savingValue.textContent = "—";
@@ -667,7 +712,10 @@
         results.style.display = "block";
         clearStatus();
 
-        showStatus("Image ready. Choose a preset and click Optimize Image.", "success");
+        showStatus(
+          "Image ready. Choose a preset and click Optimize Image.",
+          "success"
+        );
       });
 
       quality.addEventListener("input", () => {
@@ -732,9 +780,12 @@
           const context = canvas.getContext("2d");
 
           if (!context) {
-            throw new Error("Your browser could not create the image canvas.");
+            throw new Error(
+              "Your browser could not create the image canvas."
+            );
           }
 
+          // JPEG does not support transparency, so use a white background.
           context.fillStyle = "#ffffff";
           context.fillRect(0, 0, canvas.width, canvas.height);
           context.drawImage(img, 0, 0);
@@ -746,7 +797,9 @@
           if (version !== imageVersion) return;
 
           if (!blob) {
-            throw new Error("The browser could not create the optimized image.");
+            throw new Error(
+              "The browser could not create the optimized image."
+            );
           }
 
           optimizedBlob = blob;
@@ -769,9 +822,11 @@
           savingValue.classList.toggle("saving", difference >= 0);
 
           if (difference > 0) {
-            savingValue.textContent = percentage.toFixed(1) + "% smaller";
+            savingValue.textContent =
+              percentage.toFixed(1) + "% smaller";
           } else if (difference < 0) {
-            savingValue.textContent = Math.abs(percentage).toFixed(1) + "% larger";
+            savingValue.textContent =
+              Math.abs(percentage).toFixed(1) + "% larger";
           } else {
             savingValue.textContent = "Same size";
           }
@@ -788,19 +843,26 @@
           downloadBtn.disabled = false;
 
           if (difference > 0) {
-            showStatus("Optimization complete. Your image is smaller.", "success");
+            showStatus(
+              "Optimization complete. Your image is smaller.",
+              "success"
+            );
           } else {
             showStatus(
               "Optimization complete, but this file is not smaller than the original. Try a lower quality setting."
             );
           }
 
-          results.scrollIntoView({ behavior: "smooth", block: "start" });
+          results.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
 
         } catch (error) {
           if (version === imageVersion) {
             showStatus(
-              error.message || "Something went wrong. Please try another image.",
+              error.message ||
+              "Something went wrong. Please try another image.",
               "error"
             );
           }
@@ -814,7 +876,10 @@
 
       downloadBtn.addEventListener("click", () => {
         if (!optimizedBlob || !optimizedUrl || !selectedFile) {
-          showStatus("Please optimize an image before downloading.", "error");
+          showStatus(
+            "Please optimize an image before downloading.",
+            "error"
+          );
           return;
         }
 
@@ -836,7 +901,10 @@
         qualityValue.textContent = "80%";
 
         presetButtons.forEach(button => {
-          button.classList.toggle("active", button.dataset.quality === "80");
+          button.classList.toggle(
+            "active",
+            button.dataset.quality === "80"
+          );
         });
 
         showStatus("Reset complete. Select an image to start again.");
