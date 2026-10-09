@@ -6,13 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Free Image Resizer Online - Resize Multiple Images | Image Tools</title>
-  <meta name="description" content="Resize up to 50 images online for free. Set custom dimensions, keep aspect ratio, convert to JPG, PNG or WebP, and download all resized images in one ZIP file.">
-  <meta name="keywords" content="free image resizer, resize images online, bulk image resizer, resize multiple images, image resize tool, JPG resizer, PNG resizer, WebP converter">
+  <meta name="description" content="Resize up to 50 images online for free. Preview photos before resizing, customize dimensions, convert to JPG, PNG or WebP, and download all images in a ZIP file.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://matteoda1978.github.io/image-tools/image-resizer.html">
-
   <meta property="og:title" content="Free Image Resizer Online | Image Tools">
-  <meta property="og:description" content="Resize multiple images for free. Choose dimensions, select an output format and download everything in a ZIP file.">
+  <meta property="og:description" content="Preview, resize and convert multiple images online for free. Download individual images or a ZIP archive.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://matteoda1978.github.io/image-tools/image-resizer.html">
 
@@ -171,8 +169,96 @@
     }
 
     .file-summary.visible { display: flex; }
-
     .file-summary p { margin: 0; }
+
+    /* Selected image previews */
+    .selected-section {
+      display: none;
+      margin-top: 25px;
+    }
+
+    .selected-section.visible { display: block; }
+
+    .selected-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .selected-heading h3 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .selected-heading span {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .selected-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .selected-card {
+      min-width: 0;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #0d1729;
+    }
+
+    .selected-image-wrap {
+      height: 140px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #17243b;
+      padding: 5px;
+    }
+
+    .selected-image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .remove-image {
+      position: absolute;
+      top: 7px;
+      right: 7px;
+      width: 29px;
+      height: 29px;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      color: white;
+      background: #b91c1c;
+      font-size: 20px;
+      line-height: 1;
+      box-shadow: 0 2px 6px #0006;
+    }
+
+    .selected-details { padding: 10px; }
+
+    .selected-name {
+      font-size: 13px;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+      margin-bottom: 5px;
+    }
+
+    .selected-size {
+      font-size: 12px;
+      color: var(--muted);
+    }
 
     .settings {
       display: grid;
@@ -202,9 +288,7 @@
     }
 
     input[type="number"]:focus,
-    select:focus {
-      border-color: var(--accent);
-    }
+    select:focus { border-color: var(--accent); }
 
     .dimensions {
       display: grid;
@@ -267,9 +351,7 @@
       transition: opacity .2s, transform .2s;
     }
 
-    button:hover:not(:disabled) {
-      transform: translateY(-1px);
-    }
+    button:hover:not(:disabled) { transform: translateY(-1px); }
 
     button:disabled {
       opacity: .45;
@@ -375,10 +457,7 @@
       object-fit: contain;
     }
 
-    .file-info {
-      min-width: 0;
-      flex: 1;
-    }
+    .file-info { min-width: 0; flex: 1; }
 
     .file-name {
       font-weight: 700;
@@ -416,10 +495,7 @@
       overflow-wrap: anywhere;
     }
 
-    .card-actions {
-      display: flex;
-      gap: 8px;
-    }
+    .card-actions { display: flex; gap: 8px; }
 
     .card-actions button {
       flex: 1;
@@ -441,8 +517,6 @@
       font-size: 14px;
     }
 
-    .zip-area .zip-button { margin-top: 0; }
-
     .trust-note {
       margin-top: 17px;
       color: var(--muted);
@@ -450,9 +524,7 @@
       text-align: center;
     }
 
-    .content-section {
-      padding: 15px 0 30px;
-    }
+    .content-section { padding: 15px 0 30px; }
 
     .content-section h2 {
       font-size: 26px;
@@ -465,9 +537,7 @@
     }
 
     .content-section p,
-    .content-section li {
-      color: var(--muted);
-    }
+    .content-section li { color: var(--muted); }
 
     .faq-item {
       border-bottom: 1px solid var(--border);
@@ -508,23 +578,23 @@
 
     footer a { margin: 0 7px; }
 
+    @media (max-width: 850px) {
+      .selected-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+
     @media (max-width: 650px) {
       .settings,
-      .results-grid {
-        grid-template-columns: 1fr;
-      }
+      .results-grid { grid-template-columns: 1fr; }
+
+      .selected-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
       .tool { padding: 16px; }
-
       .hero { padding-top: 32px; }
-
       .header-inner { justify-content: center; }
-
       nav { justify-content: center; }
-
       .actions button { width: 100%; }
-
       .dimensions { gap: 8px; }
+      .selected-image-wrap { height: 125px; }
     }
   </style>
 
@@ -547,39 +617,41 @@
     <section class="hero">
       <h1>Free Image Resizer Online</h1>
       <p>
-        Resize multiple images at once, customize dimensions, choose JPG, PNG or WebP,
-        and download all your resized images in one ZIP file. Free and easy to use.
+        Preview your photos before resizing, change dimensions, convert to JPG, PNG or WebP,
+        and download all your resized images in one ZIP file.
       </p>
     </section>
 
     <section class="tool" aria-label="Image resizing tool">
       <h2 class="section-title">Resize your images</h2>
       <p class="subtext">
-        Select up to 50 images. Your original files will not be changed.
+        Select up to 50 images. Their previews will appear below before you resize them.
       </p>
 
       <label class="dropzone" id="dropzone" for="fileInput">
         <span class="upload-icon" aria-hidden="true">⬆</span>
         <strong>Choose images or drag and drop them here</strong>
-        <span>JPG, PNG, WebP, GIF, BMP and other browser-supported image formats · Up to 50 images</span>
+        <span>Choose up to 50 images · JPG, PNG, WebP, GIF and other browser-supported formats</span>
       </label>
 
-      <input
-        type="file"
-        id="fileInput"
-        accept="image/*"
-        multiple
-      >
+      <input type="file" id="fileInput" accept="image/*" multiple>
 
       <div class="file-summary" id="fileSummary">
         <p id="fileSummaryText">No images selected</p>
-        <button type="button" class="secondary" id="clearFilesBtn">Clear images</button>
+        <button type="button" class="secondary" id="clearFilesBtn">Clear all images</button>
       </div>
+
+      <section class="selected-section" id="selectedSection" aria-label="Selected images">
+        <div class="selected-heading">
+          <h3>Selected photos</h3>
+          <span id="selectedCount"></span>
+        </div>
+        <div class="selected-grid" id="selectedGrid"></div>
+      </section>
 
       <div class="settings">
         <div class="field">
           <span class="field-title">Image dimensions</span>
-
           <div class="dimensions">
             <div>
               <label for="widthInput">Width (px)</label>
@@ -590,14 +662,12 @@
               <input type="number" id="heightInput" min="1" max="20000" value="800">
             </div>
           </div>
-
           <label class="checkbox-row" for="keepRatio">
             <input type="checkbox" id="keepRatio" checked>
             Keep aspect ratio
           </label>
-
           <p class="format-note">
-            When enabled, each image keeps its own proportions.
+            Each image keeps its own proportions when this option is enabled.
           </p>
         </div>
 
@@ -608,17 +678,15 @@
             <option value="image/png">PNG</option>
             <option value="image/webp" selected>WebP</option>
           </select>
-
           <p class="format-note">
-            Transparent backgrounds are preserved in PNG. JPG does not support transparency.
+            PNG supports transparency. JPG uses a white background for transparent areas.
           </p>
 
-          <label for="qualityInput" style="margin-top: 22px;">Output quality</label>
+          <label for="qualityInput" style="margin-top:22px;">Output quality</label>
           <div class="quality-row">
             <input type="range" id="qualityInput" min="10" max="100" value="85">
             <span id="qualityValue">85%</span>
           </div>
-
           <p class="format-note">
             Quality mainly affects JPG and WebP. PNG is generally lossless.
           </p>
@@ -626,12 +694,8 @@
       </div>
 
       <div class="actions">
-        <button type="button" class="primary" id="resizeBtn">
-          Resize all images
-        </button>
-        <button type="button" class="secondary" id="resetBtn">
-          Reset settings
-        </button>
+        <button type="button" class="primary" id="resizeBtn" disabled>Resize all images</button>
+        <button type="button" class="secondary" id="resetBtn">Reset settings</button>
       </div>
 
       <div class="status" id="status" role="status" aria-live="polite">
@@ -646,13 +710,12 @@
           <h2>Your resized images</h2>
           <span id="resultCount" class="subtext" style="margin:0;"></span>
         </div>
-
         <div class="results-grid" id="resultsGrid"></div>
 
         <div class="zip-area">
           <p>
-            Download every successfully resized image in a single ZIP file.
-            Images that failed to process will be skipped.
+            Download every successfully resized image in one ZIP file.
+            Images that could not be processed will be skipped.
           </p>
           <button type="button" class="zip-button" id="downloadZipBtn" disabled>
             Download All as ZIP
@@ -661,39 +724,33 @@
       </section>
 
       <p class="trust-note">
-        Privacy-friendly: image processing happens in your browser. Images are not uploaded to our server.
+        Your images are processed locally in your browser and are not uploaded to our server.
       </p>
     </section>
 
     <section class="content-section">
       <h2>Resize multiple images online for free</h2>
       <p>
-        Image Tools makes it easy to resize photos and graphics directly in your browser.
-        Set the width and height you need, preserve the original aspect ratio, and choose
-        the format that best suits your project. You can process up to 50 images in one batch.
+        Image Tools lets you preview and resize photos directly in your browser.
+        Select multiple images, check their thumbnails, set the dimensions and choose
+        the output format. Process up to 50 images in a single batch.
       </p>
 
       <h3>How to resize images</h3>
       <ol>
-        <li>Select one or more images from your device, or drag them into the upload area.</li>
+        <li>Select your images or drag and drop them into the upload area.</li>
+        <li>Check the previews and remove any image you do not need.</li>
         <li>Enter your desired width and height in pixels.</li>
-        <li>Keep the aspect ratio enabled to avoid stretching your images.</li>
-        <li>Choose JPG, PNG or WebP and adjust the quality if needed.</li>
-        <li>Click “Resize all images”. Download files individually or use the ZIP button.</li>
+        <li>Keep the aspect ratio enabled to avoid stretching photos.</li>
+        <li>Choose JPG, PNG or WebP and click “Resize all images”.</li>
+        <li>Download individual images or click “Download All as ZIP”.</li>
       </ol>
-
-      <h3>Why resize images?</h3>
-      <p>
-        Smaller dimensions can make images more suitable for websites, online stores,
-        email attachments, presentations and social media. Resizing can also reduce file
-        size, although the result depends on the original image, output format and quality.
-      </p>
 
       <h3>Choose the right image format</h3>
       <ul>
-        <li><strong>JPG:</strong> useful for photographs and images where a compact file is important.</li>
-        <li><strong>PNG:</strong> useful for graphics and images that need transparency.</li>
-        <li><strong>WebP:</strong> a modern format often suitable for websites and online content.</li>
+        <li><strong>JPG:</strong> suitable for photographs and compact image files.</li>
+        <li><strong>PNG:</strong> useful for graphics and transparent backgrounds.</li>
+        <li><strong>WebP:</strong> a modern format commonly used on websites.</li>
       </ul>
 
       <h3>Frequently asked questions</h3>
@@ -704,33 +761,31 @@
       </div>
 
       <div class="faq-item">
+        <h3>Can I preview images before resizing?</h3>
+        <p>Yes. Thumbnails, file names and original file sizes appear immediately after you select your images. You can remove individual images before processing.</p>
+      </div>
+
+      <div class="faq-item">
         <h3>Can I resize multiple images at once?</h3>
-        <p>Yes. Select up to 50 images in one batch and apply the same target dimensions and output settings to all of them.</p>
+        <p>Yes. Select up to 50 images and apply the same target dimensions and output format to the batch.</p>
       </div>
 
       <div class="faq-item">
         <h3>Can I download all resized images together?</h3>
-        <p>Yes. After resizing, click “Download All as ZIP” to download the successfully processed images in one archive.</p>
+        <p>Yes. Use the ZIP download button after resizing to download the successfully processed images in one archive.</p>
       </div>
 
       <div class="faq-item">
         <h3>Will my images be stretched?</h3>
-        <p>Not when “Keep aspect ratio” is enabled. Each image is scaled to fit within the requested width and height without stretching.</p>
-      </div>
-
-      <div class="faq-item">
-        <h3>Does resizing reduce image quality?</h3>
-        <p>Reducing dimensions removes pixels, and JPG or WebP compression can affect quality. Use a higher quality setting when preserving detail is important.</p>
+        <p>Not if “Keep aspect ratio” is enabled. Each photo is scaled to fit within the selected dimensions without being stretched.</p>
       </div>
 
       <div class="faq-item">
         <h3>Are my images uploaded to a server?</h3>
-        <p>No. Resizing is performed locally in your browser. The ZIP library is loaded from a content delivery network to create the archive.</p>
+        <p>No. Image resizing happens locally in your browser. An external library is used to create the ZIP archive.</p>
       </div>
 
       <h3>More free image tools</h3>
-      <p>Explore other tools to prepare images for your website and everyday use.</p>
-
       <div class="related-links">
         <a href="image-compressor.html">Image Compressor</a>
         <a href="index.html">All Image Tools</a>
@@ -761,6 +816,10 @@
       const fileSummaryText = document.getElementById("fileSummaryText");
       const clearFilesBtn = document.getElementById("clearFilesBtn");
 
+      const selectedSection = document.getElementById("selectedSection");
+      const selectedGrid = document.getElementById("selectedGrid");
+      const selectedCount = document.getElementById("selectedCount");
+
       const widthInput = document.getElementById("widthInput");
       const heightInput = document.getElementById("heightInput");
       const keepRatio = document.getElementById("keepRatio");
@@ -781,9 +840,9 @@
       const downloadZipBtn = document.getElementById("downloadZipBtn");
 
       let selectedFiles = [];
+      let selectedPreviewUrls = new Map();
       let processedImages = [];
       let isProcessing = false;
-      let lastEditedDimension = "width";
       let generation = 0;
 
       function formatBytes(bytes) {
@@ -806,9 +865,7 @@
 
       function safeBaseName(name) {
         const base = name.replace(/\.[^/.]+$/, "");
-        const cleaned = base
-          .replace(/[<>:"/\\|?*\x00-\x1F]/g, "_")
-          .trim();
+        const cleaned = base.replace(/[<>:"/\\|?*\x00-\x1F]/g, "_").trim();
         return cleaned || "resized-image";
       }
 
@@ -830,16 +887,18 @@
       function updateFileSummary() {
         const count = selectedFiles.length;
         fileSummary.classList.toggle("visible", count > 0);
-        fileSummaryText.textContent =
-          count + (count === 1 ? " image selected" : " images selected") +
+
+        fileSummaryText.textContent = count +
+          (count === 1 ? " image selected" : " images selected") +
           " · " + formatBytes(selectedFiles.reduce((sum, file) => sum + file.size, 0));
 
         fileInput.disabled = isProcessing;
         clearFilesBtn.disabled = isProcessing;
         resizeBtn.disabled = isProcessing || count === 0;
+        dropzone.style.opacity = isProcessing ? "0.55" : "1";
       }
 
-      function revokeProcessedUrls() {
+      function clearProcessedImages() {
         processedImages.forEach(item => {
           if (item.url) URL.revokeObjectURL(item.url);
         });
@@ -848,7 +907,7 @@
 
       function clearResults() {
         generation++;
-        revokeProcessedUrls();
+        clearProcessedImages();
         resultsGrid.replaceChildren();
         results.classList.remove("visible");
         resultCount.textContent = "";
@@ -856,14 +915,94 @@
         progressBar.style.width = "0%";
       }
 
+      function revokePreviewUrls() {
+        selectedPreviewUrls.forEach(url => URL.revokeObjectURL(url));
+        selectedPreviewUrls.clear();
+      }
+
+      function clearSelectedFiles() {
+        revokePreviewUrls();
+        selectedFiles = [];
+        selectedGrid.replaceChildren();
+        selectedSection.classList.remove("visible");
+        updateFileSummary();
+      }
+
       function resetEverything() {
         if (isProcessing) return;
-        selectedFiles = [];
-        fileInput.value = "";
         clearResults();
-        updateFileSummary();
+        clearSelectedFiles();
+        fileInput.value = "";
         status.className = "status";
         statusText.textContent = "";
+      }
+
+      function renderSelectedPreviews() {
+        revokePreviewUrls();
+        selectedGrid.replaceChildren();
+
+        selectedFiles.forEach((file, index) => {
+          const url = URL.createObjectURL(file);
+          selectedPreviewUrls.set(file, url);
+
+          const card = document.createElement("article");
+          card.className = "selected-card";
+
+          const imageWrap = document.createElement("div");
+          imageWrap.className = "selected-image-wrap";
+
+          const img = document.createElement("img");
+          img.className = "selected-image";
+          img.src = url;
+          img.alt = "Preview of " + file.name;
+          img.loading = "lazy";
+
+          const removeBtn = document.createElement("button");
+          removeBtn.type = "button";
+          removeBtn.className = "remove-image";
+          removeBtn.textContent = "×";
+          removeBtn.title = "Remove " + file.name;
+          removeBtn.setAttribute("aria-label", "Remove " + file.name);
+          removeBtn.disabled = isProcessing;
+
+          removeBtn.addEventListener("click", () => {
+            if (isProcessing) return;
+            removeSelectedFile(file);
+          });
+
+          imageWrap.append(img, removeBtn);
+
+          const details = document.createElement("div");
+          details.className = "selected-details";
+
+          const name = document.createElement("div");
+          name.className = "selected-name";
+          name.textContent = file.name;
+          name.title = file.name;
+
+          const size = document.createElement("div");
+          size.className = "selected-size";
+          size.textContent = formatBytes(file.size);
+
+          details.append(name, size);
+          card.append(imageWrap, details);
+          selectedGrid.appendChild(card);
+        });
+
+        selectedCount.textContent = selectedFiles.length + " / " + MAX_FILES + " images";
+        selectedSection.classList.toggle("visible", selectedFiles.length > 0);
+      }
+
+      function removeSelectedFile(fileToRemove) {
+        selectedFiles = selectedFiles.filter(file => file !== fileToRemove);
+        clearResults();
+        renderSelectedPreviews();
+        updateFileSummary();
+
+        if (selectedFiles.length === 0) {
+          status.className = "status";
+          statusText.textContent = "";
+        }
       }
 
       function addFiles(fileList) {
@@ -891,19 +1030,23 @@
           }
         });
 
-        if (unique.length > MAX_FILES) {
+        const overLimit = unique.length > MAX_FILES;
+        selectedFiles = unique.slice(0, MAX_FILES);
+
+        clearResults();
+        renderSelectedPreviews();
+        updateFileSummary();
+
+        if (overLimit) {
           setStatus(
-            "You can process up to " + MAX_FILES +
-            " images at a time. Only the first " + MAX_FILES + " unique images were kept.",
+            "You can select up to " + MAX_FILES +
+            " images. The first " + MAX_FILES + " unique images have been kept.",
             "error"
           );
         } else {
           status.className = "status";
+          statusText.textContent = "";
         }
-
-        selectedFiles = unique.slice(0, MAX_FILES);
-        clearResults();
-        updateFileSummary();
       }
 
       function loadImage(file) {
@@ -992,18 +1135,13 @@
         context.imageSmoothingQuality = "high";
         context.drawImage(img, 0, 0, dimensions.width, dimensions.height);
 
-        const blob = await canvasToBlob(
-          canvas,
-          settings.mimeType,
-          settings.quality
-        );
+        const blob = await canvasToBlob(canvas, settings.mimeType, settings.quality);
 
         canvas.width = 1;
         canvas.height = 1;
 
         const extension = getExtension(blob.type);
-        const outputName = safeBaseName(file.name) +
-          "-resized." + extension;
+        const outputName = safeBaseName(file.name) + "-resized." + extension;
 
         return {
           originalFile: file,
@@ -1016,8 +1154,7 @@
           originalHeight: img.naturalHeight,
           width: dimensions.width,
           height: dimensions.height,
-          mimeType: blob.type,
-          error: null
+          mimeType: blob.type
         };
       }
 
@@ -1025,15 +1162,17 @@
         const wrapper = document.createElement("div");
         const labelEl = document.createElement("div");
         const valueEl = document.createElement("div");
+
         labelEl.className = "stat-label";
         valueEl.className = "stat-value";
         labelEl.textContent = label;
         valueEl.textContent = value;
+
         wrapper.append(labelEl, valueEl);
         return wrapper;
       }
 
-      function createResultCard(item, index) {
+      function createResultCard(item) {
         const card = document.createElement("article");
         card.className = "result-card";
 
@@ -1053,9 +1192,8 @@
         name.textContent = item.name;
 
         const fileStatus = document.createElement("div");
-        fileStatus.className = "file-status";
+        fileStatus.className = "file-status done";
         fileStatus.textContent = "Successfully resized";
-        fileStatus.classList.add("done");
 
         info.append(name, fileStatus);
         top.append(img, info);
@@ -1078,17 +1216,15 @@
         downloadBtn.type = "button";
         downloadBtn.className = "primary";
         downloadBtn.textContent = "Download image";
-        downloadBtn.addEventListener("click", () => {
-          downloadBlob(item.blob, item.name);
-        });
+        downloadBtn.addEventListener("click", () => downloadBlob(item.blob, item.name));
 
         actions.append(downloadBtn);
         card.append(actions);
-        card.dataset.index = String(index);
+
         return card;
       }
 
-      function createErrorCard(file, errorMessage) {
+      function createErrorCard(file, message) {
         const card = document.createElement("article");
         card.className = "result-card";
 
@@ -1098,7 +1234,7 @@
 
         const error = document.createElement("div");
         error.className = "file-status failed";
-        error.textContent = "Could not resize: " + errorMessage;
+        error.textContent = "Could not resize: " + message;
 
         card.append(name, error);
         return card;
@@ -1112,7 +1248,8 @@
         document.body.appendChild(link);
         link.click();
         link.remove();
-        setTimeout(() => URL.revokeObjectURL(url), 1500);
+
+        window.setTimeout(() => URL.revokeObjectURL(url), 1500);
       }
 
       async function resizeAll() {
@@ -1132,8 +1269,7 @@
           width > MAX_DIMENSION || height > MAX_DIMENSION
         ) {
           setStatus(
-            "Enter a width and height between 1 and " +
-            MAX_DIMENSION + " pixels.",
+            "Enter a width and height between 1 and " + MAX_DIMENSION + " pixels.",
             "error"
           );
           return;
@@ -1143,8 +1279,9 @@
         const thisGeneration = generation;
         isProcessing = true;
         updateFileSummary();
+        renderSelectedPreviews();
+
         resizeBtn.textContent = "Resizing...";
-        downloadZipBtn.disabled = true;
         results.classList.add("visible");
         resultsGrid.replaceChildren();
         resultCount.textContent = "Processing " + selectedFiles.length + " images";
@@ -1157,7 +1294,8 @@
           width,
           height,
           mimeType: formatSelect.value,
-          quality: Number(qualityInput.value) / 100
+          quality: Number(qualityInput.value) / 100,
+          keepRatio: keepRatio.checked
         };
 
         let succeeded = 0;
@@ -1168,6 +1306,7 @@
             if (thisGeneration !== generation) return;
 
             const file = filesToProcess[i];
+
             setStatus(
               "Resizing image " + (i + 1) + " of " + filesToProcess.length +
               ": " + file.name,
@@ -1178,9 +1317,7 @@
             try {
               const item = await resizeImage(file, settings);
               processedImages.push(item);
-              resultsGrid.appendChild(
-                createResultCard(item, processedImages.length - 1)
-              );
+              resultsGrid.appendChild(createResultCard(item));
               succeeded++;
             } catch (error) {
               failed++;
@@ -1207,7 +1344,7 @@
           } else {
             setStatus(
               "Finished with " + succeeded + " successful image(s) and " +
-              failed + " failed image(s). You can download the successful files.",
+              failed + " failed image(s). Successful files are ready to download.",
               "error"
             );
           }
@@ -1216,6 +1353,7 @@
             isProcessing = false;
             resizeBtn.textContent = "Resize all images";
             updateFileSummary();
+            renderSelectedPreviews();
           }
         }
       }
@@ -1240,16 +1378,15 @@
 
           processedImages.forEach((item, index) => {
             let name = item.name;
-            if (usedNames.has(name)) {
-              const extension = "." + getExtension(item.mimeType);
-              const base = name.endsWith(extension)
-                ? name.slice(0, -extension.length)
-                : name;
-              name = base + "-" + (index + 1) + extension;
-            }
+            const extension = "." + getExtension(item.mimeType);
+            const base = name.endsWith(extension)
+              ? name.slice(0, -extension.length)
+              : name;
 
+            let suffix = 2;
             while (usedNames.has(name)) {
-              name = "image-" + (index + 1) + "-" + name;
+              name = base + "-" + suffix + extension;
+              suffix++;
             }
 
             usedNames.add(name);
@@ -1257,21 +1394,25 @@
           });
 
           setStatus("Creating your ZIP file. Please wait...", "", true);
-          setProgress(0, 1);
+          setProgress(0, 100);
 
           const zipBlob = await zip.generateAsync(
-            { type: "blob", compression: "DEFLATE", compressionOptions: { level: 5 } },
+            {
+              type: "blob",
+              compression: "DEFLATE",
+              compressionOptions: { level: 5 }
+            },
             metadata => setProgress(Math.round(metadata.percent), 100)
           );
 
           downloadBlob(zipBlob, "resized-images.zip");
           setStatus(
-            "Your ZIP file is ready. If the download does not start, check your browser's download settings.",
+            "Your ZIP file is ready. Check your browser downloads if it does not open automatically.",
             "success"
           );
         } catch (error) {
           setStatus(
-            "Could not create the ZIP file. Try downloading images individually or process fewer images at once.",
+            "Could not create the ZIP file. Try downloading the images individually or processing fewer images.",
             "error"
           );
         } finally {
@@ -1286,36 +1427,20 @@
       });
 
       clearFilesBtn.addEventListener("click", resetEverything);
-
       resizeBtn.addEventListener("click", resizeAll);
+      downloadZipBtn.addEventListener("click", downloadZip);
+      qualityInput.addEventListener("input", updateQualityControl);
+
       resetBtn.addEventListener("click", () => {
         if (isProcessing) return;
+
         widthInput.value = "1200";
         heightInput.value = "800";
         keepRatio.checked = true;
         formatSelect.value = "image/webp";
         qualityInput.value = "85";
-        lastEditedDimension = "width";
         updateQualityControl();
         setStatus("Settings restored to their defaults.");
-      });
-
-      downloadZipBtn.addEventListener("click", downloadZip);
-
-      qualityInput.addEventListener("input", updateQualityControl);
-
-      widthInput.addEventListener("input", () => {
-        lastEditedDimension = "width";
-        if (!keepRatio.checked) return;
-        const first = selectedFiles[0];
-        if (!first || !widthInput.value || Number(widthInput.value) <= 0) return;
-      });
-
-      heightInput.addEventListener("input", () => {
-        lastEditedDimension = "height";
-        if (!keepRatio.checked) return;
-        const first = selectedFiles[0];
-        if (!first || !heightInput.value || Number(heightInput.value) <= 0) return;
       });
 
       dropzone.addEventListener("dragover", event => {
