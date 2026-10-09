@@ -27,7 +27,6 @@
       position: relative;
       display: flex;
       align-items: center;
-      justify-content: flex-start;
       width: 100%;
       min-width: 0;
       box-sizing: border-box;
@@ -38,7 +37,6 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
-      max-width: 100%;
       padding: 11px 16px;
       border: 1px solid #334155;
       border-radius: 10px;
@@ -47,7 +45,6 @@
       font: inherit;
       font-weight: 600;
       cursor: pointer;
-      box-sizing: border-box;
     }
 
     .tools-dropdown .tools-toggle:hover {
@@ -55,16 +52,14 @@
     }
 
     .tools-dropdown .tools-arrow {
-      display: inline-block;
       transition: transform 0.2s ease;
     }
 
-    .tools-dropdown .tools-toggle[aria-expanded="true"]
-      .tools-arrow {
+    .tools-dropdown .tools-toggle[aria-expanded="true"] .tools-arrow {
       transform: rotate(180deg);
     }
 
-    .tools-dropdown .tools-menu {
+    .tools-menu {
       position: fixed;
       z-index: 999999;
       display: none;
@@ -79,46 +74,34 @@
       background: #101b2e;
       box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
       box-sizing: border-box;
-      overscroll-behavior: contain;
     }
 
-    .tools-dropdown .tools-menu.open {
+    .tools-menu.open {
       display: block;
     }
 
-    .tools-dropdown .tools-menu a {
+    .tools-menu a {
       display: block;
       width: 100%;
       padding: 12px;
       border-radius: 7px;
       color: #e2e8f0;
       text-decoration: none;
-      font-size: 14px;
+      font-size: 15px;
       line-height: 1.4;
       overflow-wrap: anywhere;
       box-sizing: border-box;
     }
 
-    .tools-dropdown .tools-menu a:hover {
+    .tools-menu a:hover {
       background: #243550;
       color: #ffffff;
     }
 
-    .tools-dropdown .tools-menu a[aria-current="page"] {
+    .tools-menu a[aria-current="page"] {
       background: #1e3a5f;
       color: #93c5fd;
       font-weight: 700;
-    }
-
-    @media (max-width: 600px) {
-      .tools-dropdown .tools-toggle {
-        padding: 10px 13px;
-      }
-
-      .tools-dropdown .tools-menu a {
-        padding: 13px 12px;
-        font-size: 15px;
-      }
     }
   `;
 
@@ -158,27 +141,20 @@
     const viewportWidth = document.documentElement.clientWidth;
     const viewportHeight = window.innerHeight;
 
-    menu.style.left = "0px";
-    menu.style.top = "0px";
-    menu.style.maxHeight =
-      Math.max(120, viewportHeight - margin * 2) + "px";
+    menu.style.left = "8px";
+    menu.style.top = "8px";
+    menu.style.maxHeight = Math.max(120, viewportHeight - 16) + "px";
 
     const menuWidth = menu.getBoundingClientRect().width;
     const left = Math.max(
       margin,
-      Math.min(
-        buttonRect.left,
-        viewportWidth - menuWidth - margin
-      )
+      Math.min(buttonRect.left, viewportWidth - menuWidth - margin)
     );
 
     const menuHeight = menu.getBoundingClientRect().height;
     let top = buttonRect.bottom + margin;
 
-    if (
-      top + menuHeight > viewportHeight - margin &&
-      buttonRect.top > viewportHeight - buttonRect.bottom
-    ) {
+    if (top + menuHeight > viewportHeight - margin) {
       top = buttonRect.top - menuHeight - margin;
     }
 
@@ -189,8 +165,6 @@
 
     menu.style.left = left + "px";
     menu.style.top = top + "px";
-    menu.style.maxHeight =
-      Math.max(120, viewportHeight - top - margin) + "px";
   }
 
   function closeMenu() {
@@ -198,25 +172,27 @@
     button.setAttribute("aria-expanded", "false");
   }
 
-  function openMenu() {
-    menu.classList.add("open");
-    button.setAttribute("aria-expanded", "true");
-    positionMenu();
-  }
+  button.addEventListener("click", function (event) {
+    event.stopPropagation();
 
-  button.addEventListener("click", function () {
     if (menu.classList.contains("open")) {
       closeMenu();
     } else {
-      openMenu();
+      menu.classList.add("open");
+      button.setAttribute("aria-expanded", "true");
+      positionMenu();
     }
   });
 
-  document.addEventListener("click", function (event) {
-    if (!nav.contains(event.target) && !menu.contains(event.target)) {
+  menu.addEventListener("click", function (event) {
+    event.stopPropagation();
+
+    if (event.target.closest("a")) {
       closeMenu();
     }
   });
+
+  document.addEventListener("click", closeMenu);
 
   document.addEventListener("keydown", function (event) {
     if (event.key === "Escape") {
@@ -227,13 +203,7 @@
 
   window.addEventListener("resize", positionMenu);
   window.addEventListener("orientationchange", function () {
-    setTimeout(positionMenu, 100);
-  });
-
-  menu.addEventListener("click", function (event) {
-    if (event.target.closest("a")) {
-      closeMenu();
-    }
+    window.setTimeout(positionMenu, 150);
   });
 
   nav.appendChild(button);
