@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Free Image Resizer Online – Resize Images in Pixels</title>
 <meta name="description" content="Resize images online for free. Change image width and height in pixels, keep the original proportions, preview your result and download it instantly. No uploads required.">
@@ -13,14 +13,15 @@
 
 <style>
 *{box-sizing:border-box}
-:root{--bg:#080d18;--card:#111827;--card2:#0d1422;--border:#263249;--text:#f5f7fb;--muted:#a0abc0;--accent:#91aaff}
-body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
+:root{--bg:#080d18;--card:#111827;--card2:#0d1422;--border:#263249;--text:#f5f7fb;--muted:#a0abc0;--accent:#91aaff;--success:#70d99a}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
 a{color:inherit;text-decoration:none}
 .container{width:min(920px,calc(100% - 28px));margin:auto}
-header{border-bottom:1px solid #1e293b}
+header{border-bottom:1px solid #1e293b;background:var(--bg)}
 .nav{min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:16px}
-.logo{font-size:19px;font-weight:800;letter-spacing:-.5px}
+.logo{font-size:19px;font-weight:800;letter-spacing:-.5px;color:var(--accent)}
 .home{color:var(--muted);font-size:14px}
+.home:hover,footer a:hover{color:var(--accent)}
 .hero{text-align:center;padding:45px 0 28px}
 .badge{display:inline-block;padding:7px 12px;border:1px solid var(--border);border-radius:999px;color:#c5d0e4;font-size:12px;margin-bottom:18px}
 h1{margin:0;font-size:clamp(34px,7vw,50px);line-height:1.08;letter-spacing:-1.8px}
@@ -37,6 +38,7 @@ h1{margin:0;font-size:clamp(34px,7vw,50px);line-height:1.08;letter-spacing:-1.8p
 .setting{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:15px}
 .setting label{display:block;margin-bottom:10px;font-size:13px;font-weight:750}
 input[type=number]{width:100%;height:48px;border:1px solid #354258;border-radius:9px;background:#111a2b;color:var(--text);padding:0 12px;font-size:16px}
+input:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .checkbox{display:flex;align-items:center;gap:11px;margin-top:16px;padding:14px;background:var(--card2);border:1px solid var(--border);border-radius:12px}
 .checkbox input{width:21px;height:21px;accent-color:var(--accent);flex:none}
 .checkbox label{margin:0;font-size:14px;font-weight:700;cursor:pointer}
@@ -45,13 +47,16 @@ input[type=number]{width:100%;height:48px;border:1px solid #354258;border-radius
 button{border:0;border-radius:12px;cursor:pointer;font-family:inherit;font-weight:800;transition:filter .15s,transform .15s}
 button:active:not(:disabled){transform:scale(.98)}
 .primary{flex:1;min-height:64px;padding:17px 22px;background:var(--accent);color:#08101d;font-size:19px;box-shadow:0 4px 0 #637bc4}
+.primary:hover,.download:hover{filter:brightness(1.08)}
 .secondary{min-height:56px;padding:14px 22px;background:#202b40;color:#e8edf6;font-size:15px}
 button:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
 .status{display:none;margin-top:14px;padding:13px 15px;border:1px solid var(--border);border-radius:10px;background:var(--card2);color:#c5d0e2;font-size:14px;line-height:1.6;overflow-wrap:anywhere}
+.status.success{color:var(--success);background:#10251f;border-color:#24513f}
+.status.error{color:#ffb4bd;background:#2b151d;border-color:#5d2935}
 .result{display:none;margin-top:18px;padding:16px;border:1px solid var(--border);border-radius:12px;background:var(--card2)}
 .result-head{font-size:18px;font-weight:800;margin-bottom:14px}
-.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.stat{background:#111827;border:1px solid var(--border);border-radius:10px;padding:13px}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.stat{background:#111827;border:1px solid var(--border);border-radius:10px;padding:13px;min-width:0}
 .stat small{display:block;color:#98a5ba;font-size:11px;margin-bottom:5px}
 .stat strong{font-size:16px;overflow-wrap:anywhere}
 .preview{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:16px}
@@ -109,10 +114,10 @@ h1{font-size:36px;letter-spacing:-1px}
 
 <section class="tool" aria-label="Image resizing tool">
   <label class="upload" for="fileInput">
-    <div class="upload-icon">↔️</div>
+    <div class="upload-icon" aria-hidden="true">↔️</div>
     <strong>Select an image to resize</strong>
     <span>Choose an image from your phone, tablet or computer.</span>
-    <input id="fileInput" type="file" accept="image/*">
+    <input id="fileInput" type="file" accept="image/*" aria-label="Choose an image">
   </label>
 
   <div id="fileInfo" class="file-info" hidden></div>
@@ -223,6 +228,9 @@ h1{font-size:36px;letter-spacing:-1px}
 </footer>
 
 <script>
+(() => {
+"use strict";
+
 const fileInput = document.getElementById("fileInput");
 const fileInfo = document.getElementById("fileInfo");
 const widthInput = document.getElementById("widthInput");
@@ -245,6 +253,8 @@ let originalWidth = 0;
 let originalHeight = 0;
 let beforeUrl = null;
 let afterUrl = null;
+let loadVersion = 0;
+let resizeVersion = 0;
 
 function formatBytes(bytes) {
   if (!Number.isFinite(bytes) || bytes < 0) return "0 B";
@@ -253,16 +263,31 @@ function formatBytes(bytes) {
   return (bytes / (1024 * 1024)).toFixed(2) + " MB";
 }
 
-function showStatus(message) {
+function showStatus(message, type = "") {
   statusBox.textContent = message;
+  statusBox.className = "status" + (type ? " " + type : "");
   statusBox.style.display = "block";
 }
 
-function clearPreviewUrls() {
-  if (beforeUrl) URL.revokeObjectURL(beforeUrl);
-  if (afterUrl) URL.revokeObjectURL(afterUrl);
-  beforeUrl = null;
+function hideStatus() {
+  statusBox.textContent = "";
+  statusBox.style.display = "none";
+  statusBox.className = "status";
+}
+
+function revokeUrl(url) {
+  if (url) URL.revokeObjectURL(url);
+}
+
+function resetResult() {
+  resizeVersion++;
+  result.style.display = "none";
+  revokeUrl(afterUrl);
   afterUrl = null;
+  afterImage.removeAttribute("src");
+  download.removeAttribute("href");
+  newDimensions.textContent = "—";
+  newSize.textContent = "—";
 }
 
 function loadImage(file) {
@@ -277,7 +302,7 @@ function loadImage(file) {
 
     img.onerror = () => {
       URL.revokeObjectURL(url);
-      reject(new Error("Could not read image"));
+      reject(new Error("Could not read image."));
     };
 
     img.src = url;
@@ -288,73 +313,114 @@ function canvasToBlob(canvas) {
   return new Promise((resolve, reject) => {
     canvas.toBlob(blob => {
       if (blob) resolve(blob);
-      else reject(new Error("Image export failed"));
+      else reject(new Error("Image export failed."));
     }, "image/jpeg", 0.92);
   });
 }
 
 function updateHeightFromWidth() {
-  const w = Number(widthInput.value);
-  if (!originalWidth || !originalHeight || !Number.isFinite(w) || w < 1) return;
-  heightInput.value = Math.max(1, Math.round(w * originalHeight / originalWidth));
+  const width = Number(widthInput.value);
+  if (!originalWidth || !originalHeight || !Number.isFinite(width) || width < 1) return;
+  heightInput.value = Math.max(1, Math.round(width * originalHeight / originalWidth));
 }
 
 function updateWidthFromHeight() {
-  const h = Number(heightInput.value);
-  if (!originalWidth || !originalHeight || !Number.isFinite(h) || h < 1) return;
-  widthInput.value = Math.max(1, Math.round(h * originalWidth / originalHeight));
+  const height = Number(heightInput.value);
+  if (!originalWidth || !originalHeight || !Number.isFinite(height) || height < 1) return;
+  widthInput.value = Math.max(1, Math.round(height * originalWidth / originalHeight));
 }
 
-function resetResult() {
-  result.style.display = "none";
-  statusBox.style.display = "none";
-  if (afterUrl) URL.revokeObjectURL(afterUrl);
+function clearAll() {
+  loadVersion++;
+  resizeVersion++;
+  selectedFile = null;
+  originalWidth = 0;
+  originalHeight = 0;
+
+  revokeUrl(beforeUrl);
+  revokeUrl(afterUrl);
+  beforeUrl = null;
   afterUrl = null;
+
+  fileInput.value = "";
+  widthInput.value = "";
+  heightInput.value = "";
+  fileInfo.textContent = "";
+  fileInfo.hidden = true;
+
+  beforeImage.removeAttribute("src");
   afterImage.removeAttribute("src");
   download.removeAttribute("href");
+
+  result.style.display = "none";
+  hideStatus();
+
+  originalDimensions.textContent = "—";
+  newDimensions.textContent = "—";
+  originalSize.textContent = "—";
+  newSize.textContent = "—";
+
+  resizeButton.disabled = true;
+  clearButton.disabled = false;
 }
 
 fileInput.addEventListener("change", async () => {
   const file = fileInput.files && fileInput.files[0];
-
-  resetResult();
-  clearPreviewUrls();
-  selectedFile = null;
-  originalWidth = 0;
-  originalHeight = 0;
-  resizeButton.disabled = true;
-  fileInfo.hidden = true;
-
   if (!file) return;
 
+  clearAll();
+  const version = loadVersion;
+
   if (!file.type.startsWith("image/")) {
-    showStatus("Please select a valid image file.");
+    showStatus("Please select a valid image file.", "error");
     fileInput.value = "";
     return;
   }
 
+  selectedFile = file;
+  showStatus("Loading your image…");
+
   try {
     const img = await loadImage(file);
 
-    selectedFile = file;
+    if (version !== loadVersion) return;
+
     originalWidth = img.naturalWidth;
     originalHeight = img.naturalHeight;
 
+    if (!originalWidth || !originalHeight) {
+      throw new Error("The image dimensions are invalid.");
+    }
+
     beforeUrl = URL.createObjectURL(file);
     beforeImage.src = beforeUrl;
+    beforeImage.alt = "Original image: " + file.name;
 
     widthInput.value = originalWidth;
     heightInput.value = originalHeight;
 
-    originalDimensions.textContent = originalWidth + " × " + originalHeight + " px";
+    originalDimensions.textContent =
+      originalWidth + " × " + originalHeight + " px";
     originalSize.textContent = formatBytes(file.size);
 
-    fileInfo.textContent = file.name + " · " + originalWidth + " × " + originalHeight + " px · " + formatBytes(file.size);
+    fileInfo.textContent =
+      file.name + " · " + originalWidth + " × " +
+      originalHeight + " px · " + formatBytes(file.size);
     fileInfo.hidden = false;
+
     resizeButton.disabled = false;
-    showStatus("Image ready. Set your desired dimensions and tap Resize Image.");
+    showStatus(
+      "Image ready. Set your desired dimensions and tap Resize Image.",
+      "success"
+    );
   } catch (error) {
-    showStatus("Could not open this image. Please try another supported image file.");
+    if (version !== loadVersion) return;
+    selectedFile = null;
+    resizeButton.disabled = true;
+    showStatus(
+      "Could not open this image. Please try another supported image file.",
+      "error"
+    );
   }
 });
 
@@ -375,7 +441,7 @@ keepRatio.addEventListener("change", () => {
 
 resizeButton.addEventListener("click", async () => {
   if (!selectedFile) {
-    showStatus("Please select an image first.");
+    showStatus("Please select an image first.", "error");
     return;
   }
 
@@ -383,7 +449,7 @@ resizeButton.addEventListener("click", async () => {
   let height = Math.round(Number(heightInput.value));
 
   if (!Number.isFinite(width) || width < 1 || width > 12000) {
-    showStatus("Enter a width between 1 and 12000 pixels.");
+    showStatus("Enter a width between 1 and 12000 pixels.", "error");
     return;
   }
 
@@ -393,75 +459,90 @@ resizeButton.addEventListener("click", async () => {
   }
 
   if (!Number.isFinite(height) || height < 1 || height > 12000) {
-    showStatus("Enter a height between 1 and 12000 pixels.");
+    showStatus("Enter a height between 1 and 12000 pixels.", "error");
     return;
   }
 
   if (width * height > 40000000) {
-    showStatus("This image would be very large. Choose smaller dimensions to avoid running out of memory.");
+    showStatus(
+      "This image would be very large. Choose smaller dimensions to avoid running out of memory.",
+      "error"
+    );
     return;
   }
+
+  const currentFile = selectedFile;
+  const version = ++resizeVersion;
 
   resizeButton.disabled = true;
   clearButton.disabled = true;
   result.style.display = "none";
+  hideStatus();
   showStatus("Resizing your image…");
 
   try {
-    const img = await loadImage(selectedFile);
+    const img = await loadImage(currentFile);
+
+    if (version !== resizeVersion || currentFile !== selectedFile) return;
+
     const canvas = document.createElement("canvas");
     canvas.width = width;
     canvas.height = height;
 
     const ctx = canvas.getContext("2d");
-    if (!ctx) throw new Error("Canvas unavailable");
+    if (!ctx) throw new Error("Canvas unavailable.");
 
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, width, height);
     ctx.drawImage(img, 0, 0, width, height);
 
     const blob = await canvasToBlob(canvas);
-    if (!blob) throw new Error("Image export failed");
 
-    if (afterUrl) URL.revokeObjectURL(afterUrl);
+    if (version !== resizeVersion || currentFile !== selectedFile) return;
+
+    if (!blob) throw new Error("Image export failed.");
+
+    revokeUrl(afterUrl);
     afterUrl = URL.createObjectURL(blob);
     afterImage.src = afterUrl;
+    afterImage.alt = "Resized image, " + width + " by " + height + " pixels";
 
     newDimensions.textContent = width + " × " + height + " px";
     newSize.textContent = formatBytes(blob.size);
 
     download.href = afterUrl;
-    download.download = selectedFile.name.replace(/\.[^/.]+$/, "") + "-resized.jpg";
+    download.download =
+      currentFile.name.replace(/\.[^/.]+$/, "") + "-resized.jpg";
 
     result.style.display = "block";
-    showStatus("Image resized successfully. Your image is ready to download.");
-    result.scrollIntoView({behavior:"smooth", block:"start"});
+    showStatus(
+      "Image resized successfully. Your image is ready to download.",
+      "success"
+    );
+
+    result.scrollIntoView({ behavior: "smooth", block: "start" });
   } catch (error) {
-    showStatus("Resizing failed. Try a different image or smaller dimensions.");
+    if (version === resizeVersion) {
+      showStatus(
+        "Resizing failed. Try a different image or smaller dimensions.",
+        "error"
+      );
+    }
   } finally {
-    resizeButton.disabled = !selectedFile;
-    clearButton.disabled = false;
+    if (version === resizeVersion) {
+      resizeButton.disabled = !selectedFile;
+      clearButton.disabled = false;
+    }
   }
 });
 
-clearButton.addEventListener("click", () => {
-  selectedFile = null;
-  originalWidth = 0;
-  originalHeight = 0;
-  fileInput.value = "";
-  widthInput.value = "";
-  heightInput.value = "";
-  fileInfo.hidden = true;
-  resizeButton.disabled = true;
-  clearPreviewUrls();
-  beforeImage.removeAttribute("src");
-  afterImage.removeAttribute("src");
-  download.removeAttribute("href");
-  result.style.display = "none";
-  statusBox.style.display = "none";
-  originalDimensions.textContent = "—";
-  newDimensions.textContent = "—";
-  originalSize.textContent = "—";
-  newSize.textContent = "—";
+clearButton.addEventListener("click", clearAll);
+
+window.addEventListener("beforeunload", () => {
+  revokeUrl(beforeUrl);
+  revokeUrl(afterUrl);
 });
+})();
 </script>
 </body>
 </html>
