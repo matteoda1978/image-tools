@@ -4,13 +4,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <title>Free Image Resizer Online – Resize Images in Pixels</title>
 <meta name="description" content="Resize images online for free. Set custom pixel dimensions, preserve aspect ratio, preview your image and download as JPG, PNG or WebP. Private browser-based processing.">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://matteoda1978.github.io/image-tools/image-resizer.html">
 <meta name="theme-color" content="#080d18">
-
 <style>
 *{box-sizing:border-box}
 :root{--bg:#080d18;--card:#111827;--card2:#0d1422;--border:#263249;--text:#f5f7fb;--muted:#a0abc0;--accent:#91aaff;--success:#70d99a}
@@ -75,6 +73,10 @@ button:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
 .feature span{color:var(--muted);font-size:12px;line-height:1.6}
 .faq{border-top:1px solid var(--border);padding:15px 0}
 .faq p{margin:0}
+.related-tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:18px}
+.related-tools a{display:block;padding:16px;border:1px solid var(--border);border-radius:12px;background:var(--card2)}
+.related-tools a strong{display:block;margin-bottom:5px}
+.related-tools a span{font-size:12px;color:var(--muted)}
 footer{border-top:1px solid #1e293b;padding:22px 0;text-align:center;color:#8491a6;font-size:12px}
 footer a{text-decoration:underline}
 @media(max-width:680px){
@@ -86,7 +88,7 @@ footer a{text-decoration:underline}
 h1{font-size:36px;letter-spacing:-1px}
 .hero p{font-size:14px}
 .tool{padding:13px}
-.settings,.features{grid-template-columns:1fr}
+.settings,.features,.related-tools{grid-template-columns:1fr}
 .actions{flex-direction:column;gap:12px}
 .actions button{width:100%}
 .primary{min-height:68px;font-size:19px}
@@ -99,7 +101,6 @@ h1{font-size:36px;letter-spacing:-1px}
 }
 </style>
 </head>
-
 <body>
 <header>
   <div class="container nav">
@@ -122,7 +123,6 @@ h1{font-size:36px;letter-spacing:-1px}
     <span>Choose an image from your phone, tablet or computer.</span>
     <input id="fileInput" type="file" accept="image/*" aria-label="Choose an image">
   </label>
-
   <div id="fileInfo" class="file-info" hidden></div>
 
   <div class="settings">
@@ -175,7 +175,6 @@ h1{font-size:36px;letter-spacing:-1px}
       <div class="stat"><small>FILE SIZE CHANGE</small><strong id="sizeChange">—</strong></div>
       <div class="stat"><small>OUTPUT FORMAT</small><strong id="outputFormat">—</strong></div>
     </div>
-
     <div class="preview">
       <div class="preview-box">
         <h3>Original image</h3>
@@ -186,7 +185,6 @@ h1{font-size:36px;letter-spacing:-1px}
         <img id="afterImage" alt="Resized image preview">
       </div>
     </div>
-
     <a id="download" class="download" href="#" download>⬇ Download Resized Image</a>
   </section>
 </section>
@@ -211,7 +209,6 @@ h1{font-size:36px;letter-spacing:-1px}
   </ol>
 
   <h2>Frequently Asked Questions</h2>
-
   <div class="faq">
     <h3>Is this image resizer free?</h3>
     <p>Yes. You can resize images for free without registering or installing software.</p>
@@ -245,7 +242,14 @@ h1{font-size:36px;letter-spacing:-1px}
     <p>The tool limits dimensions and total output pixels to reduce the risk of running out of browser memory. Very large source images may still be limited by your device or browser.</p>
   </div>
 
-  <p>Need to reduce file size too? Try our <a href="image-compressor.html" style="text-decoration:underline">free image compressor</a>, or visit <a href="index.html" style="text-decoration:underline">Free Image Tools</a> to explore more tools.</p>
+  <h2>Explore More Free Image Tools</h2>
+  <p>After resizing, you can compress your image, convert it to another format or return to the main tool directory.</p>
+  <div class="related-tools">
+    <a href="image-compressor.html"><strong>Image Compressor</strong><span>Reduce image file size for easier sharing and faster websites.</span></a>
+    <a href="image-converter.html"><strong>Image Converter</strong><span>Convert images between supported file formats.</span></a>
+    <a href="image-optimizer.html"><strong>Image Optimizer</strong><span>Prepare image files for web use.</span></a>
+    <a href="index.html"><strong>All Image Tools</strong><span>Explore the complete collection of free online tools.</span></a>
+  </div>
 </section>
 </main>
 
@@ -356,26 +360,19 @@ function updateHeightFromWidth() {
   const width = Number(widthInput.value);
   if (!originalWidth || !originalHeight ||
       !Number.isFinite(width) || width < 1) return;
-
-  heightInput.value = Math.max(
-    1, Math.round(width * originalHeight / originalWidth)
-  );
+  heightInput.value = Math.max(1, Math.round(width * originalHeight / originalWidth));
 }
 
 function updateWidthFromHeight() {
   const height = Number(heightInput.value);
   if (!originalWidth || !originalHeight ||
       !Number.isFinite(height) || height < 1) return;
-
-  widthInput.value = Math.max(
-    1, Math.round(height * originalWidth / originalHeight)
-  );
+  widthInput.value = Math.max(1, Math.round(height * originalWidth / originalHeight));
 }
 
 function updateQualityControl() {
   qualityValue.textContent = qualityInput.value + "%";
-  qualitySetting.style.opacity =
-    formatInput.value === "image/png" ? ".55" : "1";
+  qualitySetting.style.opacity = formatInput.value === "image/png" ? ".55" : "1";
 }
 
 function clearAll() {
@@ -437,7 +434,6 @@ fileInput.addEventListener("change", async () => {
 
   try {
     const img = await loadImage(file);
-
     if (version !== loadVersion) return;
 
     originalWidth = img.naturalWidth;
@@ -454,31 +450,22 @@ fileInput.addEventListener("change", async () => {
     widthInput.value = originalWidth;
     heightInput.value = originalHeight;
 
-    originalDimensions.textContent =
-      originalWidth + " × " + originalHeight + " px";
+    originalDimensions.textContent = originalWidth + " × " + originalHeight + " px";
     originalSize.textContent = formatBytes(file.size);
 
-    fileInfo.textContent =
-      file.name + " · " + originalWidth + " × " +
+    fileInfo.textContent = file.name + " · " + originalWidth + " × " +
       originalHeight + " px · " + formatBytes(file.size);
     fileInfo.hidden = false;
 
     resizeButton.disabled = false;
-    showStatus(
-      "Image ready. Set your dimensions and output format, then select Resize Image.",
-      "success"
-    );
+    showStatus("Image ready. Set your dimensions and output format, then select Resize Image.", "success");
   } catch (error) {
     if (version !== loadVersion) return;
-
     selectedFile = null;
     originalWidth = 0;
     originalHeight = 0;
     resizeButton.disabled = true;
-    showStatus(
-      "Could not open this image. Try another image format supported by your browser.",
-      "error"
-    );
+    showStatus("Could not open this image. Try another image format supported by your browser.", "error");
   }
 });
 
@@ -496,11 +483,8 @@ heightInput.addEventListener("input", () => {
 
 keepRatio.addEventListener("change", () => {
   if (keepRatio.checked) {
-    if (lastEditedDimension === "height") {
-      updateWidthFromHeight();
-    } else {
-      updateHeightFromWidth();
-    }
+    if (lastEditedDimension === "height") updateWidthFromHeight();
+    else updateHeightFromWidth();
   }
   resetResult();
 });
@@ -537,14 +521,10 @@ function canvasToBlob(canvas, mime, quality) {
           reject(new Error("Image export failed."));
           return;
         }
-
         if (blob.type !== mime) {
-          reject(new Error(
-            "Your browser does not support exporting this format. Choose another output format."
-          ));
+          reject(new Error("Your browser does not support exporting this format. Choose another output format."));
           return;
         }
-
         resolve(blob);
       }, mime, quality);
     } catch (error) {
@@ -582,10 +562,7 @@ resizeButton.addEventListener("click", async () => {
   }
 
   if (width * height > MAX_PIXELS) {
-    showStatus(
-      "These dimensions exceed the 40-megapixel output limit. Choose smaller dimensions.",
-      "error"
-    );
+    showStatus("These dimensions exceed the 40-megapixel output limit. Choose smaller dimensions.", "error");
     return;
   }
 
@@ -602,7 +579,6 @@ resizeButton.addEventListener("click", async () => {
 
   try {
     const img = await loadImage(currentFile);
-
     if (version !== resizeVersion || currentFile !== selectedFile) return;
 
     const canvas = document.createElement("canvas");
@@ -618,7 +594,6 @@ resizeButton.addEventListener("click", async () => {
     }
 
     ctx.drawImage(img, 0, 0, width, height);
-
     const blob = await canvasToBlob(canvas, requestedMime, quality);
 
     if (version !== resizeVersion || currentFile !== selectedFile) return;
@@ -630,8 +605,7 @@ resizeButton.addEventListener("click", async () => {
     afterUrl = URL.createObjectURL(blob);
 
     afterImage.src = afterUrl;
-    afterImage.alt =
-      "Resized image, " + width + " by " + height + " pixels";
+    afterImage.alt = "Resized image, " + width + " by " + height + " pixels";
 
     newDimensions.textContent = width + " × " + height + " px";
     newSize.textContent = formatBytes(blob.size);
@@ -639,12 +613,10 @@ resizeButton.addEventListener("click", async () => {
 
     const difference = blob.size - currentFile.size;
     if (difference < 0) {
-      const percentage = (Math.abs(difference) / currentFile.size) * 100;
+      const percentage = currentFile.size > 0 ? Math.abs(difference) / currentFile.size * 100 : 0;
       sizeChange.textContent = percentage.toFixed(1) + "% smaller";
     } else if (difference > 0) {
-      const percentage = currentFile.size > 0
-        ? (difference / currentFile.size) * 100
-        : 0;
+      const percentage = currentFile.size > 0 ? difference / currentFile.size * 100 : 0;
       sizeChange.textContent = percentage.toFixed(1) + "% larger";
     } else {
       sizeChange.textContent = "No change";
@@ -655,20 +627,11 @@ resizeButton.addEventListener("click", async () => {
     download.textContent = "⬇ Download Resized Image (" + extension.toUpperCase() + ")";
 
     result.style.display = "block";
-    showStatus(
-      "Image resized successfully. Your image is ready to download.",
-      "success"
-    );
-
+    showStatus("Image resized successfully. Your image is ready to download.", "success");
     result.scrollIntoView({behavior:"smooth", block:"start"});
   } catch (error) {
     if (version === resizeVersion) {
-      showStatus(
-        error && error.message
-          ? error.message
-          : "Resizing failed. Try another image or smaller dimensions.",
-        "error"
-      );
+      showStatus(error && error.message ? error.message : "Resizing failed. Try another image or smaller dimensions.", "error");
     }
   } finally {
     if (version === resizeVersion) {
