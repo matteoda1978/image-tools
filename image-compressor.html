@@ -1,11 +1,12 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Free Image Compressor Online – Compress JPG, PNG & WebP</title>
-<meta name="description" content="Compress images online for free. Reduce JPG, PNG and WebP file sizes, adjust quality and resize images directly in your browser. No uploads required.">
+<title>Free Image Compressor – Compress JPG, PNG & WebP Online</title>
+<meta name="description" content="Compress images online for free. Reduce JPG, PNG and WebP file sizes, adjust image quality and resize photos in your browser. No uploads or installation required.">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://matteoda1978.github.io/image-tools/image-compressor.html">
 <meta name="theme-color" content="#080d18">
@@ -72,6 +73,10 @@ button:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
 .faq{border-top:1px solid var(--border);padding:14px 0}
 .faq h3{margin:0 0 6px;font-size:16px}
 .faq p{margin:0}
+.tool-links{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.tool-link{display:block;padding:16px;border:1px solid var(--border);border-radius:12px;background:var(--card2)}
+.tool-link strong{display:block;margin-bottom:6px}
+.tool-link span{color:var(--muted);font-size:13px;line-height:1.6}
 footer{border-top:1px solid #1e293b;padding:22px 0;text-align:center;color:#8491a6;font-size:12px}
 footer a{text-decoration:underline}
 @media(max-width:680px){
@@ -83,7 +88,7 @@ footer a{text-decoration:underline}
 h1{font-size:36px;letter-spacing:-1px}
 .hero p{font-size:14px}
 .tool{padding:13px}
-.settings,.features{grid-template-columns:1fr}
+.settings,.features,.tool-links{grid-template-columns:1fr}
 .actions{flex-direction:column;gap:12px}
 .actions button{width:100%}
 .primary{min-height:68px;font-size:19px}
@@ -105,7 +110,7 @@ h1{font-size:36px;letter-spacing:-1px}
 <section class="hero">
   <div class="badge">Free online image compressor</div>
   <h1>Compress Images Online for Free</h1>
-  <p>Reduce image file sizes without installing software. Compress JPG, PNG and WebP images, adjust quality and resize large photos directly in your browser.</p>
+  <p>Reduce JPG, PNG and WebP image file sizes without installing software. Adjust image quality, resize large photos and download compressed images directly in your browser. Your selected files are processed locally by this tool.</p>
 </section>
 
 <section class="tool" aria-label="Image compression tool">
@@ -183,7 +188,7 @@ h1{font-size:36px;letter-spacing:-1px}
 
 <section class="info">
   <h2>Free Online Image Compression</h2>
-  <p>Use this free image compressor to reduce the file size of photos and graphics. Choose an output format, adjust image quality and optionally reduce the maximum width. Smaller images can be easier to upload, share and use on websites.</p>
+  <p>This free online image compressor helps you reduce the file size of photos and graphics. Select an output format, adjust image quality and optionally limit the maximum image width. Smaller image files can be easier to upload, share by email and use on websites.</p>
 
   <div class="features">
     <div class="feature"><strong>🔒 Private by design</strong><span>Your selected images are processed locally in your browser and are not uploaded to our server by this tool.</span></div>
@@ -191,29 +196,43 @@ h1{font-size:36px;letter-spacing:-1px}
     <div class="feature"><strong>📦 Multiple images</strong><span>Select several images and process them in one session. Download each result separately.</span></div>
   </div>
 
-  <h2>How to Compress an Image</h2>
+  <h2>Compress JPG, PNG and WebP Images</h2>
+  <p>Different image formats behave differently when compressed. JPG is commonly used for photographs, while PNG is useful for graphics that need lossless output or transparency. WebP can provide smaller files for many web images, depending on the image and settings.</p>
+  <p>For JPG and WebP, lowering the quality setting can reduce file size, although it may also reduce visible detail. Resizing a large image can reduce its dimensions and file size as well. PNG output from this tool is lossless, but converting an image to PNG does not necessarily make it smaller.</p>
+
+  <h2>How to Compress an Image Online</h2>
   <ol>
-    <li>Choose one or more JPG, PNG or WebP images.</li>
-    <li>Select the output format and image quality.</li>
-    <li>Optionally set a maximum width or target file size.</li>
+    <li>Select one or more JPG, JPEG, PNG or WebP images from your device.</li>
+    <li>Choose JPG, WebP or PNG as the output format.</li>
+    <li>Adjust image quality and optionally choose a maximum width.</li>
+    <li>Enter a target file size in KB or MB if needed. The target is an estimate, not a guarantee.</li>
     <li>Click <strong>Compress images</strong> and download the results.</li>
   </ol>
+
+  <h2>How to Reduce Image Size for Websites and Email</h2>
+  <p>If an image is too large to upload or send, try WebP or JPG output and reduce the quality gradually until you find a suitable balance between size and appearance. For website images, choose dimensions appropriate for where the image will be displayed rather than uploading an unnecessarily large photo.</p>
+  <p>If you need to change dimensions without focusing on compression, try our <a href="image-resizer.html" style="text-decoration:underline">free online image resizer</a>. If you need to change an image from one file format to another, use the <a href="image-converter.html" style="text-decoration:underline">online image converter</a>.</p>
 
   <h2>Frequently Asked Questions</h2>
 
   <div class="faq">
     <h3>How can I compress an image online for free?</h3>
-    <p>Select your image, choose the quality and output format, then click the compress button. You can download the compressed result directly from your browser.</p>
+    <p>Select your image, choose the quality and output format, then click the compress button. You can download the compressed result directly from your browser without installing software.</p>
   </div>
 
   <div class="faq">
     <h3>Does this image compressor upload my files?</h3>
-    <p>No. Image processing is performed locally in your browser. The tool does not send selected image files to our server.</p>
+    <p>No. Image processing is performed locally in your browser. This tool does not send selected image files to our server.</p>
   </div>
 
   <div class="faq">
     <h3>Which image formats are supported?</h3>
     <p>You can select JPG, JPEG, PNG and WebP images. The output can be JPG, PNG or WebP.</p>
+  </div>
+
+  <div class="faq">
+    <h3>How can I reduce image size without losing quality?</h3>
+    <p>Try resizing the image to suitable dimensions or using lossless PNG output when appropriate. JPG and WebP compression can reduce file size with some loss of image detail, depending on the settings.</p>
   </div>
 
   <div class="faq">
@@ -226,7 +245,26 @@ h1{font-size:36px;letter-spacing:-1px}
     <p>The target size setting makes an attempt to reduce JPG or WebP output toward the requested size. An exact size cannot be guaranteed for every image. PNG does not use the target-size adjustment.</p>
   </div>
 
-  <p>Looking for another tool? Visit <a href="index.html" style="text-decoration:underline">Free Image Tools</a> to explore more image utilities.</p>
+  <div class="faq">
+    <h3>Can I compress multiple images at once?</h3>
+    <p>Yes. Select multiple supported images, compress them in one session and download each result separately.</p>
+  </div>
+
+  <h2>Explore More Free Image Tools</h2>
+  <p>Use the other tools on Free Image Tools to prepare images for websites, social media and everyday use.</p>
+
+  <div class="tool-links">
+    <a class="tool-link" href="image-resizer.html">
+      <strong>Free Image Resizer</strong>
+      <span>Change image dimensions and set a maximum width.</span>
+    </a>
+    <a class="tool-link" href="image-converter.html">
+      <strong>Image Format Converter</strong>
+      <span>Convert images between supported file formats.</span>
+    </a>
+  </div>
+
+  <p>Visit <a href="index.html" style="text-decoration:underline">Free Image Tools</a> to explore all available image utilities.</p>
 </section>
 </main>
 
@@ -477,4 +515,3 @@ compressBtn.addEventListener("click", async () => {
 </script>
 </body>
 </html>
-
