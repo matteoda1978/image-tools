@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -78,6 +79,11 @@
 
     nav a:hover {
       color: white;
+    }
+
+    nav a[aria-current="page"] {
+      color: var(--accent);
+      font-weight: 700;
     }
 
     main {
@@ -603,6 +609,9 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
+  <!-- Shared navigation menu -->
+  <script src="menu.js"></script>
+
   <script>
     const fileInput = document.getElementById("fileInput");
     const browseButton = document.getElementById("browseButton");
@@ -668,8 +677,7 @@
         selectedFiles.length + (selectedFiles.length === 1 ? " image" : " images");
 
       resultCount.textContent =
-        convertedFiles.length +
-        (convertedFiles.length === 1 ? " converted" : " converted");
+        convertedFiles.length + " converted";
 
       convertButton.disabled = selectedFiles.length === 0 || isConverting;
       clearButton.disabled =
@@ -1188,3 +1196,4 @@
   </script>
 </body>
 </html>
+```
