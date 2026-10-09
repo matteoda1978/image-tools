@@ -5,8 +5,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Free Image Compressor – Compress JPG, PNG & WebP Online</title>
-<meta name="description" content="Compress images online for free. Reduce JPG, PNG and WebP file sizes, adjust image quality and resize photos in your browser. No uploads or installation required.">
+<title>Free Image Compressor & Resizer – Compress Multiple Images Online</title>
+<meta name="description" content="Compress and resize multiple JPG, PNG and WebP images online for free. Select up to 50 photos, adjust dimensions and download your images in bulk.">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://matteoda1978.github.io/image-tools/image-compressor.html">
 <meta name="theme-color" content="#080d18">
@@ -26,23 +26,33 @@ header{border-bottom:1px solid #1e293b}
 h1{margin:0;font-size:clamp(34px,7vw,50px);line-height:1.08;letter-spacing:-1.8px}
 .hero p{max-width:680px;margin:16px auto 0;color:var(--muted);font-size:16px;line-height:1.7}
 .tool{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:22px;margin-bottom:42px}
-.upload{display:block;text-align:center;border:1.5px dashed #43516b;border-radius:16px;padding:35px 16px;background:var(--card2);cursor:pointer}
-.upload:hover{border-color:var(--accent)}
+.upload{display:block;text-align:center;border:1.5px dashed #43516b;border-radius:16px;padding:35px 16px;background:var(--card2);cursor:pointer;transition:.2s}
+.upload:hover,.upload.dragover{border-color:var(--accent);background:#142039}
 .upload-icon{font-size:30px;margin-bottom:10px}
 .upload strong{display:block;font-size:18px;margin-bottom:7px}
-.upload span{color:var(--muted);font-size:13px}
+.upload span{color:var(--muted);font-size:13px;line-height:1.7}
 #fileInput{display:none}
-.files{display:grid;gap:8px;margin-top:14px}
-.file{display:flex;align-items:center;gap:12px;min-width:0;padding:11px;border:1px solid var(--border);border-radius:10px;background:var(--card2)}
-.file-info{min-width:0;flex:1}
-.file-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px;font-weight:650}
+.file-count{margin-top:15px;color:var(--muted);font-size:13px}
+.files{display:grid;grid-template-columns:repeat(auto-fill,minmax(135px,1fr));gap:12px;margin-top:12px}
+.file{position:relative;display:flex;flex-direction:column;gap:8px;min-width:0;padding:9px;border:1px solid var(--border);border-radius:12px;background:var(--card2)}
+.file-preview{display:block;width:100%;aspect-ratio:1/1;object-fit:contain;background:#080d18;border-radius:8px}
+.file-info{min-width:0;width:100%;padding-right:3px}
+.file-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;font-weight:650}
 .file-size{color:var(--muted);font-size:12px;margin-top:4px}
+.remove-file{position:absolute;top:13px;right:13px;width:30px;min-height:30px;height:30px;padding:0;border:1px solid #43516b;border-radius:50%;background:#111827;color:white;font-size:20px;line-height:1}
+.remove-file:hover{background:#a83245}
+.section-heading{margin:25px 0 12px;font-size:17px}
 .settings{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:15px}
-.setting{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:15px}
+.setting{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:15px;min-width:0}
 .setting-label{display:flex;justify-content:space-between;gap:8px;margin-bottom:10px;font-size:13px;font-weight:700}
 .value{color:#c3d0e8}
 select,input[type=number]{width:100%;height:43px;border:1px solid #354258;border-radius:9px;background:#111a2b;color:var(--text);padding:0 10px;font-size:14px}
 input[type=range]{width:100%;accent-color:var(--accent)}
+.dimension-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.dimension-row label{display:block;color:var(--muted);font-size:12px;margin-bottom:6px}
+.check-row{display:flex;align-items:flex-start;gap:9px;margin-top:12px;color:#c5d0e2;font-size:13px;line-height:1.5}
+.check-row input{accent-color:var(--accent);margin-top:3px}
+.setting-note{color:var(--muted);font-size:12px;line-height:1.6;margin-top:9px}
 .target{display:flex;gap:8px}
 .target select{width:78px;flex:none}
 .target input{min-width:0}
@@ -52,7 +62,7 @@ button:active:not(:disabled){transform:scale(.98)}
 .primary{flex:1;background:var(--accent);color:#08101d;min-height:64px;font-size:19px;font-weight:850;padding:17px 22px;border-radius:14px;box-shadow:0 4px 0 #637bc4}
 .secondary{background:#202b40;color:#e8edf6;min-height:52px;padding:13px 22px}
 button:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
-.status{display:none;margin-top:14px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--card2);color:#c5d0e2;font-size:13px;line-height:1.6}
+.status{display:none;margin-top:14px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--card2);color:#c5d0e2;font-size:13px;line-height:1.6;overflow-wrap:anywhere}
 .result{display:none;margin-top:15px;padding:16px;border:1px solid var(--border);border-radius:12px;background:var(--card2)}
 .result-head{font-size:16px;font-weight:800;margin-bottom:12px}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
@@ -61,6 +71,7 @@ button:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
 .stat strong{font-size:15px;overflow-wrap:anywhere}
 .downloads{display:grid;gap:8px;margin-top:13px}
 .download{display:block;padding:15px;text-align:center;border-radius:10px;background:var(--accent);color:#08101d;font-size:14px;font-weight:800;overflow-wrap:anywhere}
+.download-all{background:#b9e6cb}
 .info{padding:0 0 55px}
 .info h2{margin:28px 0 10px;font-size:24px;letter-spacing:-.5px}
 .info h3{margin:24px 0 8px;font-size:18px}
@@ -94,6 +105,7 @@ h1{font-size:36px;letter-spacing:-1px}
 .primary{min-height:68px;font-size:19px}
 .secondary{min-height:56px;font-size:16px}
 .stats{grid-template-columns:1fr}
+.files{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 </style>
 </head>
@@ -108,26 +120,50 @@ h1{font-size:36px;letter-spacing:-1px}
 
 <main class="container">
 <section class="hero">
-  <div class="badge">Free online image compressor</div>
-  <h1>Compress Images Online for Free</h1>
-  <p>Reduce JPG, PNG and WebP image file sizes without installing software. Adjust image quality, resize large photos and download compressed images directly in your browser. Your selected files are processed locally by this tool.</p>
+  <div class="badge">Free online image compressor & resizer</div>
+  <h1>Compress and Resize Multiple Images Online</h1>
+  <p>Select up to 50 photos, resize them to your chosen dimensions and compress them together. Download the results individually or as a ZIP archive. Images are processed locally in your browser.</p>
 </section>
 
-<section class="tool" aria-label="Image compression tool">
-  <label class="upload" for="fileInput">
-    <div class="upload-icon">🗜️</div>
-    <strong>Select images to compress</strong>
-    <span>Choose JPG, JPEG, PNG or WebP files. Multiple images are supported.</span>
+<section class="tool" aria-label="Bulk image compression and resizing tool">
+  <label class="upload" id="dropZone" for="fileInput">
+    <div class="upload-icon">🖼️</div>
+    <strong>Select or add multiple images</strong>
+    <span>Choose up to 50 JPG, JPEG, PNG or WebP photos at once.<br>You can also drag and drop images here or add more later.</span>
   </label>
 
-  <input id="fileInput" type="file" accept="image/jpeg,image/png,image/webp" multiple>
+  <input id="fileInput" type="file" accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp" multiple>
+  <div id="fileCount" class="file-count">No images selected</div>
   <div id="files" class="files"></div>
+
+  <h2 class="section-heading">Resize all selected images</h2>
 
   <div class="settings">
     <div class="setting">
+      <div class="setting-label"><span>Width (pixels)</span><span class="value">Optional</span></div>
+      <input id="resizeWidth" type="number" min="1" max="30000" step="1" placeholder="e.g. 1200" aria-label="Output width in pixels">
+      <div class="setting-note">Leave blank to keep the original width unless a height is entered.</div>
+    </div>
+
+    <div class="setting">
+      <div class="setting-label"><span>Height (pixels)</span><span class="value">Optional</span></div>
+      <input id="resizeHeight" type="number" min="1" max="30000" step="1" placeholder="e.g. 800" aria-label="Output height in pixels">
+      <div class="setting-note">Leave blank to keep the original height unless a width is entered.</div>
+    </div>
+
+    <div class="setting">
+      <div class="setting-label"><span>Image proportions</span></div>
+      <label class="check-row">
+        <input id="keepRatio" type="checkbox" checked>
+        <span>Keep proportions and fit images inside the selected dimensions.</span>
+      </label>
+      <div class="setting-note">If enabled, photos will not be stretched. If disabled, both width and height are applied exactly.</div>
+    </div>
+
+    <div class="setting">
       <div class="setting-label"><span>Image quality</span><span id="qualityValue" class="value">80%</span></div>
       <input id="quality" type="range" min="20" max="100" value="80" aria-label="Image quality">
-      <div class="file-size">Lower quality usually means a smaller file.</div>
+      <div class="setting-note">Lower quality usually means smaller JPG and WebP files.</div>
     </div>
 
     <div class="setting">
@@ -137,22 +173,7 @@ h1{font-size:36px;letter-spacing:-1px}
         <option value="image/webp">WebP</option>
         <option value="image/png">PNG</option>
       </select>
-      <div class="file-size">PNG is lossless; the quality slider does not affect PNG compression.</div>
-    </div>
-
-    <div class="setting">
-      <div class="setting-label"><span>Maximum width</span></div>
-      <select id="width" aria-label="Maximum image width">
-        <option value="original">Keep original width</option>
-        <option value="4000">4000 px</option>
-        <option value="3000">3000 px</option>
-        <option value="2500">2500 px</option>
-        <option value="2000">2000 px</option>
-        <option value="1600">1600 px</option>
-        <option value="1200">1200 px</option>
-        <option value="800">800 px</option>
-      </select>
-      <div class="file-size">Large images can be resized to reduce file size.</div>
+      <div class="setting-note">PNG output is lossless. JPG does not support transparency.</div>
     </div>
 
     <div class="setting">
@@ -164,90 +185,76 @@ h1{font-size:36px;letter-spacing:-1px}
           <option value="MB">MB</option>
         </select>
       </div>
-      <div class="file-size">Best effort for JPG and WebP. The exact size is not guaranteed.</div>
+      <div class="setting-note">Best effort per image for JPG and WebP. The exact size is not guaranteed.</div>
     </div>
   </div>
 
   <div class="actions">
-    <button id="compressBtn" class="primary" disabled>Compress images</button>
-    <button id="clearBtn" class="secondary" type="button">Clear</button>
+    <button id="compressBtn" class="primary" disabled>Process all images</button>
+    <button id="clearBtn" class="secondary" type="button">Clear all</button>
   </div>
 
   <div id="status" class="status" role="status" aria-live="polite"></div>
 
-  <section id="result" class="result" aria-label="Compression results">
-    <div class="result-head">Compression results</div>
+  <section id="result" class="result" aria-label="Image processing results">
+    <div class="result-head">Results for all images</div>
     <div class="stats">
       <div class="stat"><small>ORIGINAL TOTAL</small><strong id="before">—</strong></div>
-      <div class="stat"><small>COMPRESSED TOTAL</small><strong id="after">—</strong></div>
-      <div class="stat"><small>SIZE REDUCTION</small><strong id="saved">—</strong></div>
+      <div class="stat"><small>PROCESSED TOTAL</small><strong id="after">—</strong></div>
+      <div class="stat"><small>TOTAL SIZE REDUCTION</small><strong id="saved">—</strong></div>
     </div>
     <div id="downloads" class="downloads"></div>
   </section>
 </section>
 
 <section class="info">
-  <h2>Free Online Image Compression</h2>
-  <p>This free online image compressor helps you reduce the file size of photos and graphics. Select an output format, adjust image quality and optionally limit the maximum image width. Smaller image files can be easier to upload, share by email and use on websites.</p>
+  <h2>Free Online Image Compressor and Resizer</h2>
+  <p>Compress and resize multiple images in one operation without installing software. Choose common output dimensions, adjust quality and select JPG, PNG or WebP. The same settings are applied to each selected image, making it easier to prepare batches of photos for websites, email and sharing.</p>
 
   <div class="features">
     <div class="feature"><strong>🔒 Private by design</strong><span>Your selected images are processed locally in your browser and are not uploaded to our server by this tool.</span></div>
-    <div class="feature"><strong>⚡ Simple and fast</strong><span>Compress images without installing a desktop application or creating an account.</span></div>
-    <div class="feature"><strong>📦 Multiple images</strong><span>Select several images and process them in one session. Download each result separately.</span></div>
+    <div class="feature"><strong>⚡ Bulk processing</strong><span>Select up to 50 photos and process them together with one set of options.</span></div>
+    <div class="feature"><strong>📦 Download together</strong><span>Download individual results or create one ZIP archive containing the processed images.</span></div>
   </div>
 
-  <h2>Compress JPG, PNG and WebP Images</h2>
-  <p>Different image formats behave differently when compressed. JPG is commonly used for photographs, while PNG is useful for graphics that need lossless output or transparency. WebP can provide smaller files for many web images, depending on the image and settings.</p>
-  <p>For JPG and WebP, lowering the quality setting can reduce file size, although it may also reduce visible detail. Resizing a large image can reduce its dimensions and file size as well. PNG output from this tool is lossless, but converting an image to PNG does not necessarily make it smaller.</p>
-
-  <h2>How to Compress an Image Online</h2>
+  <h2>How to Resize 50 Images at Once</h2>
   <ol>
-    <li>Select one or more JPG, JPEG, PNG or WebP images from your device.</li>
-    <li>Choose JPG, WebP or PNG as the output format.</li>
-    <li>Adjust image quality and optionally choose a maximum width.</li>
-    <li>Enter a target file size in KB or MB if needed. The target is an estimate, not a guarantee.</li>
-    <li>Click <strong>Compress images</strong> and download the results.</li>
+    <li>Select multiple JPG, JPEG, PNG or WebP images from your device.</li>
+    <li>Enter the width and/or height you want for the output images.</li>
+    <li>Keep proportions enabled to avoid stretching the photos.</li>
+    <li>Choose the quality and output format for the whole batch.</li>
+    <li>Click <strong>Process all images</strong> and wait for the results.</li>
+    <li>Download individual images or use the ZIP download to save them together.</li>
   </ol>
 
-  <h2>How to Reduce Image Size for Websites and Email</h2>
-  <p>If an image is too large to upload or send, try WebP or JPG output and reduce the quality gradually until you find a suitable balance between size and appearance. For website images, choose dimensions appropriate for where the image will be displayed rather than uploading an unnecessarily large photo.</p>
-  <p>If you need to change dimensions without focusing on compression, try our <a href="image-resizer.html" style="text-decoration:underline">free online image resizer</a>. If you need to change an image from one file format to another, use the <a href="image-converter.html" style="text-decoration:underline">online image converter</a>.</p>
+  <h2>Compress JPG, PNG and WebP Images</h2>
+  <p>JPG is commonly used for photographs, PNG is useful for graphics and transparency, and WebP can produce smaller files for many web images. For JPG and WebP, lowering the quality setting can reduce file size, although it may reduce visible detail. PNG output is lossless, but converting an image to PNG does not necessarily make it smaller.</p>
 
   <h2>Frequently Asked Questions</h2>
 
   <div class="faq">
-    <h3>How can I compress an image online for free?</h3>
-    <p>Select your image, choose the quality and output format, then click the compress button. You can download the compressed result directly from your browser without installing software.</p>
+    <h3>Can I resize 50 photos at once?</h3>
+    <p>Yes. You can select up to 50 supported images and apply the same width, height, quality and output format settings to the entire batch.</p>
   </div>
 
   <div class="faq">
-    <h3>Does this image compressor upload my files?</h3>
-    <p>No. Image processing is performed locally in your browser. This tool does not send selected image files to our server.</p>
+    <h3>Can I add more photos after selecting some?</h3>
+    <p>Yes. Select or drag additional images into the upload area. Previously selected images remain in the list, and you can remove individual images before processing.</p>
   </div>
 
   <div class="faq">
-    <h3>Which image formats are supported?</h3>
-    <p>You can select JPG, JPEG, PNG and WebP images. The output can be JPG, PNG or WebP.</p>
+    <h3>Can I keep the original proportions?</h3>
+    <p>Yes. Keep the proportions option enabled to fit each image inside the dimensions you enter without stretching it. Disable this option only when you want to apply exact width and height values.</p>
   </div>
 
   <div class="faq">
-    <h3>How can I reduce image size without losing quality?</h3>
-    <p>Try resizing the image to suitable dimensions or using lossless PNG output when appropriate. JPG and WebP compression can reduce file size with some loss of image detail, depending on the settings.</p>
+    <h3>Can I download all processed photos together?</h3>
+    <p>Yes. Use the ZIP download button to collect the processed images in one archive. You can also download each image separately.</p>
   </div>
 
   <div class="faq">
-    <h3>Will compressing an image reduce its quality?</h3>
-    <p>It depends on the output format and settings. JPG and WebP quality settings can reduce file size with some loss of image detail. PNG output is lossless, although converting another format to PNG may not make the file smaller.</p>
-  </div>
-
-  <div class="faq">
-    <h3>Can I compress an image to an exact file size?</h3>
-    <p>The target size setting makes an attempt to reduce JPG or WebP output toward the requested size. An exact size cannot be guaranteed for every image. PNG does not use the target-size adjustment.</p>
-  </div>
-
-  <div class="faq">
-    <h3>Can I compress multiple images at once?</h3>
-    <p>Yes. Select multiple supported images, compress them in one session and download each result separately.</p>
+    <h3>Are my images uploaded to a server?</h3>
+    <p>No. Image processing takes place locally in your browser. Your selected image files are not sent to our server by this tool.</p>
   </div>
 
   <h2>Explore More Free Image Tools</h2>
@@ -272,13 +279,20 @@ h1{font-size:36px;letter-spacing:-1px}
   <div class="container">© 2026 Free Image Tools · Free online image tools</div>
 </footer>
 
+<!-- JSZip is used only to create the optional ZIP download in your browser. -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
 <script>
 const fileInput = document.getElementById("fileInput");
+const dropZone = document.getElementById("dropZone");
 const filesBox = document.getElementById("files");
+const fileCount = document.getElementById("fileCount");
 const quality = document.getElementById("quality");
 const qualityValue = document.getElementById("qualityValue");
 const format = document.getElementById("format");
-const width = document.getElementById("width");
+const resizeWidth = document.getElementById("resizeWidth");
+const resizeHeight = document.getElementById("resizeHeight");
+const keepRatio = document.getElementById("keepRatio");
 const target = document.getElementById("target");
 const targetUnit = document.getElementById("targetUnit");
 const compressBtn = document.getElementById("compressBtn");
@@ -292,6 +306,10 @@ const downloads = document.getElementById("downloads");
 
 let selectedFiles = [];
 let outputUrls = [];
+let previewUrls = [];
+let isProcessing = false;
+
+const MAX_FILES = 50;
 
 function formatBytes(bytes) {
   if (!Number.isFinite(bytes) || bytes < 0) return "0 B";
@@ -310,46 +328,194 @@ function clearOutputUrls() {
   outputUrls = [];
 }
 
+function clearPreviousResults() {
+  clearOutputUrls();
+  downloads.innerHTML = "";
+  result.style.display = "none";
+  statusBox.style.display = "none";
+}
+
+function isSupportedImage(file) {
+  const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+  const extension = file.name.split(".").pop().toLowerCase();
+  return allowedTypes.includes(file.type) ||
+    ["jpg", "jpeg", "png", "webp"].includes(extension);
+}
+
+function fileKey(file) {
+  return [file.name, file.size, file.lastModified].join("|");
+}
+
+function addFiles(files) {
+  if (isProcessing) return;
+
+  const validFiles = files.filter(isSupportedImage);
+  const invalidCount = files.length - validFiles.length;
+  const known = new Set(selectedFiles.map(fileKey));
+  let added = 0;
+  let skippedDuplicates = 0;
+
+  for (const file of validFiles) {
+    const key = fileKey(file);
+
+    if (known.has(key)) {
+      skippedDuplicates++;
+      continue;
+    }
+
+    if (selectedFiles.length >= MAX_FILES) {
+      break;
+    }
+
+    selectedFiles.push(file);
+    known.add(key);
+    added++;
+  }
+
+  if (added > 0) {
+    clearPreviousResults();
+    renderFiles();
+  }
+
+  const messages = [];
+
+  if (added > 0) {
+    messages.push(added + " image(s) added.");
+  }
+
+  if (invalidCount > 0) {
+    messages.push(invalidCount + " unsupported file(s) skipped. Use JPG, PNG or WebP.");
+  }
+
+  if (skippedDuplicates > 0) {
+    messages.push(skippedDuplicates + " duplicate image(s) skipped.");
+  }
+
+  if (selectedFiles.length >= MAX_FILES && files.length > added) {
+    messages.push("The maximum of " + MAX_FILES + " images has been reached.");
+  }
+
+  if (messages.length) {
+    showStatus(messages.join(" "));
+  } else if (added > 0) {
+    statusBox.style.display = "none";
+  } else if (files.length === 0) {
+    showStatus("Please select JPG, PNG or WebP images.");
+  }
+
+  renderFiles();
+}
+
 function renderFiles() {
+  previewUrls.forEach(url => URL.revokeObjectURL(url));
+  previewUrls = [];
   filesBox.innerHTML = "";
-  selectedFiles.forEach(file => {
-    const row = document.createElement("div");
-    row.className = "file";
+
+  selectedFiles.forEach((file, index) => {
+    const card = document.createElement("div");
+    card.className = "file";
+
+    const preview = document.createElement("img");
+    preview.className = "file-preview";
+    preview.alt = "Preview of " + file.name;
+    preview.loading = "lazy";
+
+    const previewUrl = URL.createObjectURL(file);
+    previewUrls.push(previewUrl);
+    preview.src = previewUrl;
+
+    const removeButton = document.createElement("button");
+    removeButton.type = "button";
+    removeButton.className = "remove-file";
+    removeButton.textContent = "×";
+    removeButton.setAttribute("aria-label", "Remove " + file.name);
+    removeButton.title = "Remove image";
+    removeButton.disabled = isProcessing;
+    removeButton.addEventListener("click", () => {
+      if (isProcessing) return;
+      selectedFiles.splice(index, 1);
+      clearPreviousResults();
+      renderFiles();
+    });
+
     const info = document.createElement("div");
     info.className = "file-info";
+
     const name = document.createElement("div");
     name.className = "file-name";
+    name.title = file.name;
     name.textContent = file.name;
+
     const size = document.createElement("div");
     size.className = "file-size";
     size.textContent = formatBytes(file.size);
+
     info.append(name, size);
-    row.appendChild(info);
-    filesBox.appendChild(row);
+    card.append(preview, removeButton, info);
+    filesBox.appendChild(card);
   });
-  compressBtn.disabled = selectedFiles.length === 0;
+
+  fileCount.textContent = selectedFiles.length
+    ? selectedFiles.length + " of " + MAX_FILES + " images selected"
+    : "No images selected";
+
+  compressBtn.disabled = selectedFiles.length === 0 || isProcessing;
 }
 
 fileInput.addEventListener("change", () => {
-  selectedFiles = Array.from(fileInput.files || []);
-  clearOutputUrls();
-  result.style.display = "none";
-  statusBox.style.display = "none";
-  renderFiles();
+  const files = Array.from(fileInput.files || []);
+  fileInput.value = "";
+  addFiles(files);
+});
+
+["dragenter", "dragover"].forEach(eventName => {
+  dropZone.addEventListener(eventName, event => {
+    event.preventDefault();
+    if (!isProcessing) dropZone.classList.add("dragover");
+  });
+});
+
+["dragleave", "drop"].forEach(eventName => {
+  dropZone.addEventListener(eventName, event => {
+    event.preventDefault();
+    dropZone.classList.remove("dragover");
+  });
+});
+
+dropZone.addEventListener("drop", event => {
+  if (isProcessing) return;
+  addFiles(Array.from(event.dataTransfer.files || []));
 });
 
 quality.addEventListener("input", () => {
   qualityValue.textContent = quality.value + "%";
 });
 
+function setProcessing(busy) {
+  isProcessing = busy;
+  compressBtn.disabled = busy || selectedFiles.length === 0;
+  clearBtn.disabled = busy;
+  fileInput.disabled = busy;
+
+  document.querySelectorAll(".settings input, .settings select").forEach(control => {
+    control.disabled = busy;
+  });
+
+  renderFiles();
+}
+
 clearBtn.addEventListener("click", () => {
+  if (isProcessing) return;
+
   selectedFiles = [];
   fileInput.value = "";
+
+  previewUrls.forEach(url => URL.revokeObjectURL(url));
+  previewUrls = [];
+
+  clearPreviousResults();
   filesBox.innerHTML = "";
-  clearOutputUrls();
-  downloads.innerHTML = "";
-  result.style.display = "none";
-  statusBox.style.display = "none";
+  fileCount.textContent = "No images selected";
   compressBtn.disabled = true;
 });
 
@@ -357,14 +523,17 @@ function loadImage(file) {
   return new Promise((resolve, reject) => {
     const url = URL.createObjectURL(file);
     const img = new Image();
+
     img.onload = () => {
       URL.revokeObjectURL(url);
       resolve(img);
     };
+
     img.onerror = () => {
       URL.revokeObjectURL(url);
       reject(new Error("Could not read image"));
     };
+
     img.src = url;
   });
 }
@@ -384,24 +553,66 @@ function outputExtension(mime) {
   return "jpg";
 }
 
-async function compressOne(file) {
-  const img = await loadImage(file);
-  let maxWidth = img.naturalWidth;
+function getOutputDimensions(originalWidth, originalHeight) {
+  const requestedWidth = Number(resizeWidth.value);
+  const requestedHeight = Number(resizeHeight.value);
 
-  if (width.value !== "original") {
-    const requested = Number(width.value);
-    if (Number.isFinite(requested) && requested > 0) {
-      maxWidth = Math.min(img.naturalWidth, requested);
-    }
+  const hasWidth = resizeWidth.value.trim() !== "" &&
+    Number.isFinite(requestedWidth) && requestedWidth > 0;
+  const hasHeight = resizeHeight.value.trim() !== "" &&
+    Number.isFinite(requestedHeight) && requestedHeight > 0;
+
+  if (!hasWidth && !hasHeight) {
+    return { width: originalWidth, height: originalHeight };
   }
 
-  const scale = maxWidth / img.naturalWidth;
+  let newWidth = hasWidth ? requestedWidth : originalWidth;
+  let newHeight = hasHeight ? requestedHeight : originalHeight;
+
+  if (keepRatio.checked) {
+    let scale;
+
+    if (hasWidth && hasHeight) {
+      scale = Math.min(
+        requestedWidth / originalWidth,
+        requestedHeight / originalHeight
+      );
+    } else if (hasWidth) {
+      scale = requestedWidth / originalWidth;
+    } else {
+      scale = requestedHeight / originalHeight;
+    }
+
+    newWidth = Math.round(originalWidth * scale);
+    newHeight = Math.round(originalHeight * scale);
+  }
+
+  newWidth = Math.max(1, Math.min(30000, Math.round(newWidth)));
+  newHeight = Math.max(1, Math.min(30000, Math.round(newHeight)));
+
+  return { width: newWidth, height: newHeight };
+}
+
+async function compressOne(file) {
+  const img = await loadImage(file);
+
+  const dimensions = getOutputDimensions(
+    img.naturalWidth,
+    img.naturalHeight
+  );
+
   const canvas = document.createElement("canvas");
-  canvas.width = Math.max(1, Math.round(img.naturalWidth * scale));
-  canvas.height = Math.max(1, Math.round(img.naturalHeight * scale));
+  canvas.width = dimensions.width;
+  canvas.height = dimensions.height;
 
   const ctx = canvas.getContext("2d");
   if (!ctx) throw new Error("Canvas is not available");
+
+  // JPG does not support transparency, so use a white background.
+  if (format.value === "image/jpeg") {
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  }
 
   ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
@@ -410,12 +621,14 @@ async function compressOne(file) {
   let blob = await canvasBlob(canvas, mime, q);
 
   const targetNumber = Number(target.value);
+
   if (Number.isFinite(targetNumber) && targetNumber > 0 && mime !== "image/png") {
     const targetBytes = targetUnit.value === "MB"
       ? targetNumber * 1024 * 1024
       : targetNumber * 1024;
 
     let attempts = 0;
+
     while (blob.size > targetBytes && q > 0.1 && attempts < 10) {
       q = Math.max(0.1, q - 0.1);
       blob = await canvasBlob(canvas, mime, q);
@@ -423,39 +636,65 @@ async function compressOne(file) {
     }
   }
 
-  return { blob, originalSize: file.size, name: file.name };
+  return {
+    blob,
+    originalSize: file.size,
+    name: file.name,
+    width: canvas.width,
+    height: canvas.height
+  };
 }
 
 function makeDownloadName(name) {
   const base = name.replace(/\.[^/.]+$/, "");
-  return base + "-compressed." + outputExtension(format.value);
+  return base + "-processed." + outputExtension(format.value);
+}
+
+function uniqueName(name, usedNames) {
+  if (!usedNames.has(name)) {
+    usedNames.add(name);
+    return name;
+  }
+
+  const dot = name.lastIndexOf(".");
+  const base = dot >= 0 ? name.slice(0, dot) : name;
+  const extension = dot >= 0 ? name.slice(dot) : "";
+  let counter = 2;
+  let candidate = base + "-" + counter + extension;
+
+  while (usedNames.has(candidate)) {
+    counter++;
+    candidate = base + "-" + counter + extension;
+  }
+
+  usedNames.add(candidate);
+  return candidate;
 }
 
 compressBtn.addEventListener("click", async () => {
-  if (!selectedFiles.length) {
-    showStatus("Please select at least one image.");
+  if (!selectedFiles.length || isProcessing) {
+    if (!selectedFiles.length) showStatus("Please select at least one image.");
     return;
   }
 
-  clearOutputUrls();
-  downloads.innerHTML = "";
-  compressBtn.disabled = true;
-  clearBtn.disabled = true;
-  result.style.display = "none";
+  clearPreviousResults();
+  setProcessing(true);
 
   let totalBefore = 0;
   let totalAfter = 0;
   let succeeded = 0;
   const outputs = [];
   const failed = [];
+  const batch = [...selectedFiles];
 
   try {
-    for (let i = 0; i < selectedFiles.length; i++) {
-      const file = selectedFiles[i];
-      showStatus("Compressing image " + (i + 1) + " of " + selectedFiles.length + "…");
+    for (let i = 0; i < batch.length; i++) {
+      const file = batch[i];
+      showStatus("Processing image " + (i + 1) + " of " + batch.length + ": " + file.name);
 
       try {
         const output = await compressOne(file);
+        output.outputName = makeDownloadName(output.name);
         outputs.push(output);
         totalBefore += output.originalSize;
         totalAfter += output.blob.size;
@@ -466,7 +705,7 @@ compressBtn.addEventListener("click", async () => {
     }
 
     if (!outputs.length) {
-      showStatus("No images could be compressed. Try JPG, PNG or WebP files.");
+      showStatus("No images could be processed. Try JPG, PNG or WebP files.");
       return;
     }
 
@@ -485,31 +724,77 @@ compressBtn.addEventListener("click", async () => {
       const link = document.createElement("a");
       link.className = "download";
       link.href = url;
-      link.download = makeDownloadName(output.name);
-      link.textContent = "Download " + makeDownloadName(output.name) +
+      link.download = output.outputName;
+      link.textContent = "Download " + output.outputName +
         " (" + formatBytes(output.blob.size) + ")";
       downloads.appendChild(link);
     });
 
+    const zipLink = document.createElement("a");
+    zipLink.className = "download download-all";
+    zipLink.href = "#";
+    zipLink.textContent = "Preparing ZIP download…";
+    zipLink.setAttribute("aria-label", "Download all processed images as a ZIP file");
+    downloads.prepend(zipLink);
+
+    if (typeof JSZip !== "undefined") {
+      try {
+        const zip = new JSZip();
+        const usedNames = new Set();
+
+        outputs.forEach(output => {
+          const zipName = uniqueName(output.outputName, usedNames);
+          zip.file(zipName, output.blob);
+        });
+
+        const zipBlob = await zip.generateAsync({
+          type: "blob",
+          compression: "STORE"
+        }, metadata => {
+          zipLink.textContent = "Creating ZIP… " + Math.round(metadata.percent) + "%";
+        });
+
+        const zipUrl = URL.createObjectURL(zipBlob);
+        outputUrls.push(zipUrl);
+        zipLink.href = zipUrl;
+        zipLink.download = "processed-images.zip";
+        zipLink.textContent = "Download all " + outputs.length + " images as ZIP (" +
+          formatBytes(zipBlob.size) + ")";
+      } catch (zipError) {
+        zipLink.remove();
+        showStatus("Images were processed, but the ZIP archive could not be created. Download each image separately.");
+      }
+    } else {
+      zipLink.remove();
+      showStatus("Images were processed. ZIP support could not load; download each image separately or check your internet connection.");
+    }
+
     result.style.display = "block";
 
-    let message = "Finished: " + succeeded + " image(s) compressed.";
+    let message = "Finished: " + succeeded + " of " + batch.length + " image(s) processed.";
+
     if (failed.length) {
       message += " Could not process: " + failed.join(", ") + ".";
     }
+
     if (format.value === "image/png" && target.value.trim() !== "") {
       message += " The target file size setting is not applied to PNG.";
     }
+
     if (reduction < 0) {
       message += " The output files are larger overall; try WebP or a lower quality setting.";
+    } else if (reduction === 0) {
+      message += " The total file size did not change.";
+    } else {
+      message += " Total size reduced by " + reduction + "%.";
     }
+
     showStatus(message);
 
   } catch (error) {
     showStatus("Something went wrong. Please try again with JPG, PNG or WebP images.");
   } finally {
-    compressBtn.disabled = selectedFiles.length === 0;
-    clearBtn.disabled = false;
+    setProcessing(false);
   }
 });
 </script>
