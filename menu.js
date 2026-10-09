@@ -27,7 +27,6 @@ const link = document.createElement("a");
 link.href = tool.url;
 link.textContent = tool.name;
 
-```
 if (currentPage === tool.url) {
   link.setAttribute("aria-current", "page");
   link.style.color = "#60a5fa";
@@ -35,7 +34,6 @@ if (currentPage === tool.url) {
 }
 
 nav.appendChild(link);
-```
 
 });
 })();
