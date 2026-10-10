@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Smart Image Fix - Ottimizza immagini online | Image Tools</title>
+  <title>Smart Image Fix - Ottimizza immagini online | RitoccaPix</title>
   <meta name="description" content="Ottimizza automaticamente le immagini online. Analizza dimensioni e peso, confronta il risultato e scarica la foto ottimizzata gratuitamente.">
   <meta name="theme-color" content="#080d18">
 
@@ -22,9 +21,7 @@
       --radius: 16px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     html {
       min-height: 100%;
@@ -40,8 +37,6 @@
       color: var(--text);
       line-height: 1.6;
     }
-
-    /* HEADER E MENU CONDIVISO */
 
     header {
       background: var(--background);
@@ -75,8 +70,6 @@
       margin-left: auto;
       flex: 0 0 auto;
     }
-
-    /* CONTENUTO */
 
     main {
       width: 100%;
@@ -123,20 +116,11 @@
       margin: 0 0 10px;
     }
 
-    p {
-      overflow-wrap: anywhere;
-    }
+    p { overflow-wrap: anywhere; }
 
-    .muted,
-    .hint {
-      color: var(--muted);
-    }
+    .muted, .hint { color: var(--muted); }
 
-    .hint {
-      font-size: 13px;
-    }
-
-    /* CARICAMENTO */
+    .hint { font-size: 13px; }
 
     .upload {
       border: 2px dashed #43516b;
@@ -146,13 +130,9 @@
       text-align: center;
     }
 
-    .upload strong {
-      font-size: 18px;
-    }
+    .upload strong { font-size: 18px; }
 
-    .upload p {
-      color: var(--muted);
-    }
+    .upload p { color: var(--muted); }
 
     input[type="file"] {
       display: block;
@@ -197,10 +177,7 @@
       outline-offset: 2px;
     }
 
-    /* MESSAGGI */
-
-    .status,
-    .error {
+    .status, .error {
       display: none;
       margin-top: 18px;
       padding: 14px;
@@ -220,8 +197,6 @@
       border: 1px solid #713344;
     }
 
-    /* RISULTATO */
-
     .result {
       display: none;
       margin-top: 25px;
@@ -235,9 +210,7 @@
       margin-bottom: 20px;
     }
 
-    .recommendation h3 {
-      color: var(--primary);
-    }
+    .recommendation h3 { color: var(--primary); }
 
     .recommendation p {
       margin-bottom: 0;
@@ -297,8 +270,6 @@
       border: 1px solid var(--border);
     }
 
-    /* PULSANTI */
-
     .button {
       display: inline-block;
       border: 0;
@@ -317,9 +288,7 @@
       color: #082016;
     }
 
-    .download:hover {
-      background: #91e8b2;
-    }
+    .download:hover { background: #91e8b2; }
 
     .secondary {
       background: #27364f;
@@ -327,27 +296,16 @@
       margin-left: 8px;
     }
 
-    .secondary:hover {
-      background: #354762;
-    }
+    .secondary:hover { background: #354762; }
 
-    /* TESTO INFORMATIVO */
-
-    .content p,
-    .content li {
+    .content p, .content li {
       color: var(--muted);
       line-height: 1.7;
     }
 
-    .content strong {
-      color: var(--text);
-    }
+    .content strong { color: var(--text); }
 
-    .content h2:not(:first-child) {
-      margin-top: 28px;
-    }
-
-    /* PIEDE PAGINA */
+    .content h2:not(:first-child) { margin-top: 28px; }
 
     footer {
       text-align: center;
@@ -369,26 +327,15 @@
         align-items: center;
       }
 
-      .hero h1 {
-        font-size: 26px;
-      }
+      .hero h1 { font-size: 26px; }
 
-      main {
-        padding: 24px 15px 40px;
-      }
+      main { padding: 24px 15px 40px; }
 
-      .card {
-        padding: 18px;
-      }
+      .card { padding: 18px; }
 
-      .stats,
-      .comparison {
-        grid-template-columns: 1fr;
-      }
+      .stats, .comparison { grid-template-columns: 1fr; }
 
-      .secondary {
-        margin-left: 0;
-      }
+      .secondary { margin-left: 0; }
     }
   </style>
 </head>
@@ -397,7 +344,7 @@
 
 <header>
   <div class="header-inner">
-    <a class="brand" href="index.html">Image Tools</a>
+    <a class="brand" href="index.html">RitoccaPix</a>
     <nav aria-label="Navigazione principale"></nav>
   </div>
 </header>
@@ -419,11 +366,7 @@
       <p><strong>📷 Seleziona una foto</strong></p>
       <p>L'ottimizzazione parte automaticamente.</p>
 
-      <input
-        type="file"
-        id="fileInput"
-        accept="image/*"
-      >
+      <input type="file" id="fileInput" accept="image/*">
 
       <p class="hint">
         La foto viene elaborata nel browser e non viene inviata
@@ -552,7 +495,7 @@
 </main>
 
 <footer>
-  © 2026 Image Tools ·
+  © 2026 RitoccaPix ·
   <a href="index.html">Torna alla Home</a>
 </footer>
 
@@ -606,9 +549,7 @@
   let jobNumber = 0;
 
   function formatBytes(bytes) {
-    if (bytes < 1024) {
-      return bytes + " B";
-    }
+    if (bytes < 1024) return bytes + " B";
 
     if (bytes < 1024 * 1024) {
       return (bytes / 1024).toFixed(1) + " KB";
@@ -648,47 +589,31 @@
     if (type === "web") {
       maxWidth = 1920;
       quality = 0.82;
-      text =
-        "Impostazioni web: larghezza massima 1920 px e compressione equilibrata.";
+      text = "Impostazioni web: larghezza massima 1920 px e compressione equilibrata.";
     } else if (type === "social") {
       maxWidth = 1600;
       quality = 0.84;
-      text =
-        "Impostazioni social: larghezza massima 1600 px e buona qualità visiva.";
+      text = "Impostazioni social: larghezza massima 1600 px e buona qualità visiva.";
     } else if (type === "email") {
       maxWidth = 1200;
       quality = 0.72;
-      text =
-        "Impostazioni email: larghezza massima 1200 px e compressione più marcata.";
+      text = "Impostazioni email: larghezza massima 1200 px e compressione più marcata.";
     } else {
       maxWidth = 2400;
       quality = 0.90;
-      text =
-        "Uso generale: larghezza massima 2400 px e impostazioni orientate alla qualità.";
+      text = "Uso generale: larghezza massima 2400 px e impostazioni orientate alla qualità.";
     }
 
-    if (width < maxWidth) {
-      maxWidth = width;
-    }
+    if (width < maxWidth) maxWidth = width;
 
-    return {
-      maxWidth: maxWidth,
-      quality: quality,
-      text: text
-    };
+    return { maxWidth, quality, text };
   }
 
   function optimizeImage() {
-    if (!selectedFile) {
-      return;
-    }
+    if (!selectedFile) return;
 
     const thisJob = ++jobNumber;
     const file = selectedFile;
-    const settings = getSettings(
-      useSelect.value,
-      Number.MAX_SAFE_INTEGER
-    );
 
     status.style.display = "block";
     error.style.display = "none";
@@ -719,7 +644,6 @@
 
       if (width > currentSettings.maxWidth) {
         const scale = currentSettings.maxWidth / width;
-
         outputWidth = Math.max(1, Math.round(width * scale));
         outputHeight = Math.max(1, Math.round(height * scale));
       }
@@ -739,20 +663,12 @@
       ctx.fillStyle = "#ffffff";
       ctx.fillRect(0, 0, outputWidth, outputHeight);
 
-      ctx.drawImage(
-        image,
-        0,
-        0,
-        outputWidth,
-        outputHeight
-      );
+      ctx.drawImage(image, 0, 0, outputWidth, outputHeight);
 
       canvas.toBlob(function (blob) {
         URL.revokeObjectURL(objectUrl);
 
-        if (thisJob !== jobNumber) {
-          return;
-        }
+        if (thisJob !== jobNumber) return;
 
         status.style.display = "none";
 
@@ -774,11 +690,9 @@
         let savingsText;
 
         if (difference > 0) {
-          savingsText =
-            percentage.toFixed(1) + "% in meno";
+          savingsText = percentage.toFixed(1) + "% in meno";
         } else if (difference < 0) {
-          savingsText =
-            percentage.toFixed(1) + "% in più";
+          savingsText = percentage.toFixed(1) + "% in più";
         } else {
           savingsText = "Nessuna variazione";
         }
@@ -787,12 +701,8 @@
           currentSettings.text +
           " Controlla l'anteprima prima di scaricare.";
 
-        originalDimensions.textContent =
-          width + " × " + height + " px";
-
-        newDimensions.textContent =
-          outputWidth + " × " + outputHeight + " px";
-
+        originalDimensions.textContent = width + " × " + height + " px";
+        newDimensions.textContent = outputWidth + " × " + outputHeight + " px";
         originalSize.textContent = formatBytes(file.size);
         newSize.textContent = formatBytes(blob.size);
         reduction.textContent = savingsText;
@@ -813,13 +723,9 @@
     image.onerror = function () {
       URL.revokeObjectURL(objectUrl);
 
-      if (thisJob !== jobNumber) {
-        return;
-      }
+      if (thisJob !== jobNumber) return;
 
-      showError(
-        "Impossibile leggere questa immagine. Prova con un altro file."
-      );
+      showError("Impossibile leggere questa immagine. Prova con un altro file.");
     };
 
     image.src = objectUrl;
@@ -835,9 +741,7 @@
     error.style.display = "none";
     status.style.display = "none";
 
-    if (!selectedFile) {
-      return;
-    }
+    if (!selectedFile) return;
 
     if (!selectedFile.type.startsWith("image/")) {
       selectedFile = null;
@@ -849,9 +753,7 @@
   });
 
   useSelect.addEventListener("change", function () {
-    if (selectedFile) {
-      optimizeImage();
-    }
+    if (selectedFile) optimizeImage();
   });
 
   reset.addEventListener("click", function () {
@@ -876,4 +778,3 @@
 
 </body>
 </html>
-```
