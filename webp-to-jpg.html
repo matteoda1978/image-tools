@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>WebP to JPG Converter Online Free | Image Tools</title>
-<meta name="description" content="Converti WebP in JPG online gratis. Scegli la qualità, ridimensiona e scarica le immagini direttamente dal browser.">
+<meta name="description" content="Converti WebP in JPG online gratis. Regola la qualità, ridimensiona le immagini e scarica i risultati direttamente dal browser.">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://matteoda1978.github.io/image-tools/webp-to-jpg.html">
 
@@ -48,14 +48,25 @@ header {
 
 .nav {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 15px;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
 .logo {
+  flex: none;
   font-size: 21px;
   font-weight: 800;
+  letter-spacing: -.5px;
+}
+
+header nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-left: auto;
 }
 
 .home {
@@ -238,7 +249,7 @@ input[type="range"] {
   cursor: pointer;
 }
 
-/* PULSANTE PRINCIPALE: GRANDE E ALTO */
+/* Pulsante principale molto alto */
 .actions {
   display: flex;
   flex-direction: column;
@@ -455,6 +466,23 @@ footer {
     width: calc(100% - 20px);
   }
 
+  header {
+    padding: 16px 0;
+  }
+
+  .nav {
+    align-items: center;
+    gap: 12px;
+  }
+
+  .logo {
+    font-size: 19px;
+  }
+
+  header nav {
+    gap: 8px;
+  }
+
   .hero {
     padding: 35px 0 24px;
   }
@@ -504,6 +532,9 @@ footer {
   }
 }
 </style>
+
+<!-- Ripristina lo script del menu condiviso -->
+<script src="menu.js" defer></script>
 </head>
 
 <body>
@@ -511,7 +542,13 @@ footer {
 <div class="container">
   <header>
     <div class="nav">
-      <a class="logo" href="index.html">Image Tools</a>
+      <div class="logo">
+        <a href="index.html">Image Tools</a>
+      </div>
+
+      <!-- menu.js può inserire qui il menu condiviso -->
+      <nav aria-label="Main navigation"></nav>
+
       <a class="home" href="index.html">← Home</a>
     </div>
   </header>
@@ -789,7 +826,6 @@ async function convertOne(file) {
   ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
   const q = Math.min(1, Math.max(0.2, Number(quality.value) / 100));
-
   return canvasToJpg(canvas, q);
 }
 
