@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>WebP to JPG Converter Online Free | Image Tools</title>
-<meta name="description" content="Converti immagini WebP in JPG online gratis. Regola la qualità, ridimensiona le immagini e scarica i risultati direttamente dal browser.">
+<meta name="description" content="Converti immagini WebP in JPG online gratis. Regola la qualità, ridimensiona le immagini e scarica singoli file o tutti insieme in ZIP.">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://matteoda1978.github.io/image-tools/webp-to-jpg.html">
 
@@ -46,7 +46,6 @@ header {
   border-bottom: 1px solid #1e293b;
 }
 
-/* Intestazione: logo a sinistra, menu accanto */
 .nav {
   display: flex;
   align-items: center;
@@ -82,7 +81,6 @@ header nav {
   padding: 0;
 }
 
-/* Stile del menu a tendina condiviso */
 header nav a,
 header nav button {
   font-family: inherit;
@@ -321,6 +319,32 @@ input[type="range"] {
   cursor: pointer;
 }
 
+#clearBtn:disabled {
+  opacity: .6;
+  cursor: wait;
+}
+
+#downloadAllBtn {
+  display: none;
+  width: 100%;
+  min-height: 64px;
+  margin-top: 16px;
+  padding: 16px;
+  background: #91aaff;
+  color: #08101d;
+  border: 0;
+  border-radius: 13px;
+  font-family: inherit;
+  font-size: 17px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+#downloadAllBtn:disabled {
+  opacity: .6;
+  cursor: wait;
+}
+
 .status {
   display: none;
   margin-top: 15px;
@@ -537,7 +561,11 @@ footer {
 }
 </style>
 
+<!-- Menu condiviso -->
 <script src="menu.js" defer></script>
+
+<!-- Libreria necessaria per creare l'archivio ZIP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
 
 <body>
@@ -562,7 +590,7 @@ footer {
     <p>
       Converti immagini WebP in JPG online gratuitamente.
       Scegli la qualità, ridimensiona le immagini e scarica
-      ogni file direttamente dal browser.
+      ogni file singolarmente oppure tutti insieme in un archivio ZIP.
     </p>
   </section>
 
@@ -608,6 +636,7 @@ footer {
       <button id="convertBtn" type="button" disabled>
         Converti in JPG
       </button>
+
       <button id="clearBtn" type="button">
         Cancella immagini
       </button>
@@ -620,18 +649,24 @@ footer {
 
       <div class="stats">
         <div class="stat">
-          <small>ORIGINALI</small>
+          <small>DIMENSIONE ORIGINALE</small>
           <strong id="before">—</strong>
         </div>
+
         <div class="stat">
-          <small>FILE JPG</small>
+          <small>DIMENSIONE JPG</small>
           <strong id="after">—</strong>
         </div>
+
         <div class="stat">
           <small>CONVERTITI</small>
           <strong id="count">—</strong>
         </div>
       </div>
+
+      <button id="downloadAllBtn" type="button">
+        Scarica tutti i JPG (.ZIP)
+      </button>
 
       <div id="downloadList" class="download-list"></div>
     </div>
@@ -659,10 +694,12 @@ footer {
         <strong>🔒 Privacy</strong>
         <span>Elaborazione locale nel browser, senza upload delle immagini.</span>
       </div>
+
       <div class="feature">
         <strong>⚡ Semplice</strong>
         <span>Seleziona, converti e scarica i file JPG.</span>
       </div>
+
       <div class="feature">
         <strong>📱 Mobile</strong>
         <span>Interfaccia adattata a smartphone, tablet e computer.</span>
@@ -690,8 +727,10 @@ const before = document.getElementById("before");
 const after = document.getElementById("after");
 const count = document.getElementById("count");
 const downloadList = document.getElementById("downloadList");
+const downloadAllBtn = document.getElementById("downloadAllBtn");
 
 let files = [];
+let convertedFiles = [];
 let downloadUrls = [];
 
 function formatBytes(bytes) {
@@ -743,9 +782,13 @@ function renderFiles() {
 
 fileInput.addEventListener("change", () => {
   files = Array.from(fileInput.files || []);
+
+  convertedFiles = [];
   result.style.display = "none";
   statusBox.style.display = "none";
+  downloadAllBtn.style.display = "none";
   downloadList.innerHTML = "";
+
   releaseDownloadUrls();
   renderFiles();
 });
@@ -756,12 +799,15 @@ quality.addEventListener("input", () => {
 
 clearBtn.addEventListener("click", () => {
   files = [];
+  convertedFiles = [];
   fileInput.value = "";
   fileList.innerHTML = "";
   downloadList.innerHTML = "";
   result.style.display = "none";
   statusBox.style.display = "none";
+  downloadAllBtn.style.display = "none";
   convertBtn.disabled = true;
+
   releaseDownloadUrls();
 });
 
@@ -858,6 +904,57 @@ function createDownloadItem(blob, originalName) {
   downloadList.appendChild(item);
 }
 
+downloadAllBtn.addEventListener("click", async () => {
+  if (convertedFiles.length === 0) return;
+
+  if (typeof JSZip === "undefined") {
+    showStatus("La libreria ZIP non è disponibile. Controlla la connessione e aggiorna la pagina.");
+    return;
+  }
+
+  downloadAllBtn.disabled = true;
+  downloadAllBtn.textContent = "Preparazione ZIP...";
+
+  try {
+    const zip = new JSZip();
+
+    convertedFiles.forEach(file => {
+      zip.file(file.name, file.blob);
+    });
+
+    const zipBlob = await zip.generateAsync(
+      { type: "blob" },
+      metadata => {
+        downloadAllBtn.textContent =
+          "Preparazione ZIP: " + Math.round(metadata.percent) + "%";
+      }
+    );
+
+    const url = URL.createObjectURL(zipBlob);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = "image-tools-jpg.zip";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    setTimeout(() => URL.revokeObjectURL(url), 60000);
+
+    showStatus(
+      "Archivio ZIP creato con " +
+      convertedFiles.length +
+      " immagini JPG."
+    );
+  } catch (error) {
+    console.error(error);
+    showStatus("Errore durante la creazione dello ZIP. Riprova.");
+  } finally {
+    downloadAllBtn.disabled = false;
+    downloadAllBtn.textContent = "Scarica tutti i JPG (.ZIP)";
+  }
+});
+
 convertBtn.addEventListener("click", async () => {
   if (files.length === 0) {
     showStatus("Seleziona almeno un'immagine.");
@@ -866,8 +963,13 @@ convertBtn.addEventListener("click", async () => {
 
   convertBtn.disabled = true;
   clearBtn.disabled = true;
+  downloadAllBtn.style.display = "none";
+  downloadAllBtn.disabled = false;
+  downloadAllBtn.textContent = "Scarica tutti i JPG (.ZIP)";
   result.style.display = "none";
   downloadList.innerHTML = "";
+  convertedFiles = [];
+
   releaseDownloadUrls();
 
   let totalBefore = 0;
@@ -879,10 +981,18 @@ convertBtn.addEventListener("click", async () => {
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
 
-      showStatus("Conversione " + (i + 1) + " di " + files.length + "…");
+      showStatus(
+        "Conversione " + (i + 1) + " di " + files.length + "…"
+      );
 
       try {
         const blob = await convertOne(file);
+        const baseName = file.name.replace(/\.[^/.]+$/, "") || "image";
+
+        convertedFiles.push({
+          name: baseName + ".jpg",
+          blob: blob
+        });
 
         totalBefore += file.size;
         totalAfter += blob.size;
@@ -896,7 +1006,9 @@ convertBtn.addEventListener("click", async () => {
     }
 
     if (convertedCount === 0) {
-      showStatus("Nessuna immagine è stata convertita. Verifica che i file siano immagini leggibili dal browser.");
+      showStatus(
+        "Nessuna immagine è stata convertita. Verifica che i file siano immagini leggibili dal browser."
+      );
       return;
     }
 
@@ -905,8 +1017,11 @@ convertBtn.addEventListener("click", async () => {
     count.textContent = convertedCount + " file";
 
     result.style.display = "block";
+    downloadAllBtn.style.display =
+      convertedFiles.length > 0 ? "block" : "none";
 
-    let message = "Conversione completata: " + convertedCount + " immagini.";
+    let message =
+      "Conversione completata: " + convertedCount + " immagini.";
 
     if (errors.length > 0) {
       message += " File non convertiti: " + errors.join(", ") + ".";
