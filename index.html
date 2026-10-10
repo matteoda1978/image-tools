@@ -1,16 +1,22 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>RitoccaPix - Free Online Image Tools</title>
-  <meta name="description" content="RitoccaPix offers free online image tools to resize, compress, convert and optimize images directly in your browser.">
+  <title>Free Image Resizer, Compressor & Converter Online | RitoccaPix</title>
+  <meta name="description" content="Resize, compress and convert images online for free with RitoccaPix. Easy image tools for JPG, PNG and WebP, directly in your browser.">
   <meta name="robots" content="index,follow">
   <meta name="theme-color" content="#080d18">
   <meta name="google-site-verification" content="3U0om5RVf6tSSRd0oWfPQYekE1MmstKK6PTbFflVmIQ">
+
   <link rel="canonical" href="https://matteoda1978.github.io/image-tools/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Free Online Image Tools | RitoccaPix">
+  <meta property="og:description" content="Resize, compress and convert images online with free, easy-to-use image tools.">
+  <meta property="og:url" content="https://matteoda1978.github.io/image-tools/">
+  <meta property="og:site_name" content="RitoccaPix">
 
   <style>
     * {
@@ -64,10 +70,10 @@
       font-size: 32px;
       font-weight: 900;
       letter-spacing: -1.5px;
-      text-shadow: 0 0 22px rgba(145, 170, 255, .3);
     }
 
-    .logo span {
+    .logo span,
+    .footer-brand span {
       color: #91aaff;
     }
 
@@ -87,7 +93,7 @@
     .hero {
       position: relative;
       text-align: center;
-      padding: 90px 0 75px;
+      padding: 85px 0 70px;
       overflow: hidden;
     }
 
@@ -122,10 +128,8 @@
       font-size: 12px;
       font-weight: 800;
       letter-spacing: 1px;
-      margin-bottom: 30px;
+      margin-bottom: 25px;
     }
-
-    /* GRANDE SCRITTA RITOCCAPIX */
 
     .hero h1 {
       max-width: 1050px;
@@ -139,16 +143,15 @@
     .hero h1 .brand-word {
       display: block;
       margin: 8px 0 12px;
-      font-size: clamp(64px, 12vw, 112px);
-      line-height: 1.05;
-      letter-spacing: -5px;
+      font-size: clamp(58px, 12vw, 112px);
+      line-height: 1.08;
+      letter-spacing: -4px;
       font-weight: 900;
       color: #91aaff;
       background: linear-gradient(100deg, #ffffff 5%, #91aaff 45%, #6ea8ff 95%);
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 0 25px rgba(110, 168, 255, .2));
       overflow-wrap: anywhere;
     }
 
@@ -217,7 +220,7 @@
       font-size: 12px;
     }
 
-    /* STRUMENTI */
+    /* TOOLS */
 
     .tools-section {
       padding: 12px 0 72px;
@@ -282,6 +285,7 @@
     .tool-icon {
       width: 47px;
       height: 47px;
+      flex: 0 0 47px;
       border-radius: 13px;
       background: #1a2942;
       border: 1px solid #2b3e60;
@@ -307,8 +311,9 @@
 
     .tool-tag {
       display: inline-block;
-      margin-top: 17px;
+      margin-top: auto;
       padding: 5px 9px;
+      margin-top: 17px;
       border-radius: 6px;
       background: #19253b;
       color: #b6c5ed;
@@ -318,7 +323,7 @@
       letter-spacing: .5px;
     }
 
-    /* VANTAGGI */
+    /* BENEFITS */
 
     .benefits {
       border-top: 1px solid #263249;
@@ -363,7 +368,7 @@
       line-height: 1.75;
     }
 
-    /* TESTO SEO */
+    /* SEO CONTENT */
 
     .seo {
       max-width: 850px;
@@ -419,10 +424,6 @@
       font-weight: 900;
     }
 
-    .footer-brand span {
-      color: #91aaff;
-    }
-
     @media (max-width: 900px) {
       .tools-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -460,8 +461,8 @@
       }
 
       .hero h1 .brand-word {
-        font-size: clamp(52px, 13.5vw, 76px);
-        letter-spacing: -2.5px;
+        font-size: clamp(48px, 13vw, 72px);
+        letter-spacing: -2px;
       }
 
       .hero h1 .tagline {
@@ -522,7 +523,9 @@
         scroll-behavior: auto;
       }
 
-      *, *::before, *::after {
+      *,
+      *::before,
+      *::after {
         transition-duration: .01ms !important;
         animation-duration: .01ms !important;
       }
@@ -612,28 +615,28 @@
           <a class="tool" href="image-optimizer.html">
             <div class="tool-icon" aria-hidden="true">⚡</div>
             <h3>Image Optimizer</h3>
-            <p>Prepare supported images for websites and digital projects.</p>
+            <p>Explore options for preparing supported images for web use.</p>
             <span class="tool-tag">Optimize</span>
           </a>
 
           <a class="tool" href="image-analyzer.html">
             <div class="tool-icon" aria-hidden="true">🔎</div>
             <h3>Image Analyzer</h3>
-            <p>Inspect available image details and file information.</p>
+            <p>Inspect available image dimensions and file information.</p>
             <span class="tool-tag">Analyze</span>
           </a>
 
           <a class="tool" href="image-smart.html">
             <div class="tool-icon" aria-hidden="true">✨</div>
             <h3>Smart Image Tools</h3>
-            <p>Discover additional image utilities in one convenient place.</p>
+            <p>Explore additional image utilities and editing options.</p>
             <span class="tool-tag">Smart tools</span>
           </a>
 
           <a class="tool" href="image-social.html">
             <div class="tool-icon" aria-hidden="true">📱</div>
             <h3>Social Media Image Tools</h3>
-            <p>Prepare images for common social media formats and uses.</p>
+            <p>Prepare images for common social media formats and sizes.</p>
             <span class="tool-tag">Social media</span>
           </a>
 
@@ -647,7 +650,7 @@
           <a class="tool" href="image-object-remover.html">
             <div class="tool-icon" aria-hidden="true">🪄</div>
             <h3>Image Object Remover</h3>
-            <p>Open the image editing tool and explore its available features.</p>
+            <p>Check the available image editing and object-removal features.</p>
             <span class="tool-tag">Image editing</span>
           </a>
 
@@ -683,7 +686,7 @@
             <div class="benefit-icon" aria-hidden="true">🔒</div>
             <div>
               <h3>Browser-based tools</h3>
-              <p>Image processing and data handling depend on the individual tool.</p>
+              <p>Processing and data handling depend on the individual tool. Check each tool's details before uploading sensitive images.</p>
             </div>
           </div>
 
@@ -703,9 +706,9 @@
 
         <p>
           RitoccaPix brings together online tools for everyday image tasks.
-          Whether you need to compress a photo, resize an image, convert
-          a file format or prepare images for web use, start by choosing
-          the tool that matches your needs.
+          Compress photos, resize image dimensions, convert supported file
+          formats and prepare images for websites and digital projects.
+          Choose the tool that matches your needs.
         </p>
 
         <h3>Compress Images Online</h3>
@@ -715,22 +718,22 @@
           Smaller files can be easier to store, transfer and use online.
         </p>
 
-        <h3>Resize Images</h3>
+        <h3>Resize Images Online</h3>
         <p>
-          Adjust image dimensions for websites, documents and other projects
-          with the <a href="image-resizer.html">Image Resizer</a>.
+          Adjust image width and height for websites, documents and other
+          projects with the <a href="image-resizer.html">Image Resizer</a>.
         </p>
 
         <h3>Convert Image Formats</h3>
         <p>
           Explore supported image conversions with the
           <a href="image-converter.html">Image Converter</a>.
-          The available formats depend on the tool and browser.
+          Available formats depend on the tool and browser.
         </p>
 
         <h3>Convert WebP to JPG</h3>
         <p>
-          Open the <a href="webp-to-jpg.html">WebP to JPG Converter</a>
+          Visit the <a href="webp-to-jpg.html">WebP to JPG Converter</a>
           to work with compatible WebP images and JPG output.
         </p>
 
@@ -743,19 +746,31 @@
         <h3>Optimize Images for the Web</h3>
         <p>
           Visit the <a href="image-optimizer.html">Image Optimizer</a>
-          to explore the available options for preparing images for online use.
+          to explore options for preparing supported images for online use.
         </p>
 
         <h3>Analyze Image Information</h3>
         <p>
           The <a href="image-analyzer.html">Image Analyzer</a>
-          provides a dedicated place to inspect supported image details.
+          provides a place to inspect supported image details.
         </p>
 
-        <h3>RitoccaPix: Image Tools in One Place</h3>
+        <h3>Prepare Images for Social Media</h3>
         <p>
-          Explore the tools above and choose the one that fits your task.
-          Features, supported formats and processing options may vary between tools.
+          Explore the <a href="image-social.html">Social Media Image Tools</a>
+          to find available options for common social media formats.
+        </p>
+
+        <h3>Create Image Collages</h3>
+        <p>
+          Visit the <a href="image-collage.html">Image Collage Maker</a>
+          to check the available collage features.
+        </p>
+
+        <h3>Explore RitoccaPix Tools</h3>
+        <p>
+          Features, supported formats and processing options may vary between
+          tools. Check the individual page for available functions.
         </p>
       </section>
     </main>
