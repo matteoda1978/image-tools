@@ -5,579 +5,1094 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Social Image Maker - Immagini per social gratis | Image Tools</title>
-  <meta name="description" content="Ridimensiona gratuitamente le immagini per Instagram, Facebook, LinkedIn e X. Crea post e storie con le dimensioni corrette direttamente nel browser.">
+  <title>Social Image Maker – Ridimensiona immagini per i social | Image Tools</title>
+  <meta name="description" content="Crea immagini per Instagram, Facebook, LinkedIn e X. Ridimensiona le foto nei formati corretti, visualizza l'anteprima e scarica gratis in JPG.">
   <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#080d18">
   <link rel="canonical" href="https://matteoda1978.github.io/image-tools/image-social.html">
+  <link rel="icon" href="favicon.ico">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Social Image Maker | Image Tools">
+  <meta property="og:description" content="Adatta le tue foto ai formati di Instagram, Facebook, LinkedIn e X, gratis online.">
+  <meta property="og:url" content="https://matteoda1978.github.io/image-tools/image-social.html">
 
   <script src="menu.js" defer></script>
 
   <style>
-    * {
-      box-sizing: border-box;
+    :root {
+      --primary: #91aaff;
+      --primary-dark: #a9baff;
+      --background: #f1f5f9;
+      --card: #ffffff;
+      --text: #172033;
+      --muted: #64748b;
+      --border: #dce4ef;
+      --dark: #080d18;
+      --success: #087443;
+      --radius: 18px;
+      --shadow: 0 12px 35px rgba(28, 45, 78, .07);
     }
 
-   
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f1f5f9;
-  color: #172033;
-}
+    * { box-sizing: border-box; }
 
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 24px;
+    }
 
-    .container {
+    body {
+      margin: 0;
+      background: var(--background);
+      color: var(--text);
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+    }
+
+    button, input, select { font: inherit; }
+    button, select, input { accent-color: #647fe5; }
+
+    button, a, select, input {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button:focus-visible, a:focus-visible,
+    input:focus-visible, select:focus-visible {
+      outline: 3px solid #91aaff;
+      outline-offset: 3px;
+    }
+
+    a { color: #365bc5; }
+
+    .site-header {
+      background: var(--dark);
+      color: #f5f7fb;
+      border-bottom: 1px solid #263249;
+    }
+
+    .header-inner {
       max-width: 1100px;
-      margin: auto;
-      padding: 0 20px;
-    }
-
-    header {
-      background: #111827;
-      color: white;
-      padding: 20px 0;
-    }
-
-    header .container {
+      min-height: 72px;
+      margin: 0 auto;
+      padding: 12px 20px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      flex-wrap: wrap;
+      justify-content: flex-start;
+      gap: 22px;
     }
 
-    .logo {
-      font-size: 25px;
+    .brand {
+      color: #f5f7fb;
+      font-size: 1.2rem;
       font-weight: 800;
       letter-spacing: -.5px;
+      text-decoration: none;
+      white-space: nowrap;
     }
 
-    .logo span {
-      color: #60a5fa;
+    .brand:hover { color: var(--primary); }
+
+    header .header-inner > nav.tools-dropdown {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: auto !important;
+      max-width: max-content;
+      margin: 0 !important;
+      flex: 0 0 auto;
     }
 
-    main {
-      max-width: 950px;
-      margin: auto;
-      padding: 32px 20px 60px;
+    .container {
+      width: min(1100px, calc(100% - 40px));
+      margin-inline: auto;
     }
 
     .hero {
+      margin-top: 32px;
+      padding: clamp(30px, 6vw, 62px) 24px;
+      overflow: hidden;
       text-align: center;
-      padding: 25px 15px 30px;
+      border: 1px solid #d6e1ff;
+      border-radius: 24px;
+      background:
+        radial-gradient(ellipse at 10% 0%, rgba(255,255,255,.85), transparent 45%),
+        linear-gradient(135deg, #dbeafe 0%, #e9e7ff 55%, #f1eaff 100%);
     }
 
-    .hero .eyebrow {
-      color: #2563eb;
-      font-size: 13px;
-      font-weight: bold;
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border: 1px solid rgba(54,91,197,.17);
+      border-radius: 999px;
+      background: rgba(255,255,255,.65);
+      color: #3653a5;
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .08em;
       text-transform: uppercase;
-      letter-spacing: 1.5px;
+    }
+
+    h1, h2, h3 {
+      line-height: 1.2;
+      letter-spacing: -.035em;
     }
 
     .hero h1 {
-      margin: 12px 0;
-      font-size: clamp(29px, 5vw, 42px);
-      line-height: 1.15;
+      max-width: 800px;
+      margin: 18px auto 14px;
+      font-size: clamp(2.1rem, 5vw, 3.45rem);
+      font-weight: 850;
     }
 
-    
-.hero {
-  text-align: center;
-  padding: 30px 20px;
-  margin-bottom: 20px;
-  background: linear-gradient(135deg, #dbeafe, #ede9fe);
-  border: 1px solid #dbeafe;
-  border-radius: 18px;
-}
+    .hero h1 span { color: #4d64c9; }
 
-
-    .tool,
-    .content {
-      background: white;
-      border: 1px solid #e5e7eb;
-      border-radius: 18px;
-      padding: 28px;
-      box-shadow: 0 5px 20px rgba(0,0,0,.04);
+    .hero-copy {
+      max-width: 690px;
+      margin: 0 auto;
+      color: #465571;
+      font-size: clamp(1rem, 2vw, 1.1rem);
     }
 
-    .upload {
-      border: 2px dashed #93a4bb;
-      border-radius: 14px;
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px 20px;
+      margin-top: 24px;
+      color: #40516d;
+      font-size: .88rem;
+      font-weight: 650;
+    }
+
+    .hero-badges span::before {
+      content: "✓";
+      margin-right: 7px;
+      color: #087443;
+      font-weight: 900;
+    }
+
+    .editor-card, .content-card {
+      margin-top: 24px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--card);
+      box-shadow: var(--shadow);
+    }
+
+    .section-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 22px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-top h2 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+
+    .section-top p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    .free-pill {
+      flex-shrink: 0;
+      padding: 6px 10px;
+      border: 1px solid #bce8d0;
+      border-radius: 999px;
+      background: #effcf5;
+      color: #087443;
+      font-size: .8rem;
+      font-weight: 800;
+    }
+
+    .editor-body { padding: 24px; }
+
+    .upload-zone {
+      display: block;
       padding: 30px 18px;
+      border: 2px dashed #bac8dc;
+      border-radius: 16px;
+      background: #f8faff;
       text-align: center;
-      background: #f8fafc;
+      cursor: pointer;
+      transition: border-color .2s, background .2s;
+    }
+
+    .upload-zone:hover, .upload-zone.dragging {
+      border-color: #647fe5;
+      background: #f0f4ff;
     }
 
     .upload-icon {
-      font-size: 38px;
-      margin-bottom: 10px;
+      display: grid;
+      width: 58px;
+      height: 58px;
+      place-items: center;
+      margin: 0 auto 12px;
+      border: 1px solid #d8e1ff;
+      border-radius: 17px;
+      background: #e9eeff;
+      color: #4d64c9;
+      font-size: 1.65rem;
     }
 
-    .upload p {
-      color: #64748b;
-      line-height: 1.6;
-    }
-
-    input[type="file"] {
+    .upload-title {
       display: block;
-      width: 100%;
-      max-width: 430px;
-      margin: 18px auto 0;
-      font-size: 15px;
+      font-size: 1.05rem;
+      font-weight: 800;
     }
 
-    label {
+    .upload-subtitle {
       display: block;
-      margin: 24px 0 9px;
-      font-weight: bold;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .upload-cta {
+      display: inline-flex;
+      justify-content: center;
+      margin-top: 16px;
+      padding: 10px 17px;
+      border-radius: 10px;
+      background: #243c86;
+      color: white;
+      font-size: .92rem;
+      font-weight: 750;
+    }
+
+    #fileInput {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 20px;
+      margin-top: 25px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: .92rem;
+      font-weight: 800;
     }
 
     select {
       width: 100%;
-      padding: 14px;
+      min-height: 49px;
+      padding: 11px 13px;
       border: 1px solid #cbd5e1;
-      border-radius: 10px;
+      border-radius: 11px;
       background: white;
-      color: #172033;
-      font-size: 16px;
+      color: var(--text);
+      font-size: .94rem;
     }
 
-    .hint {
-      margin-top: 10px;
-      color: #64748b;
-      font-size: 13px;
+    .field-help {
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: .82rem;
       line-height: 1.5;
     }
 
-    .status,
-    .error {
+    .fit-options {
+      display: flex;
+      gap: 10px;
+    }
+
+    .fit-option {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      gap: 8px;
+      min-height: 49px;
+      padding: 10px;
+      border: 1px solid #cbd5e1;
+      border-radius: 11px;
+      background: white;
+      cursor: pointer;
+      font-size: .9rem;
+    }
+
+    .fit-option:has(input:checked) {
+      border-color: #647fe5;
+      background: #f0f4ff;
+    }
+
+    .preview-section {
       display: none;
+      margin-top: 26px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .preview-heading {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .preview-heading h3 {
+      margin: 0;
+      font-size: 1.1rem;
+    }
+
+    .dimensions {
+      padding: 5px 10px;
+      border: 1px solid #d8e1ff;
+      border-radius: 8px;
+      background: #f0f4ff;
+      color: #3653a5;
+      font-size: .82rem;
+      font-weight: 800;
+    }
+
+    .preview-frame {
+      display: flex;
+      min-height: 220px;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background-color: #f8fafc;
+      background-image:
+        linear-gradient(45deg, #e8edf5 25%, transparent 25%),
+        linear-gradient(-45deg, #e8edf5 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #e8edf5 75%),
+        linear-gradient(-45deg, transparent 75%, #e8edf5 75%);
+      background-size: 22px 22px;
+      background-position: 0 0, 0 11px, 11px -11px, -11px 0;
+    }
+
+    #preview {
+      display: block;
+      max-width: 100%;
+      max-height: 480px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border-radius: 4px;
+      box-shadow: 0 8px 25px rgba(15,23,42,.15);
+    }
+
+    .preview-meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: .84rem;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
       margin-top: 18px;
-      padding: 14px;
-      border-radius: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 46px;
+      padding: 11px 17px;
+      border: 1px solid #cbd5e1;
+      border-radius: 11px;
+      background: white;
+      color: #24324a;
+      font-size: .93rem;
+      font-weight: 800;
       text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .15s, background .15s, box-shadow .15s;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 5px 14px rgba(15,23,42,.08);
+    }
+
+    .btn-primary {
+      border-color: #243c86;
+      background: #243c86;
+      color: white;
+    }
+
+    .btn-primary:hover { background: #192e70; }
+
+    .btn:disabled {
+      cursor: not-allowed;
+      opacity: .5;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .privacy-note {
+      margin-top: 20px;
+      padding: 14px 16px;
+      border: 1px solid #d6e5fb;
+      border-radius: 11px;
+      background: #f2f7ff;
+      color: #4a5d78;
+      font-size: .86rem;
+    }
+
+    .privacy-note strong { color: #243c86; }
+
+    .status, .error {
+      display: none;
+      margin-top: 16px;
+      padding: 13px 15px;
+      border-radius: 11px;
+      font-size: .92rem;
       line-height: 1.5;
     }
 
     .status {
-      background: #eff6ff;
-      color: #1d4ed8;
+      border: 1px solid #bce8d0;
+      background: #effcf5;
+      color: #087443;
     }
 
     .error {
-      background: #fee2e2;
+      border: 1px solid #fecaca;
+      background: #fff1f2;
       color: #991b1b;
     }
 
-    .result {
-      display: none;
-      margin-top: 25px;
+    .content-card { padding: 28px; }
+
+    .content-card h2 {
+      margin: 0 0 12px;
+      font-size: clamp(1.4rem, 3vw, 1.9rem);
     }
 
-    .info {
-      padding: 18px;
-      margin-bottom: 20px;
-      background: #f0fdf4;
-      border: 1px solid #bbf7d0;
-      border-radius: 12px;
+    .content-card h3 {
+      margin: 26px 0 8px;
+      font-size: 1.08rem;
+      letter-spacing: -.015em;
     }
 
-    .info h2 {
-      margin-top: 0;
-      font-size: 21px;
-      color: #166534;
+    .content-card p, .content-card li {
+      color: #536176;
+      line-height: 1.8;
     }
 
-    .preview {
-      padding: 20px;
-      border: 1px solid #e5e7eb;
-      border-radius: 14px;
-      background: #f8fafc;
-      text-align: center;
+    .content-card p { margin: 10px 0; }
+
+    .format-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 20px;
     }
 
-    .preview h2 {
-      font-size: 20px;
-      margin-top: 0;
+    .format-card {
+      padding: 17px;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      background: #fbfcff;
     }
 
-    .preview img {
+    .format-card strong {
       display: block;
-      max-width: 100%;
-      max-height: 500px;
-      margin: 15px auto;
-      object-fit: contain;
-      border: 1px solid #e5e7eb;
-      border-radius: 8px;
-      background: white;
+      margin-bottom: 4px;
+      font-size: .95rem;
     }
 
-    .download {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 14px 22px;
+    .format-card span {
+      color: #5264a8;
+      font-size: .85rem;
+      font-weight: 750;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .step {
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: #fbfcff;
+    }
+
+    .step-number {
+      display: grid;
+      width: 36px;
+      height: 36px;
+      place-items: center;
+      margin-bottom: 13px;
+      border-radius: 11px;
+      background: #e9eeff;
+      color: #3653a5;
+      font-weight: 850;
+    }
+
+    .step h3 { margin: 0 0 8px; font-size: 1rem; }
+    .step p { margin: 0; font-size: .91rem; }
+
+    .faq-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .faq-item {
+      padding: 17px 19px;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      background: #fbfcff;
+    }
+
+    .faq-item h3 { margin: 0 0 8px; font-size: 1rem; }
+    .faq-item p { margin: 0; font-size: .93rem; }
+
+    .related-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 17px;
+    }
+
+    .related-links a {
+      padding: 9px 13px;
+      border: 1px solid #d6e1ff;
       border-radius: 10px;
-      background: #16a34a;
-      color: white;
+      background: #f5f7ff;
+      color: #3653a5;
+      font-size: .9rem;
+      font-weight: 700;
       text-decoration: none;
-      font-weight: bold;
     }
 
-    .download:hover {
-      background: #15803d;
-    }
-
-    .content {
-      margin-top: 24px;
-      box-shadow: none;
-    }
-
-    .content h2 {
-      margin-top: 0;
-    }
-
-    .content h3 {
-      margin-top: 25px;
-    }
-
-    .content p,
-    .content li {
-      color: #475569;
-      line-height: 1.75;
-    }
-
-    .content li {
-      margin-bottom: 7px;
-    }
-
-    .privacy {
-      margin-top: 18px;
-      padding: 14px;
-      border-radius: 10px;
-      background: #f1f5f9;
-      color: #475569;
-      font-size: 14px;
-      line-height: 1.6;
-    }
+    .related-links a:hover { background: #e9eeff; }
 
     footer {
-      padding: 28px 15px;
-      text-align: center;
+      margin-top: 55px;
+      padding: 25px 15px;
+      border-top: 1px solid #dce4ef;
+      background: #fff;
       color: #64748b;
-      font-size: 14px;
+      font-size: .88rem;
+      text-align: center;
     }
 
-    @media (max-width: 600px) {
-      .container {
-        padding: 0 15px;
-      }
+    footer a { text-decoration: none; }
 
-      main {
-        padding: 20px 14px 40px;
-      }
+    @media (max-width: 760px) {
+      .form-grid { grid-template-columns: 1fr; gap: 17px; }
+      .format-grid, .steps { grid-template-columns: 1fr; }
+      .section-top { align-items: flex-start; }
+      .editor-body, .content-card { padding: 20px; }
+    }
 
-      .tool,
-      .content {
-        padding: 19px;
-      }
+    @media (max-width: 520px) {
+      .container { width: calc(100% - 24px); }
+      .header-inner { padding: 12px; gap: 14px; }
+      .hero { margin-top: 18px; padding: 32px 16px; border-radius: 18px; }
+      .hero-badges { gap: 8px 13px; font-size: .82rem; }
+      .section-top { padding: 18px; }
+      .free-pill { font-size: .74rem; }
+      .editor-body, .content-card { padding: 16px; }
+      .upload-zone { padding: 24px 12px; }
+      .button-row { flex-direction: column; }
+      .button-row .btn { width: 100%; }
+      .preview-frame { min-height: 160px; padding: 12px; }
+    }
 
-      .hero {
-        padding-top: 18px;
-      }
-
-      .preview {
-        padding: 12px;
-      }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; }
     }
   </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Social Image Maker - Image Tools",
+    "url": "https://matteoda1978.github.io/image-tools/image-social.html",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "Any",
+    "description": "Strumento gratuito nel browser per adattare immagini ai formati di Instagram, Facebook, LinkedIn e X.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "EUR"
+    }
+  }
+  </script>
 </head>
 
 <body>
-
-<header>
-  <div class="container">
-    <div class="logo">
-      <a href="index.html" style="color:inherit;text-decoration:none">
-        Image <span>Tools</span>
-      </a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html">Image Tools</a>
+      <nav aria-label="Navigazione principale"></nav>
     </div>
-    <nav aria-label="Navigazione principale"></nav>
-  </div>
-</header>
+  </header>
 
-<main>
+  <main class="container">
+    <section class="hero">
+      <div class="eyebrow">✦ Social Image Maker</div>
+      <h1>Le tue foto, <span>perfette per i social.</span></h1>
+      <p class="hero-copy">
+        Adatta le immagini ai formati di Instagram, Facebook, LinkedIn e X.
+        Carica una foto, scegli le dimensioni e scarica il risultato in pochi secondi.
+      </p>
+      <div class="hero-badges">
+        <span>Gratis</span>
+        <span>Senza registrazione</span>
+        <span>Elaborazione nel browser</span>
+      </div>
+    </section>
 
-  <section class="hero">
-    <div class="eyebrow">Social Image Maker</div>
-    <h1>Crea immagini perfette per i social</h1>
-    <p>
-      Scegli una foto, seleziona Instagram, Facebook, LinkedIn
-      o X e ottieni un'immagine nelle dimensioni desiderate.
-      Gratis e senza installare programmi.
-    </p>
-  </section>
-
-  <section class="tool">
-
-    <div class="upload">
-      <div class="upload-icon">📸</div>
-      <strong>Carica la tua immagine</strong>
-      <p>Scegli una foto dal telefono o dal computer.</p>
-      <input type="file" id="fileInput" accept="image/*">
-    </div>
-
-    <label for="platform">Scegli il social e il formato</label>
-
-    <select id="platform">
-      <option value="instagram-square">Instagram — Post quadrato · 1080 × 1080</option>
-      <option value="instagram-portrait">Instagram — Post verticale · 1080 × 1350</option>
-      <option value="instagram-story">Instagram — Storia / Reel · 1080 × 1920</option>
-      <option value="facebook">Facebook — Post orizzontale · 1200 × 630</option>
-      <option value="linkedin">LinkedIn — Post orizzontale · 1200 × 627</option>
-      <option value="twitter">X / Twitter — Immagine orizzontale · 1600 × 900</option>
-    </select>
-
-    <p class="hint">
-      L'immagine viene adattata automaticamente al formato selezionato.
-      Puoi cambiare formato anche dopo aver caricato la foto.
-    </p>
-
-    <div id="status" class="status" role="status" aria-live="polite">
-      ⏳ Creazione dell'immagine in corso...
-    </div>
-
-    <div id="error" class="error" role="alert"></div>
-
-    <div id="result" class="result">
-
-      <div class="info">
-        <h2>✅ La tua immagine è pronta!</h2>
-        <p id="resultText"></p>
+    <section class="editor-card" aria-labelledby="editor-heading">
+      <div class="section-top">
+        <div>
+          <h2 id="editor-heading">Crea la tua immagine social</h2>
+          <p>Tre passaggi semplici per preparare la tua foto.</p>
+        </div>
+        <span class="free-pill">100% gratuito</span>
       </div>
 
-      <div class="preview">
-        <h2>Anteprima</h2>
-        <img id="preview" alt="Anteprima dell'immagine adattata al social">
-        <a id="download" class="download" download>
-          ⬇ Scarica immagine JPG
-        </a>
+      <div class="editor-body">
+        <label class="upload-zone" id="uploadZone" for="fileInput">
+          <span class="upload-icon" aria-hidden="true">↑</span>
+          <span class="upload-title">Carica la tua foto</span>
+          <span class="upload-subtitle">Trascina un'immagine qui oppure selezionala dal dispositivo.</span>
+          <span class="upload-cta">Scegli immagine</span>
+        </label>
+        <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp">
+
+        <div class="form-grid">
+          <div class="field">
+            <label for="platform">1. Scegli social e formato</label>
+            <select id="platform">
+              <option value="instagram-square">Instagram · Post quadrato (1080 × 1080)</option>
+              <option value="instagram-portrait">Instagram · Post verticale (1080 × 1350)</option>
+              <option value="instagram-story">Instagram · Stories / Reels (1080 × 1920)</option>
+              <option value="facebook">Facebook · Post orizzontale (1200 × 630)</option>
+              <option value="linkedin">LinkedIn · Post (1200 × 627)</option>
+              <option value="twitter">X · Post orizzontale (1600 × 900)</option>
+            </select>
+            <p class="field-help">Puoi cambiare formato in qualsiasi momento.</p>
+          </div>
+
+          <div class="field">
+            <label>2. Scegli come adattare la foto</label>
+            <div class="fit-options">
+              <label class="fit-option">
+                <input type="radio" name="fitMode" value="cover" checked>
+                <span><strong>Riempi</strong><br><small>Ritaglia i bordi</small></span>
+              </label>
+              <label class="fit-option">
+                <input type="radio" name="fitMode" value="contain">
+                <span><strong>Adatta</strong><br><small>Mostra tutta la foto</small></span>
+              </label>
+            </div>
+            <p class="field-help">Riempi evita i bordi vuoti; Adatta conserva tutta l'immagine.</p>
+          </div>
+        </div>
+
+        <div id="status" class="status" role="status" aria-live="polite"></div>
+        <div id="error" class="error" role="alert"></div>
+
+        <section id="result" class="preview-section" aria-labelledby="preview-heading">
+          <div class="preview-heading">
+            <h3 id="preview-heading">3. Anteprima del risultato</h3>
+            <span class="dimensions" id="dimensions"></span>
+          </div>
+
+          <div class="preview-frame">
+            <img id="preview" alt="Anteprima della foto adattata al formato social selezionato">
+          </div>
+
+          <div class="preview-meta">
+            <span id="formatName"></span>
+            <span id="fileInfo"></span>
+          </div>
+
+          <div class="button-row">
+            <a id="download" class="btn btn-primary" download>↓ Scarica immagine JPG</a>
+            <button id="changeImage" class="btn" type="button">Cambia foto</button>
+          </div>
+        </section>
+
+        <div class="privacy-note">
+          <strong>🔒 La tua privacy conta.</strong>
+          L'immagine viene elaborata direttamente nel browser. Non viene inviata
+          ai nostri server. Per le foto sensibili, usa comunque dispositivi e
+          connessioni di cui ti fidi.
+        </div>
       </div>
+    </section>
 
-    </div>
+    <section class="content-card" aria-labelledby="formats-heading">
+      <h2 id="formats-heading">Dimensioni immagini per i social network</h2>
+      <p>
+        Ogni piattaforma utilizza proporzioni differenti. Seleziona il formato
+        adatto per preparare immagini con dimensioni precise e un risultato
+        coerente con il tuo post.
+      </p>
 
-    <div class="privacy">
-      🔒 <strong>Privacy:</strong> la foto viene elaborata direttamente
-      nel tuo browser. Non viene caricata sui nostri server.
-    </div>
+      <div class="format-grid">
+        <div class="format-card">
+          <strong>Instagram · Quadrato</strong>
+          <span>1080 × 1080 px</span>
+        </div>
+        <div class="format-card">
+          <strong>Instagram · Verticale</strong>
+          <span>1080 × 1350 px</span>
+        </div>
+        <div class="format-card">
+          <strong>Instagram · Stories / Reels</strong>
+          <span>1080 × 1920 px</span>
+        </div>
+        <div class="format-card">
+          <strong>Facebook · Post</strong>
+          <span>1200 × 630 px</span>
+        </div>
+        <div class="format-card">
+          <strong>LinkedIn · Post</strong>
+          <span>1200 × 627 px</span>
+        </div>
+        <div class="format-card">
+          <strong>X · Post orizzontale</strong>
+          <span>1600 × 900 px</span>
+        </div>
+      </div>
+    </section>
 
-  </section>
+    <section class="content-card" aria-labelledby="how-heading">
+      <h2 id="how-heading">Come ridimensionare una foto per i social</h2>
+      <p>Non servono programmi da installare né competenze di grafica.</p>
 
-  <section class="content">
-    <h2>Ridimensiona immagini per Instagram e altri social</h2>
+      <div class="steps">
+        <article class="step">
+          <div class="step-number">1</div>
+          <h3>Carica una foto</h3>
+          <p>Seleziona un'immagine JPG, PNG o WebP dal telefono o dal computer.</p>
+        </article>
+        <article class="step">
+          <div class="step-number">2</div>
+          <h3>Scegli il formato</h3>
+          <p>Seleziona la piattaforma e decidi se riempire il formato o mostrare tutta la foto.</p>
+        </article>
+        <article class="step">
+          <div class="step-number">3</div>
+          <h3>Scarica il risultato</h3>
+          <p>Controlla l'anteprima e scarica l'immagine JPG pronta per il tuo contenuto.</p>
+        </article>
+      </div>
+    </section>
 
-    <p>
-      Ogni social network utilizza proporzioni differenti.
-      Con Social Image Maker puoi adattare una foto al formato
-      desiderato e scaricare il risultato senza utilizzare
-      programmi di grafica.
-    </p>
+    <section class="content-card" aria-labelledby="faq-heading">
+      <h2 id="faq-heading">Domande frequenti</h2>
+      <div class="faq-list">
+        <article class="faq-item">
+          <h3>Social Image Maker è gratuito?</h3>
+          <p>Sì. Puoi utilizzare questo strumento senza registrazione e senza installare applicazioni.</p>
+        </article>
+        <article class="faq-item">
+          <h3>La foto viene caricata online?</h3>
+          <p>No. La conversione viene eseguita nel browser del tuo dispositivo, senza inviare la foto ai nostri server.</p>
+        </article>
+        <article class="faq-item">
+          <h3>La foto viene ritagliata?</h3>
+          <p>Con “Riempi”, l'immagine copre tutto il formato e una parte dei bordi può essere tagliata. Con “Adatta”, l'intera foto rimane visibile e possono comparire bordi bianchi.</p>
+        </article>
+        <article class="faq-item">
+          <h3>In quale formato posso scaricare l'immagine?</h3>
+          <p>Il risultato viene scaricato in JPG con qualità elevata. La resa finale dipende anche dalla qualità della foto originale.</p>
+        </article>
+        <article class="faq-item">
+          <h3>Posso usarlo dal telefono?</h3>
+          <p>Sì. La pagina si adatta agli schermi piccoli e permette di scegliere una foto dalla galleria del dispositivo.</p>
+        </article>
+      </div>
+    </section>
 
-    <h3>Formati disponibili</h3>
-    <ul>
-      <li>Instagram post quadrato: 1080 × 1080 pixel.</li>
-      <li>Instagram post verticale: 1080 × 1350 pixel.</li>
-      <li>Instagram storia e Reel: 1080 × 1920 pixel.</li>
-      <li>Facebook post orizzontale: 1200 × 630 pixel.</li>
-      <li>LinkedIn post orizzontale: 1200 × 627 pixel.</li>
-      <li>X / Twitter immagine orizzontale: 1600 × 900 pixel.</li>
-    </ul>
+    <section class="content-card" aria-labelledby="related-heading">
+      <h2 id="related-heading">Scopri gli altri strumenti Image Tools</h2>
+      <p>Continua a lavorare sulle tue immagini con gli altri strumenti gratuiti del sito.</p>
+      <div class="related-links">
+        <a href="image-smart.html">Smart Image Fix</a>
+        <a href="image-compressor.html">Image Compressor</a>
+        <a href="image-converter.html">Image Converter</a>
+        <a href="batch-resize.html">Batch Image Resizer</a>
+      </div>
+    </section>
+  </main>
 
-    <h3>Come si usa?</h3>
-    <ol>
-      <li>Carica la foto dal tuo dispositivo.</li>
-      <li>Scegli il social network e il formato.</li>
-      <li>Controlla l'anteprima generata.</li>
-      <li>Scarica l'immagine pronta per essere utilizzata.</li>
-    </ol>
+  <footer>
+    © <span id="year"></span> Image Tools ·
+    <a href="index.html">Tutti gli strumenti</a>
+  </footer>
 
-    <h3>La qualità della foto viene mantenuta?</h3>
-    <p>
-      L'immagine viene ridimensionata e ritagliata per riempire
-      il formato scelto. Una parte della foto potrebbe quindi
-      essere tagliata. Il risultato viene scaricato in formato JPG
-      con qualità elevata; la qualità finale dipende anche dalla
-      foto originale.
-    </p>
-  </section>
+  <script>
+    (() => {
+      "use strict";
 
-</main>
+      const fileInput = document.getElementById("fileInput");
+      const platform = document.getElementById("platform");
+      const uploadZone = document.getElementById("uploadZone");
+      const status = document.getElementById("status");
+      const error = document.getElementById("error");
+      const result = document.getElementById("result");
+      const preview = document.getElementById("preview");
+      const download = document.getElementById("download");
+      const dimensions = document.getElementById("dimensions");
+      const formatName = document.getElementById("formatName");
+      const fileInfo = document.getElementById("fileInfo");
+      const changeImage = document.getElementById("changeImage");
 
-<footer>
-  © 2026 Image Tools
-</footer>
+      const MAX_SIZE = 20 * 1024 * 1024;
+      const MAX_PIXELS = 40000000;
 
-<script>
-  const fileInput = document.getElementById("fileInput");
-  const platform = document.getElementById("platform");
-  const status = document.getElementById("status");
-  const error = document.getElementById("error");
-  const result = document.getElementById("result");
-  const resultText = document.getElementById("resultText");
-  const preview = document.getElementById("preview");
-  const download = document.getElementById("download");
+      let selectedFile = null;
+      let outputUrl = null;
+      let currentJob = 0;
 
-  let selectedFile = null;
-  let outputUrl = null;
-  let currentJob = 0;
+      const formats = {
+        "instagram-square": {
+          width: 1080, height: 1080, name: "Instagram · Post quadrato"
+        },
+        "instagram-portrait": {
+          width: 1080, height: 1350, name: "Instagram · Post verticale"
+        },
+        "instagram-story": {
+          width: 1080, height: 1920, name: "Instagram · Stories / Reels"
+        },
+        "facebook": {
+          width: 1200, height: 630, name: "Facebook · Post"
+        },
+        "linkedin": {
+          width: 1200, height: 627, name: "LinkedIn · Post"
+        },
+        "twitter": {
+          width: 1600, height: 900, name: "X · Post orizzontale"
+        }
+      };
 
-  const formats = {
-    "instagram-square": {
-      width: 1080, height: 1080, name: "Instagram Post quadrato"
-    },
-    "instagram-portrait": {
-      width: 1080, height: 1350, name: "Instagram Post verticale"
-    },
-    "instagram-story": {
-      width: 1080, height: 1920, name: "Instagram Storia / Reel"
-    },
-    "facebook": {
-      width: 1200, height: 630, name: "Facebook Post"
-    },
-    "linkedin": {
-      width: 1200, height: 627, name: "LinkedIn Post"
-    },
-    "twitter": {
-      width: 1600, height: 900, name: "X / Twitter"
-    }
-  };
+      document.getElementById("year").textContent = new Date().getFullYear();
 
-  function showError(message) {
-    status.style.display = "none";
-    error.textContent = message;
-    error.style.display = "block";
-  }
-
-  function createSocialImage() {
-    if (!selectedFile) return;
-
-    const job = ++currentJob;
-    const format = formats[platform.value];
-
-    if (!format) {
-      showError("Formato non disponibile.");
-      return;
-    }
-
-    status.style.display = "block";
-    error.style.display = "none";
-    result.style.display = "none";
-
-    const imageUrl = URL.createObjectURL(selectedFile);
-    const image = new Image();
-
-    image.onload = function() {
-      if (job !== currentJob) {
-        URL.revokeObjectURL(imageUrl);
-        return;
-      }
-
-      const canvas = document.createElement("canvas");
-      canvas.width = format.width;
-      canvas.height = format.height;
-
-      const ctx = canvas.getContext("2d");
-
-      if (!ctx) {
-        URL.revokeObjectURL(imageUrl);
-        showError("Il browser non supporta questa funzione.");
-        return;
-      }
-
-      const scale = Math.max(
-        format.width / image.naturalWidth,
-        format.height / image.naturalHeight
-      );
-
-      const scaledWidth = image.naturalWidth * scale;
-      const scaledHeight = image.naturalHeight * scale;
-      const x = (format.width - scaledWidth) / 2;
-      const y = (format.height - scaledHeight) / 2;
-
-      ctx.fillStyle = "#ffffff";
-      ctx.fillRect(0, 0, format.width, format.height);
-      ctx.drawImage(image, x, y, scaledWidth, scaledHeight);
-
-      canvas.toBlob(function(blob) {
-        URL.revokeObjectURL(imageUrl);
-
-        if (job !== currentJob) return;
-
+      function showError(text) {
         status.style.display = "none";
+        error.textContent = text;
+        error.style.display = "block";
+      }
 
-        if (!blob) {
-          showError("Non è stato possibile creare l'immagine. Riprova.");
+      function clearMessages() {
+        status.style.display = "none";
+        error.style.display = "none";
+        status.textContent = "";
+        error.textContent = "";
+      }
+
+      function revokeOutput() {
+        if (outputUrl) {
+          URL.revokeObjectURL(outputUrl);
+          outputUrl = null;
+        }
+      }
+
+      function getFitMode() {
+        const checked = document.querySelector('input[name="fitMode"]:checked');
+        return checked ? checked.value : "cover";
+      }
+
+      function createSocialImage() {
+        if (!selectedFile) return;
+
+        const job = ++currentJob;
+        const format = formats[platform.value];
+
+        if (!format) {
+          showError("Formato non disponibile. Seleziona un altro formato.");
           return;
         }
 
-        if (outputUrl) {
-          URL.revokeObjectURL(outputUrl);
-        }
+        clearMessages();
+        result.style.display = "none";
+        status.textContent = "Creazione dell'immagine in corso…";
+        status.style.display = "block";
 
-        outputUrl = URL.createObjectURL(blob);
-        preview.src = outputUrl;
+        const sourceUrl = URL.createObjectURL(selectedFile);
+        const image = new Image();
 
-        resultText.textContent =
-          format.name + " — " +
-          format.width + " × " + format.height + " pixel.";
+        image.onload = () => {
+          if (job !== currentJob) {
+            URL.revokeObjectURL(sourceUrl);
+            return;
+          }
 
-        const baseName = selectedFile.name
-          .replace(/\.[^/.]+$/, "")
-          .replace(/[^\w-]+/g, "-");
+          if (!image.naturalWidth || !image.naturalHeight ||
+              image.naturalWidth * image.naturalHeight > MAX_PIXELS) {
+            URL.revokeObjectURL(sourceUrl);
+            showError("Questa immagine è troppo grande da elaborare. Prova con una foto più piccola.");
+            return;
+          }
 
-        download.href = outputUrl;
-        download.download = baseName + "-" + platform.value + ".jpg";
+          const canvas = document.createElement("canvas");
+          canvas.width = format.width;
+          canvas.height = format.height;
 
-        result.style.display = "block";
-      }, "image/jpeg", 0.92);
-    };
+          const ctx = canvas.getContext("2d", { alpha: false });
 
-    image.onerror = function() {
-      URL.revokeObjectURL(imageUrl);
+          if (!ctx) {
+            URL.revokeObjectURL(sourceUrl);
+            showError("Il browser non supporta questa funzione.");
+            return;
+          }
 
-      if (job !== currentJob) return;
+          ctx.fillStyle = "#ffffff";
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      showError("Non è stato possibile leggere questa immagine. Prova con un altro file.");
-    };
+          const scaleX = format.width / image.naturalWidth;
+          const scaleY = format.height / image.naturalHeight;
+          const scale = getFitMode() === "cover"
+            ? Math.max(scaleX, scaleY)
+            : Math.min(scaleX, scaleY);
 
-    image.src = imageUrl;
-  }
+          const width = image.naturalWidth * scale;
+          const height = image.naturalHeight * scale;
+          const x = (format.width - width) / 2;
+          const y = (format.height - height) / 2;
 
-  fileInput.addEventListener("change", function() {
-    selectedFile = fileInput.files[0] || null;
-    result.style.display = "none";
-    error.style.display = "none";
+          ctx.drawImage(image, x, y, width, height);
 
-    if (outputUrl) {
-      URL.revokeObjectURL(outputUrl);
-      outputUrl = null;
-    }
+          canvas.toBlob((blob) => {
+            URL.revokeObjectURL(sourceUrl);
 
-    if (selectedFile) {
-      if (!selectedFile.type.startsWith("image/")) {
-        selectedFile = null;
-        showError("Seleziona un file immagine valido.");
-        return;
+            if (job !== currentJob) return;
+
+            status.style.display = "none";
+
+            if (!blob) {
+              showError("Non è stato possibile creare l'immagine. Riprova.");
+              return;
+            }
+
+            revokeOutput();
+            outputUrl = URL.createObjectURL(blob);
+            preview.src = outputUrl;
+
+            dimensions.textContent = format.width + " × " + format.height + " px";
+            formatName.textContent = format.name;
+            fileInfo.textContent = "JPG · Qualità 92%";
+
+            const baseName = selectedFile.name
+              .replace(/\.[^.]+$/, "")
+              .normalize("NFKD")
+              .replace(/[^a-zA-Z0-9_-]+/g, "-")
+              .replace(/^-+|-+$/g, "") || "image";
+
+            download.href = outputUrl;
+            download.download = baseName + "-" + platform.value + ".jpg";
+            result.style.display = "block";
+
+            status.textContent = "Immagine pronta. Controlla l'anteprima e scarica il risultato.";
+            status.style.display = "block";
+            result.scrollIntoView({ behavior: "smooth", block: "nearest" });
+          }, "image/jpeg", 0.92);
+        };
+
+        image.onerror = () => {
+          URL.revokeObjectURL(sourceUrl);
+          if (job !== currentJob) return;
+          showError("Non è stato possibile leggere questa immagine. Prova con un altro file.");
+        };
+
+        image.src = sourceUrl;
       }
 
-      createSocialImage();
-    }
-  });
+      function handleFile(file) {
+        if (!file) return;
 
-  platform.addEventListener("change", function() {
-    if (selectedFile) createSocialImage();
-  });
-</script>
+        clearMessages();
 
+        if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
+          showError("Scegli un'immagine JPG, PNG o WebP.");
+          return;
+        }
+
+        if (file.size > MAX_SIZE) {
+          showError("Il file supera i 20 MB. Scegli un'immagine più piccola.");
+          return;
+        }
+
+        selectedFile = file;
+        revokeOutput();
+        createSocialImage();
+      }
+
+      fileInput.addEventListener("change", () => {
+        handleFile(fileInput.files && fileInput.files[0]);
+      });
+
+      platform.addEventListener("change", createSocialImage);
+
+      document.querySelectorAll('input[name="fitMode"]').forEach((radio) => {
+        radio.addEventListener("change", createSocialImage);
+      });
+
+      changeImage.addEventListener("click", () => {
+        fileInput.click();
+      });
+
+      ["dragenter", "dragover"].forEach((eventName) => {
+        uploadZone.addEventListener(eventName, (event) => {
+          event.preventDefault();
+          uploadZone.classList.add("dragging");
+        });
+      });
+
+      ["dragleave", "drop"].forEach((eventName) => {
+        uploadZone.addEventListener(eventName, (event) => {
+          event.preventDefault();
+          uploadZone.classList.remove("dragging");
+        });
+      });
+
+      uploadZone.addEventListener("drop", (event) => {
+        const file = event.dataTransfer && event.dataTransfer.files[0];
+        handleFile(file);
+      });
+
+      window.addEventListener("beforeunload", revokeOutput);
+    })();
+  </script>
 </body>
 </html>
