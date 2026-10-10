@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://matteoda1978.github.io/image-tools/sitemap.xml
+Sitemap: https://ritoccapix.com/sitemap.xml
