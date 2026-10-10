@@ -57,11 +57,27 @@ header {
   margin: 0 auto;
   padding: 12px 20px;
   display: flex;
+  flex-direction: row;
   justify-content: flex-start;
   align-items: center;
   gap: 22px;
 }
 
+.header-inner > .brand {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+header .header-inner > nav.tools-dropdown {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: auto !important;
+  max-width: max-content;
+  margin: 0 !important;
+  flex: 0 0 auto;
+}
 .brand,
 .logo {
   flex: 0 0 auto;
