@@ -5,391 +5,512 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>AI Object Remover - Rimuovi oggetti dalle foto | Image Tools</title>
-<meta name="description" content="Rimuovi oggetti indesiderati dalle tue foto con il nostro strumento avanzato Object Remover. Gratis, veloce e direttamente dal browser.">
+<meta name="description" content="Seleziona oggetti indesiderati nelle tue foto con Image Tools. Strumento gratuito per preparare immagini alla rimozione degli oggetti direttamente dal browser.">
 <meta name="robots" content="index, follow">
+<meta name="theme-color" content="#080d18">
+
+<script src="menu.js" defer></script>
 
 <style>
-*{box-sizing:border-box}
-
-:root{
-  --bg:#07090d;
-  --panel:#10141b;
-  --panel2:#151a22;
-  --border:#252c38;
-  --text:#f5f7fa;
-  --muted:#9ba5b4;
-  --accent:#7c5cff;
-  --accent2:#9a82ff;
-  --danger:#ff5d6c;
-  --green:#38d996;
+* {
+  box-sizing: border-box;
 }
 
-body{
-  margin:0;
-  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+:root {
+  --primary: #91aaff;
+  --primary-dark: #a9baff;
+  --background: #080d18;
+  --card: #111827;
+  --card2: #151e2d;
+  --text: #f5f7fb;
+  --muted: #a0abc0;
+  --border: #263249;
+  --success: #70d99a;
+  --danger: #ff7886;
+  --radius: 16px;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  color: var(--text);
   background:
-    radial-gradient(circle at 50% -20%,#1a1830 0,#07090d 48%);
-  color:var(--text);
-  min-height:100vh;
+    radial-gradient(circle at 50% -20%, #17233e 0, #080d18 48%);
 }
 
-header{
-  height:68px;
-  border-bottom:1px solid var(--border);
-  display:flex;
-  align-items:center;
-  padding:0 28px;
-  background:rgba(7,9,13,.88);
-  backdrop-filter:blur(15px);
-  position:sticky;
-  top:0;
-  z-index:20;
+/* HEADER */
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  border-bottom: 1px solid var(--border);
+  background: rgba(8, 13, 24, .92);
+  backdrop-filter: blur(15px);
 }
 
-.logo{
-  font-size:20px;
-  font-weight:800;
-  text-decoration:none;
-  color:white;
+.header-inner {
+  max-width: 1100px;
+  min-height: 72px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 22px;
 }
 
-.logo span{color:var(--accent2)}
-
-main{
-  max-width:1250px;
-  margin:auto;
-  padding:42px 22px 70px;
+.brand,
+.logo {
+  flex: 0 0 auto;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -.5px;
+  text-decoration: none;
+  color: #fff;
 }
 
-.hero{
-  text-align:center;
-  max-width:760px;
-  margin:0 auto 38px;
+.brand span {
+  color: var(--primary);
 }
 
-.badge{
-  display:inline-flex;
-  align-items:center;
-  gap:7px;
-  padding:7px 12px;
-  border:1px solid #322d54;
-  border-radius:999px;
-  background:#121026;
-  color:#b9adff;
-  font-size:12px;
-  font-weight:700;
-  margin-bottom:16px;
+/* Menu condiviso con le altre pagine */
+header .header-inner > nav.tools-dropdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: auto !important;
+  max-width: max-content;
+  margin: 0 !important;
+  flex: 0 0 auto;
 }
 
-.badge i{
-  width:7px;
-  height:7px;
-  border-radius:50%;
-  background:#8e78ff;
-  box-shadow:0 0 10px #8e78ff;
+/* CONTENUTO */
+
+main {
+  max-width: 1250px;
+  margin: 0 auto;
+  padding: 42px 22px 70px;
 }
 
-h1{
-  font-size:clamp(34px,6vw,58px);
-  line-height:1;
-  letter-spacing:-2px;
-  margin:0 0 16px;
+.hero {
+  max-width: 760px;
+  margin: 0 auto 38px;
+  text-align: center;
 }
 
-.hero p{
-  color:var(--muted);
-  font-size:17px;
-  line-height:1.6;
-  margin:0;
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 16px;
+  padding: 7px 12px;
+  border: 1px solid #2d4268;
+  border-radius: 999px;
+  background: #111b30;
+  color: #b9caff;
+  font-size: 12px;
+  font-weight: 700;
 }
 
-.app{
-  display:grid;
-  grid-template-columns:290px 1fr;
-  gap:18px;
+.badge i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--primary);
+  box-shadow: 0 0 10px var(--primary);
 }
 
-.sidebar{
-  background:rgba(16,20,27,.94);
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:18px;
-  height:max-content;
+h1 {
+  margin: 0 0 16px;
+  font-size: clamp(34px, 6vw, 58px);
+  line-height: 1.05;
+  letter-spacing: -2px;
 }
 
-.section{
-  padding-bottom:18px;
-  margin-bottom:18px;
-  border-bottom:1px solid var(--border);
+.hero p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.6;
 }
 
-.section:last-child{
-  border-bottom:0;
-  margin-bottom:0;
-  padding-bottom:0;
+.app {
+  display: grid;
+  grid-template-columns: 290px minmax(0, 1fr);
+  gap: 18px;
 }
 
-.section-title{
-  font-size:12px;
-  text-transform:uppercase;
-  letter-spacing:.08em;
-  color:#7f8998;
-  font-weight:800;
-  margin-bottom:12px;
+/* PANNELLO LATERALE */
+
+.sidebar {
+  height: max-content;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: rgba(17, 24, 39, .96);
 }
 
-.upload{
-  width:100%;
-  border:1px dashed #3b4352;
-  background:#141922;
-  color:white;
-  border-radius:13px;
-  padding:16px 12px;
-  text-align:center;
-  cursor:pointer;
-  transition:.2s;
-  font-weight:700;
+.section {
+  margin-bottom: 18px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--border);
 }
 
-.upload:hover{
-  border-color:var(--accent);
-  background:#171a2a;
+.section:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: 0;
 }
 
-.upload small{
-  display:block;
-  color:var(--muted);
-  margin-top:5px;
-  font-weight:500;
+.section-title {
+  margin-bottom: 12px;
+  color: #9ba9c0;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
 }
 
-input[type=file]{display:none}
-
-button{
-  border:0;
-  cursor:pointer;
-  font:inherit;
+.upload {
+  display: block;
+  width: 100%;
+  padding: 16px 12px;
+  border: 1px dashed #435473;
+  border-radius: 13px;
+  background: #131d2d;
+  color: #fff;
+  text-align: center;
+  font-weight: 700;
+  cursor: pointer;
+  transition: .2s;
 }
 
-.tool-btn{
-  width:100%;
-  min-height:44px;
-  border-radius:11px;
-  background:#1a202a;
-  color:white;
-  margin-top:9px;
-  border:1px solid #29313e;
-  font-weight:700;
-  transition:.2s;
+.upload:hover {
+  border-color: var(--primary);
+  background: #19253a;
 }
 
-.tool-btn:hover{
-  background:#222a36;
+.upload small {
+  display: block;
+  margin-top: 5px;
+  color: var(--muted);
+  font-weight: 500;
 }
 
-.tool-btn.primary{
-  background:linear-gradient(135deg,var(--accent),#6245e9);
-  border-color:transparent;
+input[type="file"] {
+  display: none;
 }
 
-.tool-btn.primary:hover{
-  filter:brightness(1.08);
+button {
+  border: 0;
+  font: inherit;
+  cursor: pointer;
 }
 
-.tool-btn.danger{
-  color:#ff8b95;
+.tool-btn {
+  width: 100%;
+  min-height: 44px;
+  margin-top: 9px;
+  padding: 10px 12px;
+  border: 1px solid #2c3a52;
+  border-radius: 11px;
+  background: #192337;
+  color: #fff;
+  font-weight: 700;
+  transition: background .2s, border-color .2s;
 }
 
-.tool-btn:disabled{
-  opacity:.4;
-  cursor:not-allowed;
+.tool-btn:hover:not(:disabled) {
+  border-color: #536a92;
+  background: #22314a;
 }
 
-label{
-  display:block;
-  color:#c9ced7;
-  font-size:13px;
-  margin-bottom:8px;
+.tool-btn.primary {
+  border-color: transparent;
+  background: linear-gradient(135deg, #91aaff, #5c7fe8);
+  color: #071020;
 }
 
-.range-row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  color:#cdd2da;
-  font-size:13px;
+.tool-btn.primary:hover:not(:disabled) {
+  filter: brightness(1.08);
 }
 
-.value{
-  color:#a99aff;
-  font-weight:800;
+.tool-btn.danger {
+  color: var(--danger);
 }
 
-input[type=range]{
-  width:100%;
-  margin-top:9px;
-  accent-color:var(--accent);
+.tool-btn:disabled {
+  opacity: .4;
+  cursor: not-allowed;
 }
 
-.workspace{
-  min-width:0;
+label {
+  display: block;
+  margin-bottom: 8px;
+  color: #c9d2e1;
+  font-size: 13px;
 }
 
-.canvas-box{
-  position:relative;
-  min-height:650px;
-  border:1px solid var(--border);
-  border-radius:20px;
-  overflow:hidden;
-  background:
-    linear-gradient(45deg,#171b22 25%,transparent 25%),
-    linear-gradient(-45deg,#171b22 25%,transparent 25%),
-    linear-gradient(45deg,transparent 75%,#171b22 75%),
-    linear-gradient(-45deg,transparent 75%,#171b22 75%);
-  background-size:28px 28px;
-  background-position:0 0,0 14px,14px -14px,-14px 0;
+.range-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  color: #cdd6e5;
+  font-size: 13px;
 }
 
-.empty{
-  position:absolute;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-  color:var(--muted);
-  text-align:center;
-  padding:25px;
+.value {
+  color: var(--primary);
+  font-weight: 800;
 }
 
-.empty-icon{
-  width:74px;
-  height:74px;
-  border-radius:20px;
-  background:#171c25;
-  border:1px solid #2a313d;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:31px;
-  margin-bottom:18px;
+input[type="range"] {
+  width: 100%;
+  margin-top: 9px;
+  accent-color: var(--primary);
+  cursor: pointer;
 }
 
-.empty strong{
-  color:white;
-  font-size:18px;
-  margin-bottom:7px;
+/* AREA DI LAVORO */
+
+.workspace {
+  min-width: 0;
 }
 
-#canvas{
-  display:block;
-  max-width:100%;
-  max-height:700px;
-  margin:auto;
-  cursor:none;
+.canvas-box {
+  position: relative;
+  display: flex;
+  min-height: 650px;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background-color: #0d1421;
+  background-image:
+    linear-gradient(45deg, #172131 25%, transparent 25%),
+    linear-gradient(-45deg, #172131 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #172131 75%),
+    linear-gradient(-45deg, transparent 75%, #172131 75%);
+  background-size: 28px 28px;
+  background-position: 0 0, 0 14px, 14px -14px, -14px 0;
 }
 
-.workspace-top{
-  position:absolute;
-  left:14px;
-  right:14px;
-  top:14px;
-  z-index:5;
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  pointer-events:none;
+.empty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 25px;
+  color: var(--muted);
+  text-align: center;
 }
 
-.status{
-  padding:8px 11px;
-  background:rgba(7,9,13,.82);
-  border:1px solid #303744;
-  border-radius:10px;
-  font-size:12px;
-  color:#c9ced7;
-  backdrop-filter:blur(10px);
+.empty-icon {
+  display: flex;
+  width: 74px;
+  height: 74px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+  border: 1px solid #2c3a52;
+  border-radius: 20px;
+  background: #151f30;
+  color: var(--primary);
+  font-size: 31px;
 }
 
-.actions{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  pointer-events:auto;
+.empty strong {
+  margin-bottom: 7px;
+  color: white;
+  font-size: 18px;
 }
 
-.small-btn{
-  min-height:38px;
-  padding:0 12px;
-  border-radius:9px;
-  background:#151a22;
-  color:white;
-  border:1px solid #303744;
-  font-size:12px;
-  font-weight:700;
+#canvas {
+  display: block;
+  max-width: 100%;
+  max-height: 700px;
+  margin: auto;
+  touch-action: none;
+  cursor: none;
 }
 
-.small-btn:hover{background:#202631}
-
-.brush{
-  position:fixed;
-  pointer-events:none;
-  width:50px;
-  height:50px;
-  border:2px solid white;
-  border-radius:50%;
-  z-index:100;
-  display:none;
-  box-shadow:0 0 0 1px rgba(0,0,0,.7);
+.workspace-top {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  left: 14px;
+  z-index: 5;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+  pointer-events: none;
 }
 
-.bottom-bar{
-  margin-top:14px;
-  padding:13px 15px;
-  background:#10141b;
-  border:1px solid var(--border);
-  border-radius:15px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
+.status {
+  padding: 8px 11px;
+  border: 1px solid #303f57;
+  border-radius: 10px;
+  background: rgba(8, 13, 24, .88);
+  color: #d2dced;
+  font-size: 12px;
+  backdrop-filter: blur(10px);
 }
 
-.help{
-  color:var(--muted);
-  font-size:12px;
-  line-height:1.5;
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  pointer-events: auto;
 }
 
-.ai-note{
-  margin-top:18px;
-  padding:14px 16px;
-  border:1px solid #302b50;
-  background:#111022;
-  border-radius:14px;
-  color:#b9b0e9;
-  font-size:12px;
-  line-height:1.55;
+.small-btn {
+  min-height: 38px;
+  padding: 0 12px;
+  border: 1px solid #34445e;
+  border-radius: 9px;
+  background: #151f30;
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
 }
 
-.ai-note strong{color:white}
-
-@media(max-width:850px){
-  header{padding:0 16px}
-  main{padding:28px 13px 50px}
-  .app{grid-template-columns:1fr}
-  .sidebar{order:2}
-  .workspace{order:1}
-  .canvas-box{min-height:430px}
-  #canvas{max-height:520px}
-  .hero{margin-bottom:25px}
+.small-btn:hover {
+  background: #22314a;
+  border-color: #536a92;
 }
 
-@media(max-width:500px){
-  h1{letter-spacing:-1.3px}
-  .hero p{font-size:15px}
-  .canvas-box{min-height:350px}
-  .bottom-bar{align-items:flex-start;flex-direction:column}
+/* CERCHIO DEL PENNELLO */
+
+.brush {
+  position: fixed;
+  z-index: 100;
+  display: none;
+  width: 60px;
+  height: 60px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, .7);
+  pointer-events: none;
+}
+
+/* BARRA INFERIORE */
+
+.bottom-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 14px;
+  padding: 13px 15px;
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  background: #111827;
+}
+
+.help {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.ai-note {
+  margin-top: 18px;
+  padding: 14px 16px;
+  border: 1px solid #34486a;
+  border-radius: 14px;
+  background: #121d30;
+  color: #c0cde4;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.ai-note strong {
+  color: var(--primary);
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 850px) {
+  .header-inner {
+    padding-right: 16px;
+    padding-left: 16px;
+    gap: 16px;
+  }
+
+  main {
+    padding: 28px 13px 50px;
+  }
+
+  .app {
+    grid-template-columns: 1fr;
+  }
+
+  .workspace {
+    order: 1;
+  }
+
+  .sidebar {
+    order: 2;
+  }
+
+  .canvas-box {
+    min-height: 430px;
+  }
+
+  #canvas {
+    max-height: 520px;
+  }
+
+  .hero {
+    margin-bottom: 25px;
+  }
+}
+
+@media (max-width: 500px) {
+  h1 {
+    letter-spacing: -1.3px;
+  }
+
+  .hero p {
+    font-size: 15px;
+  }
+
+  .canvas-box {
+    min-height: 350px;
+  }
+
+  .bottom-bar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .workspace-top {
+    right: 8px;
+    left: 8px;
+    top: 8px;
+  }
+
+  .status {
+    max-width: 55%;
+    overflow-wrap: anywhere;
+  }
+
+  .actions {
+    gap: 4px;
+  }
+
+  .small-btn {
+    min-height: 34px;
+    padding: 0 9px;
+  }
 }
 </style>
 </head>
@@ -397,136 +518,150 @@ input[type=range]{
 <body>
 
 <header>
-  <a class="logo" href="index.html">Image <span>Tools</span></a>
+  <div class="header-inner">
+    <a class="brand" href="index.html">Image <span>Tools</span></a>
+    <nav aria-label="Navigazione principale"></nav>
+  </div>
 </header>
 
 <main>
 
-<section class="hero">
-  <div class="badge"><i></i> ADVANCED PHOTO TOOL</div>
-  <h1>Rimuovi oggetti<br>in modo intelligente</h1>
-  <p>
-    Seleziona una persona, un oggetto o un elemento indesiderato
-    e prepara la foto per la rimozione automatica.
-  </p>
-</section>
-
-<div class="app">
-
-  <aside class="sidebar">
-
-    <div class="section">
-      <div class="section-title">1 · Foto</div>
-
-      <label class="upload" for="fileInput">
-        ＋ Carica una foto
-        <small>JPG, PNG, WEBP fino a 20 MB</small>
-      </label>
-
-      <input id="fileInput" type="file" accept="image/jpeg,image/png,image/webp">
-
-      <button class="tool-btn" id="resetBtn" disabled>
-        ↺ Ricomincia
-      </button>
-    </div>
-
-    <div class="section">
-      <div class="section-title">2 · Selezione</div>
-
-      <div class="range-row">
-        <span>Dimensione pennello</span>
-        <span class="value" id="brushValue">60 px</span>
-      </div>
-
-      <input id="brushSize" type="range" min="10" max="180" value="60">
-
-      <button class="tool-btn" id="undoBtn" disabled>
-        ↶ Annulla
-      </button>
-
-      <button class="tool-btn" id="clearMaskBtn" disabled>
-        Cancella selezione
-      </button>
-    </div>
-
-    <div class="section">
-      <div class="section-title">3 · Rimozione</div>
-
-      <button class="tool-btn primary" id="removeBtn" disabled>
-        ✨ Rimuovi con AI
-      </button>
-
-      <button class="tool-btn" id="downloadBtn" disabled>
-        ↓ Scarica risultato
-      </button>
-
-      <div class="ai-note">
-        <strong>AI ready</strong><br>
-        Il pulsante è predisposto per il futuro motore AI.
-        La chiave API non viene inserita nel codice pubblico.
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-title">Suggerimento</div>
-
-      <div class="help">
-        Dipingi completamente sopra l'oggetto da eliminare.
-        Per risultati migliori includi anche una piccola area
-        intorno all'oggetto.
-      </div>
-    </div>
-
-  </aside>
-
-  <section class="workspace">
-
-    <div class="canvas-box" id="canvasBox">
-
-      <div class="workspace-top">
-        <div class="status" id="status">
-          Nessuna immagine
-        </div>
-
-        <div class="actions">
-          <button class="small-btn" id="zoomOut">−</button>
-          <button class="small-btn" id="zoomReset">100%</button>
-          <button class="small-btn" id="zoomIn">+</button>
-        </div>
-      </div>
-
-      <div class="empty" id="empty">
-        <div class="empty-icon">✦</div>
-        <strong>Carica una foto per iniziare</strong>
-        <span>La tua immagine rimane nel browser durante questa fase.</span>
-      </div>
-
-      <canvas id="canvas"></canvas>
-
-    </div>
-
-    <div class="bottom-bar">
-      <div class="help">
-        🖌️ Disegna sopra ciò che vuoi rimuovere
-      </div>
-
-      <div class="help" id="selectionInfo">
-        Selezione: 0 px
-      </div>
-    </div>
-
+  <section class="hero">
+    <div class="badge"><i></i> ADVANCED PHOTO TOOL</div>
+    <h1>Rimuovi oggetti<br>in modo intelligente</h1>
+    <p>
+      Seleziona una persona, un oggetto o un elemento indesiderato
+      e prepara la foto per la rimozione automatica.
+    </p>
   </section>
 
-</div>
+  <div class="app">
 
+    <aside class="sidebar">
+
+      <div class="section">
+        <div class="section-title">1 · Foto</div>
+
+        <label class="upload" for="fileInput">
+          ＋ Carica una foto
+          <small>JPG, PNG, WEBP fino a 20 MB</small>
+        </label>
+
+        <input
+          id="fileInput"
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+        >
+
+        <button class="tool-btn" id="resetBtn" disabled>
+          ↺ Ricomincia
+        </button>
+      </div>
+
+      <div class="section">
+        <div class="section-title">2 · Selezione</div>
+
+        <div class="range-row">
+          <span>Dimensione pennello</span>
+          <span class="value" id="brushValue">60 px</span>
+        </div>
+
+        <input
+          id="brushSize"
+          type="range"
+          min="10"
+          max="180"
+          value="60"
+          aria-label="Dimensione pennello"
+        >
+
+        <button class="tool-btn" id="undoBtn" disabled>
+          ↶ Annulla
+        </button>
+
+        <button class="tool-btn" id="clearMaskBtn" disabled>
+          Cancella selezione
+        </button>
+      </div>
+
+      <div class="section">
+        <div class="section-title">3 · Rimozione</div>
+
+        <button class="tool-btn primary" id="removeBtn" disabled>
+          ✨ Rimuovi con AI
+        </button>
+
+        <button class="tool-btn" id="downloadBtn" disabled>
+          ↓ Scarica risultato
+        </button>
+
+        <div class="ai-note">
+          <strong>AI non ancora collegata</strong><br>
+          Puoi caricare una foto e preparare la selezione.
+          Per rimuovere davvero gli oggetti servirà un motore AI
+          collegato tramite un backend sicuro.
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Suggerimento</div>
+
+        <div class="help">
+          Dipingi completamente sopra l'oggetto da eliminare.
+          Per risultati migliori includi anche una piccola area
+          intorno all'oggetto.
+        </div>
+      </div>
+
+    </aside>
+
+    <section class="workspace">
+
+      <div class="canvas-box" id="canvasBox">
+
+        <div class="workspace-top">
+          <div class="status" id="status">Nessuna immagine</div>
+
+          <div class="actions">
+            <button class="small-btn" id="zoomOut" aria-label="Riduci zoom">−</button>
+            <button class="small-btn" id="zoomReset">100%</button>
+            <button class="small-btn" id="zoomIn" aria-label="Aumenta zoom">+</button>
+          </div>
+        </div>
+
+        <div class="empty" id="empty">
+          <div class="empty-icon">✦</div>
+          <strong>Carica una foto per iniziare</strong>
+          <span>La tua immagine viene elaborata nel browser in questa fase.</span>
+        </div>
+
+        <canvas id="canvas"></canvas>
+
+      </div>
+
+      <div class="bottom-bar">
+        <div class="help">
+          🖌️ Disegna sopra ciò che vuoi rimuovere
+        </div>
+
+        <div class="help" id="selectionInfo">
+          Selezione: 0%
+        </div>
+      </div>
+
+    </section>
+
+  </div>
 </main>
 
 <div class="brush" id="brush"></div>
 
 <script>
+"use strict";
+
 const fileInput = document.getElementById("fileInput");
 const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d", { willReadFrequently:true });
+const ctx = canvas.getContext("2d", { willReadFrequently: true });
 
 const empty = document.getElementById("empty");
 const canvasBox = document.getElementById("canvasBox");
@@ -552,25 +687,43 @@ let image = new Image();
 let loaded = false;
 let drawing = false;
 let zoom = 1;
+let activePointerId = null;
 
 let maskCanvas = document.createElement("canvas");
-let maskCtx = maskCanvas.getContext("2d");
+let maskCtx = maskCanvas.getContext("2d", { willReadFrequently: true });
 
+/* Ogni voce contiene una copia della maschera prima della modifica. */
 let history = [];
 
-function updateButtons(){
+function updateButtons() {
   resetBtn.disabled = !loaded;
-  undoBtn.disabled = history.length === 0;
+  undoBtn.disabled = !loaded || history.length === 0;
   clearMaskBtn.disabled = !loaded;
-  removeBtn.disabled = !loaded || history.length === 0;
+  removeBtn.disabled = !loaded || !hasSelection();
   downloadBtn.disabled = !loaded;
 }
 
-function fitCanvas(){
-  if(!loaded) return;
+function hasSelection() {
+  if (!loaded || !maskCanvas.width || !maskCanvas.height) {
+    return false;
+  }
 
-  const maxW = canvasBox.clientWidth - 20;
-  const maxH = Math.min(window.innerHeight * .72, 700);
+  const data = maskCtx.getImageData(
+    0, 0, maskCanvas.width, maskCanvas.height
+  ).data;
+
+  for (let i = 3; i < data.length; i += 4) {
+    if (data[i] > 30) return true;
+  }
+
+  return false;
+}
+
+function fitCanvas() {
+  if (!loaded) return;
+
+  const maxW = Math.max(100, canvasBox.clientWidth - 20);
+  const maxH = Math.min(window.innerHeight * 0.72, 700);
 
   const ratio = Math.min(
     maxW / image.naturalWidth,
@@ -578,103 +731,170 @@ function fitCanvas(){
     1
   );
 
-  canvas.style.width = (image.naturalWidth * ratio * zoom) + "px";
-  canvas.style.height = (image.naturalHeight * ratio * zoom) + "px";
+  canvas.style.width =
+    (image.naturalWidth * ratio * zoom) + "px";
+
+  canvas.style.height =
+    (image.naturalHeight * ratio * zoom) + "px";
 }
 
-function drawBase(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  ctx.drawImage(image,0,0);
+function drawBase() {
+  if (!loaded) return;
 
-  if(history.length){
-    ctx.save();
-    ctx.globalAlpha=.35;
-    ctx.drawImage(maskCanvas,0,0);
-    ctx.restore();
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.drawImage(image, 0, 0);
+
+  /* Mostra la selezione blu semitrasparente sopra la foto. */
+  ctx.save();
+  ctx.globalAlpha = 0.42;
+  ctx.drawImage(maskCanvas, 0, 0);
+  ctx.restore();
+}
+
+function saveHistory() {
+  if (!loaded) return;
+
+  const snapshot = maskCtx.getImageData(
+    0, 0, maskCanvas.width, maskCanvas.height
+  );
+
+  history.push(snapshot);
+
+  if (history.length > 20) {
+    history.shift();
   }
-}
-
-function saveHistory(){
-  history.push(maskCtx.getImageData(
-    0,0,maskCanvas.width,maskCanvas.height
-  ));
-
-  if(history.length > 20) history.shift();
 
   updateButtons();
 }
 
-function restoreMask(){
-  maskCtx.clearRect(0,0,maskCanvas.width,maskCanvas.height);
+function restoreMask() {
+  maskCtx.clearRect(0, 0, maskCanvas.width, maskCanvas.height);
 
-  if(history.length){
-    maskCtx.putImageData(history[history.length-1],0,0);
+  if (history.length) {
+    maskCtx.putImageData(history[history.length - 1], 0, 0);
   }
 
   drawBase();
   updateSelectionInfo();
+  updateButtons();
 }
 
-function updateSelectionInfo(){
-  if(!loaded){
-    selectionInfo.textContent="Selezione: 0 px";
+function updateSelectionInfo() {
+  if (!loaded) {
+    selectionInfo.textContent = "Selezione: 0%";
     return;
   }
 
   const data = maskCtx.getImageData(
-    0,0,maskCanvas.width,maskCanvas.height
+    0, 0, maskCanvas.width, maskCanvas.height
   ).data;
 
-  let count=0;
+  let count = 0;
 
-  for(let i=3;i<data.length;i+=4){
-    if(data[i] > 30) count++;
+  for (let i = 3; i < data.length; i += 4) {
+    if (data[i] > 30) count++;
   }
 
-  const total=maskCanvas.width*maskCanvas.height;
-  const percent=((count/total)*100).toFixed(1);
+  const total = maskCanvas.width * maskCanvas.height;
+  const percent = total ? ((count / total) * 100).toFixed(1) : "0.0";
 
-  selectionInfo.textContent =
-    "Selezione: " + percent + "%";
+  selectionInfo.textContent = "Selezione: " + percent + "%";
+  updateButtons();
 }
 
-fileInput.addEventListener("change",function(){
+function clearCurrentImage() {
+  loaded = false;
+  drawing = false;
+  activePointerId = null;
+  history = [];
+  zoom = 1;
 
-  const file=this.files[0];
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  maskCtx.clearRect(0, 0, maskCanvas.width, maskCanvas.height);
 
-  if(!file) return;
+  canvas.width = 0;
+  canvas.height = 0;
+  maskCanvas.width = 0;
+  maskCanvas.height = 0;
 
-  if(file.size > 20 * 1024 * 1024){
-    alert("La foto è troppo grande. Massimo 20 MB.");
-    this.value="";
+  canvas.style.width = "";
+  canvas.style.height = "";
+
+  image = new Image();
+  fileInput.value = "";
+
+  empty.style.display = "flex";
+  status.textContent = "Nessuna immagine";
+  zoomReset.textContent = "100%";
+  brush.style.display = "none";
+
+  updateSelectionInfo();
+  updateButtons();
+}
+
+/* CARICAMENTO IMMAGINE */
+
+fileInput.addEventListener("change", function () {
+  const file = this.files && this.files[0];
+
+  if (!file) return;
+
+  const allowedTypes = [
+    "image/jpeg",
+    "image/png",
+    "image/webp"
+  ];
+
+  if (!allowedTypes.includes(file.type)) {
+    alert("Formato non supportato. Scegli un file JPG, PNG o WEBP.");
+    this.value = "";
     return;
   }
 
-  const reader=new FileReader();
+  if (file.size > 20 * 1024 * 1024) {
+    alert("La foto è troppo grande. Massimo 20 MB.");
+    this.value = "";
+    return;
+  }
 
-  reader.onload=function(e){
+  const reader = new FileReader();
 
-    image.onload=function(){
+  reader.onerror = function () {
+    alert("Non è stato possibile leggere il file selezionato.");
+    fileInput.value = "";
+  };
 
-      canvas.width=image.naturalWidth;
-      canvas.height=image.naturalHeight;
+  reader.onload = function (event) {
+    const newImage = new Image();
 
-      maskCanvas.width=image.naturalWidth;
-      maskCanvas.height=image.naturalHeight;
+    newImage.onerror = function () {
+      alert("Non è stato possibile aprire questa immagine.");
+      fileInput.value = "";
+    };
+
+    newImage.onload = function () {
+      image = newImage;
+
+      canvas.width = image.naturalWidth;
+      canvas.height = image.naturalHeight;
+
+      maskCanvas.width = image.naturalWidth;
+      maskCanvas.height = image.naturalHeight;
 
       maskCtx.clearRect(
-        0,0,
-        maskCanvas.width,
-        maskCanvas.height
+        0, 0, maskCanvas.width, maskCanvas.height
       );
 
-      history=[];
+      history = [];
+      zoom = 1;
+      loaded = true;
 
-      loaded=true;
-      empty.style.display="none";
+      empty.style.display = "none";
 
       status.textContent =
-        image.naturalWidth+" × "+image.naturalHeight;
+        image.naturalWidth + " × " + image.naturalHeight;
+
+      zoomReset.textContent = "100%";
 
       drawBase();
       fitCanvas();
@@ -682,268 +902,228 @@ fileInput.addEventListener("change",function(){
       updateButtons();
     };
 
-    image.src=e.target.result;
+    newImage.src = event.target.result;
   };
 
   reader.readAsDataURL(file);
 });
 
-brushSize.addEventListener("input",function(){
-  brushValue.textContent=this.value+" px";
-  brush.style.width=this.value+"px";
-  brush.style.height=this.value+"px";
+/* DIMENSIONE PENNELLO */
+
+brushSize.addEventListener("input", function () {
+  brushValue.textContent = this.value + " px";
+  brush.style.width = this.value + "px";
+  brush.style.height = this.value + "px";
 });
 
-function pointerPosition(e){
+/* COORDINATE DEL PUNTATORE */
 
-  const rect=canvas.getBoundingClientRect();
+function pointerPosition(event) {
+  const rect = canvas.getBoundingClientRect();
 
-  const x=(e.clientX-rect.left) *
-    canvas.width / rect.width;
-
-  const y=(e.clientY-rect.top) *
-    canvas.height / rect.height;
-
-  return {x,y};
+  return {
+    x: (event.clientX - rect.left) * canvas.width / rect.width,
+    y: (event.clientY - rect.top) * canvas.height / rect.height
+  };
 }
 
-canvas.addEventListener("pointerdown",function(e){
+/* DISEGNO DELLA MASCHERA */
 
-  if(!loaded) return;
+canvas.addEventListener("pointerdown", function (event) {
+  if (!loaded || event.button !== 0) return;
 
-  drawing=true;
-  canvas.setPointerCapture(e.pointerId);
+  event.preventDefault();
 
-  saveHistory();
+  drawing = true;
+  activePointerId = event.pointerId;
 
-  paint(e);
-});
-
-canvas.addEventListener("pointermove",function(e){
-
-  if(!loaded) return;
-
-  const rect=canvas.getBoundingClientRect();
-
-  brush.style.display="block";
-  brush.style.left=(e.clientX - brush.offsetWidth/2)+"px";
-  brush.style.top=(e.clientY - brush.offsetHeight/2)+"px";
-
-  if(drawing) paint(e);
-});
-
-canvas.addEventListener("pointerup",function(){
-  drawing=false;
-});
-
-canvas.addEventListener("pointerleave",function(){
-  brush.style.display="none";
-});
-
-function paint(e){
-
-  const p=pointerPosition(e);
-
-  const scale=canvas.width /
-    canvas.getBoundingClientRect().width;
-
-  const size=parseInt(brushSize.value)*scale;
-
-  maskCtx.save();
-
-  maskCtx.fillStyle="rgba(124,92,255,.95)";
-  maskCtx.beginPath();
-  maskCtx.arc(p.x,p.y,size/2,0,Math.PI*2);
-  maskCtx.fill();
-
-  maskCtx.restore();
-
-  drawBase();
-
-  ctx.save();
-  ctx.globalAlpha=.36;
-  ctx.drawImage(maskCanvas,0,0);
-  ctx.restore();
-
-  updateSelectionInfo();
-}
-
-undoBtn.addEventListener("click",function(){
-
-  if(history.length < 1) return;
-
-  history.pop();
-
-  maskCtx.clearRect(
-    0,0,
-    maskCanvas.width,
-    maskCanvas.height
-  );
-
-  if(history.length){
-    maskCtx.putImageData(
-      history[history.length-1],
-      0,
-      0
-    );
+  try {
+    canvas.setPointerCapture(event.pointerId);
+  } catch (error) {
+    /* Alcuni dispositivi potrebbero non supportare il capture. */
   }
 
-  drawBase();
-  updateSelectionInfo();
-  updateButtons();
-});
-
-clearMaskBtn.addEventListener("click",function(){
-
-  if(!loaded) return;
-
   saveHistory();
-
-  maskCtx.clearRect(
-    0,
-    0,
-    maskCanvas.width,
-    maskCanvas.height
-  );
-
-  drawBase();
-  updateSelectionInfo();
-  updateButtons();
+  paint(event);
 });
 
-resetBtn.addEventListener("click",function(){
+canvas.addEventListener("pointermove", function (event) {
+  if (!loaded) return;
 
-  if(!loaded) return;
+  brush.style.display = "block";
+  brush.style.left = (event.clientX - brush.offsetWidth / 2) + "px";
+  brush.style.top = (event.clientY - brush.offsetHeight / 2) + "px";
 
-  loaded=false;
-  history=[];
-
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  maskCtx.clearRect(0,0,maskCanvas.width,maskCanvas.height);
-
-  canvas.width=0;
-  canvas.height=0;
-
-  empty.style.display="flex";
-  status.textContent="Nessuna immagine";
-
-  fileInput.value="";
-
-  updateSelectionInfo();
-  updateButtons();
+  if (drawing && event.pointerId === activePointerId) {
+    event.preventDefault();
+    paint(event);
+  }
 });
 
-zoomIn.addEventListener("click",function(){
-  if(!loaded) return;
-
-  zoom=Math.min(zoom+.1,2.5);
-  fitCanvas();
-});
-
-zoomOut.addEventListener("click",function(){
-  if(!loaded) return;
-
-  zoom=Math.max(zoom-.1,.5);
-  fitCanvas();
-});
-
-zoomReset.addEventListener("click",function(){
-  zoom=1;
-  fitCanvas();
-});
-
-removeBtn.addEventListener("click",async function(){
-
-  if(!loaded || history.length===0) return;
-
-  /*
-    IMPORTANTISSIMO:
-
-    Qui verrà collegato il vero backend AI.
-
-    Il browser NON contiene API key.
-    Il backend riceverà:
-      - immagine
-      - maschera
-    e restituirà l'immagine ricostruita.
-
-    Endpoint previsto:
-
-      POST /api/remove-object
-
-    Formato:
-      multipart/form-data
-        image
-        mask
-
-    Risposta:
-      immagine PNG/JPEG
-
-    Fino a quando il backend non viene collegato,
-    non fingiamo che questo sia un motore AI.
-  */
-
-  status.textContent="Preparazione della rimozione AI…";
-
-  const hasBackend=false;
-
-  if(!hasBackend){
-
-    setTimeout(function(){
-
-      status.textContent="AI non ancora collegata";
-
-      alert(
-        "La nuova interfaccia è pronta per il vero motore AI. " +
-        "Il collegamento verrà aggiunto tramite backend sicuro, " +
-        "senza esporre API key nel sito pubblico."
-      );
-
-    },500);
-
+function stopDrawing(event) {
+  if (
+    activePointerId !== null &&
+    event &&
+    event.pointerId !== activePointerId
+  ) {
     return;
   }
 
-  /*
-    Codice che useremo quando il backend sarà pronto:
+  drawing = false;
+  activePointerId = null;
+}
 
-    const form = new FormData();
+canvas.addEventListener("pointerup", stopDrawing);
+canvas.addEventListener("pointercancel", stopDrawing);
 
-    canvas.toBlob(blob=>{
-      form.append("image",blob,"image.png");
-
-      maskCanvas.toBlob(mask=>{
-        form.append("mask",mask,"mask.png");
-
-        fetch("/api/remove-object",{
-          method:"POST",
-          body:form
-        })
-        .then(r=>r.blob())
-        .then(result=>{
-          image.src=URL.createObjectURL(result);
-        });
-      },"image/png");
-    },"image/png");
-  */
+canvas.addEventListener("lostpointercapture", function () {
+  drawing = false;
+  activePointerId = null;
 });
 
-downloadBtn.addEventListener("click",function(){
+canvas.addEventListener("pointerleave", function () {
+  if (!drawing) brush.style.display = "none";
+});
 
-  if(!loaded) return;
+function paint(event) {
+  if (!loaded) return;
 
-  const link=document.createElement("a");
+  const point = pointerPosition(event);
+  const rect = canvas.getBoundingClientRect();
 
-  link.download="image-tools-object-remover.png";
-  link.href=canvas.toDataURL("image/png");
+  if (!rect.width || !rect.height) return;
 
+  const scaleX = canvas.width / rect.width;
+  const scaleY = canvas.height / rect.height;
+
+  const radiusX = (parseInt(brushSize.value, 10) / 2) * scaleX;
+  const radiusY = (parseInt(brushSize.value, 10) / 2) * scaleY;
+
+  /*
+    La maschera è disegnata in blu per la visualizzazione.
+    In futuro il backend potrà riceverla come immagine separata.
+  */
+  maskCtx.save();
+  maskCtx.fillStyle = "rgba(145,170,255,0.95)";
+  maskCtx.beginPath();
+
+  /* Cerchio corretto anche se la scala orizzontale e verticale differisce. */
+  maskCtx.ellipse(
+    point.x,
+    point.y,
+    radiusX,
+    radiusY,
+    0,
+    0,
+    Math.PI * 2
+  );
+
+  maskCtx.fill();
+  maskCtx.restore();
+
+  drawBase();
+  updateSelectionInfo();
+}
+
+/* ANNULLA */
+
+undoBtn.addEventListener("click", function () {
+  if (!loaded || history.length === 0) return;
+
+  const previous = history.pop();
+
+  maskCtx.clearRect(
+    0, 0, maskCanvas.width, maskCanvas.height
+  );
+
+  maskCtx.putImageData(previous, 0, 0);
+
+  drawBase();
+  updateSelectionInfo();
+  updateButtons();
+});
+
+/* CANCELLA SELEZIONE */
+
+clearMaskBtn.addEventListener("click", function () {
+  if (!loaded || !hasSelection()) return;
+
+  saveHistory();
+
+  maskCtx.clearRect(
+    0, 0, maskCanvas.width, maskCanvas.height
+  );
+
+  drawBase();
+  updateSelectionInfo();
+  updateButtons();
+});
+
+/* RICOMINCIA */
+
+resetBtn.addEventListener("click", function () {
+  if (!loaded) return;
+
+  clearCurrentImage();
+});
+
+/* ZOOM */
+
+zoomIn.addEventListener("click", function () {
+  if (!loaded) return;
+
+  zoom = Math.min(zoom + 0.1, 2.5);
+  zoomReset.textContent = Math.round(zoom * 100) + "%";
+  fitCanvas();
+});
+
+zoomOut.addEventListener("click", function () {
+  if (!loaded) return;
+
+  zoom = Math.max(zoom - 0.1, 0.5);
+  zoomReset.textContent = Math.round(zoom * 100) + "%";
+  fitCanvas();
+});
+
+zoomReset.addEventListener("click", function () {
+  if (!loaded) return;
+
+  zoom = 1;
+  zoomReset.textContent = "100%";
+  fitCanvas();
+});
+
+/* RIMOZIONE AI: BACKEND NON ANCORA COLLEGATO */
+
+removeBtn.addEventListener("click", function () {
+  if (!loaded || !hasSelection()) return;
+
+  status.textContent = "AI non ancora collegata";
+
+  alert(
+    "La foto e la selezione sono pronte, ma il motore AI non è ancora collegato. " +
+    "Per rimuovere davvero l'oggetto occorre configurare un backend sicuro. " +
+    "Non è stata modificata la foto originale."
+  );
+});
+
+/* DOWNLOAD DELLA FOTO VISUALIZZATA */
+
+downloadBtn.addEventListener("click", function () {
+  if (!loaded) return;
+
+  const link = document.createElement("a");
+  link.download = "image-tools-object-remover.png";
+  link.href = canvas.toDataURL("image/png");
   link.click();
 });
 
-window.addEventListener("resize",fitCanvas);
+/* AGGIORNAMENTO LAYOUT */
 
-brush.style.width=brushSize.value+"px";
-brush.style.height=brushSize.value+"px";
+window.addEventListener("resize", fitCanvas);
+
+brush.style.width = brushSize.value + "px";
+brush.style.height = brushSize.value + "px";
 
 updateButtons();
 </script>
