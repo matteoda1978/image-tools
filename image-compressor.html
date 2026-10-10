@@ -1,21 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <title>Free Image Compressor Online – Compress and Resize Multiple Images</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">  <title>Free Image Compressor Online – Compress and Resize Multiple Images</title>
   <meta name="description" content="Compress and resize multiple JPG, PNG and WebP images online for free. Adjust image quality, set dimensions, preview results and download images individually or as a ZIP.">
   <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#08111f">
-  <link rel="canonical" href="https://matteoda1978.github.io/image-tools/image-compressor.html">
-
-  <meta property="og:title" content="Free Image Compressor Online">
+  <link rel="canonical" href="https://matteoda1978.github.io/image-tools/image-compressor.html">  <meta property="og:title" content="Free Image Compressor Online">
   <meta property="og:description" content="Compress and resize multiple images in your browser. Adjust quality and download your results individually or as a ZIP.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://matteoda1978.github.io/image-tools/image-compressor.html">
-
-  <style>
+  <meta property="og:url" content="https://matteoda1978.github.io/image-tools/image-compressor.html">  <style>
     :root {
       color-scheme: dark;
       --bg: #08111f;
@@ -634,25 +627,17 @@
       }
     }
   
-  </style>
-
-  <script src="menu.js" defer></script>
-</head>
-
-
-<body>
+  </style>  <script src="menu.js" defer></script></head><body>
   <header>
     <div class="header-inner">
-      <a class="logo" href="index.html">Image Tools</a>
+      <a class="logo" href="index.html">RitoccaPix</a>
       <nav aria-label="Main navigation">
         <a href="image-resizer.html">Image Resizer</a>
         <a href="image-compressor.html">Image Compressor</a>
         <a href="image-converter.html">Image Converter</a>
       </nav>
     </div>
-  </header>
-
-  <main>
+  </header>  <main>
     <section class="hero">
       <h1>Free Online Image Compressor</h1>
       <p>
@@ -660,247 +645,240 @@
         Adjust image quality, choose output dimensions and compare file sizes.
         Download your optimized images individually or together in a ZIP archive.
       </p>
-    </section>
+    </section><section class="tool-panel" aria-label="Image compression tool">
+  <div class="drop-zone" id="dropZone">
+    <div class="upload-icon" aria-hidden="true">🖼️</div>
+    <h2>Select or Drop Your Images</h2>
+    <p>Choose JPG, PNG or WebP images. You can select multiple files or add more later.</p>
+    <button class="primary" type="button" id="browseButton">Choose Images</button>
+    <input
+      type="file"
+      id="fileInput"
+      accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp"
+      multiple
+    >
+    <p style="margin-top:12px;margin-bottom:0;">
+      Your images are processed locally in your browser.
+    </p>
+  </div>
 
-    <section class="tool-panel" aria-label="Image compression tool">
-      <div class="drop-zone" id="dropZone">
-        <div class="upload-icon" aria-hidden="true">🖼️</div>
-        <h2>Select or Drop Your Images</h2>
-        <p>Choose JPG, PNG or WebP images. You can select multiple files or add more later.</p>
-        <button class="primary" type="button" id="browseButton">Choose Images</button>
-        <input
-          type="file"
-          id="fileInput"
-          accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp"
-          multiple
-        >
-        <p style="margin-top:12px;margin-bottom:0;">
-          Your images are processed locally in your browser.
-        </p>
+  <div class="section-heading">
+    <h2>Selected Images</h2>
+    <span class="muted" id="selectedCount">0 images</span>
+  </div>
+
+  <div id="selectedGrid" class="image-grid"></div>
+
+  <div class="settings">
+    <div class="setting">
+      <label for="resizeWidth">Maximum width (pixels)</label>
+      <input id="resizeWidth" type="number" min="1" max="30000" step="1" placeholder="e.g. 1200">
+      <small>Leave blank to keep the original width unless a height is entered.</small>
+    </div>
+
+    <div class="setting">
+      <label for="resizeHeight">Maximum height (pixels)</label>
+      <input id="resizeHeight" type="number" min="1" max="30000" step="1" placeholder="e.g. 800">
+      <small>Leave blank to keep the original height unless a width is entered.</small>
+    </div>
+
+    <div class="setting">
+      <label for="keepRatio">Image proportions</label>
+      <div class="check-row">
+        <input id="keepRatio" type="checkbox" checked>
+        <span>Keep proportions and fit images inside the selected dimensions.</span>
       </div>
+      <small>Disable this option only if you want to stretch images to exact dimensions.</small>
+    </div>
 
-      <div class="section-heading">
-        <h2>Selected Images</h2>
-        <span class="muted" id="selectedCount">0 images</span>
+    <div class="setting">
+      <label for="quality">
+        Image quality: <span class="quality-value" id="qualityValue">80%</span>
+      </label>
+      <input id="quality" type="range" min="10" max="100" value="80">
+      <small>Lower quality usually produces smaller JPG and WebP files. PNG is lossless.</small>
+    </div>
+
+    <div class="setting">
+      <label for="format">Output format</label>
+      <select id="format">
+        <option value="image/webp">WebP</option>
+        <option value="image/jpeg">JPG</option>
+        <option value="image/png">PNG</option>
+      </select>
+      <small>JPG does not support transparency. Transparent areas become white in JPG output.</small>
+    </div>
+
+    <div class="setting">
+      <label for="targetSize">Target file size per image (optional)</label>
+      <div class="target-row">
+        <input id="targetSize" type="number" min="0.1" step="any" placeholder="e.g. 500">
+        <select id="targetUnit" aria-label="Target size unit">
+          <option value="KB">KB</option>
+          <option value="MB">MB</option>
+        </select>
       </div>
+      <small>Best effort for JPG and WebP. Exact size is not guaranteed. Leave blank to ignore.</small>
+    </div>
+  </div>
 
-      <div id="selectedGrid" class="image-grid"></div>
+  <div class="main-actions">
+    <button class="primary" type="button" id="processButton" disabled>
+      Compress Images
+    </button>
+    <button class="secondary" type="button" id="clearButton" disabled>
+      Clear All
+    </button>
+  </div>
 
-      <div class="settings">
-        <div class="setting">
-          <label for="resizeWidth">Maximum width (pixels)</label>
-          <input id="resizeWidth" type="number" min="1" max="30000" step="1" placeholder="e.g. 1200">
-          <small>Leave blank to keep the original width unless a height is entered.</small>
-        </div>
+  <div class="progress-track" id="progressTrack">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
 
-        <div class="setting">
-          <label for="resizeHeight">Maximum height (pixels)</label>
-          <input id="resizeHeight" type="number" min="1" max="30000" step="1" placeholder="e.g. 800">
-          <small>Leave blank to keep the original height unless a width is entered.</small>
-        </div>
+  <div class="status" id="status" role="status" aria-live="polite"></div>
 
-        <div class="setting">
-          <label for="keepRatio">Image proportions</label>
-          <div class="check-row">
-            <input id="keepRatio" type="checkbox" checked>
-            <span>Keep proportions and fit images inside the selected dimensions.</span>
-          </div>
-          <small>Disable this option only if you want to stretch images to exact dimensions.</small>
-        </div>
+  <div id="summary" style="display:none;">
+    <div class="section-heading">
+      <h2>Compression Results</h2>
+      <span class="muted" id="resultCount">0 processed</span>
+    </div>
 
-        <div class="setting">
-          <label for="quality">
-            Image quality: <span class="quality-value" id="qualityValue">80%</span>
-          </label>
-          <input id="quality" type="range" min="10" max="100" value="80">
-          <small>Lower quality usually produces smaller JPG and WebP files. PNG is lossless.</small>
-        </div>
-
-        <div class="setting">
-          <label for="format">Output format</label>
-          <select id="format">
-            <option value="image/webp">WebP</option>
-            <option value="image/jpeg">JPG</option>
-            <option value="image/png">PNG</option>
-          </select>
-          <small>JPG does not support transparency. Transparent areas become white in JPG output.</small>
-        </div>
-
-        <div class="setting">
-          <label for="targetSize">Target file size per image (optional)</label>
-          <div class="target-row">
-            <input id="targetSize" type="number" min="0.1" step="any" placeholder="e.g. 500">
-            <select id="targetUnit" aria-label="Target size unit">
-              <option value="KB">KB</option>
-              <option value="MB">MB</option>
-            </select>
-          </div>
-          <small>Best effort for JPG and WebP. Exact size is not guaranteed. Leave blank to ignore.</small>
-        </div>
+    <div class="stats">
+      <div class="stat">
+        <small>ORIGINAL TOTAL</small>
+        <strong id="originalTotal">—</strong>
       </div>
-
-      <div class="main-actions">
-        <button class="primary" type="button" id="processButton" disabled>
-          Compress Images
-        </button>
-        <button class="secondary" type="button" id="clearButton" disabled>
-          Clear All
-        </button>
+      <div class="stat">
+        <small>COMPRESSED TOTAL</small>
+        <strong id="compressedTotal">—</strong>
       </div>
-
-      <div class="progress-track" id="progressTrack">
-        <div class="progress-bar" id="progressBar"></div>
+      <div class="stat">
+        <small>TOTAL SIZE CHANGE</small>
+        <strong id="sizeChange">—</strong>
       </div>
+    </div>
 
-      <div class="status" id="status" role="status" aria-live="polite"></div>
+    <button class="primary zip-link" type="button" id="zipButton" disabled>
+      Download All as ZIP
+    </button>
 
-      <div id="summary" style="display:none;">
-        <div class="section-heading">
-          <h2>Compression Results</h2>
-          <span class="muted" id="resultCount">0 processed</span>
-        </div>
+    <div class="section-heading">
+      <h2>Processed Images</h2>
+      <span class="muted">Download each file below</span>
+    </div>
 
-        <div class="stats">
-          <div class="stat">
-            <small>ORIGINAL TOTAL</small>
-            <strong id="originalTotal">—</strong>
-          </div>
-          <div class="stat">
-            <small>COMPRESSED TOTAL</small>
-            <strong id="compressedTotal">—</strong>
-          </div>
-          <div class="stat">
-            <small>TOTAL SIZE CHANGE</small>
-            <strong id="sizeChange">—</strong>
-          </div>
-        </div>
+    <div id="resultsGrid" class="image-grid"></div>
+  </div>
+</section>
 
-        <button class="primary zip-link" type="button" id="zipButton" disabled>
-          Download All as ZIP
-        </button>
+<section class="content-section">
+  <h2>Free Online Image Compressor and Resizer</h2>
+  <p>
+    Compress and resize multiple images without installing software.
+    Choose output dimensions, adjust quality and select JPG, PNG or WebP.
+    The same settings are applied to every image in your batch, making it
+    easier to optimize photos for websites, email and sharing.
+  </p>
 
-        <div class="section-heading">
-          <h2>Processed Images</h2>
-          <span class="muted">Download each file below</span>
-        </div>
+  <div class="feature-grid">
+    <div class="feature">
+      <strong>🔒 Browser-based processing</strong>
+      <span>Your selected image files are processed on your device and are not uploaded to our conversion server by this tool.</span>
+    </div>
+    <div class="feature">
+      <strong>⚡ Batch compression</strong>
+      <span>Select up to 50 images and process them together with one set of settings.</span>
+    </div>
+    <div class="feature">
+      <strong>📦 ZIP downloads</strong>
+      <span>Download individual results or collect all successfully processed images in one ZIP archive.</span>
+    </div>
+  </div>
 
-        <div id="resultsGrid" class="image-grid"></div>
-      </div>
-    </section>
+  <h2>How to Compress Multiple Images</h2>
+  <ol>
+    <li>Select JPG, PNG or WebP images from your device.</li>
+    <li>Optionally enter a maximum width or height.</li>
+    <li>Keep image proportions enabled to avoid stretching photos.</li>
+    <li>Choose an output format and quality setting.</li>
+    <li>Optionally set a target file size for JPG or WebP images.</li>
+    <li>Click Compress Images and wait for processing to finish.</li>
+    <li>Compare the file sizes and download your results individually or as a ZIP.</li>
+  </ol>
 
-    <section class="content-section">
-      <h2>Free Online Image Compressor and Resizer</h2>
-      <p>
-        Compress and resize multiple images without installing software.
-        Choose output dimensions, adjust quality and select JPG, PNG or WebP.
-        The same settings are applied to every image in your batch, making it
-        easier to optimize photos for websites, email and sharing.
-      </p>
+  <h2>Choose the Best Image Format</h2>
 
-      <div class="feature-grid">
-        <div class="feature">
-          <strong>🔒 Browser-based processing</strong>
-          <span>Your selected image files are processed on your device and are not uploaded to our conversion server by this tool.</span>
-        </div>
-        <div class="feature">
-          <strong>⚡ Batch compression</strong>
-          <span>Select up to 50 images and process them together with one set of settings.</span>
-        </div>
-        <div class="feature">
-          <strong>📦 ZIP downloads</strong>
-          <span>Download individual results or collect all successfully processed images in one ZIP archive.</span>
-        </div>
-      </div>
+  <h3>WebP</h3>
+  <p>
+    WebP can provide a useful balance between file size and visual quality.
+    It is often a good choice for website images.
+  </p>
 
-      <h2>How to Compress Multiple Images</h2>
-      <ol>
-        <li>Select JPG, PNG or WebP images from your device.</li>
-        <li>Optionally enter a maximum width or height.</li>
-        <li>Keep image proportions enabled to avoid stretching photos.</li>
-        <li>Choose an output format and quality setting.</li>
-        <li>Optionally set a target file size for JPG or WebP images.</li>
-        <li>Click Compress Images and wait for processing to finish.</li>
-        <li>Compare the file sizes and download your results individually or as a ZIP.</li>
-      </ol>
+  <h3>JPG</h3>
+  <p>
+    JPG is widely supported and is commonly used for photographs.
+    Lower quality settings can reduce file size, although some image detail
+    may be lost. JPG does not support transparency.
+  </p>
 
-      <h2>Choose the Best Image Format</h2>
+  <h3>PNG</h3>
+  <p>
+    PNG uses lossless compression and supports transparency. It is useful
+    for graphics and screenshots, but PNG output is not necessarily smaller
+    than the original file.
+  </p>
 
-      <h3>WebP</h3>
-      <p>
-        WebP can provide a useful balance between file size and visual quality.
-        It is often a good choice for website images.
-      </p>
+  <h2>Frequently Asked Questions</h2>
 
-      <h3>JPG</h3>
-      <p>
-        JPG is widely supported and is commonly used for photographs.
-        Lower quality settings can reduce file size, although some image detail
-        may be lost. JPG does not support transparency.
-      </p>
+  <div class="faq">
+    <h3>Can I compress 50 images at once?</h3>
+    <p>Yes. Select up to 50 supported images and apply the same settings to the whole batch.</p>
+  </div>
 
-      <h3>PNG</h3>
-      <p>
-        PNG uses lossless compression and supports transparency. It is useful
-        for graphics and screenshots, but PNG output is not necessarily smaller
-        than the original file.
-      </p>
+  <div class="faq">
+    <h3>Can I resize images and compress them at the same time?</h3>
+    <p>Yes. Enter the maximum width and/or height before processing. Images can be resized and compressed in the same operation.</p>
+  </div>
 
-      <h2>Frequently Asked Questions</h2>
+  <div class="faq">
+    <h3>Will the compressed image always be smaller?</h3>
+    <p>No. The result depends on the original image, output format, dimensions and quality. Some images may become larger, especially when converting to PNG.</p>
+  </div>
 
-      <div class="faq">
-        <h3>Can I compress 50 images at once?</h3>
-        <p>Yes. Select up to 50 supported images and apply the same settings to the whole batch.</p>
-      </div>
+  <div class="faq">
+    <h3>Can I specify a target file size?</h3>
+    <p>You can set a target size for JPG and WebP. The tool attempts to reduce quality to approach that target, but it cannot guarantee an exact file size.</p>
+  </div>
 
-      <div class="faq">
-        <h3>Can I resize images and compress them at the same time?</h3>
-        <p>Yes. Enter the maximum width and/or height before processing. Images can be resized and compressed in the same operation.</p>
-      </div>
+  <div class="faq">
+    <h3>Are my images uploaded to a server?</h3>
+    <p>The image processing takes place locally in your browser. This tool does not upload your selected image files to our server. The optional ZIP library is loaded from an external CDN.</p>
+  </div>
 
-      <div class="faq">
-        <h3>Will the compressed image always be smaller?</h3>
-        <p>No. The result depends on the original image, output format, dimensions and quality. Some images may become larger, especially when converting to PNG.</p>
-      </div>
+  <h2>Explore More Free Image Tools</h2>
+  <p>Use our other tools to prepare images for websites, social media and everyday tasks.</p>
 
-      <div class="faq">
-        <h3>Can I specify a target file size?</h3>
-        <p>You can set a target size for JPG and WebP. The tool attempts to reduce quality to approach that target, but it cannot guarantee an exact file size.</p>
-      </div>
+  <div class="tool-links">
+    <a class="tool-link" href="image-resizer.html">
+      <strong>Free Image Resizer</strong>
+      <span>Change image dimensions and resize photos online.</span>
+    </a>
+    <a class="tool-link" href="image-converter.html">
+      <strong>Image Format Converter</strong>
+      <span>Convert images between JPG, PNG and WebP.</span>
+    </a>
+  </div>
 
-      <div class="faq">
-        <h3>Are my images uploaded to a server?</h3>
-        <p>The image processing takes place locally in your browser. This tool does not upload your selected image files to our server. The optional ZIP library is loaded from an external CDN.</p>
-      </div>
+  <p>Visit <a href="index.html">RitoccaPix</a> to explore all available image utilities.</p>
+</section>
 
-      <h2>Explore More Free Image Tools</h2>
-      <p>Use our other tools to prepare images for websites, social media and everyday tasks.</p>
-
-      <div class="tool-links">
-        <a class="tool-link" href="image-resizer.html">
-          <strong>Free Image Resizer</strong>
-          <span>Change image dimensions and resize photos online.</span>
-        </a>
-        <a class="tool-link" href="image-converter.html">
-          <strong>Image Format Converter</strong>
-          <span>Convert images between JPG, PNG and WebP.</span>
-        </a>
-      </div>
-
-      <p>Visit <a href="index.html">Image Tools</a> to explore all available image utilities.</p>
-    </section>
-  </main>
-
-  <footer>
+  </main>  <footer>
     <p>Free online tools for everyday image tasks.</p>
     <a href="index.html">Home</a>
     <a href="image-resizer.html">Image Resizer</a>
     <a href="image-compressor.html">Image Compressor</a>
     <a href="image-converter.html">Image Converter</a>
-  </footer>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-
-  <script>
+  </footer>  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>  <script>
     const fileInput = document.getElementById("fileInput");
     const browseButton = document.getElementById("browseButton");
     const dropZone = document.getElementById("dropZone");
@@ -1641,6 +1619,5 @@
     zipButton.addEventListener("click", downloadAllAsZip);
 
     updateButtons();
-  </script>
-</body>
+  </script></body>
 </html>
