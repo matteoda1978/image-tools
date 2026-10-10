@@ -1,137 +1,226 @@
+```html
 <!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Smart Image Fix - Ottimizza foto automaticamente | Image Tools</title>
-
-  <meta
-    name="description"
-    content="Ottimizza automaticamente le immagini online. Smart Image Fix analizza dimensioni, formato e peso e crea una versione ottimizzata."
-  >
+  <title>Smart Image Fix - Ottimizza immagini online | Image Tools</title>
+  <meta name="description" content="Ottimizza automaticamente le immagini online. Analizza dimensioni e peso, confronta il risultato e scarica la foto ottimizzata gratuitamente.">
+  <meta name="theme-color" content="#080d18">
 
   <style>
+    :root {
+      --primary: #91aaff;
+      --primary-dark: #a9baff;
+      --background: #080d18;
+      --card: #111827;
+      --text: #f5f7fb;
+      --muted: #a0abc0;
+      --border: #263249;
+      --success: #70d99a;
+      --radius: 16px;
+    }
+
     * {
       box-sizing: border-box;
     }
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f7fb;
-      color: #172033;
+    html {
+      min-height: 100%;
+      background: var(--background);
+      color-scheme: dark;
     }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--background);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* HEADER E MENU CONDIVISO */
 
     header {
-      background: #111827;
-      color: white;
-      text-align: center;
-      padding: 38px 20px;
+      background: var(--background);
+      border-bottom: 1px solid #1e293b;
+      padding: 17px 16px;
     }
 
-    header h1 {
-      margin: 0 0 10px;
-      font-size: 34px;
+    .header-inner {
+      max-width: 1050px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
     }
 
-    header p {
-      margin: 0;
-      color: #cbd5e1;
-    }
-
-    nav {
-      background: white;
-      border-bottom: 1px solid #e5e7eb;
-      text-align: center;
-      padding: 17px 10px;
-    }
-
-    nav a {
-      color: #2563eb;
+    .brand {
+      color: var(--primary);
+      font-size: 21px;
+      font-weight: 800;
       text-decoration: none;
-      font-weight: bold;
-      margin: 0 7px;
+      white-space: nowrap;
     }
+
+    header nav.tools-dropdown {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: auto;
+      margin-left: auto;
+      flex: 0 0 auto;
+    }
+
+    /* CONTENUTO */
 
     main {
-      max-width: 900px;
+      width: 100%;
+      max-width: 1000px;
       margin: auto;
-      padding: 30px 20px 60px;
-    }
-
-    .hero,
-    .tool,
-    .content {
-      background: white;
-      border: 1px solid #e5e7eb;
-      border-radius: 18px;
-      padding: 28px;
-      box-shadow: 0 5px 20px rgba(0,0,0,.05);
+      padding: 30px 16px 48px;
     }
 
     .hero {
       text-align: center;
-      margin-bottom: 22px;
+      margin-bottom: 25px;
     }
 
-    .hero h2 {
-      margin-top: 0;
+    .hero h1 {
+      font-size: 30px;
+      line-height: 1.3;
+      margin: 0 0 12px;
     }
 
     .hero p {
-      color: #64748b;
-      line-height: 1.6;
+      max-width: 680px;
+      margin: auto;
+      color: var(--muted);
     }
 
+    .card {
+      background: var(--card);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, .15);
+    }
+
+    h2 {
+      font-size: 21px;
+      line-height: 1.3;
+      margin: 0 0 14px;
+    }
+
+    h3 {
+      font-size: 17px;
+      margin: 0 0 10px;
+    }
+
+    p {
+      overflow-wrap: anywhere;
+    }
+
+    .muted,
+    .hint {
+      color: var(--muted);
+    }
+
+    .hint {
+      font-size: 13px;
+    }
+
+    /* CARICAMENTO */
+
     .upload {
-      border: 2px dashed #94a3b8;
-      border-radius: 14px;
-      padding: 35px 20px;
+      border: 2px dashed #43516b;
+      background: #0d1422;
+      border-radius: 13px;
+      padding: 28px 16px;
       text-align: center;
-      background: #f8fafc;
+    }
+
+    .upload strong {
+      font-size: 18px;
+    }
+
+    .upload p {
+      color: var(--muted);
     }
 
     input[type="file"] {
+      display: block;
       width: 100%;
       max-width: 450px;
-      font-size: 16px;
+      margin: 12px auto;
+      padding: 10px;
+      background: #111a2b;
+      color: var(--text);
+      border: 1px solid #354258;
+      border-radius: 9px;
+      font-size: 15px;
     }
 
     label {
       display: block;
       font-weight: bold;
-      margin: 22px 0 8px;
+      margin: 20px 0 8px;
     }
 
     select {
+      display: block;
       width: 100%;
       padding: 12px;
-      border: 1px solid #cbd5e1;
+      color: var(--text);
+      background: #0d1422;
+      border: 1px solid #354258;
       border-radius: 9px;
       font-size: 16px;
-      background: white;
     }
 
-    .status {
+    select option {
+      background: var(--card);
+      color: var(--text);
+    }
+
+    input:focus,
+    select:focus,
+    button:focus,
+    a:focus {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+
+    /* MESSAGGI */
+
+    .status,
+    .error {
       display: none;
       margin-top: 18px;
       padding: 14px;
-      background: #eff6ff;
-      color: #1d4ed8;
       border-radius: 10px;
       text-align: center;
-      font-weight: bold;
+    }
+
+    .status {
+      background: #17243b;
+      color: #c5d4ff;
+      border: 1px solid #33466b;
     }
 
     .error {
-      display: none;
-      margin-top: 15px;
-      padding: 12px;
-      background: #fee2e2;
-      color: #991b1b;
-      border-radius: 8px;
+      background: #351c27;
+      color: #fecaca;
+      border: 1px solid #713344;
     }
+
+    /* RISULTATO */
 
     .result {
       display: none;
@@ -139,125 +228,166 @@
     }
 
     .recommendation {
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
+      background: #17243b;
+      border: 1px solid #33466b;
       border-radius: 12px;
       padding: 18px;
       margin-bottom: 20px;
     }
 
     .recommendation h3 {
-      margin-top: 0;
-      color: #1d4ed8;
+      color: var(--primary);
+    }
+
+    .recommendation p {
+      margin-bottom: 0;
+      color: var(--text);
     }
 
     .stats {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 12px;
     }
 
     .stat {
-      background: #f8fafc;
-      border: 1px solid #e5e7eb;
+      min-width: 0;
+      background: #0d1422;
+      border: 1px solid var(--border);
       border-radius: 10px;
       padding: 15px;
     }
 
     .stat strong {
       display: block;
-      color: #64748b;
+      color: var(--muted);
       font-size: 13px;
       margin-bottom: 5px;
     }
 
     .stat span {
-      font-weight: bold;
+      display: block;
       font-size: 17px;
+      font-weight: bold;
+      overflow-wrap: anywhere;
     }
 
     .comparison {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
       margin-top: 22px;
     }
 
-    .comparison div {
-      background: #f8fafc;
-      border: 1px solid #e5e7eb;
+    .preview {
+      min-width: 0;
+      background: #0d1422;
+      border: 1px solid var(--border);
       border-radius: 12px;
       padding: 15px;
     }
 
-    .comparison h3 {
-      margin-top: 0;
+    .preview img {
+      display: block;
+      width: 100%;
+      max-height: 360px;
+      object-fit: contain;
+      background: var(--background);
+      border-radius: 8px;
+      border: 1px solid var(--border);
     }
 
-    .comparison img {
-      width: 100%;
-      max-height: 320px;
-      object-fit: contain;
-      background: white;
-      border-radius: 8px;
-      border: 1px solid #e5e7eb;
+    /* PULSANTI */
+
+    .button {
+      display: inline-block;
+      border: 0;
+      border-radius: 9px;
+      padding: 13px 18px;
+      margin-top: 18px;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: bold;
+      text-decoration: none;
+      cursor: pointer;
     }
 
     .download {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 13px 18px;
-      background: #16a34a;
-      color: white;
-      text-decoration: none;
-      border-radius: 9px;
-      font-weight: bold;
+      background: var(--success);
+      color: #082016;
     }
 
     .download:hover {
-      background: #15803d;
+      background: #91e8b2;
     }
 
-    .content {
-      margin-top: 22px;
-      box-shadow: none;
+    .secondary {
+      background: #27364f;
+      color: var(--text);
+      margin-left: 8px;
     }
 
-    .content h2 {
-      margin-top: 0;
+    .secondary:hover {
+      background: #354762;
     }
+
+    /* TESTO INFORMATIVO */
 
     .content p,
     .content li {
-      color: #475569;
+      color: var(--muted);
       line-height: 1.7;
     }
 
+    .content strong {
+      color: var(--text);
+    }
+
+    .content h2:not(:first-child) {
+      margin-top: 28px;
+    }
+
+    /* PIEDE PAGINA */
+
     footer {
       text-align: center;
-      padding: 30px;
-      color: #64748b;
+      padding: 28px 16px;
+      border-top: 1px solid #1e293b;
+      background: var(--background);
+      color: #8491a6;
       font-size: 14px;
     }
 
+    footer a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
     @media (max-width: 650px) {
-      header h1 {
-        font-size: 28px;
+      .header-inner {
+        flex-direction: row;
+        align-items: center;
+      }
+
+      .hero h1 {
+        font-size: 26px;
       }
 
       main {
-        padding: 20px 15px 45px;
+        padding: 24px 15px 40px;
       }
 
-      .hero,
-      .tool,
-      .content {
-        padding: 20px;
+      .card {
+        padding: 18px;
       }
 
       .stats,
       .comparison {
         grid-template-columns: 1fr;
+      }
+
+      .secondary {
+        margin-left: 0;
       }
     }
   </style>
@@ -266,41 +396,28 @@
 <body>
 
 <header>
-  <h1>⚡ Smart Image Fix</h1>
-  <p>Ottimizzazione automatica delle immagini</p>
+  <div class="header-inner">
+    <a class="brand" href="index.html">Image Tools</a>
+    <nav aria-label="Navigazione principale"></nav>
+  </div>
 </header>
 
-<nav>
-  <a href="index.html">Home</a>
-  <a href="image-optimizer.html">Ottimizza</a>
-  <a href="image-compressor.html">Comprimi</a>
-  <a href="image-resizer.html">Ridimensiona</a>
-  <a href="image-converter.html">Converti</a>
-  <a href="image-analyzer.html">Analizza</a>
-</nav>
-
 <main>
-
   <section class="hero">
-    <h2>Carica una foto e lascia fare tutto a Smart Image Fix</h2>
-
+    <h1>⚡ Smart Image Fix</h1>
     <p>
-      Seleziona un'immagine: lo strumento la analizzerà
-      automaticamente e creerà una versione ottimizzata.
+      Ottimizza le immagini in pochi secondi.
+      Scegli l'utilizzo, confronta il risultato e scarica la foto
+      direttamente sul tuo dispositivo.
     </p>
   </section>
 
-  <section class="tool">
+  <section class="card">
+    <h2>1. Carica la tua immagine</h2>
 
     <div class="upload">
-
-      <p>
-        <strong>📷 Seleziona un'immagine</strong>
-      </p>
-
-      <p>
-        L'ottimizzazione parte automaticamente.
-      </p>
+      <p><strong>📷 Seleziona una foto</strong></p>
+      <p>L'ottimizzazione parte automaticamente.</p>
 
       <input
         type="file"
@@ -308,11 +425,13 @@
         accept="image/*"
       >
 
+      <p class="hint">
+        La foto viene elaborata nel browser e non viene inviata
+        a un server per l'ottimizzazione.
+      </p>
     </div>
 
-    <label for="useSelect">
-      Utilizzo dell'immagine
-    </label>
+    <label for="useSelect">2. Come vuoi utilizzare l'immagine?</label>
 
     <select id="useSelect">
       <option value="web">🌐 Sito web</option>
@@ -321,31 +440,30 @@
       <option value="general">⭐ Uso generale</option>
     </select>
 
-    <div id="status" class="status">
+    <p class="hint">
+      Puoi cambiare utilizzo anche dopo aver caricato la foto.
+    </p>
+
+    <div id="status" class="status" role="status" aria-live="polite">
       ⚡ Analisi e ottimizzazione in corso...
     </div>
 
-    <div id="error" class="error"></div>
+    <div id="error" class="error" role="alert"></div>
 
     <div id="result" class="result">
-
       <div class="recommendation">
-
-        <h3>🎯 Ottimizzazione completata</h3>
-
+        <h3>✅ Ottimizzazione completata</h3>
         <p id="recommendationText"></p>
-
       </div>
 
       <div class="stats">
-
         <div class="stat">
           <strong>Dimensioni originali</strong>
           <span id="originalDimensions">-</span>
         </div>
 
         <div class="stat">
-          <strong>Dimensioni ottimizzate</strong>
+          <strong>Dimensioni finali</strong>
           <span id="newDimensions">-</span>
         </div>
 
@@ -355,12 +473,12 @@
         </div>
 
         <div class="stat">
-          <strong>Peso ottimizzato</strong>
+          <strong>Peso finale</strong>
           <span id="newSize">-</span>
         </div>
 
         <div class="stat">
-          <strong>Riduzione</strong>
+          <strong>Risparmio sul peso</strong>
           <span id="reduction">-</span>
         </div>
 
@@ -368,75 +486,80 @@
           <strong>Formato finale</strong>
           <span id="finalFormat">-</span>
         </div>
-
       </div>
 
       <div class="comparison">
-
-        <div>
+        <div class="preview">
           <h3>Prima</h3>
           <img id="beforeImage" alt="Immagine originale">
         </div>
 
-        <div>
+        <div class="preview">
           <h3>Dopo</h3>
           <img id="afterImage" alt="Immagine ottimizzata">
         </div>
-
       </div>
 
-      <a
-        id="download"
-        class="download"
-        download
-      >
+      <a id="download" class="button download" download>
         ⬇️ Scarica immagine ottimizzata
       </a>
 
+      <button id="reset" class="button secondary" type="button">
+        Scegli un'altra foto
+      </button>
     </div>
-
   </section>
 
-  <section class="content">
-
+  <section class="card content">
     <h2>Come funziona Smart Image Fix?</h2>
 
     <p>
-      Smart Image Fix analizza automaticamente l'immagine
-      selezionata e sceglie dimensioni e compressione in base
-      all'utilizzo indicato.
+      Smart Image Fix ridimensiona e comprime l'immagine in base
+      all'utilizzo scelto. Puoi verificare le dimensioni, il peso
+      e l'anteprima prima di scaricare il risultato.
     </p>
 
     <ul>
       <li><strong>Sito web:</strong> equilibrio tra qualità e peso.</li>
-      <li><strong>Social media:</strong> dimensioni adatte alla condivisione.</li>
-      <li><strong>Email:</strong> maggiore riduzione del peso.</li>
-      <li><strong>Uso generale:</strong> maggiore attenzione alla qualità.</li>
+      <li><strong>Social media:</strong> immagini adatte alla condivisione.</li>
+      <li><strong>Email:</strong> maggiore attenzione alla riduzione del peso.</li>
+      <li><strong>Uso generale:</strong> impostazioni orientate alla qualità.</li>
     </ul>
 
-    <h2>Prima e dopo</h2>
+    <h2>Come viene ridimensionata la foto?</h2>
 
     <p>
-      Dopo l'elaborazione puoi confrontare direttamente l'immagine
-      originale con quella ottimizzata e vedere quanto spazio è stato
-      risparmiato.
+      Se l'immagine supera la larghezza prevista, viene ridimensionata
+      mantenendo le proporzioni. Non viene ritagliata e non viene
+      deformata intenzionalmente.
     </p>
 
-    <h2>Le immagini vengono caricate su un server?</h2>
+    <h2>Il file finale è sempre più leggero?</h2>
 
     <p>
-      No. L'elaborazione viene eseguita direttamente nel browser.
+      No. Il risultato dipende dalla foto di partenza e dalla
+      compressione. Se il file finale è più grande, lo strumento
+      lo segnala invece di dichiarare un risparmio inesistente.
     </p>
 
+    <h2>Le immagini sono private?</h2>
+
+    <p>
+      L'elaborazione avviene localmente nel browser. Il codice di
+      questa pagina non invia l'immagine a un server per ottimizzarla.
+    </p>
   </section>
-
 </main>
 
 <footer>
-  © 2026 Image Tools
+  © 2026 Image Tools ·
+  <a href="index.html">Torna alla Home</a>
 </footer>
 
 <script>
+(function () {
+  "use strict";
+
   const fileInput = document.getElementById("fileInput");
   const useSelect = document.getElementById("useSelect");
 
@@ -474,12 +597,15 @@
   const download =
     document.getElementById("download");
 
+  const reset =
+    document.getElementById("reset");
+
   let selectedFile = null;
   let beforeUrl = null;
   let afterUrl = null;
+  let jobNumber = 0;
 
   function formatBytes(bytes) {
-
     if (bytes < 1024) {
       return bytes + " B";
     }
@@ -491,43 +617,54 @@
     return (bytes / (1024 * 1024)).toFixed(2) + " MB";
   }
 
-  function getSettings(type, width) {
+  function releaseUrls() {
+    if (beforeUrl) {
+      URL.revokeObjectURL(beforeUrl);
+      beforeUrl = null;
+    }
 
+    if (afterUrl) {
+      URL.revokeObjectURL(afterUrl);
+      afterUrl = null;
+    }
+
+    beforeImage.removeAttribute("src");
+    afterImage.removeAttribute("src");
+    download.removeAttribute("href");
+  }
+
+  function showError(message) {
+    status.style.display = "none";
+    result.style.display = "none";
+    error.textContent = message;
+    error.style.display = "block";
+  }
+
+  function getSettings(type, width) {
     let maxWidth;
     let quality;
     let text;
 
     if (type === "web") {
-
       maxWidth = 1920;
       quality = 0.82;
-
       text =
-        "Per il web abbiamo scelto un massimo di 1920 px e una compressione equilibrata.";
-
+        "Impostazioni web: larghezza massima 1920 px e compressione equilibrata.";
     } else if (type === "social") {
-
       maxWidth = 1600;
       quality = 0.84;
-
       text =
-        "Per i social abbiamo scelto dimensioni adatte alla condivisione mantenendo una buona qualità.";
-
+        "Impostazioni social: larghezza massima 1600 px e buona qualità visiva.";
     } else if (type === "email") {
-
       maxWidth = 1200;
       quality = 0.72;
-
       text =
-        "Per l'email abbiamo privilegiato un file più leggero.";
-
+        "Impostazioni email: larghezza massima 1200 px e compressione più marcata.";
     } else {
-
       maxWidth = 2400;
       quality = 0.90;
-
       text =
-        "Per l'uso generale abbiamo privilegiato la qualità riducendo comunque il peso quando possibile.";
+        "Uso generale: larghezza massima 2400 px e impostazioni orientate alla qualità.";
     }
 
     if (width < maxWidth) {
@@ -535,95 +672,72 @@
     }
 
     return {
-      maxWidth,
-      quality,
-      text
+      maxWidth: maxWidth,
+      quality: quality,
+      text: text
     };
   }
 
   function optimizeImage() {
-
     if (!selectedFile) {
       return;
     }
+
+    const thisJob = ++jobNumber;
+    const file = selectedFile;
+    const settings = getSettings(
+      useSelect.value,
+      Number.MAX_SAFE_INTEGER
+    );
 
     status.style.display = "block";
     error.style.display = "none";
     result.style.display = "none";
 
-    const objectUrl =
-      URL.createObjectURL(selectedFile);
-
+    const objectUrl = URL.createObjectURL(file);
     const image = new Image();
 
     image.onload = function () {
+      if (thisJob !== jobNumber) {
+        URL.revokeObjectURL(objectUrl);
+        return;
+      }
 
       const width = image.naturalWidth;
       const height = image.naturalHeight;
 
       if (!width || !height) {
-
         URL.revokeObjectURL(objectUrl);
-
-        status.style.display = "none";
-
-        error.textContent =
-          "Non è stato possibile leggere l'immagine.";
-
-        error.style.display = "block";
-
+        showError("Non è stato possibile leggere l'immagine.");
         return;
       }
 
-      const settings =
-        getSettings(useSelect.value, width);
+      const currentSettings = getSettings(useSelect.value, width);
 
       let outputWidth = width;
       let outputHeight = height;
 
-      if (width > settings.maxWidth) {
+      if (width > currentSettings.maxWidth) {
+        const scale = currentSettings.maxWidth / width;
 
-        const scale =
-          settings.maxWidth / width;
-
-        outputWidth =
-          Math.max(1, Math.round(width * scale));
-
-        outputHeight =
-          Math.max(1, Math.round(height * scale));
+        outputWidth = Math.max(1, Math.round(width * scale));
+        outputHeight = Math.max(1, Math.round(height * scale));
       }
 
-      const canvas =
-        document.createElement("canvas");
-
+      const canvas = document.createElement("canvas");
       canvas.width = outputWidth;
       canvas.height = outputHeight;
 
-      const ctx =
-        canvas.getContext("2d");
+      const ctx = canvas.getContext("2d");
 
       if (!ctx) {
-
         URL.revokeObjectURL(objectUrl);
-
-        status.style.display = "none";
-
-        error.textContent =
-          "Il browser non supporta questa funzione.";
-
-        error.style.display = "block";
-
+        showError("Il browser non supporta questa funzione.");
         return;
       }
 
       ctx.fillStyle = "#ffffff";
-
-      ctx.fillRect(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-      );
+      ctx.fillRect(0, 0, outputWidth, outputHeight);
 
       ctx.drawImage(
         image,
@@ -634,51 +748,44 @@
       );
 
       canvas.toBlob(function (blob) {
-
         URL.revokeObjectURL(objectUrl);
+
+        if (thisJob !== jobNumber) {
+          return;
+        }
 
         status.style.display = "none";
 
         if (!blob) {
-
-          error.textContent =
-            "Non è stato possibile creare l'immagine ottimizzata.";
-
-          error.style.display = "block";
-
+          showError("Non è stato possibile creare l'immagine ottimizzata.");
           return;
         }
 
-        if (beforeUrl) {
-          URL.revokeObjectURL(beforeUrl);
-        }
+        releaseUrls();
 
-        if (afterUrl) {
-          URL.revokeObjectURL(afterUrl);
-        }
+        beforeUrl = URL.createObjectURL(file);
+        afterUrl = URL.createObjectURL(blob);
 
-        beforeUrl =
-          URL.createObjectURL(selectedFile);
+        const difference = file.size - blob.size;
+        const percentage = file.size > 0
+          ? Math.abs(difference / file.size * 100)
+          : 0;
 
-        afterUrl =
-          URL.createObjectURL(blob);
+        let savingsText;
 
-        let saved =
-          selectedFile.size - blob.size;
-
-        let reductionPercent = 0;
-
-        if (selectedFile.size > 0) {
-          reductionPercent =
-            (saved / selectedFile.size) * 100;
-        }
-
-        if (reductionPercent < 0) {
-          reductionPercent = 0;
+        if (difference > 0) {
+          savingsText =
+            percentage.toFixed(1) + "% in meno";
+        } else if (difference < 0) {
+          savingsText =
+            percentage.toFixed(1) + "% in più";
+        } else {
+          savingsText = "Nessuna variazione";
         }
 
         recommendationText.textContent =
-          settings.text;
+          currentSettings.text +
+          " Controlla l'anteprima prima di scaricare.";
 
         originalDimensions.textContent =
           width + " × " + height + " px";
@@ -686,63 +793,55 @@
         newDimensions.textContent =
           outputWidth + " × " + outputHeight + " px";
 
-        originalSize.textContent =
-          formatBytes(selectedFile.size);
+        originalSize.textContent = formatBytes(file.size);
+        newSize.textContent = formatBytes(blob.size);
+        reduction.textContent = savingsText;
+        finalFormat.textContent = "JPG";
 
-        newSize.textContent =
-          formatBytes(blob.size);
+        beforeImage.src = beforeUrl;
+        afterImage.src = afterUrl;
 
-        reduction.textContent =
-          reductionPercent.toFixed(1) + "%";
+        const baseName = file.name.replace(/\.[^/.]+$/, "");
 
-        finalFormat.textContent =
-          "JPG";
-
-        beforeImage.src =
-          beforeUrl;
-
-        afterImage.src =
-          afterUrl;
-
-        const baseName =
-          selectedFile.name
-            .replace(/\.[^/.]+$/, "");
-
-        download.href =
-          afterUrl;
-
-        download.download =
-          baseName + "-smart-optimized.jpg";
+        download.href = afterUrl;
+        download.download = baseName + "-smart-optimized.jpg";
 
         result.style.display = "block";
-
-      }, "image/jpeg", settings.quality);
+      }, "image/jpeg", currentSettings.quality);
     };
 
     image.onerror = function () {
-
       URL.revokeObjectURL(objectUrl);
 
-      status.style.display = "none";
+      if (thisJob !== jobNumber) {
+        return;
+      }
 
-      error.textContent =
-        "Impossibile leggere questa immagine. Prova con un'altra foto.";
-
-      error.style.display = "block";
+      showError(
+        "Impossibile leggere questa immagine. Prova con un altro file."
+      );
     };
 
     image.src = objectUrl;
   }
 
   fileInput.addEventListener("change", function () {
+    jobNumber++;
+    selectedFile = fileInput.files[0] || null;
 
-    selectedFile =
-      fileInput.files[0] || null;
+    releaseUrls();
 
     result.style.display = "none";
     error.style.display = "none";
+    status.style.display = "none";
 
     if (!selectedFile) {
+      return;
+    }
+
+    if (!selectedFile.type.startsWith("image/")) {
+      selectedFile = null;
+      showError("Seleziona un file immagine valido.");
       return;
     }
 
@@ -750,12 +849,31 @@
   });
 
   useSelect.addEventListener("change", function () {
-
     if (selectedFile) {
       optimizeImage();
     }
   });
+
+  reset.addEventListener("click", function () {
+    jobNumber++;
+    selectedFile = null;
+    fileInput.value = "";
+
+    releaseUrls();
+
+    result.style.display = "none";
+    error.style.display = "none";
+    status.style.display = "none";
+
+    fileInput.focus();
+  });
+
+  window.addEventListener("beforeunload", releaseUrls);
+})();
 </script>
+
+<script src="menu.js" defer></script>
 
 </body>
 </html>
+```
