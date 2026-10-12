@@ -1,995 +1,505 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>HEIC to JPG Converter – Free Online HEIC Converter | RitoccaPix</title>
-  <meta name="description" content="Convert HEIC and HEIF images to JPG online for free. Adjust JPG quality, resize images and convert multiple files directly in your browser.">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://ritoccapix.com/heic-to-jpg.html">
-  <meta name="theme-color" content="#080d18">
+<title>HEIC to JPG Converter – Convert HEIC Images to JPG Online | RitoccaPix</title>
+<meta name="description" content="Convert HEIC and HEIF images to JPG online for free. Adjust image quality and size, convert multiple images, and download your JPG files directly in your browser.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://ritoccapix.com/heic-to-jpg.html">
+<meta name="theme-color" content="#0a0f1d">
 
-  <style>
-    * { box-sizing: border-box; }
-
-    :root {
-      color-scheme: dark;
-      --bg: #080d18;
-      --card: #111827;
-      --card2: #0d1422;
-      --border: #263249;
-      --text: #f5f7fb;
-      --muted: #a0abc0;
-      --accent: #91aaff;
-      --green: #32c77b;
-      --danger: #ff9baa;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-    }
-
-    header {
-      text-align: center;
-      padding: 28px 16px;
-      background: var(--card);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .brand {
-      display: inline-block;
-      margin-bottom: 12px;
-      color: var(--text);
-      font-size: 22px;
-      font-weight: 800;
-      text-decoration: none;
-    }
-
-    header h1 {
-      margin: 0 0 10px;
-      font-size: clamp(27px, 5vw, 38px);
-      line-height: 1.2;
-    }
-
-    header p {
-      margin: 0 auto;
-      max-width: 720px;
-      color: var(--muted);
-    }
-
-    nav {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 10px 20px;
-      padding: 14px;
-      background: var(--card);
-      border-bottom: 1px solid var(--border);
-    }
-
-    nav a, .text-link {
-      color: var(--accent);
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    nav a:hover, .text-link:hover {
-      text-decoration: underline;
-    }
-
-    main {
-      width: 100%;
-      max-width: 900px;
-      margin: auto;
-      padding: 25px 16px 45px;
-    }
-
-    .tool, .content {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 25px;
-      margin-bottom: 22px;
-    }
-
-    h2 { line-height: 1.3; }
-    .tool h2, .content h2 { margin-top: 0; }
-
-    .intro {
-      color: var(--muted);
-      margin-bottom: 22px;
-    }
-
-    .upload {
-      border: 2px dashed #526483;
-      border-radius: 15px;
-      padding: 25px 16px;
-      text-align: center;
-      background: var(--card2);
-      margin: 20px 0;
-    }
-
-    .upload p { margin: 5px 0 12px; }
-
-    input[type="file"] {
-      display: block;
-      width: 100%;
-      max-width: 450px;
-      margin: 12px auto 0;
-      font-size: 16px;
-      color: var(--text);
-    }
-
-    input[type="file"]::file-selector-button {
-      padding: 10px 13px;
-      margin-right: 10px;
-      border: 0;
-      border-radius: 8px;
-      background: #263956;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .settings {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-      margin: 20px 0;
-    }
-
-    .setting {
-      padding: 16px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      background: var(--card2);
-      min-width: 0;
-    }
-
-    .setting label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: bold;
-    }
-
-    .setting input[type="range"],
-    .setting select {
-      width: 100%;
-    }
-
-    .setting select {
-      padding: 11px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      background: var(--bg);
-      color: var(--text);
-      font-size: 16px;
-    }
-
-    .hint {
-      color: var(--muted);
-      font-size: 13px;
-      margin: 8px 0 0;
-    }
-
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 20px;
-    }
-
-    button {
-      padding: 13px 18px;
-      border: 0;
-      border-radius: 10px;
-      font-size: 15px;
-      font-weight: 800;
-      cursor: pointer;
-    }
-
-    button:disabled {
-      opacity: .45;
-      cursor: not-allowed;
-    }
-
-    .primary {
-      background: var(--green);
-      color: #062316;
-      flex: 1 1 220px;
-    }
-
-    .secondary {
-      background: transparent;
-      color: var(--text);
-      border: 1px solid var(--border);
-    }
-
-    .status {
-      display: none;
-      margin-top: 18px;
-      padding: 13px 15px;
-      border-radius: 10px;
-      overflow-wrap: anywhere;
-      background: var(--card2);
-      border: 1px solid var(--border);
-    }
-
-    .status.error {
-      display: block;
-      background: #451f2a;
-      border-color: #8d384b;
-      color: #ffd6dd;
-    }
-
-    .status.success {
-      display: block;
-      background: #123729;
-      border-color: #267a50;
-      color: #c6f7d9;
-    }
-
-    .status.info { display: block; }
-
-    .file-list {
-      display: grid;
-      gap: 10px;
-      margin-top: 18px;
-    }
-
-    .file-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 12px;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      background: var(--card2);
-      min-width: 0;
-    }
-
-    .file-details {
-      min-width: 0;
-      overflow-wrap: anywhere;
-    }
-
-    .file-name {
-      font-weight: bold;
-      overflow-wrap: anywhere;
-    }
-
-    .file-meta {
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .remove-file {
-      padding: 8px 10px;
-      background: transparent;
-      color: var(--danger);
-      border: 1px solid #6d3543;
-      flex-shrink: 0;
-    }
-
-    .result {
-      display: none;
-      margin-top: 24px;
-      padding: 20px;
-      background: var(--card2);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-    }
-
-    .result h2 { margin-top: 0; }
-
-    .result-list {
-      display: grid;
-      gap: 12px;
-      margin-top: 18px;
-    }
-
-    .result-item {
-      padding: 14px;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      overflow-wrap: anywhere;
-    }
-
-    .result-item a {
-      display: inline-block;
-      margin-top: 8px;
-      color: var(--accent);
-      font-weight: bold;
-    }
-
-    .content h3 { margin-top: 25px; }
-    .content p, .content li { color: var(--muted); }
-    .content a { overflow-wrap: anywhere; }
-
-    .privacy {
-      margin-top: 18px;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    footer {
-      text-align: center;
-      padding: 25px 15px;
-      color: var(--muted);
-      font-size: 14px;
-      border-top: 1px solid var(--border);
-    }
-
-    footer a {
-      color: var(--accent);
-      margin: 0 8px;
-      text-decoration: none;
-    }
-
-    @media (max-width: 600px) {
-      header { padding: 24px 15px; }
-      main { padding: 18px 12px 35px; }
-      .tool, .content { padding: 19px; }
-      .settings { grid-template-columns: 1fr; }
-      .file-row { align-items: flex-start; }
-    }
-  </style>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#0a0f1d;color:#f5f7ff}
+.container{width:min(920px,92%);margin:auto}
+header{padding:24px 0}
+.logo{font-size:21px;font-weight:800;letter-spacing:-.3px}
+.logo span{color:#6ea8ff}
+.logo a{color:inherit;text-decoration:none}
+.hero{text-align:center;padding:35px 0 30px}
+.hero h1{margin:0;font-size:clamp(32px,6vw,48px);line-height:1.1;letter-spacing:-1px}
+.hero p{max-width:680px;margin:17px auto 0;color:#9da8bd;line-height:1.65;font-size:16px}
+.tool{background:#11192b;border:1px solid #26324a;border-radius:22px;padding:24px}
+.upload{display:block;border:1.5px dashed #465775;border-radius:17px;padding:38px 20px;text-align:center;cursor:pointer;transition:.2s}
+.upload:hover{border-color:#6ea8ff;background:#141e34}
+.upload-icon{width:58px;height:58px;margin:0 auto 15px;border-radius:16px;background:#18243b;display:flex;align-items:center;justify-content:center;font-size:28px}
+.upload-title{font-size:19px;font-weight:700;margin-bottom:7px}
+.upload-subtitle{color:#8995aa;font-size:13px}
+input[type=file]{display:none}
+.files{margin-top:18px;display:grid;gap:9px}
+.file{display:flex;align-items:center;gap:12px;padding:12px 14px;background:#0c1323;border:1px solid #202c43;border-radius:12px;min-width:0}
+.file-icon{width:38px;height:38px;flex:0 0 38px;border-radius:9px;background:#18243b;display:flex;align-items:center;justify-content:center}
+.file-main{min-width:0;flex:1}
+.file-name{font-size:14px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.file-info{margin-top:4px;color:#7f8ba0;font-size:12px}
+.detected{flex-shrink:0;padding:6px 9px;border-radius:7px;background:#15233a;color:#9fc5ff;font-size:11px;font-weight:700;white-space:nowrap}
+.settings{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.setting{background:#0c1323;border:1px solid #202c43;border-radius:13px;padding:15px}
+.setting-label{display:flex;justify-content:space-between;gap:10px;margin-bottom:11px;color:#aeb8ca;font-size:13px}
+.setting-label strong{color:#fff}
+select{width:100%;background:#151f34;color:#fff;border:1px solid #33415c;border-radius:9px;padding:11px 12px;font-size:14px;outline:none}
+input[type=range]{width:100%;accent-color:#6ea8ff}
+.status{margin-top:18px;padding:12px 14px;background:#0c1323;border:1px solid #202c43;border-radius:11px;color:#9da8bd;font-size:13px;line-height:1.4;overflow-wrap:anywhere}
+.actions{display:flex;gap:10px;margin-top:12px}
+button{border:0;border-radius:11px;padding:13px 18px;font-size:14px;font-weight:700;cursor:pointer}
+.primary{flex:1;background:#6ea8ff;color:#07101d}
+.secondary{background:#202c43;color:#fff}
+button:disabled{opacity:.4;cursor:not-allowed}
+.privacy{text-align:center;margin:18px auto 0;max-width:680px;color:#778398;font-size:12px;line-height:1.6}
+.info{margin-top:28px;padding:22px 0 40px}
+.info h2{margin:0 0 12px;font-size:21px}
+.info p{margin:0 0 18px;color:#9da8bd;line-height:1.7;font-size:14px}
+.links{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:12px}
+.links a{display:block;padding:11px;border-radius:9px;border:1px solid #202c43;background:#0c1323;color:#9fc5ff;text-decoration:none;text-align:center;font-size:12px}
+.faq{margin-top:25px}
+.faq details{margin:10px 0;padding:14px;border:1px solid #202c43;border-radius:10px;background:#0c1323}
+.faq summary{cursor:pointer;font-weight:700;font-size:14px}
+.faq details p{margin:12px 0 0}
+@media(max-width:650px){
+.container{width:min(94%,560px)}
+header{padding:19px 0}
+.hero{padding:28px 0 24px}
+.hero h1{font-size:34px}
+.hero p{font-size:14px}
+.tool{padding:15px;border-radius:18px}
+.upload{padding:30px 15px}
+.settings{grid-template-columns:1fr}
+.file{align-items:flex-start}
+.detected{display:none}
+.actions{flex-direction:column}
+.primary,.secondary{width:100%}
+.links{grid-template-columns:1fr 1fr}
+}
+</style>
+<script src="menu.js" defer></script>
 </head>
 
 <body>
+<div class="container">
+
 <header>
-  <a class="brand" href="index.html">RitoccaPix</a>
-  <h1>HEIC to JPG Converter</h1>
-  <p>Convert HEIC and HEIF photos to JPG online for free. Adjust image quality, resize photos and process multiple files in your browser.</p>
+  <div class="logo">
+    <a href="index.html">Ritocca<span>Pix</span></a>
+  </div>
+  <nav aria-label="Main navigation"></nav>
 </header>
 
-<nav id="mainMenu" aria-label="Main navigation"></nav>
+<section class="hero">
+  <h1>HEIC to JPG Converter</h1>
+  <p>
+    Convert HEIC and HEIF images to JPG directly in your browser.
+    Fast, simple, free, and no registration required.
+  </p>
+</section>
 
-<main>
-  <section class="tool">
-    <h2>Convert HEIC to JPG online</h2>
-    <p class="intro">
-      Select HEIC or HEIF photos from your iPhone, iPad or computer.
-      Choose your JPG quality and image size, then convert and download your files.
-    </p>
-
-    <div class="upload">
-      <strong>Select your HEIC or HEIF images</strong>
-      <p>Choose one photo or multiple photos at once.</p>
-      <input
-        id="fileInput"
-        type="file"
-        accept=".heic,.heif,image/heic,image/heif"
-        multiple
-      >
-      <p class="hint">Large images may take longer to process. Available memory depends on your device and browser.</p>
+<section class="tool">
+  <label class="upload" for="fileInput">
+    <div class="upload-icon">🖼️</div>
+    <div class="upload-title">Select images</div>
+    <div class="upload-subtitle">
+      HEIC, HEIF, JPG, JPEG, PNG, WebP and other image formats
     </div>
+  </label>
 
-    <div id="fileList" class="file-list" aria-live="polite"></div>
+  <input id="fileInput" type="file" accept="image/*,.heic,.heif" multiple>
 
-    <div class="settings">
-      <div class="setting">
-        <label for="quality">JPG quality: <span id="qualityValue">90%</span></label>
-        <input id="quality" type="range" min="50" max="100" value="90">
-        <p class="hint">Higher quality usually creates a larger file.</p>
+  <div id="fileList" class="files"></div>
+
+  <div class="settings">
+    <div class="setting">
+      <div class="setting-label">
+        <span>JPG quality</span>
+        <strong><span id="qualityValue">90</span>%</strong>
       </div>
+      <input id="quality" type="range" min="50" max="100" value="90">
+    </div>
 
-      <div class="setting">
-        <label for="resize">Maximum image dimension</label>
-        <select id="resize">
-          <option value="0">Original size</option>
-          <option value="4096">Maximum 4096 px</option>
-          <option value="3000">Maximum 3000 px</option>
-          <option value="2000">Maximum 2000 px</option>
-        </select>
-        <p class="hint">Images are reduced only when they exceed the selected dimension.</p>
+    <div class="setting">
+      <div class="setting-label">
+        <span>Maximum image dimension</span>
       </div>
+      <select id="resize">
+        <option value="original">Keep original size</option>
+        <option value="4096">Maximum 4096 px</option>
+        <option value="3000">Maximum 3000 px</option>
+        <option value="2000">Maximum 2000 px</option>
+      </select>
     </div>
+  </div>
 
-    <div class="actions">
-      <button id="convertBtn" class="primary" type="button" disabled>
-        Convert to JPG
-      </button>
-      <button id="zipBtn" class="secondary" type="button" disabled>
-        Download all as ZIP
-      </button>
-      <button id="clearBtn" class="secondary" type="button" disabled>
-        Clear
-      </button>
-    </div>
+  <div id="status" class="status">No images selected.</div>
 
-    <div id="status" class="status" role="status" aria-live="polite"></div>
+  <div class="actions">
+    <button id="convertBtn" class="primary" disabled>Convert to JPG</button>
+    <button id="clearBtn" class="secondary" disabled>Clear</button>
+  </div>
+</section>
 
-    <section id="result" class="result">
-      <h2>Conversion results</h2>
-      <p id="resultSummary"></p>
-      <div id="resultList" class="result-list"></div>
-    </section>
+<div class="privacy">
+  🔒 Images are processed in your browser whenever possible.
+  No account is required.
+</div>
 
-    <p class="privacy">
-      Privacy: image conversion takes place in your browser. Your selected image files are not intentionally uploaded to our server. This page loads conversion libraries from external CDNs, so an internet connection is required.
-    </p>
-  </section>
+<section class="info">
+  <h2>Convert HEIC to JPG online</h2>
+  <p>
+    HEIC is an image format commonly used by modern smartphones,
+    including iPhones. JPG is widely supported by devices, software,
+    websites, and online services.
+  </p>
+  <p>
+    HEIC and HEIF images are decoded with the HEIC conversion engine.
+    JPG, PNG, and WebP images are processed directly by your browser
+    without using the HEIC decoder.
+  </p>
+  <p>
+    Select one image or multiple images, adjust the JPG quality,
+    choose a maximum image dimension if needed, and click Convert to JPG.
+    When you convert multiple images, the results are packaged into a ZIP file.
+  </p>
 
-  <section class="content">
-    <h2>Why convert HEIC to JPG?</h2>
-    <p>
-      HEIC and HEIF are image formats commonly used by Apple devices.
-      They can store high-quality photos efficiently, but some websites,
-      apps and older devices do not support them.
-    </p>
-    <p>
-      JPG is widely supported by browsers, computers, smartphones,
-      social networks and online forms. Converting HEIC to JPG can make
-      photos easier to share, upload and open on different devices.
-    </p>
+  <h2>Frequently asked questions</h2>
+  <div class="faq">
+    <details>
+      <summary>How do I convert HEIC to JPG?</summary>
+      <p>Select your HEIC or HEIF images, choose your preferred quality and size, then click Convert to JPG. The converted file will be downloaded to your device.</p>
+    </details>
+    <details>
+      <summary>Can I convert multiple HEIC images at once?</summary>
+      <p>Yes. Select multiple images and convert them together. The resulting JPG files will be packaged into a ZIP archive.</p>
+    </details>
+    <details>
+      <summary>Are my images uploaded to a server?</summary>
+      <p>This tool processes images in your browser. HEIC decoding and conversion take place on your device using the included browser-side libraries.</p>
+    </details>
+    <details>
+      <summary>Can I reduce the image size?</summary>
+      <p>Yes. Choose a maximum dimension of 4096, 3000, or 2000 pixels. The original aspect ratio is preserved.</p>
+    </details>
+  </div>
 
-    <h3>How to convert HEIC to JPG</h3>
-    <ol>
-      <li>Select one or more HEIC or HEIF images.</li>
-      <li>Choose the JPG quality and optional maximum image dimension.</li>
-      <li>Click <strong>Convert to JPG</strong> and wait for processing to finish.</li>
-      <li>Download each converted photo, or download all successful conversions as a ZIP file.</li>
-    </ol>
+  <h2>More image tools</h2>
+  <div class="links">
+    <a href="image-compressor.html">Compress Image</a>
+    <a href="image-resizer.html">Resize Image</a>
+    <a href="image-converter.html">Image Converter</a>
+    <a href="image-optimizer.html">Image Optimizer</a>
+  </div>
+</section>
+</div>
 
-    <h3>Convert iPhone photos to JPG</h3>
-    <p>
-      If your iPhone saves photos in HEIC format, you can use this converter
-      to create JPG copies for sharing or uploading. Transfer the original
-      photos to the device you are using, select them here and convert them.
-    </p>
-
-    <h3>Does JPG quality affect file size?</h3>
-    <p>
-      Yes. A higher quality setting generally preserves more visual detail
-      but produces a larger file. A lower setting can reduce file size,
-      although excessive compression may create visible artefacts.
-    </p>
-
-    <h3>Are my photos uploaded?</h3>
-    <p>
-      The selected photo files are processed locally in your browser and
-      are not intentionally uploaded to our server. The page does load
-      third-party JavaScript libraries from external CDNs.
-    </p>
-  </section>
-
-  <section class="content">
-    <h2>Frequently asked questions</h2>
-
-    <h3>Is this HEIC to JPG converter free?</h3>
-    <p>
-      Yes. You can use this online HEIC to JPG converter for free without
-      installing a desktop application.
-    </p>
-
-    <h3>Can I convert HEIC to JPG on Windows?</h3>
-    <p>
-      Yes, if you use a supported modern browser and have the HEIC or HEIF
-      files available on your computer. Conversion support can vary by device
-      and browser.
-    </p>
-
-    <h3>Can I convert iPhone photos to JPG?</h3>
-    <p>
-      Yes. Select HEIC or HEIF photos from your iPhone or from files transferred
-      to another device. Then convert them and download the JPG copies.
-    </p>
-
-    <h3>Can I convert multiple HEIC images at once?</h3>
-    <p>
-      Yes. Select multiple files before starting. Successful conversions can
-      be downloaded individually or combined into a ZIP archive.
-    </p>
-
-    <h3>Can I reduce the dimensions of my photos?</h3>
-    <p>
-      Yes. Choose a maximum dimension from the size menu. Images larger than
-      that limit are scaled down while preserving their proportions.
-    </p>
-
-    <h3>Will converting HEIC to JPG reduce image quality?</h3>
-    <p>
-      JPG uses lossy compression, so some image data may be lost.
-      A higher quality setting can help preserve visual detail, but cannot
-      guarantee an identical copy of the original.
-    </p>
-
-    <h3>Does JPG support transparency?</h3>
-    <p>
-      No. JPG does not support transparent pixels. HEIC photos are usually
-      photographs, but any transparent areas in an image would need a
-      background when saved as JPG.
-    </p>
-
-    <h3>Why did my HEIC file fail to convert?</h3>
-    <p>
-      The file may be damaged, use an unsupported encoding, or be too large
-      for the available browser memory. Try converting fewer files at once
-      or using a smaller source image.
-    </p>
-
-    <h3>Can I use this converter on a phone?</h3>
-    <p>
-      Yes, on compatible mobile browsers. Very large photos or batches may
-      take longer and may exceed the memory available on some phones.
-    </p>
-
-    <h2>Explore more free image tools</h2>
-    <ul>
-      <li><a class="text-link" href="image-compressor.html">Image Compressor</a> – reduce image file sizes.</li>
-      <li><a class="text-link" href="image-resizer.html">Image Resizer</a> – resize photos to the dimensions you need.</li>
-      <li><a class="text-link" href="image-converter.html">Image Converter</a> – convert supported images to JPG, PNG or WebP.</li>
-      <li><a class="text-link" href="image-optimizer.html">Image Optimizer</a> – optimize images for websites and everyday use.</li>
-      <li><a class="text-link" href="index.html">All RitoccaPix tools</a> – explore the complete collection.</li>
-    </ul>
-  </section>
-</main>
-
-<footer>
-  <p>RitoccaPix · Free online image tools</p>
-  <a href="index.html">Home</a>
-  <a href="image-resizer.html">Image Resizer</a>
-  <a href="image-compressor.html">Image Compressor</a>
-  <a href="image-converter.html">Image Converter</a>
-</footer>
-
-<script src="menu.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 <script>
-"use strict";
+const fileInput=document.getElementById("fileInput");
+const fileList=document.getElementById("fileList");
+const convertBtn=document.getElementById("convertBtn");
+const clearBtn=document.getElementById("clearBtn");
+const statusBox=document.getElementById("status");
+const quality=document.getElementById("quality");
+const qualityValue=document.getElementById("qualityValue");
+const resize=document.getElementById("resize");
 
-const fileInput = document.getElementById("fileInput");
-const fileList = document.getElementById("fileList");
-const qualityInput = document.getElementById("quality");
-const qualityValue = document.getElementById("qualityValue");
-const resizeSelect = document.getElementById("resize");
-const convertBtn = document.getElementById("convertBtn");
-const zipBtn = document.getElementById("zipBtn");
-const clearBtn = document.getElementById("clearBtn");
-const statusBox = document.getElementById("status");
-const result = document.getElementById("result");
-const resultSummary = document.getElementById("resultSummary");
-const resultList = document.getElementById("resultList");
+let files=[];
 
-const MAX_FILES = 50;
-const MAX_FILE_SIZE = 50 * 1024 * 1024;
-const MAX_PIXELS = 40000000;
+quality.addEventListener("input",()=>{
+  qualityValue.textContent=quality.value;
+});
 
-let selectedFiles = [];
-let convertedFiles = [];
-let isConverting = false;
-let jobId = 0;
+fileInput.addEventListener("change",()=>{
+  const selected=Array.from(fileInput.files||[]);
+  if(!selected.length)return;
 
-function formatBytes(bytes) {
-  if (!Number.isFinite(bytes) || bytes < 0) return "0 B";
-  if (bytes < 1024) return bytes + " B";
-  if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
-  return (bytes / (1024 * 1024)).toFixed(2) + " MB";
+  files=selected;
+  renderFiles();
+
+  convertBtn.disabled=false;
+  clearBtn.disabled=false;
+
+  statusBox.textContent=
+    files.length===1
+    ?"Image selected. Ready to convert."
+    :files.length+" images selected. Ready to convert.";
+});
+
+clearBtn.addEventListener("click",()=>{
+  files=[];
+  fileInput.value="";
+  fileList.innerHTML="";
+  convertBtn.disabled=true;
+  clearBtn.disabled=true;
+  statusBox.textContent="No images selected.";
+});
+
+function getExtension(file){
+  const name=file.name||"";
+  const dot=name.lastIndexOf(".");
+  return dot!==-1
+    ?name.substring(dot+1).toLowerCase()
+    :"";
 }
 
-function setStatus(message, type = "info") {
-  statusBox.textContent = message;
-  statusBox.className = "status " + type;
+function detectFormat(file){
+  const ext=getExtension(file);
+  const type=(file.type||"").toLowerCase();
+
+  if(ext==="heic"||ext==="heif"||
+     type==="image/heic"||type==="image/heif")
+    return "HEIC / HEIF";
+
+  if(ext==="jpg"||ext==="jpeg"||type==="image/jpeg")
+    return "JPG / JPEG";
+
+  if(ext==="png"||type==="image/png")
+    return "PNG";
+
+  if(ext==="webp"||type==="image/webp")
+    return "WebP";
+
+  if(ext)return ext.toUpperCase();
+  if(type)return type;
+
+  return "Unknown";
 }
 
-function hideStatus() {
-  statusBox.textContent = "";
-  statusBox.className = "status";
+function isHeic(file){
+  const ext=getExtension(file);
+  const type=(file.type||"").toLowerCase();
+
+  return(
+    ext==="heic"||
+    ext==="heif"||
+    type==="image/heic"||
+    type==="image/heif"
+  );
 }
 
-function fileKey(file) {
-  return [file.name, file.size, file.lastModified].join("|");
-}
+function renderFiles(){
+  fileList.innerHTML="";
 
-function isHeicFile(file) {
-  const name = file.name.toLowerCase();
-  return /\.(heic|heif)$/.test(name) ||
-    file.type === "image/heic" ||
-    file.type === "image/heif";
-}
+  files.forEach((file,index)=>{
+    const item=document.createElement("div");
+    item.className="file";
 
-function updateButtons() {
-  convertBtn.disabled = isConverting || selectedFiles.length === 0;
-  clearBtn.disabled = isConverting ||
-    (selectedFiles.length === 0 && convertedFiles.length === 0);
-  zipBtn.disabled = isConverting || convertedFiles.length === 0;
-  fileInput.disabled = isConverting;
-  qualityInput.disabled = isConverting;
-  resizeSelect.disabled = isConverting;
-}
+    const sizeMB=file.size
+      ?(file.size/1024/1024).toFixed(2)
+      :"0";
 
-function revokeResults() {
-  convertedFiles.forEach(item => {
-    if (item.url) URL.revokeObjectURL(item.url);
+    item.innerHTML=`
+      <div class="file-icon">🖼️</div>
+      <div class="file-main">
+        <div class="file-name">
+          ${escapeHtml(file.name||"image")}
+        </div>
+        <div class="file-info">
+          ${sizeMB} MB
+          ${file.type?" • "+escapeHtml(file.type):""}
+        </div>
+      </div>
+      <div class="detected">
+        ${escapeHtml(detectFormat(file))}
+      </div>
+    `;
+
+    fileList.appendChild(item);
   });
-  convertedFiles = [];
-  resultList.replaceChildren();
-  result.style.display = "none";
-  updateButtons();
 }
 
-function renderSelectedFiles() {
-  fileList.replaceChildren();
+function escapeHtml(value){
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
 
-  selectedFiles.forEach((file, index) => {
-    const row = document.createElement("div");
-    row.className = "file-row";
+async function convertImage(file){
+  let sourceBlob=file;
 
-    const details = document.createElement("div");
-    details.className = "file-details";
+  if(isHeic(file)){
+    if(typeof window.heic2any!=="function"){
+      throw new Error("HEIC conversion engine is unavailable.");
+    }
 
-    const name = document.createElement("div");
-    name.className = "file-name";
-    name.textContent = file.name;
+    statusBox.textContent=
+      "HEIC/HEIF format detected. Decoding...";
 
-    const meta = document.createElement("div");
-    meta.className = "file-meta";
-    meta.textContent = (isHeicFile(file) ? "HEIC / HEIF" : "Image") +
-      " · " + formatBytes(file.size);
-
-    details.append(name, meta);
-
-    const remove = document.createElement("button");
-    remove.type = "button";
-    remove.className = "remove-file";
-    remove.textContent = "Remove";
-    remove.disabled = isConverting;
-
-    remove.addEventListener("click", () => {
-      if (isConverting) return;
-      selectedFiles.splice(index, 1);
-      revokeResults();
-      renderSelectedFiles();
-      updateButtons();
-      hideStatus();
+    const result=await window.heic2any({
+      blob:file,
+      toType:"image/jpeg",
+      quality:Number(quality.value)/100
     });
 
-    row.append(details, remove);
-    fileList.appendChild(row);
-  });
+    sourceBlob=Array.isArray(result)
+      ?result[0]
+      :result;
 
-  updateButtons();
-}
-
-function addFiles(fileCollection) {
-  if (isConverting) return;
-
-  const incoming = Array.from(fileCollection || []);
-  if (!incoming.length) return;
-
-  const known = new Set(selectedFiles.map(fileKey));
-  let added = 0;
-  let skipped = 0;
-  let duplicates = 0;
-
-  for (const file of incoming) {
-    if (!isHeicFile(file) || file.size === 0 || file.size > MAX_FILE_SIZE) {
-      skipped++;
-      continue;
-    }
-
-    const key = fileKey(file);
-
-    if (known.has(key)) {
-      duplicates++;
-      continue;
-    }
-
-    if (selectedFiles.length >= MAX_FILES) {
-      skipped++;
-      continue;
-    }
-
-    selectedFiles.push(file);
-    known.add(key);
-    added++;
+  }else{
+    statusBox.textContent=
+      "Compatible image format detected. Converting to JPG...";
   }
 
-  revokeResults();
-  renderSelectedFiles();
+  const imageUrl=URL.createObjectURL(sourceBlob);
 
-  const messages = [];
-  if (added) messages.push(added + (added === 1 ? " image added." : " images added."));
-  if (duplicates) messages.push(duplicates + " duplicate file(s) skipped.");
-  if (skipped) {
-    messages.push(" " + skipped + " file(s) skipped. Select HEIC or HEIF files under 50 MB each, up to 50 files.");
-  }
+  try{
+    const img=new Image();
 
-  setStatus(messages.join(" ") || "No new files were added.", skipped ? "error" : added ? "success" : "info");
-  fileInput.value = "";
-}
-
-function loadImage(blob) {
-  return new Promise((resolve, reject) => {
-    const url = URL.createObjectURL(blob);
-    const image = new Image();
-
-    image.onload = () => {
-      URL.revokeObjectURL(url);
-
-      if (!image.naturalWidth || !image.naturalHeight) {
-        reject(new Error("The image has invalid dimensions."));
-        return;
-      }
-
-      if (image.naturalWidth * image.naturalHeight > MAX_PIXELS) {
-        reject(new Error("The image exceeds the 40-megapixel processing limit."));
-        return;
-      }
-
-      resolve(image);
-    };
-
-    image.onerror = () => {
-      URL.revokeObjectURL(url);
-      reject(new Error("The converted image could not be opened."));
-    };
-
-    image.src = url;
-  });
-}
-
-function canvasToJpeg(canvas, quality) {
-  return new Promise((resolve, reject) => {
-    canvas.toBlob(blob => {
-      if (!blob) {
-        reject(new Error("The browser could not create the JPG file."));
-        return;
-      }
-
-      if (blob.type !== "image/jpeg") {
-        reject(new Error("JPG export is not supported by this browser."));
-        return;
-      }
-
-      resolve(blob);
-    }, "image/jpeg", quality);
-  });
-}
-
-function safeBaseName(filename) {
-  const dot = filename.lastIndexOf(".");
-  const base = dot > 0 ? filename.slice(0, dot) : filename;
-  return base.replace(/[<>:"/\\|?*\x00-\x1F]/g, "_").trim() || "image";
-}
-
-async function convertOne(file, quality, maxDimension) {
-  if (typeof heic2any !== "function") {
-    throw new Error("The HEIC conversion library did not load. Check your internet connection and reload the page.");
-  }
-
-  const converted = await heic2any({
-    blob: file,
-    toType: "image/jpeg",
-    quality: Math.max(0.5, Math.min(1, quality))
-  });
-
-  const sourceBlob = Array.isArray(converted) ? converted[0] : converted;
-
-  if (!(sourceBlob instanceof Blob)) {
-    throw new Error("The HEIC library did not return a valid image.");
-  }
-
-  const image = await loadImage(sourceBlob);
-  let width = image.naturalWidth;
-  let height = image.naturalHeight;
-
-  if (maxDimension > 0 && Math.max(width, height) > maxDimension) {
-    const scale = maxDimension / Math.max(width, height);
-    width = Math.max(1, Math.round(width * scale));
-    height = Math.max(1, Math.round(height * scale));
-  }
-
-  if (width * height > MAX_PIXELS) {
-    throw new Error("The output image exceeds the 40-megapixel limit. Choose a smaller maximum dimension.");
-  }
-
-  const canvas = document.createElement("canvas");
-  canvas.width = width;
-  canvas.height = height;
-
-  const context = canvas.getContext("2d");
-  if (!context) {
-    throw new Error("Canvas is not available in this browser.");
-  }
-
-  context.fillStyle = "#ffffff";
-  context.fillRect(0, 0, width, height);
-  context.drawImage(image, 0, 0, width, height);
-
-  const blob = await canvasToJpeg(canvas, quality);
-
-  return {
-    name: safeBaseName(file.name) + ".jpg",
-    blob,
-    url: URL.createObjectURL(blob),
-    originalSize: file.size,
-    outputSize: blob.size,
-    width,
-    height
-  };
-}
-
-function renderResults() {
-  resultList.replaceChildren();
-
-  convertedFiles.forEach(item => {
-    const card = document.createElement("div");
-    card.className = "result-item";
-
-    const name = document.createElement("strong");
-    name.textContent = item.name;
-
-    const details = document.createElement("p");
-    details.textContent = item.width + " × " + item.height +
-      " px · " + formatBytes(item.outputSize);
-
-    const download = document.createElement("a");
-    download.href = item.url;
-    download.download = item.name;
-    download.textContent = "Download JPG";
-
-    card.append(name, details, download);
-    resultList.appendChild(card);
-  });
-
-  resultSummary.textContent = convertedFiles.length +
-    (convertedFiles.length === 1 ? " image converted successfully." : " images converted successfully.");
-
-  result.style.display = convertedFiles.length ? "block" : "none";
-  updateButtons();
-}
-
-fileInput.addEventListener("change", () => {
-  addFiles(fileInput.files);
-});
-
-qualityInput.addEventListener("input", () => {
-  qualityValue.textContent = qualityInput.value + "%";
-});
-
-clearBtn.addEventListener("click", () => {
-  if (isConverting) return;
-
-  jobId++;
-  selectedFiles = [];
-  fileInput.value = "";
-  fileList.replaceChildren();
-  revokeResults();
-  hideStatus();
-  updateButtons();
-});
-
-convertBtn.addEventListener("click", async () => {
-  if (isConverting || selectedFiles.length === 0) return;
-
-  if (typeof heic2any !== "function") {
-    setStatus("The HEIC library could not load. Check your internet connection and reload this page.", "error");
-    return;
-  }
-
-  const currentJob = ++jobId;
-  const batch = selectedFiles.slice();
-  const quality = Number(qualityInput.value) / 100;
-  const maxDimension = Number(resizeSelect.value);
-
-  isConverting = true;
-  revokeResults();
-  hideStatus();
-  updateButtons();
-
-  let failed = 0;
-  const errors = [];
-
-  try {
-    for (let i = 0; i < batch.length; i++) {
-      if (currentJob !== jobId) return;
-
-      const file = batch[i];
-      setStatus("Converting image " + (i + 1) + " of " + batch.length + ": " + file.name, "info");
-
-      try {
-        const item = await convertOne(file, quality, maxDimension);
-
-        if (currentJob !== jobId) {
-          URL.revokeObjectURL(item.url);
-          return;
-        }
-
-        convertedFiles.push(item);
-        renderResults();
-      } catch (error) {
-        failed++;
-        errors.push(file.name + ": " + (error && error.message ? error.message : "Conversion failed."));
-      }
-    }
-
-    if (currentJob !== jobId) return;
-
-    renderResults();
-
-    if (convertedFiles.length === 0) {
-      setStatus("No images could be converted. " + errors.slice(0, 3).join(" "), "error");
-    } else {
-      let message = "Finished: " + convertedFiles.length + " of " + batch.length + " image(s) converted.";
-      if (failed > 0) {
-        message += " " + failed + " file(s) could not be converted. " + errors.slice(0, 3).join(" ");
-      }
-      setStatus(message, failed ? "error" : "success");
-    }
-  } finally {
-    if (currentJob === jobId) {
-      isConverting = false;
-      renderSelectedFiles();
-      updateButtons();
-    }
-  }
-});
-
-zipBtn.addEventListener("click", async () => {
-  if (isConverting || convertedFiles.length === 0) return;
-
-  if (typeof JSZip === "undefined") {
-    setStatus("The ZIP library could not load. Check your internet connection and reload the page.", "error");
-    return;
-  }
-
-  zipBtn.disabled = true;
-  setStatus("Creating ZIP archive...", "info");
-
-  try {
-    const zip = new JSZip();
-    const usedNames = new Set();
-
-    convertedFiles.forEach(item => {
-      let name = item.name;
-      let suffix = 2;
-
-      while (usedNames.has(name.toLowerCase())) {
-        const dot = item.name.lastIndexOf(".");
-        const base = dot > 0 ? item.name.slice(0, dot) : item.name;
-        const extension = dot > 0 ? item.name.slice(dot) : ".jpg";
-        name = base + "-" + suffix + extension;
-        suffix++;
-      }
-
-      usedNames.add(name.toLowerCase());
-      zip.file(name, item.blob);
+    await new Promise((resolve,reject)=>{
+      img.onload=resolve;
+      img.onerror=()=>{
+        reject(new Error("Unable to read the image."));
+      };
+      img.src=imageUrl;
     });
 
-    const zipBlob = await zip.generateAsync({
-      type: "blob",
-      compression: "STORE"
+    let width=img.naturalWidth;
+    let height=img.naturalHeight;
+
+    if(resize.value!=="original"){
+      const max=Number(resize.value);
+
+      if(width>max||height>max){
+        const ratio=Math.min(
+          max/width,
+          max/height
+        );
+        width=Math.max(1,Math.round(width*ratio));
+        height=Math.max(1,Math.round(height*ratio));
+      }
+    }
+
+    const canvas=document.createElement("canvas");
+    canvas.width=width;
+    canvas.height=height;
+
+    const ctx=canvas.getContext("2d",{
+      alpha:false
     });
 
-    const url = URL.createObjectURL(zipBlob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "ritoccapix-converted-images.zip";
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
+    if(!ctx){
+      throw new Error("Canvas is unavailable.");
+    }
 
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
-    setStatus("ZIP archive created successfully.", "success");
-  } catch (error) {
-    setStatus("Could not create the ZIP archive. " +
-      (error && error.message ? error.message : ""), "error");
-  } finally {
-    updateButtons();
+    ctx.drawImage(img,0,0,width,height);
+
+    return await new Promise((resolve,reject)=>{
+      canvas.toBlob(
+        blob=>{
+          if(blob)resolve(blob);
+          else reject(new Error("Unable to create the JPG."));
+        },
+        "image/jpeg",
+        Number(quality.value)/100
+      );
+    });
+
+  }finally{
+    URL.revokeObjectURL(imageUrl);
+  }
+}
+
+function createFileName(name){
+  const clean=name||"image";
+  return clean.replace(/\.[^/.]+$/,"")+".jpg";
+}
+
+function downloadBlob(blob,filename){
+  const url=URL.createObjectURL(blob);
+  const link=document.createElement("a");
+
+  link.href=url;
+  link.download=filename;
+
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+
+  setTimeout(()=>{
+    URL.revokeObjectURL(url);
+  },1000);
+}
+
+convertBtn.addEventListener("click",async()=>{
+  if(!files.length)return;
+
+  convertBtn.disabled=true;
+  clearBtn.disabled=true;
+
+  try{
+    const results=[];
+
+    for(let i=0;i<files.length;i++){
+      statusBox.textContent=
+        "Converting "+
+        (i+1)+
+        " of "+
+        files.length+
+        "...";
+
+      const blob=await convertImage(files[i]);
+
+      results.push({
+        blob,
+        name:createFileName(files[i].name)
+      });
+    }
+
+    if(results.length===1){
+      downloadBlob(
+        results[0].blob,
+        results[0].name
+      );
+
+      statusBox.textContent=
+        "✓ JPG created and downloaded.";
+
+    }else{
+      if(typeof JSZip==="undefined"){
+        throw new Error("ZIP engine is unavailable.");
+      }
+
+      statusBox.textContent="Creating ZIP archive...";
+
+      const zip=new JSZip();
+
+      results.forEach(result=>{
+        zip.file(result.name,result.blob);
+      });
+
+      const zipBlob=await zip.generateAsync({
+        type:"blob"
+      });
+
+      downloadBlob(
+        zipBlob,
+        "converted-images.zip"
+      );
+
+      statusBox.textContent=
+        "✓ "+
+        results.length+
+        " JPG files created and added to the ZIP archive.";
+    }
+
+  }catch(error){
+    console.error("Conversion error:",error);
+
+    statusBox.textContent=
+      "⚠️ Conversion failed: "+
+      (
+        error&&error.message
+        ?error.message
+        :"unknown error"
+      );
+
+  }finally{
+    convertBtn.disabled=false;
+    clearBtn.disabled=false;
   }
 });
-
-updateButtons();
 </script>
 </body>
 </html>
