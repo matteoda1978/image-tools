@@ -4,9 +4,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>RitoccaPix – Rimozione oggetti con IA</title>
-<meta name="description" content="Prova a rimuovere oggetti dalle foto direttamente nel browser con intelligenza artificiale.">
-<link rel="canonical" href="https://ritoccapix.com/object-remover-test.html">
+<title>RitoccaPix – Rimuovi oggetti dalle foto gratis</title>
+<meta name="description" content="Rimuovi oggetti indesiderati dalle foto con l'intelligenza artificiale direttamente nel browser.">
+<meta name="theme-color" content="#263b80">
 <style>
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,sans-serif;background:#f4f6fb;color:#172033}
@@ -14,7 +14,7 @@ header{background:#263b80;color:white;padding:20px;text-align:center}
 header h1{margin:0 0 8px}
 main{max-width:850px;margin:20px auto;padding:16px}
 .card{background:white;padding:18px;border-radius:14px;margin-bottom:16px;box-shadow:0 2px 10px #0000000b}
-button{display:inline-block;border:0;border-radius:9px;padding:12px 16px;font-size:16px;font-weight:bold;cursor:pointer;margin:4px 2px}
+button,.filebtn{display:inline-block;border:0;border-radius:9px;padding:12px 16px;font-size:16px;font-weight:bold;cursor:pointer;margin:4px 2px}
 .primary{background:#304fc1;color:white}
 .secondary{background:#e8edff;color:#263b80}
 button:disabled{opacity:.45;cursor:default}
@@ -24,24 +24,26 @@ label{display:block;margin:12px 0 6px;font-weight:bold}
 #status{padding:12px;border-radius:8px;background:#edf1ff;line-height:1.5;overflow-wrap:anywhere}
 .small{font-size:14px;color:#5c6578;line-height:1.5}
 #result{display:none}
+footer{text-align:center;padding:20px;color:#5c6578;font-size:14px}
+a{color:#304fc1}
 </style>
 </head>
 <body>
 <header>
 <h1>RitoccaPix</h1>
-<div>Rimozione oggetti con intelligenza artificiale</div>
+<div>Rimuovi oggetti dalle foto con l'intelligenza artificiale</div>
 </header>
 
 <main>
 <section class="card">
 <h2>1. Scegli una foto</h2>
 <input id="file" type="file" accept="image/jpeg,image/png,image/webp">
-<p class="small">Per la prima prova usa una foto non troppo grande. La foto viene elaborata nel browser, se il dispositivo è compatibile.</p>
+<p class="small">Per la prima prova usa una foto non troppo grande. Non caricare foto private o sensibili. L'elaborazione viene eseguita nel browser, ma il modello IA viene scaricato da un servizio esterno.</p>
 </section>
 
 <section class="card">
 <h2>2. Evidenzia l'oggetto</h2>
-<p>Traccia con il dito sopra l'oggetto da eliminare. Colora tutto l'oggetto e una piccola parte intorno.</p>
+<p>Traccia con il dito o con il mouse sopra l'oggetto da eliminare. Colora anche una piccola parte intorno all'oggetto per aiutare l'intelligenza artificiale.</p>
 <canvas id="canvas" width="512" height="512"></canvas>
 <label for="brush">Dimensione pennello</label>
 <input id="brush" type="range" min="5" max="70" value="25">
@@ -53,7 +55,7 @@ label{display:block;margin:12px 0 6px;font-weight:bold}
 
 <section class="card">
 <h2>3. Rimuovi l'oggetto</h2>
-<p class="small">Al primo utilizzo viene scaricato il modello IA. Mantieni aperta la pagina durante il caricamento e l'elaborazione.</p>
+<p class="small">Al primo utilizzo viene scaricato il modello IA, di circa 28 MB. Il tempo di elaborazione dipende dal dispositivo e dalla dimensione della foto. Il risultato può variare in base all'immagine.</p>
 <button id="remove" class="primary" disabled>Rimuovi oggetto</button>
 <div id="status" role="status" aria-live="polite">Scegli prima una foto.</div>
 </section>
@@ -64,6 +66,10 @@ label{display:block;margin:12px 0 6px;font-weight:bold}
 <button id="download" class="primary">Scarica risultato PNG</button>
 </section>
 </main>
+
+<footer>
+<a href="https://ritoccapix.com/">RitoccaPix</a> – Strumenti gratuiti per immagini
+</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort.min.js"></script>
 <script>
@@ -80,9 +86,11 @@ const remove = document.getElementById('remove');
 const undo = document.getElementById('undo');
 const clear = document.getElementById('clear');
 const result = document.getElementById('result');
+const brush = document.getElementById('brush');
+const download = document.getElementById('download');
 
 const MODEL_URL =
- 'https://huggingface.co/andraniksargsyan/migan/resolve/1538c135034b8cfe7a8472f34d09c8a5a45b17a7/migan_pipeline_v2.onnx';
+'https://huggingface.co/andraniksargsyan/migan/resolve/1538c135034b8cfe7a8472f34d09c8a5a45b17a7/migan_pipeline_v2.onnx';
 
 let original = null;
 let drawing = false;
@@ -90,7 +98,7 @@ let lastPoint = null;
 let strokes = [];
 let session = null;
 let busy = false;
-let originalFileName = 'foto';
+let currentFileName = 'immagine';
 
 function message(text) {
   status.textContent = text;
@@ -103,7 +111,7 @@ function buttonsEnabled(on) {
 }
 
 function dimensions(w,h) {
-  const scale = Math.min(1,768 / Math.max(w,h));
+  const scale = Math.min(1, 768 / Math.max(w,h));
   return {
     w: Math.max(1,Math.round(w*scale)),
     h: Math.max(1,Math.round(h*scale))
@@ -123,7 +131,7 @@ function paintMask() {
     ctx.fillStyle = 'rgba(90,100,255,0.72)';
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
-    ctx.lineWidth = Number(document.getElementById('brush').value);
+    ctx.lineWidth = Number(brush.value);
 
     if (stroke.length === 1) {
       ctx.beginPath();
@@ -154,8 +162,8 @@ function pointFromEvent(e) {
   const r = canvas.getBoundingClientRect();
 
   return {
-    x:(e.clientX-r.left)*canvas.width/r.width,
-    y:(e.clientY-r.top)*canvas.height/r.height
+    x: (e.clientX-r.left)*canvas.width/r.width,
+    y: (e.clientY-r.top)*canvas.height/r.height
   };
 }
 
@@ -165,10 +173,8 @@ canvas.addEventListener('pointerdown',e=>{
   e.preventDefault();
   drawing = true;
   canvas.setPointerCapture(e.pointerId);
-
   lastPoint = pointFromEvent(e);
   strokes.push([lastPoint]);
-
   paintMask();
   buttonsEnabled(true);
 });
@@ -179,9 +185,10 @@ canvas.addEventListener('pointermove',e=>{
   e.preventDefault();
 
   const p = pointFromEvent(e);
-  strokes[strokes.length-1].push(p);
-  lastPoint = p;
+  const stroke = strokes[strokes.length-1];
 
+  stroke.push(p);
+  lastPoint = p;
   paintMask();
 });
 
@@ -194,6 +201,10 @@ canvas.addEventListener('pointerup',stopDrawing);
 canvas.addEventListener('pointercancel',stopDrawing);
 canvas.addEventListener('lostpointercapture',stopDrawing);
 
+brush.addEventListener('input',()=>{
+  if (original) paintMask();
+});
+
 file.addEventListener('change',()=>{
   const f = file.files && file.files[0];
   if (!f) return;
@@ -203,7 +214,9 @@ file.addEventListener('change',()=>{
     return;
   }
 
-  originalFileName = f.name.replace(/\.[^.]+$/,'') || 'foto';
+  currentFileName = f.name.replace(/\.[^.]+$/,'')
+    .replace(/[^a-zA-Z0-9_-]+/g,'-')
+    .replace(/^-+|-+$/g,'') || 'immagine';
 
   const url = URL.createObjectURL(f);
   const img = new Image();
@@ -214,15 +227,19 @@ file.addEventListener('change',()=>{
     canvas.width = d.w;
     canvas.height = d.h;
 
+    ctx.clearRect(0,0,d.w,d.h);
     ctx.drawImage(img,0,0,d.w,d.h);
-    original = ctx.getImageData(0,0,d.w,d.h);
 
+    original = ctx.getImageData(0,0,d.w,d.h);
     strokes = [];
     result.style.display = 'none';
 
+    output.width = d.w;
+    output.height = d.h;
+    outctx.clearRect(0,0,d.w,d.h);
+
     buttonsEnabled(true);
     message('Foto pronta. Evidenzia l’oggetto con il dito.');
-
     URL.revokeObjectURL(url);
   };
 
@@ -240,7 +257,6 @@ clear.addEventListener('click',()=>{
   strokes = [];
   paintMask();
   buttonsEnabled(true);
-
   message('Selezione cancellata.');
 });
 
@@ -261,7 +277,7 @@ async function getSession() {
     );
   }
 
-  message('Caricamento del modello IA. Attendi senza chiudere la pagina…');
+  message('Scaricamento del modello IA (circa 28 MB). Attendi senza chiudere la pagina…');
 
   ort.env.wasm.wasmPaths =
     'https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/';
@@ -294,33 +310,32 @@ async function runRemoval() {
     const pixels = original.data;
     const n = w*h;
 
+    // Maschera: 0 = area da eliminare, 255 = area da conservare.
     const imageData = new Uint8Array(n*3);
     const maskData = new Uint8Array(n);
     maskData.fill(255);
 
-    const radius = Number(document.getElementById('brush').value)/2;
-
     for (const stroke of strokes) {
+      const radius = Number(brush.value)/2;
+
       for (let j=0;j<stroke.length;j++) {
         const a = stroke[j];
         const b = j ? stroke[j-1] : a;
-
         const dist = Math.hypot(b.x-a.x,b.y-a.y);
         const steps = Math.max(1,Math.ceil(dist/Math.max(1,radius/2)));
 
-        for (let t=0;t<=steps;t++) {
+        for(let t=0;t<=steps;t++) {
           const x = b.x+(a.x-b.x)*t/steps;
           const y = b.y+(a.y-b.y)*t/steps;
-
           const x0 = Math.max(0,Math.floor(x-radius));
           const x1 = Math.min(w-1,Math.ceil(x+radius));
           const y0 = Math.max(0,Math.floor(y-radius));
           const y1 = Math.min(h-1,Math.ceil(y+radius));
 
-          for (let yy=y0;yy<=y1;yy++) {
-            for (let xx=x0;xx<=x1;xx++) {
+          for(let yy=y0;yy<=y1;yy++) {
+            for(let xx=x0;xx<=x1;xx++) {
               if ((xx-x)**2+(yy-y)**2 <= radius**2) {
-                maskData[yy*w+xx]=0;
+                maskData[yy*w+xx] = 0;
               }
             }
           }
@@ -328,14 +343,14 @@ async function runRemoval() {
       }
     }
 
-    for (let y=0;y<h;y++) {
-      for (let x=0;x<w;x++) {
-        const p=(y*w+x)*4;
-        const q=y*w+x;
+    for(let y=0;y<h;y++) {
+      for(let x=0;x<w;x++) {
+        const p = (y*w+x)*4;
+        const q = y*w+x;
 
-        imageData[q]=pixels[p];
-        imageData[n+q]=pixels[p+1];
-        imageData[2*n+q]=pixels[p+2];
+        imageData[q] = pixels[p];
+        imageData[n+q] = pixels[p+1];
+        imageData[2*n+q] = pixels[p+2];
       }
     }
 
@@ -343,11 +358,15 @@ async function runRemoval() {
     await new Promise(resolve=>setTimeout(resolve,30));
 
     const imageTensor = new ort.Tensor(
-      'uint8',imageData,[1,3,h,w]
+      'uint8',
+      imageData,
+      [1,3,h,w]
     );
 
     const maskTensor = new ort.Tensor(
-      'uint8',maskData,[1,1,h,w]
+      'uint8',
+      maskData,
+      [1,1,h,w]
     );
 
     const feeds = {};
@@ -358,7 +377,6 @@ async function runRemoval() {
     const outputTensor = predictions[s.outputNames[0]];
     const data = outputTensor.data;
     const dims = outputTensor.dims;
-
     const oh = dims[dims.length-2];
     const ow = dims[dims.length-1];
 
@@ -367,36 +385,31 @@ async function runRemoval() {
 
     const out = outctx.createImageData(ow,oh);
 
-    for (let y=0;y<oh;y++) {
-      for (let x=0;x<ow;x++) {
-        const q=y*ow+x;
-        const p=q*4;
+    for(let y=0;y<oh;y++) {
+      for(let x=0;x<ow;x++) {
+        const q = y*ow+x;
+        const p = q*4;
 
-        out.data[p]=data[q];
-        out.data[p+1]=data[ow*oh+q];
-        out.data[p+2]=data[2*ow*oh+q];
-        out.data[p+3]=255;
+        out.data[p] = data[q];
+        out.data[p+1] = data[ow*oh+q];
+        out.data[p+2] = data[2*ow*oh+q];
+        out.data[p+3] = 255;
       }
     }
 
     outctx.putImageData(out,0,0);
-    result.style.display='block';
+    result.style.display = 'block';
 
     message('Elaborazione completata. Controlla il risultato prima di scaricarlo.');
-
-    result.scrollIntoView({
-      behavior:'smooth',
-      block:'start'
-    });
+    result.scrollIntoView({behavior:'smooth',block:'start'});
 
   } catch(err) {
     console.error(err);
     session = null;
 
     message(
-      'Errore: '+
-      (err && err.message ? err.message : String(err))+
-      '. Prova una foto più piccola e verifica la connessione.'
+      'Errore: '+(err && err.message ? err.message : String(err))+
+      '. Prova una foto più piccola e verifica la connessione. Questa versione è sperimentale.'
     );
 
   } finally {
@@ -407,7 +420,7 @@ async function runRemoval() {
 
 remove.addEventListener('click',runRemoval);
 
-document.getElementById('download').addEventListener('click',()=>{
+download.addEventListener('click',()=>{
   if (!output.width || !output.height) return;
 
   output.toBlob(blob=>{
@@ -419,23 +432,11 @@ document.getElementById('download').addEventListener('click',()=>{
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
 
+    // Nome univoco: evita il riutilizzo dello stesso nome a ogni download.
+    const uniqueId = Date.now();
     a.href = url;
-
-    const data = new Date();
-
-    const dataOra =
-      data.getFullYear() +
-      String(data.getMonth()+1).padStart(2,'0') +
-      String(data.getDate()).padStart(2,'0') + '-' +
-      String(data.getHours()).padStart(2,'0') +
-      String(data.getMinutes()).padStart(2,'0') +
-      String(data.getSeconds()).padStart(2,'0');
-
-    const nomeBase = originalFileName
-      .replace(/[^\p{L}\p{N}_-]+/gu,'-')
-      .replace(/^-+|-+$/g,'') || 'foto';
-
-    a.download = nomeBase + '-ritoccapix-' + dataOra + '.png';
+    a.download = 'ritoccapix-' + currentFileName +
+      '-risultato-' + uniqueId + '.png';
 
     document.body.appendChild(a);
     a.click();
@@ -443,11 +444,12 @@ document.getElementById('download').addEventListener('click',()=>{
 
     setTimeout(()=>URL.revokeObjectURL(url),30000);
 
-    message('Download avviato: ' + a.download);
+    message('Download avviato. Il file ha un nome univoco.');
   },'image/png');
 });
 
 buttonsEnabled(false);
+
 })();
 </script>
 </body>
