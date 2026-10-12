@@ -1,0 +1,499 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Social Video Maker – Create Videos from Photos | RitoccaPix</title>
+<meta name="description" content="Create vertical slideshow videos from your photos for TikTok, Instagram Reels and YouTube Shorts. Add text, preview and export in your browser.">
+<meta name="theme-color" content="#10131c">
+<link rel="canonical" href="https://ritoccapix.com/social-video-maker.html">
+<style>
+:root {
+  color-scheme: dark;
+  --bg:#10131c;
+  --panel:#191e2b;
+  --panel2:#222a3b;
+  --text:#f4f6ff;
+  --muted:#aab3c7;
+  --accent:#8b7cff;
+  --border:#30394e;
+  --green:#55dfad;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;line-height:1.6
+}
+a{color:#b8adff}
+header{
+  padding:24px 16px;text-align:center;
+  border-bottom:1px solid var(--border)
+}
+.logo{font-size:25px;font-weight:800;color:white;text-decoration:none}
+.logo span{color:var(--accent)}
+header p{margin:6px 0 0;color:var(--muted)}
+main{width:min(1100px,94%);margin:30px auto 60px}
+h1{font-size:clamp(28px,5vw,42px);line-height:1.15;margin:0 0 12px}
+h2{font-size:21px;margin:0 0 15px}
+.intro{color:var(--muted);max-width:720px;margin-bottom:25px}
+.layout{display:grid;grid-template-columns:1.1fr .9fr;gap:22px}
+.panel{
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:18px;padding:22px;min-width:0
+}
+.field{margin:0 0 18px}
+label{display:block;font-weight:700;margin-bottom:7px}
+input,select,textarea,button{
+  font:inherit
+}
+input[type="text"],input[type="number"],select,textarea{
+  width:100%;padding:12px;border-radius:10px;
+  border:1px solid var(--border);background:#111725;color:white
+}
+input[type="file"]{width:100%;padding:12px;background:#111725;
+  border:1px dashed #56617b;border-radius:10px}
+input[type="range"]{width:100%;accent-color:var(--accent)}
+small,.muted{color:var(--muted)}
+button{
+  border:0;border-radius:10px;padding:12px 16px;
+  cursor:pointer;font-weight:700
+}
+.primary{background:var(--accent);color:white;width:100%}
+.secondary{background:var(--panel2);color:white;border:1px solid var(--border)}
+button:disabled{opacity:.5;cursor:not-allowed}
+.preview-wrap{display:flex;justify-content:center}
+.preview{
+  width:min(100%,300px);aspect-ratio:9/16;background:#080a10;
+  border:1px solid #434d65;border-radius:16px;overflow:hidden;
+  position:relative;display:flex;align-items:center;justify-content:center
+}
+.preview img{width:100%;height:100%;object-fit:contain}
+.overlay{
+  position:absolute;left:7%;right:7%;bottom:9%;text-align:center;
+  font-weight:800;font-size:25px;line-height:1.2;
+  color:white;text-shadow:0 2px 7px #000,0 0 12px #000;
+  overflow-wrap:anywhere
+}
+.preview-placeholder{text-align:center;color:var(--muted);padding:20px}
+.file-list{display:grid;gap:8px;margin:12px 0}
+.file-item{
+  display:flex;align-items:center;gap:10px;padding:8px;
+  border:1px solid var(--border);border-radius:10px;background:#111725
+}
+.file-item img{width:48px;height:48px;object-fit:cover;border-radius:6px}
+.file-item span{font-size:13px;overflow-wrap:anywhere;flex:1}
+.file-item button{padding:5px 9px}
+.actions{display:grid;gap:10px;margin-top:16px}
+#status{margin-top:12px;font-size:14px;color:var(--muted);overflow-wrap:anywhere}
+#downloadLink{display:none;text-align:center;padding:12px;background:#173c32;
+  border:1px solid #2e795e;border-radius:10px;color:#b8ffe4;font-weight:bold}
+.note{font-size:13px;color:var(--muted)}
+footer{text-align:center;border-top:1px solid var(--border);
+  padding:24px;color:var(--muted);font-size:13px}
+@media(max-width:760px){.layout{grid-template-columns:1fr}.panel{padding:16px}}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="index.html">Ritocca<span>Pix</span></a>
+  <p>Free online photo and video tools</p>
+  <div id="site-menu"></div>
+</header>
+
+<main>
+  <h1>Social Video Maker</h1>
+  <p class="intro">
+    Turn your photos into a vertical slideshow for TikTok, Instagram Reels
+    and YouTube Shorts. Add a title, preview your video and export it directly
+    in your browser.
+  </p>
+
+  <div class="layout">
+    <section class="panel">
+      <h2>1. Choose your photos</h2>
+      <div class="field">
+        <label for="photos">Upload images</label>
+        <input id="photos" type="file" accept="image/*" multiple>
+        <small>Select at least one photo. You can change their order below.</small>
+      </div>
+
+      <div id="fileList" class="file-list"></div>
+
+      <h2>2. Customize your video</h2>
+      <div class="field">
+        <label for="format">Video format</label>
+        <select id="format">
+          <option value="vertical">Vertical 9:16 – TikTok / Reels / Shorts</option>
+          <option value="square">Square 1:1</option>
+          <option value="landscape">Landscape 16:9 – YouTube</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="titleText">Video title or caption</label>
+        <input id="titleText" type="text" maxlength="100"
+          placeholder="Write your title here">
+      </div>
+
+      <div class="field">
+        <label for="duration">Seconds per photo: <span id="durationValue">2</span></label>
+        <input id="duration" type="range" min="1" max="6" value="2">
+      </div>
+
+      <div class="field">
+        <label for="quality">Video quality</label>
+        <select id="quality">
+          <option value="720">720p – Faster export</option>
+          <option value="1080">1080p – Higher resolution</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="music">Optional music file</label>
+        <input id="music" type="file" accept="audio/*">
+        <small>Use audio you own or are licensed to use. Audio export depends on browser support.</small>
+      </div>
+
+      <div class="actions">
+        <button class="secondary" id="previewButton" type="button">Update preview</button>
+        <button class="primary" id="exportButton" type="button">Create video</button>
+        <a id="downloadLink" download="ritoccapix-social-video.webm">Download video</a>
+      </div>
+      <p id="status" role="status" aria-live="polite">Choose your photos to get started.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Live preview</h2>
+      <div class="preview-wrap">
+        <div class="preview" id="preview">
+          <div class="preview-placeholder">Your video preview will appear here.</div>
+          <div class="overlay" id="previewTitle"></div>
+        </div>
+      </div>
+      <p class="note">
+        The preview shows one photo at a time. The exported video plays
+        through your selected photos automatically.
+      </p>
+      <div class="field">
+        <label for="previewIndex">Preview photo</label>
+        <input id="previewIndex" type="range" min="0" max="0" value="0">
+      </div>
+      <p class="note">
+        Processing happens on your device. Large photos and long videos
+        may require more memory and time.
+      </p>
+    </section>
+  </div>
+
+  <section class="panel" style="margin-top:22px">
+    <h2>How to create a social video</h2>
+    <ol>
+      <li>Select your photos.</li>
+      <li>Arrange the photos using the arrows.</li>
+      <li>Choose your video format and duration.</li>
+      <li>Add a title and optionally your own music.</li>
+      <li>Create and download the video.</li>
+    </ol>
+    <p class="note">
+      This first version exports WebM when supported by your browser.
+      Some social platforms or workflows may require MP4 conversion.
+    </p>
+  </section>
+</main>
+
+<footer>
+  <p>RitoccaPix – Free online tools for images and social content.</p>
+  <p>Use only photos and audio you have permission to use.</p>
+</footer>
+
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  let files = [];
+  let urls = [];
+  let currentBlobUrl = null;
+  let audioUrl = null;
+  let stopRequested = false;
+
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+
+  function setStatus(message){ $('status').textContent = message; }
+
+  function cleanupUrls(){
+    urls.forEach(url => URL.revokeObjectURL(url));
+    urls = [];
+  }
+
+  function getDimensions(){
+    const q = Number($('quality').value);
+    const format = $('format').value;
+    if(format === 'square') return {w:q,h:q};
+    if(format === 'landscape') return {w:q,h:Math.round(q*9/16)};
+    return {w:Math.round(q*9/16),h:q};
+  }
+
+  function drawCover(img,w,h){
+    const scale = Math.max(w/img.width,h/img.height);
+    const sw = w/scale, sh = h/scale;
+    const sx = (img.width-sw)/2, sy = (img.height-sh)/2;
+    ctx.drawImage(img,sx,sy,sw,sh,0,0,w,h);
+  }
+
+  function drawTitle(text,w,h){
+    if(!text) return;
+    const lines = [];
+    const words = text.split(/\s+/);
+    let line = '';
+    ctx.font = `bold ${Math.max(22,Math.round(w*0.065))}px Arial`;
+    const maxWidth = w*0.84;
+    for(const word of words){
+      const test = line ? line+' '+word : word;
+      if(ctx.measureText(test).width > maxWidth && line){
+        lines.push(line); line = word;
+      } else line = test;
+    }
+    if(line) lines.push(line);
+    const lineHeight = Math.max(28,Math.round(w*0.08));
+    const startY = h*0.82 - (lines.length-1)*lineHeight/2;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.lineJoin = 'round';
+    ctx.lineWidth = Math.max(4,w*0.012);
+    ctx.strokeStyle = 'rgba(0,0,0,.9)';
+    ctx.fillStyle = '#ffffff';
+    lines.forEach((line,i)=>{
+      ctx.strokeText(line,w/2,startY+i*lineHeight,maxWidth);
+      ctx.fillText(line,w/2,startY+i*lineHeight,maxWidth);
+    });
+  }
+
+  function drawPlaceholder(){
+    const d = getDimensions();
+    canvas.width = d.w; canvas.height = d.h;
+    ctx.fillStyle = '#171d2b';
+    ctx.fillRect(0,0,d.w,d.h);
+    ctx.fillStyle = '#ffffff';
+    ctx.font = `bold ${Math.round(d.w*.07)}px Arial`;
+    ctx.textAlign = 'center';
+    ctx.fillText('RitoccaPix',d.w/2,d.h/2);
+  }
+
+  function updatePreview(){
+    const d = getDimensions();
+    $('preview').style.aspectRatio = `${d.w}/${d.h}`;
+    $('previewTitle').textContent = $('titleText').value;
+    const idx = Number($('previewIndex').value);
+    const preview = $('preview');
+    const old = preview.querySelector('img');
+    if(old) old.remove();
+    const placeholder = preview.querySelector('.preview-placeholder');
+    if(files.length && files[idx]){
+      if(placeholder) placeholder.remove();
+      const img = document.createElement('img');
+      img.alt = 'Selected photo preview';
+      img.src = urls[idx];
+      preview.insertBefore(img,$('previewTitle'));
+    } else if(!placeholder){
+      const p = document.createElement('div');
+      p.className = 'preview-placeholder';
+      p.textContent = 'Your video preview will appear here.';
+      preview.insertBefore(p,$('previewTitle'));
+    }
+    renderFileList();
+  }
+
+  function renderFileList(){
+    const list = $('fileList');
+    list.replaceChildren();
+    files.forEach((file,i)=>{
+      const row = document.createElement('div');
+      row.className = 'file-item';
+      const img = document.createElement('img');
+      img.src = urls[i]; img.alt = '';
+      const name = document.createElement('span');
+      name.textContent = `${i+1}. ${file.name}`;
+      const up = document.createElement('button');
+      up.className = 'secondary'; up.type='button'; up.textContent='↑';
+      up.setAttribute('aria-label','Move photo up');
+      up.disabled = i===0;
+      up.onclick=()=>moveFile(i,-1);
+      const down = document.createElement('button');
+      down.className = 'secondary'; down.type='button'; down.textContent='↓';
+      down.setAttribute('aria-label','Move photo down');
+      down.disabled = i===files.length-1;
+      down.onclick=()=>moveFile(i,1);
+      const remove = document.createElement('button');
+      remove.className = 'secondary'; remove.type='button'; remove.textContent='×';
+      remove.setAttribute('aria-label','Remove photo');
+      remove.onclick=()=>removeFile(i);
+      row.append(img,name,up,down,remove);
+      list.append(row);
+    });
+    $('previewIndex').max = Math.max(0,files.length-1);
+    if(Number($('previewIndex').value)>files.length-1) $('previewIndex').value=0;
+  }
+
+  function resetExport(){
+    if(currentBlobUrl){URL.revokeObjectURL(currentBlobUrl);currentBlobUrl=null;}
+    $('downloadLink').style.display='none';
+  }
+
+  function moveFile(index,delta){
+    const next=index+delta;
+    if(next<0 || next>=files.length) return;
+    [files[index],files[next]]=[files[next],files[index]];
+    [urls[index],urls[next]]=[urls[next],urls[index]];
+    resetExport(); updatePreview();
+  }
+
+  function removeFile(index){
+    URL.revokeObjectURL(urls[index]);
+    files.splice(index,1); urls.splice(index,1);
+    resetExport(); updatePreview();
+    setStatus(files.length ? `${files.length} photo(s) selected.` : 'Choose your photos to get started.');
+  }
+
+  $('photos').addEventListener('change',e=>{
+    const selected = Array.from(e.target.files || []).filter(f=>f.type.startsWith('image/'));
+    if(!selected.length) return;
+    cleanupUrls();
+    files = selected;
+    urls = files.map(f=>URL.createObjectURL(f));
+    resetExport();
+    updatePreview();
+    setStatus(`${files.length} photo(s) selected.`);
+  });
+
+  ['format','quality','titleText'].forEach(id=>{
+    $(id).addEventListener('input',()=>{resetExport();updatePreview();});
+  });
+  $('duration').addEventListener('input',()=>{
+    $('durationValue').textContent=$('duration').value;
+    resetExport();
+  });
+  $('previewIndex').addEventListener('input',updatePreview);
+  $('previewButton').addEventListener('click',updatePreview);
+
+  $('music').addEventListener('change',()=>{
+    if(audioUrl) URL.revokeObjectURL(audioUrl);
+    audioUrl = $('music').files[0] ? URL.createObjectURL($('music').files[0]) : null;
+    resetExport();
+    setStatus(audioUrl ? 'Music selected. Audio support will be checked during export.' : 'Music removed.');
+  });
+
+  function loadImage(url){
+    return new Promise((resolve,reject)=>{
+      const img=new Image();
+      img.onload=()=>resolve(img);
+      img.onerror=()=>reject(new Error('One of the photos could not be loaded.'));
+      img.src=url;
+    });
+  }
+
+  function supportedMime(){
+    if(!window.MediaRecorder) return '';
+    const candidates=['video/webm;codecs=vp9','video/webm;codecs=vp8','video/webm'];
+    return candidates.find(type=>MediaRecorder.isTypeSupported(type)) || '';
+  }
+
+  $('exportButton').addEventListener('click',async()=>{
+    if(!files.length){
+      setStatus('Please upload at least one photo first.'); return;
+    }
+    if(!canvas.captureStream || !window.MediaRecorder){
+      setStatus('Video export is not supported in this browser. Try a recent version of Chrome or Edge.');
+      return;
+    }
+    const mime=supportedMime();
+    if(!mime){
+      setStatus('No supported WebM video format was found in this browser.');
+      return;
+    }
+    const button=$('exportButton');
+    button.disabled=true;
+    stopRequested=false;
+    resetExport();
+    let audioContext=null, source=null, audioStream=null, mixedStream=null;
+    let recorder=null, chunks=[];
+    try{
+      const d=getDimensions();
+      canvas.width=d.w; canvas.height=d.h;
+      const images=await Promise.all(urls.map(loadImage));
+      const videoStream=canvas.captureStream(30);
+      let tracks=[...videoStream.getVideoTracks()];
+      const musicFile=$('music').files[0];
+      if(musicFile){
+        const AudioContextClass=window.AudioContext||window.webkitAudioContext;
+        if(AudioContextClass){
+          audioContext=new AudioContextClass();
+          await audioContext.resume();
+          const audioEl=new Audio();
+          audioEl.src=audioUrl;
+          audioEl.loop=true;
+          source=audioContext.createMediaElementSource(audioEl);
+          const dest=audioContext.createMediaStreamDestination();
+          source.connect(dest);
+          audioStream=dest.stream;
+          tracks=tracks.concat(audioStream.getAudioTracks());
+          await audioEl.play();
+          mixedStream={stream:new MediaStream(tracks),audioEl};
+        }
+      }
+      const stream=mixedStream ? mixedStream.stream : new MediaStream(tracks);
+      recorder=new MediaRecorder(stream,{mimeType:mime});
+      recorder.ondataavailable=e=>{if(e.data && e.data.size) chunks.push(e.data);};
+      const stopped=new Promise((resolve,reject)=>{
+        recorder.onstop=resolve;
+        recorder.onerror=()=>reject(new Error('Video recording failed.'));
+      });
+      recorder.start(250);
+      const seconds=Number($('duration').value);
+      for(let i=0;i<images.length;i++){
+        if(stopRequested) break;
+        ctx.fillStyle='#000000';ctx.fillRect(0,0,d.w,d.h);
+        drawCover(images[i],d.w,d.h);
+        drawTitle($('titleText').value,d.w,d.h);
+        setStatus(`Creating video: photo ${i+1} of ${images.length}…`);
+        await new Promise(resolve=>setTimeout(resolve,seconds*1000));
+      }
+      recorder.stop();
+      await stopped;
+      if(mixedStream && mixedStream.audioEl){
+        mixedStream.audioEl.pause();
+        mixedStream.audioEl.src='';
+      }
+      if(audioContext) await audioContext.close();
+      if(!chunks.length) throw new Error('The browser did not produce a video file.');
+      const blob=new Blob(chunks,{type:mime});
+      currentBlobUrl=URL.createObjectURL(blob);
+      $('downloadLink').href=currentBlobUrl;
+      $('downloadLink').download='ritoccapix-social-video.webm';
+      $('downloadLink').textContent=`Download video (${(blob.size/1024/1024).toFixed(1)} MB)`;
+      $('downloadLink').style.display='block';
+      setStatus('Video created successfully. Download it and check playback before posting.');
+    }catch(err){
+      if(recorder && recorder.state!=='inactive'){
+        try{recorder.stop();}catch(e){}
+      }
+      if(audioContext){try{await audioContext.close();}catch(e){}}
+      setStatus(err.message || 'Something went wrong while creating the video.');
+    }finally{
+      button.disabled=false;
+    }
+  });
+
+  drawPlaceholder();
+  updatePreview();
+
+  // Load the site's shared navigation if available.
+  const menuScript=document.createElement('script');
+  menuScript.src='menu.js';
+  menuScript.onerror=()=>{};
+  document.body.appendChild(menuScript);
+})();
+</script>
+</body>
+</html>
+```
