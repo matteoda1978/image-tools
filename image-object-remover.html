@@ -5,81 +5,195 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>RitoccaPix – Rimuovi oggetti dalle foto gratis</title>
-<meta name="description" content="Rimuovi oggetti indesiderati dalle foto con RitoccaPix.">
+<meta name="description" content="Rimuovi oggetti indesiderati dalle foto gratuitamente con RitoccaPix.">
 <meta name="theme-color" content="#0a0f1d">
 
 <style>
 :root {
-  --bg:#0a0f1d; --panel:#121a2b; --panel2:#19243a;
-  --text:#f4f7ff; --muted:#aab6cc; --accent:#7c9cff;
-  --accent2:#9d7bff; --border:#2b3852;
+  --bg:#0a0f1d;
+  --panel:#121a2b;
+  --panel2:#19243a;
+  --text:#f4f7ff;
+  --muted:#aab6cc;
+  --accent:#7c9cff;
+  --border:#2b3852;
 }
 * { box-sizing:border-box; }
 body {
-  margin:0; font-family:Arial,Helvetica,sans-serif;
-  background:var(--bg); color:var(--text); line-height:1.55;
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.55;
 }
 header {
-  position:sticky; top:0; z-index:50;
-  background:rgba(10,15,29,.97); border-bottom:1px solid var(--border);
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:#0a0f1df5;
+  border-bottom:1px solid var(--border);
 }
 .header-inner {
-  max-width:1100px; margin:auto; padding:14px 18px;
-  display:flex; align-items:center; justify-content:space-between; gap:16px;
+  max-width:1100px;
+  margin:auto;
+  padding:14px 18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
 }
-.brand { color:var(--text); text-decoration:none; font-size:24px; font-weight:800; }
+.brand {
+  color:var(--text);
+  text-decoration:none;
+  font-size:24px;
+  font-weight:800;
+}
 .brand span { color:var(--accent); }
 .nav-wrap { position:relative; }
 .menu-button,.action {
-  font:inherit; cursor:pointer; font-weight:700; border-radius:11px;
+  font:inherit;
+  cursor:pointer;
+  font-weight:700;
+  border-radius:11px;
 }
 .menu-button {
-  padding:11px 15px; color:var(--text); background:var(--panel);
+  padding:11px 15px;
+  color:var(--text);
+  background:var(--panel);
   border:1px solid var(--border);
 }
 .tools-menu {
-  display:none; position:absolute; top:calc(100% + 10px); right:0;
-  width:min(300px,calc(100vw - 24px)); max-height:70vh; overflow:auto;
-  padding:8px; background:var(--panel); border:1px solid var(--border);
-  border-radius:14px; box-shadow:0 18px 45px #0008;
+  display:none;
+  position:absolute;
+  top:calc(100% + 10px);
+  right:0;
+  width:min(300px,calc(100vw - 24px));
+  max-height:70vh;
+  overflow:auto;
+  padding:8px;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:14px;
+  box-shadow:0 18px 45px #0008;
 }
 .tools-menu.open { display:block; }
 .tools-menu a {
-  display:block; color:var(--text); text-decoration:none;
-  padding:11px 12px; border-radius:9px; font-size:14px;
+  display:block;
+  color:var(--text);
+  text-decoration:none;
+  padding:11px 12px;
+  border-radius:9px;
+  font-size:14px;
 }
-.tools-menu a:hover,.tools-menu a[aria-current="page"] { background:var(--panel2); }
-main { width:min(100% - 32px,1000px); margin:34px auto 60px; }
-.hero { text-align:center; margin-bottom:28px; }
-h1 { font-size:clamp(30px,5vw,44px); line-height:1.15; margin:0 0 14px; }
-.hero p { max-width:700px; margin:auto; color:var(--muted); font-size:17px; }
+.tools-menu a:hover,
+.tools-menu a[aria-current="page"] {
+  background:var(--panel2);
+}
+main {
+  width:min(100% - 32px,1000px);
+  margin:34px auto 60px;
+}
+.hero {
+  text-align:center;
+  margin-bottom:28px;
+}
+h1 {
+  font-size:clamp(30px,5vw,44px);
+  line-height:1.15;
+  margin:0 0 14px;
+}
+.hero p {
+  max-width:700px;
+  margin:auto;
+  color:var(--muted);
+  font-size:17px;
+}
 .panel {
-  background:var(--panel); border:1px solid var(--border);
-  border-radius:18px; padding:clamp(16px,3vw,26px); margin-bottom:20px;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:clamp(16px,3vw,26px);
+  margin-bottom:20px;
 }
 h2 { font-size:21px; margin:0 0 12px; }
 .muted { color:var(--muted); }
-.controls { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin:16px 0; }
-.action { padding:12px 16px; border:0; color:white; background:linear-gradient(135deg,var(--accent),var(--accent2)); }
-.action.secondary { background:var(--panel2); border:1px solid var(--border); }
-.action:disabled { opacity:.45; cursor:not-allowed; }
-input[type="file"] { max-width:100%; color:var(--muted); }
-input[type="range"] { accent-color:var(--accent); width:min(100%,260px); }
-.canvas-wrap {
-  min-height:180px; display:flex; justify-content:center; align-items:center;
-  overflow:hidden; background:#080c15; border:1px solid var(--border); border-radius:14px;
+.controls {
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  align-items:center;
+  margin:16px 0;
 }
-canvas { display:block; max-width:100%; height:auto; cursor:crosshair; touch-action:none; }
-#placeholder { padding:35px 18px; text-align:center; color:var(--muted); }
+.action {
+  padding:12px 16px;
+  border:0;
+  color:white;
+  background:linear-gradient(135deg,#7c9cff,#9d7bff);
+}
+.action.secondary {
+  background:var(--panel2);
+  border:1px solid var(--border);
+}
+.action:disabled {
+  opacity:.45;
+  cursor:not-allowed;
+}
+input[type="file"] {
+  max-width:100%;
+  color:var(--muted);
+}
+input[type="range"] {
+  accent-color:var(--accent);
+  width:min(100%,260px);
+}
+.canvas-wrap {
+  min-height:180px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+  background:#080c15;
+  border:1px solid var(--border);
+  border-radius:14px;
+}
+canvas {
+  display:block;
+  max-width:100%;
+  height:auto;
+  cursor:crosshair;
+  touch-action:none;
+}
+#placeholder {
+  padding:35px 18px;
+  text-align:center;
+  color:var(--muted);
+}
 .status {
-  margin-top:14px; padding:12px 14px; background:#0b1220;
-  border:1px solid var(--border); border-radius:10px; color:var(--muted);
+  margin-top:14px;
+  padding:12px 14px;
+  background:#0b1220;
+  border:1px solid var(--border);
+  border-radius:10px;
+  color:var(--muted);
   overflow-wrap:anywhere;
 }
 .status.error { color:#ff9b9b; border-color:#75404a; }
 .status.success { color:#8ce5b1; border-color:#2d624b; }
-.notice { padding:12px 14px; background:#101a2d; border-left:3px solid var(--accent); border-radius:8px; color:var(--muted); font-size:14px; }
-footer { text-align:center; color:var(--muted); padding:24px 16px; border-top:1px solid var(--border); font-size:13px; }
+.notice {
+  padding:12px 14px;
+  background:#101a2d;
+  border-left:3px solid var(--accent);
+  border-radius:8px;
+  color:var(--muted);
+  font-size:14px;
+}
+footer {
+  text-align:center;
+  color:var(--muted);
+  padding:24px 16px;
+  border-top:1px solid var(--border);
+  font-size:13px;
+}
 [hidden] { display:none !important; }
 @media(max-width:520px) {
   .header-inner { padding:12px; }
@@ -89,13 +203,16 @@ footer { text-align:center; color:var(--muted); padding:24px 16px; border-top:1p
 }
 </style>
 </head>
+
 <body>
 <header>
   <div class="header-inner">
     <a class="brand" href="index.html">Ritocca<span>Pix</span></a>
     <div class="nav-wrap">
-      <button class="menu-button" id="menuButton" type="button"
-        aria-expanded="false" aria-controls="toolsMenu">Tutti gli strumenti ▼</button>
+      <button class="menu-button" id="menuButton"
+        type="button" aria-expanded="false" aria-controls="toolsMenu">
+        Tutti gli strumenti ▼
+      </button>
       <nav class="tools-menu" id="toolsMenu" aria-label="Strumenti immagini">
         <a href="image-resizer.html">Image Resizer</a>
         <a href="image-compressor.html">Image Compressor</a>
@@ -116,23 +233,26 @@ footer { text-align:center; color:var(--muted); padding:24px 16px; border-top:1p
 <main>
   <section class="hero">
     <h1>Rimuovi oggetti dalle foto</h1>
-    <p>Carica una foto, dipingi sull'oggetto da rimuovere e avvia l'elaborazione con l'IA.</p>
+    <p>Carica una foto, evidenzia l'oggetto da eliminare e lascia che l'intelligenza artificiale ricostruisca lo sfondo.</p>
   </section>
 
   <section class="panel">
-    <h2>1. Carica la foto</h2>
-    <p class="muted">Scegli un'immagine JPG, PNG o WebP.</p>
+    <h2>1. Carica la tua foto</h2>
+    <p class="muted">Formati supportati: JPG, PNG e WebP.</p>
     <div class="controls">
-      <input id="fileInput" type="file" accept="image/jpeg,image/png,image/webp">
-      <button class="action secondary" id="clearMaskButton" type="button" disabled>Cancella selezione</button>
+      <input id="fileInput" type="file"
+        accept="image/jpeg,image/png,image/webp">
+      <button class="action secondary" id="clearButton"
+        type="button" disabled>Cancella selezione</button>
     </div>
 
-    <h2>2. Seleziona l'oggetto</h2>
-    <p class="muted">Dipingi sopra l'area da rimuovere. La selezione rossa è la maschera.</p>
+    <h2>2. Dipingi sull'oggetto</h2>
+    <p class="muted">Trascina il dito o il mouse sopra tutto l'oggetto da rimuovere. L'area rossa indica la selezione.</p>
     <div class="controls">
-      <label for="brushSize">Pennello: <strong id="brushValue">30</strong> px</label>
+      <label for="brushSize">Dimensione pennello: <strong id="brushValue">30</strong> px</label>
       <input id="brushSize" type="range" min="5" max="100" value="30">
-      <button class="action secondary" id="undoButton" type="button" disabled>Annulla tratto</button>
+      <button class="action secondary" id="undoButton"
+        type="button" disabled>Annulla tratto</button>
     </div>
 
     <div class="canvas-wrap">
@@ -141,356 +261,492 @@ footer { text-align:center; color:var(--muted); padding:24px 16px; border-top:1p
     </div>
 
     <div class="controls">
-      <button class="action" id="removeButton" type="button" disabled>Rimuovi oggetto con IA</button>
-      <button class="action secondary" id="downloadButton" type="button" disabled>Scarica risultato</button>
-      <button class="action secondary" id="resetButton" type="button" disabled>Ricomincia</button>
+      <button class="action" id="removeButton"
+        type="button" disabled>Rimuovi oggetto con IA</button>
+      <button class="action secondary" id="downloadButton"
+        type="button" disabled>Scarica risultato</button>
+      <button class="action secondary" id="resetButton"
+        type="button" disabled>Ricomincia</button>
     </div>
-    <div id="status" class="status" role="status" aria-live="polite">Carica una foto per iniziare.</div>
+    <div id="status" class="status" role="status" aria-live="polite">
+      Carica una foto per iniziare.
+    </div>
   </section>
 
   <section class="panel">
-    <h2>Come funziona</h2>
-    <p>Carica la foto, dipingi sull'oggetto e premi il pulsante di rimozione. Se il modello completa l'elaborazione, potrai scaricare il risultato.</p>
-    <div class="notice">Il modello IA viene caricato da un servizio esterno. La compatibilità dipende dagli ingressi e dalle dimensioni richieste dal modello.</div>
+    <h2>Come ottenere un buon risultato</h2>
+    <p>Dipingi sopra tutto l'oggetto, compresi i bordi. Per risultati migliori, prova prima con un oggetto piccolo e una foto non troppo grande.</p>
+    <div class="notice">
+      L'elaborazione avviene nel browser e richiede il download del modello IA. Al primo utilizzo può essere necessario attendere.
+    </div>
   </section>
 </main>
 
 <footer>© RitoccaPix – Strumenti gratuiti per immagini</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort.min.js"></script>
+
 <script>
 (() => {
 "use strict";
 
 const $ = id => document.getElementById(id);
-const menuButton = $("menuButton"), toolsMenu = $("toolsMenu");
 
-menuButton.addEventListener("click", e => {
-  e.stopPropagation();
+// MENU
+const menuButton = $("menuButton");
+const toolsMenu = $("toolsMenu");
+
+menuButton.addEventListener("click", event => {
+  event.stopPropagation();
   const open = toolsMenu.classList.toggle("open");
   menuButton.setAttribute("aria-expanded", String(open));
 });
-document.addEventListener("click", e => {
-  if (!toolsMenu.contains(e.target) && !menuButton.contains(e.target)) {
-    toolsMenu.classList.remove("open");
-    menuButton.setAttribute("aria-expanded", "false");
-  }
-});
-document.addEventListener("keydown", e => {
-  if (e.key === "Escape") {
+
+document.addEventListener("click", event => {
+  if (!toolsMenu.contains(event.target) &&
+      !menuButton.contains(event.target)) {
     toolsMenu.classList.remove("open");
     menuButton.setAttribute("aria-expanded", "false");
   }
 });
 
-const MODEL_URL = "https://huggingface.co/andraniksargsyan/migan/resolve/1538c135034b8cfe7a8472f34d09c8a5a45b17a7/migan_pipeline_v2.onnx";
-const fileInput = $("fileInput"), canvas = $("photoCanvas");
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") {
+    toolsMenu.classList.remove("open");
+    menuButton.setAttribute("aria-expanded", "false");
+  }
+});
+
+// MODELLO MI-GAN
+const MODEL_URL =
+  "https://huggingface.co/andraniksargsyan/migan/resolve/1538c135034b8cfe7a8472f34d09c8a5a45b17a7/migan_pipeline_v2.onnx";
+
+const fileInput = $("fileInput");
+const canvas = $("photoCanvas");
 const ctx = canvas.getContext("2d", {willReadFrequently:true});
-const placeholder = $("placeholder"), maskCanvas = document.createElement("canvas");
-const maskCtx = maskCanvas.getContext("2d", {willReadFrequently:true});
-const brushSize = $("brushSize"), brushValue = $("brushValue");
-const clearButton = $("clearMaskButton"), undoButton = $("undoButton");
-const removeButton = $("removeButton"), downloadButton = $("downloadButton");
-const resetButton = $("resetButton"), statusBox = $("status");
+const placeholder = $("placeholder");
 
-let originalImage = null, originalUrl = null, resultBlob = null;
-let sessionPromise = null, drawing = false, lastPoint = null, strokes = [];
+const maskCanvas = document.createElement("canvas");
+const maskCtx = maskCanvas.getContext("2d", {willReadFrequently:true});
+
+const brushSize = $("brushSize");
+const brushValue = $("brushValue");
+const clearButton = $("clearButton");
+const undoButton = $("undoButton");
+const removeButton = $("removeButton");
+const downloadButton = $("downloadButton");
+const resetButton = $("resetButton");
+const statusBox = $("status");
+
+let originalImage = null;
+let originalUrl = null;
+let resultBlob = null;
+let sessionPromise = null;
+let drawing = false;
+let lastPoint = null;
+let strokes = [];
+let loadNumber = 0;
 
 function status(message, type="") {
   statusBox.textContent = message;
   statusBox.className = "status" + (type ? " " + type : "");
 }
-function buttons(on) {
-  clearButton.disabled = !on;
-  undoButton.disabled = !on || strokes.length === 0;
-  removeButton.disabled = !on;
-  resetButton.disabled = !on;
+
+function updateButtons() {
+  const loaded = !!originalImage;
+  clearButton.disabled = !loaded;
+  undoButton.disabled = !loaded || strokes.length === 0;
+  removeButton.disabled = !loaded;
+  resetButton.disabled = !loaded;
 }
-function draw() {
+
+function drawPhoto() {
   if (!originalImage) return;
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  ctx.drawImage(originalImage,0,0,canvas.width,canvas.height);
-  ctx.drawImage(maskCanvas,0,0);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.drawImage(originalImage, 0, 0, canvas.width, canvas.height);
+  ctx.drawImage(maskCanvas, 0, 0);
 }
-function clearMask() {
-  maskCtx.clearRect(0,0,maskCanvas.width,maskCanvas.height);
-  strokes = []; draw(); buttons(!!originalImage);
-  resultBlob = null; downloadButton.disabled = true;
-  status("Selezione cancellata.");
+
+function clearSelection() {
+  maskCtx.clearRect(0, 0, maskCanvas.width, maskCanvas.height);
+  strokes = [];
+  resultBlob = null;
+  downloadButton.disabled = true;
+  drawPhoto();
+  updateButtons();
+  status("Selezione cancellata. Dipingi sopra l'oggetto da rimuovere.");
 }
-function eventPoint(e) {
-  const r = canvas.getBoundingClientRect();
-  return {x:(e.clientX-r.left)*canvas.width/r.width,y:(e.clientY-r.top)*canvas.height/r.height};
+
+function getPoint(event) {
+  const rect = canvas.getBoundingClientRect();
+  return {
+    x: (event.clientX - rect.left) * canvas.width / rect.width,
+    y: (event.clientY - rect.top) * canvas.height / rect.height
+  };
 }
+
 function paint(point) {
   const scale = canvas.width / canvas.getBoundingClientRect().width;
-  const radius = Number(brushSize.value)*scale/2;
-  maskCtx.strokeStyle = "rgba(255,35,65,.8)";
-  maskCtx.fillStyle = "rgba(255,35,65,.45)";
-  maskCtx.lineWidth = radius*2; maskCtx.lineCap = "round"; maskCtx.lineJoin = "round";
+  const radius = Number(brushSize.value) * scale / 2;
+
+  maskCtx.lineWidth = radius * 2;
+  maskCtx.lineCap = "round";
+  maskCtx.lineJoin = "round";
+  maskCtx.strokeStyle = "rgba(255,35,65,0.85)";
+  maskCtx.fillStyle = "rgba(255,35,65,0.5)";
+
   if (lastPoint) {
-    maskCtx.beginPath(); maskCtx.moveTo(lastPoint.x,lastPoint.y);
-    maskCtx.lineTo(point.x,point.y); maskCtx.stroke();
+    maskCtx.beginPath();
+    maskCtx.moveTo(lastPoint.x, lastPoint.y);
+    maskCtx.lineTo(point.x, point.y);
+    maskCtx.stroke();
   } else {
-    maskCtx.beginPath(); maskCtx.arc(point.x,point.y,radius,0,Math.PI*2); maskCtx.fill();
+    maskCtx.beginPath();
+    maskCtx.arc(point.x, point.y, radius, 0, Math.PI * 2);
+    maskCtx.fill();
   }
-  lastPoint = point; draw();
+
+  lastPoint = point;
+  drawPhoto();
 }
-canvas.addEventListener("pointerdown", e => {
+
+canvas.addEventListener("pointerdown", event => {
   if (!originalImage) return;
-  e.preventDefault(); drawing = true; lastPoint = null;
-  strokes.push(maskCtx.getImageData(0,0,maskCanvas.width,maskCanvas.height));
-  canvas.setPointerCapture(e.pointerId); paint(eventPoint(e));
-  undoButton.disabled = false; resultBlob = null; downloadButton.disabled = true;
+
+  event.preventDefault();
+  drawing = true;
+  lastPoint = null;
+
+  strokes.push(maskCtx.getImageData(
+    0, 0, maskCanvas.width, maskCanvas.height
+  ));
+
+  canvas.setPointerCapture(event.pointerId);
+  paint(getPoint(event));
+  updateButtons();
+  resultBlob = null;
+  downloadButton.disabled = true;
 });
-canvas.addEventListener("pointermove", e => {
-  if (drawing) { e.preventDefault(); paint(eventPoint(e)); }
+
+canvas.addEventListener("pointermove", event => {
+  if (!drawing) return;
+  event.preventDefault();
+  paint(getPoint(event));
 });
-function stopDraw() { drawing = false; lastPoint = null; }
-canvas.addEventListener("pointerup",stopDraw);
-canvas.addEventListener("pointercancel",stopDraw);
-canvas.addEventListener("lostpointercapture",stopDraw);
-brushSize.addEventListener("input", () => brushValue.textContent = brushSize.value);
-clearButton.addEventListener("click",clearMask);
-undoButton.addEventListener("click",() => {
+
+function stopDrawing() {
+  drawing = false;
+  lastPoint = null;
+}
+
+canvas.addEventListener("pointerup", stopDrawing);
+canvas.addEventListener("pointercancel", stopDrawing);
+canvas.addEventListener("lostpointercapture", stopDrawing);
+
+brushSize.addEventListener("input", () => {
+  brushValue.textContent = brushSize.value;
+});
+
+clearButton.addEventListener("click", clearSelection);
+
+undoButton.addEventListener("click", () => {
   const previous = strokes.pop();
-  if (previous) maskCtx.putImageData(previous,0,0);
-  draw(); undoButton.disabled = !strokes.length;
-  resultBlob = null; downloadButton.disabled = true;
+  if (previous) maskCtx.putImageData(previous, 0, 0);
+  drawPhoto();
+  resultBlob = null;
+  downloadButton.disabled = true;
+  updateButtons();
   status("Ultimo tratto annullato.");
 });
 
-function revokeOriginal() {
+// CARICAMENTO FOTO
+function revokeOriginalUrl() {
   if (originalUrl) URL.revokeObjectURL(originalUrl);
   originalUrl = null;
 }
+
 fileInput.addEventListener("change", () => {
   const file = fileInput.files && fileInput.files[0];
   if (!file) return;
-  if (!["image/jpeg","image/png","image/webp"].includes(file.type)) {
-    status("Formato non supportato. Usa JPG, PNG o WebP.","error");
-    fileInput.value = ""; return;
+
+  if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
+    status("Formato non supportato. Scegli JPG, PNG o WebP.", "error");
+    fileInput.value = "";
+    return;
   }
-  revokeOriginal();
-  const url = URL.createObjectURL(file); originalUrl = url;
+
+  const currentLoad = ++loadNumber;
+  revokeOriginalUrl();
+
+  const url = URL.createObjectURL(file);
+  originalUrl = url;
   const img = new Image();
+
   img.onload = () => {
+    if (currentLoad !== loadNumber) {
+      URL.revokeObjectURL(url);
+      return;
+    }
+
     originalImage = img;
-    const factor = Math.min(1,1024/Math.max(img.naturalWidth,img.naturalHeight));
-    canvas.width = Math.max(1,Math.round(img.naturalWidth*factor));
-    canvas.height = Math.max(1,Math.round(img.naturalHeight*factor));
-    maskCanvas.width = canvas.width; maskCanvas.height = canvas.height;
-    strokes = []; maskCtx.clearRect(0,0,maskCanvas.width,maskCanvas.height);
-    canvas.hidden = false; placeholder.hidden = true; draw();
-    buttons(true); resultBlob = null; downloadButton.disabled = true;
-    status("Foto caricata. Dipingi sull'oggetto da rimuovere.");
+
+    // Limita la foto a 1024 pixel sul lato maggiore.
+    const scale = Math.min(
+      1, 1024 / Math.max(img.naturalWidth, img.naturalHeight)
+    );
+
+    canvas.width = Math.max(1, Math.round(img.naturalWidth * scale));
+    canvas.height = Math.max(1, Math.round(img.naturalHeight * scale));
+
+    maskCanvas.width = canvas.width;
+    maskCanvas.height = canvas.height;
+    maskCtx.clearRect(0, 0, maskCanvas.width, maskCanvas.height);
+
+    strokes = [];
+    resultBlob = null;
+    downloadButton.disabled = true;
+    canvas.hidden = false;
+    placeholder.hidden = true;
+
+    drawPhoto();
+    updateButtons();
+    status("Foto caricata. Dipingi sopra l'oggetto da rimuovere.");
   };
+
   img.onerror = () => {
+    if (currentLoad !== loadNumber) return;
     URL.revokeObjectURL(url);
     if (originalUrl === url) originalUrl = null;
-    status("Impossibile leggere la foto selezionata.","error");
+    status("Impossibile aprire questa immagine.", "error");
   };
+
   img.src = url;
 });
 
-resetButton.addEventListener("click",() => {
-  originalImage = null; revokeOriginal(); fileInput.value = "";
-  canvas.hidden = true; placeholder.hidden = false;
-  canvas.width = canvas.height = maskCanvas.width = maskCanvas.height = 1;
-  strokes = []; resultBlob = null; downloadButton.disabled = true;
-  buttons(false); status("Carica una foto per iniziare.");
+// RIPRISTINO
+resetButton.addEventListener("click", () => {
+  loadNumber++;
+  originalImage = null;
+  revokeOriginalUrl();
+  fileInput.value = "";
+
+  canvas.hidden = true;
+  placeholder.hidden = false;
+  canvas.width = canvas.height = 1;
+  maskCanvas.width = maskCanvas.height = 1;
+
+  strokes = [];
+  resultBlob = null;
+  downloadButton.disabled = true;
+  updateButtons();
+  status("Carica una foto per iniziare.");
 });
 
-function ortLib() {
-  if (!window.ort || !ort.InferenceSession || !ort.Tensor) {
-    throw new Error("Libreria IA non caricata. Ricarica la pagina e verifica la connessione.");
+// CARICAMENTO MODELLO
+function getOrt() {
+  if (!window.ort || !window.ort.InferenceSession || !window.ort.Tensor) {
+    throw new Error(
+      "Libreria IA non caricata. Controlla la connessione e ricarica la pagina."
+    );
   }
   return window.ort;
 }
+
 async function getSession() {
-  const ort = ortLib();
   if (!sessionPromise) {
+    const ort = getOrt();
     ort.env.wasm.numThreads = 1;
-    sessionPromise = ort.InferenceSession.create(MODEL_URL,{
-      executionProviders:["wasm"], graphOptimizationLevel:"all"
-    }).catch(err => { sessionPromise = null; throw err; });
+
+    sessionPromise = ort.InferenceSession.create(MODEL_URL, {
+      executionProviders: ["wasm"],
+      graphOptimizationLevel: "all"
+    }).catch(error => {
+      sessionPromise = null;
+      throw error;
+    });
   }
   return sessionPromise;
 }
 
-// Converte i pixel in canali RGB e supporta float32 o uint8.
-// L'ordine dei canali e la forma sono controllati separatamente.
-function makeImageData(imageData, dataType, channelFirst) {
-  const {width,height,data:pixels} = imageData;
-  const channels = 3, count = width*height;
-  const out = dataType === "uint8" ? new Uint8Array(count*channels) : new Float32Array(count*channels);
-  for (let i=0;i<count;i++) {
-    for (let c=0;c<channels;c++) {
-      const value = pixels[i*4+c];
-      const index = channelFirst ? c*count+i : i*channels+c;
-      out[index] = dataType === "uint8" ? value : value/255;
-    }
+// PREPARA ESATTAMENTE I TENSOR UINT8 RICHIESTI DAL MODELLO.
+// image: RGB [1,3,H,W]
+// mask:  [1,1,H,W]
+// La maschera MI-GAN usa 0 per cancellare e 255 per conservare.
+function makeImageTensor(ort, imageData) {
+  const width = imageData.width;
+  const height = imageData.height;
+  const source = imageData.data;
+  const plane = width * height;
+  const data = new Uint8Array(3 * plane);
+
+  for (let i = 0; i < plane; i++) {
+    data[i] = source[i * 4];                 // R
+    data[plane + i] = source[i * 4 + 1];     // G
+    data[2 * plane + i] = source[i * 4 + 2]; // B
   }
-  return out;
-}
-function makeMaskData(maskPixels, dataType) {
-  const count = maskPixels.length/4;
-  const out = dataType === "uint8" ? new Uint8Array(count) : new Float32Array(count);
-  for (let i=0;i<count;i++) {
-    const selected = maskPixels[i*4+3] > 0;
-    out[i] = dataType === "uint8" ? (selected ? 255 : 0) : (selected ? 1 : 0);
-  }
-  return out;
-}
-function shapeFor(meta, width, height, channels) {
-  const dims = meta.dimensions || [];
-  // Usa dimensioni fisse se dichiarate, altrimenti le dimensioni dell'immagine.
-  if (dims.length === 4) {
-    const channelFirst = dims[1] === 3 || dims[1] === 1 ||
-      (typeof dims[1] === "number" && dims[1] > 4);
-    return {
-      dims: [1, channelFirst ? channels : height, channelFirst ? height : width,
-        channelFirst ? width : channels],
-      channelFirst
-    };
-  }
-  return {dims:[1,channels,height,width],channelFirst:true};
-}
-function buildInputTensor(ort, meta, imageData, maskPixels, width, height, kind) {
-  const type = meta.type;
-  if (!["float32","uint8"].includes(type)) {
-    throw new Error("Tipo ingresso non supportato dal codice: " + type + ". Serve adattare il preprocessing del modello.");
-  }
-  const isMask = kind === "mask";
-  const channels = isMask ? 1 : 3;
-  const shape = shapeFor(meta,width,height,channels);
-  let data;
-  if (isMask) {
-    const flat = makeMaskData(maskPixels,type);
-    if (shape.dims.length === 4 && shape.dims[1] === 1) data = flat;
-    else data = flat;
-  } else {
-    data = makeImageData(imageData,type,shape.channelFirst);
-  }
-  return new ort.Tensor(type,data,shape.dims);
+
+  return new ort.Tensor("uint8", data, [1, 3, height, width]);
 }
 
+function makeMaskTensor(ort, maskPixels, width, height) {
+  const plane = width * height;
+  const data = new Uint8Array(plane);
+
+  for (let i = 0; i < plane; i++) {
+    // La zona dipinta è da cancellare: valore 0.
+    // Tutto il resto va conservato: valore 255.
+    data[i] = maskPixels[i * 4 + 3] > 0 ? 0 : 255;
+  }
+
+  return new ort.Tensor("uint8", data, [1, 1, height, width]);
+}
+
+// ELABORAZIONE
 removeButton.addEventListener("click", async () => {
   if (!originalImage) return;
-  const width = canvas.width, height = canvas.height;
-  const maskPixels = maskCtx.getImageData(0,0,width,height).data;
-  let hasMask = false;
-  for (let i=3;i<maskPixels.length;i+=4) if (maskPixels[i]>0) { hasMask=true; break; }
-  if (!hasMask) { status("Dipingi prima sull'oggetto da rimuovere.","error"); return; }
 
-  removeButton.disabled = true; downloadButton.disabled = true;
-  status("Caricamento del modello IA…");
+  const width = canvas.width;
+  const height = canvas.height;
+
+  const maskPixels = maskCtx.getImageData(
+    0, 0, width, height
+  ).data;
+
+  let hasSelection = false;
+  for (let i = 3; i < maskPixels.length; i += 4) {
+    if (maskPixels[i] > 0) {
+      hasSelection = true;
+      break;
+    }
+  }
+
+  if (!hasSelection) {
+    status("Dipingi prima sopra l'oggetto che vuoi rimuovere.", "error");
+    return;
+  }
+
+  removeButton.disabled = true;
+  downloadButton.disabled = true;
+  status("Caricamento del modello IA. Attendi…");
 
   try {
-    const ort = ortLib();
+    const ort = getOrt();
     const session = await getSession();
-    const sourceCanvas = document.createElement("canvas");
-    sourceCanvas.width = width; sourceCanvas.height = height;
-    const sourceCtx = sourceCanvas.getContext("2d",{willReadFrequently:true});
-    sourceCtx.drawImage(originalImage,0,0,width,height);
-    const imageData = sourceCtx.getImageData(0,0,width,height);
-    const feeds = {};
 
-    for (const name of session.inputNames) {
-      const meta = session.inputMetadata && session.inputMetadata[name];
-      if (!meta) {
-        throw new Error("Metadati ingresso non disponibili per '" + name + "'. Non posso determinare il tipo corretto.");
-      }
-      const lower = name.toLowerCase();
-      const isMask = lower.includes("mask");
-      if (isMask) {
-        feeds[name] = buildInputTensor(ort,meta,imageData,maskPixels,width,height,"mask");
-      } else {
-        feeds[name] = buildInputTensor(ort,meta,imageData,maskPixels,width,height,"image");
-      }
-    }
+    // Ricrea la foto originale senza la sovrapposizione rossa.
+    const sourceCanvas = document.createElement("canvas");
+    sourceCanvas.width = width;
+    sourceCanvas.height = height;
+
+    const sourceCtx = sourceCanvas.getContext(
+      "2d", {willReadFrequently:true}
+    );
+    sourceCtx.drawImage(originalImage, 0, 0, width, height);
+
+    const imageData = sourceCtx.getImageData(0, 0, width, height);
+
+    // Nomi, tipi e forme previsti dal modello MI-GAN Pipeline v2.
+    const imageTensor = makeImageTensor(ort, imageData);
+    const maskTensor = makeMaskTensor(ort, maskPixels, width, height);
 
     status("Elaborazione IA in corso…");
-    const outputs = await session.run(feeds);
-    const outputName = session.outputNames[0];
-    const output = outputs[outputName];
+
+    const outputs = await session.run({
+      image: imageTensor,
+      mask: maskTensor
+    });
+
+    const output = outputs.result;
+
     if (!output || !output.data || !output.dims) {
-      throw new Error("Il modello non ha restituito un'immagine valida.");
+      throw new Error("Il modello non ha restituito un risultato valido.");
     }
 
     const dims = output.dims;
-    if (dims.length !== 4 || dims[0] !== 1) {
-      throw new Error("La forma dell'uscita del modello non è quella prevista: " + JSON.stringify(dims));
+
+    if (
+      dims.length !== 4 ||
+      dims[0] !== 1 ||
+      dims[1] !== 3 ||
+      dims[2] !== height ||
+      dims[3] !== width ||
+      output.type !== "uint8"
+    ) {
+      throw new Error(
+        "Formato del risultato inatteso: " +
+        JSON.stringify(dims) + ", tipo " + output.type
+      );
     }
 
-    let channels, outHeight, outWidth, channelFirst;
-    if (dims[1] === 3 || dims[1] === 4) {
-      channels = dims[1]; outHeight = dims[2]; outWidth = dims[3]; channelFirst = true;
-    } else if (dims[3] === 3 || dims[3] === 4) {
-      outHeight = dims[1]; outWidth = dims[2]; channels = dims[3]; channelFirst = false;
-    } else {
-      throw new Error("Numero di canali uscita non riconosciuto: " + JSON.stringify(dims));
+    // Il risultato è RGB uint8 in formato [1,3,H,W].
+    const plane = width * height;
+    const rgb = output.data;
+    const resultCanvas = document.createElement("canvas");
+    resultCanvas.width = width;
+    resultCanvas.height = height;
+
+    const resultCtx = resultCanvas.getContext("2d");
+    const resultPixels = resultCtx.createImageData(width, height);
+
+    for (let i = 0; i < plane; i++) {
+      resultPixels.data[i * 4] = rgb[i];
+      resultPixels.data[i * 4 + 1] = rgb[plane + i];
+      resultPixels.data[i * 4 + 2] = rgb[2 * plane + i];
+      resultPixels.data[i * 4 + 3] = 255;
     }
 
-    const outCanvas = document.createElement("canvas");
-    outCanvas.width = outWidth; outCanvas.height = outHeight;
-    const outCtx = outCanvas.getContext("2d");
-    const pixels = outCtx.createImageData(outWidth,outHeight);
-    const plane = outWidth*outHeight;
+    resultCtx.putImageData(resultPixels, 0, 0);
 
-    for (let i=0;i<plane;i++) {
-      for (let c=0;c<3;c++) {
-        let v = channelFirst ? output.data[c*plane+i] : output.data[i*channels+c];
-        if (output.type === "float32" && v >= 0 && v <= 1) v *= 255;
-        pixels.data[i*4+c] = Math.max(0,Math.min(255,Math.round(v)));
-      }
-      pixels.data[i*4+3] = 255;
+    resultBlob = await new Promise(resolve =>
+      resultCanvas.toBlob(resolve, "image/png")
+    );
+
+    if (!resultBlob) {
+      throw new Error("Impossibile creare il file immagine finale.");
     }
-    outCtx.putImageData(pixels,0,0);
 
-    const finalCanvas = document.createElement("canvas");
-    finalCanvas.width = width; finalCanvas.height = height;
-    finalCanvas.getContext("2d").drawImage(outCanvas,0,0,width,height);
-    resultBlob = await new Promise(resolve => finalCanvas.toBlob(resolve,"image/png"));
-    if (!resultBlob) throw new Error("Impossibile creare il file finale.");
+    // Mostra il risultato senza perdere la foto originale caricata.
+    ctx.clearRect(0, 0, width, height);
+    ctx.drawImage(resultCanvas, 0, 0, width, height);
 
-    const resultUrl = URL.createObjectURL(resultBlob);
-    const resultImage = new Image();
-    resultImage.onload = () => {
-      ctx.clearRect(0,0,width,height);
-      ctx.drawImage(resultImage,0,0,width,height);
-      URL.revokeObjectURL(resultUrl);
-      downloadButton.disabled = false;
-      status("Elaborazione completata. Puoi scaricare la foto.","success");
-    };
-    resultImage.onerror = () => {
-      URL.revokeObjectURL(resultUrl);
-      resultBlob = null;
-      status("Il risultato non può essere visualizzato.","error");
-    };
-    resultImage.src = resultUrl;
+    downloadButton.disabled = false;
+    status("Oggetto rimosso. Puoi scaricare la foto modificata.", "success");
 
-  } catch (err) {
-    console.error("Errore modello MI-GAN:",err);
-    status("Errore durante l'elaborazione: " +
-      (err && err.message ? err.message : String(err)) +
-      " Il modello può richiedere un formato o dimensioni specifiche.","error");
+  } catch (error) {
+    console.error("Errore MI-GAN:", error);
+    status(
+      "Errore durante l'elaborazione: " +
+      (error && error.message ? error.message : String(error)),
+      "error"
+    );
   } finally {
     removeButton.disabled = !originalImage;
   }
 });
 
-downloadButton.addEventListener("click",() => {
+// DOWNLOAD
+downloadButton.addEventListener("click", () => {
   if (!resultBlob) return;
+
   const url = URL.createObjectURL(resultBlob);
   const link = document.createElement("a");
-  link.href = url; link.download = "ritoccapix-foto-modificata.png";
-  document.body.appendChild(link); link.click(); link.remove();
-  setTimeout(() => URL.revokeObjectURL(url),1500);
+  link.href = url;
+  link.download = "ritoccapix-foto-modificata.png";
+
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+
+  setTimeout(() => URL.revokeObjectURL(url), 2000);
 });
 
-window.addEventListener("load",() => {
-  if (!window.ort) status("Libreria IA non caricata. Menu e pagina sono disponibili, ma la rimozione IA non può partire.","error");
+window.addEventListener("load", () => {
+  if (!window.ort) {
+    status(
+      "La libreria IA non è stata caricata. Controlla la connessione.",
+      "error"
+    );
+  }
 });
 })();
 </script>
