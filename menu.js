@@ -1,9 +1,9 @@
-
 /* Image Tools - Responsive Dropdown Navigation */
 (function () {
   const tools = [
     { name: "Image Resizer", url: "image-resizer.html" },
     { name: "Image Compressor", url: "image-compressor.html" },
+    { name: "Compress Image to 100KB", url: "compress-image-to-100kb.html" },
     { name: "Image Converter", url: "image-converter.html" },
     { name: "HEIC to JPG", url: "heic-to-jpg.html" },
     { name: "WebP to JPG", url: "webp-to-jpg.html" },
