@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Social Video Maker – TikTok, Reels & Shorts | RitoccaPix</title>
-<meta name="description" content="Create videos from photos for TikTok, Instagram Reels and YouTube Shorts. Add music, text and export your slideshow online for free.">
+<meta name="description" content="Create videos from photos for TikTok, Instagram Reels and YouTube Shorts. Add text, preview your slideshow and export it online for free.">
 <meta name="theme-color" content="#10131c">
 <link rel="canonical" href="https://ritoccapix.com/social-video-maker.html">
 
@@ -23,15 +23,24 @@
 }
 *{box-sizing:border-box}
 body{
-  margin:0;background:var(--bg);color:var(--text);
-  font-family:Arial,Helvetica,sans-serif;line-height:1.6
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
+  line-height:1.6
 }
 a{color:#c1b7ff}
 header{
-  padding:22px 16px;text-align:center;
+  padding:22px 16px;
+  text-align:center;
   border-bottom:1px solid var(--border)
 }
-.logo{font-size:26px;font-weight:800;color:white;text-decoration:none}
+.logo{
+  font-size:26px;
+  font-weight:800;
+  color:white;
+  text-decoration:none
+}
 .logo span{color:var(--accent)}
 header p{margin:5px 0;color:var(--muted)}
 main{width:min(1120px,94%);margin:30px auto 60px}
@@ -41,49 +50,84 @@ h3{font-size:16px;margin:0 0 8px}
 .intro{color:var(--muted);max-width:760px;margin-bottom:26px}
 .layout{display:grid;grid-template-columns:1.1fr .9fr;gap:22px}
 .panel{
-  background:var(--panel);border:1px solid var(--border);
-  border-radius:18px;padding:22px;min-width:0
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:22px;
+  min-width:0
 }
 .field{margin:0 0 19px}
 label{display:block;font-weight:700;margin-bottom:7px}
 input,select,button{font:inherit}
 input[type="text"],select{
-  width:100%;padding:12px;border-radius:10px;
-  border:1px solid var(--border);background:#111725;color:white
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:#111725;
+  color:white
 }
 input[type="file"]{
-  width:100%;padding:12px;background:#111725;color:white;
-  border:1px dashed #56617b;border-radius:10px
+  width:100%;
+  padding:12px;
+  background:#111725;
+  color:white;
+  border:1px dashed #56617b;
+  border-radius:10px
 }
 input[type="range"]{width:100%;accent-color:var(--accent)}
 button{
-  border:0;border-radius:10px;padding:12px 16px;
-  cursor:pointer;font-weight:700
+  border:0;
+  border-radius:10px;
+  padding:12px 16px;
+  cursor:pointer;
+  font-weight:700
 }
 .primary{background:var(--accent);color:white;width:100%}
 .secondary{
-  background:var(--panel2);color:white;
+  background:var(--panel2);
+  color:white;
   border:1px solid var(--border)
 }
 button:disabled{opacity:.5;cursor:not-allowed}
 small,.muted{color:var(--muted)}
 .preview-wrap{display:flex;justify-content:center}
 .preview{
-  width:min(100%,300px);aspect-ratio:9/16;background:#080a10;
-  border:1px solid #434d65;border-radius:16px;overflow:hidden;
-  position:relative;display:flex;align-items:center;justify-content:center
+  width:min(100%,300px);
+  aspect-ratio:9/16;
+  background:#080a10;
+  border:1px solid #434d65;
+  border-radius:16px;
+  overflow:hidden;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center
 }
 .preview img{width:100%;height:100%;object-fit:contain}
 .overlay{
-  position:absolute;left:7%;right:7%;bottom:9%;text-align:center;
-  font-weight:800;font-size:25px;line-height:1.2;color:white;
-  text-shadow:0 2px 7px #000,0 0 12px #000;overflow-wrap:anywhere
+  position:absolute;
+  left:7%;
+  right:7%;
+  bottom:9%;
+  text-align:center;
+  font-weight:800;
+  font-size:25px;
+  line-height:1.2;
+  color:white;
+  text-shadow:0 2px 7px #000,0 0 12px #000;
+  overflow-wrap:anywhere
 }
 .preview-placeholder{text-align:center;color:var(--muted);padding:20px}
 .file-list{display:grid;gap:8px;margin:12px 0}
 .file-item{
-  display:flex;align-items:center;gap:8px;padding:8px;
-  border:1px solid var(--border);border-radius:10px;background:#111725
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:8px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:#111725
 }
 .file-item img{width:45px;height:45px;object-fit:cover;border-radius:6px}
 .file-item span{font-size:13px;overflow-wrap:anywhere;flex:1;min-width:0}
@@ -91,34 +135,39 @@ small,.muted{color:var(--muted)}
 .actions{display:grid;gap:10px;margin-top:16px}
 #status{margin-top:12px;font-size:14px;color:var(--muted);overflow-wrap:anywhere}
 #downloadLink{
-  display:none;text-align:center;padding:12px;background:#173c32;
-  border:1px solid #2e795e;border-radius:10px;
-  color:#b8ffe4;font-weight:bold;text-decoration:none
+  display:none;
+  text-align:center;
+  padding:12px;
+  background:#173c32;
+  border:1px solid #2e795e;
+  border-radius:10px;
+  color:#b8ffe4;
+  font-weight:bold;
+  text-decoration:none
 }
 .note{font-size:13px;color:var(--muted)}
-.music-grid{
-  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px
-}
-.music-card{
-  display:flex;flex-direction:column;gap:5px;padding:13px;
-  text-decoration:none;color:white;background:#111725;
-  border:1px solid var(--border);border-radius:12px
-}
-.music-card:hover{border-color:var(--accent);background:var(--panel2)}
-.music-card strong{font-size:14px}
-.music-card span{font-size:12px;color:var(--muted)}
-.music-icon{font-size:22px}
 .music-note{
-  padding:12px;background:#20283a;border-radius:10px;
-  font-size:13px;color:var(--muted);margin-top:12px
+  padding:14px;
+  background:#20283a;
+  border:1px solid var(--border);
+  border-radius:12px;
+  font-size:14px;
+  color:var(--muted);
+  margin-top:16px
 }
+.music-note strong{color:var(--text)}
 footer{
-  text-align:center;border-top:1px solid var(--border);
-  padding:24px;color:var(--muted);font-size:13px
+  text-align:center;
+  border-top:1px solid var(--border);
+  padding:24px;
+  color:var(--muted);
+  font-size:13px
 }
 @media(max-width:760px){
   .layout{grid-template-columns:1fr}
   .panel{padding:16px}
+  .file-item{gap:5px}
+  .file-item button{padding:5px 8px}
 }
 </style>
 </head>
@@ -134,7 +183,7 @@ footer{
   <h1>Social Video Maker</h1>
   <p class="intro">
     Turn your photos into videos for TikTok, Instagram Reels and YouTube Shorts.
-    Add text and music, preview your slideshow and export it in your browser.
+    Add a title, choose your format and export your slideshow directly in your browser.
   </p>
 
   <div class="layout">
@@ -167,7 +216,9 @@ footer{
       </div>
 
       <div class="field">
-        <label for="duration">Seconds per photo: <span id="durationValue">2</span></label>
+        <label for="duration">
+          Seconds per photo: <span id="durationValue">2</span>
+        </label>
         <input id="duration" type="range" min="1" max="6" value="2">
       </div>
 
@@ -179,77 +230,26 @@ footer{
         </select>
       </div>
 
-      <h2>3. Find your music</h2>
-      <p class="muted">Explore music services and libraries in a new tab.</p>
-
-      <div class="music-grid">
-        <a class="music-card" href="https://open.spotify.com/"
-           target="_blank" rel="noopener noreferrer">
-          <span class="music-icon">🎧</span>
-          <strong>Spotify</strong>
-          <span>Discover music</span>
-        </a>
-
-        <a class="music-card" href="https://music.youtube.com/"
-           target="_blank" rel="noopener noreferrer">
-          <span class="music-icon">▶️</span>
-          <strong>YouTube Music</strong>
-          <span>Find a soundtrack</span>
-        </a>
-
-        <a class="music-card" href="https://pixabay.com/music/"
-           target="_blank" rel="noopener noreferrer">
-          <span class="music-icon">🎵</span>
-          <strong>Pixabay Music</strong>
-          <span>Explore free music</span>
-        </a>
-
-        <a class="music-card" href="https://mixkit.co/free-stock-music/"
-           target="_blank" rel="noopener noreferrer">
-          <span class="music-icon">🎼</span>
-          <strong>Mixkit</strong>
-          <span>Explore free tracks</span>
-        </a>
-      </div>
-
       <div class="music-note">
-        Spotify and YouTube Music are for discovering and listening to music.
-        This tool cannot import or download their tracks automatically.
-        Check the licence for any music you use in your exported video.
-      </div>
-
-      <div class="field" style="margin-top:20px">
-        <label for="music">Upload your own audio file</label>
-        <input id="music" type="file" accept="audio/*">
-        <small>Choose an audio file saved on your device.</small>
-      </div>
-
-      <div id="audioControls" hidden>
-        <div class="field">
-          <label for="volume">Music volume: <span id="volumeValue">70%</span></label>
-          <input id="volume" type="range" min="0" max="100" value="70">
-        </div>
-
-        <div class="field">
-          <label for="fade">Fade in / fade out: <span id="fadeValue">2 seconds</span></label>
-          <input id="fade" type="range" min="0" max="5" value="2">
-          <small>Gradually increase the music at the start and reduce it at the end.</small>
-        </div>
-
-        <div class="field">
-          <button class="secondary" id="removeMusic" type="button">
-            Remove music
-          </button>
-        </div>
+        <strong>Want to add music?</strong>
+        <p>
+          Create and download your video first. Then open TikTok or Instagram,
+          upload your video and choose music from the platform's music library.
+        </p>
+        <p>
+          Music availability depends on your account, region and how you use the video.
+        </p>
       </div>
 
       <div class="actions">
         <button class="secondary" id="previewButton" type="button">
           Update preview
         </button>
+
         <button class="primary" id="exportButton" type="button">
           Create video
         </button>
+
         <a id="downloadLink" download="ritoccapix-social-video.webm">
           Download video
         </a>
@@ -283,9 +283,11 @@ footer{
       </div>
 
       <div class="music-note">
-        <strong>Privacy</strong><br>
-        Photos and audio are processed locally in your browser.
-        They are not uploaded by this tool.
+        <strong>Privacy</strong>
+        <p>
+          Photos are processed locally in your browser.
+          They are not uploaded by this tool.
+        </p>
       </div>
     </section>
   </div>
@@ -293,23 +295,23 @@ footer{
   <section class="panel" style="margin-top:22px">
     <h2>How to create your social video</h2>
     <ol>
-      <li>Upload and arrange your photos.</li>
+      <li>Upload your photos and arrange their order.</li>
       <li>Choose a vertical, square or landscape format.</li>
       <li>Add a title and select the duration of each photo.</li>
-      <li>Find music from one of the linked services, then upload an audio file you can use.</li>
-      <li>Set the volume and fade effects.</li>
+      <li>Choose the video resolution.</li>
       <li>Create and download your video.</li>
+      <li>To add music, upload the video to TikTok or Instagram and choose an available track.</li>
     </ol>
     <p class="note">
       This version exports WebM when supported by your browser.
-      MP4 conversion is not included in this version.
+      MP4 conversion is not included.
     </p>
   </section>
 </main>
 
 <footer>
   <p>RitoccaPix – Free online tools for images and social content.</p>
-  <p>Use only photos and audio you have permission to use.</p>
+  <p>Use only photos you have permission to use.</p>
 </footer>
 
 <script>
@@ -318,7 +320,6 @@ footer{
 
   let files = [];
   let urls = [];
-  let audioUrl = null;
   let currentBlobUrl = null;
   let exporting = false;
 
@@ -560,54 +561,6 @@ footer{
   $('previewIndex').addEventListener('input',updatePreview);
   $('previewButton').addEventListener('click',updatePreview);
 
-  $('volume').addEventListener('input',()=>{
-    $('volumeValue').textContent = $('volume').value+'%';
-    resetExport();
-  });
-
-  $('fade').addEventListener('input',()=>{
-    $('fadeValue').textContent = $('fade').value+' seconds';
-    resetExport();
-  });
-
-  $('music').addEventListener('change',()=>{
-    if(audioUrl){
-      URL.revokeObjectURL(audioUrl);
-      audioUrl = null;
-    }
-
-    const file = $('music').files[0];
-
-    if(file && !file.type.startsWith('audio/')){
-      $('music').value = '';
-      $('audioControls').hidden = true;
-      setStatus('Please select a valid audio file.');
-      return;
-    }
-
-    audioUrl = file ? URL.createObjectURL(file) : null;
-    $('audioControls').hidden = !file;
-
-    resetExport();
-
-    setStatus(file
-      ? `Music selected: ${file.name}.`
-      : 'No music selected.');
-  });
-
-  $('removeMusic').addEventListener('click',()=>{
-    if(audioUrl){
-      URL.revokeObjectURL(audioUrl);
-      audioUrl = null;
-    }
-
-    $('music').value = '';
-    $('audioControls').hidden = true;
-
-    resetExport();
-    setStatus('Music removed.');
-  });
-
   function loadImage(url){
     return new Promise((resolve,reject)=>{
       const img = new Image();
@@ -622,8 +575,6 @@ footer{
     if(!window.MediaRecorder) return '';
 
     const candidates = [
-      'video/webm;codecs=vp9,opus',
-      'video/webm;codecs=vp8,opus',
       'video/webm;codecs=vp9',
       'video/webm;codecs=vp8',
       'video/webm'
@@ -661,23 +612,15 @@ footer{
     button.disabled = true;
 
     let recorder = null;
-    let audioContext = null;
-    let audioElement = null;
-    let audioSource = null;
-    let audioGain = null;
-    let mixedStream = null;
+    let videoStream = null;
     let chunks = [];
     let stoppedPromise = null;
-    let completed = false;
 
     resetExport();
 
     try{
       const d = getDimensions();
       const seconds = Number($('duration').value);
-      const totalDuration = seconds*files.length;
-      const volume = Number($('volume').value)/100;
-      const fade = Math.min(Number($('fade').value),totalDuration/2);
 
       setStatus('Loading photos…');
 
@@ -686,57 +629,8 @@ footer{
       canvas.width = d.w;
       canvas.height = d.h;
 
-      const videoStream = canvas.captureStream(30);
-      const tracks = [...videoStream.getVideoTracks()];
-
-      if(audioUrl){
-        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-
-        if(!AudioContextClass){
-          throw new Error('Audio processing is not supported in this browser.');
-        }
-
-        audioContext = new AudioContextClass();
-        await audioContext.resume();
-
-        audioElement = new Audio();
-        audioElement.src = audioUrl;
-        audioElement.loop = true;
-        audioElement.preload = 'auto';
-
-        await new Promise((resolve,reject)=>{
-          audioElement.oncanplay = resolve;
-          audioElement.onerror = ()=>reject(
-            new Error('The selected audio file could not be loaded.')
-          );
-          audioElement.load();
-        });
-
-        audioSource = audioContext.createMediaElementSource(audioElement);
-        audioGain = audioContext.createGain();
-
-        audioSource.connect(audioGain);
-
-        const destination = audioContext.createMediaStreamDestination();
-        audioGain.connect(destination);
-
-        audioGain.gain.setValueAtTime(0,audioContext.currentTime);
-
-        if(fade>0){
-          audioGain.gain.linearRampToValueAtTime(
-            volume,audioContext.currentTime+fade
-          );
-        }else{
-          audioGain.gain.setValueAtTime(volume,audioContext.currentTime);
-        }
-
-        tracks.push(...destination.stream.getAudioTracks());
-      }
-
-      mixedStream = new MediaStream(tracks);
-
-      const options = {mimeType:mime};
-      recorder = new MediaRecorder(mixedStream,options);
+      videoStream = canvas.captureStream(30);
+      recorder = new MediaRecorder(videoStream,{mimeType:mime});
 
       recorder.ondataavailable = e=>{
         if(e.data && e.data.size) chunks.push(e.data);
@@ -746,11 +640,6 @@ footer{
         recorder.onstop = resolve;
         recorder.onerror = ()=>reject(new Error('Video recording failed.'));
       });
-
-      if(audioElement){
-        audioElement.currentTime = 0;
-        await audioElement.play();
-      }
 
       recorder.start(250);
 
@@ -767,21 +656,8 @@ footer{
 
         const elapsed = performance.now()-startedAt;
         const target = (i+1)*seconds*1000;
+
         await wait(Math.max(0,target-elapsed));
-      }
-
-      if(audioGain && audioContext){
-        const now = audioContext.currentTime;
-        const fadeStart = Math.max(now,now+Math.max(0,totalDuration-fade));
-        const param = audioGain.gain;
-
-        if(fade>0){
-          param.cancelScheduledValues(now);
-          param.setValueAtTime(volume,fadeStart);
-          param.linearRampToValueAtTime(0,fadeStart+fade);
-        }else{
-          param.setValueAtTime(volume,now);
-        }
       }
 
       if(recorder.state !== 'inactive'){
@@ -790,15 +666,8 @@ footer{
 
       await stoppedPromise;
 
-      if(audioElement){
-        audioElement.pause();
-        audioElement.removeAttribute('src');
-        audioElement.load();
-      }
-
-      if(audioContext){
-        await audioContext.close();
-        audioContext = null;
+      if(videoStream){
+        videoStream.getTracks().forEach(track=>track.stop());
       }
 
       if(!chunks.length){
@@ -815,7 +684,6 @@ footer{
         `Download video (${(blob.size/1024/1024).toFixed(1)} MB)`;
       $('downloadLink').style.display = 'block';
 
-      completed = true;
       setStatus('Video created. Download it and check playback before posting.');
 
     }catch(err){
@@ -823,12 +691,8 @@ footer{
         try{recorder.stop();}catch(e){}
       }
 
-      if(audioElement){
-        try{audioElement.pause();}catch(e){}
-      }
-
-      if(audioContext){
-        try{await audioContext.close();}catch(e){}
+      if(videoStream){
+        videoStream.getTracks().forEach(track=>track.stop());
       }
 
       setStatus(err.message || 'Something went wrong while creating the video.');
@@ -850,4 +714,3 @@ footer{
 </script>
 </body>
 </html>
-```
