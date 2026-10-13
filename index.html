@@ -477,3 +477,343 @@
       }
 
       .hero-button {
+        width: 100%;
+      }
+
+      .tools-section {
+        padding-bottom: 52px;
+      }
+
+      .section-heading {
+        display: block;
+      }
+
+      .section-heading p {
+        margin-top: 9px;
+      }
+
+      .tools-grid {
+        grid-template-columns: 1fr;
+        gap: 13px;
+      }
+
+      .tool {
+        min-height: 0;
+        padding: 21px;
+      }
+
+      .benefits {
+        padding: 32px 0;
+        margin-bottom: 45px;
+      }
+
+      .seo {
+        padding-bottom: 45px;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        gap: 5px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <header>
+      <nav class="nav" aria-label="Main navigation">
+        <a class="logo" href="./" aria-label="RitoccaPix homepage">
+          Ritocca<span>Pix</span>
+        </a>
+        <a class="nav-link" href="#tools">Explore all tools ↓</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-content">
+
+          <div class="badge">✦ FREE ONLINE IMAGE TOOLS</div>
+
+          <h1>
+            Welcome to
+            <span class="brand-word">RitoccaPix</span>
+            <span class="tagline">Your images. Your creativity. Your tools.</span>
+          </h1>
+
+          <p>
+            Compress, resize, convert and optimize your images online.
+            Discover simple tools for everyday image tasks, directly
+            in your browser, without installing extra software.
+          </p>
+
+          <div class="hero-actions">
+            <a class="hero-button hero-primary" href="image-compressor.html">
+              Compress an image →
+            </a>
+
+            <a class="hero-button hero-secondary" href="#tools">
+              Explore all tools
+            </a>
+          </div>
+
+          <div class="hero-note">
+            Free to use · Simple · Browser-based
+          </div>
+
+        </div>
+      </section>
+
+      <section id="tools" class="tools-section">
+        <div class="section-heading">
+          <div>
+            <div class="section-label">Free image utilities</div>
+            <h2>What would you like to do?</h2>
+          </div>
+          <p>Explore our image tools.</p>
+        </div>
+
+        <div class="tools-grid">
+
+          <a class="tool" href="image-compressor.html">
+            <div class="tool-icon" aria-hidden="true">📦</div>
+            <h3>Image Compressor</h3>
+            <p>Reduce image file sizes for easier storage, sharing and web use.</p>
+            <span class="tool-tag">Compress</span>
+          </a>
+
+          <a class="tool" href="compress-image-to-100kb.html">
+            <div class="tool-icon" aria-hidden="true">🎯</div>
+            <h3>Compress Image to 100KB</h3>
+            <p>Compress images to a target file size of 50KB, 100KB, 200KB, 500KB or 1MB.</p>
+            <span class="tool-tag">Target file size</span>
+          </a>
+
+          <a class="tool" href="image-resizer.html">
+            <div class="tool-icon" aria-hidden="true">↔️</div>
+            <h3>Image Resizer</h3>
+            <p>Change image width and height to suit your needs.</p>
+            <span class="tool-tag">Resize</span>
+          </a>
+
+          <a class="tool" href="image-converter.html">
+            <div class="tool-icon" aria-hidden="true">🔄</div>
+            <h3>Image Converter</h3>
+            <p>Convert supported images between common image formats.</p>
+            <span class="tool-tag">Convert</span>
+          </a>
+
+          <a class="tool" href="image-optimizer.html">
+            <div class="tool-icon" aria-hidden="true">⚡</div>
+            <h3>Image Optimizer</h3>
+            <p>Explore options for preparing supported images for web use.</p>
+            <span class="tool-tag">Optimize</span>
+          </a>
+
+          <a class="tool" href="image-analyzer.html">
+            <div class="tool-icon" aria-hidden="true">🔎</div>
+            <h3>Image Analyzer</h3>
+            <p>Inspect available image dimensions and file information.</p>
+            <span class="tool-tag">Analyze</span>
+          </a>
+
+          <a class="tool" href="image-smart.html">
+            <div class="tool-icon" aria-hidden="true">✨</div>
+            <h3>Smart Image Tools</h3>
+            <p>Explore additional image utilities and editing options.</p>
+            <span class="tool-tag">Smart tools</span>
+          </a>
+
+          <a class="tool" href="image-social.html">
+            <div class="tool-icon" aria-hidden="true">📱</div>
+            <h3>Social Media Image Tools</h3>
+            <p>Prepare images for common social media formats and sizes.</p>
+            <span class="tool-tag">Social media</span>
+          </a>
+
+          <!-- NEW TOOL: SOCIAL VIDEO MAKER -->
+          <a class="tool" href="social-video-maker.html">
+            <div class="tool-icon" aria-hidden="true">🎬</div>
+            <h3>Social Video Maker</h3>
+            <p>Turn your photos into a short video. Choose a format, add a title and export your video.</p>
+            <span class="tool-tag">Create videos</span>
+          </a>
+
+          <a class="tool" href="image-collage.html">
+            <div class="tool-icon" aria-hidden="true">🖼️</div>
+            <h3>Image Collage Maker</h3>
+            <p>Explore the available options for combining images into a collage.</p>
+            <span class="tool-tag">Collage</span>
+          </a>
+
+          <a class="tool" href="image-object-remover.html">
+            <div class="tool-icon" aria-hidden="true">🪄</div>
+            <h3>Image Object Remover</h3>
+            <p>Check the available image editing and object-removal features.</p>
+            <span class="tool-tag">Image editing</span>
+          </a>
+
+          <a class="tool" href="heic-to-jpg.html">
+            <div class="tool-icon" aria-hidden="true">📸</div>
+            <h3>HEIC to JPG Converter</h3>
+            <p>Convert compatible HEIC photos into JPG images.</p>
+            <span class="tool-tag">HEIC to JPG</span>
+          </a>
+
+          <a class="tool" href="webp-to-jpg.html">
+            <div class="tool-icon" aria-hidden="true">🌐</div>
+            <h3>WebP to JPG Converter</h3>
+            <p>Convert compatible WebP images into JPG files.</p>
+            <span class="tool-tag">WebP to JPG</span>
+          </a>
+
+        </div>
+      </section>
+
+      <section class="benefits" aria-label="Benefits">
+        <div class="benefit-grid">
+
+          <div class="benefit">
+            <div class="benefit-icon" aria-hidden="true">⚡</div>
+            <div>
+              <h3>Simple to use</h3>
+              <p>Clear controls help you find the right tool for your image task.</p>
+            </div>
+          </div>
+
+          <div class="benefit">
+            <div class="benefit-icon" aria-hidden="true">🔒</div>
+            <div>
+              <h3>Browser-based tools</h3>
+              <p>Processing and data handling depend on the individual tool. Check each tool's details before uploading sensitive images.</p>
+            </div>
+          </div>
+
+          <div class="benefit">
+            <div class="benefit-icon" aria-hidden="true">📱</div>
+            <div>
+              <h3>Mobile-friendly</h3>
+              <p>Use the responsive layout on supported phones, tablets and computers.</p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <section class="seo">
+        <h2>Free Online Image Tools by RitoccaPix</h2>
+
+        <p>
+          RitoccaPix brings together online tools for everyday image tasks.
+          Compress photos, resize image dimensions, convert supported file
+          formats and prepare images for websites and digital projects.
+          Choose the tool that matches your needs.
+        </p>
+
+        <h3>Compress Images Online</h3>
+        <p>
+          Reduce the size of supported image files with the
+          <a href="image-compressor.html">Image Compressor</a>.
+          Smaller files can be easier to store, transfer and use online.
+        </p>
+
+        <h3>Compress Images to a Specific File Size</h3>
+        <p>
+          Need to reduce a photo to a particular size? Try our
+          <a href="compress-image-to-100kb.html">Compress Image to 100KB tool</a>.
+          Choose a target of 50KB, 100KB, 200KB, 500KB or 1MB and download
+          the compressed result when the tool can reach your chosen size.
+        </p>
+
+        <h3>Resize Images Online</h3>
+        <p>
+          Adjust image width and height for websites, documents and other
+          projects with the <a href="image-resizer.html">Image Resizer</a>.
+        </p>
+
+        <h3>Convert Image Formats</h3>
+        <p>
+          Explore supported image conversions with the
+          <a href="image-converter.html">Image Converter</a>.
+          Available formats depend on the tool and browser.
+        </p>
+
+        <h3>Convert WebP to JPG</h3>
+        <p>
+          Visit the <a href="webp-to-jpg.html">WebP to JPG Converter</a>
+          to work with compatible WebP images and JPG output.
+        </p>
+
+        <h3>Convert HEIC to JPG</h3>
+        <p>
+          Use the <a href="heic-to-jpg.html">HEIC to JPG Converter</a>
+          to work with compatible HEIC photos.
+        </p>
+
+        <h3>Optimize Images for the Web</h3>
+        <p>
+          Visit the <a href="image-optimizer.html">Image Optimizer</a>
+          to explore options for preparing supported images for online use.
+        </p>
+
+        <h3>Analyze Image Information</h3>
+        <p>
+          The <a href="image-analyzer.html">Image Analyzer</a>
+          provides a place to inspect supported image details.
+        </p>
+
+        <h3>Prepare Images for Social Media</h3>
+        <p>
+          Explore the <a href="image-social.html">Social Media Image Tools</a>
+          to find available options for common social media formats.
+        </p>
+
+        <!-- NEW SEO SECTION: SOCIAL VIDEO MAKER -->
+        <h3>Create Videos from Photos</h3>
+        <p>
+          Turn your photos into a short video with the
+          <a href="social-video-maker.html">Social Video Maker</a>.
+          Choose a video format, add a title and create a video for sharing
+          on social media. Available export formats depend on your browser
+          and the options supported by the tool.
+        </p>
+
+        <h3>Create Image Collages</h3>
+        <p>
+          Visit the <a href="image-collage.html">Image Collage Maker</a>
+          to check the available collage features.
+        </p>
+
+        <h3>Explore RitoccaPix Tools</h3>
+        <p>
+          Features, supported formats and processing options may vary between
+          tools. Check the individual page for available functions.
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <span class="footer-brand">Ritocca<span>Pix</span></span>
+        <span>Free online image tools · © 2026 RitoccaPix</span>
+      </div>
+    </footer>
+
+  </div>
+</body>
+</html>
