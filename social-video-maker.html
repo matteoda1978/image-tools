@@ -10,8 +10,8 @@
 <link rel="canonical" href="https://ritoccapix.com/social-video-maker.html">
 
 <style>
-:root{
-  color-scheme:dark;
+:root {
+  color-scheme: dark;
   --bg:#10131c;
   --panel:#191e2b;
   --panel2:#222a3b;
@@ -19,80 +19,86 @@
   --muted:#aab3c7;
   --accent:#8b7cff;
   --border:#30394e;
-  --green:#55dfad;
 }
-*{box-sizing:border-box}
-body{
+* { box-sizing:border-box; }
+body {
   margin:0;
   background:var(--bg);
   color:var(--text);
   font-family:Arial,Helvetica,sans-serif;
-  line-height:1.6
+  line-height:1.6;
 }
-a{color:#c1b7ff}
-header{
+a { color:#c1b7ff; }
+header {
   padding:22px 16px;
   text-align:center;
-  border-bottom:1px solid var(--border)
+  border-bottom:1px solid var(--border);
 }
-.logo{
+.logo {
   font-size:26px;
   font-weight:800;
   color:white;
-  text-decoration:none
+  text-decoration:none;
 }
-.logo span{color:var(--accent)}
-header p{margin:5px 0;color:var(--muted)}
-main{width:min(1120px,94%);margin:30px auto 60px}
-h1{font-size:clamp(28px,5vw,42px);line-height:1.2;margin:0 0 12px}
-h2{font-size:21px;margin:0 0 15px}
-h3{font-size:16px;margin:0 0 8px}
-.intro{color:var(--muted);max-width:760px;margin-bottom:26px}
-.layout{display:grid;grid-template-columns:1.1fr .9fr;gap:22px}
-.panel{
+.logo span { color:var(--accent); }
+header p { margin:5px 0 14px; color:var(--muted); }
+
+/* Contenitore richiesto da menu.js */
+header nav {
+  display:flex;
+  justify-content:center;
+  width:100%;
+}
+
+main { width:min(1120px,94%); margin:30px auto 60px; }
+h1 { font-size:clamp(28px,5vw,42px); line-height:1.2; margin:0 0 12px; }
+h2 { font-size:21px; margin:0 0 15px; }
+.intro { color:var(--muted); max-width:760px; margin-bottom:26px; }
+.layout { display:grid; grid-template-columns:1.1fr .9fr; gap:22px; }
+.panel {
   background:var(--panel);
   border:1px solid var(--border);
   border-radius:18px;
   padding:22px;
-  min-width:0
+  min-width:0;
 }
-.field{margin:0 0 19px}
-label{display:block;font-weight:700;margin-bottom:7px}
-input,select,button{font:inherit}
-input[type="text"],select{
+.field { margin:0 0 19px; }
+label { display:block; font-weight:700; margin-bottom:7px; }
+input,select,button { font:inherit; }
+input[type="text"],select {
   width:100%;
   padding:12px;
   border-radius:10px;
   border:1px solid var(--border);
   background:#111725;
-  color:white
+  color:white;
 }
-input[type="file"]{
+input[type="file"] {
   width:100%;
   padding:12px;
   background:#111725;
   color:white;
   border:1px dashed #56617b;
-  border-radius:10px
+  border-radius:10px;
 }
-input[type="range"]{width:100%;accent-color:var(--accent)}
-button{
+input[type="range"] { width:100%; accent-color:var(--accent); }
+button {
   border:0;
   border-radius:10px;
   padding:12px 16px;
   cursor:pointer;
-  font-weight:700
+  font-weight:700;
 }
-.primary{background:var(--accent);color:white;width:100%}
-.secondary{
+.primary { background:var(--accent); color:white; width:100%; }
+.secondary {
   background:var(--panel2);
   color:white;
-  border:1px solid var(--border)
+  border:1px solid var(--border);
 }
-button:disabled{opacity:.5;cursor:not-allowed}
-small,.muted{color:var(--muted)}
-.preview-wrap{display:flex;justify-content:center}
-.preview{
+button:disabled { opacity:.5; cursor:not-allowed; }
+small,.muted,.note { color:var(--muted); }
+.preview-wrap { display:flex; justify-content:center; }
+.preview {
   width:min(100%,300px);
   aspect-ratio:9/16;
   background:#080a10;
@@ -102,39 +108,38 @@ small,.muted{color:var(--muted)}
   position:relative;
   display:flex;
   align-items:center;
-  justify-content:center
+  justify-content:center;
 }
-.preview img{width:100%;height:100%;object-fit:contain}
-.overlay{
+.preview img { width:100%; height:100%; object-fit:contain; }
+.overlay {
   position:absolute;
-  left:7%;
-  right:7%;
-  bottom:9%;
+  left:7%; right:7%; bottom:9%;
   text-align:center;
   font-weight:800;
   font-size:25px;
   line-height:1.2;
   color:white;
   text-shadow:0 2px 7px #000,0 0 12px #000;
-  overflow-wrap:anywhere
+  overflow-wrap:anywhere;
+  pointer-events:none;
 }
-.preview-placeholder{text-align:center;color:var(--muted);padding:20px}
-.file-list{display:grid;gap:8px;margin:12px 0}
-.file-item{
+.preview-placeholder { text-align:center; color:var(--muted); padding:20px; }
+.file-list { display:grid; gap:8px; margin:12px 0; }
+.file-item {
   display:flex;
   align-items:center;
   gap:8px;
   padding:8px;
   border:1px solid var(--border);
   border-radius:10px;
-  background:#111725
+  background:#111725;
 }
-.file-item img{width:45px;height:45px;object-fit:cover;border-radius:6px}
-.file-item span{font-size:13px;overflow-wrap:anywhere;flex:1;min-width:0}
-.file-item button{padding:5px 9px}
-.actions{display:grid;gap:10px;margin-top:16px}
-#status{margin-top:12px;font-size:14px;color:var(--muted);overflow-wrap:anywhere}
-#downloadLink{
+.file-item img { width:45px; height:45px; object-fit:cover; border-radius:6px; }
+.file-item span { font-size:13px; overflow-wrap:anywhere; flex:1; min-width:0; }
+.file-item button { padding:5px 9px; }
+.actions { display:grid; gap:10px; margin-top:16px; }
+#status { margin-top:12px; font-size:14px; color:var(--muted); overflow-wrap:anywhere; }
+#downloadLink {
   display:none;
   text-align:center;
   padding:12px;
@@ -143,31 +148,30 @@ small,.muted{color:var(--muted)}
   border-radius:10px;
   color:#b8ffe4;
   font-weight:bold;
-  text-decoration:none
+  text-decoration:none;
 }
-.note{font-size:13px;color:var(--muted)}
-.music-note{
+.music-note {
   padding:14px;
   background:#20283a;
   border:1px solid var(--border);
   border-radius:12px;
   font-size:14px;
   color:var(--muted);
-  margin-top:16px
+  margin-top:16px;
 }
-.music-note strong{color:var(--text)}
-footer{
+.music-note strong { color:var(--text); }
+footer {
   text-align:center;
   border-top:1px solid var(--border);
   padding:24px;
   color:var(--muted);
-  font-size:13px
+  font-size:13px;
 }
-@media(max-width:760px){
-  .layout{grid-template-columns:1fr}
-  .panel{padding:16px}
-  .file-item{gap:5px}
-  .file-item button{padding:5px 8px}
+@media(max-width:760px) {
+  .layout { grid-template-columns:1fr; }
+  .panel { padding:16px; }
+  .file-item { gap:5px; }
+  .file-item button { padding:5px 8px; }
 }
 </style>
 </head>
@@ -176,7 +180,7 @@ footer{
 <header>
   <a class="logo" href="index.html">Ritocca<span>Pix</span></a>
   <p>Free online photo and video tools</p>
-  <div id="site-menu"></div>
+  <nav aria-label="Menu strumenti"></nav>
 </header>
 
 <main>
@@ -189,17 +193,14 @@ footer{
   <div class="layout">
     <section class="panel">
       <h2>1. Choose your photos</h2>
-
       <div class="field">
         <label for="photos">Upload images</label>
         <input id="photos" type="file" accept="image/*" multiple>
         <small>Select your photos and arrange their order below.</small>
       </div>
-
       <div id="fileList" class="file-list"></div>
 
       <h2>2. Customize your video</h2>
-
       <div class="field">
         <label for="format">Video format</label>
         <select id="format">
@@ -211,14 +212,11 @@ footer{
 
       <div class="field">
         <label for="titleText">Video title or caption</label>
-        <input id="titleText" type="text" maxlength="100"
-          placeholder="Write your title here">
+        <input id="titleText" type="text" maxlength="100" placeholder="Write your title here">
       </div>
 
       <div class="field">
-        <label for="duration">
-          Seconds per photo: <span id="durationValue">2</span>
-        </label>
+        <label for="duration">Seconds per photo: <span id="durationValue">2</span></label>
         <input id="duration" type="range" min="1" max="6" value="2">
       </div>
 
@@ -232,62 +230,34 @@ footer{
 
       <div class="music-note">
         <strong>Want to add music?</strong>
-        <p>
-          Create and download your video first. Then open TikTok or Instagram,
-          upload your video and choose music from the platform's music library.
-        </p>
-        <p>
-          Music availability depends on your account, region and how you use the video.
-        </p>
+        <p>Create and download your video first. Then upload it to TikTok or Instagram and choose music from the platform's music library.</p>
+        <p>Music availability depends on your account, region and how you use the video.</p>
       </div>
 
       <div class="actions">
-        <button class="secondary" id="previewButton" type="button">
-          Update preview
-        </button>
-
-        <button class="primary" id="exportButton" type="button">
-          Create video
-        </button>
-
-        <a id="downloadLink" download="ritoccapix-social-video.webm">
-          Download video
-        </a>
+        <button class="secondary" id="previewButton" type="button">Update preview</button>
+        <button class="primary" id="exportButton" type="button">Create video</button>
+        <a id="downloadLink" download="ritoccapix-social-video.webm">Download video</a>
       </div>
-
-      <p id="status" role="status" aria-live="polite">
-        Choose your photos to get started.
-      </p>
+      <p id="status" role="status" aria-live="polite">Choose your photos to get started.</p>
     </section>
 
     <section class="panel">
       <h2>Live preview</h2>
-
       <div class="preview-wrap">
         <div class="preview" id="preview">
-          <div class="preview-placeholder">
-            Your video preview will appear here.
-          </div>
+          <div class="preview-placeholder">Your video preview will appear here.</div>
           <div class="overlay" id="previewTitle"></div>
         </div>
       </div>
-
-      <p class="note">
-        Preview the selected photo and title. The exported video plays through
-        all your selected photos automatically.
-      </p>
-
+      <p class="note">Preview the selected photo and title. The exported video plays through all your selected photos automatically.</p>
       <div class="field">
         <label for="previewIndex">Preview photo</label>
         <input id="previewIndex" type="range" min="0" max="0" value="0">
       </div>
-
       <div class="music-note">
         <strong>Privacy</strong>
-        <p>
-          Photos are processed locally in your browser.
-          They are not uploaded by this tool.
-        </p>
+        <p>Photos are processed locally in your browser. They are not uploaded by this tool.</p>
       </div>
     </section>
   </div>
@@ -302,10 +272,7 @@ footer{
       <li>Create and download your video.</li>
       <li>To add music, upload the video to TikTok or Instagram and choose an available track.</li>
     </ol>
-    <p class="note">
-      This version exports WebM when supported by your browser.
-      MP4 conversion is not included.
-    </p>
+    <p class="note">This version exports WebM when supported by your browser. MP4 conversion is not included.</p>
   </section>
 </main>
 
@@ -315,7 +282,7 @@ footer{
 </footer>
 
 <script>
-(function(){
+(function() {
   const $ = id => document.getElementById(id);
 
   let files = [];
@@ -326,101 +293,90 @@ footer{
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
 
-  function setStatus(message){
+  function setStatus(message) {
     $('status').textContent = message;
   }
 
-  function resetExport(){
-    if(currentBlobUrl){
+  function resetExport() {
+    if (currentBlobUrl) {
       URL.revokeObjectURL(currentBlobUrl);
       currentBlobUrl = null;
     }
     $('downloadLink').style.display = 'none';
+    $('downloadLink').removeAttribute('href');
   }
 
-  function cleanupImageUrls(){
+  function cleanupImageUrls() {
     urls.forEach(url => URL.revokeObjectURL(url));
     urls = [];
   }
 
-  function getDimensions(){
+  function getDimensions() {
     const q = Number($('quality').value);
     const format = $('format').value;
-
-    if(format === 'square') return {w:q,h:q};
-    if(format === 'landscape') return {w:q,h:Math.round(q*9/16)};
-
+    if (format === 'square') return {w:q,h:q};
+    if (format === 'landscape') return {w:q,h:Math.round(q*9/16)};
     return {w:Math.round(q*9/16),h:q};
   }
 
-  function drawCover(img,w,h){
+  function drawCover(img,w,h) {
     const scale = Math.max(w/img.width,h/img.height);
     const sw = w/scale;
     const sh = h/scale;
-    const sx = (img.width-sw)/2;
-    const sy = (img.height-sh)/2;
-
-    ctx.drawImage(img,sx,sy,sw,sh,0,0,w,h);
+    ctx.drawImage(img,(img.width-sw)/2,(img.height-sh)/2,sw,sh,0,0,w,h);
   }
 
-  function drawTitle(text,w,h){
-    if(!text) return;
-
+  function drawTitle(text,w,h) {
+    if (!text) return;
     const lines = [];
     const words = text.split(/\s+/);
     let line = '';
+    ctx.font = `bold ${Math.max(22,Math.round(w*.065))}px Arial`;
+    const maxWidth = w*.84;
 
-    ctx.font = `bold ${Math.max(22,Math.round(w*0.065))}px Arial`;
-    const maxWidth = w*0.84;
-
-    for(const word of words){
+    for (const word of words) {
       const test = line ? line+' '+word : word;
-
-      if(ctx.measureText(test).width > maxWidth && line){
+      if (ctx.measureText(test).width > maxWidth && line) {
         lines.push(line);
         line = word;
-      }else{
+      } else {
         line = test;
       }
     }
+    if (line) lines.push(line);
 
-    if(line) lines.push(line);
-
-    const lineHeight = Math.max(28,Math.round(w*0.08));
-    const startY = h*0.82 - (lines.length-1)*lineHeight/2;
-
+    const lineHeight = Math.max(28,Math.round(w*.08));
+    const startY = h*.82-(lines.length-1)*lineHeight/2;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.lineJoin = 'round';
-    ctx.lineWidth = Math.max(4,w*0.012);
+    ctx.lineWidth = Math.max(4,w*.012);
     ctx.strokeStyle = 'rgba(0,0,0,.9)';
-    ctx.fillStyle = '#ffffff';
+    ctx.fillStyle = '#fff';
 
-    lines.forEach((textLine,i)=>{
+    lines.forEach((textLine,i) => {
       ctx.strokeText(textLine,w/2,startY+i*lineHeight,maxWidth);
       ctx.fillText(textLine,w/2,startY+i*lineHeight,maxWidth);
     });
   }
 
-  function drawPlaceholder(){
+  function drawPlaceholder() {
     const d = getDimensions();
     canvas.width = d.w;
     canvas.height = d.h;
-
     ctx.fillStyle = '#171d2b';
     ctx.fillRect(0,0,d.w,d.h);
-
-    ctx.fillStyle = '#ffffff';
+    ctx.fillStyle = '#fff';
     ctx.font = `bold ${Math.round(d.w*.07)}px Arial`;
     ctx.textAlign = 'center';
     ctx.fillText('RitoccaPix',d.w/2,d.h/2);
   }
 
-  function renderFileList(){
+  function renderFileList() {
     const list = $('fileList');
     list.replaceChildren();
 
-    files.forEach((file,i)=>{
+    files.forEach((file,i) => {
       const row = document.createElement('div');
       row.className = 'file-item';
 
@@ -436,124 +392,108 @@ footer{
       up.type = 'button';
       up.textContent = '↑';
       up.setAttribute('aria-label','Move photo up');
-      up.disabled = i===0;
-      up.onclick = ()=>moveFile(i,-1);
+      up.disabled = i === 0;
+      up.onclick = () => moveFile(i,-1);
 
       const down = document.createElement('button');
       down.className = 'secondary';
       down.type = 'button';
       down.textContent = '↓';
       down.setAttribute('aria-label','Move photo down');
-      down.disabled = i===files.length-1;
-      down.onclick = ()=>moveFile(i,1);
+      down.disabled = i === files.length-1;
+      down.onclick = () => moveFile(i,1);
 
       const remove = document.createElement('button');
       remove.className = 'secondary';
       remove.type = 'button';
       remove.textContent = '×';
       remove.setAttribute('aria-label','Remove photo');
-      remove.onclick = ()=>removeFile(i);
+      remove.onclick = () => removeFile(i);
 
       row.append(img,name,up,down,remove);
       list.append(row);
     });
 
     $('previewIndex').max = Math.max(0,files.length-1);
-
-    if(Number($('previewIndex').value)>files.length-1){
+    if (Number($('previewIndex').value) > files.length-1) {
       $('previewIndex').value = 0;
     }
   }
 
-  function updatePreview(){
+  function updatePreview() {
     const d = getDimensions();
-
     $('preview').style.aspectRatio = `${d.w}/${d.h}`;
     $('previewTitle').textContent = $('titleText').value;
 
     const idx = Number($('previewIndex').value);
     const preview = $('preview');
     const old = preview.querySelector('img');
+    if (old) old.remove();
 
-    if(old) old.remove();
+    let placeholder = preview.querySelector('.preview-placeholder');
 
-    const placeholder = preview.querySelector('.preview-placeholder');
-
-    if(files.length && files[idx]){
-      if(placeholder) placeholder.remove();
-
+    if (files.length && files[idx]) {
+      if (placeholder) placeholder.remove();
       const img = document.createElement('img');
       img.alt = 'Selected photo preview';
       img.src = urls[idx];
-
       preview.insertBefore(img,$('previewTitle'));
-    }else if(!placeholder){
-      const p = document.createElement('div');
-      p.className = 'preview-placeholder';
-      p.textContent = 'Your video preview will appear here.';
-      preview.insertBefore(p,$('previewTitle'));
+    } else if (!placeholder) {
+      placeholder = document.createElement('div');
+      placeholder.className = 'preview-placeholder';
+      placeholder.textContent = 'Your video preview will appear here.';
+      preview.insertBefore(placeholder,$('previewTitle'));
     }
-
     renderFileList();
   }
 
-  function moveFile(index,delta){
+  function moveFile(index,delta) {
     const next = index+delta;
-
-    if(next<0 || next>=files.length) return;
-
+    if (next < 0 || next >= files.length) return;
     [files[index],files[next]] = [files[next],files[index]];
     [urls[index],urls[next]] = [urls[next],urls[index]];
-
     resetExport();
     updatePreview();
   }
 
-  function removeFile(index){
+  function removeFile(index) {
     URL.revokeObjectURL(urls[index]);
-
     files.splice(index,1);
     urls.splice(index,1);
-
     resetExport();
     updatePreview();
-
     setStatus(files.length
       ? `${files.length} photo(s) selected.`
       : 'Choose your photos to get started.');
   }
 
-  $('photos').addEventListener('change',e=>{
-    if(exporting) return;
-
+  $('photos').addEventListener('change',e => {
+    if (exporting) return;
     const selected = Array.from(e.target.files || [])
-      .filter(file=>file.type.startsWith('image/'));
+      .filter(file => file.type.startsWith('image/'));
 
-    if(!selected.length){
+    if (!selected.length) {
       setStatus('Please select valid image files.');
       return;
     }
 
     cleanupImageUrls();
     files = selected;
-    urls = files.map(file=>URL.createObjectURL(file));
-
+    urls = files.map(file => URL.createObjectURL(file));
     $('previewIndex').value = 0;
-
     resetExport();
     updatePreview();
-
     setStatus(`${files.length} photo(s) selected.`);
   });
 
-  ['format','quality','titleText'].forEach(id=>{
-    $(id).addEventListener('input',()=>{
+  ['format','quality','titleText'].forEach(id => {
+    $(id).addEventListener('input',() => {
       resetExport();
       updatePreview();
     });
   });
 
-  $('duration').addEventListener('input',()=>{
+  $('duration').addEventListener('input',() => {
     $('durationValue').textContent = $('duration').value;
     resetExport();
   });
@@ -561,48 +501,42 @@ footer{
   $('previewIndex').addEventListener('input',updatePreview);
   $('previewButton').addEventListener('click',updatePreview);
 
-  function loadImage(url){
-    return new Promise((resolve,reject)=>{
+  function loadImage(url) {
+    return new Promise((resolve,reject) => {
       const img = new Image();
-
-      img.onload = ()=>resolve(img);
-      img.onerror = ()=>reject(new Error('One of the photos could not be loaded.'));
+      img.onload = () => resolve(img);
+      img.onerror = () => reject(new Error('One of the photos could not be loaded.'));
       img.src = url;
     });
   }
 
-  function supportedMime(){
-    if(!window.MediaRecorder) return '';
-
+  function supportedMime() {
+    if (!window.MediaRecorder) return '';
     const candidates = [
       'video/webm;codecs=vp9',
       'video/webm;codecs=vp8',
       'video/webm'
     ];
-
-    return candidates.find(type=>MediaRecorder.isTypeSupported(type)) || '';
+    return candidates.find(type => MediaRecorder.isTypeSupported(type)) || '';
   }
 
-  function wait(ms){
-    return new Promise(resolve=>setTimeout(resolve,ms));
+  function wait(ms) {
+    return new Promise(resolve => setTimeout(resolve,ms));
   }
 
-  $('exportButton').addEventListener('click',async()=>{
-    if(exporting) return;
-
-    if(!files.length){
+  $('exportButton').addEventListener('click',async() => {
+    if (exporting) return;
+    if (!files.length) {
       setStatus('Please upload at least one photo first.');
       return;
     }
-
-    if(!canvas.captureStream || !window.MediaRecorder){
+    if (!canvas.captureStream || !window.MediaRecorder) {
       setStatus('Video export is not supported in this browser. Try an updated Chrome or Edge browser.');
       return;
     }
 
     const mime = supportedMime();
-
-    if(!mime){
+    if (!mime) {
       setStatus('No supported WebM video format was found in this browser.');
       return;
     }
@@ -610,94 +544,68 @@ footer{
     exporting = true;
     const button = $('exportButton');
     button.disabled = true;
-
     let recorder = null;
     let videoStream = null;
     let chunks = [];
     let stoppedPromise = null;
-
     resetExport();
 
-    try{
+    try {
       const d = getDimensions();
       const seconds = Number($('duration').value);
-
       setStatus('Loading photos…');
 
       const images = await Promise.all(urls.map(loadImage));
-
       canvas.width = d.w;
       canvas.height = d.h;
-
       videoStream = canvas.captureStream(30);
       recorder = new MediaRecorder(videoStream,{mimeType:mime});
 
-      recorder.ondataavailable = e=>{
-        if(e.data && e.data.size) chunks.push(e.data);
+      recorder.ondataavailable = e => {
+        if (e.data && e.data.size) chunks.push(e.data);
       };
 
-      stoppedPromise = new Promise((resolve,reject)=>{
+      stoppedPromise = new Promise((resolve,reject) => {
         recorder.onstop = resolve;
-        recorder.onerror = ()=>reject(new Error('Video recording failed.'));
+        recorder.onerror = () => reject(new Error('Video recording failed.'));
       });
 
       recorder.start(250);
-
       const startedAt = performance.now();
 
-      for(let i=0;i<images.length;i++){
-        ctx.fillStyle = '#000000';
+      for (let i=0;i<images.length;i++) {
+        ctx.fillStyle = '#000';
         ctx.fillRect(0,0,d.w,d.h);
-
         drawCover(images[i],d.w,d.h);
         drawTitle($('titleText').value,d.w,d.h);
-
         setStatus(`Creating video: photo ${i+1} of ${images.length}…`);
-
         const elapsed = performance.now()-startedAt;
         const target = (i+1)*seconds*1000;
-
         await wait(Math.max(0,target-elapsed));
       }
 
-      if(recorder.state !== 'inactive'){
-        recorder.stop();
-      }
-
+      if (recorder.state !== 'inactive') recorder.stop();
       await stoppedPromise;
+      videoStream.getTracks().forEach(track => track.stop());
 
-      if(videoStream){
-        videoStream.getTracks().forEach(track=>track.stop());
-      }
-
-      if(!chunks.length){
-        throw new Error('The browser did not produce a video file.');
-      }
+      if (!chunks.length) throw new Error('The browser did not produce a video file.');
 
       const blob = new Blob(chunks,{type:mime});
-
       currentBlobUrl = URL.createObjectURL(blob);
-
       $('downloadLink').href = currentBlobUrl;
       $('downloadLink').download = 'ritoccapix-social-video.webm';
       $('downloadLink').textContent =
         `Download video (${(blob.size/1024/1024).toFixed(1)} MB)`;
       $('downloadLink').style.display = 'block';
-
       setStatus('Video created. Download it and check playback before posting.');
 
-    }catch(err){
-      if(recorder && recorder.state !== 'inactive'){
-        try{recorder.stop();}catch(e){}
+    } catch(err) {
+      if (recorder && recorder.state !== 'inactive') {
+        try { recorder.stop(); } catch(e) {}
       }
-
-      if(videoStream){
-        videoStream.getTracks().forEach(track=>track.stop());
-      }
-
+      if (videoStream) videoStream.getTracks().forEach(track => track.stop());
       setStatus(err.message || 'Something went wrong while creating the video.');
-
-    }finally{
+    } finally {
       exporting = false;
       button.disabled = false;
     }
@@ -705,11 +613,14 @@ footer{
 
   drawPlaceholder();
   updatePreview();
+})();
 
-  const menuScript = document.createElement('script');
-  menuScript.src = 'menu.js';
-  menuScript.onerror = ()=>{};
-  document.body.appendChild(menuScript);
+/* Load the shared navigation menu */
+(function() {
+  const script = document.createElement('script');
+  script.src = 'menu.js';
+  script.onerror = () => console.error('RitoccaPix menu.js could not be loaded.');
+  document.body.appendChild(script);
 })();
 </script>
 </body>
