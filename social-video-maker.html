@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="it">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Social Video Maker | RitoccaPix</title>
-<meta name="description" content="Crea video nitidi dalle tue foto per TikTok, Instagram Reels e YouTube Shorts. Gratis direttamente nel browser.">
+<title>Social Video Maker Gratis Online | RitoccaPix</title>
+<meta name="description" content="Crea video dalle tue foto per TikTok, Instagram Reels e YouTube Shorts. Scegli formato, titolo e durata, poi scarica il video gratis direttamente dal browser.">
 <meta name="theme-color" content="#10131c">
 <link rel="canonical" href="https://ritoccapix.com/social-video-maker.html">
 
@@ -21,14 +20,23 @@
 }
 * {box-sizing:border-box}
 body {
-  margin:0;background:var(--bg);color:var(--text);
-  font-family:Arial,Helvetica,sans-serif;line-height:1.6
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
+  line-height:1.6
 }
 header {
-  padding:22px 16px;text-align:center;
+  padding:22px 16px;
+  text-align:center;
   border-bottom:1px solid var(--border)
 }
-.logo {font-size:26px;font-weight:800;color:white;text-decoration:none}
+.logo {
+  font-size:26px;
+  font-weight:800;
+  color:white;
+  text-decoration:none
+}
 .logo span {color:var(--accent)}
 header p {margin:5px 0 14px;color:var(--muted)}
 header nav {display:flex;justify-content:center;width:100%}
@@ -39,72 +47,150 @@ h2 {font-size:21px;margin:0 0 15px}
 .intro {max-width:760px;margin-bottom:26px}
 .layout {display:grid;grid-template-columns:1.1fr .9fr;gap:22px}
 .panel {
-  background:var(--panel);border:1px solid var(--border);
-  border-radius:18px;padding:22px;min-width:0
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:22px;
+  min-width:0
 }
 .field {margin-bottom:19px}
 label {display:block;font-weight:700;margin-bottom:7px}
 input,select,button {font:inherit}
 input[type="text"],select {
-  width:100%;padding:12px;border-radius:10px;
-  border:1px solid var(--border);background:#111725;color:white
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:#111725;
+  color:white
 }
 input[type="file"] {
-  width:100%;padding:12px;background:#111725;color:white;
-  border:1px dashed #56617b;border-radius:10px
+  width:100%;
+  padding:12px;
+  background:#111725;
+  color:white;
+  border:1px dashed #56617b;
+  border-radius:10px
 }
 input[type="range"] {width:100%;accent-color:var(--accent)}
 button {
-  border:0;border-radius:10px;padding:12px 16px;
-  cursor:pointer;font-weight:700
+  border:0;
+  border-radius:10px;
+  padding:12px 16px;
+  cursor:pointer;
+  font-weight:700
 }
 .primary {background:var(--accent);color:white;width:100%}
 .secondary {background:var(--panel2);color:white;border:1px solid var(--border)}
 button:disabled {opacity:.5;cursor:not-allowed}
 .preview-wrap {display:flex;justify-content:center}
 .preview {
-  width:min(100%,300px);aspect-ratio:9/16;
-  background:#080a10;border:1px solid #434d65;border-radius:16px;
-  overflow:hidden;position:relative;display:flex;
-  align-items:center;justify-content:center
+  width:min(100%,300px);
+  aspect-ratio:9/16;
+  background:#080a10;
+  border:1px solid #434d65;
+  border-radius:16px;
+  overflow:hidden;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center
 }
-.preview img {width:100%;height:100%;object-fit:contain}
+.preview img {
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover
+}
 .overlay {
-  position:absolute;left:7%;right:7%;bottom:9%;
-  text-align:center;font-weight:800;font-size:25px;line-height:1.2;
-  color:white;text-shadow:0 2px 7px #000,0 0 12px #000;
-  overflow-wrap:anywhere;pointer-events:none
+  position:absolute;
+  left:7%;
+  right:7%;
+  bottom:9%;
+  text-align:center;
+  font-weight:800;
+  font-size:25px;
+  line-height:1.2;
+  color:white;
+  text-shadow:0 2px 7px #000,0 0 12px #000;
+  overflow-wrap:anywhere;
+  pointer-events:none
 }
-.preview-placeholder {text-align:center;color:var(--muted);padding:20px}
+.preview-placeholder {
+  text-align:center;
+  color:var(--muted);
+  padding:20px;
+  z-index:1
+}
 .file-list {display:grid;gap:8px;margin:12px 0}
 .file-item {
-  display:flex;align-items:center;gap:8px;padding:8px;
-  border:1px solid var(--border);border-radius:10px;background:#111725
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:8px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:#111725
 }
-.file-item img {width:45px;height:45px;object-fit:cover;border-radius:6px}
-.file-item span {font-size:13px;overflow-wrap:anywhere;flex:1;min-width:0}
-.file-item button {padding:5px 9px}
+.file-item img {
+  width:45px;
+  height:45px;
+  object-fit:cover;
+  border-radius:6px;
+  flex-shrink:0
+}
+.file-item span {
+  font-size:13px;
+  overflow-wrap:anywhere;
+  flex:1;
+  min-width:0
+}
+.file-item button {padding:5px 9px;flex-shrink:0}
 .actions {display:grid;gap:10px;margin-top:16px}
-#status {margin-top:12px;font-size:14px;color:var(--muted);overflow-wrap:anywhere}
+#status {
+  margin-top:12px;
+  font-size:14px;
+  color:var(--muted);
+  overflow-wrap:anywhere
+}
 #downloadLink {
-  display:none;text-align:center;padding:12px;background:#173c32;
-  border:1px solid #2e795e;border-radius:10px;color:#b8ffe4;
-  font-weight:bold;text-decoration:none
+  display:none;
+  text-align:center;
+  padding:12px;
+  background:#173c32;
+  border:1px solid #2e795e;
+  border-radius:10px;
+  color:#b8ffe4;
+  font-weight:bold;
+  text-decoration:none
 }
 .music-note {
-  padding:14px;background:#20283a;border:1px solid var(--border);
-  border-radius:12px;font-size:14px;color:var(--muted);margin-top:16px
+  padding:14px;
+  background:#20283a;
+  border:1px solid var(--border);
+  border-radius:12px;
+  font-size:14px;
+  color:var(--muted);
+  margin-top:16px
 }
 .music-note strong {color:var(--text)}
 footer {
-  text-align:center;border-top:1px solid var(--border);
-  padding:24px;color:var(--muted);font-size:13px
+  text-align:center;
+  border-top:1px solid var(--border);
+  padding:24px;
+  color:var(--muted);
+  font-size:13px
 }
 @media(max-width:760px) {
   .layout {grid-template-columns:1fr}
   .panel {padding:16px}
   .file-item {gap:5px}
   .file-item button {padding:5px 8px}
+}
+@media(max-width:390px) {
+  .file-item img {width:36px;height:36px}
+  .file-item button {padding:5px 6px;font-size:13px}
 }
 </style>
 </head>
@@ -120,20 +206,24 @@ footer {
   <h1>Social Video Maker</h1>
   <p class="intro">
     Trasforma le tue foto in video per TikTok, Instagram Reels e YouTube Shorts.
-    Scegli il formato, aggiungi un titolo e crea il tuo video direttamente nel browser.
+    Scegli il formato, aggiungi un titolo e crea il tuo video direttamente nel browser,
+    senza caricare le immagini su un server.
   </p>
 
   <div class="layout">
     <section class="panel">
       <h2>1. Scegli le foto</h2>
+
       <div class="field">
         <label for="photos">Carica le immagini</label>
         <input id="photos" type="file" accept="image/*" multiple>
-        <small>Puoi selezionare più foto e modificarne l'ordine.</small>
+        <small>Puoi aggiungere foto in più riprese, cambiarne l'ordine o rimuoverle.</small>
       </div>
+
       <div id="fileList" class="file-list"></div>
 
       <h2>2. Personalizza il video</h2>
+
       <div class="field">
         <label for="format">Formato video</label>
         <select id="format">
@@ -150,7 +240,9 @@ footer {
       </div>
 
       <div class="field">
-        <label for="duration">Durata di ogni foto: <span id="durationValue">2</span> secondi</label>
+        <label for="duration">
+          Durata di ogni foto: <span id="durationValue">2</span> secondi
+        </label>
         <input id="duration" type="range" min="1" max="6" value="2">
       </div>
 
@@ -164,48 +256,70 @@ footer {
 
       <div class="music-note">
         <strong>Musica</strong>
-        <p>Crea il video e poi caricalo su TikTok o Instagram per aggiungere musica dalla libreria della piattaforma.</p>
+        <p>
+          Crea il video e poi caricalo su TikTok o Instagram per aggiungere
+          musica dalla libreria della piattaforma.
+        </p>
       </div>
 
       <div class="actions">
-        <button class="secondary" id="previewButton" type="button">Aggiorna anteprima</button>
-        <button class="primary" id="exportButton" type="button">Crea video HD</button>
+        <button class="secondary" id="previewButton" type="button">
+          Aggiorna anteprima
+        </button>
+        <button class="primary" id="exportButton" type="button">
+          Crea video HD
+        </button>
         <a id="downloadLink" download>Scarica il video</a>
       </div>
 
-      <p id="status" role="status" aria-live="polite">Carica le foto per iniziare.</p>
+      <p id="status" role="status" aria-live="polite">
+        Carica le foto per iniziare.
+      </p>
     </section>
 
     <section class="panel">
       <h2>Anteprima</h2>
+
       <div class="preview-wrap">
         <div class="preview" id="preview">
           <div class="preview-placeholder">L'anteprima apparirà qui.</div>
           <div class="overlay" id="previewTitle"></div>
         </div>
       </div>
-      <p class="note">Seleziona una foto per vedere l'anteprima. Il video finale riprodurrà tutte le immagini nell'ordine scelto.</p>
+
+      <p class="note">
+        L'anteprima mostra il ritaglio del formato scelto.
+        Il video finale riprodurrà tutte le immagini nell'ordine selezionato.
+      </p>
+
       <div class="field">
         <label for="previewIndex">Foto da visualizzare</label>
-        <input id="previewIndex" type="range" min="0" max="0" value="0">
+        <input id="previewIndex" type="range" min="0" max="0" value="0" disabled>
       </div>
+
       <div class="music-note">
         <strong>Privacy</strong>
-        <p>Le foto vengono elaborate nel browser e non vengono caricate su un server da questo strumento.</p>
+        <p>
+          Le foto vengono elaborate nel browser e non vengono caricate
+          su un server da questo strumento.
+        </p>
       </div>
     </section>
   </div>
 
   <section class="panel" style="margin-top:22px">
-    <h2>Come creare il video</h2>
+    <h2>Come creare un video dalle foto</h2>
     <ol>
-      <li>Carica le foto e disponile nell'ordine desiderato.</li>
-      <li>Scegli il formato verticale, quadrato o orizzontale.</li>
-      <li>Aggiungi un titolo e imposta la durata.</li>
-      <li>Scegli la risoluzione 1080p per un risultato più dettagliato.</li>
-      <li>Crea il video e scarica il file.</li>
+      <li>Carica una o più foto dal tuo dispositivo.</li>
+      <li>Scegli il formato verticale, quadrato oppure orizzontale.</li>
+      <li>Aggiungi un titolo e imposta la durata di ogni immagine.</li>
+      <li>Scegli la risoluzione e premi «Crea video HD».</li>
+      <li>Al termine, premi il link per scaricare il video.</li>
     </ol>
-    <p class="note">Il formato esportato è WebM. La conversione in MP4 non è inclusa in questa versione.</p>
+    <p class="note">
+      Questa versione esporta video WebM, non MP4.
+      Il supporto alla registrazione dipende dal browser e dal dispositivo.
+    </p>
   </section>
 </main>
 
@@ -216,6 +330,7 @@ footer {
 <script>
 (function() {
   const $ = id => document.getElementById(id);
+
   let files = [];
   let urls = [];
   let currentBlobUrl = null;
@@ -230,68 +345,86 @@ footer {
   }
 
   function resetExport() {
-    if (currentBlobUrl) URL.revokeObjectURL(currentBlobUrl);
-    currentBlobUrl = null;
+    if (currentBlobUrl) {
+      URL.revokeObjectURL(currentBlobUrl);
+      currentBlobUrl = null;
+    }
+
     $('downloadLink').style.display = 'none';
     $('downloadLink').removeAttribute('href');
   }
 
-  function cleanupUrls() {
-    urls.forEach(url => URL.revokeObjectURL(url));
-    urls = [];
-  }
-
-  // 720p verticale = 720 x 1280.
-  // 1080p verticale = 1080 x 1920.
   function getDimensions() {
     const q = Number($('quality').value);
     const format = $('format').value;
 
     if (format === 'square') return {w:q, h:q};
-    if (format === 'landscape') return {w:Math.round(q*16/9), h:q};
-    return {w:q, h:Math.round(q*16/9)};
+    if (format === 'landscape') return {w:Math.round(q * 16 / 9), h:q};
+
+    return {w:q, h:Math.round(q * 16 / 9)};
   }
 
-  // Adatta la foto senza deformarla.
-  function drawCover(img,w,h) {
-    const scale = Math.max(w/img.width,h/img.height);
-    const sw = w/scale;
-    const sh = h/scale;
-    ctx.drawImage(img,(img.width-sw)/2,(img.height-sh)/2,sw,sh,0,0,w,h);
+  // Ritaglia al centro senza deformare la foto.
+  function drawCover(context, img, w, h) {
+    const iw = img.naturalWidth || img.width;
+    const ih = img.naturalHeight || img.height;
+    const scale = Math.max(w / iw, h / ih);
+    const sw = w / scale;
+    const sh = h / scale;
+
+    context.drawImage(
+      img,
+      (iw - sw) / 2,
+      (ih - sh) / 2,
+      sw,
+      sh,
+      0,
+      0,
+      w,
+      h
+    );
   }
 
-  function drawTitle(text,w,h) {
+  function drawTitle(context, text, w, h) {
+    text = text.trim();
     if (!text) return;
-    const lines = [];
+
     const words = text.split(/\s+/);
+    const lines = [];
+    const fontSize = Math.max(22, Math.round(w * 0.055));
+
+    context.font = `bold ${fontSize}px Arial`;
+
+    const maxWidth = w * 0.84;
     let line = '';
-    ctx.font = `bold ${Math.max(22,Math.round(w*.055))}px Arial`;
-    const maxWidth = w*.84;
 
     for (const word of words) {
-      const test = line ? line+' '+word : word;
-      if (ctx.measureText(test).width > maxWidth && line) {
+      const test = line ? line + ' ' + word : word;
+
+      if (context.measureText(test).width > maxWidth && line) {
         lines.push(line);
         line = word;
       } else {
         line = test;
       }
     }
+
     if (line) lines.push(line);
 
-    const lineHeight = Math.max(28,Math.round(w*.065));
-    const startY = h*.82-(lines.length-1)*lineHeight/2;
+    const lineHeight = Math.max(28, Math.round(w * 0.065));
+    const startY = h * 0.82 - (lines.length - 1) * lineHeight / 2;
 
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.lineJoin = 'round';
-    ctx.lineWidth = Math.max(4,w*.006);
-    ctx.strokeStyle = 'rgba(0,0,0,.95)';
-    ctx.fillStyle = '#fff';
+    context.textAlign = 'center';
+    context.textBaseline = 'middle';
+    context.lineJoin = 'round';
+    context.lineWidth = Math.max(4, w * 0.006);
+    context.strokeStyle = 'rgba(0,0,0,.95)';
+    context.fillStyle = '#fff';
 
-    lines.forEach((t,i) => {
-      ctx.strokeText(t,w/2,startY+i*lineHeight,maxWidth);
-      ctx.fillText(t,w/2,startY+i*lineHeight,maxWidth);
+    lines.forEach((t, i) => {
+      const y = startY + i * lineHeight;
+      context.strokeText(t, w / 2, y, maxWidth);
+      context.fillText(t, w / 2, y, maxWidth);
     });
   }
 
@@ -299,7 +432,7 @@ footer {
     const list = $('fileList');
     list.replaceChildren();
 
-    files.forEach((file,i) => {
+    files.forEach((file, i) => {
       const row = document.createElement('div');
       row.className = 'file-item';
 
@@ -308,144 +441,197 @@ footer {
       img.alt = '';
 
       const name = document.createElement('span');
-      name.textContent = `${i+1}. ${file.name}`;
+      name.textContent = `${i + 1}. ${file.name}`;
 
       const up = document.createElement('button');
       up.className = 'secondary';
       up.type = 'button';
       up.textContent = '↑';
       up.disabled = i === 0;
-      up.setAttribute('aria-label','Sposta foto in alto');
-      up.onclick = () => moveFile(i,-1);
+      up.setAttribute('aria-label', 'Sposta foto in alto');
+      up.onclick = () => moveFile(i, -1);
 
       const down = document.createElement('button');
       down.className = 'secondary';
       down.type = 'button';
       down.textContent = '↓';
-      down.disabled = i === files.length-1;
-      down.setAttribute('aria-label','Sposta foto in basso');
-      down.onclick = () => moveFile(i,1);
+      down.disabled = i === files.length - 1;
+      down.setAttribute('aria-label', 'Sposta foto in basso');
+      down.onclick = () => moveFile(i, 1);
 
       const remove = document.createElement('button');
       remove.className = 'secondary';
       remove.type = 'button';
       remove.textContent = '×';
-      remove.setAttribute('aria-label','Rimuovi foto');
+      remove.setAttribute('aria-label', 'Rimuovi foto');
       remove.onclick = () => removeFile(i);
 
-      row.append(img,name,up,down,remove);
+      row.append(img, name, up, down, remove);
       list.append(row);
     });
 
-    $('previewIndex').max = Math.max(0,files.length-1);
+    $('previewIndex').max = Math.max(0, files.length - 1);
+    $('previewIndex').disabled = files.length < 2;
+
     if (Number($('previewIndex').value) >= files.length) {
-      $('previewIndex').value = Math.max(0,files.length-1);
+      $('previewIndex').value = Math.max(0, files.length - 1);
     }
   }
 
   function updatePreview() {
     const d = getDimensions();
-    $('preview').style.aspectRatio = `${d.w}/${d.h}`;
+    const preview = $('preview');
+
+    preview.style.aspectRatio = `${d.w}/${d.h}`;
     $('previewTitle').textContent = $('titleText').value;
 
-    const preview = $('preview');
-    const old = preview.querySelector('img');
-    if (old) old.remove();
+    const oldImage = preview.querySelector('img');
+    if (oldImage) oldImage.remove();
 
     let placeholder = preview.querySelector('.preview-placeholder');
     const idx = Number($('previewIndex').value);
 
     if (files.length && files[idx]) {
       if (placeholder) placeholder.remove();
+
       const img = document.createElement('img');
       img.alt = 'Anteprima foto selezionata';
       img.src = urls[idx];
-      preview.insertBefore(img,$('previewTitle'));
+
+      preview.insertBefore(img, $('previewTitle'));
     } else if (!placeholder) {
       placeholder = document.createElement('div');
       placeholder.className = 'preview-placeholder';
       placeholder.textContent = "L'anteprima apparirà qui.";
-      preview.insertBefore(placeholder,$('previewTitle'));
+
+      preview.insertBefore(placeholder, $('previewTitle'));
     }
+
     renderList();
   }
 
-  function moveFile(index,delta) {
-    const next = index+delta;
+  function moveFile(index, delta) {
+    const next = index + delta;
+
     if (next < 0 || next >= files.length) return;
-    [files[index],files[next]] = [files[next],files[index]];
-    [urls[index],urls[next]] = [urls[next],urls[index]];
+
+    [files[index], files[next]] = [files[next], files[index]];
+    [urls[index], urls[next]] = [urls[next], urls[index]];
+
+    $('previewIndex').value = next;
     resetExport();
     updatePreview();
   }
 
   function removeFile(index) {
     URL.revokeObjectURL(urls[index]);
-    files.splice(index,1);
-    urls.splice(index,1);
+
+    files.splice(index, 1);
+    urls.splice(index, 1);
+
+    $('previewIndex').value = Math.min(
+      Number($('previewIndex').value),
+      Math.max(0, files.length - 1)
+    );
+
     resetExport();
     updatePreview();
-    setStatus(files.length ? `${files.length} foto selezionate.` : 'Carica le foto per iniziare.');
+
+    setStatus(
+      files.length
+        ? `${files.length} foto selezionate.`
+        : 'Carica le foto per iniziare.'
+    );
   }
 
-  $('photos').addEventListener('change',e => {
+  // Consente di aggiungere immagini in più riprese.
+  $('photos').addEventListener('change', e => {
     if (exporting) return;
+
     const selected = Array.from(e.target.files || [])
       .filter(file => file.type.startsWith('image/'));
 
     if (!selected.length) {
       setStatus('Seleziona file immagine validi.');
+      e.target.value = '';
       return;
     }
 
-    cleanupUrls();
-    files = selected;
-    urls = files.map(file => URL.createObjectURL(file));
-    $('previewIndex').value = 0;
+    const existingKeys = new Set(
+      files.map(file => `${file.name}|${file.size}|${file.lastModified}`)
+    );
+
+    const fresh = selected.filter(file =>
+      !existingKeys.has(`${file.name}|${file.size}|${file.lastModified}`)
+    );
+
+    if (!fresh.length) {
+      setStatus('Queste foto sono già nell’elenco.');
+      e.target.value = '';
+      return;
+    }
+
+    fresh.forEach(file => {
+      files.push(file);
+      urls.push(URL.createObjectURL(file));
+    });
+
+    $('previewIndex').value = files.length - fresh.length;
+
     resetExport();
     updatePreview();
+
     setStatus(`${files.length} foto selezionate.`);
+    e.target.value = '';
   });
 
-  ['format','quality','titleText'].forEach(id => {
-    $(id).addEventListener('input',() => {
+  ['format', 'quality', 'titleText'].forEach(id => {
+    $(id).addEventListener('input', () => {
       resetExport();
       updatePreview();
     });
   });
 
-  $('duration').addEventListener('input',() => {
+  $('duration').addEventListener('input', () => {
     $('durationValue').textContent = $('duration').value;
     resetExport();
   });
 
-  $('previewIndex').addEventListener('input',updatePreview);
-  $('previewButton').addEventListener('click',updatePreview);
+  $('previewIndex').addEventListener('input', updatePreview);
+  $('previewButton').addEventListener('click', updatePreview);
 
   function loadImage(url) {
-    return new Promise((resolve,reject) => {
+    return new Promise((resolve, reject) => {
       const img = new Image();
+
       img.onload = () => resolve(img);
-      img.onerror = () => reject(new Error('Impossibile caricare una delle foto.'));
+      img.onerror = () => reject(
+        new Error('Impossibile caricare una delle foto.')
+      );
+
       img.src = url;
     });
   }
 
   function supportedMime() {
     if (!window.MediaRecorder) return '';
+
     const candidates = [
       'video/webm;codecs=vp9',
       'video/webm;codecs=vp8',
       'video/webm'
     ];
-    return candidates.find(type => MediaRecorder.isTypeSupported(type)) || '';
+
+    return candidates.find(type =>
+      MediaRecorder.isTypeSupported(type)
+    ) || '';
   }
 
   function wait(ms) {
-    return new Promise(resolve => setTimeout(resolve,ms));
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  $('exportButton').addEventListener('click',async() => {
+  $('exportButton').addEventListener('click', async () => {
     if (exporting) return;
 
     if (!files.length) {
@@ -454,19 +640,27 @@ footer {
     }
 
     if (!canvas.captureStream || !window.MediaRecorder) {
-      setStatus('Esportazione non supportata. Prova con una versione aggiornata di Chrome.');
+      setStatus(
+        'Esportazione non supportata. Prova con una versione aggiornata di Chrome o Edge.'
+      );
       return;
     }
 
     const mime = supportedMime();
+
     if (!mime) {
-      setStatus('Questo browser non supporta un formato video WebM compatibile.');
+      setStatus(
+        'Questo browser non supporta un formato video WebM compatibile.'
+      );
       return;
     }
 
     exporting = true;
+
     const button = $('exportButton');
     button.disabled = true;
+    $('previewButton').disabled = true;
+    $('photos').disabled = true;
 
     let recorder = null;
     let stream = null;
@@ -477,97 +671,133 @@ footer {
     try {
       const d = getDimensions();
       const seconds = Number($('duration').value);
+      const title = $('titleText').value;
+      const exportUrls = urls.slice();
+
       setStatus('Caricamento delle foto…');
 
-      const images = await Promise.all(urls.map(loadImage));
+      const images = await Promise.all(exportUrls.map(loadImage));
+
       canvas.width = d.w;
       canvas.height = d.h;
 
       stream = canvas.captureStream(30);
 
-      // Bitrate più elevato per ridurre la perdita di dettaglio.
       const bitrate = $('quality').value === '1080'
         ? 12000000
         : 8000000;
 
-      recorder = new MediaRecorder(stream,{
-        mimeType:mime,
-        videoBitsPerSecond:bitrate
+      recorder = new MediaRecorder(stream, {
+        mimeType: mime,
+        videoBitsPerSecond: bitrate
       });
 
       recorder.ondataavailable = e => {
         if (e.data && e.data.size) chunks.push(e.data);
       };
 
-      const stopped = new Promise((resolve,reject) => {
+      const stopped = new Promise((resolve, reject) => {
         recorder.onstop = resolve;
-        recorder.onerror = () => reject(new Error('Errore durante la registrazione video.'));
+        recorder.onerror = () => reject(
+          new Error('Errore durante la registrazione video.')
+        );
       });
 
       recorder.start(250);
+
       const startedAt = performance.now();
 
-      for (let i=0;i<images.length;i++) {
+      for (let i = 0; i < images.length; i++) {
         ctx.fillStyle = '#000';
-        ctx.fillRect(0,0,d.w,d.h);
-        drawCover(images[i],d.w,d.h);
-        drawTitle($('titleText').value,d.w,d.h);
+        ctx.fillRect(0, 0, d.w, d.h);
 
-        setStatus(`Creazione video: foto ${i+1} di ${images.length}…`);
+        drawCover(ctx, images[i], d.w, d.h);
+        drawTitle(ctx, title, d.w, d.h);
 
-        const target = (i+1)*seconds*1000;
-        await wait(Math.max(0,target-(performance.now()-startedAt)));
+        setStatus(`Creazione video: foto ${i + 1} di ${images.length}…`);
+
+        const target = (i + 1) * seconds * 1000;
+        await wait(Math.max(
+          0,
+          target - (performance.now() - startedAt)
+        ));
       }
 
       if (recorder.state !== 'inactive') recorder.stop();
+
       await stopped;
+
       stream.getTracks().forEach(track => track.stop());
+      stream = null;
 
       if (!chunks.length) {
         throw new Error('Il browser non ha generato il file video.');
       }
 
-      const blob = new Blob(chunks,{type:mime});
-      currentBlobUrl = URL.createObjectURL(blob);
+      const blob = new Blob(chunks, {type: mime});
 
-      // Nome diverso per ogni esportazione, con data, ora e contatore.
+      if (!blob.size) {
+        throw new Error('Il file video creato è vuoto. Riprova.');
+      }
+
+      currentBlobUrl = URL.createObjectURL(blob);
       exportNumber++;
+
       const now = new Date();
-      const pad = n => String(n).padStart(2,'0');
+      const pad = n => String(n).padStart(2, '0');
+
       const stamp =
         now.getFullYear() +
-        pad(now.getMonth()+1) +
+        pad(now.getMonth() + 1) +
         pad(now.getDate()) + '-' +
         pad(now.getHours()) +
         pad(now.getMinutes()) +
         pad(now.getSeconds());
 
-      const filename = `ritoccapix-video-${stamp}-${exportNumber}.webm`;
+      const filename =
+        `ritoccapix-video-${stamp}-${exportNumber}.webm`;
 
       const link = $('downloadLink');
       link.href = currentBlobUrl;
       link.download = filename;
-      link.textContent = `Scarica ${filename} (${(blob.size/1024/1024).toFixed(1)} MB)`;
+      link.textContent =
+        `Scarica il video (${(blob.size / 1024 / 1024).toFixed(1)} MB)`;
       link.style.display = 'block';
 
-      setStatus('Video creato in alta qualità. Premi il nuovo link per scaricarlo.');
+      setStatus(
+        'Video creato! Premi «Scarica il video» per salvarlo sul dispositivo.'
+      );
 
-    } catch(err) {
+    } catch (err) {
       if (recorder && recorder.state !== 'inactive') {
-        try { recorder.stop(); } catch(e) {}
+        try {
+          recorder.stop();
+        } catch (e) {}
       }
-      if (stream) stream.getTracks().forEach(track => track.stop());
-      setStatus(err.message || 'Si è verificato un errore durante la creazione.');
+
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+      }
+
+      setStatus(
+        err && err.message
+          ? err.message
+          : 'Si è verificato un errore durante la creazione del video.'
+      );
+
     } finally {
       exporting = false;
       button.disabled = false;
+      $('previewButton').disabled = false;
+      $('photos').disabled = false;
     }
   });
 
   updatePreview();
 })();
 
-// Caricamento del menu condiviso.
+// Caricamento del menu condiviso di RitoccaPix.
+// Non modificare questo blocco: usa il menu.js comune alle altre pagine.
 (function() {
   const script = document.createElement('script');
   script.src = 'menu.js';
