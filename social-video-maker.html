@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -58,6 +59,7 @@ footer{text-align:center;border-top:1px solid var(--border);padding:24px;color:v
 @media(max-width:390px){.file-item img{width:36px;height:36px}.file-item button{padding:5px 6px;font-size:13px}}
 </style>
 </head>
+
 <body>
 <header>
   <a class="logo" href="index.html">Ritocca<span>Pix</span></a>
@@ -84,7 +86,6 @@ footer{text-align:center;border-top:1px solid var(--border);padding:24px;color:v
       <div id="fileList" class="file-list"></div>
 
       <h2>2. Personalizza il video</h2>
-
       <div class="field">
         <label for="format">Formato video social</label>
         <select id="format">
@@ -110,7 +111,7 @@ footer{text-align:center;border-top:1px solid var(--border);padding:24px;color:v
           <option value="720">HD 720p – File più leggero</option>
           <option value="1080" selected>Full HD 1080p – Alta qualità</option>
         </select>
-        <small id="resolutionInfo">1080 × 1920 pixel · Verticale Full HD</small>
+        <small id="resolutionInfo">1080 × 1920 pixel · Full HD</small>
       </div>
 
       <div class="field">
@@ -119,7 +120,7 @@ footer{text-align:center;border-top:1px solid var(--border);padding:24px;color:v
           <option value="mp4" selected>MP4 – Consigliato</option>
           <option value="webm">WebM – Alternativa</option>
         </select>
-        <small>MP4 è la prima scelta. La conversione richiede il caricamento del motore FFmpeg al primo utilizzo.</small>
+        <small>La prima conversione MP4 scarica il motore necessario. Potrebbe richiedere tempo e memoria.</small>
       </div>
 
       <div class="music-note">
@@ -150,7 +151,7 @@ footer{text-align:center;border-top:1px solid var(--border);padding:24px;color:v
       </div>
       <div class="music-note">
         <strong>Privacy</strong>
-        <p>Le foto vengono elaborate localmente nel browser e non vengono caricate su un server da questo strumento. Per esportare MP4 viene scaricato un motore di conversione esterno.</p>
+        <p>Le foto vengono elaborate localmente nel browser. Per convertire MP4 viene scaricato un motore esterno; le foto non vengono inviate a un server da questo strumento.</p>
       </div>
     </section>
   </div>
@@ -165,7 +166,7 @@ footer{text-align:center;border-top:1px solid var(--border);padding:24px;color:v
       <li>Premi «Crea video» e attendi il completamento.</li>
       <li>Premi il link per scaricare il video.</li>
     </ol>
-    <p class="note">L'esportazione MP4 usa FFmpeg WebAssembly nel browser e può richiedere più memoria e tempo, soprattutto su telefoni meno potenti. WebM è generalmente più rapido.</p>
+    <p class="note">La conversione MP4 richiede più risorse rispetto a WebM, soprattutto sui telefoni meno potenti.</p>
   </section>
 </main>
 
@@ -173,8 +174,13 @@ footer{text-align:center;border-top:1px solid var(--border);padding:24px;color:v
   <p>RitoccaPix – Strumenti gratuiti per foto e contenuti social.</p>
 </footer>
 
+<!-- Motore FFmpeg: versione con API compatibile con questo codice -->
+<script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script>
+
 <script>
 (function() {
+  'use strict';
+
   const $ = id => document.getElementById(id);
   let files = [];
   let urls = [];
@@ -203,6 +209,7 @@ footer{text-align:center;border-top:1px solid var(--border);padding:24px;color:v
   function getDimensions() {
     const q = Number($('quality').value);
     const format = $('format').value;
+
     if (format === 'square') return {w:q,h:q};
     if (format === 'landscape') return {w:Math.round(q*16/9),h:q};
     return {w:q,h:Math.round(q*16/9)};
@@ -211,41 +218,55 @@ footer{text-align:center;border-top:1px solid var(--border);padding:24px;color:v
   function updateResolutionInfo() {
     const d = getDimensions();
     const label = $('quality').value === '1080' ? 'Full HD' : 'HD';
+
     $('resolutionInfo').textContent =
       `${d.w} × ${d.h} pixel · ${label}`;
-    $('exportButton').textContent =
-      `Crea video ${label}`;
+
+    $('exportButton').textContent = `Crea video ${label}`;
   }
 
   function drawCover(context, img, w, h) {
     const iw = img.naturalWidth || img.width;
     const ih = img.naturalHeight || img.height;
     const scale = Math.max(w/iw,h/ih);
-    const sw = w/scale, sh = h/scale;
-    context.drawImage(img,(iw-sw)/2,(ih-sh)/2,sw,sh,0,0,w,h);
+    const sw = w/scale;
+    const sh = h/scale;
+
+    context.drawImage(
+      img,
+      (iw-sw)/2,(ih-sh)/2,sw,sh,
+      0,0,w,h
+    );
   }
 
   function drawTitle(context, text, w, h) {
     text = text.trim();
     if (!text) return;
+
     const words = text.split(/\s+/);
     const lines = [];
     const fontSize = Math.max(22,Math.round(w*.055));
+
     context.font = `bold ${fontSize}px Arial`;
     const maxWidth = w*.84;
     let line = '';
 
     for (const word of words) {
       const test = line ? line+' '+word : word;
+
       if (context.measureText(test).width > maxWidth && line) {
         lines.push(line);
         line = word;
-      } else line = test;
+      } else {
+        line = test;
+      }
     }
+
     if (line) lines.push(line);
 
     const lineHeight = Math.max(28,Math.round(w*.065));
     const startY = h*.82-(lines.length-1)*lineHeight/2;
+
     context.textAlign = 'center';
     context.textBaseline = 'middle';
     context.lineJoin = 'round';
@@ -304,6 +325,7 @@ footer{text-align:center;border-top:1px solid var(--border);padding:24px;color:v
 
     $('previewIndex').max = Math.max(0,files.length-1);
     $('previewIndex').disabled = files.length<2;
+
     if (Number($('previewIndex').value)>=files.length) {
       $('previewIndex').value = Math.max(0,files.length-1);
     }
@@ -312,6 +334,7 @@ footer{text-align:center;border-top:1px solid var(--border);padding:24px;color:v
   function updatePreview() {
     const d = getDimensions();
     const preview = $('preview');
+
     preview.style.aspectRatio = `${d.w}/${d.h}`;
     $('previewTitle').textContent = $('titleText').value;
 
@@ -323,6 +346,7 @@ footer{text-align:center;border-top:1px solid var(--border);padding:24px;color:v
 
     if (files.length && files[idx]) {
       if (placeholder) placeholder.remove();
+
       const img = document.createElement('img');
       img.alt = 'Anteprima foto selezionata';
       img.src = urls[idx];
@@ -341,8 +365,10 @@ footer{text-align:center;border-top:1px solid var(--border);padding:24px;color:v
   function moveFile(index,delta) {
     const next = index+delta;
     if (next<0 || next>=files.length) return;
+
     [files[index],files[next]] = [files[next],files[index]];
     [urls[index],urls[next]] = [urls[next],urls[index]];
+
     $('previewIndex').value = next;
     resetExport();
     updatePreview();
@@ -352,16 +378,25 @@ footer{text-align:center;border-top:1px solid var(--border);padding:24px;color:v
     URL.revokeObjectURL(urls[index]);
     files.splice(index,1);
     urls.splice(index,1);
+
     $('previewIndex').value = Math.min(
-      Number($('previewIndex').value),Math.max(0,files.length-1)
+      Number($('previewIndex').value),
+      Math.max(0,files.length-1)
     );
+
     resetExport();
     updatePreview();
-    setStatus(files.length ? `${files.length} foto selezionate.` : 'Carica le foto per iniziare.');
+
+    setStatus(
+      files.length
+        ? `${files.length} foto selezionate.`
+        : 'Carica le foto per iniziare.'
+    );
   }
 
   $('photos').addEventListener('change',e => {
     if (exporting) return;
+
     const selected = Array.from(e.target.files||[])
       .filter(file => file.type.startsWith('image/'));
 
@@ -374,6 +409,7 @@ footer{text-align:center;border-top:1px solid var(--border);padding:24px;color:v
     const existingKeys = new Set(files.map(file =>
       `${file.name}|${file.size}|${file.lastModified}`
     ));
+
     const fresh = selected.filter(file =>
       !existingKeys.has(`${file.name}|${file.size}|${file.lastModified}`)
     );
@@ -414,14 +450,19 @@ footer{text-align:center;border-top:1px solid var(--border);padding:24px;color:v
   function loadImage(url) {
     return new Promise((resolve,reject) => {
       const img = new Image();
+
       img.onload = () => resolve(img);
-      img.onerror = () => reject(new Error('Impossibile caricare una delle foto.'));
+      img.onerror = () => reject(
+        new Error('Impossibile caricare una delle foto.')
+      );
+
       img.src = url;
     });
   }
 
   function supportedWebMMime() {
     if (!window.MediaRecorder) return '';
+
     return [
       'video/webm;codecs=vp9',
       'video/webm;codecs=vp8',
@@ -434,33 +475,31 @@ footer{text-align:center;border-top:1px solid var(--border);padding:24px;color:v
   }
 
   async function getFFmpeg() {
-    if (ffmpegInstance && ffmpegInstance.loaded) return ffmpegInstance;
+    if (ffmpegInstance && ffmpegInstance.isLoaded()) {
+      return ffmpegInstance;
+    }
+
     if (ffmpegLoading) return ffmpegLoading;
 
     ffmpegLoading = (async () => {
       setStatus('Caricamento del convertitore MP4. Al primo utilizzo può richiedere qualche minuto…');
 
-      const {FFmpeg} = await import(
-        'https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.15/dist/esm/index.js'
-      );
-      const {toBlobURL} = await import(
-        'https://cdn.jsdelivr.net/npm/@ffmpeg/util@0.12.2/dist/esm/index.js'
-      );
+      if (!window.FFmpeg ||
+          typeof window.FFmpeg.createFFmpeg !== 'function') {
+        throw new Error(
+          'Impossibile caricare FFmpeg. Controlla la connessione e ricarica la pagina.'
+        );
+      }
 
-      const baseURL = 'https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.10/dist/umd';
-      const ffmpeg = new FFmpeg();
+      const {createFFmpeg} = window.FFmpeg;
 
-      ffmpeg.on('log',({message}) => {
-        if (message && /error/i.test(message)) {
-          console.warn('FFmpeg:',message);
-        }
+      const ffmpeg = createFFmpeg({
+        log:false,
+        corePath:
+          'https://unpkg.com/@ffmpeg/core@0.11.0/dist/ffmpeg-core.js'
       });
 
-      await ffmpeg.load({
-        coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`,'text/javascript'),
-        wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`,'application/wasm')
-      });
-
+      await ffmpeg.load();
       ffmpegInstance = ffmpeg;
       return ffmpeg;
     })();
@@ -480,12 +519,13 @@ footer{text-align:center;border-top:1px solid var(--border);padding:24px;color:v
     setStatus('Conversione in MP4 in corso. Non chiudere questa pagina…');
 
     try {
-      await ffmpeg.writeFile(
+      ffmpeg.FS(
+        'writeFile',
         inputName,
         new Uint8Array(await webmBlob.arrayBuffer())
       );
 
-      const result = await ffmpeg.exec([
+      await ffmpeg.run(
         '-i',inputName,
         '-an',
         '-c:v','libx264',
@@ -493,20 +533,19 @@ footer{text-align:center;border-top:1px solid var(--border);padding:24px;color:v
         '-pix_fmt','yuv420p',
         '-movflags','+faststart',
         outputName
-      ]);
+      );
 
-      if (result !== 0) {
-        throw new Error('Conversione MP4 non riuscita. Prova WebM oppure riduci la risoluzione.');
-      }
-
-      const data = await ffmpeg.readFile(outputName);
+      const data = ffmpeg.FS('readFile',outputName);
       const mp4Blob = new Blob([data],{type:'video/mp4'});
 
-      if (!mp4Blob.size) throw new Error('Il file MP4 generato è vuoto.');
+      if (!mp4Blob.size) {
+        throw new Error('Il file MP4 generato è vuoto.');
+      }
+
       return mp4Blob;
     } finally {
-      try { await ffmpeg.deleteFile(inputName); } catch(e) {}
-      try { await ffmpeg.deleteFile(outputName); } catch(e) {}
+      try { ffmpeg.FS('unlink',inputName); } catch(e) {}
+      try { ffmpeg.FS('unlink',outputName); } catch(e) {}
     }
   }
 
@@ -519,17 +558,19 @@ footer{text-align:center;border-top:1px solid var(--border);padding:24px;color:v
     }
 
     if (!canvas.captureStream || !window.MediaRecorder) {
-      setStatus('Esportazione non supportata. Prova con una versione aggiornata di Chrome o Edge.');
+      setStatus('Esportazione non supportata. Prova una versione aggiornata di Chrome o Edge.');
       return;
     }
 
     const mime = supportedWebMMime();
+
     if (!mime) {
-      setStatus('Questo browser non supporta la registrazione video WebM necessaria alla creazione del video.');
+      setStatus('Questo browser non supporta la registrazione WebM necessaria. Prova Chrome aggiornato.');
       return;
     }
 
     exporting = true;
+
     const button = $('exportButton');
     button.disabled = true;
     $('previewButton').disabled = true;
@@ -555,7 +596,9 @@ footer{text-align:center;border-top:1px solid var(--border);padding:24px;color:v
       canvas.height = d.h;
       stream = canvas.captureStream(30);
 
-      const bitrate = $('quality').value === '1080' ? 12000000 : 8000000;
+      const bitrate =
+        $('quality').value === '1080' ? 12000000 : 8000000;
+
       recorder = new MediaRecorder(stream,{
         mimeType:mime,
         videoBitsPerSecond:bitrate
@@ -567,7 +610,9 @@ footer{text-align:center;border-top:1px solid var(--border);padding:24px;color:v
 
       const stopped = new Promise((resolve,reject) => {
         recorder.onstop = resolve;
-        recorder.onerror = () => reject(new Error('Errore durante la registrazione video.'));
+        recorder.onerror = () => reject(
+          new Error('Errore durante la registrazione video.')
+        );
       });
 
       recorder.start(250);
@@ -582,18 +627,26 @@ footer{text-align:center;border-top:1px solid var(--border);padding:24px;color:v
         setStatus(`Creazione video: foto ${i+1} di ${images.length}…`);
 
         const target = (i+1)*seconds*1000;
-        await wait(Math.max(0,target-(performance.now()-startedAt)));
+        await wait(Math.max(
+          0,target-(performance.now()-startedAt)
+        ));
       }
 
       if (recorder.state!=='inactive') recorder.stop();
       await stopped;
+
       stream.getTracks().forEach(track => track.stop());
       stream = null;
 
-      if (!chunks.length) throw new Error('Il browser non ha generato il file video.');
+      if (!chunks.length) {
+        throw new Error('Il browser non ha generato il file video.');
+      }
 
       const webmBlob = new Blob(chunks,{type:'video/webm'});
-      if (!webmBlob.size) throw new Error('Il file video creato è vuoto.');
+
+      if (!webmBlob.size) {
+        throw new Error('Il file video creato è vuoto.');
+      }
 
       let finalBlob = webmBlob;
       let extension = 'webm';
@@ -608,24 +661,41 @@ footer{text-align:center;border-top:1px solid var(--border);padding:24px;color:v
 
       const now = new Date();
       const pad = n => String(n).padStart(2,'0');
-      const stamp = now.getFullYear()+
-        pad(now.getMonth()+1)+pad(now.getDate())+'-'+
-        pad(now.getHours())+pad(now.getMinutes())+pad(now.getSeconds());
 
-      const filename = `ritoccapix-video-${stamp}-${exportNumber}.${extension}`;
+      const stamp =
+        now.getFullYear()+
+        pad(now.getMonth()+1)+
+        pad(now.getDate())+'-'+
+        pad(now.getHours())+
+        pad(now.getMinutes())+
+        pad(now.getSeconds());
+
+      const filename =
+        `ritoccapix-video-${stamp}-${exportNumber}.${extension}`;
+
       const link = $('downloadLink');
       link.href = currentBlobUrl;
       link.download = filename;
-      link.textContent = `Scarica il video ${extension.toUpperCase()} (${(finalBlob.size/1024/1024).toFixed(1)} MB)`;
+      link.textContent =
+        `Scarica il video ${extension.toUpperCase()} (${(finalBlob.size/1024/1024).toFixed(1)} MB)`;
       link.style.display = 'block';
 
-      setStatus(`Video ${extension.toUpperCase()} creato! Premi il link verde per scaricarlo.`);
+      setStatus(
+        `Video ${extension.toUpperCase()} creato! Premi il link verde per scaricarlo.`
+      );
     } catch(err) {
       console.error(err);
-      setStatus(err && err.message
-        ? err.message
-        : 'Errore durante la creazione del video. Prova con WebM o con una risoluzione più bassa.');
+
+      setStatus(
+        err && err.message
+          ? err.message
+          : 'Errore durante la creazione del video. Prova WebM oppure una risoluzione più bassa.'
+      );
     } finally {
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+      }
+
       exporting = false;
       button.disabled = false;
       $('previewButton').disabled = false;
