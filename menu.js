@@ -16,15 +16,27 @@
   ];
 
   function initMenu() {
-    const nav = document.querySelector(
+    let nav = document.querySelector(
       'nav[aria-label="Menu strumenti"]'
     );
 
-    if (!nav || nav.dataset.menuInitialized === "true") {
-      return;
+    if (!nav) {
+      nav = document.querySelector("header nav");
     }
 
-    nav.dataset.menuInitialized = "true";
+    if (!nav) {
+      const header = document.querySelector("header");
+
+      if (header) {
+        nav = document.createElement("nav");
+        nav.setAttribute("aria-label", "Menu strumenti");
+        header.appendChild(nav);
+      }
+    }
+
+    if (!nav || nav.querySelector(".rp-menu")) {
+      return;
+    }
 
     const style = document.createElement("style");
     style.textContent = `
