@@ -1,1092 +1,441 @@
+
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Photo Collage Maker - Crea collage online gratis | RitoccaPix</title>
-<meta name="description" content="Crea collage fotografici online gratis. Unisci 2, 3, 4, 6 o 9 immagini con layout personalizzati e scarica il risultato in JPG o PNG.">
+<title>Photo Collage Maker - Free Online Collage | RitoccaPix</title>
+<meta name="description" content="Create custom photo collages online for free. Arrange photos in flexible layouts, adjust frames and download in JPG or PNG.">
 <meta name="robots" content="index, follow">
-
 <script src="menu.js" defer></script>
-
 <style>
-* {
-  box-sizing: border-box;
-}
-
-:root {
-  --bg: #0a0f1d;
-  --card: #11192b;
-  --card2: #0c1323;
-  --border: #26324a;
-  --text: #f5f7ff;
-  --muted: #9da8bd;
-  --accent: #6ea8ff;
-  --accent-hover: #8bbaff;
-}
-
-body {
-  margin: 0;
-  font-family: Inter, Arial, Helvetica, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.6;
-}
-
-.container {
-  width: min(1180px, 92%);
-  margin: auto;
-}
-
-header {
-  padding: 24px 0;
-  border-bottom: 1px solid #1e293b;
-}
-
-.logo {
-  font-size: 23px;
-  font-weight: 800;
-  letter-spacing: -.5px;
-}
-
-.logo span {
-  color: var(--accent);
-}
-
-main {
-  max-width: 1180px;
-  margin: 0 auto;
-  padding: 38px 20px 60px;
-}
-
-.hero {
-  text-align: center;
-  margin-bottom: 34px;
-}
-
-.hero h1 {
-  margin: 0;
-  font-size: clamp(32px, 5vw, 46px);
-  line-height: 1.15;
-  letter-spacing: -1px;
-}
-
-.hero p {
-  margin: 14px auto 0;
-  color: var(--muted);
-  max-width: 680px;
-  font-size: 16px;
-}
-
-.workspace {
-  display: grid;
-  grid-template-columns: 340px minmax(0, 1fr);
-  gap: 24px;
-  align-items: start;
-}
-
-.panel,
-.preview-panel,
-.content {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 22px;
-}
-
-.panel-title,
-.preview-title {
-  font-size: 18px;
-  font-weight: 800;
-  margin-bottom: 18px;
-}
-
-.upload {
-  display: block;
-  border: 2px dashed #465775;
-  border-radius: 16px;
-  padding: 24px 16px;
-  text-align: center;
-  cursor: pointer;
-  transition: .2s;
-  background: var(--card2);
-}
-
-.upload:hover {
-  border-color: var(--accent);
-  background: #101b30;
-}
-
-.upload-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 14px;
-  background: var(--accent);
-  color: #081326;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 12px;
-  font-size: 25px;
-}
-
-.upload strong {
-  display: block;
-  font-size: 15px;
-}
-
-.upload span {
-  display: block;
-  color: var(--muted);
-  font-size: 12px;
-  margin-top: 5px;
-}
-
-#fileInput {
-  display: none;
-}
-
-.section {
-  margin-top: 25px;
-}
-
-.section-label {
-  font-size: 12px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: .7px;
-  color: var(--muted);
-  margin-bottom: 11px;
-}
-
-.layout-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px;
-}
-
-.layout-btn {
-  min-width: 0;
-  border: 1px solid var(--border);
-  background: var(--card2);
-  border-radius: 12px;
-  padding: 10px 4px;
-  cursor: pointer;
-  color: var(--muted);
-  transition: .18s;
-}
-
-.layout-btn:hover,
-.format-btn:hover {
-  border-color: var(--accent);
-}
-
-.layout-btn.active {
-  border-color: var(--accent);
-  background: #1a2b49;
-  color: var(--text);
-}
-
-.layout-preview {
-  height: 32px;
-  width: 44px;
-  margin: 0 auto 7px;
-  display: grid;
-  gap: 2px;
-}
-
-.layout-preview span {
-  background: currentColor;
-  opacity: .8;
-  border-radius: 2px;
-}
-
-.l2 {
-  grid-template-columns: 1fr 1fr;
-}
-
-.l3 {
-  grid-template-columns: 1.4fr 1fr;
-  grid-template-rows: 1fr 1fr;
-}
-
-.l3 span:first-child {
-  grid-row: 1 / 3;
-}
-
-.l4 {
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-}
-
-.l6 {
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: 1fr 1fr;
-}
-
-.l9 {
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-}
-
-.layout-name {
-  display: block;
-  font-size: 11px;
-  font-weight: 700;
-}
-
-.format-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-}
-
-.format-btn {
-  border: 1px solid var(--border);
-  background: var(--card2);
-  border-radius: 10px;
-  padding: 10px 6px;
-  cursor: pointer;
-  font-size: 12px;
-  color: var(--muted);
-  font-weight: 700;
-}
-
-.format-btn.active {
-  background: #1a2b49;
-  border-color: var(--accent);
-  color: var(--text);
-}
-
-.control {
-  margin-top: 18px;
-}
-
-.control-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 8px;
-}
-
-.control-top label {
-  font-size: 13px;
-  font-weight: 700;
-}
-
-.value {
-  font-size: 12px;
-  color: var(--muted);
-}
-
-input[type="range"] {
-  width: 100%;
-  accent-color: var(--accent);
-  cursor: pointer;
-}
-
-.color-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-#bgColor {
-  width: 44px;
-  height: 38px;
-  border: 1px solid var(--border);
-  border-radius: 9px;
-  padding: 3px;
-  background: var(--card2);
-  cursor: pointer;
-}
-
-.color-info {
-  font-size: 12px;
-  color: var(--muted);
-}
-
-.text-input {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  font-size: 13px;
-  outline: none;
-  background: var(--card2);
-  color: var(--text);
-}
-
-.text-input::placeholder {
-  color: #778398;
-}
-
-.text-input:focus {
-  border-color: var(--accent);
-}
-
-.photo-list {
-  margin-top: 18px;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 8px;
-}
-
-.photo-thumb {
-  display: block;
-  width: 100%;
-  aspect-ratio: 1;
-  border-radius: 9px;
-  object-fit: cover;
-  border: 1px solid var(--border);
-}
-
-.photo-count {
-  font-size: 12px;
-  color: var(--muted);
-  margin-top: 9px;
-}
-
-.preview-panel {
-  min-width: 0;
-}
-
-.preview-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-  gap: 10px;
-}
-
-.preview-title {
-  margin: 0;
-}
-
-.shuffle {
-  border: 1px solid var(--border);
-  background: var(--card2);
-  color: var(--text);
-  border-radius: 10px;
-  padding: 9px 12px;
-  font-size: 12px;
-  font-weight: 800;
-  cursor: pointer;
-}
-
-.shuffle:hover {
-  border-color: var(--accent);
-}
-
-.canvas-wrap {
-  background-color: var(--card2);
-  background-image:
-    linear-gradient(45deg, #1a2538 25%, transparent 25%),
-    linear-gradient(-45deg, #1a2538 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, #1a2538 75%),
-    linear-gradient(-45deg, transparent 75%, #1a2538 75%);
-  background-size: 20px 20px;
-  background-position: 0 0, 0 10px, 10px -10px, -10px 0;
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 20px;
-  min-height: 360px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: auto;
-}
-
-#canvas {
-  max-width: 100%;
-  max-height: 650px;
-  width: auto;
-  height: auto;
-  display: block;
-  border-radius: 4px;
-  box-shadow: 0 18px 45px rgba(0, 0, 0, .3);
-}
-
-.empty-preview {
-  color: var(--muted);
-  text-align: center;
-  padding: 50px 20px;
-}
-
-.empty-preview-icon {
-  font-size: 48px;
-  margin-bottom: 10px;
-}
-
-.downloads {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-top: 16px;
-}
-
-.download-btn {
-  border: 0;
-  border-radius: 12px;
-  padding: 13px;
-  font-weight: 800;
-  cursor: pointer;
-  font-size: 13px;
-  transition: .2s;
-}
-
-.download-jpg {
-  background: var(--accent);
-  color: #081326;
-}
-
-.download-png {
-  background: #253149;
-  color: var(--text);
-  border: 1px solid #394761;
-}
-
-.download-btn:hover {
-  opacity: .9;
-}
-
-.download-btn:disabled {
-  opacity: .4;
-  cursor: not-allowed;
-}
-
-.content {
-  margin-top: 24px;
-}
-
-.content h2 {
-  margin-top: 0;
-}
-
-.content h3 {
-  margin-top: 24px;
-}
-
-.content p,
-.content li {
-  color: var(--muted);
-  line-height: 1.8;
-}
-
-.content strong {
-  color: var(--text);
-}
-
-footer {
-  border-top: 1px solid #1e293b;
-  text-align: center;
-  color: #778398;
-  font-size: 13px;
-  margin-top: 35px;
-  padding: 25px 15px;
-}
-
-footer a {
-  color: var(--accent);
-  text-decoration: none;
-}
-
-footer a:hover {
-  text-decoration: underline;
-}
-
-@media(max-width: 850px) {
-  .workspace {
-    grid-template-columns: 1fr;
-  }
-
-  .panel {
-    order: 2;
-  }
-
-  .preview-panel {
-    order: 1;
-  }
-
-  .canvas-wrap {
-    min-height: 300px;
-  }
-
-  #canvas {
-    max-height: 520px;
-  }
-}
-
-@media(max-width: 520px) {
-  main {
-    padding: 28px 14px 45px;
-  }
-
-  .hero h1 {
-    font-size: 30px;
-  }
-
-  .hero p {
-    font-size: 14px;
-  }
-
-  .panel,
-  .preview-panel,
-  .content {
-    padding: 16px;
-    border-radius: 16px;
-  }
-
-  .canvas-wrap {
-    padding: 10px;
-    min-height: 250px;
-  }
-
-  .downloads {
-    grid-template-columns: 1fr;
-  }
-
-  .preview-top {
-    align-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
+*{box-sizing:border-box}
+:root{--bg:#0a0f1d;--card:#11192b;--card2:#0c1323;--border:#26324a;--text:#f5f7ff;--muted:#9da8bd;--accent:#6ea8ff}
+body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+.container{width:min(1180px,92%);margin:auto}
+header{padding:24px 0;border-bottom:1px solid #1e293b}
+.logo{font-size:23px;font-weight:800;letter-spacing:-.5px}
+.logo span{color:var(--accent)}
+main{max-width:1180px;margin:auto;padding:36px 20px 60px}
+.hero{text-align:center;margin-bottom:32px}
+.hero h1{margin:0;font-size:clamp(30px,5vw,44px);line-height:1.2}
+.hero p{color:var(--muted);max-width:680px;margin:12px auto}
+.workspace{display:grid;grid-template-columns:340px minmax(0,1fr);gap:22px;align-items:start}
+.panel,.preview-panel,.content{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:20px}
+.panel-title,.preview-title{font-size:18px;font-weight:800;margin-bottom:16px}
+.upload{display:block;border:2px dashed #465775;border-radius:14px;padding:22px 14px;text-align:center;cursor:pointer;background:var(--card2)}
+.upload:hover{border-color:var(--accent)}
+.upload-icon{font-size:28px;color:var(--accent)}
+.upload strong,.upload span{display:block}
+.upload span{font-size:12px;color:var(--muted)}
+#fileInput{display:none}
+.section{margin-top:24px}
+.section-label{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin-bottom:10px}
+.layout-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.layout-btn,.format-btn,.secondary-btn{border:1px solid var(--border);background:var(--card2);border-radius:10px;padding:10px 5px;cursor:pointer;color:var(--muted);font-size:12px;font-weight:700}
+.layout-btn.active,.format-btn.active,.secondary-btn.active{border-color:var(--accent);background:#1a2b49;color:white}
+.layout-btn:hover,.format-btn:hover,.secondary-btn:hover{border-color:var(--accent)}
+.layout-preview{height:30px;width:42px;margin:0 auto 6px;display:grid;gap:2px}
+.layout-preview span{background:currentColor;border-radius:2px}
+.l2{grid-template-columns:1fr 1fr}
+.l3{grid-template-columns:1.4fr 1fr;grid-template-rows:1fr 1fr}
+.l3 span:first-child{grid-row:1/3}
+.l4{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}
+.l6{grid-template-columns:repeat(3,1fr);grid-template-rows:1fr 1fr}
+.l9{grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr)}
+.layout-name{display:block;font-size:11px}
+.format-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.control{margin-top:16px}
+.control-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:7px}
+.control-top label{font-size:13px;font-weight:700}
+.value,.color-info,.photo-count{font-size:12px;color:var(--muted)}
+input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
+.color-row{display:flex;align-items:center;gap:10px}
+#bgColor{width:44px;height:38px;border:1px solid var(--border);border-radius:8px;padding:3px;background:var(--card2)}
+.text-input,select{width:100%;padding:11px;border:1px solid var(--border);border-radius:9px;background:var(--card2);color:var(--text);font-size:13px}
+.photo-list{margin-top:16px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+.photo-thumb{width:100%;aspect-ratio:1;object-fit:cover;border-radius:8px;border:1px solid var(--border)}
+.preview-panel{min-width:0}
+.preview-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.preview-title{margin:0}
+.shuffle{border:1px solid var(--border);background:var(--card2);color:var(--text);border-radius:9px;padding:9px 11px;font-size:12px;font-weight:800;cursor:pointer}
+.canvas-wrap{background-color:var(--card2);background-image:linear-gradient(45deg,#1a2538 25%,transparent 25%),linear-gradient(-45deg,#1a2538 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#1a2538 75%),linear-gradient(-45deg,transparent 75%,#1a2538 75%);background-size:20px 20px;background-position:0 0,0 10px,10px -10px,-10px 0;border:1px solid var(--border);border-radius:14px;padding:14px;min-height:300px;display:flex;align-items:center;justify-content:center;overflow:auto}
+#canvas{max-width:100%;max-height:650px;width:auto;height:auto;display:block;box-shadow:0 15px 40px #0005;touch-action:none}
+.empty-preview{color:var(--muted);text-align:center;padding:45px 12px}
+.empty-preview-icon{font-size:45px}
+.downloads{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.download-btn{border:0;border-radius:10px;padding:13px;font-weight:800;cursor:pointer;font-size:13px}
+.download-jpg{background:var(--accent);color:#081326}
+.download-png{background:#253149;color:white;border:1px solid #394761}
+.download-btn:disabled{opacity:.4;cursor:not-allowed}
+.custom-tools{margin-top:22px;padding-top:18px;border-top:1px solid var(--border)}
+.custom-tools h3{font-size:16px;margin:0 0 8px}
+.help{font-size:12px;color:var(--muted);margin:5px 0 12px}
+.custom-buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.secondary-btn{padding:10px}
+.cell-selector{margin-top:12px}
+.content{margin-top:22px}
+.content h2{margin-top:0}
+.content h3{margin-top:22px}
+.content p,.content li{color:var(--muted);line-height:1.8}
+footer{border-top:1px solid #1e293b;text-align:center;color:#778398;font-size:13px;margin-top:32px;padding:24px 15px}
+footer a{color:var(--accent);text-decoration:none}
+@media(max-width:850px){.workspace{grid-template-columns:1fr}.preview-panel{order:1}.panel{order:2}.canvas-wrap{min-height:240px}#canvas{max-height:520px}}
+@media(max-width:520px){main{padding:25px 12px 40px}.panel,.preview-panel,.content{padding:14px}.downloads{grid-template-columns:1fr}.canvas-wrap{padding:8px}.hero p{font-size:14px}}
 </style>
 </head>
-
 <body>
-
 <div class="container">
-  <header>
-    <div class="logo">
-      <a href="index.html" style="color:inherit;text-decoration:none;">
-        Ritocca<span>Pix</span>
-      </a>
-    </div>
-    <nav aria-label="Main navigation"></nav>
-  </header>
+<header>
+<div class="logo"><a href="index.html" style="color:inherit;text-decoration:none">Ritocca<span>Pix</span></a></div>
+<nav aria-label="Main navigation"></nav>
+</header>
 </div>
 
 <main>
+<section class="hero">
+<h1>Photo Collage Maker</h1>
+<p>Create photo collages with ready-made layouts or design your own composition. Arrange your photos, customize the background and download your collage for free.</p>
+</section>
 
-  <section class="hero">
-    <h1>Photo Collage Maker</h1>
-    <p>Crea un collage professionale dalle tue foto in pochi secondi. Scegli il layout, personalizza il formato e scarica il risultato.</p>
-  </section>
+<div class="workspace">
+<aside class="panel">
+<div class="panel-title">Your photos</div>
+<label class="upload" for="fileInput">
+<div class="upload-icon">＋</div>
+<strong>Add photos</strong>
+<span>JPG, PNG, WebP · Up to 9 photos</span>
+</label>
+<input id="fileInput" type="file" accept="image/*" multiple>
+<div id="photoList" class="photo-list"></div>
+<div id="photoCount" class="photo-count">No photos selected</div>
 
-  <div class="workspace">
+<div class="section">
+<div class="section-label">Layout</div>
+<div class="layout-grid">
+<button class="layout-btn active" data-layout="2" type="button"><div class="layout-preview l2"><span></span><span></span></div><span class="layout-name">2 photos</span></button>
+<button class="layout-btn" data-layout="3" type="button"><div class="layout-preview l3"><span></span><span></span><span></span></div><span class="layout-name">3 photos</span></button>
+<button class="layout-btn" data-layout="4" type="button"><div class="layout-preview l4"><span></span><span></span><span></span><span></span></div><span class="layout-name">4 photos</span></button>
+<button class="layout-btn" data-layout="6" type="button"><div class="layout-preview l6"><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="layout-name">6 photos</span></button>
+<button class="layout-btn" data-layout="9" type="button"><div class="layout-preview l9"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="layout-name">9 photos</span></button>
+<button class="layout-btn" data-layout="custom" type="button"><div class="layout-preview l4"><span></span><span></span><span></span><span></span></div><span class="layout-name">Custom</span></button>
+</div>
+</div>
 
-    <aside class="panel">
+<div class="section">
+<div class="section-label">Canvas format</div>
+<div class="format-grid">
+<button class="format-btn active" data-format="square" type="button">Square</button>
+<button class="format-btn" data-format="portrait" type="button">Portrait</button>
+<button class="format-btn" data-format="story" type="button">Story</button>
+<button class="format-btn" data-format="landscape" type="button">Landscape</button>
+</div>
+</div>
 
-      <div class="panel-title">Le tue foto</div>
+<div class="control">
+<div class="control-top"><label for="spacing">Spacing</label><span id="spacingValue" class="value">12 px</span></div>
+<input id="spacing" type="range" min="0" max="40" value="12">
+</div>
+<div class="control">
+<div class="control-top"><label for="radius">Rounded corners</label><span id="radiusValue" class="value">12 px</span></div>
+<input id="radius" type="range" min="0" max="40" value="12">
+</div>
+<div class="control">
+<div class="control-top"><label for="bgColor">Background color</label></div>
+<div class="color-row"><input id="bgColor" type="color" value="#ffffff"><span class="color-info">Color between photo frames</span></div>
+</div>
+<div class="control">
+<div class="control-top"><label for="caption">Caption</label></div>
+<input id="caption" class="text-input" type="text" maxlength="80" placeholder="Add text to your collage...">
+</div>
 
-      <label class="upload" for="fileInput">
-        <div class="upload-icon">＋</div>
-        <strong>Aggiungi foto</strong>
-        <span>JPG, PNG, WEBP · massimo 9 immagini</span>
-      </label>
+<div id="customTools" class="custom-tools" hidden>
+<h3>Custom layout editor</h3>
+<p class="help">Select a frame, then adjust its position and size. You can also drag a frame directly on the preview.</p>
+<div class="custom-buttons">
+<button id="addCell" class="secondary-btn" type="button">＋ Add frame</button>
+<button id="removeCell" class="secondary-btn" type="button">− Remove frame</button>
+</div>
+<div class="cell-selector">
+<div class="control-top"><label for="cellSelect">Selected frame</label></div>
+<select id="cellSelect" class="text-input"></select>
+</div>
+<div class="control">
+<div class="control-top"><label for="cellX">Horizontal position</label><span id="cellXValue" class="value">0%</span></div>
+<input id="cellX" type="range" min="0" max="90" value="0">
+</div>
+<div class="control">
+<div class="control-top"><label for="cellY">Vertical position</label><span id="cellYValue" class="value">0%</span></div>
+<input id="cellY" type="range" min="0" max="90" value="0">
+</div>
+<div class="control">
+<div class="control-top"><label for="cellW">Frame width</label><span id="cellWValue" class="value">50%</span></div>
+<input id="cellW" type="range" min="10" max="100" value="50">
+</div>
+<div class="control">
+<div class="control-top"><label for="cellH">Frame height</label><span id="cellHValue" class="value">50%</span></div>
+<input id="cellH" type="range" min="10" max="100" value="50">
+</div>
+<div class="control">
+<div class="control-top"><label for="cellZoom">Photo zoom</label><span id="cellZoomValue" class="value">1.0×</span></div>
+<input id="cellZoom" type="range" min="100" max="250" value="100">
+</div>
+<button id="resetCustom" class="secondary-btn" style="width:100%;margin-top:12px" type="button">Reset custom layout</button>
+</div>
+</aside>
 
-      <input id="fileInput" type="file" accept="image/*" multiple>
+<section class="preview-panel">
+<div class="preview-top">
+<div class="preview-title">Preview</div>
+<button id="shuffle" class="shuffle" type="button">🔀 Shuffle photos</button>
+</div>
+<div class="canvas-wrap">
+<div id="emptyPreview" class="empty-preview">
+<div class="empty-preview-icon">▧</div>
+<strong>Your collage will appear here</strong>
+<div style="margin-top:6px;font-size:13px">Select at least 2 photos to start</div>
+</div>
+<canvas id="canvas" hidden></canvas>
+</div>
+<div class="downloads">
+<button id="downloadJpg" class="download-btn download-jpg" type="button" disabled>Download JPG</button>
+<button id="downloadPng" class="download-btn download-png" type="button" disabled>Download PNG</button>
+</div>
+<p id="status" role="status" aria-live="polite" class="help"></p>
+</section>
+</div>
 
-      <div id="photoList" class="photo-list"></div>
-      <div id="photoCount" class="photo-count">Nessuna foto selezionata</div>
-
-      <div class="section">
-        <div class="section-label">Layout</div>
-
-        <div class="layout-grid">
-
-          <button class="layout-btn active" data-layout="2" type="button">
-            <div class="layout-preview l2"><span></span><span></span></div>
-            <span class="layout-name">2 foto</span>
-          </button>
-
-          <button class="layout-btn" data-layout="3" type="button">
-            <div class="layout-preview l3"><span></span><span></span><span></span></div>
-            <span class="layout-name">3 foto</span>
-          </button>
-
-          <button class="layout-btn" data-layout="4" type="button">
-            <div class="layout-preview l4"><span></span><span></span><span></span><span></span></div>
-            <span class="layout-name">4 foto</span>
-          </button>
-
-          <button class="layout-btn" data-layout="6" type="button">
-            <div class="layout-preview l6"><span></span><span></span><span></span><span></span><span></span><span></span></div>
-            <span class="layout-name">6 foto</span>
-          </button>
-
-          <button class="layout-btn" data-layout="9" type="button">
-            <div class="layout-preview l9"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-            <span class="layout-name">9 foto</span>
-          </button>
-
-        </div>
-      </div>
-
-      <div class="section">
-        <div class="section-label">Formato</div>
-
-        <div class="format-grid">
-          <button class="format-btn active" data-format="square" type="button">Quadrato</button>
-          <button class="format-btn" data-format="portrait" type="button">Verticale</button>
-          <button class="format-btn" data-format="story" type="button">Story</button>
-          <button class="format-btn" data-format="landscape" type="button">Orizzontale</button>
-        </div>
-      </div>
-
-      <div class="control">
-        <div class="control-top">
-          <label for="spacing">Spaziatura</label>
-          <span class="value" id="spacingValue">12 px</span>
-        </div>
-        <input id="spacing" type="range" min="0" max="40" value="12">
-      </div>
-
-      <div class="control">
-        <div class="control-top">
-          <label for="radius">Angoli arrotondati</label>
-          <span class="value" id="radiusValue">12 px</span>
-        </div>
-        <input id="radius" type="range" min="0" max="40" value="12">
-      </div>
-
-      <div class="control">
-        <div class="control-top">
-          <label for="bgColor">Colore dello sfondo</label>
-        </div>
-        <div class="color-row">
-          <input id="bgColor" type="color" value="#ffffff">
-          <span class="color-info">Colore degli spazi tra le foto</span>
-        </div>
-      </div>
-
-      <div class="control">
-        <div class="control-top">
-          <label for="caption">Testo sul collage</label>
-        </div>
-        <input id="caption" class="text-input" type="text" maxlength="80" placeholder="Aggiungi una scritta...">
-      </div>
-
-    </aside>
-
-    <section class="preview-panel">
-
-      <div class="preview-top">
-        <div class="preview-title">Anteprima</div>
-        <button id="shuffle" class="shuffle" type="button">🔀 Cambia ordine</button>
-      </div>
-
-      <div class="canvas-wrap">
-        <div id="emptyPreview" class="empty-preview">
-          <div class="empty-preview-icon">▧</div>
-          <strong>Il tuo collage apparirà qui</strong>
-          <div style="margin-top:6px;font-size:13px;">Seleziona almeno 2 foto per iniziare</div>
-        </div>
-        <canvas id="canvas" hidden></canvas>
-      </div>
-
-      <div class="downloads">
-        <button id="downloadJpg" class="download-btn download-jpg" type="button" disabled>Scarica JPG</button>
-        <button id="downloadPng" class="download-btn download-png" type="button" disabled>Scarica PNG</button>
-      </div>
-
-      <p id="status" class="muted" role="status" aria-live="polite"></p>
-
-    </section>
-
-  </div>
-
-  <section class="content">
-    <h2>Come creare un collage di foto</h2>
-    <ol>
-      <li>Seleziona le immagini dal computer o dal telefono.</li>
-      <li>Scegli un layout da 2, 3, 4, 6 o 9 foto.</li>
-      <li>Personalizza il formato, lo spazio, gli angoli e il colore.</li>
-      <li>Se vuoi, aggiungi una scritta al collage.</li>
-      <li>Scarica il risultato in formato JPG o PNG.</li>
-    </ol>
-    <p>Le immagini vengono elaborate direttamente nel browser: non è necessario installare programmi.</p>
-  </section>
-
-  <section class="content">
-    <h2>Domande frequenti</h2>
-
-    <h3>Il Photo Collage Maker è gratuito?</h3>
-    <p>Sì, puoi creare e scaricare collage senza registrazione.</p>
-
-    <h3>Quali formati posso usare?</h3>
-    <p>Puoi selezionare immagini compatibili con il browser, come JPG, PNG e WebP. Il risultato può essere salvato in JPG o PNG.</p>
-
-    <h3>Le immagini vengono caricate su un server?</h3>
-    <p>Questo strumento elabora le immagini localmente nel browser e non contiene codice per inviarle a un server.</p>
-  </section>
-
+<section class="content">
+<h2>How to create a photo collage</h2>
+<ol>
+<li>Select your photos from your device.</li>
+<li>Choose a preset layout or select Custom to create your own.</li>
+<li>In Custom mode, add frames and adjust their position, size and zoom.</li>
+<li>Customize the canvas format, spacing, corners and background color.</li>
+<li>Download your collage in JPG or PNG format.</li>
+</ol>
+<p>Your photos are processed directly in your browser. They are not uploaded by this tool to a server.</p>
+</section>
+<section class="content">
+<h2>Frequently asked questions</h2>
+<h3>Is the Photo Collage Maker free?</h3>
+<p>Yes. You can create and download collages without registration.</p>
+<h3>Can I create a custom collage?</h3>
+<p>Yes. Select Custom to add, remove, resize and reposition frames. Each frame can also have its own zoom setting.</p>
+<h3>Are my photos uploaded?</h3>
+<p>No. This tool processes your selected photos locally in your browser.</p>
+</section>
 </main>
 
 <footer>
-  <p>© 2026 RitoccaPix · Strumenti gratuiti per le immagini</p>
-  <p>
-    <a href="index.html">Home</a> ·
-    <a href="image-resizer.html">Ridimensiona immagini</a> ·
-    <a href="image-compressor.html">Comprimi immagini</a> ·
-    <a href="image-analyzer.html">Analizza immagini</a>
-  </p>
+<p>© 2026 RitoccaPix · Free online image tools</p>
+<p><a href="index.html">Home</a> · <a href="image-resizer.html">Image Resizer</a> · <a href="image-compressor.html">Image Compressor</a> · <a href="image-analyzer.html">Image Analyzer</a></p>
 </footer>
 
 <script>
-const fileInput = document.getElementById("fileInput");
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
+const $ = id => document.getElementById(id);
+const fileInput=$("fileInput"), canvas=$("canvas"), ctx=canvas.getContext("2d");
+const emptyPreview=$("emptyPreview"), photoList=$("photoList"), photoCount=$("photoCount"), status=$("status");
+const spacingInput=$("spacing"), radiusInput=$("radius"), bgColor=$("bgColor"), caption=$("caption");
+const downloadJpg=$("downloadJpg"), downloadPng=$("downloadPng");
+const customTools=$("customTools"), cellSelect=$("cellSelect");
+let images=[], selectedLayout=2, selectedFormat="square", cells=[], selectedCell=0, dragging=null;
+const formats={square:{width:1080,height:1080},portrait:{width:1080,height:1350},story:{width:1080,height:1920},landscape:{width:1200,height:800}};
 
-const emptyPreview = document.getElementById("emptyPreview");
-const photoList = document.getElementById("photoList");
-const photoCount = document.getElementById("photoCount");
-const status = document.getElementById("status");
-
-const spacingInput = document.getElementById("spacing");
-const radiusInput = document.getElementById("radius");
-const bgColor = document.getElementById("bgColor");
-const caption = document.getElementById("caption");
-
-const spacingValue = document.getElementById("spacingValue");
-const radiusValue = document.getElementById("radiusValue");
-
-const downloadJpg = document.getElementById("downloadJpg");
-const downloadPng = document.getElementById("downloadPng");
-const shuffleButton = document.getElementById("shuffle");
-
-let images = [];
-let selectedLayout = 2;
-let selectedFormat = "square";
-let renderVersion = 0;
-
-const formats = {
-  square: { width: 1080, height: 1080 },
-  portrait: { width: 1080, height: 1350 },
-  story: { width: 1080, height: 1920 },
-  landscape: { width: 1200, height: 800 }
-};
-
-function showStatus(message) {
-  status.textContent = message;
+function showStatus(message){status.textContent=message}
+function makeCell(x,y,w,h){return {x,y,w,h,zoom:1,panX:0,panY:0}}
+function defaultCells(){
+ return [makeCell(0,0,50,50),makeCell(50,0,50,50),makeCell(0,50,50,50),makeCell(50,50,50,50)];
 }
-
-fileInput.addEventListener("change", async () => {
-  const files = Array.from(fileInput.files || [])
-    .filter(file => file.type.startsWith("image/"))
-    .slice(0, 9);
-
-  renderVersion++;
-  images = [];
-  renderThumbnails();
-  drawCollage();
-
-  if (files.length < 2) {
-    showStatus("Seleziona almeno 2 immagini.");
-    return;
-  }
-
-  showStatus("Caricamento delle immagini...");
-
-  const loadedImages = await Promise.all(files.map(file => {
-    return new Promise(resolve => {
-      const reader = new FileReader();
-
-      reader.onload = event => {
-        const img = new Image();
-
-        img.onload = () => resolve({
-          image: img,
-          name: file.name
-        });
-
-        img.onerror = () => resolve(null);
-        img.src = event.target.result;
-      };
-
-      reader.onerror = () => resolve(null);
-      reader.readAsDataURL(file);
-    });
-  }));
-
-  images = loadedImages.filter(Boolean);
-
-  renderThumbnails();
-  drawCollage();
-
-  if (images.length < 2) {
-    showStatus("Non è stato possibile caricare almeno 2 immagini valide.");
-  } else {
-    showStatus(
-      images.length + " immagini pronte." +
-      (files.length > images.length ? " Alcuni file non sono stati caricati." : "")
-    );
-  }
+function presetCells(layout){
+ if(layout===2)return [makeCell(0,0,50,100),makeCell(50,0,50,100)];
+ if(layout===3)return [makeCell(0,0,58,100),makeCell(58,0,42,50),makeCell(58,50,42,50)];
+ if(layout===4)return [makeCell(0,0,50,50),makeCell(50,0,50,50),makeCell(0,50,50,50),makeCell(50,50,50,50)];
+ if(layout===6)return Array.from({length:6},(_,i)=>makeCell((i%3)*100/3,Math.floor(i/3)*50,100/3,50));
+ return Array.from({length:9},(_,i)=>makeCell((i%3)*100/3,Math.floor(i/3)*100/3,100/3,100/3));
+}
+function updateCellSelect(){
+ cellSelect.replaceChildren();
+ cells.forEach((cell,i)=>{
+  const option=document.createElement("option");
+  option.value=i;option.textContent="Frame "+(i+1);cellSelect.appendChild(option);
+ });
+ if(cells.length){selectedCell=Math.max(0,Math.min(selectedCell,cells.length-1));cellSelect.value=selectedCell}
+ updateCellControls();
+}
+function updateCellControls(){
+ if(!cells.length)return;
+ const c=cells[selectedCell];
+ $("cellX").value=Math.round(c.x);$("cellY").value=Math.round(c.y);
+ $("cellW").value=Math.round(c.w);$("cellH").value=Math.round(c.h);
+ $("cellZoom").value=Math.round(c.zoom*100);
+ $("cellXValue").textContent=Math.round(c.x)+"%";
+ $("cellYValue").textContent=Math.round(c.y)+"%";
+ $("cellWValue").textContent=Math.round(c.w)+"%";
+ $("cellHValue").textContent=Math.round(c.h)+"%";
+ $("cellZoomValue").textContent=c.zoom.toFixed(1)+"×";
+ $("removeCell").disabled=cells.length<=1;
+}
+function renderThumbnails(){
+ photoList.replaceChildren();
+ images.forEach((item,i)=>{
+  const img=document.createElement("img");
+  img.src=item.image.src;img.className="photo-thumb";img.alt="Photo "+(i+1)+": "+item.name;
+  img.title=item.name;photoList.appendChild(img);
+ });
+ photoCount.textContent=images.length?images.length+" photo"+(images.length===1?"":"s")+" selected":"No photos selected";
+}
+fileInput.addEventListener("change",async()=>{
+ const files=Array.from(fileInput.files||[]).filter(f=>f.type.startsWith("image/")).slice(0,9);
+ images=[];renderThumbnails();drawCollage();
+ if(files.length<2){showStatus("Select at least 2 images.");return}
+ showStatus("Loading photos...");
+ const loaded=await Promise.all(files.map(file=>new Promise(resolve=>{
+  const reader=new FileReader();
+  reader.onload=e=>{const img=new Image();img.onload=()=>resolve({image:img,name:file.name});img.onerror=()=>resolve(null);img.src=e.target.result};
+  reader.onerror=()=>resolve(null);reader.readAsDataURL(file);
+ })));
+ images=loaded.filter(Boolean);renderThumbnails();drawCollage();
+ showStatus(images.length<2?"Could not load at least 2 valid images.":images.length+" photos ready.");
 });
-
-document.querySelectorAll(".layout-btn").forEach(button => {
-  button.addEventListener("click", () => {
-    selectedLayout = Number(button.dataset.layout);
-
-    document.querySelectorAll(".layout-btn")
-      .forEach(btn => btn.classList.remove("active"));
-
-    button.classList.add("active");
-    drawCollage();
-  });
+document.querySelectorAll(".layout-btn").forEach(button=>button.addEventListener("click",()=>{
+ const value=button.dataset.layout;
+ selectedLayout=value==="custom"?"custom":Number(value);
+ document.querySelectorAll(".layout-btn").forEach(b=>b.classList.toggle("active",b===button));
+ customTools.hidden=selectedLayout!=="custom";
+ if(selectedLayout==="custom"){cells=defaultCells();selectedCell=0;updateCellSelect()}
+ drawCollage();
+}));
+document.querySelectorAll(".format-btn").forEach(button=>button.addEventListener("click",()=>{
+ selectedFormat=button.dataset.format;
+ document.querySelectorAll(".format-btn").forEach(b=>b.classList.toggle("active",b===button));
+ drawCollage();
+}));
+spacingInput.addEventListener("input",()=>{$("spacingValue").textContent=spacingInput.value+" px";drawCollage()});
+radiusInput.addEventListener("input",()=>{$("radiusValue").textContent=radiusInput.value+" px";drawCollage()});
+bgColor.addEventListener("input",drawCollage);
+caption.addEventListener("input",drawCollage);
+$("shuffle").addEventListener("click",()=>{
+ for(let i=images.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[images[i],images[j]]=[images[j],images[i]]}
+ renderThumbnails();drawCollage();
 });
-
-document.querySelectorAll(".format-btn").forEach(button => {
-  button.addEventListener("click", () => {
-    selectedFormat = button.dataset.format;
-
-    document.querySelectorAll(".format-btn")
-      .forEach(btn => btn.classList.remove("active"));
-
-    button.classList.add("active");
-    drawCollage();
-  });
+cellSelect.addEventListener("change",()=>{selectedCell=Number(cellSelect.value);updateCellControls();drawCollage()});
+["cellX","cellY","cellW","cellH","cellZoom"].forEach(id=>$(id).addEventListener("input",()=>{
+ if(!cells.length)return;
+ const c=cells[selectedCell];
+ if(id==="cellX")c.x=Number($(id).value);
+ if(id==="cellY")c.y=Number($(id).value);
+ if(id==="cellW")c.w=Number($(id).value);
+ if(id==="cellH")c.h=Number($(id).value);
+ if(id==="cellZoom")c.zoom=Number($(id).value)/100;
+ c.x=Math.max(0,Math.min(100-c.w,c.x));
+ c.y=Math.max(0,Math.min(100-c.h,c.y));
+ updateCellControls();drawCollage();
+}));
+$("addCell").addEventListener("click",()=>{
+ if(cells.length>=9){showStatus("Maximum 9 frames.");return}
+ const n=cells.length, size=32;
+ cells.push(makeCell((n*13)%60,(n*17)%60,size,size));
+ selectedCell=cells.length-1;updateCellSelect();drawCollage();
 });
-
-spacingInput.addEventListener("input", () => {
-  spacingValue.textContent = spacingInput.value + " px";
-  drawCollage();
+$("removeCell").addEventListener("click",()=>{
+ if(cells.length<=1)return;
+ cells.splice(selectedCell,1);selectedCell=Math.max(0,selectedCell-1);updateCellSelect();drawCollage();
 });
+$("resetCustom").addEventListener("click",()=>{cells=defaultCells();selectedCell=0;updateCellSelect();drawCollage()});
 
-radiusInput.addEventListener("input", () => {
-  radiusValue.textContent = radiusInput.value + " px";
-  drawCollage();
+function roundedRect(x,y,w,h,r){
+ r=Math.max(0,Math.min(r,w/2,h/2));ctx.beginPath();ctx.moveTo(x+r,y);
+ ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+ ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+ ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+ ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath();
+}
+function drawImageInCell(img,x,y,w,h,r,c){
+ ctx.save();roundedRect(x,y,w,h,r);ctx.clip();
+ const iw=img.naturalWidth,ih=img.naturalHeight;
+ const scale=Math.max(w/iw,h/ih)*(c?c.zoom:1);
+ const dw=iw*scale,dh=ih*scale;
+ const maxPanX=Math.max(0,(dw-w)/2),maxPanY=Math.max(0,(dh-h)/2);
+ const dx=x+(w-dw)/2+(c?c.panX*maxPanX:0);
+ const dy=y+(h-dh)/2+(c?c.panY*maxPanY:0);
+ ctx.drawImage(img,dx,dy,dw,dh);ctx.restore();
+}
+function drawCaption(width,height){
+ const text=caption.value.trim();if(!text)return;
+ const fs=Math.max(24,Math.round(width/28));
+ ctx.save();ctx.font="800 "+fs+"px Arial";ctx.textAlign="center";ctx.textBaseline="middle";
+ const x=width/2,y=height-Math.max(45,height*.06),max=width*.88;
+ let display=text;while(ctx.measureText(display).width>max&&display.length>3)display=display.slice(0,-2)+"…";
+ const tw=ctx.measureText(display).width,bw=Math.min(width-30,tw+44),bh=fs+28;
+ ctx.fillStyle="rgba(0,0,0,.62)";roundedRect(x-bw/2,y-bh/2,bw,bh,14);ctx.fill();
+ ctx.fillStyle="#fff";ctx.fillText(display,x,y,max);ctx.restore();
+}
+function getCells(){
+ if(selectedLayout==="custom")return cells;
+ return presetCells(selectedLayout);
+}
+function drawCollage(){
+ if(images.length<2){canvas.hidden=true;emptyPreview.hidden=false;downloadJpg.disabled=true;downloadPng.disabled=true;return}
+ canvas.hidden=false;emptyPreview.hidden=true;
+ const format=formats[selectedFormat];canvas.width=format.width;canvas.height=format.height;
+ ctx.fillStyle=bgColor.value;ctx.fillRect(0,0,canvas.width,canvas.height);
+ const gap=Number(spacingInput.value),radius=Number(radiusInput.value);
+ const list=getCells();
+ list.forEach((c,i)=>{
+  const x=c.x/100*canvas.width+gap/2;
+  const y=c.y/100*canvas.height+gap/2;
+  const w=Math.max(1,c.w/100*canvas.width-gap);
+  const h=Math.max(1,c.h/100*canvas.height-gap);
+  const photo=images[i%images.length];
+  drawImageInCell(photo.image,x,y,w,h,radius,c);
+  if(selectedLayout==="custom"&&i===selectedCell){
+   ctx.save();ctx.strokeStyle="#6ea8ff";ctx.lineWidth=Math.max(3,canvas.width/300);
+   ctx.setLineDash([12,8]);ctx.strokeRect(x,y,w,h);ctx.restore();
+  }
+ });
+ drawCaption(canvas.width,canvas.height);
+ downloadJpg.disabled=false;downloadPng.disabled=false;
+ showStatus("Preview updated · "+list.length+" frames · "+canvas.width+" × "+canvas.height+" px");
+}
+function canvasPoint(event){
+ const rect=canvas.getBoundingClientRect();
+ return {x:(event.clientX-rect.left)/rect.width*canvas.width,y:(event.clientY-rect.top)/rect.height*canvas.height};
+}
+canvas.addEventListener("pointerdown",event=>{
+ if(selectedLayout!=="custom"||images.length<2)return;
+ const p=canvasPoint(event);
+ for(let i=cells.length-1;i>=0;i--){
+  const c=cells[i],x=c.x/100*canvas.width,y=c.y/100*canvas.height,w=c.w/100*canvas.width,h=c.h/100*canvas.height;
+  if(p.x>=x&&p.x<=x+w&&p.y>=y&&p.y<=y+h){
+   selectedCell=i;cellSelect.value=i;updateCellControls();
+   dragging={x:p.x,y:p.y,cellX:c.x,cellY:c.y};canvas.setPointerCapture(event.pointerId);drawCollage();break;
+  }
+ }
 });
-
-bgColor.addEventListener("input", drawCollage);
-caption.addEventListener("input", drawCollage);
-
-shuffleButton.addEventListener("click", () => {
-  for (let i = images.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [images[i], images[j]] = [images[j], images[i]];
-  }
-
-  renderThumbnails();
-  drawCollage();
+canvas.addEventListener("pointermove",event=>{
+ if(!dragging||selectedLayout!=="custom")return;
+ const p=canvasPoint(event),c=cells[selectedCell];
+ c.x=Math.max(0,Math.min(100-c.w,dragging.cellX+(p.x-dragging.x)/canvas.width*100));
+ c.y=Math.max(0,Math.min(100-c.h,dragging.cellY+(p.y-dragging.y)/canvas.height*100));
+ updateCellControls();drawCollage();
 });
+canvas.addEventListener("pointerup",()=>dragging=null);
+canvas.addEventListener("pointercancel",()=>dragging=null);
 
-function renderThumbnails() {
-  photoList.replaceChildren();
-
-  images.forEach((item, index) => {
-    const thumb = document.createElement("img");
-    thumb.src = item.image.src;
-    thumb.className = "photo-thumb";
-    thumb.alt = "Foto " + (index + 1) + ": " + item.name;
-    thumb.title = item.name;
-    photoList.appendChild(thumb);
-  });
-
-  photoCount.textContent = images.length === 0
-    ? "Nessuna foto selezionata"
-    : images.length + (images.length === 1
-      ? " foto selezionata"
-      : " foto selezionate");
+function downloadCanvas(format){
+ if(images.length<2)return;
+ canvas.toBlob(blob=>{
+  if(!blob){showStatus("Export failed. Try using fewer photos.");return}
+  const url=URL.createObjectURL(blob),link=document.createElement("a");
+  link.href=url;link.download="ritoccapix-collage."+format;
+  document.body.appendChild(link);link.click();link.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+ },format==="jpg"?"image/jpeg":"image/png",format==="jpg"?.92:undefined);
 }
-
-function roundedRect(x, y, w, h, r) {
-  r = Math.max(0, Math.min(r, w / 2, h / 2));
-
-  ctx.beginPath();
-  ctx.moveTo(x + r, y);
-  ctx.lineTo(x + w - r, y);
-  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
-  ctx.lineTo(x + w, y + h - r);
-  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
-  ctx.lineTo(x + r, y + h);
-  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
-  ctx.lineTo(x, y + r);
-  ctx.quadraticCurveTo(x, y, x + r, y);
-  ctx.closePath();
-}
-
-function drawImageCover(img, x, y, w, h, radius) {
-  ctx.save();
-  roundedRect(x, y, w, h, radius);
-  ctx.clip();
-
-  const imageRatio = img.naturalWidth / img.naturalHeight;
-  const boxRatio = w / h;
-
-  let sx = 0;
-  let sy = 0;
-  let sw = img.naturalWidth;
-  let sh = img.naturalHeight;
-
-  if (imageRatio > boxRatio) {
-    sw = img.naturalHeight * boxRatio;
-    sx = (img.naturalWidth - sw) / 2;
-  } else {
-    sh = img.naturalWidth / boxRatio;
-    sy = (img.naturalHeight - sh) / 2;
-  }
-
-  ctx.drawImage(img, sx, sy, sw, sh, x, y, w, h);
-  ctx.restore();
-}
-
-function drawCaption(width, height) {
-  const text = caption.value.trim();
-  if (!text) return;
-
-  const fontSize = Math.max(24, Math.round(width / 28));
-
-  ctx.save();
-  ctx.font = "800 " + fontSize + "px Arial";
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-
-  const x = width / 2;
-  const y = height - Math.max(45, height * 0.06);
-  const maxTextWidth = width * 0.88;
-
-  let displayText = text;
-
-  while (ctx.measureText(displayText).width > maxTextWidth &&
-         displayText.length > 3) {
-    displayText = displayText.slice(0, -2) + "…";
-  }
-
-  const textWidth = ctx.measureText(displayText).width;
-  const boxW = Math.min(width - 30, textWidth + 44);
-  const boxH = fontSize + 28;
-
-  ctx.fillStyle = "rgba(0,0,0,.62)";
-  roundedRect(x - boxW / 2, y - boxH / 2, boxW, boxH, 14);
-  ctx.fill();
-
-  ctx.fillStyle = "#ffffff";
-  ctx.fillText(displayText, x, y, maxTextWidth);
-  ctx.restore();
-}
-
-function drawCollage() {
-  const version = ++renderVersion;
-
-  if (images.length < 2) {
-    canvas.hidden = true;
-    emptyPreview.hidden = false;
-    downloadJpg.disabled = true;
-    downloadPng.disabled = true;
-    return;
-  }
-
-  canvas.hidden = false;
-  emptyPreview.hidden = true;
-
-  const format = formats[selectedFormat];
-  canvas.width = format.width;
-  canvas.height = format.height;
-
-  ctx.fillStyle = bgColor.value;
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  const count = Math.min(selectedLayout, images.length);
-  const gap = Number(spacingInput.value);
-  const radius = Number(radiusInput.value);
-
-  let columns;
-  let rows;
-
-  if (selectedLayout === 2) {
-    columns = 2;
-    rows = 1;
-  } else if (selectedLayout === 3) {
-    columns = 2;
-    rows = 2;
-  } else if (selectedLayout === 4) {
-    columns = 2;
-    rows = 2;
-  } else if (selectedLayout === 6) {
-    columns = 3;
-    rows = 2;
-  } else {
-    columns = 3;
-    rows = 3;
-  }
-
-  const usableWidth = canvas.width - gap * (columns + 1);
-  const usableHeight = canvas.height - gap * (rows + 1);
-  const cellWidth = usableWidth / columns;
-  const cellHeight = usableHeight / rows;
-
-  for (let i = 0; i < count; i++) {
-    let x;
-    let y;
-    let w;
-    let h;
-
-    if (selectedLayout === 3) {
-      if (i === 0) {
-        x = gap;
-        y = gap;
-        w = cellWidth;
-        h = usableHeight;
-      } else {
-        x = gap * 2 + cellWidth;
-        w = cellWidth;
-        h = (usableHeight - gap) / 2;
-        y = i === 1 ? gap : gap * 2 + h;
-      }
-    } else {
-      const col = i % columns;
-      const row = Math.floor(i / columns);
-
-      x = gap + col * (cellWidth + gap);
-      y = gap + row * (cellHeight + gap);
-      w = cellWidth;
-      h = cellHeight;
-    }
-
-    drawImageCover(images[i].image, x, y, w, h, radius);
-  }
-
-  drawCaption(canvas.width, canvas.height);
-
-  downloadJpg.disabled = false;
-  downloadPng.disabled = false;
-
-  showStatus(
-    "Anteprima aggiornata · " + count + " foto · " +
-    canvas.width + " × " + canvas.height + " px"
-  );
-}
-
-function downloadCanvas(format) {
-  if (images.length < 2) return;
-
-  const mime = format === "jpg" ? "image/jpeg" : "image/png";
-
-  canvas.toBlob(blob => {
-    if (!blob) {
-      showStatus("Non è stato possibile esportare il collage. Prova con meno immagini.");
-      return;
-    }
-
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-
-    link.href = url;
-    link.download = "photo-collage." + format;
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
-  }, mime, format === "jpg" ? 0.92 : undefined);
-}
-
-downloadJpg.addEventListener("click", () => downloadCanvas("jpg"));
-downloadPng.addEventListener("click", () => downloadCanvas("png"));
+downloadJpg.addEventListener("click",()=>downloadCanvas("jpg"));
+downloadPng.addEventListener("click",()=>downloadCanvas("png"));
+updateCellSelect();
 </script>
-
 </body>
 </html>
