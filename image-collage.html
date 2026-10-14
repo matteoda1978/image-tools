@@ -5,83 +5,84 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Photo Collage Maker - Free Online Collage | RitoccaPix</title>
-<meta name="description" content="Create custom photo collages online for free. Arrange photos in flexible layouts, adjust frames and download in JPG or PNG.">
+<meta name="description" content="Create custom photo collages for free. Choose ready-made layouts or design your own photo composition online.">
 <meta name="robots" content="index, follow">
 <script src="menu.js" defer></script>
 <style>
 *{box-sizing:border-box}
 :root{--bg:#0a0f1d;--card:#11192b;--card2:#0c1323;--border:#26324a;--text:#f5f7ff;--muted:#9da8bd;--accent:#6ea8ff}
-body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
 .container{width:min(1180px,92%);margin:auto}
 header{padding:24px 0;border-bottom:1px solid #1e293b}
-.logo{font-size:23px;font-weight:800;letter-spacing:-.5px}
+.logo{font-size:23px;font-weight:800}
 .logo span{color:var(--accent)}
-main{max-width:1180px;margin:auto;padding:36px 20px 60px}
-.hero{text-align:center;margin-bottom:32px}
-.hero h1{margin:0;font-size:clamp(30px,5vw,44px);line-height:1.2}
-.hero p{color:var(--muted);max-width:680px;margin:12px auto}
-.workspace{display:grid;grid-template-columns:340px minmax(0,1fr);gap:22px;align-items:start}
+main{max-width:1180px;margin:auto;padding:34px 18px 55px}
+.hero{text-align:center;margin-bottom:30px}
+.hero h1{font-size:clamp(30px,5vw,44px);margin:0;line-height:1.2}
+.hero p{color:var(--muted);max-width:700px;margin:12px auto}
+.workspace{display:grid;grid-template-columns:350px minmax(0,1fr);gap:22px;align-items:start}
 .panel,.preview-panel,.content{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:20px}
-.panel-title,.preview-title{font-size:18px;font-weight:800;margin-bottom:16px}
-.upload{display:block;border:2px dashed #465775;border-radius:14px;padding:22px 14px;text-align:center;cursor:pointer;background:var(--card2)}
+.panel-title,.preview-title{font-size:18px;font-weight:800;margin-bottom:15px}
+.upload{display:block;border:2px dashed #465775;border-radius:14px;padding:20px;text-align:center;cursor:pointer;background:var(--card2)}
 .upload:hover{border-color:var(--accent)}
-.upload-icon{font-size:28px;color:var(--accent)}
 .upload strong,.upload span{display:block}
 .upload span{font-size:12px;color:var(--muted)}
+.upload-icon{font-size:28px;color:var(--accent)}
 #fileInput{display:none}
-.section{margin-top:24px}
+.section{margin-top:23px}
 .section-label{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin-bottom:10px}
 .layout-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
-.layout-btn,.format-btn,.secondary-btn{border:1px solid var(--border);background:var(--card2);border-radius:10px;padding:10px 5px;cursor:pointer;color:var(--muted);font-size:12px;font-weight:700}
+.layout-btn,.format-btn,.secondary-btn{min-width:0;border:1px solid var(--border);background:var(--card2);color:var(--muted);border-radius:10px;padding:9px 5px;cursor:pointer;font-size:12px;font-weight:700}
 .layout-btn.active,.format-btn.active,.secondary-btn.active{border-color:var(--accent);background:#1a2b49;color:white}
 .layout-btn:hover,.format-btn:hover,.secondary-btn:hover{border-color:var(--accent)}
-.layout-preview{height:30px;width:42px;margin:0 auto 6px;display:grid;gap:2px}
-.layout-preview span{background:currentColor;border-radius:2px}
-.l2{grid-template-columns:1fr 1fr}
-.l3{grid-template-columns:1.4fr 1fr;grid-template-rows:1fr 1fr}
-.l3 span:first-child{grid-row:1/3}
-.l4{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}
-.l6{grid-template-columns:repeat(3,1fr);grid-template-rows:1fr 1fr}
-.l9{grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr)}
-.layout-name{display:block;font-size:11px}
+.layout-preview{width:46px;height:34px;margin:0 auto 6px;display:grid;gap:2px}
+.layout-preview span{background:currentColor;border-radius:2px;min-width:0;min-height:0}
+.lp2{grid-template-columns:1fr 1fr}
+.lp3{grid-template-columns:1.4fr 1fr;grid-template-rows:1fr 1fr}
+.lp3 span:first-child{grid-row:1/3}
+.lp4{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}
+.lp6{grid-template-columns:repeat(3,1fr);grid-template-rows:1fr 1fr}
+.lp9{grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr)}
+.lp-big3{grid-template-columns:1.6fr 1fr;grid-template-rows:repeat(3,1fr)}
+.lp-big3 span:first-child{grid-row:1/4}
+.lp-top3{grid-template-columns:repeat(3,1fr);grid-template-rows:1.5fr 1fr}
+.lp-top3 span:first-child{grid-column:1/4}
+.lp-two{grid-template-columns:1fr 1fr}
+.lp-two span:first-child{grid-row:1/3}
+.layout-name{display:block;font-size:10px;line-height:1.3}
 .format-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .control{margin-top:16px}
 .control-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:7px}
 .control-top label{font-size:13px;font-weight:700}
-.value,.color-info,.photo-count{font-size:12px;color:var(--muted)}
-input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
+.value,.help,.photo-count,.color-info{font-size:12px;color:var(--muted)}
+input[type=range]{width:100%;accent-color:var(--accent)}
 .color-row{display:flex;align-items:center;gap:10px}
 #bgColor{width:44px;height:38px;border:1px solid var(--border);border-radius:8px;padding:3px;background:var(--card2)}
 .text-input,select{width:100%;padding:11px;border:1px solid var(--border);border-radius:9px;background:var(--card2);color:var(--text);font-size:13px}
-.photo-list{margin-top:16px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+.photo-list{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-top:15px}
 .photo-thumb{width:100%;aspect-ratio:1;object-fit:cover;border-radius:8px;border:1px solid var(--border)}
 .preview-panel{min-width:0}
-.preview-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.preview-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
 .preview-title{margin:0}
 .shuffle{border:1px solid var(--border);background:var(--card2);color:var(--text);border-radius:9px;padding:9px 11px;font-size:12px;font-weight:800;cursor:pointer}
-.canvas-wrap{background-color:var(--card2);background-image:linear-gradient(45deg,#1a2538 25%,transparent 25%),linear-gradient(-45deg,#1a2538 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#1a2538 75%),linear-gradient(-45deg,transparent 75%,#1a2538 75%);background-size:20px 20px;background-position:0 0,0 10px,10px -10px,-10px 0;border:1px solid var(--border);border-radius:14px;padding:14px;min-height:300px;display:flex;align-items:center;justify-content:center;overflow:auto}
-#canvas{max-width:100%;max-height:650px;width:auto;height:auto;display:block;box-shadow:0 15px 40px #0005;touch-action:none}
-.empty-preview{color:var(--muted);text-align:center;padding:45px 12px}
-.empty-preview-icon{font-size:45px}
+.canvas-wrap{background-color:var(--card2);background-image:linear-gradient(45deg,#1a2538 25%,transparent 25%),linear-gradient(-45deg,#1a2538 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#1a2538 75%),linear-gradient(-45deg,transparent 75%,#1a2538 75%);background-size:20px 20px;background-position:0 0,0 10px,10px -10px,-10px 0;border:1px solid var(--border);border-radius:14px;padding:12px;min-height:260px;display:flex;align-items:center;justify-content:center;overflow:auto}
+#canvas{display:block;width:auto;height:auto;max-width:100%;max-height:650px;touch-action:none;box-shadow:0 15px 40px #0005}
 .downloads{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
 .download-btn{border:0;border-radius:10px;padding:13px;font-weight:800;cursor:pointer;font-size:13px}
 .download-jpg{background:var(--accent);color:#081326}
 .download-png{background:#253149;color:white;border:1px solid #394761}
 .download-btn:disabled{opacity:.4;cursor:not-allowed}
 .custom-tools{margin-top:22px;padding-top:18px;border-top:1px solid var(--border)}
-.custom-tools h3{font-size:16px;margin:0 0 8px}
-.help{font-size:12px;color:var(--muted);margin:5px 0 12px}
+.custom-tools h3{font-size:16px;margin:0 0 6px}
 .custom-buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.secondary-btn{padding:10px}
-.cell-selector{margin-top:12px}
 .content{margin-top:22px}
 .content h2{margin-top:0}
 .content h3{margin-top:22px}
 .content p,.content li{color:var(--muted);line-height:1.8}
 footer{border-top:1px solid #1e293b;text-align:center;color:#778398;font-size:13px;margin-top:32px;padding:24px 15px}
 footer a{color:var(--accent);text-decoration:none}
-@media(max-width:850px){.workspace{grid-template-columns:1fr}.preview-panel{order:1}.panel{order:2}.canvas-wrap{min-height:240px}#canvas{max-height:520px}}
-@media(max-width:520px){main{padding:25px 12px 40px}.panel,.preview-panel,.content{padding:14px}.downloads{grid-template-columns:1fr}.canvas-wrap{padding:8px}.hero p{font-size:14px}}
+@media(max-width:850px){.workspace{grid-template-columns:1fr}.preview-panel{order:1}.panel{order:2}#canvas{max-height:520px}}
+@media(max-width:520px){main{padding:25px 12px 40px}.panel,.preview-panel,.content{padding:14px}.downloads{grid-template-columns:1fr}.canvas-wrap{padding:7px}.layout-grid{gap:6px}}
 </style>
 </head>
 <body>
@@ -95,7 +96,7 @@ footer a{color:var(--accent);text-decoration:none}
 <main>
 <section class="hero">
 <h1>Photo Collage Maker</h1>
-<p>Create photo collages with ready-made layouts or design your own composition. Arrange your photos, customize the background and download your collage for free.</p>
+<p>Choose a ready-made photo composition or start with a blank canvas. Customize every frame and download your collage for free.</p>
 </section>
 
 <div class="workspace">
@@ -111,15 +112,19 @@ footer a{color:var(--accent);text-decoration:none}
 <div id="photoCount" class="photo-count">No photos selected</div>
 
 <div class="section">
-<div class="section-label">Layout</div>
+<div class="section-label">Choose a composition</div>
 <div class="layout-grid">
-<button class="layout-btn active" data-layout="2" type="button"><div class="layout-preview l2"><span></span><span></span></div><span class="layout-name">2 photos</span></button>
-<button class="layout-btn" data-layout="3" type="button"><div class="layout-preview l3"><span></span><span></span><span></span></div><span class="layout-name">3 photos</span></button>
-<button class="layout-btn" data-layout="4" type="button"><div class="layout-preview l4"><span></span><span></span><span></span><span></span></div><span class="layout-name">4 photos</span></button>
-<button class="layout-btn" data-layout="6" type="button"><div class="layout-preview l6"><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="layout-name">6 photos</span></button>
-<button class="layout-btn" data-layout="9" type="button"><div class="layout-preview l9"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="layout-name">9 photos</span></button>
-<button class="layout-btn" data-layout="custom" type="button"><div class="layout-preview l4"><span></span><span></span><span></span><span></span></div><span class="layout-name">Custom</span></button>
+<button class="layout-btn active" data-layout="blank" type="button"><div class="layout-preview"><span></span></div><span class="layout-name">Blank canvas</span></button>
+<button class="layout-btn" data-layout="2" type="button"><div class="layout-preview lp2"><span></span><span></span></div><span class="layout-name">2 photos</span></button>
+<button class="layout-btn" data-layout="3" type="button"><div class="layout-preview lp3"><span></span><span></span><span></span></div><span class="layout-name">3 photos</span></button>
+<button class="layout-btn" data-layout="4" type="button"><div class="layout-preview lp4"><span></span><span></span><span></span><span></span></div><span class="layout-name">4 photos</span></button>
+<button class="layout-btn" data-layout="6" type="button"><div class="layout-preview lp6"><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="layout-name">6 photos</span></button>
+<button class="layout-btn" data-layout="9" type="button"><div class="layout-preview lp9"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="layout-name">9 photos</span></button>
+<button class="layout-btn" data-layout="big3" type="button"><div class="layout-preview lp-big3"><span></span><span></span><span></span><span></span></div><span class="layout-name">1 big + 3 small</span></button>
+<button class="layout-btn" data-layout="top3" type="button"><div class="layout-preview lp-top3"><span></span><span></span><span></span><span></span></div><span class="layout-name">1 big + 3 below</span></button>
+<button class="layout-btn" data-layout="twoBig" type="button"><div class="layout-preview lp-two"><span></span><span></span><span></span></div><span class="layout-name">2 big + 1 small</span></button>
 </div>
+<p class="help">Choose a layout first. You can move and resize the frames afterwards.</p>
 </div>
 
 <div class="section">
@@ -149,14 +154,14 @@ footer a{color:var(--accent);text-decoration:none}
 <input id="caption" class="text-input" type="text" maxlength="80" placeholder="Add text to your collage...">
 </div>
 
-<div id="customTools" class="custom-tools" hidden>
-<h3>Custom layout editor</h3>
-<p class="help">Select a frame, then adjust its position and size. You can also drag a frame directly on the preview.</p>
+<div class="custom-tools">
+<h3>Edit your composition</h3>
+<p class="help">Tap a frame to select it. Drag it on the preview to move it, or use the controls to change its size.</p>
 <div class="custom-buttons">
 <button id="addCell" class="secondary-btn" type="button">＋ Add frame</button>
 <button id="removeCell" class="secondary-btn" type="button">− Remove frame</button>
 </div>
-<div class="cell-selector">
+<div class="control">
 <div class="control-top"><label for="cellSelect">Selected frame</label></div>
 <select id="cellSelect" class="text-input"></select>
 </div>
@@ -169,18 +174,18 @@ footer a{color:var(--accent);text-decoration:none}
 <input id="cellY" type="range" min="0" max="90" value="0">
 </div>
 <div class="control">
-<div class="control-top"><label for="cellW">Frame width</label><span id="cellWValue" class="value">50%</span></div>
-<input id="cellW" type="range" min="10" max="100" value="50">
+<div class="control-top"><label for="cellW">Frame width</label><span id="cellWValue" class="value">100%</span></div>
+<input id="cellW" type="range" min="10" max="100" value="100">
 </div>
 <div class="control">
-<div class="control-top"><label for="cellH">Frame height</label><span id="cellHValue" class="value">50%</span></div>
-<input id="cellH" type="range" min="10" max="100" value="50">
+<div class="control-top"><label for="cellH">Frame height</label><span id="cellHValue" class="value">100%</span></div>
+<input id="cellH" type="range" min="10" max="100" value="100">
 </div>
 <div class="control">
 <div class="control-top"><label for="cellZoom">Photo zoom</label><span id="cellZoomValue" class="value">1.0×</span></div>
 <input id="cellZoom" type="range" min="100" max="250" value="100">
 </div>
-<button id="resetCustom" class="secondary-btn" style="width:100%;margin-top:12px" type="button">Reset custom layout</button>
+<button id="resetLayout" class="secondary-btn" style="width:100%;margin-top:12px" type="button">Reset selected layout</button>
 </div>
 </aside>
 
@@ -190,40 +195,35 @@ footer a{color:var(--accent);text-decoration:none}
 <button id="shuffle" class="shuffle" type="button">🔀 Shuffle photos</button>
 </div>
 <div class="canvas-wrap">
-<div id="emptyPreview" class="empty-preview">
-<div class="empty-preview-icon">▧</div>
-<strong>Your collage will appear here</strong>
-<div style="margin-top:6px;font-size:13px">Select at least 2 photos to start</div>
-</div>
-<canvas id="canvas" hidden></canvas>
+<canvas id="canvas" aria-label="Photo collage preview"></canvas>
 </div>
 <div class="downloads">
-<button id="downloadJpg" class="download-btn download-jpg" type="button" disabled>Download JPG</button>
-<button id="downloadPng" class="download-btn download-png" type="button" disabled>Download PNG</button>
+<button id="downloadJpg" class="download-btn download-jpg" type="button">Download JPG</button>
+<button id="downloadPng" class="download-btn download-png" type="button">Download PNG</button>
 </div>
-<p id="status" role="status" aria-live="polite" class="help"></p>
+<p id="status" class="help" role="status" aria-live="polite">Choose a layout and add photos.</p>
 </section>
 </div>
 
 <section class="content">
 <h2>How to create a photo collage</h2>
 <ol>
-<li>Select your photos from your device.</li>
-<li>Choose a preset layout or select Custom to create your own.</li>
-<li>In Custom mode, add frames and adjust their position, size and zoom.</li>
-<li>Customize the canvas format, spacing, corners and background color.</li>
-<li>Download your collage in JPG or PNG format.</li>
+<li>Choose a ready-made composition or start with a blank canvas.</li>
+<li>Add photos from your phone or computer.</li>
+<li>Add, move and resize frames to create your own layout.</li>
+<li>Adjust the canvas format, spacing, corners and background color.</li>
+<li>Download your finished collage as JPG or PNG.</li>
 </ol>
-<p>Your photos are processed directly in your browser. They are not uploaded by this tool to a server.</p>
+<p>Your photos are processed locally in your browser and are not uploaded by this tool.</p>
 </section>
 <section class="content">
 <h2>Frequently asked questions</h2>
 <h3>Is the Photo Collage Maker free?</h3>
 <p>Yes. You can create and download collages without registration.</p>
-<h3>Can I create a custom collage?</h3>
-<p>Yes. Select Custom to add, remove, resize and reposition frames. Each frame can also have its own zoom setting.</p>
-<h3>Are my photos uploaded?</h3>
-<p>No. This tool processes your selected photos locally in your browser.</p>
+<h3>Can I design my own layout?</h3>
+<p>Yes. Start with a blank canvas or choose a template and customize its frames.</p>
+<h3>Are my photos uploaded to a server?</h3>
+<p>No. This tool processes selected images locally in your browser.</p>
 </section>
 </main>
 
@@ -233,41 +233,45 @@ footer a{color:var(--accent);text-decoration:none}
 </footer>
 
 <script>
-const $ = id => document.getElementById(id);
-const fileInput=$("fileInput"), canvas=$("canvas"), ctx=canvas.getContext("2d");
-const emptyPreview=$("emptyPreview"), photoList=$("photoList"), photoCount=$("photoCount"), status=$("status");
-const spacingInput=$("spacing"), radiusInput=$("radius"), bgColor=$("bgColor"), caption=$("caption");
-const downloadJpg=$("downloadJpg"), downloadPng=$("downloadPng");
-const customTools=$("customTools"), cellSelect=$("cellSelect");
-let images=[], selectedLayout=2, selectedFormat="square", cells=[], selectedCell=0, dragging=null;
-const formats={square:{width:1080,height:1080},portrait:{width:1080,height:1350},story:{width:1080,height:1920},landscape:{width:1200,height:800}};
+const $=id=>document.getElementById(id);
+const canvas=$("canvas"),ctx=canvas.getContext("2d");
+const fileInput=$("fileInput"),photoList=$("photoList"),photoCount=$("photoCount");
+const spacing=$("spacing"),radius=$("radius"),bgColor=$("bgColor"),caption=$("caption");
+let images=[],cells=[],selectedCell=0,selectedFormat="square",currentLayout="blank",dragging=null;
 
-function showStatus(message){status.textContent=message}
-function makeCell(x,y,w,h){return {x,y,w,h,zoom:1,panX:0,panY:0}}
-function defaultCells(){
- return [makeCell(0,0,50,50),makeCell(50,0,50,50),makeCell(0,50,50,50),makeCell(50,50,50,50)];
+const formats={
+ square:{width:1080,height:1080},
+ portrait:{width:1080,height:1350},
+ story:{width:1080,height:1920},
+ landscape:{width:1200,height:800}
+};
+const makeCell=(x,y,w,h)=>({x,y,w,h,zoom:1});
+const templates={
+ blank:()=>[makeCell(0,0,100,100)],
+ "2":()=>[makeCell(0,0,50,100),makeCell(50,0,50,100)],
+ "3":()=>[makeCell(0,0,58,100),makeCell(58,0,42,50),makeCell(58,50,42,50)],
+ "4":()=>[makeCell(0,0,50,50),makeCell(50,0,50,50),makeCell(0,50,50,50),makeCell(50,50,50,50)],
+ "6":()=>Array.from({length:6},(_,i)=>makeCell(i%3*100/3,Math.floor(i/3)*50,100/3,50)),
+ "9":()=>Array.from({length:9},(_,i)=>makeCell(i%3*100/3,Math.floor(i/3)*100/3,100/3,100/3)),
+ big3:()=>[makeCell(0,0,62,100),makeCell(64,0,36,32),makeCell(64,34,36,32),makeCell(64,68,36,32)],
+ top3:()=>[makeCell(0,0,100,58),makeCell(0,60,32,40),makeCell(34,60,32,40),makeCell(68,60,32,40)],
+ twoBig:()=>[makeCell(0,0,50,100),makeCell(52,0,48,58),makeCell(52,60,48,40)]
+};
+
+function showStatus(message){$("status").textContent=message}
+function selectCell(index){selectedCell=Math.max(0,Math.min(index,cells.length-1));$("cellSelect").value=selectedCell;updateControls();draw()}
+function updateSelect(){
+ const select=$("cellSelect");select.replaceChildren();
+ cells.forEach((cell,i)=>{const opt=document.createElement("option");opt.value=i;opt.textContent="Frame "+(i+1);select.appendChild(opt)});
+ if(cells.length)select.value=selectedCell;
+ updateControls();
 }
-function presetCells(layout){
- if(layout===2)return [makeCell(0,0,50,100),makeCell(50,0,50,100)];
- if(layout===3)return [makeCell(0,0,58,100),makeCell(58,0,42,50),makeCell(58,50,42,50)];
- if(layout===4)return [makeCell(0,0,50,50),makeCell(50,0,50,50),makeCell(0,50,50,50),makeCell(50,50,50,50)];
- if(layout===6)return Array.from({length:6},(_,i)=>makeCell((i%3)*100/3,Math.floor(i/3)*50,100/3,50));
- return Array.from({length:9},(_,i)=>makeCell((i%3)*100/3,Math.floor(i/3)*100/3,100/3,100/3));
-}
-function updateCellSelect(){
- cellSelect.replaceChildren();
- cells.forEach((cell,i)=>{
-  const option=document.createElement("option");
-  option.value=i;option.textContent="Frame "+(i+1);cellSelect.appendChild(option);
- });
- if(cells.length){selectedCell=Math.max(0,Math.min(selectedCell,cells.length-1));cellSelect.value=selectedCell}
- updateCellControls();
-}
-function updateCellControls(){
+function updateControls(){
  if(!cells.length)return;
  const c=cells[selectedCell];
  $("cellX").value=Math.round(c.x);$("cellY").value=Math.round(c.y);
  $("cellW").value=Math.round(c.w);$("cellH").value=Math.round(c.h);
+ $("cellX").max=Math.max(0,100-c.w);$("cellY").max=Math.max(0,100-c.h);
  $("cellZoom").value=Math.round(c.zoom*100);
  $("cellXValue").textContent=Math.round(c.x)+"%";
  $("cellYValue").textContent=Math.round(c.y)+"%";
@@ -276,166 +280,159 @@ function updateCellControls(){
  $("cellZoomValue").textContent=c.zoom.toFixed(1)+"×";
  $("removeCell").disabled=cells.length<=1;
 }
-function renderThumbnails(){
+function renderPhotos(){
  photoList.replaceChildren();
  images.forEach((item,i)=>{
-  const img=document.createElement("img");
-  img.src=item.image.src;img.className="photo-thumb";img.alt="Photo "+(i+1)+": "+item.name;
-  img.title=item.name;photoList.appendChild(img);
+  const img=document.createElement("img");img.src=item.image.src;img.className="photo-thumb";
+  img.alt="Photo "+(i+1)+": "+item.name;img.title=item.name;photoList.appendChild(img);
  });
  photoCount.textContent=images.length?images.length+" photo"+(images.length===1?"":"s")+" selected":"No photos selected";
 }
 fileInput.addEventListener("change",async()=>{
  const files=Array.from(fileInput.files||[]).filter(f=>f.type.startsWith("image/")).slice(0,9);
- images=[];renderThumbnails();drawCollage();
- if(files.length<2){showStatus("Select at least 2 images.");return}
+ images=[];renderPhotos();draw();
+ if(!files.length){showStatus("Choose at least one image.");return}
  showStatus("Loading photos...");
  const loaded=await Promise.all(files.map(file=>new Promise(resolve=>{
   const reader=new FileReader();
   reader.onload=e=>{const img=new Image();img.onload=()=>resolve({image:img,name:file.name});img.onerror=()=>resolve(null);img.src=e.target.result};
   reader.onerror=()=>resolve(null);reader.readAsDataURL(file);
  })));
- images=loaded.filter(Boolean);renderThumbnails();drawCollage();
- showStatus(images.length<2?"Could not load at least 2 valid images.":images.length+" photos ready.");
+ images=loaded.filter(Boolean);renderPhotos();draw();
+ showStatus(images.length?images.length+" photo(s) ready.":"No valid images could be loaded.");
 });
 document.querySelectorAll(".layout-btn").forEach(button=>button.addEventListener("click",()=>{
- const value=button.dataset.layout;
- selectedLayout=value==="custom"?"custom":Number(value);
+ currentLayout=button.dataset.layout;
+ cells=templates[currentLayout]();
+ selectedCell=0;
  document.querySelectorAll(".layout-btn").forEach(b=>b.classList.toggle("active",b===button));
- customTools.hidden=selectedLayout!=="custom";
- if(selectedLayout==="custom"){cells=defaultCells();selectedCell=0;updateCellSelect()}
- drawCollage();
+ updateSelect();draw();
+ showStatus("Layout selected. Add photos and customize the frames.");
 }));
 document.querySelectorAll(".format-btn").forEach(button=>button.addEventListener("click",()=>{
  selectedFormat=button.dataset.format;
  document.querySelectorAll(".format-btn").forEach(b=>b.classList.toggle("active",b===button));
- drawCollage();
+ draw();
 }));
-spacingInput.addEventListener("input",()=>{$("spacingValue").textContent=spacingInput.value+" px";drawCollage()});
-radiusInput.addEventListener("input",()=>{$("radiusValue").textContent=radiusInput.value+" px";drawCollage()});
-bgColor.addEventListener("input",drawCollage);
-caption.addEventListener("input",drawCollage);
-$("shuffle").addEventListener("click",()=>{
- for(let i=images.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[images[i],images[j]]=[images[j],images[i]]}
- renderThumbnails();drawCollage();
-});
-cellSelect.addEventListener("change",()=>{selectedCell=Number(cellSelect.value);updateCellControls();drawCollage()});
+spacing.addEventListener("input",()=>{$("spacingValue").textContent=spacing.value+" px";draw()});
+radius.addEventListener("input",()=>{$("radiusValue").textContent=radius.value+" px";draw()});
+bgColor.addEventListener("input",draw);
+caption.addEventListener("input",draw);
+$("cellSelect").addEventListener("change",()=>selectCell(Number($("cellSelect").value)));
+
 ["cellX","cellY","cellW","cellH","cellZoom"].forEach(id=>$(id).addEventListener("input",()=>{
- if(!cells.length)return;
- const c=cells[selectedCell];
+ const c=cells[selectedCell];if(!c)return;
  if(id==="cellX")c.x=Number($(id).value);
  if(id==="cellY")c.y=Number($(id).value);
  if(id==="cellW")c.w=Number($(id).value);
  if(id==="cellH")c.h=Number($(id).value);
  if(id==="cellZoom")c.zoom=Number($(id).value)/100;
- c.x=Math.max(0,Math.min(100-c.w,c.x));
- c.y=Math.max(0,Math.min(100-c.h,c.y));
- updateCellControls();drawCollage();
+ c.w=Math.min(c.w,100-c.x);c.h=Math.min(c.h,100-c.y);
+ updateControls();draw();
 }));
 $("addCell").addEventListener("click",()=>{
  if(cells.length>=9){showStatus("Maximum 9 frames.");return}
- const n=cells.length, size=32;
- cells.push(makeCell((n*13)%60,(n*17)%60,size,size));
- selectedCell=cells.length-1;updateCellSelect();drawCollage();
+ cells.push(makeCell(8,8,35,35));selectedCell=cells.length-1;updateSelect();draw();
+ showStatus("Frame added. Move and resize it as needed.");
 });
 $("removeCell").addEventListener("click",()=>{
  if(cells.length<=1)return;
- cells.splice(selectedCell,1);selectedCell=Math.max(0,selectedCell-1);updateCellSelect();drawCollage();
+ cells.splice(selectedCell,1);selectedCell=Math.min(selectedCell,cells.length-1);updateSelect();draw();
 });
-$("resetCustom").addEventListener("click",()=>{cells=defaultCells();selectedCell=0;updateCellSelect();drawCollage()});
+$("resetLayout").addEventListener("click",()=>{
+ cells=templates[currentLayout]();selectedCell=0;updateSelect();draw();
+ showStatus("Selected layout reset.");
+});
+$("shuffle").addEventListener("click",()=>{
+ for(let i=images.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[images[i],images[j]]=[images[j],images[i]]}
+ renderPhotos();draw();
+});
 
 function roundedRect(x,y,w,h,r){
- r=Math.max(0,Math.min(r,w/2,h/2));ctx.beginPath();ctx.moveTo(x+r,y);
- ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);
- ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
- ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);
- ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath();
+ r=Math.max(0,Math.min(r,w/2,h/2));
+ ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);
+ ctx.quadraticCurveTo(x+w,y,x+w,y+r);ctx.lineTo(x+w,y+h-r);
+ ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);ctx.lineTo(x+r,y+h);
+ ctx.quadraticCurveTo(x,y+h,x,y+h-r);ctx.lineTo(x,y+r);
+ ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath();
 }
-function drawImageInCell(img,x,y,w,h,r,c){
+function drawPhoto(img,x,y,w,h,r,c){
  ctx.save();roundedRect(x,y,w,h,r);ctx.clip();
- const iw=img.naturalWidth,ih=img.naturalHeight;
- const scale=Math.max(w/iw,h/ih)*(c?c.zoom:1);
- const dw=iw*scale,dh=ih*scale;
- const maxPanX=Math.max(0,(dw-w)/2),maxPanY=Math.max(0,(dh-h)/2);
- const dx=x+(w-dw)/2+(c?c.panX*maxPanX:0);
- const dy=y+(h-dh)/2+(c?c.panY*maxPanY:0);
- ctx.drawImage(img,dx,dy,dw,dh);ctx.restore();
+ const scale=Math.max(w/img.naturalWidth,h/img.naturalHeight)*c.zoom;
+ const dw=img.naturalWidth*scale,dh=img.naturalHeight*scale;
+ ctx.drawImage(img,x+(w-dw)/2,y+(h-dh)/2,dw,dh);
+ ctx.restore();
 }
-function drawCaption(width,height){
+function drawCaption(){
  const text=caption.value.trim();if(!text)return;
- const fs=Math.max(24,Math.round(width/28));
+ const fs=Math.max(24,Math.round(canvas.width/28));
  ctx.save();ctx.font="800 "+fs+"px Arial";ctx.textAlign="center";ctx.textBaseline="middle";
- const x=width/2,y=height-Math.max(45,height*.06),max=width*.88;
- let display=text;while(ctx.measureText(display).width>max&&display.length>3)display=display.slice(0,-2)+"…";
- const tw=ctx.measureText(display).width,bw=Math.min(width-30,tw+44),bh=fs+28;
- ctx.fillStyle="rgba(0,0,0,.62)";roundedRect(x-bw/2,y-bh/2,bw,bh,14);ctx.fill();
- ctx.fillStyle="#fff";ctx.fillText(display,x,y,max);ctx.restore();
+ const x=canvas.width/2,y=canvas.height-Math.max(45,canvas.height*.06),max=canvas.width*.88;
+ let t=text;while(ctx.measureText(t).width>max&&t.length>3)t=t.slice(0,-2)+"…";
+ const w=Math.min(canvas.width-30,ctx.measureText(t).width+40),h=fs+26;
+ ctx.fillStyle="rgba(0,0,0,.65)";roundedRect(x-w/2,y-h/2,w,h,12);ctx.fill();
+ ctx.fillStyle="#fff";ctx.fillText(t,x,y,max);ctx.restore();
 }
-function getCells(){
- if(selectedLayout==="custom")return cells;
- return presetCells(selectedLayout);
-}
-function drawCollage(){
- if(images.length<2){canvas.hidden=true;emptyPreview.hidden=false;downloadJpg.disabled=true;downloadPng.disabled=true;return}
- canvas.hidden=false;emptyPreview.hidden=true;
+function draw(){
  const format=formats[selectedFormat];canvas.width=format.width;canvas.height=format.height;
  ctx.fillStyle=bgColor.value;ctx.fillRect(0,0,canvas.width,canvas.height);
- const gap=Number(spacingInput.value),radius=Number(radiusInput.value);
- const list=getCells();
- list.forEach((c,i)=>{
-  const x=c.x/100*canvas.width+gap/2;
-  const y=c.y/100*canvas.height+gap/2;
-  const w=Math.max(1,c.w/100*canvas.width-gap);
-  const h=Math.max(1,c.h/100*canvas.height-gap);
-  const photo=images[i%images.length];
-  drawImageInCell(photo.image,x,y,w,h,radius,c);
-  if(selectedLayout==="custom"&&i===selectedCell){
-   ctx.save();ctx.strokeStyle="#6ea8ff";ctx.lineWidth=Math.max(3,canvas.width/300);
-   ctx.setLineDash([12,8]);ctx.strokeRect(x,y,w,h);ctx.restore();
+ const gap=Number(spacing.value),r=Number(radius.value);
+ cells.forEach((c,i)=>{
+  const x=c.x/100*canvas.width+gap/2,y=c.y/100*canvas.height+gap/2;
+  const w=Math.max(1,c.w/100*canvas.width-gap),h=Math.max(1,c.h/100*canvas.height-gap);
+  if(images[i])drawPhoto(images[i].image,x,y,w,h,r,c);
+  else{
+   ctx.save();ctx.fillStyle=bgColor.value;roundedRect(x,y,w,h,r);ctx.fill();
+   ctx.strokeStyle="#7184a3";ctx.lineWidth=3;ctx.setLineDash([12,8]);ctx.stroke();ctx.setLineDash([]);
+   ctx.fillStyle="#7184a3";ctx.textAlign="center";ctx.textBaseline="middle";ctx.font="bold "+Math.max(20,Math.round(canvas.width/45))+"px Arial";
+   ctx.fillText("＋",x+w/2,y+h/2);ctx.restore();
+  }
+  if(i===selectedCell){
+   ctx.save();ctx.strokeStyle="#6ea8ff";ctx.lineWidth=Math.max(3,canvas.width/350);ctx.setLineDash([12,8]);ctx.strokeRect(x,y,w,h);ctx.restore();
   }
  });
- drawCaption(canvas.width,canvas.height);
- downloadJpg.disabled=false;downloadPng.disabled=false;
- showStatus("Preview updated · "+list.length+" frames · "+canvas.width+" × "+canvas.height+" px");
+ drawCaption();
+ $("downloadJpg").disabled=false;$("downloadPng").disabled=false;
+ showStatus(cells.length+" frame(s) · "+images.length+" photo(s) · "+canvas.width+" × "+canvas.height+" px");
 }
-function canvasPoint(event){
+function pointerPoint(event){
  const rect=canvas.getBoundingClientRect();
- return {x:(event.clientX-rect.left)/rect.width*canvas.width,y:(event.clientY-rect.top)/rect.height*canvas.height};
+ return{x:(event.clientX-rect.left)/rect.width*canvas.width,y:(event.clientY-rect.top)/rect.height*canvas.height};
 }
 canvas.addEventListener("pointerdown",event=>{
- if(selectedLayout!=="custom"||images.length<2)return;
- const p=canvasPoint(event);
+ const p=pointerPoint(event);
  for(let i=cells.length-1;i>=0;i--){
   const c=cells[i],x=c.x/100*canvas.width,y=c.y/100*canvas.height,w=c.w/100*canvas.width,h=c.h/100*canvas.height;
   if(p.x>=x&&p.x<=x+w&&p.y>=y&&p.y<=y+h){
-   selectedCell=i;cellSelect.value=i;updateCellControls();
-   dragging={x:p.x,y:p.y,cellX:c.x,cellY:c.y};canvas.setPointerCapture(event.pointerId);drawCollage();break;
+   selectedCell=i;$("cellSelect").value=i;updateControls();
+   dragging={startX:p.x,startY:p.y,originX:c.x,originY:c.y};
+   canvas.setPointerCapture(event.pointerId);draw();break;
   }
  }
 });
 canvas.addEventListener("pointermove",event=>{
- if(!dragging||selectedLayout!=="custom")return;
- const p=canvasPoint(event),c=cells[selectedCell];
- c.x=Math.max(0,Math.min(100-c.w,dragging.cellX+(p.x-dragging.x)/canvas.width*100));
- c.y=Math.max(0,Math.min(100-c.h,dragging.cellY+(p.y-dragging.y)/canvas.height*100));
- updateCellControls();drawCollage();
+ if(!dragging)return;
+ const p=pointerPoint(event),c=cells[selectedCell];
+ c.x=Math.max(0,Math.min(100-c.w,dragging.originX+(p.x-dragging.startX)/canvas.width*100));
+ c.y=Math.max(0,Math.min(100-c.h,dragging.originY+(p.y-dragging.startY)/canvas.height*100));
+ updateControls();draw();
 });
 canvas.addEventListener("pointerup",()=>dragging=null);
 canvas.addEventListener("pointercancel",()=>dragging=null);
 
-function downloadCanvas(format){
- if(images.length<2)return;
+function download(format){
  canvas.toBlob(blob=>{
-  if(!blob){showStatus("Export failed. Try using fewer photos.");return}
-  const url=URL.createObjectURL(blob),link=document.createElement("a");
-  link.href=url;link.download="ritoccapix-collage."+format;
-  document.body.appendChild(link);link.click();link.remove();
-  setTimeout(()=>URL.revokeObjectURL(url),1000);
+  if(!blob){showStatus("Export failed. Please try again.");return}
+  const url=URL.createObjectURL(blob),a=document.createElement("a");
+  a.href=url;a.download="ritoccapix-collage."+format;document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1500);
  },format==="jpg"?"image/jpeg":"image/png",format==="jpg"?.92:undefined);
 }
-downloadJpg.addEventListener("click",()=>downloadCanvas("jpg"));
-downloadPng.addEventListener("click",()=>downloadCanvas("png"));
-updateCellSelect();
+$("downloadJpg").addEventListener("click",()=>download("jpg"));
+$("downloadPng").addEventListener("click",()=>download("png"));
+
+updateSelect();
+draw();
 </script>
 </body>
 </html>
