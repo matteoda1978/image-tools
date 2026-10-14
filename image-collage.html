@@ -182,27 +182,16 @@ footer a{color:var(--accent);text-decoration:none}
 <button id="placePhoto" class="secondary-btn" type="button">Place photo in frame</button>
 <button id="clearPhoto" class="secondary-btn" type="button">Remove photo</button>
 </div>
-<div class="control">
-<div class="control-top"><label for="cellX">Horizontal position</label><span id="cellXValue" class="value">0%</span></div>
-<input id="cellX" type="range" min="0" max="90" value="0">
-</div>
-<div class="control">
-<div class="control-top"><label for="cellY">Vertical position</label><span id="cellYValue" class="value">0%</span></div>
-<input id="cellY" type="range" min="0" max="90" value="0">
-</div>
-<div class="control">
-<div class="control-top"><label for="cellW">Frame width</label><span id="cellWValue" class="value">100%</span></div>
-<input id="cellW" type="range" min="10" max="100" value="100">
-</div>
-<div class="control">
-<div class="control-top"><label for="cellH">Frame height</label><span id="cellHValue" class="value">100%</span></div>
-<input id="cellH" type="range" min="10" max="100" value="100">
-</div>
+
 <div class="control">
 <div class="control-top"><label for="cellZoom">Photo zoom</label><span id="cellZoomValue" class="value">1.0×</span></div>
 <input id="cellZoom" type="range" min="100" max="300" value="100">
 </div>
-<button id="resetLayout" class="secondary-btn" style="width:100%;margin-top:12px" type="button">Reset current layout</button>
+<div class="custom-buttons" style="margin-top:9px">
+<button id="centerPhoto" class="secondary-btn" type="button">Center photo</button>
+<button id="resetLayout" class="secondary-btn" type="button">Reset current layout</button>
+</div>
+<p class="help">To reposition a photo, drag inside its frame. Use “Center photo” to return it to the center. Drag a corner handle to resize the frame.</p>
 </div>
 </aside>
 
@@ -228,7 +217,8 @@ footer a{color:var(--accent);text-decoration:none}
 <li>Choose a layout or start with a blank canvas.</li>
 <li>Upload your photos.</li>
 <li>Select a frame and place the photo you want inside it.</li>
-<li>Drag the frame to move it, or drag a corner to resize it.</li>
+<li>Drag inside a frame to reposition its photo. Use Center photo to center it again.</li>
+<li>Drag a frame or its corner handles to move or resize it.</li>
 <li>Adjust the format, spacing, corners, background and caption.</li>
 <li>Download your finished collage as a JPG or PNG image.</li>
 </ol>
@@ -237,12 +227,14 @@ footer a{color:var(--accent);text-decoration:none}
 
 <section class="content">
 <h2>Frequently asked questions</h2>
+<h3>Can I move a photo inside its frame?</h3>
+<p>Yes. Drag inside the frame to adjust the photo position. Use Center photo to return it to the center.</p>
 <h3>Can I make one photo bigger than the others?</h3>
 <p>Yes. Select a frame and drag one of its corners. You can resize each frame independently.</p>
 <h3>Can I overlap frames?</h3>
 <p>Yes. Move one frame over another to create your own composition. Frames later in the frame list appear on top of earlier frames.</p>
 <h3>Can I use my phone?</h3>
-<p>Yes. You can upload photos, move frames and resize them using touch gestures.</p>
+<p>Yes. You can upload photos, move photos inside frames and resize frames using touch gestures.</p>
 <h3>Is it free?</h3>
 <p>Yes. You can create and download collages for free, without registering.</p>
 </section>
@@ -277,7 +269,7 @@ const formats={
 };
 
 function makeCell(x,y,w,h,photoIndex=-1){
- return{x,y,w,h,zoom:1,photoIndex};
+ return{x,y,w,h,zoom:1,photoIndex,photoX:0,photoY:0};
 }
 
 const templates={
@@ -358,10 +350,16 @@ fileInput.addEventListener("change",async()=>{
  images=loaded.filter(Boolean);
  selectedPhoto=images.length?0:-1;
 
- // Automatically fill available frames with uploaded photos.
  cells.forEach((cell,i)=>{
-  if(i<images.length)cell.photoIndex=i;
-  else cell.photoIndex=-1;
+  if(i<images.length){
+   cell.photoIndex=i;
+   cell.photoX=0;
+   cell.photoY=0;
+  }else{
+   cell.photoIndex=-1;
+   cell.photoX=0;
+   cell.photoY=0;
+  }
  });
 
  renderPhotos();
@@ -389,20 +387,11 @@ function updateSelect(){
 function updateControls(){
  if(!cells.length)return;
  const c=cells[selectedCell];
- $("cellX").value=Math.round(c.x);
- $("cellY").value=Math.round(c.y);
- $("cellW").value=Math.round(c.w);
- $("cellH").value=Math.round(c.h);
- $("cellX").max=Math.max(0,Math.floor(100-c.w));
- $("cellY").max=Math.max(0,Math.floor(100-c.h));
  $("cellZoom").value=Math.round(c.zoom*100);
- $("cellXValue").textContent=Math.round(c.x)+"%";
- $("cellYValue").textContent=Math.round(c.y)+"%";
- $("cellWValue").textContent=Math.round(c.w)+"%";
- $("cellHValue").textContent=Math.round(c.h)+"%";
  $("cellZoomValue").textContent=c.zoom.toFixed(1)+"×";
  $("removeCell").disabled=cells.length<=1;
  $("clearPhoto").disabled=c.photoIndex<0;
+ $("centerPhoto").disabled=c.photoIndex<0;
 }
 
 function selectCell(index){
@@ -417,17 +406,14 @@ document.querySelectorAll(".layout-btn").forEach(button=>{
  button.addEventListener("click",()=>{
   currentLayout=button.dataset.layout;
   cells=templates[currentLayout]();
-
-  // Keep missing photos as empty frames.
   cells.forEach(cell=>{
    if(cell.photoIndex<0||!images[cell.photoIndex])cell.photoIndex=-1;
   });
-
   selectedCell=0;
   document.querySelectorAll(".layout-btn").forEach(b=>b.classList.toggle("active",b===button));
   updateSelect();
   draw();
-  status("Layout selected. Drag frames or resize them using the corner handles.");
+  status("Layout selected. Drag a photo inside its frame to reposition it.");
  });
 });
 
@@ -453,18 +439,36 @@ $("placePhoto").addEventListener("click",()=>{
   status("Choose a photo first.");
   return;
  }
- cells[selectedCell].photoIndex=selectedPhoto;
+ const c=cells[selectedCell];
+ c.photoIndex=selectedPhoto;
+ c.photoX=0;
+ c.photoY=0;
  updateSelect();
  draw();
- status("Photo placed in frame "+(selectedCell+1)+".");
+ status("Photo placed in frame "+(selectedCell+1)+". Drag inside the frame to reposition it.");
 });
 
 $("clearPhoto").addEventListener("click",()=>{
  if(!cells.length)return;
- cells[selectedCell].photoIndex=-1;
+ const c=cells[selectedCell];
+ c.photoIndex=-1;
+ c.photoX=0;
+ c.photoY=0;
  updateSelect();
  draw();
  status("Photo removed from the selected frame.");
+});
+
+$("centerPhoto").addEventListener("click",()=>{
+ const c=cells[selectedCell];
+ if(!c||c.photoIndex<0||!images[c.photoIndex]){
+  status("Select a frame containing a photo first.");
+  return;
+ }
+ c.photoX=0;
+ c.photoY=0;
+ draw();
+ status("Photo centered in the selected frame.");
 });
 
 $("addCell").addEventListener("click",()=>{
@@ -476,7 +480,7 @@ $("addCell").addEventListener("click",()=>{
  selectedCell=cells.length-1;
  updateSelect();
  draw();
- status("New empty frame added. Drag it or resize its corners.");
+ status("New empty frame added.");
 });
 
 $("removeCell").addEventListener("click",()=>{
@@ -512,6 +516,8 @@ $("shuffle").addEventListener("click",()=>{
  cells.forEach(cell=>{
   if(cell.photoIndex>=0&&cell.photoIndex<indexes.length){
    cell.photoIndex=indexes[cell.photoIndex];
+   cell.photoX=0;
+   cell.photoY=0;
   }
  });
  selectedPhoto=selectedPhoto>=0?indexes[selectedPhoto]:-1;
@@ -532,30 +538,12 @@ $("radius").addEventListener("input",()=>{
 $("bgColor").addEventListener("input",draw);
 $("caption").addEventListener("input",draw);
 
-["cellX","cellY","cellW","cellH","cellZoom"].forEach(id=>{
- $(id).addEventListener("input",()=>{
-  const c=cells[selectedCell];
-  if(!c)return;
-
-  if(id==="cellX"){
-   c.x=Number($(id).value);
-   c.x=Math.min(c.x,100-c.w);
-  }
-  if(id==="cellY"){
-   c.y=Number($(id).value);
-   c.y=Math.min(c.y,100-c.h);
-  }
-  if(id==="cellW"){
-   c.w=Math.min(Number($(id).value),100-c.x);
-  }
-  if(id==="cellH"){
-   c.h=Math.min(Number($(id).value),100-c.y);
-  }
-  if(id==="cellZoom")c.zoom=Number($(id).value)/100;
-
-  updateControls();
-  draw();
- });
+$("cellZoom").addEventListener("input",()=>{
+ const c=cells[selectedCell];
+ if(!c)return;
+ c.zoom=Number($("cellZoom").value)/100;
+ $("cellZoomValue").textContent=c.zoom.toFixed(1)+"×";
+ draw();
 });
 
 function roundedRect(x,y,w,h,r){
@@ -592,7 +580,15 @@ function drawPhoto(img,r,c,cornerRadius){
  const dw=img.naturalWidth*scale;
  const dh=img.naturalHeight*scale;
 
- ctx.drawImage(img,r.x+(r.w-dw)/2,r.y+(r.h-dh)/2,dw,dh);
+ const maxX=Math.max(0,(dw-r.w)/2);
+ const maxY=Math.max(0,(dh-r.h)/2);
+ c.photoX=Math.max(-maxX,Math.min(maxX,c.photoX||0));
+ c.photoY=Math.max(-maxY,Math.min(maxY,c.photoY||0));
+
+ const x=r.x+(r.w-dw)/2+c.photoX;
+ const y=r.y+(r.h-dh)/2+c.photoY;
+
+ ctx.drawImage(img,x,y,dw,dh);
  ctx.restore();
 }
 
@@ -636,7 +632,6 @@ function draw(){
 
  const cornerRadius=Number($("radius").value);
 
- // Draw frames in list order: later frames appear above earlier frames.
  cells.forEach((c,i)=>{
   const r=getFrameRect(c);
   const image=c.photoIndex>=0?images[c.photoIndex]:null;
@@ -648,13 +643,11 @@ function draw(){
    roundedRect(r.x,r.y,r.w,r.h,cornerRadius);
    ctx.fillStyle=$("bgColor").value;
    ctx.fill();
-
    ctx.strokeStyle="#7184a3";
    ctx.lineWidth=3;
    ctx.setLineDash([12,8]);
    ctx.stroke();
    ctx.setLineDash([]);
-
    ctx.fillStyle="#7184a3";
    ctx.textAlign="center";
    ctx.textBaseline="middle";
@@ -670,7 +663,6 @@ function draw(){
    ctx.setLineDash([]);
    ctx.strokeRect(r.x,r.y,r.w,r.h);
 
-   // Four visible corner handles for direct resizing.
    const s=Math.max(28,canvas.width*.035);
    [
     [r.x,r.y],
@@ -707,7 +699,6 @@ canvas.addEventListener("pointerdown",event=>{
  const p=pointerPoint(event);
  const hit=Math.max(36,canvas.width*.035);
 
- // Check topmost frames first so overlapping frames remain selectable.
  for(let i=cells.length-1;i>=0;i--){
   const c=cells[i];
   const r=getFrameRect(c);
@@ -729,15 +720,19 @@ canvas.addEventListener("pointerdown",event=>{
    $("cellSelect").value=String(i);
    updateControls();
 
+   const hasPhoto=c.photoIndex>=0&&!!images[c.photoIndex];
+
    dragging={
-    mode:corner?"resize":"move",
+    mode:corner?"resize":hasPhoto?"photo":"move",
     corner:corner?corner.name:null,
     startX:p.x,
     startY:p.y,
     x:c.x,
     y:c.y,
     w:c.w,
-    h:c.h
+    h:c.h,
+    photoX:c.photoX||0,
+    photoY:c.photoY||0
    };
 
    canvas.setPointerCapture(event.pointerId);
@@ -755,12 +750,17 @@ canvas.addEventListener("pointermove",event=>{
  const c=cells[selectedCell];
  if(!c)return;
 
- const dx=(p.x-dragging.startX)/canvas.width*100;
- const dy=(p.y-dragging.startY)/canvas.height*100;
+ const dx=p.x-dragging.startX;
+ const dy=p.y-dragging.startY;
+ const dxPercent=dx/canvas.width*100;
+ const dyPercent=dy/canvas.height*100;
 
- if(dragging.mode==="move"){
-  c.x=Math.max(0,Math.min(100-c.w,dragging.x+dx));
-  c.y=Math.max(0,Math.min(100-c.h,dragging.y+dy));
+ if(dragging.mode==="photo"){
+  c.photoX=dragging.photoX+dx;
+  c.photoY=dragging.photoY+dy;
+ }else if(dragging.mode==="move"){
+  c.x=Math.max(0,Math.min(100-c.w,dragging.x+dxPercent));
+  c.y=Math.max(0,Math.min(100-c.h,dragging.y+dyPercent));
  }else{
   const min=10;
   const right=dragging.x+dragging.w;
@@ -768,17 +768,17 @@ canvas.addEventListener("pointermove",event=>{
   const corner=dragging.corner;
 
   if(corner.includes("w")){
-   c.x=Math.max(0,Math.min(right-min,dragging.x+dx));
+   c.x=Math.max(0,Math.min(right-min,dragging.x+dxPercent));
    c.w=right-c.x;
   }else{
-   c.w=Math.max(min,Math.min(100-dragging.x,dragging.w+dx));
+   c.w=Math.max(min,Math.min(100-dragging.x,dragging.w+dxPercent));
   }
 
   if(corner.includes("n")){
-   c.y=Math.max(0,Math.min(bottom-min,dragging.y+dy));
+   c.y=Math.max(0,Math.min(bottom-min,dragging.y+dyPercent));
    c.h=bottom-c.y;
   }else{
-   c.h=Math.max(min,Math.min(100-dragging.y,dragging.h+dy));
+   c.h=Math.max(min,Math.min(100-dragging.y,dragging.h+dyPercent));
   }
  }
 
