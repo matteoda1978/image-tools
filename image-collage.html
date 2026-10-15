@@ -8,92 +8,346 @@
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#0a0f1d">
 <link rel="canonical" href="https://ritoccapix.com/image-collage.html">
-<script src="menu.js" defer></script>
+<script src="menu.js" defer>
+</script>
 <style>
-*{box-sizing:border-box}
-:root{--bg:#0a0f1d;--panel:#11192b;--panel2:#0c1323;--border:#26324a;--text:#f5f7ff;--muted:#9da8bd;--accent:#6ea8ff}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,Arial,Helvetica,sans-serif;line-height:1.6}
-a{color:var(--accent)}
-header{padding:22px 0;border-bottom:1px solid #1e293b}
-.container{width:min(1200px,94%);margin:auto}
-.logo{font-size:24px;font-weight:800;letter-spacing:-.5px}
-.logo span{color:var(--accent)}
-main{max-width:1200px;margin:auto;padding:30px 16px 50px}
-.hero{text-align:center;margin:0 auto 28px}
-.hero h1{font-size:clamp(30px,5vw,44px);line-height:1.15;margin:0}
-.hero p{max-width:760px;margin:12px auto;color:var(--muted)}
-.workspace{display:grid;grid-template-columns:350px minmax(0,1fr);gap:20px;align-items:start}
-.panel,.preview-panel,.content{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:18px;min-width:0}
-.panel-title,.preview-title{font-size:18px;font-weight:800;margin:0 0 14px}
-.upload{display:block;text-align:center;padding:20px 12px;border:2px dashed #465775;border-radius:12px;background:var(--panel2);cursor:pointer}
-.upload:hover{border-color:var(--accent)}
-.upload strong,.upload span{display:block}
-.upload span{font-size:12px;color:var(--muted)}
-.upload-icon{font-size:28px;color:var(--accent)}
-#fileInput{display:none}
-.section{margin-top:22px}
-.section-label{font-size:12px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);font-weight:800;margin-bottom:10px}
-.layout-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
-.layout-btn,.format-btn,.secondary-btn,.shuffle{border:1px solid var(--border);background:var(--panel2);color:var(--muted);border-radius:9px;padding:9px 5px;cursor:pointer;font-size:12px;font-weight:700}
-.layout-btn.active,.format-btn.active{border-color:var(--accent);background:#1a2b49;color:white}
-.layout-btn:hover,.format-btn:hover,.secondary-btn:hover,.shuffle:hover{border-color:var(--accent);color:white}
-.layout-preview{width:46px;height:34px;margin:0 auto 6px;display:grid;gap:2px}
-.layout-preview span{background:currentColor;border-radius:2px;min-width:0;min-height:0}
-.lp2{grid-template-columns:1fr 1fr}
-.lp3{grid-template-columns:1.4fr 1fr;grid-template-rows:1fr 1fr}
-.lp3 span:first-child{grid-row:1/3}
-.lp4{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}
-.lp6{grid-template-columns:repeat(3,1fr);grid-template-rows:1fr 1fr}
-.lp9{grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr)}
-.lp-big3{grid-template-columns:1.6fr 1fr;grid-template-rows:repeat(3,1fr)}
-.lp-big3 span:first-child{grid-row:1/4}
-.lp-top3{grid-template-columns:repeat(3,1fr);grid-template-rows:1.5fr 1fr}
-.lp-top3 span:first-child{grid-column:1/4}
-.lp-two span:first-child{grid-row:1/3}
-.layout-name{display:block;font-size:10px;line-height:1.3}
-.format-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
-.control{margin-top:15px}
-.control-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px}
-.control-top label{font-size:13px;font-weight:700}
-.value,.help,.photo-count,.color-info{font-size:12px;color:var(--muted)}
-input[type=range]{width:100%;accent-color:var(--accent)}
-.color-row{display:flex;align-items:center;gap:10px}
-#bgColor{width:45px;height:38px;border:1px solid var(--border);border-radius:8px;padding:3px;background:var(--panel2)}
-.text-input,select{width:100%;padding:10px;border:1px solid var(--border);border-radius:9px;background:var(--panel2);color:var(--text);font-size:13px}
-.photo-list{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-top:12px}
-.photo-thumb{display:block;width:100%;aspect-ratio:1;object-fit:cover;border-radius:8px;border:2px solid var(--border);cursor:pointer}
-.photo-thumb.active{border:3px solid var(--accent)}
-.photo-help{font-size:12px;color:var(--muted);margin:8px 0 0}
-.preview-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
-.preview-title{margin:0}
-.shuffle{padding:9px 11px;color:var(--text)}
-.canvas-wrap{background-color:var(--panel2);background-image:linear-gradient(45deg,#1a2538 25%,transparent 25%),linear-gradient(-45deg,#1a2538 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#1a2538 75%),linear-gradient(-45deg,transparent 75%,#1a2538 75%);background-size:20px 20px;background-position:0 0,0 10px,10px -10px,-10px 0;border:1px solid var(--border);border-radius:12px;padding:12px;min-height:250px;display:flex;align-items:center;justify-content:center;overflow:auto}
-#canvas{display:block;width:auto;height:auto;max-width:100%;max-height:680px;touch-action:none;box-shadow:0 12px 35px #0005;cursor:move}
-.downloads{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
-.download-btn{border:0;border-radius:9px;padding:13px;font-weight:800;cursor:pointer;font-size:13px}
-.download-jpg{background:var(--accent);color:#081326}
-.download-png{background:#253149;color:white;border:1px solid #394761}
-.download-btn:disabled{opacity:.4;cursor:not-allowed}
-.custom-tools{margin-top:22px;padding-top:17px;border-top:1px solid var(--border)}
-.custom-tools h3{font-size:16px;margin:0 0 6px}
-.custom-buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.secondary-btn{padding:11px;color:var(--text)}
-.secondary-btn:disabled{opacity:.35;cursor:not-allowed}
-.content{margin-top:22px}
-.content h2{margin-top:0}
-.content h3{margin-top:20px}
-.content p,.content li{color:var(--muted);line-height:1.8}
-footer{border-top:1px solid #1e293b;text-align:center;color:#778398;font-size:13px;margin-top:30px;padding:24px 15px}
-footer a{color:var(--accent);text-decoration:none}
-@media(max-width:850px){.workspace{grid-template-columns:1fr}.preview-panel{order:1}.panel{order:2}#canvas{max-height:560px}}
-@media(max-width:520px){main{padding:24px 10px 35px}.panel,.preview-panel,.content{padding:13px}.canvas-wrap{padding:6px;min-height:180px}.downloads{grid-template-columns:1fr}.layout-grid{gap:5px}}
+*{
+  box-sizing:border-box}
+:root{
+  --bg:#0a0f1d;
+  --panel:#11192b;
+  --panel2:#0c1323;
+  --border:#26324a;
+  --text:#f5f7ff;
+  --muted:#9da8bd;
+  --accent:#6ea8ff}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Inter,Arial,Helvetica,sans-serif;
+  line-height:1.6}
+a{
+  color:var(--accent)}
+header{
+  padding:22px 0;
+  border-bottom:1px solid #1e293b}
+.container{
+  width:min(1200px,94%);
+  margin:auto}
+.logo{
+  font-size:24px;
+  font-weight:800;
+  letter-spacing:-.5px}
+.logo span{
+  color:var(--accent)}
+main{
+  max-width:1200px;
+  margin:auto;
+  padding:30px 16px 50px}
+.hero{
+  text-align:center;
+  margin:0 auto 28px}
+.hero h1{
+  font-size:clamp(30px,5vw,44px);
+  line-height:1.15;
+  margin:0}
+.hero p{
+  max-width:760px;
+  margin:12px auto;
+  color:var(--muted)}
+.workspace{
+  display:grid;
+  grid-template-columns:350px minmax(0,1fr);
+  gap:20px;
+  align-items:start}
+.panel,.preview-panel,.content{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:18px;
+  min-width:0}
+.panel-title,.preview-title{
+  font-size:18px;
+  font-weight:800;
+  margin:0 0 14px}
+.upload{
+  display:block;
+  text-align:center;
+  padding:20px 12px;
+  border:2px dashed #465775;
+  border-radius:12px;
+  background:var(--panel2);
+  cursor:pointer}
+.upload:hover{
+  border-color:var(--accent)}
+.upload strong,.upload span{
+  display:block}
+.upload span{
+  font-size:12px;
+  color:var(--muted)}
+.upload-icon{
+  font-size:28px;
+  color:var(--accent)}
+#fileInput{
+  display:none}
+.section{
+  margin-top:22px}
+.section-label{
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.7px;
+  color:var(--muted);
+  font-weight:800;
+  margin-bottom:10px}
+.layout-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:7px}
+.layout-btn,.format-btn,.secondary-btn,.shuffle{
+  border:1px solid var(--border);
+  background:var(--panel2);
+  color:var(--muted);
+  border-radius:9px;
+  padding:9px 5px;
+  cursor:pointer;
+  font-size:12px;
+  font-weight:700}
+.layout-btn.active,.format-btn.active{
+  border-color:var(--accent);
+  background:#1a2b49;
+  color:white}
+.layout-btn:hover,.format-btn:hover,.secondary-btn:hover,.shuffle:hover{
+  border-color:var(--accent);
+  color:white}
+.layout-preview{
+  width:46px;
+  height:34px;
+  margin:0 auto 6px;
+  display:grid;
+  gap:2px}
+.layout-preview span{
+  background:currentColor;
+  border-radius:2px;
+  min-width:0;
+  min-height:0}
+.lp2{
+  grid-template-columns:1fr 1fr}
+.lp3{
+  grid-template-columns:1.4fr 1fr;
+  grid-template-rows:1fr 1fr}
+.lp3 span:first-child{
+  grid-row:1/3}
+.lp4{
+  grid-template-columns:1fr 1fr;
+  grid-template-rows:1fr 1fr}
+.lp6{
+  grid-template-columns:repeat(3,1fr);
+  grid-template-rows:1fr 1fr}
+.lp9{
+  grid-template-columns:repeat(3,1fr);
+  grid-template-rows:repeat(3,1fr)}
+.lp-big3{
+  grid-template-columns:1.6fr 1fr;
+  grid-template-rows:repeat(3,1fr)}
+.lp-big3 span:first-child{
+  grid-row:1/4}
+.lp-top3{
+  grid-template-columns:repeat(3,1fr);
+  grid-template-rows:1.5fr 1fr}
+.lp-top3 span:first-child{
+  grid-column:1/4}
+.lp-two span:first-child{
+  grid-row:1/3}
+.layout-name{
+  display:block;
+  font-size:10px;
+  line-height:1.3}
+.format-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:7px}
+.control{
+  margin-top:15px}
+.control-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
+  margin-bottom:6px}
+.control-top label{
+  font-size:13px;
+  font-weight:700}
+.value,.help,.photo-count,.color-info{
+  font-size:12px;
+  color:var(--muted)}
+input[type=range]{
+  width:100%;
+  accent-color:var(--accent)}
+.color-row{
+  display:flex;
+  align-items:center;
+  gap:10px}
+#bgColor{
+  width:45px;
+  height:38px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:3px;
+  background:var(--panel2)}
+.text-input,select{
+  width:100%;
+  padding:10px;
+  border:1px solid var(--border);
+  border-radius:9px;
+  background:var(--panel2);
+  color:var(--text);
+  font-size:13px}
+.photo-list{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:7px;
+  margin-top:12px}
+.photo-thumb{
+  display:block;
+  width:100%;
+  aspect-ratio:1;
+  object-fit:cover;
+  border-radius:8px;
+  border:2px solid var(--border);
+  cursor:pointer}
+.photo-thumb.active{
+  border:3px solid var(--accent)}
+.photo-help{
+  font-size:12px;
+  color:var(--muted);
+  margin:8px 0 0}
+.preview-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:14px}
+.preview-title{
+  margin:0}
+.shuffle{
+  padding:9px 11px;
+  color:var(--text)}
+.canvas-wrap{
+  background-color:var(--panel2);
+  background-image:linear-gradient(45deg,#1a2538 25%,transparent 25%),linear-gradient(-45deg,#1a2538 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#1a2538 75%),linear-gradient(-45deg,transparent 75%,#1a2538 75%);
+  background-size:20px 20px;
+  background-position:0 0,0 10px,10px -10px,-10px 0;
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:12px;
+  min-height:250px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:auto}
+#canvas{
+  display:block;
+  width:auto;
+  height:auto;
+  max-width:100%;
+  max-height:680px;
+  touch-action:none;
+  box-shadow:0 12px 35px #0005;
+  cursor:move}
+.downloads{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:14px}
+.download-btn{
+  border:0;
+  border-radius:9px;
+  padding:13px;
+  font-weight:800;
+  cursor:pointer;
+  font-size:13px}
+.download-jpg{
+  background:var(--accent);
+  color:#081326}
+.download-png{
+  background:#253149;
+  color:white;
+  border:1px solid #394761}
+.download-btn:disabled{
+  opacity:.4;
+  cursor:not-allowed}
+.custom-tools{
+  margin-top:22px;
+  padding-top:17px;
+  border-top:1px solid var(--border)}
+.custom-tools h3{
+  font-size:16px;
+  margin:0 0 6px}
+.custom-buttons{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px}
+.secondary-btn{
+  padding:11px;
+  color:var(--text)}
+.secondary-btn:disabled{
+  opacity:.35;
+  cursor:not-allowed}
+.content{
+  margin-top:22px}
+.content h2{
+  margin-top:0}
+.content h3{
+  margin-top:20px}
+.content p,.content li{
+  color:var(--muted);
+  line-height:1.8}
+footer{
+  border-top:1px solid #1e293b;
+  text-align:center;
+  color:#778398;
+  font-size:13px;
+  margin-top:30px;
+  padding:24px 15px}
+footer a{
+  color:var(--accent);
+  text-decoration:none}
+@media(max-width:850px){
+  .workspace{
+  grid-template-columns:1fr}
+.preview-panel{
+  order:1}
+.panel{
+  order:2}
+#canvas{
+  max-height:560px}
+}
+@media(max-width:520px){
+  main{
+  padding:24px 10px 35px}
+.panel,.preview-panel,.content{
+  padding:13px}
+.canvas-wrap{
+  padding:6px;
+  min-height:180px}
+.downloads{
+  grid-template-columns:1fr}
+.layout-grid{
+  gap:5px}
+}
 </style>
 </head>
 <body>
 <header>
 <div class="container">
-<div class="logo"><a href="index.html" style="color:inherit;text-decoration:none">Ritocca<span>Pix</span></a></div>
-<nav aria-label="Main navigation"></nav>
+<div class="logo">
+<a href="index.html" style="color:inherit;text-decoration:none">Ritocca<span>Pix</span>
+</a>
+</div>
+<nav aria-label="Main navigation">
+</nav>
 </div>
 </header>
 <main>
@@ -110,21 +364,130 @@ footer a{color:var(--accent);text-decoration:none}
 <span>JPG, PNG or WebP · Up to 12 images</span>
 </label>
 <input id="fileInput" type="file" accept="image/*" multiple>
-<div id="photoList" class="photo-list"></div>
+<div id="photoList" class="photo-list">
+</div>
 <div id="photoCount" class="photo-count">No photos selected</div>
 <p class="photo-help">Select a thumbnail, choose a frame, then use “Place photo in frame”. You can also drag a photo inside its frame.</p>
 <div class="section">
 <div class="section-label">2. Choose a layout</div>
 <div class="layout-grid">
-<button class="layout-btn active" data-layout="blank" type="button"><div class="layout-preview"><span></span></div><span class="layout-name">Blank canvas</span></button>
-<button class="layout-btn" data-layout="2" type="button"><div class="layout-preview lp2"><span></span><span></span></div><span class="layout-name">2 equal</span></button>
-<button class="layout-btn" data-layout="3" type="button"><div class="layout-preview lp3"><span></span><span></span><span></span></div><span class="layout-name">3 frames</span></button>
-<button class="layout-btn" data-layout="4" type="button"><div class="layout-preview lp4"><span></span><span></span><span></span><span></span></div><span class="layout-name">4 equal</span></button>
-<button class="layout-btn" data-layout="6" type="button"><div class="layout-preview lp6"><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="layout-name">6 frames</span></button>
-<button class="layout-btn" data-layout="9" type="button"><div class="layout-preview lp9"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="layout-name">9 frames</span></button>
-<button class="layout-btn" data-layout="big3" type="button"><div class="layout-preview lp-big3"><span></span><span></span><span></span><span></span></div><span class="layout-name">1 big + 3 small</span></button>
-<button class="layout-btn" data-layout="top3" type="button"><div class="layout-preview lp-top3"><span></span><span></span><span></span><span></span></div><span class="layout-name">Big + 3 below</span></button>
-<button class="layout-btn" data-layout="twoBig" type="button"><div class="layout-preview lp-two"><span></span><span></span><span></span></div><span class="layout-name">2 big + 1 small</span></button>
+<button class="layout-btn active" data-layout="blank" type="button">
+<div class="layout-preview">
+<span>
+</span>
+</div>
+<span class="layout-name">Blank canvas</span>
+</button>
+<button class="layout-btn" data-layout="2" type="button">
+<div class="layout-preview lp2">
+<span>
+</span>
+<span>
+</span>
+</div>
+<span class="layout-name">2 equal</span>
+</button>
+<button class="layout-btn" data-layout="3" type="button">
+<div class="layout-preview lp3">
+<span>
+</span>
+<span>
+</span>
+<span>
+</span>
+</div>
+<span class="layout-name">3 frames</span>
+</button>
+<button class="layout-btn" data-layout="4" type="button">
+<div class="layout-preview lp4">
+<span>
+</span>
+<span>
+</span>
+<span>
+</span>
+<span>
+</span>
+</div>
+<span class="layout-name">4 equal</span>
+</button>
+<button class="layout-btn" data-layout="6" type="button">
+<div class="layout-preview lp6">
+<span>
+</span>
+<span>
+</span>
+<span>
+</span>
+<span>
+</span>
+<span>
+</span>
+<span>
+</span>
+</div>
+<span class="layout-name">6 frames</span>
+</button>
+<button class="layout-btn" data-layout="9" type="button">
+<div class="layout-preview lp9">
+<span>
+</span>
+<span>
+</span>
+<span>
+</span>
+<span>
+</span>
+<span>
+</span>
+<span>
+</span>
+<span>
+</span>
+<span>
+</span>
+<span>
+</span>
+</div>
+<span class="layout-name">9 frames</span>
+</button>
+<button class="layout-btn" data-layout="big3" type="button">
+<div class="layout-preview lp-big3">
+<span>
+</span>
+<span>
+</span>
+<span>
+</span>
+<span>
+</span>
+</div>
+<span class="layout-name">1 big + 3 small</span>
+</button>
+<button class="layout-btn" data-layout="top3" type="button">
+<div class="layout-preview lp-top3">
+<span>
+</span>
+<span>
+</span>
+<span>
+</span>
+<span>
+</span>
+</div>
+<span class="layout-name">Big + 3 below</span>
+</button>
+<button class="layout-btn" data-layout="twoBig" type="button">
+<div class="layout-preview lp-two">
+<span>
+</span>
+<span>
+</span>
+<span>
+</span>
+</div>
+<span class="layout-name">2 big + 1 small</span>
+</button>
 </div>
 <p class="help">Choosing a layout replaces the current frame arrangement. You can then move, resize and overlap frames. On a phone, drag the frame border to move the whole frame, drag the photo center to move the photo inside, and use a corner handle to resize.</p>
 </div>
@@ -139,26 +502,88 @@ footer a{color:var(--accent);text-decoration:none}
 </div>
 <div class="section">
 <div class="section-label">4. Appearance</div>
-<div class="control"><div class="control-top"><label for="spacing">Frame spacing</label><span id="spacingValue" class="value">12 px</span></div><input id="spacing" type="range" min="0" max="40" value="12"></div>
-<div class="control"><div class="control-top"><label for="radius">Rounded corners</label><span id="radiusValue" class="value">12 px</span></div><input id="radius" type="range" min="0" max="40" value="12"></div>
-<div class="control"><div class="control-top"><label for="bgColor">Background color</label></div><div class="color-row"><input id="bgColor" type="color" value="#ffffff"><span class="color-info">Color behind the photos</span></div></div>
-<div class="control"><div class="control-top"><label for="caption">Caption</label></div><input id="caption" class="text-input" type="text" maxlength="80" placeholder="Add a caption..."></div>
+<div class="control">
+<div class="control-top">
+<label for="spacing">Frame spacing</label>
+<span id="spacingValue" class="value">12 px</span>
+</div>
+<input id="spacing" type="range" min="0" max="40" value="12">
+</div>
+<div class="control">
+<div class="control-top">
+<label for="radius">Rounded corners</label>
+<span id="radiusValue" class="value">12 px</span>
+</div>
+<input id="radius" type="range" min="0" max="40" value="12">
+</div>
+<div class="control">
+<div class="control-top">
+<label for="bgColor">Background color</label>
+</div>
+<div class="color-row">
+<input id="bgColor" type="color" value="#ffffff">
+<span class="color-info">Color behind the photos</span>
+</div>
+</div>
+<div class="control">
+<div class="control-top">
+<label for="caption">Caption</label>
+</div>
+<input id="caption" class="text-input" type="text" maxlength="80" placeholder="Add a caption...">
+</div>
 </div>
 <div class="custom-tools">
 <h3>5. Edit your frames</h3>
 <p class="help">Drag a photo to reposition it. Drag a frame edge to move the whole frame. Drag any corner handle to resize it. Frames can overlap; later frames appear on top.</p>
-<div class="custom-buttons"><button id="addCell" class="secondary-btn" type="button">＋ Add frame</button><button id="removeCell" class="secondary-btn" type="button">− Remove frame</button></div>
-<div class="control"><div class="control-top"><label for="cellSelect">Selected frame</label></div><select id="cellSelect" class="text-input"></select></div>
-<div class="control"><div class="control-top"><label for="photoSelect">Photo to place</label></div><select id="photoSelect" class="text-input"><option value="-1">No photo selected</option></select></div>
-<div class="custom-buttons" style="margin-top:9px"><button id="placePhoto" class="secondary-btn" type="button">Place photo in frame</button><button id="clearPhoto" class="secondary-btn" type="button">Remove photo</button></div>
-<div class="control"><div class="control-top"><label for="cellZoom">Photo zoom</label><span id="cellZoomValue" class="value">1.0×</span></div><input id="cellZoom" type="range" min="100" max="300" value="100"></div>
-<div class="custom-buttons" style="margin-top:9px"><button id="centerPhoto" class="secondary-btn" type="button">Center photo</button><button id="resetLayout" class="secondary-btn" type="button">Reset current layout</button></div>
+<div class="custom-buttons">
+<button id="addCell" class="secondary-btn" type="button">＋ Add frame</button>
+<button id="removeCell" class="secondary-btn" type="button">− Remove frame</button>
+</div>
+<div class="control">
+<div class="control-top">
+<label for="cellSelect">Selected frame</label>
+</div>
+<select id="cellSelect" class="text-input">
+</select>
+</div>
+<div class="control">
+<div class="control-top">
+<label for="photoSelect">Photo to place</label>
+</div>
+<select id="photoSelect" class="text-input">
+<option value="-1">No photo selected</option>
+</select>
+</div>
+<div class="custom-buttons" style="margin-top:9px">
+<button id="placePhoto" class="secondary-btn" type="button">Place photo in frame</button>
+<button id="clearPhoto" class="secondary-btn" type="button">Remove photo</button>
+</div>
+<div class="control">
+<div class="control-top">
+<label for="cellZoom">Photo zoom</label>
+<span id="cellZoomValue" class="value">1.0×</span>
+</div>
+<input id="cellZoom" type="range" min="100" max="300" value="100">
+</div>
+<div class="custom-buttons" style="margin-top:9px">
+<button id="centerPhoto" class="secondary-btn" type="button">Center photo</button>
+<button id="resetLayout" class="secondary-btn" type="button">Reset current layout</button>
+</div>
 </div>
 </aside>
 <section class="preview-panel">
-<div class="preview-top"><h2 class="preview-title">Collage preview</h2><button id="shuffle" class="shuffle" type="button">Shuffle photos</button></div>
-<div class="canvas-wrap"><canvas id="canvas" aria-label="Interactive collage preview"></canvas></div>
-<div class="downloads"><button id="downloadJpg" class="download-btn download-jpg" type="button" disabled>Download JPG</button><button id="downloadPng" class="download-btn download-png" type="button" disabled>Download PNG</button></div>
+<div class="preview-top">
+<h2 class="preview-title">Collage preview</h2>
+<button id="shuffle" class="shuffle" type="button">Shuffle photos</button>
+</div>
+<div class="canvas-wrap">
+<canvas id="canvas" aria-label="Interactive collage preview">
+</canvas>
+</div>
+<div class="downloads">
+<button id="downloadJpg" class="download-btn download-jpg" type="button" disabled>Download JPG</button>
+<button id="downloadPng" class="download-btn download-png" type="button" disabled>Download PNG</button>
+</div>
 <p id="status" class="help" role="status" aria-live="polite">Choose a layout and add photos to begin.</p>
 </section>
 </div>
@@ -192,230 +617,412 @@ footer a{color:var(--accent);text-decoration:none}
 </main>
 <footer>
 <p>© 2026 RitoccaPix · Free online image tools</p>
-<p><a href="index.html">Home</a> · <a href="image-resizer.html">Image Resizer</a> · <a href="image-compressor.html">Image Compressor</a> · <a href="image-analyzer.html">Image Analyzer</a></p>
+<p>
+<a href="index.html">Home</a> · <a href="image-resizer.html">Image Resizer</a> · <a href="image-compressor.html">Image Compressor</a> · <a href="image-analyzer.html">Image Analyzer</a>
+</p>
 </footer>
 <script>
 'use strict';
 
 const $=id=>document.getElementById(id),canvas=$('canvas'),ctx=canvas.getContext('2d'),fileInput=$('fileInput'),photoList=$('photoList'),photoCount=$('photoCount');
+
 let images=[],cells=[],selectedCell=0,selectedPhoto=-1,selectedFormat='square',currentLayout='blank',dragging=null;
+
 const formats={square:{width:1080,height:1080},portrait:{width:1080,height:1350},story:{width:1080,height:1920},landscape:{width:1200,height:800}};
-function makeCell(x,y,w,h,photoIndex=-1){return{x,y,w,h,zoom:1,photoIndex,photoX:0,photoY:0}}
-const templates={
-blank:()=>[makeCell(0,0,100,100,-1)],
-'2':()=>[makeCell(0,0,50,100,0),makeCell(50,0,50,100,1)],
-'3':()=>[makeCell(0,0,58,100,0),makeCell(58,0,42,50,1),makeCell(58,50,42,50,2)],
-'4':()=>[makeCell(0,0,50,50,0),makeCell(50,0,50,50,1),makeCell(0,50,50,50,2),makeCell(50,50,50,50,3)],
-'6':()=>Array.from({length:6},(_,i)=>makeCell(i%3*100/3,Math.floor(i/3)*50,100/3,50,i)),
-'9':()=>Array.from({length:9},(_,i)=>makeCell(i%3*100/3,Math.floor(i/3)*100/3,100/3,100/3,i)),
-big3:()=>[makeCell(0,0,62,100,0),makeCell(64,0,36,32,1),makeCell(64,34,36,32,2),makeCell(64,68,36,32,3)],
-top3:()=>[makeCell(0,0,100,58,0),makeCell(0,60,32,40,1),makeCell(34,60,32,40,2),makeCell(68,60,32,40,3)],
-twoBig:()=>[makeCell(0,0,50,100,0),makeCell(52,0,48,58,1),makeCell(52,60,48,40,2)]
-};
-function status(message){$('status').textContent=message}
-function updatePhotoSelect(){
-const select=$('photoSelect');select.replaceChildren();
-const empty=document.createElement('option');empty.value='-1';empty.textContent='No photo selected';select.appendChild(empty);
-images.forEach((item,i)=>{const option=document.createElement('option');option.value=String(i);option.textContent=(i+1)+'. '+item.name;select.appendChild(option)});
+
+function makeCell(x,y,w,h,photoIndex=-1) {
+return{x,y,w,h,zoom:1,photoIndex,photoX:0,photoY:0}}
+const templates={blank:()=>[makeCell(0,0,100,100,-1)],'2':()=>[makeCell(0,0,50,100,0),makeCell(50,0,50,100,1)],'3':()=>[makeCell(0,0,58,100,0),makeCell(58,0,42,50,1),makeCell(58,50,42,50,2)],'4':()=>[makeCell(0,0,50,50,0),makeCell(50,0,50,50,1),makeCell(0,50,50,50,2),makeCell(50,50,50,50,3)],'6':()=>Array.from({length:6},(_,i)=>makeCell(i%3*100/3,Math.floor(i/3)*50,100/3,50,i)),'9':()=>Array.from({length:9},(_,i)=>makeCell(i%3*100/3,Math.floor(i/3)*100/3,100/3,100/3,i)),big3:()=>[makeCell(0,0,62,100,0),makeCell(64,0,36,32,1),makeCell(64,34,36,32,2),makeCell(64,68,36,32,3)],top3:()=>[makeCell(0,0,100,58,0),makeCell(0,60,32,40,1),makeCell(34,60,32,40,2),makeCell(68,60,32,40,3)],twoBig:()=>[makeCell(0,0,50,100,0),makeCell(52,0,48,58,1),makeCell(52,60,48,40,2)]};
+
+function status(message) {
+$('status').textContent=message}
+function updatePhotoSelect() {
+const select=$('photoSelect');
+select.replaceChildren();
+const empty=document.createElement('option');
+empty.value='-1';
+empty.textContent='No photo selected';
+select.appendChild(empty);
+images.forEach((item,i)=> {
+const option=document.createElement('option');
+option.value=String(i);
+option.textContent=(i+1)+'. '+item.name;
+select.appendChild(option)});
+
 select.value=String(selectedPhoto)}
-function renderPhotos(){
+function renderPhotos() {
 photoList.replaceChildren();
-images.forEach((item,i)=>{
-const img=document.createElement('img');img.src=item.image.src;img.alt='Photo '+(i+1)+': '+item.name;img.title='Select '+item.name;
+images.forEach((item,i)=> {
+const img=document.createElement('img');
+img.src=item.image.src;
+img.alt='Photo '+(i+1)+': '+item.name;
+img.title='Select '+item.name;
 img.className='photo-thumb'+(i===selectedPhoto?' active':'');
-img.addEventListener('click',()=>{
-selectedPhoto=i;updatePhotoSelect();renderPhotos();status('Photo selected. Select a frame and press Place photo in frame.')});
+img.addEventListener('click',()=> {
+selectedPhoto=i;
+updatePhotoSelect();
+renderPhotos();
+status('Photo selected. Select a frame and press Place photo in frame.')});
+
 photoList.appendChild(img)});
+
 photoCount.textContent=images.length?images.length+' photo'+(images.length===1?'':'s')+' loaded':'No photos selected';
 updatePhotoSelect()}
-function updateSelect(){
-const select=$('cellSelect');select.replaceChildren();
-cells.forEach((cell,i)=>{
-const option=document.createElement('option');option.value=String(i);
+function updateSelect() {
+const select=$('cellSelect');
+select.replaceChildren();
+cells.forEach((cell,i)=> {
+const option=document.createElement('option');
+option.value=String(i);
 option.textContent='Frame '+(i+1)+(cell.photoIndex>=0&&images[cell.photoIndex]?' — '+images[cell.photoIndex].name:' — empty');
 select.appendChild(option)});
-if(cells.length){selectedCell=Math.max(0,Math.min(selectedCell,cells.length-1));select.value=String(selectedCell)}
-updateControls()}
-function updateControls(){
-if(!cells.length){$('removeCell').disabled=true;$('clearPhoto').disabled=true;$('centerPhoto').disabled=true;return}
-const c=cells[selectedCell];$('cellZoom').value=Math.round(c.zoom*100);$('cellZoomValue').textContent=c.zoom.toFixed(1)+'×';
-$('removeCell').disabled=cells.length<=1;$('clearPhoto').disabled=c.photoIndex<0;$('centerPhoto').disabled=c.photoIndex<0}
-function selectCell(index){
+
+if(cells.length) {
+selectedCell=Math.max(0,Math.min(selectedCell,cells.length-1));
+select.value=String(selectedCell)}updateControls()}
+function updateControls() {
+if(!cells.length) {
+$('removeCell').disabled=true;
+$('clearPhoto').disabled=true;
+$('centerPhoto').disabled=true;
+return}const c=cells[selectedCell];
+$('cellZoom').value=Math.round(c.zoom*100);
+$('cellZoomValue').textContent=c.zoom.toFixed(1)+'×';
+$('removeCell').disabled=cells.length<=1;
+$('clearPhoto').disabled=c.photoIndex<0;
+$('centerPhoto').disabled=c.photoIndex<0}
+function selectCell(index) {
 if(!cells.length)return;
-selectedCell=Math.max(0,Math.min(index,cells.length-1));$('cellSelect').value=String(selectedCell);updateControls();draw()}
-function applyLayout(layout){
-currentLayout=layout;cells=templates[layout]();
-cells.forEach(c=>{if(c.photoIndex<0||!images[c.photoIndex])c.photoIndex=-1;c.photoX=0;c.photoY=0});
+selectedCell=Math.max(0,Math.min(index,cells.length-1));
+$('cellSelect').value=String(selectedCell);
+updateControls();
+draw()}
+function applyLayout(layout) {
+currentLayout=layout;
+cells=templates[layout]();
+cells.forEach(c=> {
+if(c.photoIndex<0||!images[c.photoIndex])c.photoIndex=-1;
+c.photoX=0;
+c.photoY=0});
+
 selectedCell=0;
 document.querySelectorAll('.layout-btn').forEach(b=>b.classList.toggle('active',b.dataset.layout===layout));
-updateSelect();draw();
+updateSelect();
+draw();
 status('Layout selected. Drag a photo to reposition it, a frame edge to move the frame, or a corner to resize it.')}
-fileInput.addEventListener('change',async()=>{
+fileInput.addEventListener('change',async()=> {
 const files=Array.from(fileInput.files||[]).filter(f=>f.type.startsWith('image/')).slice(0,12);
-if(!files.length){status('Please choose at least one valid image.');return}
-status('Loading photos…');
-const loaded=await Promise.all(files.map(file=>new Promise(resolve=>{
+if(!files.length) {
+status('Please choose at least one valid image.');
+return}status('Loading photos…');
+const loaded=await Promise.all(files.map(file=>new Promise(resolve=> {
 const reader=new FileReader();
-reader.onload=e=>{
+reader.onload=e=> {
 const img=new Image();
 img.onload=()=>resolve({image:img,name:file.name});
-img.onerror=()=>resolve(null);img.src=e.target.result};
-reader.onerror=()=>resolve(null);reader.readAsDataURL(file)})));
-images=loaded.filter(Boolean);selectedPhoto=images.length?0:-1;
-cells.forEach((c,i)=>{if(c.photoIndex<0||c.photoIndex>=images.length)c.photoIndex=-1;c.photoX=0;c.photoY=0});
-renderPhotos();updateSelect();draw();
+
+img.onerror=()=>resolve(null);
+img.src=e.target.result};
+reader.onerror=()=>resolve(null);
+reader.readAsDataURL(file)})));
+images=loaded.filter(Boolean);
+selectedPhoto=images.length?0:-1;
+cells.forEach((c,i)=> {
+if(c.photoIndex<0||c.photoIndex>=images.length)c.photoIndex=-1;
+c.photoX=0;
+c.photoY=0});
+
+renderPhotos();
+updateSelect();
+draw();
 status(images.length+' photo(s) loaded. Select a frame and place a photo. Drag the border of a frame to move the entire frame, drag inside the photo to reposition the photo, and drag a corner handle to resize.'+(files.length>images.length?' Some files could not be loaded.':''))});
 
+
 document.querySelectorAll('.layout-btn').forEach(b=>b.addEventListener('click',()=>applyLayout(b.dataset.layout)));
-document.querySelectorAll('.format-btn').forEach(b=>b.addEventListener('click',()=>{
+
+document.querySelectorAll('.format-btn').forEach(b=>b.addEventListener('click',()=> {
 selectedFormat=b.dataset.format;
-document.querySelectorAll('.format-btn').forEach(x=>x.classList.toggle('active',x===b));draw()}));
+document.querySelectorAll('.format-btn').forEach(x=>x.classList.toggle('active',x===b));
+draw()}));
+
 $('cellSelect').addEventListener('change',()=>selectCell(Number($('cellSelect').value)));
-$('photoSelect').addEventListener('change',()=>{selectedPhoto=Number($('photoSelect').value);renderPhotos()});
-$('placePhoto').addEventListener('click',()=>{
-if(!cells.length||selectedPhoto<0||!images[selectedPhoto]){status('Choose a photo first.');return}
-const c=cells[selectedCell];c.photoIndex=selectedPhoto;c.photoX=0;c.photoY=0;c.zoom=1;
-updateSelect();draw();status('Photo placed in frame '+(selectedCell+1)+'. Drag inside the photo to reposition it.')});
-$('clearPhoto').addEventListener('click',()=>{
+
+$('photoSelect').addEventListener('change',()=> {
+selectedPhoto=Number($('photoSelect').value);
+renderPhotos()});
+
+
+$('placePhoto').addEventListener('click',()=> {
+if(!cells.length||selectedPhoto<0||!images[selectedPhoto]) {
+status('Choose a photo first.');
+return}const c=cells[selectedCell];
+c.photoIndex=selectedPhoto;
+c.photoX=0;
+c.photoY=0;
+c.zoom=1;
+updateSelect();
+draw();
+status('Photo placed in frame '+(selectedCell+1)+'. Drag inside the photo to reposition it.')});
+
+
+$('clearPhoto').addEventListener('click',()=> {
 if(!cells.length)return;
-const c=cells[selectedCell];c.photoIndex=-1;c.photoX=0;c.photoY=0;
-updateSelect();draw();status('Photo removed from the selected frame.')});
-$('centerPhoto').addEventListener('click',()=>{
 const c=cells[selectedCell];
-if(!c||c.photoIndex<0||!images[c.photoIndex]){status('Select a frame containing a photo first.');return}
-c.photoX=0;c.photoY=0;draw();status('Photo centered in the selected frame.')});
-$('addCell').addEventListener('click',()=>{
-if(cells.length>=12){status('You can add up to 12 frames.');return}
-cells.push(makeCell(10,10,35,35,-1));selectedCell=cells.length-1;updateSelect();draw();status('New empty frame added. You can move, resize or overlap it.')});
-$('removeCell').addEventListener('click',()=>{
+c.photoIndex=-1;
+c.photoX=0;
+c.photoY=0;
+updateSelect();
+draw();
+status('Photo removed from the selected frame.')});
+
+
+$('centerPhoto').addEventListener('click',()=> {
+const c=cells[selectedCell];
+if(!c||c.photoIndex<0||!images[c.photoIndex]) {
+status('Select a frame containing a photo first.');
+return}c.photoX=0;
+c.photoY=0;
+draw();
+status('Photo centered in the selected frame.')});
+
+
+$('addCell').addEventListener('click',()=> {
+if(cells.length>=12) {
+status('You can add up to 12 frames.');
+return}cells.push(makeCell(10,10,35,35,-1));
+selectedCell=cells.length-1;
+updateSelect();
+draw();
+status('New empty frame added. You can move, resize or overlap it.')});
+
+
+$('removeCell').addEventListener('click',()=> {
 if(cells.length<=1)return;
-cells.splice(selectedCell,1);selectedCell=Math.min(selectedCell,cells.length-1);
-updateSelect();draw();status('Frame removed.')});
+cells.splice(selectedCell,1);
+selectedCell=Math.min(selectedCell,cells.length-1);
+updateSelect();
+draw();
+status('Frame removed.')});
+
+
 $('resetLayout').addEventListener('click',()=>applyLayout(currentLayout));
-$('shuffle').addEventListener('click',()=>{
-if(!images.length){status('Add photos before shuffling.');return}
-const indexes=images.map((_,i)=>i);
-for(let i=indexes.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[indexes[i],indexes[j]]=[indexes[j],indexes[i]]}
-cells.forEach(c=>{
-if(c.photoIndex>=0&&c.photoIndex<indexes.length){c.photoIndex=indexes[c.photoIndex];c.photoX=0;c.photoY=0}});
+
+$('shuffle').addEventListener('click',()=> {
+if(!images.length) {
+status('Add photos before shuffling.');
+return}const indexes=images.map((_,i)=>i);
+for(let i=indexes.length-1;
+i>0;
+i--) {
+const j=Math.floor(Math.random()*(i+1));
+[indexes[i],indexes[j]]=[indexes[j],indexes[i]]}cells.forEach(c=> {
+if(c.photoIndex>=0&&c.photoIndex<indexes.length) {
+c.photoIndex=indexes[c.photoIndex];
+c.photoX=0;
+c.photoY=0}});
+
 selectedPhoto=selectedPhoto>=0?indexes[selectedPhoto]:-1;
-renderPhotos();updateSelect();draw();status('Photos shuffled.')});
-$('spacing').addEventListener('input',()=>{$('spacingValue').textContent=$('spacing').value+' px';draw()});
-$('radius').addEventListener('input',()=>{$('radiusValue').textContent=$('radius').value+' px';draw()});
+renderPhotos();
+updateSelect();
+draw();
+status('Photos shuffled.')});
+
+
+$('spacing').addEventListener('input',()=> {
+$('spacingValue').textContent=$('spacing').value+' px';
+draw()});
+
+$('radius').addEventListener('input',()=> {
+$('radiusValue').textContent=$('radius').value+' px';
+draw()});
+
 $('bgColor').addEventListener('input',draw);
 $('caption').addEventListener('input',draw);
-$('cellZoom').addEventListener('input',()=>{
-const c=cells[selectedCell];if(!c)return;
-c.zoom=Number($('cellZoom').value)/100;$('cellZoomValue').textContent=c.zoom.toFixed(1)+'×';draw()});
-  function roundedRect(x,y,w,h,r){
+
+$('cellZoom').addEventListener('input',()=> {
+const c=cells[selectedCell];
+if(!c)return;
+c.zoom=Number($('cellZoom').value)/100;
+$('cellZoomValue').textContent=c.zoom.toFixed(1)+'×';
+draw()});
+
+
+function roundedRect(x,y,w,h,r) {
 r=Math.max(0,Math.min(r,w/2,h/2));
-ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);
-ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);ctx.lineTo(x+r,y+h);
-ctx.quadraticCurveTo(x,y+h,x,y+h-r);ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath()}
-function getFrameRect(c){
+ctx.beginPath();
+ctx.moveTo(x+r,y);
+ctx.lineTo(x+w-r,y);
+ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+ctx.lineTo(x+w,y+h-r);
+ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+ctx.lineTo(x+r,y+h);
+ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+ctx.lineTo(x,y+r);
+ctx.quadraticCurveTo(x,y,x+r,y);
+ctx.closePath()}
+function getFrameRect(c) {
 const gap=Number($('spacing').value);
 return{x:c.x/100*canvas.width+gap/2,y:c.y/100*canvas.height+gap/2,w:Math.max(1,c.w/100*canvas.width-gap),h:Math.max(1,c.h/100*canvas.height-gap)}}
-function drawPhoto(img,r,c,cornerRadius){
-ctx.save();roundedRect(r.x,r.y,r.w,r.h,cornerRadius);ctx.clip();
+function drawPhoto(img,r,c,cornerRadius) {
+ctx.save();
+roundedRect(r.x,r.y,r.w,r.h,cornerRadius);
+ctx.clip();
 const scale=Math.max(r.w/img.naturalWidth,r.h/img.naturalHeight)*(c.zoom||1);
-const dw=img.naturalWidth*scale,dh=img.naturalHeight*scale;
-const maxX=Math.max(0,(dw-r.w)/2),maxY=Math.max(0,(dh-r.h)/2);
-c.photoX=Math.max(-maxX,Math.min(maxX,c.photoX||0));c.photoY=Math.max(-maxY,Math.min(maxY,c.photoY||0));
-ctx.drawImage(img,r.x+(r.w-dw)/2+c.photoX,r.y+(r.h-dh)/2+c.photoY,dw,dh);ctx.restore()}
-function drawCaption(){
-const text=$('caption').value.trim();if(!text)return;
+const dw=img.naturalWidth*scale,dh=img.naturalHeight*scale,maxX=Math.max(0,(dw-r.w)/2),maxY=Math.max(0,(dh-r.h)/2);
+c.photoX=Math.max(-maxX,Math.min(maxX,c.photoX||0));
+c.photoY=Math.max(-maxY,Math.min(maxY,c.photoY||0));
+ctx.drawImage(img,r.x+(r.w-dw)/2+c.photoX,r.y+(r.h-dh)/2+c.photoY,dw,dh);
+ctx.restore()}
+function drawCaption() {
+const text=$('caption').value.trim();
+if(!text)return;
 const fs=Math.max(24,Math.round(canvas.width/28));
-ctx.save();ctx.font='800 '+fs+'px Arial';ctx.textAlign='center';ctx.textBaseline='middle';
-const max=canvas.width*.88;let output=text;
+ctx.save();
+ctx.font='800 '+fs+'px Arial';
+ctx.textAlign='center';
+ctx.textBaseline='middle';
+const max=canvas.width*.88;
+let output=text;
 while(ctx.measureText(output).width>max&&output.length>4)output=output.slice(0,-2)+'…';
-const tw=ctx.measureText(output).width,bw=Math.min(canvas.width-30,tw+36),bh=fs+24;
-const x=canvas.width/2,y=canvas.height-Math.max(45,canvas.height*.06);
-ctx.fillStyle='rgba(0,0,0,.68)';roundedRect(x-bw/2,y-bh/2,bw,bh,10);ctx.fill();
-ctx.fillStyle='#fff';ctx.fillText(output,x,y,max);ctx.restore()}
-function draw(includeSelection=true){
-const format=formats[selectedFormat];canvas.width=format.width;canvas.height=format.height;
-ctx.fillStyle=$('bgColor').value;ctx.fillRect(0,0,canvas.width,canvas.height);
+const tw=ctx.measureText(output).width,bw=Math.min(canvas.width-30,tw+36),bh=fs+24,x=canvas.width/2,y=canvas.height-Math.max(45,canvas.height*.06);
+ctx.fillStyle='rgba(0,0,0,.68)';
+roundedRect(x-bw/2,y-bh/2,bw,bh,10);
+ctx.fill();
+ctx.fillStyle='#fff';
+ctx.fillText(output,x,y,max);
+ctx.restore()}
+function draw(includeSelection=true) {
+const format=formats[selectedFormat];
+canvas.width=format.width;
+canvas.height=format.height;
+ctx.fillStyle=$('bgColor').value;
+ctx.fillRect(0,0,canvas.width,canvas.height);
 const radius=Number($('radius').value);
-cells.forEach((c,i)=>{
+cells.forEach((c,i)=> {
 const r=getFrameRect(c),item=c.photoIndex>=0?images[c.photoIndex]:null;
-if(item){drawPhoto(item.image,r,c,radius)}
-else{
-ctx.save();roundedRect(r.x,r.y,r.w,r.h,radius);ctx.fillStyle=$('bgColor').value;ctx.fill();
-ctx.strokeStyle='#7184a3';ctx.lineWidth=3;ctx.setLineDash([12,8]);ctx.stroke();ctx.setLineDash([]);
-ctx.fillStyle='#7184a3';ctx.textAlign='center';ctx.textBaseline='middle';
-ctx.font='bold '+Math.max(22,Math.round(canvas.width/45))+'px Arial';ctx.fillText('+',r.x+r.w/2,r.y+r.h/2);ctx.restore()}
-if(includeSelection&&i===selectedCell){
-ctx.save();ctx.strokeStyle='#6ea8ff';ctx.lineWidth=Math.max(4,canvas.width/300);ctx.strokeRect(r.x,r.y,r.w,r.h);
+if(item) {
+drawPhoto(item.image,r,c,radius)}else{ctx.save();
+roundedRect(r.x,r.y,r.w,r.h,radius);
+ctx.fillStyle=$('bgColor').value;
+ctx.fill();
+ctx.strokeStyle='#7184a3';
+ctx.lineWidth=3;
+ctx.setLineDash([12,8]);
+ctx.stroke();
+ctx.setLineDash([]);
+ctx.fillStyle='#7184a3';
+ctx.textAlign='center';
+ctx.textBaseline='middle';
+ctx.font='bold '+Math.max(22,Math.round(canvas.width/45))+'px Arial';
+ctx.fillText('+',r.x+r.w/2,r.y+r.h/2);
+ctx.restore()}if(includeSelection&&i===selectedCell) {
+ctx.save();
+ctx.strokeStyle='#6ea8ff';
+ctx.lineWidth=Math.max(4,canvas.width/300);
+ctx.strokeRect(r.x,r.y,r.w,r.h);
 const s=Math.max(24,canvas.width*.028);
-[[r.x,r.y],[r.x+r.w,r.y],[r.x,r.y+r.h],[r.x+r.w,r.y+r.h]].forEach(([hx,hy])=>{
-ctx.fillStyle='#fff';ctx.strokeStyle='#2563eb';ctx.lineWidth=4;
-ctx.beginPath();ctx.rect(hx-s/2,hy-s/2,s,s);ctx.fill();ctx.stroke()});
+[[r.x,r.y],[r.x+r.w,r.y],[r.x,r.y+r.h],[r.x+r.w,r.y+r.h]].forEach(([hx,hy])=> {
+ctx.fillStyle='#fff';
+ctx.strokeStyle='#2563eb';
+ctx.lineWidth=4;
+ctx.beginPath();
+ctx.rect(hx-s/2,hy-s/2,s,s);
+ctx.fill();
+ctx.stroke()});
+
 ctx.restore()}});
+
 drawCaption();
-$('downloadJpg').disabled=!images.length;$('downloadPng').disabled=!images.length;updateControls()}
-function pointerPoint(event){
+$('downloadJpg').disabled=!images.length;
+$('downloadPng').disabled=!images.length;
+updateControls()}
+function pointerPoint(event) {
 const rect=canvas.getBoundingClientRect();
 return{x:(event.clientX-rect.left)/rect.width*canvas.width,y:(event.clientY-rect.top)/rect.height*canvas.height}}
-function nearPoint(p,x,y,tolerance){return Math.abs(p.x-x)<=tolerance&&Math.abs(p.y-y)<=tolerance}
-canvas.addEventListener('pointerdown',event=>{
+function nearPoint(p,x,y,tolerance) {
+return Math.abs(p.x-x)<=tolerance&&Math.abs(p.y-y)<=tolerance}
+canvas.addEventListener('pointerdown',event=> {
 if(!cells.length)return;
 const p=pointerPoint(event),rect=canvas.getBoundingClientRect();
-/* Comfortable touch targets for frame edges and corner handles. */
-const scaleX=canvas.width/Math.max(1,rect.width),scaleY=canvas.height/Math.max(1,rect.height);
-const handleX=16*scaleX,handleY=16*scaleY,edgeX=54*scaleX,edgeY=54*scaleY;
-for(let i=cells.length-1;i>=0;i--){
-const c=cells[i],r=getFrameRect(c);
-const corners=[{name:'nw',x:r.x,y:r.y},{name:'ne',x:r.x+r.w,y:r.y},{name:'sw',x:r.x,y:r.y+r.h},{name:'se',x:r.x+r.w,y:r.y+r.h}];
+/* Convert comfortable finger-sized hit areas from CSS pixels into canvas pixels. */const scaleX=canvas.width/Math.max(1,rect.width),scaleY=canvas.height/Math.max(1,rect.height),handleX=16*scaleX,handleY=16*scaleY,edgeX=54*scaleX,edgeY=54*scaleY;
+for(let i=cells.length-1;
+i>=0;
+i--) {
+const c=cells[i],r=getFrameRect(c),corners=[{name:'nw',x:r.x,y:r.y},{name:'ne',x:r.x+r.w,y:r.y},{name:'sw',x:r.x,y:r.y+r.h},{name:'se',x:r.x+r.w,y:r.y+r.h}];
 const corner=corners.find(k=>Math.abs(p.x-k.x)<=handleX&&Math.abs(p.y-k.y)<=handleY);
 const inside=p.x>=r.x&&p.x<=r.x+r.w&&p.y>=r.y&&p.y<=r.y+r.h;
 if(!corner&&!inside)continue;
 selectedCell=i;
 const nearEdge=p.x<=r.x+edgeX||p.x>=r.x+r.w-edgeX||p.y<=r.y+edgeY||p.y>=r.y+r.h-edgeY;
-const mode=corner?'resize':nearEdge?'move':(c.photoIndex>=0&&images[c.photoIndex]?'photo':'move');
+let mode=corner?'resize':nearEdge?'move':(c.photoIndex>=0&&images[c.photoIndex]?'photo':'move');
 dragging={mode,corner:corner?corner.name:null,startX:p.x,startY:p.y,x:c.x,y:c.y,w:c.w,h:c.h,photoX:c.photoX||0,photoY:c.photoY||0,pointerId:event.pointerId};
-$('cellSelect').value=String(i);updateControls();
-if(canvas.setPointerCapture){try{canvas.setPointerCapture(event.pointerId)}catch(e){}}
-draw();event.preventDefault();return}});
-canvas.addEventListener('pointermove',event=>{
+$('cellSelect').value=String(i);
+updateControls();
+if(canvas.setPointerCapture) {
+try{canvas.setPointerCapture(event.pointerId)}catch(e) {
+}}draw();
+event.preventDefault();
+return}});
+
+
+canvas.addEventListener('pointermove',event=> {
 if(!dragging)return;
-const p=pointerPoint(event),c=cells[selectedCell];if(!c)return;
+const p=pointerPoint(event),c=cells[selectedCell];
+if(!c)return;
 const dx=p.x-dragging.startX,dy=p.y-dragging.startY,dxp=dx/canvas.width*100,dyp=dy/canvas.height*100;
-if(dragging.mode==='photo'){
-c.photoX=dragging.photoX+dx;c.photoY=dragging.photoY+dy
-}else if(dragging.mode==='move'){
+if(dragging.mode==='photo') {
+c.photoX=dragging.photoX+dx;
+c.photoY=dragging.photoY+dy}else if(dragging.mode==='move') {
 c.x=Math.max(0,Math.min(100-c.w,dragging.x+dxp));
-c.y=Math.max(0,Math.min(100-c.h,dragging.y+dyp))
-}else{
-const min=8,right=dragging.x+dragging.w,bottom=dragging.y+dragging.h,corner=dragging.corner;
-if(corner.includes('w')){c.x=Math.max(0,Math.min(right-min,dragging.x+dxp));c.w=right-c.x}
-else{c.w=Math.max(min,Math.min(100-dragging.x,dragging.w+dxp))}
-if(corner.includes('n')){c.y=Math.max(0,Math.min(bottom-min,dragging.y+dyp));c.h=bottom-c.y}
-else{c.h=Math.max(min,Math.min(100-dragging.y,dragging.h+dyp))}
-}
-updateControls();draw()});
-function stopDragging(){dragging=null}
-canvas.addEventListener('pointerup',stopDragging);
+c.y=Math.max(0,Math.min(100-c.h,dragging.y+dyp))}else{const min=8,right=dragging.x+dragging.w,bottom=dragging.y+dragging.h,corner=dragging.corner;
+if(corner.includes('w')) {
+c.x=Math.max(0,Math.min(right-min,dragging.x+dxp));
+c.w=right-c.x}else{c.w=Math.max(min,Math.min(100-dragging.x,dragging.w+dxp))}if(corner.includes('n')) {
+c.y=Math.max(0,Math.min(bottom-min,dragging.y+dyp));
+c.h=bottom-c.y}else{c.h=Math.max(min,Math.min(100-dragging.y,dragging.h+dyp))}}updateControls();
+draw()});
+
+
+function stopDragging() {
+dragging=null}canvas.addEventListener('pointerup',stopDragging);
 canvas.addEventListener('pointercancel',stopDragging);
 canvas.addEventListener('lostpointercapture',stopDragging);
 
-function download(format){
-if(!images.length){status('Add at least one photo before exporting.');return}
+function nextExportNumber() {
+const key='ritoccapixCollageExportNumber';
+let number;
+try {
+number=Number.parseInt(localStorage.getItem(key)||'0',10);
+if(!Number.isFinite(number)||number<0) number=0;
+number+=1;
+localStorage.setItem(key,String(number));
+} catch(error) {
+number=Date.now();
+}
+return String(number).padStart(3,'0');
+}
+function download(format) {
+if(!images.length) {
+status('Add at least one photo before exporting.');
+return}
 const mime=format==='jpg'?'image/jpeg':'image/png';
-
-/* Draw the collage without selection borders or corner handles before exporting. */
+// Render a clean version for export, without the active-frame outline or corner handles.
 draw(false);
-
-canvas.toBlob(blob=>{
-/* Restore the editor preview so the user can continue editing. */
+canvas.toBlob(blob=> {
+// Restore the editor preview so the user can keep editing after export.
 draw(true);
-
-if(!blob){status('Export failed. Please try again.');return}
+if(!blob) {
+status('Export failed. Please try again.');
+return}
 const url=URL.createObjectURL(blob),a=document.createElement('a');
-a.href=url;a.download='ritoccapix-photo-collage.'+format;
-document.body.appendChild(a);a.click();a.remove();
-setTimeout(()=>URL.revokeObjectURL(url),1500);
-status('Your collage has been exported as '+format.toUpperCase()+'.')
-},mime,format==='jpg'?.94:undefined)}
+const number=nextExportNumber();
+a.href=url;
+a.download='ritoccapix-collage-'+number+'.'+format;
+document.body.appendChild(a);
+a.click();
+a.remove();
+setTimeout(()=>URL.revokeObjectURL(url),10000);
+status('Download started: ritoccapix-collage-'+number+'.'+format+'.')},mime,format==='jpg'?.94:undefined)}
 $('downloadJpg').addEventListener('click',()=>download('jpg'));
 $('downloadPng').addEventListener('click',()=>download('png'));
 
