@@ -149,4 +149,815 @@ footer a{color:var(--accent);text-decoration:none}
       <input id="spacing" type="range" min="0" max="40" value="12">
     </div>
     <div class="control">
-      <div class="control-top"><label for="radius">Rounded corners</label><span id="radiusValue" class="value
+      <div class="control-top"><label for="radius">Rounded corners</label><span id="radiusValue" class="value">12 px</span></div>
+      <input id="radius" type="range" min="0" max="40" value="12">
+    </div>
+    <div class="control">
+      <div class="control-top"><label for="bgColor">Background color</label></div>
+      <div class="color-row"><input id="bgColor" type="color" value="#ffffff"><span class="color-info">Color behind the photos</span></div>
+    </div>
+    <div class="control">
+      <div class="control-top"><label for="caption">Caption</label></div>
+      <input id="caption" class="text-input" type="text" maxlength="80" placeholder="Add a caption...">
+    </div>
+  </div>
+
+  <div class="custom-tools">
+    <h3>5. Edit your frames</h3>
+    <p class="help">Drag a photo to reposition it. Drag a frame edge to move the whole frame. Drag any corner handle to resize it. Frames can overlap; later frames appear on top.</p>
+    <div class="custom-buttons">
+      <button id="addCell" class="secondary-btn" type="button">＋ Add frame</button>
+      <button id="removeCell" class="secondary-btn" type="button">− Remove frame</button>
+    </div>
+    <div class="control">
+      <div class="control-top"><label for="cellSelect">Selected frame</label></div>
+      <select id="cellSelect" class="text-input"></select>
+    </div>
+    <div class="control">
+      <div class="control-top"><label for="photoSelect">Photo to place</label></div>
+      <select id="photoSelect" class="text-input"><option value="-1">No photo selected</option></select>
+    </div>
+    <div class="custom-buttons" style="margin-top:9px">
+      <button id="placePhoto" class="secondary-btn" type="button">Place photo in frame</button>
+      <button id="clearPhoto" class="secondary-btn" type="button">Remove photo</button>
+    </div>
+    <div class="control">
+      <div class="control-top"><label for="cellZoom">Photo zoom</label><span id="cellZoomValue" class="value">1.0×</span></div>
+      <input id="cellZoom" type="range" min="100" max="300" value="100">
+    </div>
+    <div class="custom-buttons" style="margin-top:9px">
+      <button id="centerPhoto" class="secondary-btn" type="button">Center photo</button>
+      <button id="resetLayout" class="secondary-btn" type="button">Reset current layout</button>
+    </div>
+  </div>
+</aside>
+
+<section class="preview-panel">
+  <div class="preview-top"><h2 class="preview-title">Collage preview</h2><button id="shuffle" class="shuffle" type="button">Shuffle photos</button></div>
+  <div class="canvas-wrap"><canvas id="canvas" aria-label="Interactive collage preview"></canvas></div>
+  <div class="downloads">
+    <button id="downloadJpg" class="download-btn download-jpg" type="button" disabled>Download JPG</button>
+    <button id="downloadPng" class="download-btn download-png" type="button" disabled>Download PNG</button>
+  </div>
+  <p id="status" class="help" role="status" aria-live="polite">Choose a layout and add photos to begin.</p>
+</section>
+</div>
+
+<section class="content">
+  <h2>How to make your photo collage</h2>
+  <ol>
+    <li>Choose a layout or start with a blank canvas.</li>
+    <li>Upload your photos. They will be placed automatically in the available frames.</li>
+    <li>Select a frame and a photo if you want to change the automatic arrangement.</li>
+    <li>Drag inside a frame to reposition its photo. Drag an edge to move the frame, or a corner handle to resize it.</li>
+    <li>Adjust the format, spacing, corners, background and caption.</li>
+    <li>Download your finished collage as a JPG or PNG image.</li>
+  </ol>
+  <p>Photos are processed locally in your browser. This tool does not upload your images to a server.</p>
+</section>
+
+<section class="content">
+  <h2>Frequently asked questions</h2>
+  <h3>Can I move a photo inside its frame?</h3>
+  <p>Yes. Drag inside the photo area to reposition it. Use “Center photo” to return it to the center.</p>
+  <h3>Can I make one photo bigger than the others?</h3>
+  <p>Yes. Select a frame and drag any corner handle to resize it independently.</p>
+  <h3>Can I overlap frames?</h3>
+  <p>Yes. Move a frame over another to create your own composition. Frames later in the frame list appear on top.</p>
+  <h3>Can I use my phone?</h3>
+  <p>Yes. You can upload photos, reposition them and resize frames using touch gestures.</p>
+  <h3>Are my photos uploaded?</h3>
+  <p>No. Images are processed locally in your browser and are not uploaded by this tool.</p>
+  <h3>Is the Photo Collage Maker free?</h3>
+  <p>Yes. You can create and download collages for free without registering.</p>
+</section>
+</main>
+
+<footer>
+  <p>© 2026 RitoccaPix · Free online image tools</p>
+  <p><a href="index.html">Home</a> · <a href="image-resizer.html">Image Resizer</a> · <a href="image-compressor.html">Image Compressor</a> · <a href="image-analyzer.html">Image Analyzer</a></p>
+</footer>
+
+<script>
+'use strict';
+
+const $=id=>document.getElementById(id);
+const canvas=$('canvas');
+const ctx=canvas.getContext('2d');
+const fileInput=$('fileInput');
+const photoList=$('photoList');
+const photoCount=$('photoCount');
+
+let images=[];
+let cells=[];
+let selectedCell=0;
+let selectedPhoto=-1;
+let selectedFormat='square';
+let currentLayout='blank';
+let dragging=null;
+
+const formats={
+  square:{width:1080,height:1080},
+  portrait:{width:1080,height:1350},
+  story:{width:1080,height:1920},
+  landscape:{width:1200,height:800}
+};
+
+function makeCell(x,y,w,h,photoIndex=-1){
+  return{x,y,w,h,zoom:1,photoIndex,photoX:0,photoY:0};
+}
+
+const templates={
+  blank:()=>[makeCell(0,0,100,100,-1)],
+  '2':()=>[makeCell(0,0,50,100,0),makeCell(50,0,50,100,1)],
+  '3':()=>[makeCell(0,0,58,100,0),makeCell(58,0,42,50,1),makeCell(58,50,42,50,2)],
+  '4':()=>[makeCell(0,0,50,50,0),makeCell(50,0,50,50,1),makeCell(0,50,50,50,2),makeCell(50,50,50,50,3)],
+  '6':()=>Array.from({length:6},(_,i)=>makeCell(i%3*100/3,Math.floor(i/3)*50,100/3,50,i)),
+  '9':()=>Array.from({length:9},(_,i)=>makeCell(i%3*100/3,Math.floor(i/3)*100/3,100/3,100/3,i)),
+  big3:()=>[makeCell(0,0,62,100,0),makeCell(64,0,36,32,1),makeCell(64,34,36,32,2),makeCell(64,68,36,32,3)],
+  top3:()=>[makeCell(0,0,100,58,0),makeCell(0,60,32,40,1),makeCell(34,60,32,40,2),makeCell(68,60,32,40,3)],
+  twoBig:()=>[makeCell(0,0,50,100,0),makeCell(52,0,48,58,1),makeCell(52,60,48,40,2)]
+};
+
+function status(message){
+  $('status').textContent=message;
+}
+
+function updatePhotoSelect(){
+  const select=$('photoSelect');
+  select.replaceChildren();
+
+  const empty=document.createElement('option');
+  empty.value='-1';
+  empty.textContent='No photo selected';
+  select.appendChild(empty);
+
+  images.forEach((item,i)=>{
+    const option=document.createElement('option');
+    option.value=String(i);
+    option.textContent=(i+1)+'. '+item.name;
+    select.appendChild(option);
+  });
+
+  select.value=String(selectedPhoto);
+}
+
+function renderPhotos(){
+  photoList.replaceChildren();
+
+  images.forEach((item,i)=>{
+    const img=document.createElement('img');
+    img.src=item.image.src;
+    img.alt='Photo '+(i+1)+': '+item.name;
+    img.title='Select '+item.name;
+    img.className='photo-thumb'+(i===selectedPhoto?' active':'');
+
+    img.addEventListener('click',()=>{
+      selectedPhoto=i;
+      updatePhotoSelect();
+      renderPhotos();
+      status('Photo selected. Select a frame and press Place photo in frame to replace its photo.');
+    });
+
+    photoList.appendChild(img);
+  });
+
+  photoCount.textContent=images.length
+    ?images.length+' photo'+(images.length===1?'':'s')+' loaded'
+    :'No photos selected';
+
+  updatePhotoSelect();
+}
+
+function updateSelect(){
+  const select=$('cellSelect');
+  select.replaceChildren();
+
+  cells.forEach((cell,i)=>{
+    const option=document.createElement('option');
+    option.value=String(i);
+    option.textContent='Frame '+(i+1)+
+      (cell.photoIndex>=0&&images[cell.photoIndex]
+        ?' — '+images[cell.photoIndex].name
+        :' — empty');
+    select.appendChild(option);
+  });
+
+  if(cells.length){
+    selectedCell=Math.max(0,Math.min(selectedCell,cells.length-1));
+    select.value=String(selectedCell);
+  }
+
+  updateControls();
+}
+
+function updateControls(){
+  if(!cells.length){
+    $('removeCell').disabled=true;
+    $('clearPhoto').disabled=true;
+    $('centerPhoto').disabled=true;
+    return;
+  }
+
+  const c=cells[selectedCell];
+
+  $('cellZoom').value=Math.round(c.zoom*100);
+  $('cellZoomValue').textContent=c.zoom.toFixed(1)+'×';
+  $('removeCell').disabled=cells.length<=1;
+  $('clearPhoto').disabled=c.photoIndex<0;
+  $('centerPhoto').disabled=c.photoIndex<0;
+}
+
+function selectCell(index){
+  if(!cells.length)return;
+
+  selectedCell=Math.max(0,Math.min(index,cells.length-1));
+  $('cellSelect').value=String(selectedCell);
+  updateControls();
+  draw();
+}
+
+/* Automatically assign uploaded photos to the frames in order. */
+function autoPlacePhotos(){
+  cells.forEach((cell,index)=>{
+    cell.photoIndex=index<images.length?index:-1;
+    cell.photoX=0;
+    cell.photoY=0;
+    cell.zoom=1;
+  });
+
+  if(cells.length){
+    selectedCell=Math.min(selectedCell,cells.length-1);
+  }
+}
+
+/* Selecting a layout automatically places the available photos. */
+function applyLayout(layout){
+  currentLayout=layout;
+  cells=templates[layout]();
+
+  autoPlacePhotos();
+
+  selectedCell=0;
+
+  document.querySelectorAll('.layout-btn').forEach(button=>{
+    button.classList.toggle('active',button.dataset.layout===layout);
+  });
+
+  updateSelect();
+  draw();
+
+  status(images.length
+    ?'Layout selected. Photos have been placed automatically. Drag photos or frames to customize your collage.'
+    :'Layout selected. Upload photos to fill the frames automatically.');
+}
+
+/* Load photos and automatically fill the current layout. */
+fileInput.addEventListener('change',async()=>{
+  const files=Array.from(fileInput.files||[])
+    .filter(file=>file.type.startsWith('image/'))
+    .slice(0,12);
+
+  if(!files.length){
+    status('Please choose at least one valid image.');
+    return;
+  }
+
+  status('Loading photos…');
+
+  const loaded=await Promise.all(files.map(file=>new Promise(resolve=>{
+    const reader=new FileReader();
+
+    reader.onload=event=>{
+      const img=new Image();
+
+      img.onload=()=>resolve({image:img,name:file.name});
+      img.onerror=()=>resolve(null);
+      img.src=event.target.result;
+    };
+
+    reader.onerror=()=>resolve(null);
+    reader.readAsDataURL(file);
+  })));
+
+  images=loaded.filter(Boolean);
+  selectedPhoto=images.length?0:-1;
+
+  autoPlacePhotos();
+  renderPhotos();
+  updateSelect();
+  draw();
+
+  status(
+    images.length+
+    ' photo(s) loaded and placed automatically. Choose another layout to rearrange them, or select a photo and frame to edit the collage.'+
+    (files.length>images.length?' Some files could not be loaded.':'')
+  );
+});
+
+document.querySelectorAll('.layout-btn').forEach(button=>{
+  button.addEventListener('click',()=>applyLayout(button.dataset.layout));
+});
+
+document.querySelectorAll('.format-btn').forEach(button=>{
+  button.addEventListener('click',()=>{
+    selectedFormat=button.dataset.format;
+
+    document.querySelectorAll('.format-btn').forEach(item=>{
+      item.classList.toggle('active',item===button);
+    });
+
+    draw();
+  });
+});
+
+$('cellSelect').addEventListener('change',()=>{
+  selectCell(Number($('cellSelect').value));
+});
+
+$('photoSelect').addEventListener('change',()=>{
+  selectedPhoto=Number($('photoSelect').value);
+  renderPhotos();
+});
+
+$('placePhoto').addEventListener('click',()=>{
+  if(!cells.length||selectedPhoto<0||!images[selectedPhoto]){
+    status('Choose a photo first.');
+    return;
+  }
+
+  const cell=cells[selectedCell];
+  cell.photoIndex=selectedPhoto;
+  cell.photoX=0;
+  cell.photoY=0;
+  cell.zoom=1;
+
+  updateSelect();
+  draw();
+
+  status('Photo placed in frame '+(selectedCell+1)+'. Drag inside the photo to reposition it.');
+});
+
+$('clearPhoto').addEventListener('click',()=>{
+  if(!cells.length)return;
+
+  const cell=cells[selectedCell];
+  cell.photoIndex=-1;
+  cell.photoX=0;
+  cell.photoY=0;
+
+  updateSelect();
+  draw();
+
+  status('Photo removed from the selected frame.');
+});
+
+$('centerPhoto').addEventListener('click',()=>{
+  const cell=cells[selectedCell];
+
+  if(!cell||cell.photoIndex<0||!images[cell.photoIndex]){
+    status('Select a frame containing a photo first.');
+    return;
+  }
+
+  cell.photoX=0;
+  cell.photoY=0;
+
+  draw();
+  status('Photo centered in the selected frame.');
+});
+
+$('addCell').addEventListener('click',()=>{
+  if(cells.length>=12){
+    status('You can add up to 12 frames.');
+    return;
+  }
+
+  cells.push(makeCell(10,10,35,35,-1));
+  selectedCell=cells.length-1;
+
+  updateSelect();
+  draw();
+
+  status('New empty frame added. You can move, resize or overlap it.');
+});
+
+$('removeCell').addEventListener('click',()=>{
+  if(cells.length<=1)return;
+
+  cells.splice(selectedCell,1);
+  selectedCell=Math.min(selectedCell,cells.length-1);
+
+  updateSelect();
+  draw();
+
+  status('Frame removed.');
+});
+
+$('resetLayout').addEventListener('click',()=>{
+  applyLayout(currentLayout);
+});
+
+$('shuffle').addEventListener('click',()=>{
+  if(!images.length){
+    status('Add photos before shuffling.');
+    return;
+  }
+
+  const indexes=images.map((_,i)=>i);
+
+  for(let i=indexes.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [indexes[i],indexes[j]]=[indexes[j],indexes[i]];
+  }
+
+  cells.forEach(cell=>{
+    if(cell.photoIndex>=0&&cell.photoIndex<indexes.length){
+      cell.photoIndex=indexes[cell.photoIndex];
+      cell.photoX=0;
+      cell.photoY=0;
+    }
+  });
+
+  selectedPhoto=selectedPhoto>=0?indexes[selectedPhoto]:-1;
+
+  renderPhotos();
+  updateSelect();
+  draw();
+
+  status('Photos shuffled.');
+});
+
+$('spacing').addEventListener('input',()=>{
+  $('spacingValue').textContent=$('spacing').value+' px';
+  draw();
+});
+
+$('radius').addEventListener('input',()=>{
+  $('radiusValue').textContent=$('radius').value+' px';
+  draw();
+});
+
+$('bgColor').addEventListener('input',draw);
+$('caption').addEventListener('input',draw);
+
+$('cellZoom').addEventListener('input',()=>{
+  const cell=cells[selectedCell];
+  if(!cell)return;
+
+  cell.zoom=Number($('cellZoom').value)/100;
+  $('cellZoomValue').textContent=cell.zoom.toFixed(1)+'×';
+
+  draw();
+});
+
+function roundedRect(x,y,w,h,r){
+  r=Math.max(0,Math.min(r,w/2,h/2));
+
+  ctx.beginPath();
+  ctx.moveTo(x+r,y);
+  ctx.lineTo(x+w-r,y);
+  ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+  ctx.lineTo(x+w,y+h-r);
+  ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+  ctx.lineTo(x+r,y+h);
+  ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+  ctx.lineTo(x,y+r);
+  ctx.quadraticCurveTo(x,y,x+r,y);
+  ctx.closePath();
+}
+
+function getFrameRect(cell){
+  const gap=Number($('spacing').value);
+
+  return{
+    x:cell.x/100*canvas.width+gap/2,
+    y:cell.y/100*canvas.height+gap/2,
+    w:Math.max(1,cell.w/100*canvas.width-gap),
+    h:Math.max(1,cell.h/100*canvas.height-gap)
+  };
+}
+
+function drawPhoto(img,rect,cell,cornerRadius){
+  ctx.save();
+
+  roundedRect(rect.x,rect.y,rect.w,rect.h,cornerRadius);
+  ctx.clip();
+
+  const scale=Math.max(
+    rect.w/img.naturalWidth,
+    rect.h/img.naturalHeight
+  )*(cell.zoom||1);
+
+  const dw=img.naturalWidth*scale;
+  const dh=img.naturalHeight*scale;
+  const maxX=Math.max(0,(dw-rect.w)/2);
+  const maxY=Math.max(0,(dh-rect.h)/2);
+
+  cell.photoX=Math.max(-maxX,Math.min(maxX,cell.photoX||0));
+  cell.photoY=Math.max(-maxY,Math.min(maxY,cell.photoY||0));
+
+  ctx.drawImage(
+    img,
+    rect.x+(rect.w-dw)/2+cell.photoX,
+    rect.y+(rect.h-dh)/2+cell.photoY,
+    dw,
+    dh
+  );
+
+  ctx.restore();
+}
+
+function drawCaption(){
+  const text=$('caption').value.trim();
+  if(!text)return;
+
+  const fontSize=Math.max(24,Math.round(canvas.width/28));
+
+  ctx.save();
+  ctx.font='800 '+fontSize+'px Arial';
+  ctx.textAlign='center';
+  ctx.textBaseline='middle';
+
+  const maxWidth=canvas.width*.88;
+  let output=text;
+
+  while(ctx.measureText(output).width>maxWidth&&output.length>4){
+    output=output.slice(0,-2)+'…';
+  }
+
+  const textWidth=ctx.measureText(output).width;
+  const boxWidth=Math.min(canvas.width-30,textWidth+36);
+  const boxHeight=fontSize+24;
+  const x=canvas.width/2;
+  const y=canvas.height-Math.max(45,canvas.height*.06);
+
+  ctx.fillStyle='rgba(0,0,0,.68)';
+  roundedRect(
+    x-boxWidth/2,
+    y-boxHeight/2,
+    boxWidth,
+    boxHeight,
+    10
+  );
+  ctx.fill();
+
+  ctx.fillStyle='#fff';
+  ctx.fillText(output,x,y,maxWidth);
+  ctx.restore();
+}
+
+function draw(){
+  const format=formats[selectedFormat];
+
+  canvas.width=format.width;
+  canvas.height=format.height;
+
+  ctx.fillStyle=$('bgColor').value;
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  const radius=Number($('radius').value);
+
+  cells.forEach((cell,index)=>{
+    const rect=getFrameRect(cell);
+    const item=cell.photoIndex>=0?images[cell.photoIndex]:null;
+
+    if(item){
+      drawPhoto(item.image,rect,cell,radius);
+    }else{
+      ctx.save();
+
+      roundedRect(rect.x,rect.y,rect.w,rect.h,radius);
+      ctx.fillStyle=$('bgColor').value;
+      ctx.fill();
+
+      ctx.strokeStyle='#7184a3';
+      ctx.lineWidth=3;
+      ctx.setLineDash([12,8]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      ctx.fillStyle='#7184a3';
+      ctx.textAlign='center';
+      ctx.textBaseline='middle';
+      ctx.font='bold '+Math.max(22,Math.round(canvas.width/45))+'px Arial';
+      ctx.fillText('+',rect.x+rect.w/2,rect.y+rect.h/2);
+
+      ctx.restore();
+    }
+
+    if(index===selectedCell){
+      ctx.save();
+
+      ctx.strokeStyle='#6ea8ff';
+      ctx.lineWidth=Math.max(4,canvas.width/300);
+      ctx.strokeRect(rect.x,rect.y,rect.w,rect.h);
+
+      const size=Math.max(28,canvas.width*.035);
+
+      [
+        [rect.x,rect.y],
+        [rect.x+rect.w,rect.y],
+        [rect.x,rect.y+rect.h],
+        [rect.x+rect.w,rect.y+rect.h]
+      ].forEach(([x,y])=>{
+        ctx.fillStyle='#fff';
+        ctx.strokeStyle='#2563eb';
+        ctx.lineWidth=4;
+        ctx.beginPath();
+        ctx.rect(x-size/2,y-size/2,size,size);
+        ctx.fill();
+        ctx.stroke();
+      });
+
+      ctx.restore();
+    }
+  });
+
+  drawCaption();
+
+  $('downloadJpg').disabled=!images.length;
+  $('downloadPng').disabled=!images.length;
+
+  updateControls();
+}
+
+function pointerPoint(event){
+  const rect=canvas.getBoundingClientRect();
+
+  return{
+    x:(event.clientX-rect.left)/rect.width*canvas.width,
+    y:(event.clientY-rect.top)/rect.height*canvas.height
+  };
+}
+
+canvas.addEventListener('pointerdown',event=>{
+  if(!cells.length)return;
+
+  const point=pointerPoint(event);
+  const rect=canvas.getBoundingClientRect();
+
+  const scaleX=canvas.width/Math.max(1,rect.width);
+  const scaleY=canvas.height/Math.max(1,rect.height);
+
+  const handleX=25*scaleX;
+  const handleY=25*scaleY;
+  const edgeX=32*scaleX;
+  const edgeY=32*scaleY;
+
+  for(let i=cells.length-1;i>=0;i--){
+    const cell=cells[i];
+    const frame=getFrameRect(cell);
+
+    const corners=[
+      {name:'nw',x:frame.x,y:frame.y},
+      {name:'ne',x:frame.x+frame.w,y:frame.y},
+      {name:'sw',x:frame.x,y:frame.y+frame.h},
+      {name:'se',x:frame.x+frame.w,y:frame.y+frame.h}
+    ];
+
+    const corner=corners.find(item=>
+      Math.abs(point.x-item.x)<=handleX&&
+      Math.abs(point.y-item.y)<=handleY
+    );
+
+    const inside=
+      point.x>=frame.x&&
+      point.x<=frame.x+frame.w&&
+      point.y>=frame.y&&
+      point.y<=frame.y+frame.h;
+
+    if(!corner&&!inside)continue;
+
+    selectedCell=i;
+
+    const nearEdge=
+      point.x<=frame.x+edgeX||
+      point.x>=frame.x+frame.w-edgeX||
+      point.y<=frame.y+edgeY||
+      point.y>=frame.y+frame.h-edgeY;
+
+    const mode=corner
+      ?'resize'
+      :nearEdge
+        ?'move'
+        :(cell.photoIndex>=0&&images[cell.photoIndex]?'photo':'move');
+
+    dragging={
+      mode,
+      corner:corner?corner.name:null,
+      startX:point.x,
+      startY:point.y,
+      x:cell.x,
+      y:cell.y,
+      w:cell.w,
+      h:cell.h,
+      photoX:cell.photoX||0,
+      photoY:cell.photoY||0,
+      pointerId:event.pointerId
+    };
+
+    $('cellSelect').value=String(i);
+    updateControls();
+
+    if(canvas.setPointerCapture){
+      try{canvas.setPointerCapture(event.pointerId)}catch(error){}
+    }
+
+    draw();
+    event.preventDefault();
+    return;
+  }
+});
+
+canvas.addEventListener('pointermove',event=>{
+  if(!dragging)return;
+
+  const point=pointerPoint(event);
+  const cell=cells[selectedCell];
+  if(!cell)return;
+
+  const dx=point.x-dragging.startX;
+  const dy=point.y-dragging.startY;
+  const dxPercent=dx/canvas.width*100;
+  const dyPercent=dy/canvas.height*100;
+
+  if(dragging.mode==='photo'){
+    cell.photoX=dragging.photoX+dx;
+    cell.photoY=dragging.photoY+dy;
+  }else if(dragging.mode==='move'){
+    cell.x=Math.max(0,Math.min(100-cell.w,dragging.x+dxPercent));
+    cell.y=Math.max(0,Math.min(100-cell.h,dragging.y+dyPercent));
+  }else{
+    const min=8;
+    const right=dragging.x+dragging.w;
+    const bottom=dragging.y+dragging.h;
+    const corner=dragging.corner;
+
+    if(corner.includes('w')){
+      cell.x=Math.max(0,Math.min(right-min,dragging.x+dxPercent));
+      cell.w=right-cell.x;
+    }else{
+      cell.w=Math.max(min,Math.min(100-dragging.x,dragging.w+dxPercent));
+    }
+
+    if(corner.includes('n')){
+      cell.y=Math.max(0,Math.min(bottom-min,dragging.y+dyPercent));
+      cell.h=bottom-cell.y;
+    }else{
+      cell.h=Math.max(min,Math.min(100-dragging.y,dragging.h+dyPercent));
+    }
+  }
+
+  updateControls();
+  draw();
+});
+
+function stopDragging(){
+  dragging=null;
+}
+
+canvas.addEventListener('pointerup',stopDragging);
+canvas.addEventListener('pointercancel',stopDragging);
+canvas.addEventListener('lostpointercapture',stopDragging);
+
+function download(format){
+  if(!images.length){
+    status('Add at least one photo before exporting.');
+    return;
+  }
+
+  const mime=format==='jpg'?'image/jpeg':'image/png';
+
+  canvas.toBlob(blob=>{
+    if(!blob){
+      status('Export failed. Please try again.');
+      return;
+    }
+
+    const url=URL.createObjectURL(blob);
+    const link=document.createElement('a');
+
+    link.href=url;
+    link.download='ritoccapix-photo-collage.'+format;
+
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    setTimeout(()=>URL.revokeObjectURL(url),1500);
+
+    status('Your collage has been exported as '+format.toUpperCase()+'.');
+  },mime,format==='jpg'?.94:undefined);
+}
+
+$('downloadJpg').addEventListener('click',()=>download('jpg'));
+$('downloadPng').addEventListener('click',()=>download('png'));
+
+cells=templates.blank();
+updateSelect();
+draw();
+status('Start with a blank canvas, or choose a layout and upload your photos.');
+</script>
+</body>
+</html>
