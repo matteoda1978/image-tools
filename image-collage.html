@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Free Photo Collage Maker Online | RitoccaPix</title>
-<meta name="description" content="Create a free smart photo collage online. Automatically arrange photos, customize frames, and download your collage as JPG or PNG.">
+<meta name="description" content="Create creative photo collages with smart layouts, overlapping frames and photo enhancement tools. Free online photo collage maker by RitoccaPix.">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#0a0f1d">
 <link rel="canonical" href="https://ritoccapix.com/image-collage.html">
@@ -15,7 +15,7 @@
 :root{--bg:#0a0f1d;--panel:#11192b;--panel2:#0c1323;--border:#26324a;--text:#f5f7ff;--muted:#9da8bd;--accent:#6ea8ff}
 body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,Arial,Helvetica,sans-serif;line-height:1.6}
 a{color:var(--accent)}
-header{padding:22px 0;border-bottom:1px solid #1e293b}
+header{padding:20px 0;border-bottom:1px solid #1e293b}
 .container{width:min(1200px,94%);margin:auto}
 .logo{font-size:24px;font-weight:800;letter-spacing:-.5px}
 .logo span{color:var(--accent)}
@@ -35,10 +35,7 @@ main{max-width:1200px;margin:auto;padding:30px 16px 50px}
 .section{margin-top:22px}
 .section-label{font-size:12px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);font-weight:800;margin-bottom:10px}
 .layout-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
-.layout-btn,.format-btn,.secondary-btn,.shuffle{border:1px solid var(--border);background:var(--panel2);color:var(--muted);border-radius:9px;padding:9px 5px;cursor:pointer;font-size:12px;font-weight:700}
-.smart-layout-btn{width:100%;border:1px solid #6ea8ff;border-radius:10px;padding:12px 14px;background:linear-gradient(110deg,#203d68,#172947);color:#fff;font-size:14px;font-weight:800;cursor:pointer}
-.smart-layout-btn:hover{filter:brightness(1.12)}
-.smart-layout-btn:disabled{opacity:.5;cursor:not-allowed}
+.layout-btn,.format-btn,.secondary-btn,.shuffle,.style-btn{border:1px solid var(--border);background:var(--panel2);color:var(--muted);border-radius:9px;padding:9px 5px;cursor:pointer;font-size:12px;font-weight:700}
 .layout-btn.active,.format-btn.active{border-color:var(--accent);background:#1a2b49;color:white}
 .layout-btn:hover,.format-btn:hover,.secondary-btn:hover,.shuffle:hover{border-color:var(--accent);color:white}
 .layout-preview{width:46px;height:34px;margin:0 auto 6px;display:grid;gap:2px}
@@ -49,11 +46,6 @@ main{max-width:1200px;margin:auto;padding:30px 16px 50px}
 .lp4{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}
 .lp6{grid-template-columns:repeat(3,1fr);grid-template-rows:1fr 1fr}
 .lp9{grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr)}
-.lp-big3{grid-template-columns:1.6fr 1fr;grid-template-rows:repeat(3,1fr)}
-.lp-big3 span:first-child{grid-row:1/4}
-.lp-top3{grid-template-columns:repeat(3,1fr);grid-template-rows:1.5fr 1fr}
-.lp-top3 span:first-child{grid-column:1/4}
-.lp-two span:first-child{grid-row:1/3}
 .layout-name{display:block;font-size:10px;line-height:1.3}
 .format-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
 .control{margin-top:15px}
@@ -68,6 +60,19 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 .photo-thumb{display:block;width:100%;aspect-ratio:1;object-fit:cover;border-radius:8px;border:2px solid var(--border);cursor:pointer}
 .photo-thumb.active{border:3px solid var(--accent)}
 .photo-help{font-size:12px;color:var(--muted);margin:8px 0 0}
+.smart-box{padding:13px;background:#101e35;border:1px solid #304d75;border-radius:12px}
+.smart-box h3{font-size:15px;margin:0 0 8px}
+.smart-btn{width:100%;border:1px solid #6ea8ff;border-radius:10px;padding:12px;background:linear-gradient(110deg,#203d68,#172947);color:#fff;font-size:14px;font-weight:800;cursor:pointer;margin-bottom:8px}
+.smart-btn:hover{filter:brightness(1.15)}
+.smart-btn:disabled{opacity:.5;cursor:not-allowed}
+.smart-btn.secondary{background:#172235;border-color:#394761}
+.smart-btn.enhance{background:linear-gradient(110deg,#33406a,#242b4a)}
+.smart-box p{margin:5px 0 0;font-size:12px;color:var(--muted)}
+.custom-tools{margin-top:22px;padding-top:17px;border-top:1px solid var(--border)}
+.custom-tools h3{font-size:16px;margin:0 0 6px}
+.custom-buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.secondary-btn{padding:11px;color:var(--text)}
+.secondary-btn:disabled{opacity:.35;cursor:not-allowed}
 .preview-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
 .preview-title{margin:0}
 .shuffle{padding:9px 11px;color:var(--text)}
@@ -78,11 +83,6 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 .download-jpg{background:var(--accent);color:#081326}
 .download-png{background:#253149;color:white;border:1px solid #394761}
 .download-btn:disabled{opacity:.4;cursor:not-allowed}
-.custom-tools{margin-top:22px;padding-top:17px;border-top:1px solid var(--border)}
-.custom-tools h3{font-size:16px;margin:0 0 6px}
-.custom-buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.secondary-btn{padding:11px;color:var(--text)}
-.secondary-btn:disabled{opacity:.35;cursor:not-allowed}
 .content{margin-top:22px}
 .content h2{margin-top:0}
 .content h3{margin-top:20px}
@@ -95,157 +95,175 @@ footer a{color:var(--accent);text-decoration:none}
 </head>
 <body>
 <header>
-<div class="container">
-<div class="logo"><a href="index.html" style="color:inherit;text-decoration:none">Ritocca<span>Pix</span></a></div>
-<nav aria-label="Main navigation"></nav>
-</div>
+  <div class="container">
+    <div class="logo"><a href="index.html" style="color:inherit;text-decoration:none">Ritocca<span>Pix</span></a></div>
+    <nav aria-label="Main navigation"></nav>
+  </div>
 </header>
 
 <main>
 <section class="hero">
-<h1>Photo Collage Maker</h1>
-<p>Create a photo collage your way. Start with a blank canvas or a ready-made layout, then place, move, resize and overlap frames. Download your collage as a high-resolution JPG or PNG.</p>
+  <h1>Creative Photo Collage Maker</h1>
+  <p>Create original photo collages with overlapping pictures, tilted frames and intelligent-looking compositions. Then enhance the colors, light and style of your photos before downloading your design.</p>
 </section>
 
 <div class="workspace">
 <aside class="panel">
-<div class="panel-title">1. Add your photos</div>
-<label class="upload" for="fileInput">
-<div class="upload-icon">＋</div>
-<strong>Choose photos</strong>
-<span>JPG, PNG or WebP · Up to 12 images</span>
-</label>
-<input id="fileInput" type="file" accept="image/*" multiple>
-<div id="photoList" class="photo-list"></div>
-<div id="photoCount" class="photo-count">No photos selected</div>
-<p class="photo-help">Select a thumbnail, choose a frame, then use “Place photo in frame”. You can also drag a photo inside its frame.</p>
+  <div class="panel-title">1. Add your photos</div>
+  <label class="upload" for="fileInput">
+    <div class="upload-icon">＋</div>
+    <strong>Choose photos</strong>
+    <span>JPG, PNG or WebP · Up to 12 images</span>
+  </label>
+  <input id="fileInput" type="file" accept="image/*" multiple>
+  <div id="photoList" class="photo-list"></div>
+  <div id="photoCount" class="photo-count">No photos selected</div>
+  <p class="photo-help">Choose a thumbnail to select a photo. You can move photos inside their frames after creating a collage.</p>
 
-<div class="section smart-section">
-<div class="section-label">Smart collage assistant</div>
-<button id="smartLayout" class="smart-layout-btn" type="button">✦ Create a smart collage</button>
-<p class="help">Automatically chooses a layout for your photo count and prioritizes portrait photos in taller frames. Your photos stay in this browser.</p>
-</div>
+  <div class="section smart-box">
+    <h3>✦ Smart composition</h3>
+    <button id="smartLayout" class="smart-btn" type="button">Create a Smart Collage</button>
+    <button id="tryAnother" class="smart-btn secondary" type="button">Try Another Design</button>
+    <p>Creates a varied composition with different frame sizes, rotations and overlaps. Every new design can look different.</p>
+  </div>
 
-<div class="section">
-<div class="section-label">2. Choose a layout</div>
-<div class="layout-grid">
-<button class="layout-btn active" data-layout="blank" type="button"><div class="layout-preview"><span></span></div><span class="layout-name">Blank canvas</span></button>
-<button class="layout-btn" data-layout="2" type="button"><div class="layout-preview lp2"><span></span><span></span></div><span class="layout-name">2 equal</span></button>
-<button class="layout-btn" data-layout="3" type="button"><div class="layout-preview lp3"><span></span><span></span><span></span></div><span class="layout-name">3 frames</span></button>
-<button class="layout-btn" data-layout="4" type="button"><div class="layout-preview lp4"><span></span><span></span><span></span><span></span></div><span class="layout-name">4 equal</span></button>
-<button class="layout-btn" data-layout="6" type="button"><div class="layout-preview lp6"><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="layout-name">6 frames</span></button>
-<button class="layout-btn" data-layout="9" type="button"><div class="layout-preview lp9"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="layout-name">9 frames</span></button>
-<button class="layout-btn" data-layout="big3" type="button"><div class="layout-preview lp-big3"><span></span><span></span><span></span><span></span></div><span class="layout-name">1 big + 3 small</span></button>
-<button class="layout-btn" data-layout="top3" type="button"><div class="layout-preview lp-top3"><span></span><span></span><span></span><span></span></div><span class="layout-name">Big + 3 below</span></button>
-<button class="layout-btn" data-layout="twoBig" type="button"><div class="layout-preview lp-two"><span></span><span></span><span></span></div><span class="layout-name">2 big + 1 small</span></button>
-</div>
-<p class="help">Choosing a layout replaces the current frame arrangement. You can then move, resize and overlap frames. On a phone, drag the frame border to move the whole frame, drag the photo center to move the photo inside, and use a corner handle to resize.</p>
-</div>
+  <div class="section">
+    <div class="section-label">2. Ready-made layouts</div>
+    <div class="layout-grid">
+      <button class="layout-btn active" data-layout="blank" type="button"><div class="layout-preview"><span></span></div><span class="layout-name">Blank canvas</span></button>
+      <button class="layout-btn" data-layout="2" type="button"><div class="layout-preview lp2"><span></span><span></span></div><span class="layout-name">2 photos</span></button>
+      <button class="layout-btn" data-layout="3" type="button"><div class="layout-preview lp3"><span></span><span></span><span></span></div><span class="layout-name">3 photos</span></button>
+      <button class="layout-btn" data-layout="4" type="button"><div class="layout-preview lp4"><span></span><span></span><span></span><span></span></div><span class="layout-name">4 photos</span></button>
+      <button class="layout-btn" data-layout="6" type="button"><div class="layout-preview lp6"><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="layout-name">6 photos</span></button>
+      <button class="layout-btn" data-layout="9" type="button"><div class="layout-preview lp9"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="layout-name">9 photos</span></button>
+    </div>
+    <p class="help">Choose a preset for a simple starting point, or use Smart Collage for a more creative arrangement.</p>
+  </div>
 
-<div class="section">
-<div class="section-label">3. Canvas format</div>
-<div class="format-grid">
-<button class="format-btn active" data-format="square" type="button">Square</button>
-<button class="format-btn" data-format="portrait" type="button">Portrait</button>
-<button class="format-btn" data-format="story" type="button">Story</button>
-<button class="format-btn" data-format="landscape" type="button">Landscape</button>
-</div>
-</div>
+  <div class="section">
+    <div class="section-label">3. Canvas format</div>
+    <div class="format-grid">
+      <button class="format-btn active" data-format="square" type="button">Square</button>
+      <button class="format-btn" data-format="portrait" type="button">Portrait</button>
+      <button class="format-btn" data-format="story" type="button">Story 9:16</button>
+      <button class="format-btn" data-format="landscape" type="button">Landscape</button>
+    </div>
+  </div>
 
-<div class="section">
-<div class="section-label">4. Appearance</div>
-<div class="control">
-<div class="control-top"><label for="spacing">Frame spacing</label><span id="spacingValue" class="value">12 px</span></div>
-<input id="spacing" type="range" min="0" max="40" value="12">
-</div>
-<div class="control">
-<div class="control-top"><label for="radius">Rounded corners</label><span id="radiusValue" class="value">12 px</span></div>
-<input id="radius" type="range" min="0" max="40" value="12">
-</div>
-<div class="control">
-<div class="control-top"><label for="bgColor">Background color</label></div>
-<div class="color-row"><input id="bgColor" type="color" value="#ffffff"><span class="color-info">Color behind the photos</span></div>
-</div>
-<div class="control">
-<div class="control-top"><label for="caption">Caption</label></div>
-<input id="caption" class="text-input" type="text" maxlength="80" placeholder="Add a caption...">
-</div>
-</div>
+  <div class="section">
+    <div class="section-label">4. Enhance collage photos</div>
+    <label class="help" for="photoStyle">Choose an enhancement style</label>
+    <select id="photoStyle" class="text-input">
+      <option value="auto">Auto Enhance</option>
+      <option value="natural">Natural</option>
+      <option value="vivid">Vivid</option>
+      <option value="warm">Warm</option>
+      <option value="cinematic">Cinematic</option>
+      <option value="bw">Black &amp; White</option>
+      <option value="soft">Soft &amp; Bright</option>
+    </select>
+    <button id="enhancePhotos" class="smart-btn enhance" type="button" style="margin-top:10px">Enhance Collage Photos</button>
+    <button id="restorePhotos" class="secondary-btn" type="button" style="width:100%">Restore Original Look</button>
+    <p class="help">Enhancement changes the appearance of photos in the preview and exported image. Your uploaded originals are not overwritten.</p>
+  </div>
 
-<div class="custom-tools">
-<h3>5. Edit your frames</h3>
-<p class="help">Drag a photo to reposition it. Drag a frame edge to move the whole frame. Drag any corner handle to resize it. Frames can overlap; later frames appear on top.</p>
-<div class="custom-buttons">
-<button id="addCell" class="secondary-btn" type="button">＋ Add frame</button>
-<button id="removeCell" class="secondary-btn" type="button">− Remove frame</button>
-</div>
-<div class="control">
-<div class="control-top"><label for="cellSelect">Selected frame</label></div>
-<select id="cellSelect" class="text-input"></select>
-</div>
-<div class="control">
-<div class="control-top"><label for="photoSelect">Photo to place</label></div>
-<select id="photoSelect" class="text-input"><option value="-1">No photo selected</option></select>
-</div>
-<div class="custom-buttons" style="margin-top:9px">
-<button id="placePhoto" class="secondary-btn" type="button">Place photo in frame</button>
-<button id="clearPhoto" class="secondary-btn" type="button">Remove photo</button>
-</div>
-<div class="control">
-<div class="control-top"><label for="cellZoom">Photo zoom</label><span id="cellZoomValue" class="value">1.0×</span></div>
-<input id="cellZoom" type="range" min="100" max="300" value="100">
-</div>
-<div class="custom-buttons" style="margin-top:9px">
-<button id="centerPhoto" class="secondary-btn" type="button">Center photo</button>
-<button id="resetLayout" class="secondary-btn" type="button">Reset current layout</button>
-</div>
-</div>
+  <div class="section">
+    <div class="section-label">5. Appearance</div>
+    <div class="control">
+      <div class="control-top"><label for="spacing">Frame spacing</label><span id="spacingValue" class="value">12 px</span></div>
+      <input id="spacing" type="range" min="0" max="40" value="12">
+    </div>
+    <div class="control">
+      <div class="control-top"><label for="radius">Rounded corners</label><span id="radiusValue" class="value">12 px</span></div>
+      <input id="radius" type="range" min="0" max="40" value="12">
+    </div>
+    <div class="control">
+      <div class="control-top"><label for="bgColor">Background color</label></div>
+      <div class="color-row"><input id="bgColor" type="color" value="#ffffff"><span class="color-info">Color between photos</span></div>
+    </div>
+    <div class="control">
+      <div class="control-top"><label for="caption">Caption</label></div>
+      <input id="caption" class="text-input" type="text" maxlength="80" placeholder="Add a caption...">
+    </div>
+  </div>
+
+  <div class="custom-tools">
+    <h3>6. Edit your frames</h3>
+    <p class="help">Drag inside a photo to reposition it. Drag near a frame edge to move the frame. Drag a corner handle to resize it. Rotated frames can be adjusted approximately by their visible bounds.</p>
+    <div class="custom-buttons">
+      <button id="addCell" class="secondary-btn" type="button">＋ Add frame</button>
+      <button id="removeCell" class="secondary-btn" type="button">− Remove frame</button>
+    </div>
+    <div class="control">
+      <div class="control-top"><label for="cellSelect">Selected frame</label></div>
+      <select id="cellSelect" class="text-input"></select>
+    </div>
+    <div class="control">
+      <div class="control-top"><label for="photoSelect">Photo to place</label></div>
+      <select id="photoSelect" class="text-input"><option value="-1">No photo selected</option></select>
+    </div>
+    <div class="custom-buttons" style="margin-top:9px">
+      <button id="placePhoto" class="secondary-btn" type="button">Place photo in frame</button>
+      <button id="clearPhoto" class="secondary-btn" type="button">Remove photo</button>
+    </div>
+    <div class="control">
+      <div class="control-top"><label for="cellZoom">Photo zoom</label><span id="cellZoomValue" class="value">1.0×</span></div>
+      <input id="cellZoom" type="range" min="100" max="300" value="100">
+    </div>
+    <div class="custom-buttons" style="margin-top:9px">
+      <button id="centerPhoto" class="secondary-btn" type="button">Center photo</button>
+      <button id="resetLayout" class="secondary-btn" type="button">Reset layout</button>
+    </div>
+  </div>
 </aside>
 
 <section class="preview-panel">
-<div class="preview-top"><h2 class="preview-title">Collage preview</h2><button id="shuffle" class="shuffle" type="button">Shuffle photos</button></div>
-<div class="canvas-wrap"><canvas id="canvas" aria-label="Interactive collage preview"></canvas></div>
-<div class="downloads">
-<button id="downloadJpg" class="download-btn download-jpg" type="button" disabled>Download JPG</button>
-<button id="downloadPng" class="download-btn download-png" type="button" disabled>Download PNG</button>
-</div>
-<p id="status" class="help" role="status" aria-live="polite">Choose a layout and add photos to begin.</p>
+  <div class="preview-top">
+    <h2 class="preview-title">Collage preview</h2>
+    <button id="shuffle" class="shuffle" type="button">Shuffle photos</button>
+  </div>
+  <div class="canvas-wrap">
+    <canvas id="canvas" aria-label="Interactive collage preview"></canvas>
+  </div>
+  <div class="downloads">
+    <button id="downloadJpg" class="download-btn download-jpg" type="button" disabled>Download JPG</button>
+    <button id="downloadPng" class="download-btn download-png" type="button" disabled>Download PNG</button>
+  </div>
+  <p id="status" class="help" role="status" aria-live="polite">Upload photos to begin creating your collage.</p>
 </section>
 </div>
 
 <section class="content">
-<h2>How to make your photo collage</h2>
-<ol>
-<li>Choose a layout or use the smart collage assistant.</li>
-<li>Upload your photos from your device.</li>
-<li>Select a frame and choose a photo, then press “Place photo in frame”.</li>
-<li>Drag inside a frame to reposition its photo. Drag an edge to move the frame, or a corner handle to resize it.</li>
-<li>Adjust the format, spacing, corners, background and caption.</li>
-<li>Download your finished collage as a JPG or PNG image.</li>
-</ol>
-<p>Photos are processed locally in your browser. This tool does not upload your images to a server.</p>
+  <h2>How to create a creative photo collage</h2>
+  <ol>
+    <li>Upload your photos from your device.</li>
+    <li>Click Create a Smart Collage to generate a creative arrangement.</li>
+    <li>Click Try Another Design to explore a different composition.</li>
+    <li>Choose an enhancement style and apply it to your collage photos.</li>
+    <li>Adjust the canvas format, frame spacing, background and caption.</li>
+    <li>Download your finished collage as a high-resolution JPG or PNG.</li>
+  </ol>
+  <p>Photos are processed locally in your browser. This tool does not upload your images to a server.</p>
 </section>
 
 <section class="content">
-<h2>Frequently asked questions</h2>
-<h3>Can I move a photo inside its frame?</h3>
-<p>Yes. Drag inside the photo area to reposition it. Use “Center photo” to return it to the center.</p>
-<h3>Can I make one photo bigger than the others?</h3>
-<p>Yes. Select a frame and drag any corner handle to resize it independently.</p>
-<h3>Can I overlap frames?</h3>
-<p>Yes. Move a frame over another to create your own composition. Frames later in the frame list appear on top.</p>
-<h3>Can I use my phone?</h3>
-<p>Yes. You can upload photos, reposition them and resize frames using touch gestures.</p>
-<h3>Are my photos uploaded?</h3>
-<p>No. Images are processed locally in your browser and are not uploaded by this tool.</p>
-<h3>Is the Photo Collage Maker free?</h3>
-<p>Yes. You can create and download collages for free without registering.</p>
+  <h2>Frequently asked questions</h2>
+  <h3>Does Smart Collage change the arrangement of my photos?</h3>
+  <p>Yes. It creates varied compositions using different frame sizes, rotations and overlaps. Try Another Design generates a new arrangement.</p>
+  <h3>Does photo enhancement overwrite my original photos?</h3>
+  <p>No. The original uploaded images remain unchanged. The selected enhancement is applied when the collage is drawn and exported.</p>
+  <h3>Does this tool use a cloud AI service?</h3>
+  <p>No. Layout generation and photo appearance adjustments run in your browser. The composition feature uses layout rules and variation rather than a cloud-based generative AI model.</p>
+  <h3>Can I use the tool on my phone?</h3>
+  <p>Yes. You can upload photos, create layouts, apply enhancement styles and export your collage on supported mobile browsers.</p>
+  <h3>Are my photos uploaded?</h3>
+  <p>No. Images are processed locally in your browser and are not uploaded by this tool.</p>
 </section>
 </main>
 
 <footer>
-<p>© 2026 RitoccaPix · Free online image tools</p>
-<p><a href="index.html">Home</a> · <a href="image-resizer.html">Image Resizer</a> · <a href="image-compressor.html">Image Compressor</a> · <a href="image-analyzer.html">Image Analyzer</a></p>
+  <p>© 2026 RitoccaPix · Free online image tools</p>
+  <p><a href="index.html">Home</a> · <a href="image-resizer.html">Image Resizer</a> · <a href="image-compressor.html">Image Compressor</a> · <a href="image-analyzer.html">Image Analyzer</a></p>
 </footer>
 
 <script>
@@ -265,6 +283,8 @@ let selectedPhoto=-1;
 let selectedFormat='square';
 let currentLayout='blank';
 let dragging=null;
+let designVersion=0;
+let activeStyle='original';
 
 const formats={
   square:{width:1080,height:1080},
@@ -273,8 +293,19 @@ const formats={
   landscape:{width:1200,height:800}
 };
 
-function makeCell(x,y,w,h,photoIndex=-1){
-  return{x,y,w,h,zoom:1,photoIndex,photoX:0,photoY:0};
+const styles={
+  original:'none',
+  auto:'brightness(1.06) contrast(1.10) saturate(1.10)',
+  natural:'brightness(1.03) contrast(1.04) saturate(1.04)',
+  vivid:'brightness(1.04) contrast(1.14) saturate(1.35)',
+  warm:'brightness(1.05) contrast(1.07) saturate(1.12) sepia(0.16)',
+  cinematic:'brightness(0.98) contrast(1.18) saturate(0.88)',
+  bw:'grayscale(1) contrast(1.12)',
+  soft:'brightness(1.10) contrast(0.94) saturate(1.03)'
+};
+
+function makeCell(x,y,w,h,photoIndex=-1,rotation=0){
+  return {x,y,w,h,photoIndex,rotation,zoom:1,photoX:0,photoY:0,fit:true};
 }
 
 const templates={
@@ -283,10 +314,7 @@ const templates={
   '3':()=>[makeCell(0,0,58,100,0),makeCell(58,0,42,50,1),makeCell(58,50,42,50,2)],
   '4':()=>[makeCell(0,0,50,50,0),makeCell(50,0,50,50,1),makeCell(0,50,50,50,2),makeCell(50,50,50,50,3)],
   '6':()=>Array.from({length:6},(_,i)=>makeCell(i%3*100/3,Math.floor(i/3)*50,100/3,50,i)),
-  '9':()=>Array.from({length:9},(_,i)=>makeCell(i%3*100/3,Math.floor(i/3)*100/3,100/3,100/3,i)),
-  big3:()=>[makeCell(0,0,62,100,0),makeCell(64,0,36,32,1),makeCell(64,34,36,32,2),makeCell(64,68,36,32,3)],
-  top3:()=>[makeCell(0,0,100,58,0),makeCell(0,60,32,40,1),makeCell(34,60,32,40,2),makeCell(68,60,32,40,3)],
-  twoBig:()=>[makeCell(0,0,50,100,0),makeCell(52,0,48,58,1),makeCell(52,60,48,40,2)]
+  '9':()=>Array.from({length:9},(_,i)=>makeCell(i%3*100/3,Math.floor(i/3)*100/3,100/3,100/3,i))
 };
 
 function status(message){
@@ -307,34 +335,29 @@ function updatePhotoSelect(){
     option.textContent=(i+1)+'. '+item.name;
     select.appendChild(option);
   });
-
   select.value=String(selectedPhoto);
 }
 
 function renderPhotos(){
   photoList.replaceChildren();
-
   images.forEach((item,i)=>{
     const img=document.createElement('img');
     img.src=item.image.src;
     img.alt='Photo '+(i+1)+': '+item.name;
     img.title='Select '+item.name;
     img.className='photo-thumb'+(i===selectedPhoto?' active':'');
-
     img.addEventListener('click',()=>{
       selectedPhoto=i;
       updatePhotoSelect();
       renderPhotos();
-      status('Photo selected. Select a frame and press Place photo in frame.');
+      status('Photo selected. Choose a frame and press Place photo in frame to assign it.');
     });
-
     photoList.appendChild(img);
   });
 
   photoCount.textContent=images.length
-    ?images.length+' photo'+(images.length===1?'':'s')+' loaded'
-    :'No photos selected';
-
+    ? images.length+' photo'+(images.length===1?'':'s')+' loaded'
+    : 'No photos selected';
   updatePhotoSelect();
 }
 
@@ -345,10 +368,8 @@ function updateSelect(){
   cells.forEach((cell,i)=>{
     const option=document.createElement('option');
     option.value=String(i);
-    option.textContent='Frame '+(i+1)+
-      (cell.photoIndex>=0&&images[cell.photoIndex]
-        ?' — '+images[cell.photoIndex].name
-        :' — empty');
+    const photo=cell.photoIndex>=0&&images[cell.photoIndex];
+    option.textContent='Frame '+(i+1)+(photo?' — '+images[cell.photoIndex].name:' — empty');
     select.appendChild(option);
   });
 
@@ -356,7 +377,6 @@ function updateSelect(){
     selectedCell=Math.max(0,Math.min(selectedCell,cells.length-1));
     select.value=String(selectedCell);
   }
-
   updateControls();
 }
 
@@ -368,12 +388,12 @@ function updateControls(){
     return;
   }
 
-  const c=cells[selectedCell];
-  $('cellZoom').value=Math.round(c.zoom*100);
-  $('cellZoomValue').textContent=c.zoom.toFixed(1)+'×';
+  const cell=cells[selectedCell];
+  $('cellZoom').value=Math.round(cell.zoom*100);
+  $('cellZoomValue').textContent=cell.zoom.toFixed(1)+'×';
   $('removeCell').disabled=cells.length<=1;
-  $('clearPhoto').disabled=c.photoIndex<0;
-  $('centerPhoto').disabled=c.photoIndex<0;
+  $('clearPhoto').disabled=cell.photoIndex<0;
+  $('centerPhoto').disabled=cell.photoIndex<0;
 }
 
 function selectCell(index){
@@ -387,26 +407,128 @@ function selectCell(index){
 function applyLayout(layout){
   currentLayout=layout;
   cells=templates[layout]();
-
-  cells.forEach(c=>{
-    if(c.photoIndex<0||!images[c.photoIndex])c.photoIndex=-1;
-    c.photoX=0;
-    c.photoY=0;
+  cells.forEach(cell=>{
+    if(cell.photoIndex<0||!images[cell.photoIndex])cell.photoIndex=-1;
   });
-
   selectedCell=0;
-  document.querySelectorAll('.layout-btn').forEach(b=>{
-    b.classList.toggle('active',b.dataset.layout===layout);
+
+  document.querySelectorAll('.layout-btn').forEach(button=>{
+    button.classList.toggle('active',button.dataset.layout===layout);
   });
 
   updateSelect();
   draw();
-  status('Layout selected. Drag a photo to reposition it, a frame edge to move the frame, or a corner to resize it.');
+  status('Layout selected. You can move, resize and edit its frames.');
+}
+
+function rand(min,max){
+  return min+Math.random()*(max-min);
+}
+
+function variedRotation(){
+  return rand(-5,5);
+}
+
+function assignPhotosToCells(){
+  if(!images.length)return;
+  const order=images.map((_,i)=>i);
+
+  for(let i=order.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [order[i],order[j]]=[order[j],order[i]];
+  }
+
+  cells.forEach((cell,i)=>{
+    cell.photoIndex=i<order.length?order[i]:-1;
+    cell.zoom=1;
+    cell.photoX=0;
+    cell.photoY=0;
+    cell.fit=true;
+  });
+
+  selectedPhoto=order[0]??-1;
+  renderPhotos();
+  updateSelect();
+}
+
+function createSmartComposition(){
+  if(!images.length){
+    status('Choose at least one photo before creating a smart collage.');
+    fileInput.click();
+    return;
+  }
+
+  const n=images.length;
+  const variant=designVersion++%4;
+
+  if(n===1){
+    cells=[makeCell(8,8,84,84,0,variant%2?2:-2)];
+  }else if(n===2){
+    cells=[
+      makeCell(4,9,54,80,0,variant%2?-3:2),
+      makeCell(43,12,53,76,1,variant%2?3:-2)
+    ];
+  }else if(n===3){
+    cells=[
+      makeCell(4,8,59,84,0,variant%2?-2:2),
+      makeCell(59,5,36,43,1,variant%2?3:-2),
+      makeCell(57,53,38,40,2,variant%2?-3:2)
+    ];
+  }else if(n===4){
+    cells=[
+      makeCell(3,8,55,65,0,variant%2?-2:2),
+      makeCell(59,5,37,40,1,variant%2?3:-2),
+      makeCell(61,49,34,43,2,variant%2?-3:2),
+      makeCell(8,70,45,24,3,variant%2?2:-2)
+    ];
+  }else if(n<=6){
+    cells=[
+      makeCell(3,8,51,82,0,variant%2?-2:2),
+      makeCell(53,5,43,36,1,variant%2?3:-2),
+      makeCell(57,44,39,39,2,variant%2?-3:2),
+      makeCell(7,72,39,22,3,variant%2?2:-2),
+      makeCell(45,76,48,19,4,variant%2?-2:2),
+      makeCell(4,45,24,25,5,variant%2?3:-3)
+    ].slice(0,n);
+  }else{
+    const cols=3;
+    const rows=Math.ceil(n/cols);
+    const margin=3;
+    const gap=2;
+    const cellW=(100-margin*2-gap*(cols-1))/cols;
+    const cellH=(100-margin*2-gap*(rows-1))/rows;
+    cells=Array.from({length:n},(_,i)=>{
+      const row=Math.floor(i/cols);
+      const col=i%cols;
+      const width=cellW*rand(.88,1.06);
+      const height=cellH*rand(.88,1.06);
+      const x=margin+col*(cellW+gap)+rand(-1.5,1.5);
+      const y=margin+row*(cellH+gap)+rand(-1.5,1.5);
+      return makeCell(
+        Math.max(0,Math.min(100-width,x)),
+        Math.max(0,Math.min(100-height,y)),
+        width,height,i,rand(-4,4)
+      );
+    });
+  }
+
+  if(n>3){
+    cells.forEach((cell,i)=>{
+      if(cell.rotation===0)cell.rotation=variedRotation();
+    });
+  }
+
+  currentLayout='smart';
+  document.querySelectorAll('.layout-btn').forEach(button=>button.classList.remove('active'));
+  selectedCell=0;
+  assignPhotosToCells();
+  draw();
+  status('Creative composition created. Click Try Another Design for a different arrangement.');
 }
 
 fileInput.addEventListener('change',async()=>{
   const files=Array.from(fileInput.files||[])
-    .filter(f=>f.type.startsWith('image/'))
+    .filter(file=>file.type.startsWith('image/'))
     .slice(0,12);
 
   if(!files.length){
@@ -418,14 +540,12 @@ fileInput.addEventListener('change',async()=>{
 
   const loaded=await Promise.all(files.map(file=>new Promise(resolve=>{
     const reader=new FileReader();
-
-    reader.onload=e=>{
+    reader.onload=event=>{
       const img=new Image();
       img.onload=()=>resolve({image:img,name:file.name});
       img.onerror=()=>resolve(null);
-      img.src=e.target.result;
+      img.src=event.target.result;
     };
-
     reader.onerror=()=>resolve(null);
     reader.readAsDataURL(file);
   })));
@@ -433,101 +553,54 @@ fileInput.addEventListener('change',async()=>{
   images=loaded.filter(Boolean);
   selectedPhoto=images.length?0:-1;
 
-  cells.forEach(c=>{
-    if(c.photoIndex<0||c.photoIndex>=images.length)c.photoIndex=-1;
-    c.photoX=0;
-    c.photoY=0;
+  cells.forEach(cell=>{
+    if(cell.photoIndex<0||cell.photoIndex>=images.length)cell.photoIndex=-1;
   });
 
   renderPhotos();
   updateSelect();
   draw();
 
-  status(images.length+' photo(s) loaded. Select a frame and place a photo. Drag the border of a frame to move the entire frame, drag inside the photo to reposition the photo, and drag a corner handle to resize.'+
-    (files.length>images.length?' Some files could not be loaded.':''));
+  status(images.length+' photo(s) loaded. Use Create a Smart Collage or choose a layout.');
 });
 
-document.querySelectorAll('.layout-btn').forEach(b=>{
-  b.addEventListener('click',()=>applyLayout(b.dataset.layout));
+document.querySelectorAll('.layout-btn').forEach(button=>{
+  button.addEventListener('click',()=>applyLayout(button.dataset.layout));
 });
 
-/* SMART COLLAGE ASSISTANT */
-$('smartLayout').addEventListener('click',()=>{
-  if(!images.length){
-    status('Choose at least one photo before creating a smart collage.');
-    fileInput.click();
-    return;
-  }
+$('smartLayout').addEventListener('click',createSmartComposition);
+$('tryAnother').addEventListener('click',createSmartComposition);
 
-  const count=images.length;
-  let layout;
-
-  if(count===1)layout='blank';
-  else if(count===2)layout='2';
-  else if(count===3)layout='3';
-  else if(count===4)layout='4';
-  else if(count<=6)layout='6';
-  else if(count<=9)layout='9';
-  else layout='smartGrid';
-
-  // Prioritize portrait photos for taller frames.
-  const order=images.map((item,index)=>({
-    index,
-    ratio:item.image.naturalWidth/Math.max(1,item.image.naturalHeight)
-  })).sort((a,b)=>a.ratio-b.ratio).map(item=>item.index);
-
-  if(layout==='smartGrid'){
-    const cols=4;
-    const rows=Math.ceil(count/cols);
-
-    cells=Array.from({length:count},(_,i)=>{
-      const row=Math.floor(i/cols);
-      const col=i%cols;
-      const itemsInRow=row===rows-1?(count%cols||cols):cols;
-      const width=100/itemsInRow;
-
-      return makeCell(
-        col*width,
-        row*100/rows,
-        width,
-        100/rows,
-        order[i]
-      );
-    });
-
-    currentLayout='smartGrid';
-    document.querySelectorAll('.layout-btn').forEach(b=>b.classList.remove('active'));
-    selectedCell=0;
-    updateSelect();
-    draw();
-  }else{
-    applyLayout(layout);
-
-    cells.forEach((cell,i)=>{
-      cell.photoIndex=i<order.length?order[i]:-1;
-      cell.photoX=0;
-      cell.photoY=0;
-      cell.zoom=1;
-    });
-
-    updateSelect();
-    draw();
-  }
-
-  selectedPhoto=order[0]??0;
-  renderPhotos();
-
-  status('Smart collage created with '+count+' photo(s). Portrait photos were prioritized for taller frames. You can still move, resize and edit every frame.');
-});
-
-document.querySelectorAll('.format-btn').forEach(b=>{
-  b.addEventListener('click',()=>{
-    selectedFormat=b.dataset.format;
-    document.querySelectorAll('.format-btn').forEach(x=>{
-      x.classList.toggle('active',x===b);
+document.querySelectorAll('.format-btn').forEach(button=>{
+  button.addEventListener('click',()=>{
+    selectedFormat=button.dataset.format;
+    document.querySelectorAll('.format-btn').forEach(item=>{
+      item.classList.toggle('active',item===button);
     });
     draw();
   });
+});
+
+$('enhancePhotos').addEventListener('click',()=>{
+  if(!images.length){
+    status('Upload photos before enhancing them.');
+    return;
+  }
+  activeStyle=$('photoStyle').value;
+  draw();
+  status('Photo style applied: '+$('photoStyle').selectedOptions[0].text+'. Your original images remain unchanged.');
+});
+
+$('restorePhotos').addEventListener('click',()=>{
+  activeStyle='original';
+  $('photoStyle').value='auto';
+  draw();
+  status('Original photo appearance restored.');
+});
+
+$('photoStyle').addEventListener('change',()=>{
+  activeStyle=$('photoStyle').value;
+  draw();
 });
 
 $('cellSelect').addEventListener('change',()=>{
@@ -545,40 +618,37 @@ $('placePhoto').addEventListener('click',()=>{
     return;
   }
 
-  const c=cells[selectedCell];
-  c.photoIndex=selectedPhoto;
-  c.photoX=0;
-  c.photoY=0;
-  c.zoom=1;
+  const cell=cells[selectedCell];
+  cell.photoIndex=selectedPhoto;
+  cell.photoX=0;
+  cell.photoY=0;
+  cell.zoom=1;
+  cell.fit=true;
 
   updateSelect();
   draw();
-  status('Photo placed in frame '+(selectedCell+1)+'. Drag inside the photo to reposition it.');
+  status('Photo placed in frame '+(selectedCell+1)+'.');
 });
 
 $('clearPhoto').addEventListener('click',()=>{
   if(!cells.length)return;
-
-  const c=cells[selectedCell];
-  c.photoIndex=-1;
-  c.photoX=0;
-  c.photoY=0;
-
+  const cell=cells[selectedCell];
+  cell.photoIndex=-1;
+  cell.photoX=0;
+  cell.photoY=0;
   updateSelect();
   draw();
   status('Photo removed from the selected frame.');
 });
 
 $('centerPhoto').addEventListener('click',()=>{
-  const c=cells[selectedCell];
-
-  if(!c||c.photoIndex<0||!images[c.photoIndex]){
-    status('Select a frame containing a photo first.');
-    return;
-  }
-
-  c.photoX=0;
-  c.photoY=0;
+  const cell=cells[selectedCell];
+  if(!cell||cell.photoIndex<0)return;
+  cell.photoX=0;
+  cell.photoY=0;
+  cell.zoom=1;
+  cell.fit=true;
+  updateControls();
   draw();
   status('Photo centered in the selected frame.');
 });
@@ -588,17 +658,15 @@ $('addCell').addEventListener('click',()=>{
     status('You can add up to 12 frames.');
     return;
   }
-
   cells.push(makeCell(10,10,35,35,-1));
   selectedCell=cells.length-1;
   updateSelect();
   draw();
-  status('New empty frame added. You can move, resize or overlap it.');
+  status('New frame added. Move, resize or overlap it.');
 });
 
 $('removeCell').addEventListener('click',()=>{
   if(cells.length<=1)return;
-
   cells.splice(selectedCell,1);
   selectedCell=Math.min(selectedCell,cells.length-1);
   updateSelect();
@@ -607,10 +675,10 @@ $('removeCell').addEventListener('click',()=>{
 });
 
 $('resetLayout').addEventListener('click',()=>{
-  if(currentLayout==='smartGrid'){
-    $('smartLayout').click();
+  if(currentLayout==='smart'){
+    createSmartComposition();
   }else{
-    applyLayout(currentLayout);
+    applyLayout(templates[currentLayout]?currentLayout:'blank');
   }
 });
 
@@ -620,22 +688,23 @@ $('shuffle').addEventListener('click',()=>{
     return;
   }
 
-  const indexes=images.map((_,i)=>i);
-
-  for(let i=indexes.length-1;i>0;i--){
+  const order=images.map((_,i)=>i);
+  for(let i=order.length-1;i>0;i--){
     const j=Math.floor(Math.random()*(i+1));
-    [indexes[i],indexes[j]]=[indexes[j],indexes[i]];
+    [order[i],order[j]]=[order[j],order[i]];
   }
 
-  cells.forEach(c=>{
-    if(c.photoIndex>=0&&c.photoIndex<indexes.length){
-      c.photoIndex=indexes[c.photoIndex];
-      c.photoX=0;
-      c.photoY=0;
+  cells.forEach(cell=>{
+    if(cell.photoIndex>=0&&cell.photoIndex<order.length){
+      cell.photoIndex=order[cell.photoIndex];
+      cell.photoX=0;
+      cell.photoY=0;
+      cell.zoom=1;
+      cell.fit=true;
     }
   });
 
-  selectedPhoto=selectedPhoto>=0?indexes[selectedPhoto]:-1;
+  selectedPhoto=selectedPhoto>=0?order[selectedPhoto]:-1;
   renderPhotos();
   updateSelect();
   draw();
@@ -656,11 +725,11 @@ $('bgColor').addEventListener('input',draw);
 $('caption').addEventListener('input',draw);
 
 $('cellZoom').addEventListener('input',()=>{
-  const c=cells[selectedCell];
-  if(!c)return;
-
-  c.zoom=Number($('cellZoom').value)/100;
-  $('cellZoomValue').textContent=c.zoom.toFixed(1)+'×';
+  const cell=cells[selectedCell];
+  if(!cell)return;
+  cell.zoom=Number($('cellZoom').value)/100;
+  cell.fit=false;
+  $('cellZoomValue').textContent=cell.zoom.toFixed(1)+'×';
   draw();
 });
 
@@ -679,31 +748,67 @@ function roundedRect(x,y,w,h,r){
   ctx.closePath();
 }
 
-function getFrameRect(c){
+function getFrameRect(cell){
   const gap=Number($('spacing').value);
-  return{
-    x:c.x/100*canvas.width+gap/2,
-    y:c.y/100*canvas.height+gap/2,
-    w:Math.max(1,c.w/100*canvas.width-gap),
-    h:Math.max(1,c.h/100*canvas.height-gap)
+  return {
+    x:cell.x/100*canvas.width+gap/2,
+    y:cell.y/100*canvas.height+gap/2,
+    w:Math.max(1,cell.w/100*canvas.width-gap),
+    h:Math.max(1,cell.h/100*canvas.height-gap)
   };
 }
 
-function drawPhoto(img,r,c,cornerRadius){
+function drawPhoto(img,r,cell,cornerRadius){
   ctx.save();
-  roundedRect(r.x,r.y,r.w,r.h,cornerRadius);
+
+  const cx=r.x+r.w/2;
+  const cy=r.y+r.h/2;
+  ctx.translate(cx,cy);
+  ctx.rotate((cell.rotation||0)*Math.PI/180);
+
+  const frameX=-r.w/2;
+  const frameY=-r.h/2;
+
+  ctx.shadowColor='rgba(0,0,0,.38)';
+  ctx.shadowBlur=Math.max(8,canvas.width*.012);
+  ctx.shadowOffsetX=0;
+  ctx.shadowOffsetY=Math.max(4,canvas.width*.006);
+
+  roundedRect(frameX,frameY,r.w,r.h,cornerRadius);
+  ctx.fillStyle='#ffffff';
+  ctx.fill();
+
+  ctx.shadowColor='transparent';
+  ctx.shadowBlur=0;
+  ctx.shadowOffsetY=0;
+
+  const border=Math.max(5,canvas.width*.008);
+  const ix=frameX+border;
+  const iy=frameY+border;
+  const iw=Math.max(1,r.w-border*2);
+  const ih=Math.max(1,r.h-border*2);
+  const innerRadius=Math.max(0,cornerRadius-border);
+
+  roundedRect(ix,iy,iw,ih,innerRadius);
   ctx.clip();
 
-  const scale=Math.max(r.w/img.naturalWidth,r.h/img.naturalHeight)*(c.zoom||1);
+  const scale=Math.max(iw/img.naturalWidth,ih/img.naturalHeight)*(cell.zoom||1);
   const dw=img.naturalWidth*scale;
   const dh=img.naturalHeight*scale;
-  const maxX=Math.max(0,(dw-r.w)/2);
-  const maxY=Math.max(0,(dh-r.h)/2);
+  const maxX=Math.max(0,(dw-iw)/2);
+  const maxY=Math.max(0,(dh-ih)/2);
 
-  c.photoX=Math.max(-maxX,Math.min(maxX,c.photoX||0));
-  c.photoY=Math.max(-maxY,Math.min(maxY,c.photoY||0));
+  cell.photoX=Math.max(-maxX,Math.min(maxX,cell.photoX||0));
+  cell.photoY=Math.max(-maxY,Math.min(maxY,cell.photoY||0));
 
-  ctx.drawImage(img,r.x+(r.w-dw)/2+c.photoX,r.y+(r.h-dh)/2+c.photoY,dw,dh);
+  ctx.filter=styles[activeStyle]||'none';
+  ctx.drawImage(
+    img,
+    ix+(iw-dw)/2+cell.photoX,
+    iy+(ih-dh)/2+cell.photoY,
+    dw,dh
+  );
+  ctx.filter='none';
   ctx.restore();
 }
 
@@ -711,38 +816,34 @@ function drawCaption(){
   const text=$('caption').value.trim();
   if(!text)return;
 
-  const fs=Math.max(24,Math.round(canvas.width/28));
-
+  const fontSize=Math.max(24,Math.round(canvas.width/28));
   ctx.save();
-  ctx.font='800 '+fs+'px Arial';
+  ctx.font='800 '+fontSize+'px Arial';
   ctx.textAlign='center';
   ctx.textBaseline='middle';
 
-  const max=canvas.width*.88;
+  const maxWidth=canvas.width*.88;
   let output=text;
-
-  while(ctx.measureText(output).width>max&&output.length>4){
+  while(ctx.measureText(output).width>maxWidth&&output.length>4){
     output=output.slice(0,-2)+'…';
   }
 
-  const tw=ctx.measureText(output).width;
-  const bw=Math.min(canvas.width-30,tw+36);
-  const bh=fs+24;
+  const textWidth=ctx.measureText(output).width;
+  const boxWidth=Math.min(canvas.width-30,textWidth+36);
+  const boxHeight=fontSize+24;
   const x=canvas.width/2;
   const y=canvas.height-Math.max(45,canvas.height*.06);
 
-  ctx.fillStyle='rgba(0,0,0,.68)';
-  roundedRect(x-bw/2,y-bh/2,bw,bh,10);
+  ctx.fillStyle='rgba(0,0,0,.72)';
+  roundedRect(x-boxWidth/2,y-boxHeight/2,boxWidth,boxHeight,10);
   ctx.fill();
-
   ctx.fillStyle='#fff';
-  ctx.fillText(output,x,y,max);
+  ctx.fillText(output,x,y,maxWidth);
   ctx.restore();
 }
 
 function draw(includeSelection=true){
   const format=formats[selectedFormat];
-
   canvas.width=format.width;
   canvas.height=format.height;
 
@@ -751,15 +852,17 @@ function draw(includeSelection=true){
 
   const radius=Number($('radius').value);
 
-  cells.forEach((c,i)=>{
-    const r=getFrameRect(c);
-    const item=c.photoIndex>=0?images[c.photoIndex]:null;
+  cells.forEach((cell,i)=>{
+    const rect=getFrameRect(cell);
+    const item=cell.photoIndex>=0?images[cell.photoIndex]:null;
 
     if(item){
-      drawPhoto(item.image,r,c,radius);
+      drawPhoto(item.image,rect,cell,radius);
     }else{
       ctx.save();
-      roundedRect(r.x,r.y,r.w,r.h,radius);
+      ctx.translate(rect.x+rect.w/2,rect.y+rect.h/2);
+      ctx.rotate((cell.rotation||0)*Math.PI/180);
+      roundedRect(-rect.w/2,-rect.h/2,rect.w,rect.h,radius);
       ctx.fillStyle=$('bgColor').value;
       ctx.fill();
       ctx.strokeStyle='#7184a3';
@@ -771,7 +874,7 @@ function draw(includeSelection=true){
       ctx.textAlign='center';
       ctx.textBaseline='middle';
       ctx.font='bold '+Math.max(22,Math.round(canvas.width/45))+'px Arial';
-      ctx.fillText('+',r.x+r.w/2,r.y+r.h/2);
+      ctx.fillText('+',0,0);
       ctx.restore();
     }
 
@@ -779,20 +882,17 @@ function draw(includeSelection=true){
       ctx.save();
       ctx.strokeStyle='#6ea8ff';
       ctx.lineWidth=Math.max(4,canvas.width/300);
-      ctx.strokeRect(r.x,r.y,r.w,r.h);
-
-      const s=Math.max(24,canvas.width*.028);
-
-      [[r.x,r.y],[r.x+r.w,r.y],[r.x,r.y+r.h],[r.x+r.w,r.y+r.h]].forEach(([hx,hy])=>{
+      ctx.strokeRect(rect.x,rect.y,rect.w,rect.h);
+      const size=Math.max(24,canvas.width*.028);
+      [[rect.x,rect.y],[rect.x+rect.w,rect.y],[rect.x,rect.y+rect.h],[rect.x+rect.w,rect.y+rect.h]].forEach(([x,y])=>{
         ctx.fillStyle='#fff';
         ctx.strokeStyle='#2563eb';
         ctx.lineWidth=4;
         ctx.beginPath();
-        ctx.rect(hx-s/2,hy-s/2,s,s);
+        ctx.rect(x-size/2,y-size/2,size,size);
         ctx.fill();
         ctx.stroke();
       });
-
       ctx.restore();
     }
   });
@@ -800,11 +900,12 @@ function draw(includeSelection=true){
   drawCaption();
   $('downloadJpg').disabled=!images.length;
   $('downloadPng').disabled=!images.length;
+  updateControls();
 }
 
 function pointerPoint(event){
   const rect=canvas.getBoundingClientRect();
-  return{
+  return {
     x:(event.clientX-rect.left)/rect.width*canvas.width,
     y:(event.clientY-rect.top)/rect.height*canvas.height
   };
@@ -813,18 +914,18 @@ function pointerPoint(event){
 canvas.addEventListener('pointerdown',event=>{
   if(!cells.length)return;
 
-  const p=pointerPoint(event);
+  const point=pointerPoint(event);
   const rect=canvas.getBoundingClientRect();
   const scaleX=canvas.width/Math.max(1,rect.width);
   const scaleY=canvas.height/Math.max(1,rect.height);
   const handleX=16*scaleX;
   const handleY=16*scaleY;
-  const edgeX=54*scaleX;
-  const edgeY=54*scaleY;
+  const edgeX=40*scaleX;
+  const edgeY=40*scaleY;
 
   for(let i=cells.length-1;i>=0;i--){
-    const c=cells[i];
-    const r=getFrameRect(c);
+    const cell=cells[i];
+    const r=getFrameRect(cell);
     const corners=[
       {name:'nw',x:r.x,y:r.y},
       {name:'ne',x:r.x+r.w,y:r.y},
@@ -832,28 +933,30 @@ canvas.addEventListener('pointerdown',event=>{
       {name:'se',x:r.x+r.w,y:r.y+r.h}
     ];
 
-    const corner=corners.find(k=>Math.abs(p.x-k.x)<=handleX&&Math.abs(p.y-k.y)<=handleY);
-    const inside=p.x>=r.x&&p.x<=r.x+r.w&&p.y>=r.y&&p.y<=r.y+r.h;
+    const corner=corners.find(item=>
+      Math.abs(point.x-item.x)<=handleX&&Math.abs(point.y-item.y)<=handleY
+    );
 
+    const inside=point.x>=r.x&&point.x<=r.x+r.w&&point.y>=r.y&&point.y<=r.y+r.h;
     if(!corner&&!inside)continue;
 
     selectedCell=i;
+    const nearEdge=
+      point.x<=r.x+edgeX||
+      point.x>=r.x+r.w-edgeX||
+      point.y<=r.y+edgeY||
+      point.y>=r.y+r.h-edgeY;
 
-    const nearEdge=p.x<=r.x+edgeX||p.x>=r.x+r.w-edgeX||p.y<=r.y+edgeY||p.y>=r.y+r.h-edgeY;
-
-    const mode=corner?'resize':nearEdge?'move':(c.photoIndex>=0&&images[c.photoIndex]?'photo':'move');
+    let mode=corner?'resize':nearEdge?'move':(cell.photoIndex>=0?'photo':'move');
 
     dragging={
       mode,
       corner:corner?corner.name:null,
-      startX:p.x,
-      startY:p.y,
-      x:c.x,
-      y:c.y,
-      w:c.w,
-      h:c.h,
-      photoX:c.photoX||0,
-      photoY:c.photoY||0,
+      startX:point.x,
+      startY:point.y,
+      x:cell.x,y:cell.y,w:cell.w,h:cell.h,
+      photoX:cell.photoX||0,
+      photoY:cell.photoY||0,
       pointerId:event.pointerId
     };
 
@@ -861,7 +964,7 @@ canvas.addEventListener('pointerdown',event=>{
     updateControls();
 
     if(canvas.setPointerCapture){
-      try{canvas.setPointerCapture(event.pointerId)}catch(e){}
+      try{canvas.setPointerCapture(event.pointerId)}catch(error){}
     }
 
     draw();
@@ -872,22 +975,22 @@ canvas.addEventListener('pointerdown',event=>{
 
 canvas.addEventListener('pointermove',event=>{
   if(!dragging)return;
+  const point=pointerPoint(event);
+  const cell=cells[selectedCell];
+  if(!cell)return;
 
-  const p=pointerPoint(event);
-  const c=cells[selectedCell];
-  if(!c)return;
-
-  const dx=p.x-dragging.startX;
-  const dy=p.y-dragging.startY;
-  const dxp=dx/canvas.width*100;
-  const dyp=dy/canvas.height*100;
+  const dx=point.x-dragging.startX;
+  const dy=point.y-dragging.startY;
+  const dxPercent=dx/canvas.width*100;
+  const dyPercent=dy/canvas.height*100;
 
   if(dragging.mode==='photo'){
-    c.photoX=dragging.photoX+dx;
-    c.photoY=dragging.photoY+dy;
+    cell.fit=false;
+    cell.photoX=dragging.photoX+dx;
+    cell.photoY=dragging.photoY+dy;
   }else if(dragging.mode==='move'){
-    c.x=Math.max(0,Math.min(100-c.w,dragging.x+dxp));
-    c.y=Math.max(0,Math.min(100-c.h,dragging.y+dyp));
+    cell.x=Math.max(0,Math.min(100-cell.w,dragging.x+dxPercent));
+    cell.y=Math.max(0,Math.min(100-cell.h,dragging.y+dyPercent));
   }else{
     const min=8;
     const right=dragging.x+dragging.w;
@@ -895,17 +998,17 @@ canvas.addEventListener('pointermove',event=>{
     const corner=dragging.corner;
 
     if(corner.includes('w')){
-      c.x=Math.max(0,Math.min(right-min,dragging.x+dxp));
-      c.w=right-c.x;
+      cell.x=Math.max(0,Math.min(right-min,dragging.x+dxPercent));
+      cell.w=right-cell.x;
     }else{
-      c.w=Math.max(min,Math.min(100-dragging.x,dragging.w+dxp));
+      cell.w=Math.max(min,Math.min(100-dragging.x,dragging.w+dxPercent));
     }
 
     if(corner.includes('n')){
-      c.y=Math.max(0,Math.min(bottom-min,dragging.y+dyp));
-      c.h=bottom-c.y;
+      cell.y=Math.max(0,Math.min(bottom-min,dragging.y+dyPercent));
+      cell.h=bottom-cell.y;
     }else{
-      c.h=Math.max(min,Math.min(100-dragging.y,dragging.h+dyp));
+      cell.h=Math.max(min,Math.min(100-dragging.y,dragging.h+dyPercent));
     }
   }
 
@@ -916,26 +1019,9 @@ canvas.addEventListener('pointermove',event=>{
 function stopDragging(){
   dragging=null;
 }
-
 canvas.addEventListener('pointerup',stopDragging);
 canvas.addEventListener('pointercancel',stopDragging);
 canvas.addEventListener('lostpointercapture',stopDragging);
-
-function nextExportNumber(){
-  const key='ritoccapixCollageExportNumber';
-  let number;
-
-  try{
-    number=Number.parseInt(localStorage.getItem(key)||'0',10);
-    if(!Number.isFinite(number)||number<0)number=0;
-    number+=1;
-    localStorage.setItem(key,String(number));
-  }catch(error){
-    number=Date.now();
-  }
-
-  return String(number).padStart(3,'0');
-}
 
 function download(format){
   if(!images.length){
@@ -943,13 +1029,11 @@ function download(format){
     return;
   }
 
+  // Export a clean version without the editor selection handles.
+  draw(false);
   const mime=format==='jpg'?'image/jpeg':'image/png';
 
-  // Export without the editor's active-frame outline and handles.
-  draw(false);
-
   canvas.toBlob(blob=>{
-    // Restore the editing preview.
     draw(true);
 
     if(!blob){
@@ -958,18 +1042,15 @@ function download(format){
     }
 
     const url=URL.createObjectURL(blob);
-    const a=document.createElement('a');
-    const number=nextExportNumber();
-
-    a.href=url;
-    a.download='ritoccapix-collage-'+number+'.'+format;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-
+    const link=document.createElement('a');
+    const stamp=new Date().toISOString().replace(/[:.]/g,'-');
+    link.href=url;
+    link.download='ritoccapix-collage-'+stamp+'.'+format;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
     setTimeout(()=>URL.revokeObjectURL(url),10000);
-
-    status('Download started: ritoccapix-collage-'+number+'.'+format+'.');
+    status('Download started: '+link.download);
   },mime,format==='jpg'?.94:undefined);
 }
 
@@ -979,7 +1060,7 @@ $('downloadPng').addEventListener('click',()=>download('png'));
 cells=templates.blank();
 updateSelect();
 draw();
-status('Upload photos, then use Create a smart collage for an automatic arrangement, or choose a layout manually.');
+status('Upload photos, then create a smart collage or choose a ready-made layout.');
 </script>
 </body>
 </html>
