@@ -1,25 +1,24 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <base href="/">
   <title>Free AI Image Enhancer & 2x Upscaler Online | RitoccaPix</title>
   <meta name="description" content="Upscale low-resolution images with AI for free. RitoccaPix uses an ESRGAN neural network in your browser to create a 2x image, without uploading your photo to our server.">
-  <link rel="canonical" href="https://ritoccapix.com/ai-image-enhancer.html">
+  <link rel="canonical" href="https://ritoccapix.com/smart/image-smart.html">
   <meta name="theme-color" content="#080d18">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Free AI Image Enhancer & 2x Upscaler | RitoccaPix">
   <meta property="og:description" content="Use an AI super-resolution model to upscale images in your browser. Private, free, and simple.">
-  <meta property="og:url" content="https://ritoccapix.com/ai-image-enhancer.html">
+  <meta property="og:url" content="https://ritoccapix.com/smart/image-smart.html">
   <meta name="twitter:card" content="summary">
-
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
     "@type":"WebApplication",
     "name":"RitoccaPix AI Image Enhancer",
-    "url":"https://ritoccapix.com/ai-image-enhancer.html",
+    "url":"https://ritoccapix.com/smart/image-smart.html",
     "applicationCategory":"MultimediaApplication",
     "operatingSystem":"Any device with a modern browser",
     "description":"Free browser-based AI image upscaler that uses an ESRGAN neural network to create a 2x image.",
@@ -27,862 +26,186 @@
     "featureList":["AI image super-resolution","2x image upscaling","Browser-based processing","PNG download"]
   }
   </script>
-
   <style>
-    :root {
-      --bg: #080d18;
-      --card: #111827;
-      --text: #f5f7fb;
-      --muted: #a0abc0;
-      --border: #263249;
-      --blue: #91aaff;
-      --green: #70d99a;
-      --red: #fca5a5;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      min-height: 100%;
-      background: var(--bg);
-      color-scheme: dark;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: var(--bg);
-      color: var(--text);
-      font: 16px/1.6 Arial, Helvetica, sans-serif;
-    }
-
-    header {
-      padding: 16px;
-      border-bottom: 1px solid #1e293b;
-    }
-
-    .header-inner {
-      max-width: 1050px;
-      margin: auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    .brand {
-      color: var(--blue);
-      font-size: 21px;
-      font-weight: 800;
-      text-decoration: none;
-      white-space: nowrap;
-    }
-
-    main {
-      max-width: 1000px;
-      margin: auto;
-      padding: 32px 16px 56px;
-    }
-
-    .hero {
-      text-align: center;
-      margin: 0 auto 26px;
-      max-width: 760px;
-    }
-
-    .eyebrow {
-      display: inline-block;
-      color: #b9c8ff;
-      background: #17243b;
-      border: 1px solid #2b3b5c;
-      border-radius: 999px;
-      padding: 4px 12px;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: .04em;
-    }
-
-    .hero h1 {
-      font-size: clamp(29px, 5vw, 42px);
-      line-height: 1.15;
-      margin: 14px 0;
-    }
-
-    .hero p {
-      color: var(--muted);
-      margin: 0 auto;
-      max-width: 700px;
-    }
-
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 22px;
-      margin-bottom: 20px;
-      box-shadow: 0 5px 20px #0002;
-    }
-
-    .upload {
-      display: block;
-      text-align: center;
-      padding: 30px 18px;
-      border: 2px dashed #43516b;
-      border-radius: 13px;
-      background: #0d1422;
-      cursor: pointer;
-    }
-
-    .upload:hover,
-    .upload:focus-within {
-      border-color: var(--blue);
-    }
-
-    .upload strong {
-      display: block;
-      font-size: 19px;
-      margin-bottom: 5px;
-    }
-
-    .muted,
-    .hint {
-      color: var(--muted);
-    }
-
-    .hint {
-      font-size: 13px;
-    }
-
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 16px;
-    }
-
-    .btn {
-      border: 1px solid #334155;
-      border-radius: 10px;
-      padding: 12px 17px;
-      background: #17243b;
-      color: white;
-      font-weight: 700;
-      font-size: 15px;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .btn.primary {
-      background: var(--blue);
-      color: #0a1020;
-      border-color: var(--blue);
-    }
-
-    .btn:disabled {
-      opacity: .45;
-      cursor: not-allowed;
-    }
-
-    .btn:hover:not(:disabled) {
-      filter: brightness(1.1);
-    }
-
-    input[type="file"] {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      opacity: 0;
-      overflow: hidden;
-    }
-
-    .status {
-      padding: 12px 14px;
-      border-radius: 10px;
-      background: #0d1422;
-      color: var(--muted);
-      margin-top: 16px;
-      overflow-wrap: anywhere;
-    }
-
-    .status.error {
-      color: var(--red);
-    }
-
-    .status.success {
-      color: var(--green);
-    }
-
-    .preview-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px;
-    }
-
-    .preview-box {
-      min-width: 0;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px;
-      background: #0d1422;
-    }
-
-    .preview-box h3 {
-      font-size: 15px;
-      margin: 0 0 8px;
-    }
-
-    .preview-image {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 160px;
-      max-height: 420px;
-      overflow: auto;
-      background: repeating-conic-gradient(
-        #182235 0% 25%,
-        #101827 0% 50%
-      ) 50% / 18px 18px;
-      border-radius: 8px;
-    }
-
-    .preview-image img {
-      display: block;
-      max-width: 100%;
-      max-height: 400px;
-      object-fit: contain;
-    }
-
-    .empty {
-      padding: 40px 8px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .metadata {
-      font-size: 13px;
-      color: var(--muted);
-      margin-top: 8px;
-      overflow-wrap: anywhere;
-    }
-
-    .section-title {
-      font-size: 22px;
-      margin: 0 0 10px;
-    }
-
-    .faq details {
-      border-top: 1px solid var(--border);
-      padding: 14px 0;
-    }
-
-    .faq summary {
-      cursor: pointer;
-      font-weight: 700;
-    }
-
-    .faq p,
-    .notice,
-    .foot {
-      color: var(--muted);
-    }
-
-    .notice,
-    .foot {
-      font-size: 13px;
-    }
-
-    .foot {
-      text-align: center;
-      padding-top: 12px;
-    }
-
-    .progress-track {
-      height: 6px;
-      background: #263249;
-      border-radius: 99px;
-      overflow: hidden;
-      margin-top: 12px;
-    }
-
-    .progress-bar {
-      height: 100%;
-      width: 0;
-      background: var(--blue);
-      transition: width .2s;
-    }
-
-    @media (max-width: 650px) {
-      .preview-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .card {
-        padding: 16px;
-      }
-
-      .hero h1 {
-        font-size: 30px;
-      }
-
-      .actions .btn {
-        width: 100%;
-      }
-
-      .header-inner {
-        align-items: flex-start;
-      }
-    }
+    :root{--bg:#080d18;--card:#111827;--text:#f5f7fb;--muted:#a0abc0;--border:#263249;--blue:#91aaff;--blue2:#263e68;--green:#70d99a;--red:#fca5a5}
+    *{box-sizing:border-box}html{min-height:100%;background:var(--bg);color-scheme:dark}body{margin:0;min-height:100vh;background:var(--bg);color:var(--text);font:16px/1.6 Arial,Helvetica,sans-serif}
+    header{padding:16px;border-bottom:1px solid #1e293b}.header-inner{max-width:1050px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}.brand{color:var(--blue);font-size:21px;font-weight:800;text-decoration:none;white-space:nowrap}header nav.tools-dropdown{width:auto;margin-left:auto;flex:0 0 auto}
+    main{max-width:1000px;margin:auto;padding:32px 16px 56px}.hero{text-align:center;margin:0 auto 26px;max-width:760px}.eyebrow{display:inline-block;color:#b9c8ff;background:#17243b;border:1px solid #2b3b5c;border-radius:999px;padding:4px 12px;font-size:13px;font-weight:700;letter-spacing:.04em}.hero h1{font-size:clamp(29px,5vw,42px);line-height:1.15;margin:14px 0}.hero p{color:var(--muted);margin:0 auto;max-width:700px}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;margin-bottom:20px;box-shadow:0 5px 20px #0002}.upload{display:block;text-align:center;padding:30px 18px;border:2px dashed #43516b;border-radius:13px;background:#0d1422;cursor:pointer}.upload:hover,.upload:focus-within{border-color:var(--blue)}.upload strong{display:block;font-size:19px;margin-bottom:5px}.muted,.hint{color:var(--muted)}.hint{font-size:13px}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.btn{border:1px solid #334155;border-radius:10px;padding:12px 17px;background:#17243b;color:white;font-weight:700;font-size:15px;cursor:pointer;text-decoration:none;display:inline-flex;justify-content:center;align-items:center;gap:8px}.btn.primary{background:#91aaff;color:#0a1020;border-color:#91aaff}.btn:disabled{opacity:.45;cursor:not-allowed}.btn:hover:not(:disabled){filter:brightness(1.1)}input[type=file]{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden}.status{padding:12px 14px;border-radius:10px;background:#0d1422;color:var(--muted);margin-top:16px;overflow-wrap:anywhere}.status.error{color:var(--red)}.status.success{color:var(--green)}.preview-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.preview-box{min-width:0;border:1px solid var(--border);border-radius:12px;padding:12px;background:#0d1422}.preview-box h3{font-size:15px;margin:0 0 8px}.preview-image{display:flex;align-items:center;justify-content:center;min-height:160px;max-height:420px;overflow:auto;background:repeating-conic-gradient(#182235 0% 25%,#101827 0% 50%) 50%/18px 18px;border-radius:8px}.preview-image img{display:block;max-width:100%;max-height:400px;object-fit:contain}.empty{padding:40px 8px;text-align:center;color:var(--muted);font-size:14px}.metadata{font-size:13px;color:var(--muted);margin-top:8px;overflow-wrap:anywhere}.section-title{font-size:22px;margin:0 0 10px}.faq details{border-top:1px solid var(--border);padding:14px 0}.faq summary{cursor:pointer;font-weight:700}.faq p{color:var(--muted);margin-bottom:0}.notice{font-size:13px;color:var(--muted)}.foot{color:var(--muted);font-size:13px;text-align:center;padding-top:12px}.progress-track{height:6px;background:#263249;border-radius:99px;overflow:hidden;margin-top:12px}.progress-bar{height:100%;width:0;background:var(--blue);transition:width .2s}
+    @media(max-width:650px){.preview-grid{grid-template-columns:1fr}.card{padding:16px}.hero h1{font-size:30px}.actions .btn{width:100%}.header-inner{align-items:flex-start}}
   </style>
 </head>
-
 <body>
-<header>
-  <div class="header-inner">
-    <a class="brand" href="index.html" aria-label="RitoccaPix home">RitoccaPix</a>
-    <nav class="tools-dropdown" aria-label="All tools"></nav>
-  </div>
-</header>
-
+<header><div class="header-inner"><a class="brand" href="index.html" aria-label="RitoccaPix home">RitoccaPix</a><nav class="tools-dropdown" aria-label="All tools"></nav></div></header>
 <main>
   <section class="hero">
     <span class="eyebrow">AI-POWERED SUPER-RESOLUTION</span>
     <h1>AI Image Enhancer</h1>
-    <p>
-      Make small images larger with a neural network. This tool uses an
-      ESRGAN super-resolution model to create a 2× image right in your
-      browser — not just a standard resize.
-    </p>
+    <p>Make small images larger with a neural network. This tool uses an ESRGAN super-resolution model to create a 2× image right in your browser — not just a standard resize.</p>
   </section>
-
   <section class="card" aria-labelledby="upload-title">
     <h2 id="upload-title" class="section-title">Enhance an image</h2>
-
     <label class="upload" for="fileInput" id="dropZone">
       <strong>Choose an image or drop it here</strong>
       <span class="muted">JPG, PNG or WebP · Use a small image for the best first test</span>
-      <span class="hint" style="display:block;margin-top:8px">
-        For stability, images must be no larger than 1024 px on either side
-        and 1.5 megapixels.
-      </span>
+      <span class="hint" style="display:block;margin-top:8px">Large photos are accepted. To make AI processing faster, a temporary working copy is limited to 1024 px per side and about 1 megapixel. Your original file remains unchanged.</span>
     </label>
-
     <input id="fileInput" type="file" accept="image/jpeg,image/png,image/webp">
-
     <div id="inputMeta" class="metadata">No image selected.</div>
-
     <div class="actions">
-      <button id="enhanceBtn" class="btn primary" type="button" disabled>
-        ✨ Enhance with AI (2×)
-      </button>
-
-      <button id="resetBtn" class="btn" type="button" disabled>
-        Clear image
-      </button>
-
-      <a id="downloadBtn" class="btn" style="display:none"
-         download="ritoccapix-ai-enhanced.png">
-        Download enhanced PNG
-      </a>
+      <button id="enhanceBtn" class="btn primary" type="button" disabled>✨ Enhance with AI (2×)</button>
+      <button id="resetBtn" class="btn" type="button" disabled>Clear image</button>
+      <a id="downloadBtn" class="btn" style="display:none" download="ritoccapix-image-smart-enhanced.png">Download enhanced PNG</a>
     </div>
-
-    <div id="status" class="status" role="status" aria-live="polite">
-      Choose an image to get started. The AI model loads only when you run the enhancement.
-    </div>
-
-    <div id="progressTrack" class="progress-track" hidden>
-      <div id="progressBar" class="progress-bar"></div>
-    </div>
+    <div id="status" class="status" role="status" aria-live="polite">Choose an image to get started. The AI model loads only when you run the enhancement.</div>
+    <div id="progressTrack" class="progress-track" hidden><div id="progressBar" class="progress-bar"></div></div>
   </section>
-
   <section class="card" aria-labelledby="preview-title">
     <h2 id="preview-title" class="section-title">Before and after</h2>
-
     <div class="preview-grid">
-      <div class="preview-box">
-        <h3>Original</h3>
-        <div class="preview-image" id="originalFrame">
-          <div class="empty">Your original image will appear here.</div>
-        </div>
-        <div id="originalMeta" class="metadata"></div>
-      </div>
-
-      <div class="preview-box">
-        <h3>AI enhanced · 2×</h3>
-        <div class="preview-image" id="resultFrame">
-          <div class="empty">Your enhanced image will appear here.</div>
-        </div>
-        <div id="resultMeta" class="metadata"></div>
-      </div>
+      <div class="preview-box"><h3>Original</h3><div class="preview-image" id="originalFrame"><div class="empty">Your original image will appear here.</div></div><div id="originalMeta" class="metadata"></div></div>
+      <div class="preview-box"><h3>AI enhanced · 2×</h3><div class="preview-image" id="resultFrame"><div class="empty">Your enhanced image will appear here.</div></div><div id="resultMeta" class="metadata"></div></div>
     </div>
-
-    <p class="notice">
-      AI upscaling can create plausible texture, but it cannot recover every
-      detail that was never captured. Results vary by image and device.
-    </p>
+    <p class="notice">AI upscaling can create plausible texture, but it cannot recover every detail that was never captured. Results vary by image and device.</p>
   </section>
-
   <section class="card">
     <h2 class="section-title">What makes this different?</h2>
-    <p>
-      <strong>A neural network, not just interpolation.</strong>
-      A conventional resize stretches existing pixels. This tool uses an
-      ESRGAN model trained for image super-resolution to estimate a sharper-looking 2× result.
-    </p>
-    <p>
-      <strong>Designed for privacy.</strong>
-      Your selected photo is processed locally in your browser. It is not
-      uploaded to RitoccaPix. The AI runtime and model files are downloaded
-      from the public CDN when needed.
-    </p>
-    <p>
-      <strong>Free to try.</strong>
-      No account or payment is required. Processing speed depends on your device,
-      browser, and image.
-    </p>
+    <p><strong>A neural network, not just interpolation.</strong> A conventional resize stretches existing pixels. This tool uses an ESRGAN model trained for image super-resolution to estimate a sharper-looking 2× result.</p>
+    <p><strong>Designed for privacy.</strong> Your selected photo is processed locally in your browser. It is not uploaded to RitoccaPix. The AI runtime and model files are downloaded from the public CDN when needed.</p>
+    <p><strong>Free to try.</strong> No account or payment is required. Processing speed depends on your device, browser, and image.</p>
   </section>
-
   <section class="card faq">
     <h2 class="section-title">Frequently asked questions</h2>
-
-    <details>
-      <summary>Is this a real AI image enhancer?</summary>
-      <p>
-        Yes. It uses an ESRGAN neural-network model through UpscalerJS and
-        TensorFlow.js. It creates a 2× super-resolution output; it is not
-        simply changing the image dimensions with a canvas resize.
-      </p>
-    </details>
-
-    <details>
-      <summary>Are my photos uploaded?</summary>
-      <p>
-        No. Image pixels are processed in your browser. The browser does
-        download the JavaScript runtime and model files from a CDN, but your
-        selected photo is not sent to RitoccaPix's server.
-      </p>
-    </details>
-
-    <details>
-      <summary>Why is the first run slower?</summary>
-      <p>
-        The browser must download the runtime and AI model the first time.
-        The model may be cached by your browser for later use. Processing
-        time also depends on your device.
-      </p>
-    </details>
-
-    <details>
-      <summary>Can AI restore the exact original details?</summary>
-      <p>
-        No. Super-resolution estimates details and may introduce artifacts.
-        Keep the original file and compare the output before using it for important work.
-      </p>
-    </details>
-
-    <details>
-      <summary>Why is there an image size limit?</summary>
-      <p>
-        AI upscaling uses significant memory and processing power. The
-        current limit helps reduce failures on phones and lower-memory devices.
-      </p>
-    </details>
+    <details><summary>Is this a real AI image enhancer?</summary><p>Yes. It uses an ESRGAN neural-network model through UpscalerJS and TensorFlow.js. It creates a 2× super-resolution output; it is not simply changing the image dimensions with a canvas resize.</p></details>
+    <details><summary>Are my photos uploaded?</summary><p>No. Image pixels are processed in your browser. The browser does download the JavaScript runtime and model files from a CDN, but your selected photo is not sent to RitoccaPix's server.</p></details>
+    <details><summary>Why is the first run slower?</summary><p>The browser must download the runtime and AI model the first time. The model may be cached by your browser for later use. Processing time also depends on your device. This version uses a smaller working copy to reduce processing time and memory use.</p></details>
+    <details><summary>Can AI restore the exact original details?</summary><p>No. Super-resolution estimates details and may introduce artifacts. Keep the original file and compare the output before using it for important work.</p></details>
+    <details><summary>Can I upload a large photo?</summary><p>Yes. Large files can be selected, but the tool automatically creates a smaller working copy of up to 1536 px per side and about 2.3 megapixels before AI processing. The 2× result is based on that working copy, so it may be smaller than 2× the original full-size photo. This helps avoid browser memory errors.</p></details>
   </section>
-
   <p class="foot">RitoccaPix · Free browser-based image tools</p>
 </main>
-
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@upscalerjs/default-model@1.0.0/dist/umd/index.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/upscaler@1.0.0/dist/browser/umd/upscaler.min.js"></script>
-
 <script>
-(function () {
+(function(){
   'use strict';
-
-  const fileInput = document.getElementById('fileInput');
-  const enhanceBtn = document.getElementById('enhanceBtn');
-  const resetBtn = document.getElementById('resetBtn');
-  const downloadBtn = document.getElementById('downloadBtn');
-  const status = document.getElementById('status');
-  const inputMeta = document.getElementById('inputMeta');
-  const originalMeta = document.getElementById('originalMeta');
-  const resultMeta = document.getElementById('resultMeta');
-  const originalFrame = document.getElementById('originalFrame');
-  const resultFrame = document.getElementById('resultFrame');
-  const progressTrack = document.getElementById('progressTrack');
-  const progressBar = document.getElementById('progressBar');
-  const dropZone = document.getElementById('dropZone');
-
-  let sourceFile = null;
-  let sourceUrl = null;
-  let resultUrl = null;
-  let busy = false;
-  let operation = 0;
-  let upscaler = null;
-
-  function setStatus(message, type) {
-    status.textContent = message;
-    status.className = 'status' + (type ? ' ' + type : '');
-  }
-
-  function fmtBytes(bytes) {
-    if (bytes < 1024) return bytes + ' B';
-    if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
-    return (bytes / 1048576).toFixed(2) + ' MB';
-  }
-
-  function setBusy(value) {
-    busy = value;
-    enhanceBtn.disabled = value || !sourceFile;
-    resetBtn.disabled = value || !sourceFile;
-    fileInput.disabled = value;
-  }
-
-  function revoke(url) {
-    if (url) URL.revokeObjectURL(url);
-  }
-
-  function clearResult() {
-    revoke(resultUrl);
-    resultUrl = null;
-    downloadBtn.style.display = 'none';
-    downloadBtn.removeAttribute('href');
-    resultMeta.textContent = '';
-    resultFrame.innerHTML =
-      '<div class="empty">Your enhanced image will appear here.</div>';
-    progressBar.style.width = '0%';
-    progressTrack.hidden = true;
-  }
-
-  function selectFile(file) {
-    if (!file) return;
-
-    if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
-      setStatus('Please choose a JPG, PNG, or WebP image.', 'error');
-      return;
-    }
-
-    const url = URL.createObjectURL(file);
-    const img = new Image();
-
-    img.onload = function () {
-      if (
-        img.naturalWidth > 1024 ||
-        img.naturalHeight > 1024 ||
-        img.naturalWidth * img.naturalHeight > 1500000
-      ) {
-        revoke(url);
-        setStatus(
-          'This image is too large for the current safe limit. Please choose an image no larger than 1024 px on either side and 1.5 megapixels.',
-          'error'
-        );
-        return;
-      }
-
-      revoke(sourceUrl);
-      sourceFile = file;
-      sourceUrl = url;
-      clearResult();
-
-      originalFrame.innerHTML = '';
-      const preview = new Image();
-      preview.alt = 'Original image preview';
-      preview.src = sourceUrl;
-      originalFrame.appendChild(preview);
-
-      const dimensions =
-        img.naturalWidth + ' × ' + img.naturalHeight + ' px';
-
-      inputMeta.textContent =
-        file.name + ' · ' + dimensions + ' · ' + fmtBytes(file.size);
-
-      originalMeta.textContent =
-        dimensions + ' · ' + fmtBytes(file.size);
-
-      enhanceBtn.disabled = false;
-      resetBtn.disabled = false;
-      setStatus('Image ready. Run AI enhancement when you are ready.');
+  const fileInput=document.getElementById('fileInput');
+  const enhanceBtn=document.getElementById('enhanceBtn');
+  const resetBtn=document.getElementById('resetBtn');
+  const downloadBtn=document.getElementById('downloadBtn');
+  const status=document.getElementById('status');
+  const inputMeta=document.getElementById('inputMeta');
+  const originalMeta=document.getElementById('originalMeta');
+  const resultMeta=document.getElementById('resultMeta');
+  const originalFrame=document.getElementById('originalFrame');
+  const resultFrame=document.getElementById('resultFrame');
+  const progressTrack=document.getElementById('progressTrack');
+  const progressBar=document.getElementById('progressBar');
+  const dropZone=document.getElementById('dropZone');
+  let sourceFile=null, sourceUrl=null, resultUrl=null, busy=false, operation=0;
+  let upscaler=null;
+  const MAX_WORKING_SIDE=1024;
+  const MAX_WORKING_PIXELS=1000000;
+  function setStatus(message,type){status.textContent=message;status.className='status'+(type?' '+type:'');}
+  function fmtBytes(bytes){if(bytes<1024)return bytes+' B';if(bytes<1048576)return (bytes/1024).toFixed(1)+' KB';return (bytes/1048576).toFixed(2)+' MB';}
+  function setBusy(value){busy=value;enhanceBtn.disabled=value||!sourceFile;resetBtn.disabled=value||!sourceFile;fileInput.disabled=value;}
+  function revoke(url){if(url)URL.revokeObjectURL(url);}
+  function clearResult(){revoke(resultUrl);resultUrl=null;downloadBtn.style.display='none';downloadBtn.removeAttribute('href');resultMeta.textContent='';resultFrame.innerHTML='<div class="empty">Your enhanced image will appear here.</div>';progressBar.style.width='0%';progressTrack.hidden=true;}
+  function selectFile(file){
+    if(!file)return;
+    if(!['image/jpeg','image/png','image/webp'].includes(file.type)){setStatus('Please choose a JPG, PNG, or WebP image.','error');return;}
+    const url=URL.createObjectURL(file);const img=new Image();
+    img.onload=()=>{
+      revoke(sourceUrl);sourceFile=file;sourceUrl=url;clearResult();
+      originalFrame.innerHTML='';const preview=new Image();preview.alt='Original image preview';preview.src=sourceUrl;originalFrame.appendChild(preview);
+      const dimensions=img.naturalWidth+' × '+img.naturalHeight+' px';
+      inputMeta.textContent=file.name+' · '+dimensions+' · '+fmtBytes(file.size);
+      originalMeta.textContent=dimensions+' · '+fmtBytes(file.size);
+      enhanceBtn.disabled=false;resetBtn.disabled=false;
+      const scale=Math.min(1,MAX_WORKING_SIDE/img.naturalWidth,MAX_WORKING_SIDE/img.naturalHeight,Math.sqrt(MAX_WORKING_PIXELS/(img.naturalWidth*img.naturalHeight)));
+      if(scale<1){setStatus('Large photo loaded. A smaller working copy will be created automatically before AI processing.');}
+      else{setStatus('Image ready. Run AI enhancement when you are ready.');}
     };
-
-    img.onerror = function () {
-      revoke(url);
-      setStatus('The image could not be opened. Try another file.', 'error');
-    };
-
-    img.src = url;
+    img.onerror=()=>{revoke(url);setStatus('The image could not be opened. Try another file.','error');};img.src=url;
   }
-
-  fileInput.addEventListener('change', function (event) {
-    selectFile(event.target.files && event.target.files[0]);
-  });
-
-  ['dragenter', 'dragover'].forEach(function (name) {
-    dropZone.addEventListener(name, function (event) {
-      event.preventDefault();
-      dropZone.style.borderColor = '#91aaff';
-    });
-  });
-
-  ['dragleave', 'drop'].forEach(function (name) {
-    dropZone.addEventListener(name, function (event) {
-      event.preventDefault();
-      dropZone.style.borderColor = '';
-    });
-  });
-
-  dropZone.addEventListener('drop', function (event) {
-    const file = event.dataTransfer &&
-      event.dataTransfer.files &&
-      event.dataTransfer.files[0];
-
-    if (file) selectFile(file);
-  });
-
-  enhanceBtn.addEventListener('click', async function () {
-    if (!sourceFile || busy) return;
-
-    const thisOperation = ++operation;
-    setBusy(true);
-    clearResult();
-    progressTrack.hidden = false;
-    progressBar.style.width = '8%';
-    setStatus('Preparing the AI runtime… The first run may take a little longer.');
-
-    try {
-      if (!window.tf || !window.Upscaler || !window.DefaultUpscalerJSModel) {
-        throw new Error(
-          'The AI libraries did not load. Check your internet connection and reload the page.'
-        );
+  fileInput.addEventListener('change',e=>selectFile(e.target.files&&e.target.files[0]));
+  ['dragenter','dragover'].forEach(name=>dropZone.addEventListener(name,e=>{e.preventDefault();dropZone.style.borderColor='#91aaff';}));
+  ['dragleave','drop'].forEach(name=>dropZone.addEventListener(name,e=>{e.preventDefault();dropZone.style.borderColor='';}));
+  dropZone.addEventListener('drop',e=>{const f=e.dataTransfer&&e.dataTransfer.files&&e.dataTransfer.files[0];if(f)selectFile(f);});
+  enhanceBtn.addEventListener('click',async()=>{
+    if(!sourceFile||busy)return;
+    const thisOperation=++operation;setBusy(true);clearResult();progressTrack.hidden=false;progressBar.style.width='8%';setStatus('Preparing the AI runtime… The first run may take a little longer.');
+    try{
+      if(!window.tf||!window.Upscaler||!window.DefaultUpscalerJSModel)throw new Error('The AI libraries did not load. Check your internet connection and reload the page.');
+      if(!upscaler){setStatus('Loading the ESRGAN model… On the first run, model files must be downloaded.');upscaler=new Upscaler({model:DefaultUpscalerJSModel});}
+      progressBar.style.width='20%';
+      const originalImage=new Image();originalImage.src=sourceUrl;await originalImage.decode();
+      const scale=Math.min(1,MAX_WORKING_SIDE/originalImage.naturalWidth,MAX_WORKING_SIDE/originalImage.naturalHeight,Math.sqrt(MAX_WORKING_PIXELS/(originalImage.naturalWidth*originalImage.naturalHeight)));
+      let image=originalImage;
+      if(scale<1){
+        const workCanvas=document.createElement('canvas');
+        workCanvas.width=Math.max(1,Math.floor(originalImage.naturalWidth*scale));
+        workCanvas.height=Math.max(1,Math.floor(originalImage.naturalHeight*scale));
+        const workContext=workCanvas.getContext('2d',{alpha:false});
+        if(!workContext)throw new Error('Your browser could not prepare this large image. Try another browser or a smaller photo.');
+        workContext.imageSmoothingEnabled=true;workContext.imageSmoothingQuality='high';
+        workContext.drawImage(originalImage,0,0,workCanvas.width,workCanvas.height);
+        image=workCanvas;
       }
-
-      if (!upscaler) {
-        setStatus(
-          'Loading the ESRGAN model… On the first run, model files must be downloaded.'
-        );
-        upscaler = new Upscaler({
-          model: DefaultUpscalerJSModel
-        });
+      setStatus('Enhancing with the ESRGAN neural network. Please keep this tab open.');
+      // Request the raw model tensor and render it ourselves. Large uploads are
+      // resized to a safe working copy before inference to reduce memory pressure.
+      let output=await upscaler.upscale(image,{output:'tensor',patchSize:64,padding:4});
+      if(thisOperation!==operation){if(output&&typeof output.dispose==='function')output.dispose();return;}
+      if(!output||typeof output.rank!=='number'||!Array.isArray(output.shape)){
+        if(output&&typeof output.dispose==='function')output.dispose();
+        throw new Error('The AI model did not return a valid image tensor. Please reload the page and try again.');
       }
-
-      progressBar.style.width = '20%';
-
-      const image = new Image();
-      image.src = sourceUrl;
-      await image.decode();
-
-      setStatus(
-        'Enhancing with the ESRGAN neural network. Please keep this tab open.'
-      );
-
-      /*
-       * Ask UpscalerJS for the raw output tensor and render the pixels
-       * ourselves. Validate the result before creating a downloadable PNG.
-       */
-      let output = await upscaler.upscale(image, {
-        output: 'tensor',
-        patchSize: 64,
-        padding: 4
-      });
-
-      if (thisOperation !== operation) {
-        if (output && typeof output.dispose === 'function') {
-          output.dispose();
-        }
-        return;
+      let pixels=output;
+      if(output.rank===4){pixels=output.squeeze([0]);}
+      if(pixels.rank!==3||pixels.shape.length!==3||pixels.shape[2]<3){
+        if(pixels!==output&&pixels&&typeof pixels.dispose==='function')pixels.dispose();
+        if(output&&typeof output.dispose==='function')output.dispose();
+        throw new Error('The AI model returned an unexpected image format. Please try again.');
       }
-
-      if (
-        !output ||
-        typeof output.rank !== 'number' ||
-        !Array.isArray(output.shape)
-      ) {
-        if (output && typeof output.dispose === 'function') {
-          output.dispose();
-        }
-
-        throw new Error(
-          'The AI model did not return a valid image tensor. Please reload the page and try again.'
-        );
+      const outHeight=pixels.shape[0],outWidth=pixels.shape[1];
+      if(outWidth!==image.width*2||outHeight!==image.height*2){
+        if(pixels!==output&&pixels&&typeof pixels.dispose==='function')pixels.dispose();
+        if(output&&typeof output.dispose==='function')output.dispose();
+        throw new Error('The AI model returned unexpected dimensions. No file was created; please try again.');
       }
-
-      let pixels = output;
-
-      if (output.rank === 4) {
-        pixels = output.squeeze([0]);
+      const canvas=document.createElement('canvas');canvas.width=outWidth;canvas.height=outHeight;
+      try{
+        // UpscalerJS models may return normalized [0,1] floats or pixel values
+        // in [0,255]. tf.browser.toPixels requires float values in [0,1].
+        const range=await tf.tidy(()=>({min:pixels.min(),max:pixels.max()}));
+        const minValue=(await range.min.data())[0];
+        const maxValue=(await range.max.data())[0];
+        range.min.dispose();range.max.dispose();
+        if(!Number.isFinite(minValue)||!Number.isFinite(maxValue))throw new Error('The AI model returned invalid pixel values. Please try again.');
+        const normalized=tf.tidy(()=>maxValue>1.5?pixels.clipByValue(0,255).div(255).clipByValue(0,1):pixels.clipByValue(0,1));
+        try{await tf.browser.toPixels(normalized,canvas);}finally{normalized.dispose();}
+      }finally{
+        if(pixels!==output&&pixels&&typeof pixels.dispose==='function')pixels.dispose();
+        if(output&&typeof output.dispose==='function')output.dispose();
       }
-
-      if (
-        pixels.rank !== 3 ||
-        pixels.shape.length !== 3 ||
-        pixels.shape[2] < 3
-      ) {
-        if (
-          pixels !== output &&
-          pixels &&
-          typeof pixels.dispose === 'function'
-        ) {
-          pixels.dispose();
-        }
-
-        if (output && typeof output.dispose === 'function') {
-          output.dispose();
-        }
-
-        throw new Error(
-          'The AI model returned an unexpected image format. Please try again.'
-        );
-      }
-
-      const outHeight = pixels.shape[0];
-      const outWidth = pixels.shape[1];
-
-      if (
-        outWidth !== image.naturalWidth * 2 ||
-        outHeight !== image.naturalHeight * 2
-      ) {
-        if (
-          pixels !== output &&
-          pixels &&
-          typeof pixels.dispose === 'function'
-        ) {
-          pixels.dispose();
-        }
-
-        if (output && typeof output.dispose === 'function') {
-          output.dispose();
-        }
-
-        throw new Error(
-          'The AI model returned unexpected dimensions. No file was created; please try again.'
-        );
-      }
-
-      const canvas = document.createElement('canvas');
-      canvas.width = outWidth;
-      canvas.height = outHeight;
-
-      try {
-        await tf.browser.toPixels(pixels, canvas);
-      } finally {
-        if (
-          pixels !== output &&
-          pixels &&
-          typeof pixels.dispose === 'function'
-        ) {
-          pixels.dispose();
-        }
-
-        if (output && typeof output.dispose === 'function') {
-          output.dispose();
-        }
-      }
-
-      const blob = await new Promise(function (resolve, reject) {
-        canvas.toBlob(function (resultBlob) {
-          if (resultBlob) {
-            resolve(resultBlob);
-          } else {
-            reject(
-              new Error(
-                'The enhanced image could not be encoded as PNG. Please try again.'
-              )
-            );
-          }
-        }, 'image/png');
-      });
-
-      if (thisOperation !== operation) return;
-
-      if (!blob || blob.size < 100) {
-        throw new Error(
-          'The enhanced image appears to be empty, so it was not offered for download. Please reload and try again.'
-        );
-      }
-
-      resultUrl = URL.createObjectURL(blob);
-
-      const outImg = new Image();
-      outImg.alt = 'AI enhanced image preview';
-      outImg.src = resultUrl;
-
-      resultFrame.innerHTML = '';
-      resultFrame.appendChild(outImg);
-
+      const blob=await new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error('The enhanced image could not be encoded as PNG. Please try again.')),'image/png'));
+      if(thisOperation!==operation)return;
+      if(!blob||blob.size<100)throw new Error('The enhanced image appears to be empty, so it was not offered for download. Please reload and try again.');
+      resultUrl=URL.createObjectURL(blob);
+      const outImg=new Image();outImg.alt='AI enhanced image preview';outImg.src=resultUrl;resultFrame.innerHTML='';resultFrame.appendChild(outImg);
       await outImg.decode();
-
-      if (
-        outImg.naturalWidth !== outWidth ||
-        outImg.naturalHeight !== outHeight
-      ) {
-        throw new Error(
-          'The generated image could not be verified. Please try again.'
-        );
-      }
-
-      resultMeta.textContent =
-        outImg.naturalWidth + ' × ' +
-        outImg.naturalHeight + ' px · ' +
-        fmtBytes(blob.size);
-
-      downloadBtn.href = resultUrl;
-      downloadBtn.download = 'ritoccapix-ai-enhanced.png';
-      downloadBtn.style.display = 'inline-flex';
-
-      progressBar.style.width = '100%';
-
-      setStatus(
-        'AI enhancement complete. Review the result, then download the PNG.',
-        'success'
-      );
-    } catch (error) {
-      console.error(error);
-
-      setStatus(
-        error && error.message
-          ? error.message
-          : 'AI enhancement failed. Try a smaller image or a different browser.',
-        'error'
-      );
-    } finally {
-      setBusy(false);
-    }
+      if(outImg.naturalWidth!==outWidth||outImg.naturalHeight!==outHeight)throw new Error('The generated image could not be verified. Please try again.');
+      resultMeta.textContent=outImg.naturalWidth+' × '+outImg.naturalHeight+' px · '+fmtBytes(blob.size);
+      downloadBtn.href=resultUrl;downloadBtn.download='ritoccapix-image-smart-enhanced.png';downloadBtn.style.display='inline-flex';progressBar.style.width='100%';setStatus('AI enhancement complete. Review the result, then download the PNG.','success');
+    }catch(err){console.error(err);setStatus(err&&err.message?err.message:'AI enhancement failed. Try a smaller image or a different browser.','error');}
+    finally{setBusy(false);}
   });
-
-  resetBtn.addEventListener('click', function () {
-    operation++;
-    revoke(sourceUrl);
-    sourceUrl = null;
-    sourceFile = null;
-    fileInput.value = '';
-
-    clearResult();
-
-    originalFrame.innerHTML =
-      '<div class="empty">Your original image will appear here.</div>';
-
-    inputMeta.textContent = 'No image selected.';
-    originalMeta.textContent = '';
-    enhanceBtn.disabled = true;
-    resetBtn.disabled = true;
-
-    setStatus('Choose an image to get started.');
-  });
-
-  window.addEventListener('beforeunload', function () {
-    revoke(sourceUrl);
-    revoke(resultUrl);
-  });
+  resetBtn.addEventListener('click',()=>{operation++;revoke(sourceUrl);sourceUrl=null;sourceFile=null;fileInput.value='';clearResult();originalFrame.innerHTML='<div class="empty">Your original image will appear here.</div>';inputMeta.textContent='No image selected.';originalMeta.textContent='';enhanceBtn.disabled=true;resetBtn.disabled=true;setStatus('Choose an image to get started.');});
+  window.addEventListener('beforeunload',()=>{revoke(sourceUrl);revoke(resultUrl);});
 })();
 </script>
-
-<script src="menu.js"></script>
+<script src="menu.js" defer></script>
 </body>
 </html>
