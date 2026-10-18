@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Study Assistant: Notes, Flashcards & Quizzes | RitoccaPix</title>
+  <meta name="description" content="Explore the RitoccaPix AI Study Assistant concept: turn study materials into organized notes, summaries, flashcards, quizzes and oral-exam practice in one study pack.">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#080d18">
+  <link rel="canonical" href="https://ritoccapix.com/ai-study-assistant.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="AI Study Assistant | RitoccaPix">
+  <meta property="og:description" content="One study pack from your learning materials: summaries, notes, flashcards and practice questions.">
+  <meta property="og:url" content="https://ritoccapix.com/ai-study-assistant.html">
+  <meta property="og:site_name" content="RitoccaPix">
+  <style>
+    :root{--bg:#080d18;--panel:#111a2a;--panel2:#0d1422;--text:#f5f7fb;--muted:#a0abc0;--border:#263249;--blue:#91aaff;--blue2:#b8c7ff;--green:#83e0ad;--yellow:#f4d28a}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:24px;background:var(--bg);color-scheme:dark}
+    body{margin:0;background:radial-gradient(ellipse at 50% -280px,#243d70 0,transparent 65%),var(--bg);color:var(--text);font:16px/1.65 Arial,Helvetica,sans-serif}
+    a{color:inherit;-webkit-tap-highlight-color:transparent}a:focus-visible,button:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--blue2);outline-offset:3px}
+    .container{width:min(1100px,92%);margin-inline:auto}
+    header{border-bottom:1px solid var(--border);background:#080d18d9}
+    .nav{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+    .brand{font-size:26px;font-weight:900;letter-spacing:-1px;text-decoration:none;color:var(--blue)}
+    .nav-link{color:var(--muted);font-size:14px;font-weight:700;text-decoration:none}.nav-link:hover{color:white}
+    .hero{padding:74px 0 54px;text-align:center}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:7px 13px;border:1px solid #34496f;background:#111e35;border-radius:999px;color:#c3d0ff;font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase}
+    h1{max-width:900px;margin:20px auto 16px;font-size:clamp(36px,6vw,66px);line-height:1.08;letter-spacing:-2.5px}
+    .gradient{background:linear-gradient(100deg,#fff 10%,#a9bdff 55%,#6ea8ff);background-clip:text;-webkit-background-clip:text;color:transparent}
+    .hero-copy{max-width:760px;margin:0 auto;color:var(--muted);font-size:18px}
+    .actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:27px}
+    .btn{display:inline-flex;justify-content:center;align-items:center;gap:8px;min-height:47px;padding:12px 19px;border-radius:11px;border:1px solid #34435e;background:#152139;color:white;text-decoration:none;font-weight:800;font-size:14px;cursor:pointer}
+    .btn.primary{background:var(--blue);border-color:var(--blue);color:#08101d}.btn:hover{filter:brightness(1.08);transform:translateY(-1px)}
+    .microcopy{margin-top:14px;color:#7f8ca5;font-size:12px}
+    .section{padding:38px 0 56px}
+    .section-heading{text-align:center;max-width:740px;margin:0 auto 28px}
+    .section-heading .kicker{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;font-weight:800;color:#91a0b8}
+    h2{font-size:clamp(27px,4vw,38px);letter-spacing:-1px;line-height:1.2;margin:8px 0 12px}
+    .section-heading p{margin:0;color:var(--muted)}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+    .card{border:1px solid var(--border);background:linear-gradient(145deg,#121c2e,#0e1523);border-radius:17px;padding:22px;min-width:0}
+    .icon{display:grid;place-items:center;width:46px;height:46px;border-radius:13px;background:#1a2942;border:1px solid #2b3e60;font-size:22px;margin-bottom:15px}
+    .card h3{margin:0 0 8px;font-size:17px}.card p{margin:0;color:var(--muted);font-size:14px}
+    .workflow{display:grid;grid-template-columns:.9fr 1.1fr;gap:20px;align-items:stretch}
+    .panel{border:1px solid var(--border);background:#101827;border-radius:18px;padding:24px;min-width:0}
+    .panel h3{margin:0 0 6px;font-size:21px}.panel-intro{margin:0 0 19px;color:var(--muted);font-size:14px}
+    label{display:block;margin:15px 0 7px;font-size:13px;font-weight:800;color:#dfe6f5}
+    select,textarea{width:100%;border:1px solid #34415a;border-radius:10px;background:#0b1220;color:var(--text);padding:12px;font:inherit;font-size:14px}
+    textarea{min-height:100px;resize:vertical}
+    .preview-note{padding:10px 12px;background:#282315;border:1px solid #5c4b24;border-radius:10px;color:#f3dda6;font-size:12px;margin-top:14px}
+    .tabs{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 17px}
+    .tab{padding:8px 11px;border:1px solid #34415a;border-radius:8px;background:#0b1220;color:#c6d0e2;font-size:12px;font-weight:800;cursor:pointer}
+    .tab[aria-selected="true"]{background:#91aaff;color:#08101d;border-color:#91aaff}
+    .sample-content{padding:18px;border:1px solid #293750;border-radius:12px;background:#0b1220;min-height:245px}
+    .sample-content h4{font-size:16px;margin:0 0 10px}.sample-content p,.sample-content li{color:#c1cbdd;font-size:14px}
+    .sample-content ul{padding-left:20px;margin:8px 0}.sample-content .source{color:#8290a9;font-size:12px;border-top:1px solid #263249;padding-top:10px;margin-top:14px}
+    .steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;counter-reset:steps}
+    .step{padding:19px;border:1px solid var(--border);border-radius:14px;background:#0e1625;counter-increment:steps}
+    .step::before{content:counter(steps);display:grid;place-items:center;width:30px;height:30px;background:#1c2c49;color:#bdcbff;border-radius:9px;font-weight:900;margin-bottom:12px}.step h3{font-size:15px;margin:0 0 7px}.step p{margin:0;color:var(--muted);font-size:13px}
+    .honesty{border:1px solid #34435e;background:#101a2b;border-radius:15px;padding:18px 20px;color:#c0cce0;font-size:13px;margin-top:22px}
+    .faq{max-width:820px;margin:auto}.faq details{border-top:1px solid var(--border);padding:16px 0}.faq summary{cursor:pointer;font-weight:800}.faq details p{color:var(--muted);font-size:14px;margin:9px 0 0}
+    footer{border-top:1px solid var(--border);padding:25px 0;color:#7f8ca5;font-size:12px;text-align:center}footer a{color:#b5c4ec;text-decoration:none}
+    @media(max-width:780px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.workflow{grid-template-columns:1fr}.steps{grid-template-columns:repeat(2,minmax(0,1fr))}.hero{padding-top:54px}}
+    @media(max-width:520px){.grid,.steps{grid-template-columns:1fr}.hero-copy{font-size:16px}h1{letter-spacing:-1.5px}.panel{padding:17px}.actions .btn{width:100%}.nav{min-height:62px}.brand{font-size:23px}}
+  </style>
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <a class="brand" href="index.html" aria-label="RitoccaPix home">RitoccaPix</a>
+    <a class="nav-link" href="index.html">← All tools</a>
+  </div>
+</header>
+<main>
+  <section class="hero">
+    <div class="container">
+      <span class="eyebrow">✦ A smarter way to study</span>
+      <h1>Turn your study material into <span class="gradient">a complete study pack.</span></h1>
+      <p class="hero-copy">A study assistant concept designed to help students turn notes and documents into clear summaries, organized notes, flashcards, quizzes and oral-exam practice — all in one place.</p>
+      <div class="actions">
+        <a class="btn primary" href="#preview">Explore the study pack ↓</a>
+        <a class="btn" href="#how-it-works">How it should work</a>
+      </div>
+      <p class="microcopy">For middle school, high school and university students.</p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="features-title">
+    <div class="container">
+      <div class="section-heading"><span class="kicker">One source, multiple ways to learn</span><h2 id="features-title">Everything you need to prepare</h2><p>The goal is not just to shorten a document. It is to help you understand it, remember it and check what you know.</p></div>
+      <div class="grid">
+        <article class="card"><div class="icon" aria-hidden="true">📘</div><h3>Clear summaries</h3><p>Review the main ideas in a short overview or a more detailed explanation, organized by topic.</p></article>
+        <article class="card"><div class="icon" aria-hidden="true">📝</div><h3>Structured notes</h3><p>Turn dense material into headings, key terms, definitions, dates and important relationships.</p></article>
+        <article class="card"><div class="icon" aria-hidden="true">🗂️</div><h3>Flashcards</h3><p>Practice concepts and definitions with question-and-answer cards designed for active recall.</p></article>
+        <article class="card"><div class="icon" aria-hidden="true">🎯</div><h3>Practice quizzes</h3><p>Check your understanding with questions, answers and explanations of common mistakes.</p></article>
+        <article class="card"><div class="icon" aria-hidden="true">🎙️</div><h3>Oral-exam practice</h3><p>Prepare for an oral exam with one question at a time and prompts to explain ideas in your own words.</p></article>
+        <article class="card"><div class="icon" aria-hidden="true">🧭</div><h3>What to review next</h3><p>Identify topics that need more practice and create a focused list for your next study session.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="preview" aria-labelledby="preview-title">
+    <div class="container">
+      <div class="section-heading"><span class="kicker">Product concept preview</span><h2 id="preview-title">See what a study pack could look like</h2><p>Choose a study level and switch between sample outputs. This preview uses example content, not AI-generated results.</p></div>
+      <div class="workflow">
+        <section class="panel" aria-labelledby="setup-title">
+          <h3 id="setup-title">Set up your study session</h3>
+          <p class="panel-intro">The planned tool would use these preferences to tailor the study pack.</p>
+          <label for="level">Study level</label>
+          <select id="level"><option>Middle school</option><option selected>High school</option><option>University</option><option>Independent learning</option></select>
+          <label for="goal">Your goal</label>
+          <select id="goal"><option>Understand a topic</option><option selected>Prepare for a test</option><option>Prepare for an oral exam</option><option>Review a lecture</option></select>
+          <label for="topic">Topic (example)</label>
+          <textarea id="topic" maxlength="300" placeholder="For example: The human circulatory system">The human circulatory system</textarea>
+          <div class="preview-note">Preview only: document uploads and live AI processing are not enabled on this page yet. No text is sent to a server.</div>
+        </section>
+        <section class="panel" aria-label="Sample study pack">
+          <h3>Example study pack</h3>
+          <p class="panel-intro" id="packSubtitle">High school · Prepare for a test</p>
+          <div class="tabs" role="tablist" aria-label="Study pack sample sections">
+            <button class="tab" type="button" role="tab" aria-selected="true" data-tab="summary">Summary</button>
+            <button class="tab" type="button" role="tab" aria-selected="false" data-tab="notes">Key notes</button>
+            <button class="tab" type="button" role="tab" aria-selected="false" data-tab="flashcards">Flashcards</button>
+            <button class="tab" type="button" role="tab" aria-selected="false" data-tab="quiz">Quiz</button>
+          </div>
+          <div class="sample-content" id="sampleContent" role="tabpanel" aria-live="polite">
+            <h4>How blood circulates</h4>
+            <p>The circulatory system transports oxygen and nutrients around the body and carries carbon dioxide and other waste products away from cells.</p>
+            <ul><li>The heart acts as a muscular pump.</li><li>Arteries carry blood away from the heart.</li><li>Veins return blood to the heart.</li><li>Capillaries allow substances to pass between blood and tissues.</li></ul>
+            <p class="source">Example content for demonstration only. A real study pack should be checked against the student's source material.</p>
+          </div>
+        </section>
+      </div>
+      <div class="honesty"><strong>Designed around trustworthy study.</strong> A future working version should connect answers to source pages or passages where possible, clearly flag uncertain information, and encourage students to understand the material rather than simply copy generated text.</div>
+    </div>
+  </section>
+
+  <section class="section" id="how-it-works" aria-labelledby="how-title">
+    <div class="container">
+      <div class="section-heading"><span class="kicker">The intended workflow</span><h2 id="how-title">From material to confident revision</h2><p>A simple sequence that keeps the student's next step clear.</p></div>
+      <div class="steps">
+        <article class="step"><h3>Add your material</h3><p>Start with a text or a text-based PDF. More source formats can be added after testing.</p></article>
+        <article class="step"><h3>Create the study pack</h3><p>Generate a summary, structured notes, flashcards and practice questions from the same source.</p></article>
+        <article class="step"><h3>Test your knowledge</h3><p>Answer questions and review explanations instead of only rereading notes.</p></article>
+        <article class="step"><h3>Focus your revision</h3><p>Use missed questions to identify what to revisit before the test or oral exam.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="faq-title">
+    <div class="container faq">
+      <div class="section-heading"><span class="kicker">Frequently asked questions</span><h2 id="faq-title">About this preview</h2></div>
+      <details><summary>Can I upload a PDF here now?</summary><p>Not yet. This page presents the planned product and an interactive sample. Document upload and AI processing will need to be implemented and tested separately.</p></details>
+      <details><summary>Will it work for different school levels?</summary><p>The intended design includes middle school, high school, university and independent learning. The explanations and question difficulty should adapt to the selected level.</p></details>
+      <details><summary>Will the study pack always be correct?</summary><p>No AI system can guarantee that every answer is correct. A working version should show source references where possible and encourage students to verify important facts against their course material.</p></details>
+      <details><summary>Will my documents be private?</summary><p>Privacy and document handling must be designed before uploads are enabled. This preview does not upload documents or send the text in the example field to a server.</p></details>
+    </div>
+  </section>
+</main>
+<footer><div class="container">© <span id="year">2026</span> RitoccaPix · <a href="privacy.html">Privacy</a> · <a href="index.html">Home</a></div></footer>
+<script>
+(function(){
+  const content = document.getElementById('sampleContent');
+  const tabs = Array.from(document.querySelectorAll('[data-tab]'));
+  const level = document.getElementById('level');
+  const goal = document.getElementById('goal');
+  const topic = document.getElementById('topic');
+  const subtitle = document.getElementById('packSubtitle');
+  const samples = {
+    summary: '<h4>How blood circulates</h4><p>The circulatory system transports oxygen and nutrients around the body and carries carbon dioxide and other waste products away from cells.</p><ul><li>The heart acts as a muscular pump.</li><li>Arteries carry blood away from the heart.</li><li>Veins return blood to the heart.</li><li>Capillaries allow substances to pass between blood and tissues.</li></ul><p class="source">Example content for demonstration only. A real study pack should be checked against the student\'s source material.</p>',
+    notes: '<h4>Key notes</h4><ul><li><strong>Heart:</strong> muscular organ that pumps blood.</li><li><strong>Arteries:</strong> vessels that carry blood away from the heart.</li><li><strong>Veins:</strong> vessels that return blood to the heart.</li><li><strong>Capillaries:</strong> tiny vessels where exchange with tissues takes place.</li><li><strong>Main purpose:</strong> transport useful substances and remove waste.</li></ul><p class="source">Example notes. In a real version, references to the source page should appear here when available.</p>',
+    flashcards: '<h4>Flashcards</h4><p><strong>Q: What is the main role of the heart?</strong></p><p>A: To pump blood around the body.</p><hr style="border:0;border-top:1px solid #293750;margin:15px 0"><p><strong>Q: Which vessels carry blood away from the heart?</strong></p><p>A: Arteries.</p><hr style="border:0;border-top:1px solid #293750;margin:15px 0"><p><strong>Q: Where does exchange between blood and tissues occur?</strong></p><p>A: In the capillaries.</p><p class="source">Sample cards. A future version could let students reveal answers and mark difficult cards.</p>',
+    quiz: '<h4>Quick quiz</h4><p><strong>1. Which vessels carry blood back to the heart?</strong></p><p>A. Arteries · B. Veins · C. Capillaries</p><p><strong>Answer:</strong> B. Veins.</p><hr style="border:0;border-top:1px solid #293750;margin:15px 0"><p><strong>2. What happens in capillaries?</strong></p><p><strong>Answer:</strong> Oxygen, nutrients and waste products are exchanged between blood and tissues.</p><p class="source">Sample questions only. This preview does not score answers or use AI.</p>'
+  };
+  function updateSubtitle(){ subtitle.textContent = level.value + ' · ' + goal.value; }
+  function activate(tab){ tabs.forEach(button=>button.setAttribute('aria-selected',String(button.dataset.tab===tab))); content.innerHTML=samples[tab] || samples.summary; }
+  tabs.forEach(button=>button.addEventListener('click',()=>activate(button.dataset.tab)));
+  level.addEventListener('change',updateSubtitle); goal.addEventListener('change',updateSubtitle);
+  topic.addEventListener('change',()=>{topic.value=topic.value.slice(0,300)});
+  document.getElementById('year').textContent = new Date().getFullYear();
+})();
+</script>
+</body>
+</html>
