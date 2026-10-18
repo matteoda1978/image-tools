@@ -1,4 +1,5 @@
-/* Image Tools - Responsive Dropdown Navigation */
+
+/* RitoccaPix - Responsive Dropdown Navigation */
 (function () {
   const tools = [
     { name: "Image Resizer", url: "image-resizer.html" },
@@ -13,7 +14,8 @@
     { name: "Image Object Remover", url: "image-object-remover.html" },
     { name: "Image Smart", url: "image-smart.html" },
     { name: "Image Social", url: "image-social.html" },
-    { name: "Social Video Maker", url: "social-video-maker.html" }
+    { name: "Social Video Maker", url: "social-video-maker.html" },
+    { name: "AI Study Assistant", url: "ai-study-assistant.html" }
   ];
 
   const nav = document.querySelector("header nav");
