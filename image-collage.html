@@ -35,6 +35,11 @@ main{max-width:1200px;margin:auto;padding:30px 16px 50px}
 .section{margin-top:22px}
 .section-label{font-size:12px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);font-weight:800;margin-bottom:10px}
 .layout-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+.shape-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+.shape-btn{border:1px solid var(--border);background:var(--panel2);color:var(--muted);border-radius:10px;padding:10px 5px;cursor:pointer;font-size:12px;font-weight:700;min-height:66px}
+.shape-btn .shape-icon{display:block;font-size:23px;line-height:1.15;margin-bottom:5px}
+.shape-btn.active{border-color:var(--accent);background:#1a2b49;color:#fff}
+.shape-btn:hover{border-color:var(--accent);color:#fff}
 .layout-btn,.format-btn,.secondary-btn,.shuffle,.style-btn{border:1px solid var(--border);background:var(--panel2);color:var(--muted);border-radius:9px;padding:9px 5px;cursor:pointer;font-size:12px;font-weight:700}
 .layout-btn.active,.format-btn.active{border-color:var(--accent);background:#1a2b49;color:white}
 .layout-btn:hover,.format-btn:hover,.secondary-btn:hover,.shuffle:hover{border-color:var(--accent);color:white}
@@ -128,7 +133,21 @@ footer a{color:var(--accent);text-decoration:none}
   </div>
 
   <div class="section">
-    <div class="section-label">2. Ready-made layouts</div>
+    <div class="section-label">2. Creative photo shapes</div>
+    <div class="shape-grid" role="group" aria-label="Choose photo frame shape">
+      <button class="shape-btn active" data-shape="rounded" type="button" aria-pressed="true"><span class="shape-icon">▧</span>Rounded</button>
+      <button class="shape-btn" data-shape="rectangle" type="button" aria-pressed="false"><span class="shape-icon">▭</span>Rectangle</button>
+      <button class="shape-btn" data-shape="circle" type="button" aria-pressed="false"><span class="shape-icon">●</span>Circle</button>
+      <button class="shape-btn" data-shape="oval" type="button" aria-pressed="false"><span class="shape-icon">⬭</span>Oval</button>
+      <button class="shape-btn" data-shape="heart" type="button" aria-pressed="false"><span class="shape-icon">♥</span>Heart</button>
+      <button class="shape-btn" data-shape="cloud" type="button" aria-pressed="false"><span class="shape-icon">☁</span>Cloud</button>
+      <button class="shape-btn" data-shape="star" type="button" aria-pressed="false"><span class="shape-icon">★</span>Star</button>
+    </div>
+    <p class="help">Choose a shape, then pick a layout and add your photos. The shape is applied to every photo frame. Circle and heart are great for creative collages.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-label">3. Ready-made layouts</div>
     <div class="layout-grid">
       <button class="layout-btn active" data-layout="blank" type="button"><div class="layout-preview"><span></span></div><span class="layout-name">Blank canvas</span></button>
       <button class="layout-btn" data-layout="2" type="button"><div class="layout-preview lp2"><span></span><span></span></div><span class="layout-name">2 photos</span></button>
@@ -141,7 +160,7 @@ footer a{color:var(--accent);text-decoration:none}
   </div>
 
   <div class="section">
-    <div class="section-label">3. Canvas format</div>
+    <div class="section-label">4. Canvas format</div>
     <div class="format-grid">
       <button class="format-btn active" data-format="square" type="button">Square</button>
       <button class="format-btn" data-format="portrait" type="button">Portrait</button>
@@ -151,7 +170,7 @@ footer a{color:var(--accent);text-decoration:none}
   </div>
 
   <div class="section">
-    <div class="section-label">4. Enhance collage photos</div>
+    <div class="section-label">5. Enhance collage photos</div>
     <label class="help" for="photoStyle">Choose an enhancement style</label>
     <select id="photoStyle" class="text-input">
       <option value="auto">Auto Enhance</option>
@@ -168,7 +187,7 @@ footer a{color:var(--accent);text-decoration:none}
   </div>
 
   <div class="section">
-    <div class="section-label">5. Appearance</div>
+    <div class="section-label">6. Appearance</div>
     <div class="control">
       <div class="control-top"><label for="spacing">Frame spacing</label><span id="spacingValue" class="value">12 px</span></div>
       <input id="spacing" type="range" min="0" max="40" value="12">
@@ -188,7 +207,7 @@ footer a{color:var(--accent);text-decoration:none}
   </div>
 
   <div class="custom-tools">
-    <h3>6. Edit your frames</h3>
+    <h3>7. Edit your frames</h3>
     <p class="help">Drag inside a photo to reposition it. Drag near a frame edge to move the frame. Drag a corner handle to resize it. Rotated frames can be adjusted approximately by their visible bounds.</p>
     <div class="custom-buttons">
       <button id="addCell" class="secondary-btn" type="button">＋ Add frame</button>
@@ -240,7 +259,7 @@ footer a{color:var(--accent);text-decoration:none}
     <li>Click Create a Smart Collage to generate a creative arrangement.</li>
     <li>Click Try Another Design to explore a different composition.</li>
     <li>Choose an enhancement style and apply it to your collage photos.</li>
-    <li>Adjust the canvas format, frame spacing, background and caption.</li>
+    <li>Choose a creative frame shape, then adjust the canvas format, frame spacing, background and caption.</li>
     <li>Download your finished collage as a high-resolution JPG or PNG.</li>
   </ol>
   <p>Photos are processed locally in your browser. This tool does not upload your images to a server.</p>
@@ -255,7 +274,7 @@ footer a{color:var(--accent);text-decoration:none}
   <h3>Does this tool use a cloud AI service?</h3>
   <p>No. Layout generation and photo appearance adjustments run in your browser. The composition feature uses layout rules and variation rather than a cloud-based generative AI model.</p>
   <h3>Can I use the tool on my phone?</h3>
-  <p>Yes. You can upload photos, create layouts, apply enhancement styles and export your collage on supported mobile browsers.</p>
+  <p>Yes. You can upload photos, choose rounded, rectangular, circular, oval, heart, cloud or star-shaped frames, create layouts, apply enhancement styles and export your collage on supported mobile browsers.</p>
   <h3>Are my photos uploaded?</h3>
   <p>No. Images are processed locally in your browser and are not uploaded by this tool.</p>
 </section>
@@ -282,6 +301,7 @@ let selectedCell=0;
 let selectedPhoto=-1;
 let selectedFormat='square';
 let currentLayout='blank';
+let frameShape='rounded';
 let dragging=null;
 let designVersion=0;
 let activeStyle='original';
@@ -412,7 +432,21 @@ function applyLayout(layout){
   });
   selectedCell=0;
 
-  document.querySelectorAll('.layout-btn').forEach(button=>{
+  document.querySelectorAll('.shape-btn').forEach(button=>{
+  button.addEventListener('click',()=>{
+    frameShape=button.dataset.shape;
+    document.querySelectorAll('.shape-btn').forEach(item=>{
+      const active=item===button;
+      item.classList.toggle('active',active);
+      item.setAttribute('aria-pressed',String(active));
+    });
+    draw();
+    const shapeName=button.textContent.trim();
+    status(shapeName+' photo frames selected. Choose a layout and add your photos.');
+  });
+});
+
+document.querySelectorAll('.layout-btn').forEach(button=>{
     button.classList.toggle('active',button.dataset.layout===layout);
   });
 
@@ -748,6 +782,46 @@ function roundedRect(x,y,w,h,r){
   ctx.closePath();
 }
 
+function shapePath(shape,x,y,w,h,r){
+  ctx.beginPath();
+  if(shape==='circle'){
+    const radius=Math.min(w,h)/2;
+    ctx.arc(x+w/2,y+h/2,radius,0,Math.PI*2);
+  }else if(shape==='oval'){
+    ctx.ellipse(x+w/2,y+h/2,w/2,h/2,0,0,Math.PI*2);
+  }else if(shape==='heart'){
+    ctx.moveTo(x+w*.5,y+h*.92);
+    ctx.bezierCurveTo(x+w*.38,y+h*.81,x+w*.03,y+h*.57,x+w*.06,y+h*.32);
+    ctx.bezierCurveTo(x+w*.09,y+h*.06,x+w*.39,y+h*.02,x+w*.5,y+h*.24);
+    ctx.bezierCurveTo(x+w*.61,y+h*.02,x+w*.91,y+h*.06,x+w*.94,y+h*.32);
+    ctx.bezierCurveTo(x+w*.97,y+h*.57,x+w*.62,y+h*.81,x+w*.5,y+h*.92);
+    ctx.closePath();
+  }else if(shape==='star'){
+    const cx=x+w/2,cy=y+h/2,outer=Math.min(w,h)*.49,inner=outer*.43;
+    for(let i=0;i<10;i++){
+      const a=-Math.PI/2+i*Math.PI/5;
+      const rad=i%2===0?outer:inner;
+      const px=cx+Math.cos(a)*rad,py=cy+Math.sin(a)*rad;
+      if(i===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);
+    }
+    ctx.closePath();
+  }else if(shape==='cloud'){
+    ctx.moveTo(x+w*.18,y+h*.78);
+    ctx.bezierCurveTo(x+w*.03,y+h*.78,x+w*.01,y+h*.59,x+w*.14,y+h*.51);
+    ctx.bezierCurveTo(x+w*.09,y+h*.34,x+w*.25,y+h*.21,x+w*.39,y+h*.32);
+    ctx.bezierCurveTo(x+w*.44,y+h*.08,x+w*.73,y+h*.08,x+w*.77,y+h*.34);
+    ctx.bezierCurveTo(x+w*.96,y+h*.29,x+w*1.02,y+h*.51,x+w*.89,y+h*.61);
+    ctx.bezierCurveTo(x+w*.94,y+h*.78,x+w*.79,y+h*.83,x+w*.68,y+h*.78);
+    ctx.bezierCurveTo(x+w*.54,y+h*.91,x+w*.37,y+h*.88,x+w*.31,y+h*.79);
+    ctx.quadraticCurveTo(x+w*.23,y+h*.84,x+w*.18,y+h*.78);
+    ctx.closePath();
+  }else if(shape==='rectangle'){
+    ctx.rect(x,y,w,h);
+  }else{
+    roundedRect(x,y,w,h,r);
+  }
+}
+
 function getFrameRect(cell){
   const gap=Number($('spacing').value);
   return {
@@ -774,7 +848,7 @@ function drawPhoto(img,r,cell,cornerRadius){
   ctx.shadowOffsetX=0;
   ctx.shadowOffsetY=Math.max(4,canvas.width*.006);
 
-  roundedRect(frameX,frameY,r.w,r.h,cornerRadius);
+  shapePath(frameShape,frameX,frameY,r.w,r.h,frameShape==='rounded'?cornerRadius:0);
   ctx.fillStyle='#ffffff';
   ctx.fill();
 
@@ -789,7 +863,7 @@ function drawPhoto(img,r,cell,cornerRadius){
   const ih=Math.max(1,r.h-border*2);
   const innerRadius=Math.max(0,cornerRadius-border);
 
-  roundedRect(ix,iy,iw,ih,innerRadius);
+  shapePath(frameShape,ix,iy,iw,ih,frameShape==='rounded'?innerRadius:0);
   ctx.clip();
 
   const scale=Math.max(iw/img.naturalWidth,ih/img.naturalHeight)*(cell.zoom||1);
@@ -862,7 +936,7 @@ function draw(includeSelection=true){
       ctx.save();
       ctx.translate(rect.x+rect.w/2,rect.y+rect.h/2);
       ctx.rotate((cell.rotation||0)*Math.PI/180);
-      roundedRect(-rect.w/2,-rect.h/2,rect.w,rect.h,radius);
+      shapePath(frameShape,-rect.w/2,-rect.h/2,rect.w,rect.h,frameShape==='rounded'?radius:0);
       ctx.fillStyle=$('bgColor').value;
       ctx.fill();
       ctx.strokeStyle='#7184a3';
