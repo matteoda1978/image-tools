@@ -123,13 +123,14 @@ footer a{color:var(--accent);text-decoration:none}
   <input id="fileInput" type="file" accept="image/*" multiple>
   <div id="photoList" class="photo-list"></div>
   <div id="photoCount" class="photo-count">No photos selected</div>
-  <p class="photo-help">Choose a thumbnail to select a photo. You can move photos inside their frames after creating a collage.</p>
+  <p class="photo-help">Tap a thumbnail to select it, then use “Place photo in frame” to replace the photo in the selected frame.</p>
 
   <div class="section smart-box">
     <h3>✦ Smart composition</h3>
     <button id="smartLayout" class="smart-btn" type="button">Create a Smart Collage</button>
     <button id="tryAnother" class="smart-btn secondary" type="button">Try Another Design</button>
-    <p>Creates a varied composition with different frame sizes, rotations and overlaps. Every new design can look different.</p>
+    <button id="autoPlacePhotos" class="secondary-btn" type="button" style="width:100%;margin-top:2px">Auto-place photos in frames</button>
+    <p>Creates magazine-style layouts with a hero photo, varied frame sizes and asymmetrical arrangements. Photos stay on your device; this is a smart layout algorithm, not a generative AI service.</p>
   </div>
 
   <div class="section">
@@ -227,12 +228,18 @@ footer a{color:var(--accent);text-decoration:none}
     </div>
     <div class="control">
       <div class="control-top"><label for="cellZoom">Photo zoom</label><span id="cellZoomValue" class="value">1.0×</span></div>
-      <input id="cellZoom" type="range" min="100" max="300" value="100">
+      <input id="cellZoom" type="range" min="50" max="350" step="5" value="100">
+      <p class="help">Drag a photo to reposition it. Zoom out to show more, or zoom in to crop closer.</p>
     </div>
     <div class="custom-buttons" style="margin-top:9px">
-      <button id="centerPhoto" class="secondary-btn" type="button">Center photo</button>
+      <button id="fillFrame" class="secondary-btn" type="button">Fill frame</button>
+      <button id="fitWholePhoto" class="secondary-btn" type="button">Fit whole photo</button>
+    </div>
+    <div class="custom-buttons" style="margin-top:8px">
+      <button id="centerPhoto" class="secondary-btn" type="button">Center & reset zoom</button>
       <button id="resetLayout" class="secondary-btn" type="button">Reset layout</button>
     </div>
+    <button id="autoFitAll" class="secondary-btn" type="button" style="width:100%;margin-top:8px">Auto-fit all photos</button>
   </div>
 </aside>
 
@@ -256,7 +263,7 @@ footer a{color:var(--accent);text-decoration:none}
   <h2>How to create a creative photo collage</h2>
   <ol>
     <li>Upload your photos from your device.</li>
-    <li>Click Create a Smart Collage to generate a creative arrangement.</li>
+    <li>Click Create a Smart Collage to create an asymmetrical, magazine-style arrangement. Use Try Another Design to explore alternatives.</li>
     <li>Click Try Another Design to explore a different composition.</li>
     <li>Choose an enhancement style and apply it to your collage photos.</li>
     <li>Choose a creative frame shape, then adjust the canvas format, frame spacing, background and caption.</li>
@@ -267,12 +274,14 @@ footer a{color:var(--accent);text-decoration:none}
 
 <section class="content">
   <h2>Frequently asked questions</h2>
-  <h3>Does Smart Collage change the arrangement of my photos?</h3>
-  <p>Yes. It creates varied compositions using different frame sizes, rotations and overlaps. Try Another Design generates a new arrangement.</p>
+  <h3>Does Smart Collage use artificial intelligence?</h3>
+  <p>Smart Collage uses layout rules to create varied, magazine-style arrangements; it does not use a generative AI model or send photos to a cloud AI service. Your photos remain on your device.</p>
+  <h3>Can I center, zoom or show the whole photo?</h3>
+  <p>Yes. Select a frame, adjust the zoom slider, drag the photo to reposition it, or use Fill frame, Fit whole photo, Center &amp; reset zoom, or Auto-fit all photos.</p>
   <h3>Does photo enhancement overwrite my original photos?</h3>
   <p>No. The original uploaded images remain unchanged. The selected enhancement is applied when the collage is drawn and exported.</p>
   <h3>Does this tool use a cloud AI service?</h3>
-  <p>No. Layout generation and photo appearance adjustments run in your browser. The composition feature uses layout rules and variation rather than a cloud-based generative AI model.</p>
+  <p>No. Layout generation and photo appearance adjustments run in your browser. The composition feature uses smart layout rules and variation rather than a generative AI model.</p>
   <h3>Can I use the tool on my phone?</h3>
   <p>Yes. You can upload photos, choose rounded, rectangular, circular, oval, heart, cloud or star-shaped frames, create layouts, apply enhancement styles and export your collage on supported mobile browsers.</p>
   <h3>Are my photos uploaded?</h3>
@@ -325,7 +334,7 @@ const styles={
 };
 
 function makeCell(x,y,w,h,photoIndex=-1,rotation=0){
-  return {x,y,w,h,photoIndex,rotation,zoom:1,photoX:0,photoY:0,fit:true};
+  return {x,y,w,h,photoIndex,rotation,zoom:1,photoX:0,photoY:0,fit:true,fitMode:'cover'};
 }
 
 const templates={
@@ -409,11 +418,14 @@ function updateControls(){
   }
 
   const cell=cells[selectedCell];
-  $('cellZoom').value=Math.round(cell.zoom*100);
+  $('cellZoom').value=Math.max(50,Math.min(350,Math.round(cell.zoom*100)));
   $('cellZoomValue').textContent=cell.zoom.toFixed(1)+'×';
   $('removeCell').disabled=cells.length<=1;
   $('clearPhoto').disabled=cell.photoIndex<0;
   $('centerPhoto').disabled=cell.photoIndex<0;
+  $('fillFrame').disabled=cell.photoIndex<0;
+  $('fitWholePhoto').disabled=cell.photoIndex<0;
+  $('autoFitAll').disabled=!images.length;
 }
 
 function selectCell(index){
@@ -478,6 +490,7 @@ function assignPhotosToCells(){
     cell.photoX=0;
     cell.photoY=0;
     cell.fit=true;
+    cell.fitMode='cover';
   });
 
   selectedPhoto=order[0]??-1;
@@ -493,71 +506,126 @@ function createSmartComposition(){
   }
 
   const n=images.length;
-  const variant=designVersion++%4;
+  const variant=designVersion++;
+  const gap=2.2;
+  const layouts={
+    1:[[[8,7,84,86,0]],[[14,5,72,90,-2]],[[5,12,90,76,1]]],
+    2:[
+      [[4,7,56,86,-1],[62,13,34,72,2]],
+      [[5,7,90,48,-1],[12,57,76,34,1]],
+      [[5,14,42,72,-2],[52,8,43,84,2]],
+      [[5,8,43,84,-2],[52,8,43,84,2]]
+    ],
+    3:[
+      [[3,7,61,86,-1],[65,6,31,42,2],[64,52,32,41,-2]],
+      [[5,7,42,40,-2],[52,7,43,40,2],[14,51,72,41,1]],
+      [[4,9,48,80,-2],[54,8,42,48,2],[55,60,40,30,-1]],
+      [[4,7,92,43,-1],[4,53,43,39,2],[52,53,44,39,-2]]
+    ],
+    4:[
+      [[3,7,57,62,-1],[62,5,34,41,2],[63,50,33,42,-2],[8,72,45,22,1]],
+      [[4,7,43,41,-2],[52,7,44,41,2],[8,52,39,39,2],[53,52,42,39,-2]],
+      [[4,8,65,43,-2],[49,55,46,37,2],[5,56,39,35,-2],[69,8,25,39,3]],
+      [[4,7,44,84,-2],[52,7,44,39,2],[52,51,44,40,-2],[15,72,25,19,1]]
+    ],
+    5:[
+      [[3,7,55,59,-1],[61,5,35,35,2],[62,44,34,39,-2],[6,70,39,23,2],[48,72,47,21,-2]],
+      [[4,7,43,39,-2],[52,7,44,39,2],[4,51,30,42,2],[37,51,29,42,-2],[68,51,28,42,1]],
+      [[4,8,60,82,-2],[65,7,30,24,2],[66,35,29,24,-2],[65,63,30,26,2],[8,74,45,18,-1]],
+      [[4,7,92,37,-1],[4,48,28,42,2],[35,48,28,42,-2],[66,48,30,42,1],[15,8,25,37,2]]
+    ],
+    6:[
+      [[3,7,50,66,-1],[56,5,41,34,2],[58,43,39,34,-2],[5,76,29,17,2],[37,76,29,17,-2],[69,76,28,17,1]],
+      [[4,7,44,39,-2],[52,7,44,39,2],[4,51,44,39,2],[52,51,44,39,-2],[18,24,24,23,2],[58,24,24,23,-2]],
+      [[4,8,62,83,-2],[68,7,27,25,2],[68,36,27,25,-2],[68,65,27,26,2],[8,72,24,19,2],[36,74,27,17,-2]],
+      [[4,7,92,30,-1],[4,41,44,49,2],[52,41,44,23,-2],[52,68,44,22,1],[4,7,44,30,2],[52,7,44,30,-2]]
+    ]
+  };
 
-  if(n===1){
-    cells=[makeCell(8,8,84,84,0,variant%2?2:-2)];
-  }else if(n===2){
-    cells=[
-      makeCell(4,9,54,80,0,variant%2?-3:2),
-      makeCell(43,12,53,76,1,variant%2?3:-2)
-    ];
-  }else if(n===3){
-    cells=[
-      makeCell(4,8,59,84,0,variant%2?-2:2),
-      makeCell(59,5,36,43,1,variant%2?3:-2),
-      makeCell(57,53,38,40,2,variant%2?-3:2)
-    ];
-  }else if(n===4){
-    cells=[
-      makeCell(3,8,55,65,0,variant%2?-2:2),
-      makeCell(59,5,37,40,1,variant%2?3:-2),
-      makeCell(61,49,34,43,2,variant%2?-3:2),
-      makeCell(8,70,45,24,3,variant%2?2:-2)
-    ];
-  }else if(n<=6){
-    cells=[
-      makeCell(3,8,51,82,0,variant%2?-2:2),
-      makeCell(53,5,43,36,1,variant%2?3:-2),
-      makeCell(57,44,39,39,2,variant%2?-3:2),
-      makeCell(7,72,39,22,3,variant%2?2:-2),
-      makeCell(45,76,48,19,4,variant%2?-2:2),
-      makeCell(4,45,24,25,5,variant%2?3:-3)
-    ].slice(0,n);
+  // More than six photos use a hero image plus a varied editorial mosaic,
+  // rather than forcing every photo into an identical square tile.
+  function makeGeneratedLayout(count, family){
+    const out=[];
+    const m=3.5, right=53.5, rightW=43, top=5, bottom=95;
+    if(family===0){ // Hero on the left; small photos on the right
+      out.push([m,7,48,86,variant%2?-2:1]);
+      const rest=count-1, cols=rest>=7?3:(rest>=3?2:1), rows=Math.ceil(rest/cols);
+      const cw=rightW/cols, ch=(bottom-top-gap*(rows-1))/rows;
+      for(let i=0;i<rest;i++){
+        const r=Math.floor(i/cols),c=i%cols;
+        out.push([right+c*cw+0.4,top+r*(ch+gap),cw-1.0,ch*.94,rand(-2.4,2.4)]);
+      }
+    }else if(family===1){ // Large photo across the top; lively strip/grid below
+      out.push([4,5,92,45,variant%2?1:-1]);
+      const rest=count-1, cols=Math.min(4,Math.max(1,Math.ceil(rest/2))), rows=Math.ceil(rest/cols);
+      const areaY=53, areaH=41, cw=92/cols, ch=(areaH-gap*(rows-1))/rows;
+      for(let i=0;i<rest;i++){
+        const r=Math.floor(i/cols),c=i%cols;
+        const offset=(r%2)*1.2;
+        out.push([4+c*cw+offset,areaY+r*(ch+gap),cw-1.4-offset,ch*.95,rand(-2,2)]);
+      }
+    }else if(family===2){ // Magazine mosaic: one feature photo and a compact side mosaic
+      out.push([4,6,55,58,-1.5]);
+      const rest=count-1, cols=2, rows=Math.ceil(rest/cols), x0=62, w=34/cols;
+      const h=(88-gap*(rows-1))/rows;
+      for(let i=0;i<rest;i++){
+        const r=Math.floor(i/cols),c=i%cols;
+        out.push([x0+c*w,6+r*(h+gap),w-1,h*.94,rand(-2.2,2.2)]);
+      }
+    }else{ // Asymmetric split panels, alternating left/right emphasis
+      const heroLeft=variant%2===0;
+      const hero=heroLeft?[4,6,56,86,-1.5]:[40,6,56,86,1.5];
+      out.push(hero);
+      const x=heroLeft?62:4, rest=count-1, cols=rest>5?2:1;
+      const rows=Math.ceil(rest/cols), w=cols===2?16.5:34;
+      const h=(86-gap*(rows-1))/rows;
+      for(let i=0;i<rest;i++){
+        const r=Math.floor(i/cols),c=i%cols;
+        out.push([x+c*(w+1.0),6+r*(h+gap),w,h*.96,rand(-2.5,2.5)]);
+      }
+    }
+    return out.slice(0,count);
+  }
+
+  let chosen;
+  if(n<=6){
+    const choices=layouts[n]||layouts[6];
+    // Rotate through the available editorial designs, then vary the photo order.
+    chosen=choices[variant%choices.length].map(box=>box.slice());
   }else{
-    const cols=3;
-    const rows=Math.ceil(n/cols);
-    const margin=3;
-    const gap=2;
-    const cellW=(100-margin*2-gap*(cols-1))/cols;
-    const cellH=(100-margin*2-gap*(rows-1))/rows;
-    cells=Array.from({length:n},(_,i)=>{
-      const row=Math.floor(i/cols);
-      const col=i%cols;
-      const width=cellW*rand(.88,1.06);
-      const height=cellH*rand(.88,1.06);
-      const x=margin+col*(cellW+gap)+rand(-1.5,1.5);
-      const y=margin+row*(cellH+gap)+rand(-1.5,1.5);
-      return makeCell(
-        Math.max(0,Math.min(100-width,x)),
-        Math.max(0,Math.min(100-height,y)),
-        width,height,i,rand(-4,4)
-      );
-    });
+    chosen=makeGeneratedLayout(n,variant%4);
   }
 
-  if(n>3){
-    cells.forEach((cell,i)=>{
-      if(cell.rotation===0)cell.rotation=variedRotation();
-    });
+  // Occasionally mirror the composition so the focal photo is not always on the same side.
+  if(n>=3 && variant%3===2){
+    chosen=chosen.map(([x,y,w,h,r])=>[100-x-w,y,w,h,-r]);
   }
+
+  const order=images.map((_,i)=>i);
+  for(let i=order.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [order[i],order[j]]=[order[j],order[i]];
+  }
+  cells=chosen.map((box,i)=>{
+    const [x,y,w,h,rotation]=box;
+    return makeCell(x,y,w,h,order[i]??-1,rotation);
+  });
+  cells.forEach(cell=>{
+    cell.zoom=1;
+    cell.photoX=0;
+    cell.photoY=0;
+    cell.fit=true;
+    cell.fitMode='cover';
+  });
 
   currentLayout='smart';
   document.querySelectorAll('.layout-btn').forEach(button=>button.classList.remove('active'));
   selectedCell=0;
-  assignPhotosToCells();
+  selectedPhoto=order[0]??-1;
+  renderPhotos();
+  updateSelect();
   draw();
-  status('Creative composition created. Click Try Another Design for a different arrangement.');
+  status('Creative design '+(variant+1)+' is ready. Select “Try Another Design” to explore a new arrangement.');
 }
 
 fileInput.addEventListener('change',async()=>{
@@ -658,6 +726,7 @@ $('placePhoto').addEventListener('click',()=>{
   cell.photoY=0;
   cell.zoom=1;
   cell.fit=true;
+  cell.fitMode='cover';
 
   updateSelect();
   draw();
@@ -682,9 +751,85 @@ $('centerPhoto').addEventListener('click',()=>{
   cell.photoY=0;
   cell.zoom=1;
   cell.fit=true;
+  cell.fitMode='cover';
   updateControls();
   draw();
-  status('Photo centered in the selected frame.');
+  status('Photo centered and zoom reset.');
+});
+
+$('fillFrame').addEventListener('click',()=>{
+  const cell=cells[selectedCell];
+  if(!cell||cell.photoIndex<0)return;
+  cell.fitMode='cover';
+  cell.zoom=1;
+  cell.photoX=0;
+  cell.photoY=0;
+  cell.fit=true;
+  updateControls();
+  draw();
+  status('Photo fills the frame. Drag it to adjust the crop.');
+});
+
+$('fitWholePhoto').addEventListener('click',()=>{
+  const cell=cells[selectedCell];
+  if(!cell||cell.photoIndex<0)return;
+  cell.fitMode='contain';
+  cell.zoom=1;
+  cell.photoX=0;
+  cell.photoY=0;
+  cell.fit=true;
+  updateControls();
+  draw();
+  status('Whole photo shown without cropping. Empty space may remain around it.');
+});
+
+$('autoFitAll').addEventListener('click',()=>{
+  let count=0;
+  cells.forEach(cell=>{
+    if(cell.photoIndex>=0&&images[cell.photoIndex]){
+      cell.zoom=1;
+      cell.photoX=0;
+      cell.photoY=0;
+      cell.fit=true;
+      cell.fitMode='cover';
+      count++;
+    }
+  });
+  updateControls();
+  draw();
+  status(count ? 'All '+count+' photos centered and fitted to their frames.' : 'Add photos to the collage first.');
+});
+
+$('autoPlacePhotos').addEventListener('click',()=>{
+  if(!images.length){status('Upload photos first.');fileInput.click();return;}
+  const count=Math.min(images.length,12);
+  if(cells.length<count){
+    if(templates[String(count)]){
+      cells=templates[String(count)]();
+      currentLayout=String(count);
+      document.querySelectorAll('.layout-btn').forEach(button=>button.classList.toggle('active',button.dataset.layout===currentLayout));
+    }else{
+      const cols=count<=3?count:3;
+      const rows=Math.ceil(count/cols);
+      cells=Array.from({length:count},(_,i)=>makeCell((i%cols)*100/cols,Math.floor(i/cols)*100/rows,100/cols,100/rows,-1));
+      currentLayout='custom';
+      document.querySelectorAll('.layout-btn').forEach(button=>button.classList.remove('active'));
+    }
+  }
+  cells.forEach((cell,i)=>{
+    cell.photoIndex=i<count?i:-1;
+    cell.zoom=1;
+    cell.photoX=0;
+    cell.photoY=0;
+    cell.fit=true;
+    cell.fitMode='cover';
+  });
+  selectedCell=0;
+  selectedPhoto=0;
+  renderPhotos();
+  updateSelect();
+  draw();
+  status(count+' photo(s) placed in frames and centered automatically.');
 });
 
 $('addCell').addEventListener('click',()=>{
@@ -735,6 +880,7 @@ $('shuffle').addEventListener('click',()=>{
       cell.photoY=0;
       cell.zoom=1;
       cell.fit=true;
+      cell.fitMode='cover';
     }
   });
 
@@ -866,11 +1012,14 @@ function drawPhoto(img,r,cell,cornerRadius){
   shapePath(frameShape,ix,iy,iw,ih,frameShape==='rounded'?innerRadius:0);
   ctx.clip();
 
-  const scale=Math.max(iw/img.naturalWidth,ih/img.naturalHeight)*(cell.zoom||1);
+  const coverScale=Math.max(iw/img.naturalWidth,ih/img.naturalHeight);
+  const containScale=Math.min(iw/img.naturalWidth,ih/img.naturalHeight);
+  const baseScale=(cell.fitMode==='contain'?containScale:coverScale);
+  const scale=baseScale*(cell.zoom||1);
   const dw=img.naturalWidth*scale;
   const dh=img.naturalHeight*scale;
-  const maxX=Math.max(0,(dw-iw)/2);
-  const maxY=Math.max(0,(dh-ih)/2);
+  const maxX=cell.fitMode==='contain'?Math.max(0,(dw-iw)/2):Math.max(0,(dw-iw)/2);
+  const maxY=cell.fitMode==='contain'?Math.max(0,(dh-ih)/2):Math.max(0,(dh-ih)/2);
 
   cell.photoX=Math.max(-maxX,Math.min(maxX,cell.photoX||0));
   cell.photoY=Math.max(-maxY,Math.min(maxY,cell.photoY||0));
