@@ -676,6 +676,7 @@
     let previewUrls = [];
     let isConverting = false;
     let conversionId = 0;
+    let zipDownloadCounter = 0;
 
     function formatBytes(bytes) {
       if (bytes < 1024) return bytes + " B";
@@ -1194,9 +1195,21 @@
           compressionOptions: { level: 5 }
         });
 
-        downloadBlob(zipBlob, "converted-images.zip");
+        zipDownloadCounter++;
+        const now = new Date();
+        const timestamp = [
+          now.getFullYear(),
+          String(now.getMonth() + 1).padStart(2, "0"),
+          String(now.getDate()).padStart(2, "0"),
+          "-",
+          String(now.getHours()).padStart(2, "0"),
+          String(now.getMinutes()).padStart(2, "0"),
+          String(now.getSeconds()).padStart(2, "0")
+        ].join("");
+        const zipFilename = "converted-images-" + timestamp + "-" + zipDownloadCounter + ".zip";
+        downloadBlob(zipBlob, zipFilename);
         setStatus(
-          "ZIP archive created with " + convertedFiles.length + " image(s).",
+          "ZIP archive created with " + convertedFiles.length + " image(s). Download: " + zipFilename,
           "success"
         );
       } catch (error) {
