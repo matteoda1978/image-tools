@@ -4,8 +4,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Free Photo Collage Maker Online | RitoccaPix</title>
-<meta name="description" content="Create creative photo collages with smart layouts, overlapping frames and photo enhancement tools. Free online photo collage maker by RitoccaPix.">
+<title>Free Photo Collage Maker – Creative Layouts | RitoccaPix</title>
+<meta name="description" content="Create a free photo collage online with overlapping photos, creative layouts and custom shapes. Edit, enhance and download JPG or PNG images in your browser.">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#0a0f1d">
 <link rel="canonical" href="https://ritoccapix.com/image-collage.html">
@@ -108,8 +108,8 @@ footer a{color:var(--accent);text-decoration:none}
 
 <main>
 <section class="hero">
-  <h1>Creative Photo Collage Maker</h1>
-  <p>Create original photo collages with overlapping pictures, tilted frames and intelligent-looking compositions. Then enhance the colors, light and style of your photos before downloading your design.</p>
+  <h1>Free Online Photo Collage Maker with Creative Layouts</h1>
+  <p>Turn your photos into a creative collage with overlapping images, varied frame sizes and magazine-style layouts. Adjust photo position, zoom, shapes and spacing, then download your finished design as a JPG or PNG. No software installation required.</p>
 </section>
 
 <div class="workspace">
@@ -263,8 +263,7 @@ footer a{color:var(--accent);text-decoration:none}
   <h2>How to create a creative photo collage</h2>
   <ol>
     <li>Upload your photos from your device.</li>
-    <li>Click Create a Smart Collage to create an asymmetrical, magazine-style arrangement. Use Try Another Design to explore alternatives.</li>
-    <li>Click Try Another Design to explore a different composition.</li>
+    <li>Click Create a Smart Collage to create an asymmetrical, magazine-style arrangement. Click Try Another Design to explore alternative compositions.</li>
     <li>Choose an enhancement style and apply it to your collage photos.</li>
     <li>Choose a creative frame shape, then adjust the canvas format, frame spacing, background and caption.</li>
     <li>Download your finished collage as a high-resolution JPG or PNG.</li>
@@ -443,20 +442,6 @@ function applyLayout(layout){
     if(cell.photoIndex<0||!images[cell.photoIndex])cell.photoIndex=-1;
   });
   selectedCell=0;
-
-  document.querySelectorAll('.shape-btn').forEach(button=>{
-  button.addEventListener('click',()=>{
-    frameShape=button.dataset.shape;
-    document.querySelectorAll('.shape-btn').forEach(item=>{
-      const active=item===button;
-      item.classList.toggle('active',active);
-      item.setAttribute('aria-pressed',String(active));
-    });
-    draw();
-    const shapeName=button.textContent.trim();
-    status(shapeName+' photo frames selected. Choose a layout and add your photos.');
-  });
-});
 
 document.querySelectorAll('.layout-btn').forEach(button=>{
     button.classList.toggle('active',button.dataset.layout===layout);
@@ -646,6 +631,20 @@ fileInput.addEventListener('change',async()=>{
 
 document.querySelectorAll('.layout-btn').forEach(button=>{
   button.addEventListener('click',()=>applyLayout(button.dataset.layout));
+});
+
+document.querySelectorAll('.shape-btn').forEach(button=>{
+  button.addEventListener('click',()=>{
+    frameShape=button.dataset.shape;
+    document.querySelectorAll('.shape-btn').forEach(item=>{
+      const active=item===button;
+      item.classList.toggle('active',active);
+      item.setAttribute('aria-pressed',String(active));
+    });
+    draw();
+    const shapeName=button.textContent.trim();
+    status(shapeName+' photo frames selected. Choose a layout and add your photos.');
+  });
 });
 
 $('smartLayout').addEventListener('click',createSmartComposition);
