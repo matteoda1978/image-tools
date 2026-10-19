@@ -314,7 +314,7 @@ footer a { margin: 0 8px; }
       <div class="field">
         <label for="targetSize">Target file size (optional)</label>
         <input type="number" id="targetSize" min="1" max="100000" placeholder="e.g. 100">
-        <div class="target-help">Best-effort target, not a guaranteed maximum.</div>
+        <div class="target-help">Best-effort target, not a guaranteed maximum. Target-size adjustment works with JPG and WebP, not PNG. If you keep the original format, PNG files will not be reduced to the target size.</div>
       </div>
       <div class="field">
         <label for="targetUnit">Target size unit</label>
@@ -392,7 +392,7 @@ footer a { margin: 0 8px; }
     </div>
     <div class="faq-item">
       <h3>Can I make an image smaller than 100 KB?</h3>
-      <p>You can enter 100 in the target size field and select KB. The tool tries different quality settings, but the final size is not guaranteed. Image dimensions, content and format affect the result.</p>
+      <p>You can enter 100 in the target size field and select KB. For target-size adjustment, choose JPG or WebP. PNG output is lossless and the target-size setting does not apply to it. Even with JPG or WebP, the requested size is not guaranteed because image dimensions, content and quality affect the result.</p>
     </div>
     <div class="faq-item">
       <h3>Will compression reduce image quality?</h3>
@@ -404,7 +404,7 @@ footer a { margin: 0 8px; }
     </div>
     <div class="faq-item">
       <h3>Does the target size always work?</h3>
-      <p>No. The target is best-effort. Some images cannot reach the requested size at the chosen dimensions and format without substantial quality loss.</p>
+      <p>No. The target is best-effort for JPG and WebP. Some images cannot reach the requested size at the chosen dimensions and format without substantial quality loss. PNG uses lossless output here, so the target-size setting does not apply when PNG is selected or when the original PNG format is kept.</p>
     </div>
     <div class="faq-item">
       <h3>How do I download all my results?</h3>
