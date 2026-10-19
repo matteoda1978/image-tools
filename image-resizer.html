@@ -954,6 +954,7 @@
       let selectedFiles = [];
       let selectedPreviewUrls = new Map();
       let processedImages = [];
+      let zipDownloadCount = 0;
       let isProcessing = false;
 
       function formatBytes(bytes) {
@@ -1567,9 +1568,24 @@
             metadata => setProgress(Math.round(metadata.percent), 100)
           );
 
-          downloadBlob(zipBlob, "ritoccapix-resized-images.zip");
+          zipDownloadCount++;
+          const now = new Date();
+          const dateStamp = [
+            now.getFullYear(),
+            String(now.getMonth() + 1).padStart(2, "0"),
+            String(now.getDate()).padStart(2, "0")
+          ].join("");
+          const timeStamp = [
+            String(now.getHours()).padStart(2, "0"),
+            String(now.getMinutes()).padStart(2, "0"),
+            String(now.getSeconds()).padStart(2, "0")
+          ].join("");
+          const zipFilename =
+            "ritoccapix-resized-images-" + dateStamp + "-" + timeStamp + "-" +
+            String(zipDownloadCount).padStart(2, "0") + ".zip";
+          downloadBlob(zipBlob, zipFilename);
           setStatus(
-            "Your ZIP file is ready. Check your browser downloads if it does not open automatically.",
+            "Your ZIP file is ready: " + zipFilename + ". Check your browser downloads if it does not open automatically.",
             "success"
           );
         } catch (error) {
