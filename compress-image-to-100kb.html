@@ -469,14 +469,26 @@ footer a { margin: 0 7px; }
       "Select a JPG, PNG or WebP image from your device.";
   }
 
+  function rejectSelectedFile(message) {
+    selectedFile = null;
+    resetResult();
+    setBusy(false);
+    compressButton.disabled = true;
+    clearButton.disabled = true;
+    dropZone.querySelector("h2").textContent = "Choose an image";
+    dropZone.querySelector("p").textContent =
+      "Select a JPG, PNG or WebP image from your device.";
+    setStatus(message, "error");
+  }
+
   function acceptFile(file) {
     if (!file) return;
     if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
-      setStatus("Please choose a JPG, PNG or WebP image.", "error");
+      rejectSelectedFile("Please choose a JPG, PNG or WebP image.");
       return;
     }
     if (file.size > 50 * 1024 * 1024) {
-      setStatus("Please choose an image smaller than 50MB.", "error");
+      rejectSelectedFile("Please choose an image smaller than 50MB.");
       return;
     }
 
