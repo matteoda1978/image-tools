@@ -507,84 +507,62 @@ function createSmartComposition(){
 
   const n=images.length;
   const variant=designVersion++;
-  const gap=2.2;
+  // Smart layouts deliberately overlap; remove ordinary grid spacing for a full-bleed look.
+  $('spacing').value='0';
+  $('spacingValue').textContent='0 px';
+  const gap=0;
   const layouts={
-    1:[[[8,7,84,86,0]],[[14,5,72,90,-2]],[[5,12,90,76,1]]],
+    1:[[[0,-2,100,104,-1]],[[2,0,96,100,2]],[[0,3,100,94,-2]]],
     2:[
-      [[4,7,56,86,-1],[62,13,34,72,2]],
-      [[5,7,90,48,-1],[12,57,76,34,1]],
-      [[5,14,42,72,-2],[52,8,43,84,2]],
-      [[5,8,43,84,-2],[52,8,43,84,2]]
+      [[-3,-2,70,105,-4],[55,14,49,78,5]],
+      [[-2,1,104,58,-2],[15,45,83,59,3]],
+      [[-4,8,57,96,4],[48,-4,58,101,-3]],
+      [[-3,-3,58,106,-5],[43,7,62,98,4]]
     ],
     3:[
-      [[3,7,61,86,-1],[65,6,31,42,2],[64,52,32,41,-2]],
-      [[5,7,42,40,-2],[52,7,43,40,2],[14,51,72,41,1]],
-      [[4,9,48,80,-2],[54,8,42,48,2],[55,60,40,30,-1]],
-      [[4,7,92,43,-1],[4,53,43,39,2],[52,53,44,39,-2]]
+      [[-5,-3,75,107,-4],[54,-4,52,48,5],[58,43,49,63,-3]],
+      [[-3,-5,106,62,-2],[2,43,60,62,4],[51,37,54,68,-4]],
+      [[-5,3,63,103,3],[43,-5,62,65,-4],[39,48,65,58,4]],
+      [[-4,-4,59,66,-4],[43,-5,62,66,4],[15,43,77,64,-2]]
     ],
     4:[
-      [[3,7,57,62,-1],[62,5,34,41,2],[63,50,33,42,-2],[8,72,45,22,1]],
-      [[4,7,43,41,-2],[52,7,44,41,2],[8,52,39,39,2],[53,52,42,39,-2]],
-      [[4,8,65,43,-2],[49,55,46,37,2],[5,56,39,35,-2],[69,8,25,39,3]],
-      [[4,7,44,84,-2],[52,7,44,39,2],[52,51,44,40,-2],[15,72,25,19,1]]
+      [[-5,-5,69,80,-4],[52,-4,54,53,4],[56,39,49,66,-3],[-4,66,57,39,3]],
+      [[-4,-5,56,64,-4],[42,-4,63,64,4],[-5,48,57,59,3],[45,48,61,59,-3]],
+      [[-5,-3,72,55,-3],[54,-5,53,75,4],[-4,46,49,59,4],[38,57,66,48,-4]],
+      [[-5,-5,53,108,-4],[38,-5,66,54,4],[38,42,67,65,-3],[-4,72,48,34,3]]
     ],
     5:[
-      [[3,7,55,59,-1],[61,5,35,35,2],[62,44,34,39,-2],[6,70,39,23,2],[48,72,47,21,-2]],
-      [[4,7,43,39,-2],[52,7,44,39,2],[4,51,30,42,2],[37,51,29,42,-2],[68,51,28,42,1]],
-      [[4,8,60,82,-2],[65,7,30,24,2],[66,35,29,24,-2],[65,63,30,26,2],[8,74,45,18,-1]],
-      [[4,7,92,37,-1],[4,48,28,42,2],[35,48,28,42,-2],[66,48,30,42,1],[15,8,25,37,2]]
+      [[-5,-5,68,77,-4],[51,-4,55,45,4],[55,32,50,53,-3],[-4,65,50,42,3],[38,68,66,38,-4]],
+      [[-4,-5,57,61,-4],[43,-4,62,61,4],[-4,43,43,62,3],[30,44,43,62,-4],[58,48,47,57,3]],
+      [[-5,-4,68,106,-3],[53,-4,53,37,4],[54,27,52,38,-4],[-4,69,49,38,4],[38,66,66,40,-3]],
+      [[-5,-4,53,66,-4],[39,-4,66,63,4],[-5,47,53,60,3],[39,43,66,61,-3],[18,70,66,36,2]]
     ],
     6:[
-      [[3,7,50,66,-1],[56,5,41,34,2],[58,43,39,34,-2],[5,76,29,17,2],[37,76,29,17,-2],[69,76,28,17,1]],
-      [[4,7,44,39,-2],[52,7,44,39,2],[4,51,44,39,2],[52,51,44,39,-2],[18,24,24,23,2],[58,24,24,23,-2]],
-      [[4,8,62,83,-2],[68,7,27,25,2],[68,36,27,25,-2],[68,65,27,26,2],[8,72,24,19,2],[36,74,27,17,-2]],
-      [[4,7,92,30,-1],[4,41,44,49,2],[52,41,44,23,-2],[52,68,44,22,1],[4,7,44,30,2],[52,7,44,30,-2]]
+      [[-5,-5,70,79,-4],[51,-5,56,42,4],[55,29,51,48,-3],[-5,65,43,42,3],[30,67,45,38,-4],[66,64,39,42,4]],
+      [[-5,-4,56,62,-4],[42,-5,63,61,4],[-5,43,42,62,3],[29,43,43,62,-4],[57,43,47,60,3],[23,68,57,38,-2]],
+      [[-5,-5,66,105,-3],[51,-5,53,36,4],[53,24,53,38,-4],[-5,69,39,37,4],[27,66,42,39,-3],[62,63,42,42,3]],
+      [[-5,-4,54,66,-4],[39,-5,66,64,4],[-5,48,51,57,3],[36,44,66,60,-3],[14,68,49,39,-2],[59,67,44,39,4]]
     ]
   };
 
   // More than six photos use a hero image plus a varied editorial mosaic,
   // rather than forcing every photo into an identical square tile.
   function makeGeneratedLayout(count, family){
+    // Layered poster compositions: large edge-to-edge hero, with smaller photos
+    // intentionally overlapping it and one another. Later items are drawn on top.
     const out=[];
-    const m=3.5, right=53.5, rightW=43, top=5, bottom=95;
-    if(family===0){ // Hero on the left; small photos on the right
-      out.push([m,7,48,86,variant%2?-2:1]);
-      const rest=count-1, cols=rest>=7?3:(rest>=3?2:1), rows=Math.ceil(rest/cols);
-      const cw=rightW/cols, ch=(bottom-top-gap*(rows-1))/rows;
-      for(let i=0;i<rest;i++){
-        const r=Math.floor(i/cols),c=i%cols;
-        out.push([right+c*cw+0.4,top+r*(ch+gap),cw-1.0,ch*.94,rand(-2.4,2.4)]);
-      }
-    }else if(family===1){ // Large photo across the top; lively strip/grid below
-      out.push([4,5,92,45,variant%2?1:-1]);
-      const rest=count-1, cols=Math.min(4,Math.max(1,Math.ceil(rest/2))), rows=Math.ceil(rest/cols);
-      const areaY=53, areaH=41, cw=92/cols, ch=(areaH-gap*(rows-1))/rows;
-      for(let i=0;i<rest;i++){
-        const r=Math.floor(i/cols),c=i%cols;
-        const offset=(r%2)*1.2;
-        out.push([4+c*cw+offset,areaY+r*(ch+gap),cw-1.4-offset,ch*.95,rand(-2,2)]);
-      }
-    }else if(family===2){ // Magazine mosaic: one feature photo and a compact side mosaic
-      out.push([4,6,55,58,-1.5]);
-      const rest=count-1, cols=2, rows=Math.ceil(rest/cols), x0=62, w=34/cols;
-      const h=(88-gap*(rows-1))/rows;
-      for(let i=0;i<rest;i++){
-        const r=Math.floor(i/cols),c=i%cols;
-        out.push([x0+c*w,6+r*(h+gap),w-1,h*.94,rand(-2.2,2.2)]);
-      }
-    }else{ // Asymmetric split panels, alternating left/right emphasis
-      const heroLeft=variant%2===0;
-      const hero=heroLeft?[4,6,56,86,-1.5]:[40,6,56,86,1.5];
-      out.push(hero);
-      const x=heroLeft?62:4, rest=count-1, cols=rest>5?2:1;
-      const rows=Math.ceil(rest/cols), w=cols===2?16.5:34;
-      const h=(86-gap*(rows-1))/rows;
-      for(let i=0;i<rest;i++){
-        const r=Math.floor(i/cols),c=i%cols;
-        out.push([x+c*(w+1.0),6+r*(h+gap),w,h*.96,rand(-2.5,2.5)]);
-      }
+    const heroSets=[
+      [[-5,-4,72,82,-4],[53,-4,54,43,5],[57,30,49,48,-4],[-4,65,47,42,3],[35,66,45,39,-3],[68,64,38,42,4]],
+      [[-4,-4,58,68,-4],[42,-4,64,67,4],[-5,47,47,57,3],[35,43,67,61,-3],[8,70,53,37,-2],[59,68,44,39,4]],
+      [[-5,-4,70,106,-3],[52,-4,54,35,4],[53,24,53,38,-4],[-4,68,40,38,4],[27,66,43,40,-3],[62,64,42,42,3]],
+      [[-5,-4,54,66,-4],[39,-4,67,64,4],[-5,47,52,59,3],[36,44,67,61,-3],[13,69,50,39,-2],[59,66,45,41,4]]
+    ];
+    const base=heroSets[family%heroSets.length].map(box=>box.slice());
+    for(let i=6;i<count;i++){
+      const spots=[[-3,4,34,35,rand(-7,7)],[66,4,38,32,rand(-7,7)],[-2,43,32,39,rand(-7,7)],[68,39,36,37,rand(-7,7)],[28,72,42,34,rand(-6,6)],[39,6,36,31,rand(-7,7)]];
+      base.push(spots[(i-6)%spots.length]);
     }
-    return out.slice(0,count);
+    return base.slice(0,count);
   }
 
   let chosen;
@@ -625,7 +603,7 @@ function createSmartComposition(){
   renderPhotos();
   updateSelect();
   draw();
-  status('Creative design '+(variant+1)+' is ready. Select “Try Another Design” to explore a new arrangement.');
+  status('Layered creative collage '+(variant+1)+' is ready. Photos overlap to fill the canvas. Choose “Try Another Design” for a new composition.');
 }
 
 fileInput.addEventListener('change',async()=>{
