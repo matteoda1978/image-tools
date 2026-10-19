@@ -104,6 +104,7 @@ header{padding:19px 0}
   </label>
 
   <input id="fileInput" type="file" accept="image/*,.heic,.heif" multiple>
+  <p class="privacy">Batch limit: 50 images · Maximum 50 MB per file and 40 megapixels per image.</p>
 
   <div id="fileList" class="files"></div>
 
@@ -176,7 +177,11 @@ header{padding:19px 0}
     </details>
     <details>
       <summary>Can I reduce the image size?</summary>
-      <p>Yes. Choose a maximum dimension of 4096, 3000, or 2000 pixels. The original aspect ratio is preserved.</p>
+      <p>Yes. Choose a maximum dimension of 4096, 3000, or 2000 pixels. The original aspect ratio is preserved. Files over 40 megapixels are excluded for browser stability.</p>
+    </details>
+    <details>
+      <summary>Is the original photo metadata preserved?</summary>
+      <p>JPG files are created through the browser's canvas, which does not preserve all original EXIF metadata. If you need to keep capture dates, GPS data, or camera details, retain your original files.</p>
     </details>
   </div>
 
@@ -203,6 +208,10 @@ const qualityValue=document.getElementById("qualityValue");
 const resize=document.getElementById("resize");
 
 let files=[];
+let zipDownloadCounter=0;
+const MAX_FILE_SIZE=50*1024*1024;
+const MAX_FILES=50;
+const MAX_PIXELS=40000000;
 
 quality.addEventListener("input",()=>{
   qualityValue.textContent=quality.value;
@@ -212,16 +221,20 @@ fileInput.addEventListener("change",()=>{
   const selected=Array.from(fileInput.files||[]);
   if(!selected.length)return;
 
-  files=selected;
+  const oversized=selected.filter(file=>file.size>MAX_FILE_SIZE);
+  files=selected.filter(file=>file.size<=MAX_FILE_SIZE).slice(0,MAX_FILES);
   renderFiles();
 
-  convertBtn.disabled=false;
-  clearBtn.disabled=false;
+  convertBtn.disabled=files.length===0;
+  clearBtn.disabled=files.length===0;
 
-  statusBox.textContent=
-    files.length===1
-    ?"Image selected. Ready to convert."
+  let message=files.length===1
+    ?"1 image selected. Ready to convert."
     :files.length+" images selected. Ready to convert.";
+  if(oversized.length)message+=" "+oversized.length+" file(s) over 50 MB were excluded.";
+  if(selected.length>MAX_FILES)message+=" Only the first 50 eligible files are processed.";
+  if(!files.length)message="No eligible images selected. Each file must be 50 MB or smaller.";
+  statusBox.textContent=message;
 });
 
 clearBtn.addEventListener("click",()=>{
@@ -357,6 +370,9 @@ async function convertImage(file){
 
     let width=img.naturalWidth;
     let height=img.naturalHeight;
+    if(!width||!height||width*height>MAX_PIXELS){
+      throw new Error("This image exceeds the 40-megapixel processing limit.");
+    }
 
     if(resize.value!=="original"){
       const max=Number(resize.value);
@@ -401,9 +417,31 @@ async function convertImage(file){
   }
 }
 
-function createFileName(name){
-  const clean=name||"image";
-  return clean.replace(/\.[^/.]+$/,"")+".jpg";
+function createFileName(name, usedNames){
+  const clean=(name||"image").replace(/\.[^/.]+$/,"")||"image";
+  let candidate=clean+".jpg";
+  let suffix=2;
+  while(usedNames.has(candidate.toLowerCase())){
+    candidate=clean+"-"+suffix+".jpg";
+    suffix++;
+  }
+  usedNames.add(candidate.toLowerCase());
+  return candidate;
+}
+
+function createZipFilename(){
+  zipDownloadCounter++;
+  const now=new Date();
+  const stamp=[
+    now.getFullYear(),
+    String(now.getMonth()+1).padStart(2,"0"),
+    String(now.getDate()).padStart(2,"0"),"-",
+    String(now.getHours()).padStart(2,"0"),
+    String(now.getMinutes()).padStart(2,"0"),
+    String(now.getSeconds()).padStart(2,"0"),"-",
+    String(now.getMilliseconds()).padStart(3,"0")
+  ].join("");
+  return "heic-to-jpg-"+stamp+"-"+zipDownloadCounter+".zip";
 }
 
 function downloadBlob(blob,filename){
@@ -427,77 +465,52 @@ convertBtn.addEventListener("click",async()=>{
 
   convertBtn.disabled=true;
   clearBtn.disabled=true;
+  const batch=files.slice();
 
   try{
     const results=[];
+    const failures=[];
+    const usedNames=new Set();
 
-    for(let i=0;i<files.length;i++){
-      statusBox.textContent=
-        "Converting "+
-        (i+1)+
-        " of "+
-        files.length+
-        "...";
-
-      const blob=await convertImage(files[i]);
-
-      results.push({
-        blob,
-        name:createFileName(files[i].name)
-      });
+    for(let i=0;i<batch.length;i++){
+      statusBox.textContent="Converting "+(i+1)+" of "+batch.length+"...";
+      try{
+        const blob=await convertImage(batch[i]);
+        results.push({blob,name:createFileName(batch[i].name,usedNames)});
+      }catch(error){
+        failures.push((batch[i].name||"Image "+(i+1))+": "+(error&&error.message?error.message:"conversion failed"));
+      }
     }
 
-    if(results.length===1){
-      downloadBlob(
-        results[0].blob,
-        results[0].name
-      );
+    if(!results.length){
+      throw new Error("No images could be converted. Check that the files are valid, supported images under 50 MB and 40 megapixels.");
+    }
 
-      statusBox.textContent=
-        "✓ JPG created and downloaded.";
-
+    if(results.length===1&&batch.length===1){
+      downloadBlob(results[0].blob,results[0].name);
+      statusBox.textContent="✓ JPG created and downloaded: "+results[0].name;
     }else{
       if(typeof JSZip==="undefined"){
-        throw new Error("ZIP engine is unavailable.");
+        throw new Error("The images were converted, but the ZIP engine is unavailable. Reload the page and try again.");
       }
-
       statusBox.textContent="Creating ZIP archive...";
-
       const zip=new JSZip();
-
-      results.forEach(result=>{
-        zip.file(result.name,result.blob);
-      });
-
-      const zipBlob=await zip.generateAsync({
-        type:"blob"
-      });
-
-      downloadBlob(
-        zipBlob,
-        "converted-images.zip"
-      );
-
-      statusBox.textContent=
-        "✓ "+
-        results.length+
-        " JPG files created and added to the ZIP archive.";
+      results.forEach(result=>zip.file(result.name,result.blob));
+      const zipBlob=await zip.generateAsync({type:"blob"});
+      const zipFilename=createZipFilename();
+      downloadBlob(zipBlob,zipFilename);
+      statusBox.textContent="✓ "+results.length+" JPG file(s) added to "+zipFilename+".";
     }
 
+    if(failures.length){
+      statusBox.textContent+=" "+failures.length+" file(s) could not be converted: "+failures.join(" | ");
+    }
   }catch(error){
     console.error("Conversion error:",error);
-
-    statusBox.textContent=
-      "⚠️ Conversion failed: "+
-      (
-        error&&error.message
-        ?error.message
-        :"unknown error"
-      );
-
+    statusBox.textContent="⚠️ "+(error&&error.message?error.message:"Conversion failed. Please try another image.");
   }finally{
-    convertBtn.disabled=false;
-    clearBtn.disabled=false;
+    convertBtn.disabled=files.length===0;
+    clearBtn.disabled=files.length===0;
   }
 });
 </script>
