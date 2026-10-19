@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Free Image Resizer Online - Resize Multiple Images | RitoccaPix</title>
-  <meta name="description" content="Resize up to 50 images online for free. Preview photos, customize dimensions, convert to JPG, PNG or WebP, and download all resized images in a ZIP file.">
+  <meta name="description" content="Resize images online for free in batches of up to 50. Set exact pixel dimensions, fit or crop to size, use social media presets, choose JPG, PNG or WebP, and download a ZIP.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://ritoccapix.com/image-resizer.html">
   <meta property="og:title" content="Free Image Resizer Online | RitoccaPix">
-  <meta property="og:description" content="Resize multiple images online for free. Preview, customize dimensions and download individual images or a ZIP archive.">
+  <meta property="og:description" content="Resize up to 50 images, use exact dimensions or social presets, fit or crop images, and download results individually or as a ZIP.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://ritoccapix.com/image-resizer.html">
 
@@ -679,6 +679,24 @@
 
       <div class="settings">
         <div class="field">
+          <label for="sizePreset">Quick size presets</label>
+          <select id="sizePreset">
+            <option value="custom" selected>Custom dimensions</option>
+            <option value="1200x800">Web image — 1200 × 800</option>
+            <option value="1920x1080">Full HD — 1920 × 1080</option>
+            <option value="1280x720">YouTube thumbnail — 1280 × 720</option>
+            <option value="1080x1080">Instagram square — 1080 × 1080</option>
+            <option value="1080x1350">Instagram portrait — 1080 × 1350</option>
+            <option value="1080x1920">Story / Reel / TikTok — 1080 × 1920</option>
+            <option value="1640x624">Facebook cover — 1640 × 624</option>
+            <option value="1584x396">LinkedIn banner — 1584 × 396</option>
+            <option value="1000x1500">Pinterest pin — 1000 × 1500</option>
+            <option value="800x800">Profile image — 800 × 800</option>
+            <option value="400x300">Small thumbnail — 400 × 300</option>
+          </select>
+          <p class="format-note">Fit uses these dimensions as maximum bounds; Fill and Stretch create outputs at the exact selected size.</p>
+        </div>
+        <div class="field">
           <span class="field-title">Image dimensions</span>
           <div class="dimensions">
             <div>
@@ -690,13 +708,56 @@
               <input type="number" id="heightInput" min="1" max="20000" value="800">
             </div>
           </div>
-          <label class="checkbox-row" for="keepRatio">
-            <input type="checkbox" id="keepRatio" checked>
-            Keep aspect ratio
-          </label>
-          <p class="format-note">
-            Each image keeps its own proportions when this option is enabled.
+          <label for="resizeMode">Resize method</label>
+          <select id="resizeMode">
+            <option value="fit" selected>Fit inside dimensions (no crop)</option>
+            <option value="cover">Fill dimensions and crop edges</option>
+            <option value="stretch">Stretch to exact dimensions</option>
+          </select>
+          <p class="format-note" id="resizeModeHelp">
+            Fit keeps each photo's proportions and stays within the selected width and height. Fill crops the edges to make every output exactly the selected size. Stretch may distort the image.
           </p>
+        </div>
+
+        <div class="field">
+          <label for="filenameSuffix">Output filename suffix</label>
+          <input type="text" id="filenameSuffix" maxlength="40" value="-resized" placeholder="-resized" aria-describedby="filenameHelp">
+          <p class="format-note" id="filenameHelp">Example: photo-resized.webp. Leave blank to keep the original base filename.</p>
+        </div>
+
+        <div class="field">
+          <label for="borderWidth">Border (optional)</label>
+          <div class="dimensions">
+            <div>
+              <label for="borderWidth">Thickness (px)</label>
+              <input type="number" id="borderWidth" min="0" max="100" value="0">
+            </div>
+            <div>
+              <label for="borderColor">Color</label>
+              <input type="color" id="borderColor" value="#ffffff" style="width:100%;min-height:44px;background:#0d1729;border:1px solid var(--border);border-radius:9px;padding:5px;">
+            </div>
+          </div>
+          <p class="format-note">Set thickness to 0 to disable the border. The border is drawn inside the final image dimensions.</p>
+          <label for="watermarkText" style="margin-top:16px;">Text watermark (optional)</label>
+          <input type="text" id="watermarkText" maxlength="80" placeholder="Your brand or website" style="width:100%;padding:12px;border:1px solid var(--border);border-radius:9px;background:#0d1729;color:white;font:inherit;">
+          <div class="dimensions" style="margin-top:12px;">
+            <div>
+              <label for="watermarkPosition">Position</label>
+              <select id="watermarkPosition">
+                <option value="bottom-right" selected>Bottom right</option>
+                <option value="bottom-left">Bottom left</option>
+                <option value="top-right">Top right</option>
+                <option value="top-left">Top left</option>
+                <option value="center">Center</option>
+              </select>
+            </div>
+            <div>
+              <label for="watermarkOpacity">Opacity</label>
+              <input type="range" id="watermarkOpacity" min="10" max="100" value="70" style="width:100%;margin-top:12px;">
+              <span id="watermarkOpacityValue" class="format-note">70%</span>
+            </div>
+          </div>
+          <p class="format-note">A simple text watermark is added to each output. Keep important details away from the selected watermark position.</p>
         </div>
 
         <div class="field">
@@ -769,10 +830,22 @@
         <li>Click Choose Images or drag and drop your images into the upload area.</li>
         <li>Check the previews and remove any image you do not need.</li>
         <li>Enter your desired width and height in pixels.</li>
-        <li>Keep the aspect ratio enabled to avoid stretching photos.</li>
-        <li>Choose JPG, PNG or WebP and click “Resize all images”.</li>
+        <li>Choose a quick preset or enter exact width and height in pixels.</li>
+        <li>Select Fit to preserve proportions, Fill and crop to make exact-size images, or Stretch to force the dimensions.</li>
+        <li>Choose JPG, PNG or WebP, adjust quality when supported, and set an optional filename suffix.</li>
+        <li>Click “Resize all images” and download individual results or the ZIP archive.</li>
         <li>Download individual images or click “Download All as ZIP”.</li>
       </ol>
+
+      <h3>Fit, crop or stretch: which method should I use?</h3>
+      <ul>
+        <li><strong>Fit inside dimensions:</strong> keeps the full image and its proportions. The final dimensions may be smaller than the selected box.</li>
+        <li><strong>Fill dimensions and crop:</strong> fills the exact width and height, cropping the outer edges from the center. Check the preview if the subject is close to an edge.</li>
+        <li><strong>Stretch:</strong> forces the exact dimensions but can distort faces, objects and shapes. Use only when distortion is acceptable.</li>
+      </ul>
+
+      <h3>Useful image sizes</h3>
+      <p>Start with a preset for common social and web formats, then adjust the pixel dimensions to match the platform's current requirements. Social networks can change their recommended sizes, and the crop method may remove parts near the edges.</p>
 
       <h3>Choose the right image format</h3>
       <ul>
@@ -805,7 +878,7 @@
 
       <div class="faq-item">
         <h3>Will my images be stretched?</h3>
-        <p>Not if “Keep aspect ratio” is enabled. Each photo is scaled to fit within the selected dimensions without being stretched.</p>
+        <p>Choose Fit to preserve proportions without cropping. Fill crops the edges to reach the exact size, while Stretch may distort the image.</p>
       </div>
 
       <div class="faq-item">
@@ -853,7 +926,15 @@
 
       const widthInput = document.getElementById("widthInput");
       const heightInput = document.getElementById("heightInput");
-      const keepRatio = document.getElementById("keepRatio");
+      const sizePreset = document.getElementById("sizePreset");
+      const resizeMode = document.getElementById("resizeMode");
+      const filenameSuffix = document.getElementById("filenameSuffix");
+      const borderWidth = document.getElementById("borderWidth");
+      const borderColor = document.getElementById("borderColor");
+      const watermarkText = document.getElementById("watermarkText");
+      const watermarkPosition = document.getElementById("watermarkPosition");
+      const watermarkOpacity = document.getElementById("watermarkOpacity");
+      const watermarkOpacityValue = document.getElementById("watermarkOpacityValue");
       const formatSelect = document.getElementById("formatSelect");
       const qualityInput = document.getElementById("qualityInput");
       const qualityValue = document.getElementById("qualityValue");
@@ -1102,15 +1183,12 @@
         });
       }
 
-      function calculateDimensions(originalWidth, originalHeight, targetWidth, targetHeight) {
+      function calculateDimensions(originalWidth, originalHeight, targetWidth, targetHeight, mode) {
         let width = targetWidth;
         let height = targetHeight;
 
-        if (keepRatio.checked) {
-          const scale = Math.min(
-            targetWidth / originalWidth,
-            targetHeight / originalHeight
-          );
+        if (mode === "fit") {
+          const scale = Math.min(targetWidth / originalWidth, targetHeight / originalHeight);
           width = Math.max(1, Math.round(originalWidth * scale));
           height = Math.max(1, Math.round(originalHeight * scale));
         }
@@ -1118,11 +1196,9 @@
         if (width > MAX_DIMENSION || height > MAX_DIMENSION) {
           throw new Error("The requested dimensions are too large.");
         }
-
         if (width * height > MAX_PIXELS) {
           throw new Error("The output would exceed the 40-megapixel safety limit. Choose smaller dimensions.");
         }
-
         return { width, height };
       }
 
@@ -1144,7 +1220,8 @@
           img.naturalWidth,
           img.naturalHeight,
           settings.width,
-          settings.height
+          settings.height,
+          settings.mode
         );
 
         const canvas = document.createElement("canvas");
@@ -1164,7 +1241,54 @@
 
           context.imageSmoothingEnabled = true;
           context.imageSmoothingQuality = "high";
-          context.drawImage(img, 0, 0, dimensions.width, dimensions.height);
+          if (settings.mode === "cover") {
+            const sourceRatio = img.naturalWidth / img.naturalHeight;
+            const targetRatio = dimensions.width / dimensions.height;
+            let sx = 0, sy = 0, sw = img.naturalWidth, sh = img.naturalHeight;
+            if (sourceRatio > targetRatio) {
+              sw = img.naturalHeight * targetRatio;
+              sx = (img.naturalWidth - sw) / 2;
+            } else {
+              sh = img.naturalWidth / targetRatio;
+              sy = (img.naturalHeight - sh) / 2;
+            }
+            context.drawImage(img, sx, sy, sw, sh, 0, 0, dimensions.width, dimensions.height);
+          } else {
+            context.drawImage(img, 0, 0, dimensions.width, dimensions.height);
+          }
+
+          const border = settings.borderWidth;
+          if (Number.isInteger(border) && border > 0) {
+            context.save();
+            context.strokeStyle = settings.borderColor;
+            context.lineWidth = Math.min(border * 2, Math.min(canvas.width, canvas.height));
+            context.strokeRect(context.lineWidth / 2, context.lineWidth / 2,
+              Math.max(0, canvas.width - context.lineWidth),
+              Math.max(0, canvas.height - context.lineWidth));
+            context.restore();
+          }
+
+          const watermark = settings.watermarkText;
+          if (watermark) {
+            context.save();
+            const fontSize = Math.max(12, Math.min(48, Math.round(Math.min(canvas.width, canvas.height) * 0.045)));
+            const padding = Math.max(10, Math.round(fontSize * 0.55));
+            context.font = "700 " + fontSize + "px Arial, sans-serif";
+            context.textBaseline = "middle";
+            context.globalAlpha = settings.watermarkOpacity / 100;
+            context.fillStyle = "#ffffff";
+            context.strokeStyle = "rgba(0,0,0,0.65)";
+            context.lineWidth = Math.max(2, fontSize * 0.12);
+            const metrics = context.measureText(watermark);
+            let x = padding, y = canvas.height - padding - fontSize / 2;
+            if (settings.watermarkPosition.includes("right")) x = canvas.width - padding - metrics.width;
+            if (settings.watermarkPosition.includes("top")) y = padding + fontSize / 2;
+            if (settings.watermarkPosition === "center") { x = (canvas.width - metrics.width) / 2; y = canvas.height / 2; }
+            x = Math.max(padding, Math.min(x, Math.max(padding, canvas.width - metrics.width - padding)));
+            context.strokeText(watermark, x, y);
+            context.fillText(watermark, x, y);
+            context.restore();
+          }
 
           const blob = await canvasToBlob(canvas, settings.mimeType, settings.quality);
 
@@ -1173,7 +1297,8 @@
           }
 
           const extension = getExtension(blob.type);
-          const outputName = safeBaseName(file.name) + "-resized." + extension;
+          const suffix = settings.suffix.replace(/[<>:"/\\|?*\x00-\x1F]/g, "_").trim();
+          const outputName = safeBaseName(file.name) + suffix + "." + extension;
 
           return {
             originalFile: file,
@@ -1329,7 +1454,14 @@
           width,
           height,
           mimeType: formatSelect.value,
-          quality: Number(qualityInput.value) / 100
+          quality: Number(qualityInput.value) / 100,
+          mode: resizeMode.value,
+          suffix: filenameSuffix.value,
+          borderWidth: Number(borderWidth.value) || 0,
+          borderColor: borderColor.value,
+          watermarkText: watermarkText.value.trim(),
+          watermarkPosition: watermarkPosition.value,
+          watermarkOpacity: Number(watermarkOpacity.value) || 70
         };
 
         let succeeded = 0;
@@ -1464,13 +1596,48 @@
       resizeBtn.addEventListener("click", resizeAll);
       downloadZipBtn.addEventListener("click", downloadZip);
       qualityInput.addEventListener("input", updateQualityControl);
+      watermarkOpacity.addEventListener("input", () => {
+        watermarkOpacityValue.textContent = watermarkOpacity.value + "%";
+      });
+      resizeMode.addEventListener("change", () => {
+        const help = {
+          fit: "Fit keeps each photo's proportions and stays within the selected width and height.",
+          cover: "Fill crops the center edges as needed so every output matches the exact selected width and height.",
+          stretch: "Stretch forces the exact dimensions and may distort the image."
+        };
+        document.getElementById("resizeModeHelp").textContent = help[resizeMode.value];
+      });
+
+      sizePreset.addEventListener("change", () => {
+        if (sizePreset.value === "custom") return;
+        const parts = sizePreset.value.split("x").map(Number);
+        if (parts.length === 2 && parts.every(Number.isInteger)) {
+          widthInput.value = String(parts[0]);
+          heightInput.value = String(parts[1]);
+        }
+      });
+
+      widthInput.addEventListener("input", () => {
+        sizePreset.value = "custom";
+      });
+      heightInput.addEventListener("input", () => {
+        sizePreset.value = "custom";
+      });
 
       resetBtn.addEventListener("click", () => {
         if (isProcessing) return;
 
         widthInput.value = "1200";
         heightInput.value = "800";
-        keepRatio.checked = true;
+        sizePreset.value = "1200x800";
+        resizeMode.value = "fit";
+        filenameSuffix.value = "-resized";
+        borderWidth.value = "0";
+        borderColor.value = "#ffffff";
+        watermarkText.value = "";
+        watermarkPosition.value = "bottom-right";
+        watermarkOpacity.value = "70";
+        watermarkOpacityValue.textContent = "70%";
         formatSelect.value = "image/webp";
         qualityInput.value = "85";
         updateQualityControl();
