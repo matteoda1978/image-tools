@@ -6,12 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>WebP to JPG Converter Online Free | RitoccaPix</title>
-  <meta name="description" content="Convert WebP images to JPG online for free. Preview your image and download the JPG file directly in your browser. No installation required.">
+  <meta name="description" content="Convert WebP to JPG online for free. Batch convert images in your browser, adjust JPG quality and background color, preview results, and download JPGs or a numbered ZIP.">
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://ritoccapix.com/webp-to-jpg.html">
   <meta name="theme-color" content="#080d18">
   <meta property="og:title" content="WebP to JPG Converter Online Free">
-  <meta property="og:description" content="Convert WebP images to JPG in your browser. Free, simple and private.">
+  <meta property="og:description" content="Batch convert WebP images to JPG in your browser. Adjust quality and background color, preview results, and download a numbered ZIP.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://ritoccapix.com/webp-to-jpg.html">
 
@@ -243,7 +243,17 @@
       margin-top: 20px;
       color: #062316;
       background: var(--green);
+      border: 0;
     }
+
+    .results-list { display:grid; gap:14px; margin-top:18px; }
+    .result-item { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.2fr); gap:16px; padding:16px; border:1px solid var(--border); border-radius:12px; background:var(--card2); }
+    .result-item img { display:block; max-width:100%; max-height:220px; margin:auto; object-fit:contain; background:#fff; border-radius:8px; }
+    .result-item h3 { margin:0 0 10px; overflow-wrap:anywhere; }
+    .result-item p { margin:6px 0; color:var(--muted); font-size:14px; }
+    .result-item a { display:inline-block; margin-top:8px; color:var(--accent); font-weight:700; overflow-wrap:anywhere; }
+    .settings-note { color:var(--muted); font-size:13px; }
+    @media(max-width:600px){.result-item{grid-template-columns:1fr}}
 
     .content h2 { margin-top: 0; }
     .content h3 { margin-top: 25px; }
@@ -288,60 +298,47 @@
     <section class="hero">
       <h1>Convert WebP to JPG Online</h1>
       <p>
-        Convert WebP images to JPG for free in seconds.
-        Preview your converted image and download it directly to your device.
-        No software installation required.
+        Convert WebP images to JPG in batches, adjust quality and background color,
+        preview each result, and download JPGs or a uniquely named ZIP.
+        Free to use in your browser with no software installation.
       </p>
     </section>
 
     <section class="panel" aria-label="WebP to JPG conversion tool">
       <div class="drop-zone" id="dropZone">
         <div class="upload-icon" aria-hidden="true">🖼️</div>
-        <h2>Select a WebP Image</h2>
-        <p>Choose a WebP file from your device to convert it to JPG.</p>
-        <input type="file" id="fileInput" accept="image/webp,.webp">
-        <p>Your image is processed locally in your browser.</p>
+        <h2>Select WebP Images</h2>
+        <p>Choose one or multiple WebP files. Batch conversion runs on your device.</p>
+        <input type="file" id="fileInput" accept="image/webp,.webp" multiple>
+        <p>Up to 50 images per batch · 50 MB per file · 40 megapixels per image.</p>
       </div>
 
-      <button type="button" id="convertBtn" class="primary" disabled>
-        Convert WebP to JPG
-      </button>
+      <div class="info" style="margin-top:18px">
+        <div><label for="quality"><strong>JPG quality: <span id="qualityValue">92</span>%</strong></label><input id="quality" type="range" min="50" max="100" value="92" style="display:block;width:100%;margin-top:12px;accent-color:var(--accent)"></div>
+        <div><label for="background"><strong>Background for transparency</strong></label><input id="background" type="color" value="#ffffff" style="display:block;width:100%;height:42px;margin-top:8px;background:transparent;border:0;cursor:pointer"></div>
+      </div>
 
-      <button type="button" id="clearBtn" class="secondary">
-        Clear and start again
-      </button>
-
+      <div id="selectedFiles" class="status" style="display:block" role="status">No images selected.</div>
+      <button type="button" id="convertBtn" class="primary" disabled>Convert to JPG</button>
+      <button type="button" id="clearBtn" class="secondary">Clear and start again</button>
       <div id="error" class="status error" role="alert"></div>
       <div id="message" class="status success" role="status"></div>
 
       <div id="result" class="result">
-        <h2>Conversion complete!</h2>
-
-        <div class="info">
-          <div><strong>Original format</strong><br><span id="originalFormat">WebP</span></div>
-          <div><strong>Output format</strong><br><span id="newFormat">JPG</span></div>
-          <div><strong>Image dimensions</strong><br><span id="dimensions">—</span></div>
-          <div><strong>JPG file size</strong><br><span id="newSize">—</span></div>
-        </div>
-
-        <div class="preview">
-          <h3>JPG Preview</h3>
-          <img id="preview" alt="Preview of the converted JPG image">
-        </div>
-
-        <a id="download" class="download" download>
-          Download JPG Image
-        </a>
+        <h2>Conversion complete</h2>
+        <p id="resultSummary"></p>
+        <button type="button" id="downloadZip" class="download" hidden>Download all JPGs as ZIP</button>
+        <div id="resultsList" class="results-list"></div>
       </div>
     </section>
 
     <section class="content">
       <h2>Free WebP to JPG Converter</h2>
       <p>
-        RitoccaPix makes it easy to convert WebP to JPG online.
-        Select your WebP image, start the conversion, preview the result
-        and download the new JPG file. The conversion happens in your browser,
-        so your selected image is not intentionally uploaded to our server.
+        RitoccaPix converts one or multiple WebP images to JPG in your browser.
+        Choose the JPG quality and the background color for transparent areas,
+        preview each result, and download individual JPGs or a ZIP archive for a batch.
+        Your selected image files are processed locally and are not intentionally uploaded to our server.
       </p>
 
       <h3>Why convert WebP to JPG?</h3>
@@ -353,8 +350,7 @@
 
       <h3>Does JPG support transparency?</h3>
       <p>
-        No. JPG does not support transparent backgrounds. Any transparent areas
-        in the original image are filled with white during conversion.
+        No. JPG does not support transparency. Choose the background color before conversion; transparent areas are filled with that color in the JPG output.
       </p>
 
       <h3>Will the converted JPG look exactly the same?</h3>
@@ -384,8 +380,7 @@
 
       <h3>How do I convert WebP to JPG?</h3>
       <p>
-        Select a WebP image, click Convert WebP to JPG, then download the
-        converted image when the preview appears.
+        Select one or more WebP images, adjust quality and the background color if needed, then click Convert to JPG. Download a single JPG or use the numbered ZIP for a batch.
       </p>
 
       <h3>Is this WebP to JPG converter free?</h3>
@@ -404,9 +399,16 @@
       </p>
 
       <h3>Does the converter change image dimensions?</h3>
-      <p>
-        No. This tool keeps the original image width and height during conversion.
-      </p>
+      <p>No. The converter keeps each image's original width and height. Images above the 40-megapixel safety limit are skipped.</p>
+
+      <h3>Can I convert multiple WebP images at once?</h3>
+      <p>Yes. Select up to 50 WebP images. Successful results can be downloaded individually or together as a ZIP archive with a unique timestamp and sequence number in its filename.</p>
+
+      <h3>Are my images uploaded to a server?</h3>
+      <p>The selected image files are processed in your browser and are not intentionally uploaded to RitoccaPix servers. The page still loads its website code and the external ZIP library when you create a batch archive.</p>
+
+      <h3>Does the JPG keep the original EXIF metadata?</h3>
+      <p>The browser canvas creates a new JPG and does not preserve all original EXIF metadata. Keep your original WebP file if you need its original metadata.</p>
     </section>
   </main>
 
@@ -415,244 +417,198 @@
     <a href="index.html">Home</a>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
   <script>
     "use strict";
-
-    const fileInput = document.getElementById("fileInput");
-    const dropZone = document.getElementById("dropZone");
-    const convertBtn = document.getElementById("convertBtn");
-    const clearBtn = document.getElementById("clearBtn");
-    const result = document.getElementById("result");
-    const errorBox = document.getElementById("error");
-    const messageBox = document.getElementById("message");
-    const preview = document.getElementById("preview");
-    const download = document.getElementById("download");
-
-    const originalFormat = document.getElementById("originalFormat");
-    const newFormat = document.getElementById("newFormat");
-    const dimensions = document.getElementById("dimensions");
-    const newSize = document.getElementById("newSize");
-
+    const $ = id => document.getElementById(id);
+    const fileInput = $("fileInput");
+    const dropZone = $("dropZone");
+    const convertBtn = $("convertBtn");
+    const clearBtn = $("clearBtn");
+    const result = $("result");
+    const errorBox = $("error");
+    const messageBox = $("message");
+    const selectedFilesBox = $("selectedFiles");
+    const quality = $("quality");
+    const qualityValue = $("qualityValue");
+    const background = $("background");
+    const resultSummary = $("resultSummary");
+    const resultsList = $("resultsList");
+    const downloadZip = $("downloadZip");
     const MAX_FILE_SIZE = 50 * 1024 * 1024;
     const MAX_PIXELS = 40000000;
-
-    let selectedFile = null;
-    let previewUrl = null;
-    let conversionId = 0;
+    const MAX_FILES = 50;
+    let selectedFiles = [];
+    let outputUrls = [];
     let isConverting = false;
+    let conversionId = 0;
+    let zipDownloadCounter = 0;
 
     function formatBytes(bytes) {
       if (bytes < 1024) return bytes + " B";
       if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
       return (bytes / (1024 * 1024)).toFixed(2) + " MB";
     }
-
+    function hideMessages() { errorBox.style.display = "none"; messageBox.style.display = "none"; }
+    function showError(text) { errorBox.textContent = text; errorBox.style.display = "block"; }
+    function showMessage(text) { messageBox.textContent = text; messageBox.style.display = "block"; }
     function clearOutput() {
       result.style.display = "none";
-
-      if (previewUrl) {
-        URL.revokeObjectURL(previewUrl);
-        previewUrl = null;
-      }
-
-      preview.removeAttribute("src");
-      download.removeAttribute("href");
-      download.removeAttribute("download");
+      resultsList.innerHTML = "";
+      resultSummary.textContent = "";
+      downloadZip.hidden = true;
+      downloadZip.disabled = false;
+      outputUrls.forEach(url => URL.revokeObjectURL(url));
+      outputUrls = [];
     }
-
-    function hideMessages() {
-      errorBox.style.display = "none";
-      messageBox.style.display = "none";
+    function isWebP(file) { return file.type === "image/webp" || /\.webp$/i.test(file.name); }
+    function formatName(name) { return (name || "image").replace(/\.webp$/i, "") || "image"; }
+    function uniqueName(name, used) {
+      const base = formatName(name);
+      let candidate = base + ".jpg";
+      let n = 2;
+      while (used.has(candidate.toLowerCase())) { candidate = base + "-" + n + ".jpg"; n++; }
+      used.add(candidate.toLowerCase());
+      return candidate;
     }
-
-    function showError(text) {
-      errorBox.textContent = text;
-      errorBox.style.display = "block";
+    function makeZipFilename() {
+      zipDownloadCounter++;
+      const d = new Date();
+      const stamp = [d.getFullYear(), String(d.getMonth()+1).padStart(2,"0"), String(d.getDate()).padStart(2,"0"), "-", String(d.getHours()).padStart(2,"0"), String(d.getMinutes()).padStart(2,"0"), String(d.getSeconds()).padStart(2,"0"), "-", String(d.getMilliseconds()).padStart(3,"0")].join("");
+      return "webp-to-jpg-" + stamp + "-" + zipDownloadCounter + ".zip";
     }
-
-    function showMessage(text) {
-      messageBox.textContent = text;
-      messageBox.style.display = "block";
-    }
-
-    function finishConversion(id) {
-      if (id !== conversionId) return;
-      isConverting = false;
-      convertBtn.disabled = !selectedFile;
-      convertBtn.textContent = "Convert WebP to JPG";
-    }
-
-    function isWebP(file) {
-      return file.type === "image/webp" || /\.webp$/i.test(file.name);
-    }
-
-    function selectFile(file) {
+    function updateSelectedFiles(files) {
       if (isConverting) return;
-
       conversionId++;
-      clearOutput();
-      hideMessages();
-      selectedFile = null;
+      clearOutput(); hideMessages();
+      const all = Array.from(files || []);
+      selectedFiles = [];
       fileInput.value = "";
-
-      if (!file) {
+      if (!all.length) {
+        selectedFilesBox.textContent = "No images selected.";
         convertBtn.disabled = true;
         return;
       }
-
-      if (!isWebP(file)) {
-        convertBtn.disabled = true;
-        showError("Please select a WebP image (.webp).");
-        return;
+      const invalid = all.filter(file => !isWebP(file));
+      if (invalid.length) {
+        showError("Please select only WebP (.webp) images. " + invalid.length + " unsupported file(s) were ignored.");
       }
-
-      if (file.size > MAX_FILE_SIZE) {
-        convertBtn.disabled = true;
-        showError("This file is larger than 50 MB. Please choose a smaller image.");
-        return;
+      const oversized = all.filter(file => isWebP(file) && file.size > MAX_FILE_SIZE);
+      if (oversized.length) showError("Files larger than 50 MB were excluded: " + oversized.map(f => f.name).join(", "));
+      selectedFiles = all.filter(file => isWebP(file) && file.size <= MAX_FILE_SIZE).slice(0, MAX_FILES);
+      if (all.filter(isWebP).length > MAX_FILES) showError("Only the first 50 WebP images can be converted in one batch.");
+      selectedFilesBox.textContent = selectedFiles.length ? "Preparing selected images…" : "No supported images selected.";
+      if (selectedFiles.length) {
+        const totalMB = (selectedFiles.reduce((sum, f) => sum + f.size, 0) / (1024*1024)).toFixed(2);
+        selectedFilesBox.textContent = selectedFiles.length + " WebP image(s) selected · " + totalMB + " MB total.";
+        if (!oversized.length && !invalid.length && all.length <= MAX_FILES) showMessage("Ready to convert. Your image files are processed locally in this browser.");
       }
-
-      selectedFile = file;
-      convertBtn.disabled = false;
-      showMessage("Selected: " + file.name);
+      convertBtn.disabled = selectedFiles.length === 0;
     }
-
-    fileInput.addEventListener("change", function () {
-      const file = fileInput.files && fileInput.files[0];
-      selectFile(file);
+    quality.addEventListener("input", () => { qualityValue.textContent = quality.value; });
+    fileInput.addEventListener("change", () => updateSelectedFiles(fileInput.files));
+    dropZone.addEventListener("dragover", event => { event.preventDefault(); if (!isConverting) dropZone.style.borderColor = "var(--accent)"; });
+    dropZone.addEventListener("dragleave", () => { dropZone.style.borderColor = "#526483"; });
+    dropZone.addEventListener("drop", event => {
+      event.preventDefault(); dropZone.style.borderColor = "#526483";
+      if (!isConverting) updateSelectedFiles(event.dataTransfer.files);
     });
-
-    dropZone.addEventListener("dragover", function (event) {
-      event.preventDefault();
-      if (!isConverting) dropZone.style.borderColor = "#91aaff";
-    });
-
-    dropZone.addEventListener("dragleave", function () {
-      dropZone.style.borderColor = "#526483";
-    });
-
-    dropZone.addEventListener("drop", function (event) {
-      event.preventDefault();
-      dropZone.style.borderColor = "#526483";
+    clearBtn.addEventListener("click", () => {
       if (isConverting) return;
-
-      const file = event.dataTransfer.files && event.dataTransfer.files[0];
-      selectFile(file);
+      conversionId++; selectedFiles = []; fileInput.value = ""; convertBtn.disabled = true;
+      selectedFilesBox.textContent = "No images selected."; clearOutput(); hideMessages();
     });
-
-    clearBtn.addEventListener("click", function () {
-      if (isConverting) return;
-
-      conversionId++;
-      selectedFile = null;
-      fileInput.value = "";
-      convertBtn.disabled = true;
-      convertBtn.textContent = "Convert WebP to JPG";
-      clearOutput();
-      hideMessages();
-    });
-
-    convertBtn.addEventListener("click", function () {
-      if (!selectedFile || isConverting) return;
-
-      const file = selectedFile;
-      const currentId = ++conversionId;
-
-      clearOutput();
-      hideMessages();
-      isConverting = true;
-      convertBtn.disabled = true;
-      convertBtn.textContent = "Converting…";
-
-      const objectUrl = URL.createObjectURL(file);
-      const image = new Image();
-      let finished = false;
-
-      function finish() {
-        if (finished) return;
-        finished = true;
-        URL.revokeObjectURL(objectUrl);
-        finishConversion(currentId);
-      }
-
-      image.onload = function () {
-        if (currentId !== conversionId) {
-          finish();
-          return;
+    function loadImage(file) {
+      return new Promise((resolve, reject) => {
+        const url = URL.createObjectURL(file);
+        const img = new Image();
+        img.onload = () => { URL.revokeObjectURL(url); resolve({img, width: img.naturalWidth, height: img.naturalHeight}); };
+        img.onerror = () => { URL.revokeObjectURL(url); reject(new Error("The browser could not open this WebP image.")); };
+        img.src = url;
+      });
+    }
+    async function convertFile(file) {
+      const loaded = await loadImage(file);
+      const {img, width, height} = loaded;
+      if (!width || !height || width * height > MAX_PIXELS) throw new Error("Image exceeds the 40-megapixel processing limit.");
+      const canvas = document.createElement("canvas"); canvas.width = width; canvas.height = height;
+      const ctx = canvas.getContext("2d", {alpha:false});
+      if (!ctx) throw new Error("Canvas processing is unavailable in this browser.");
+      ctx.fillStyle = background.value || "#ffffff"; ctx.fillRect(0, 0, width, height); ctx.drawImage(img, 0, 0);
+      const blob = await new Promise((resolve, reject) => canvas.toBlob(b => b ? resolve(b) : reject(new Error("JPG encoding failed.")), "image/jpeg", Number(quality.value)/100));
+      return {blob, width, height, originalSize:file.size, originalName:file.name};
+    }
+    function downloadBlob(blob, filename) {
+      const url = URL.createObjectURL(blob); const a = document.createElement("a");
+      a.href = url; a.download = filename; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1500);
+    }
+    function renderResults(items) {
+      resultsList.innerHTML = "";
+      items.forEach(item => {
+        const card = document.createElement("article"); card.className = "result-item";
+        const img = document.createElement("img"); img.src = item.url; img.alt = "Converted JPG preview: " + item.name;
+        const details = document.createElement("div");
+        const heading = document.createElement("h3"); heading.textContent = item.name;
+        const dimensions = document.createElement("p"); dimensions.textContent = "Dimensions: " + item.width + " × " + item.height + " px";
+        const sizes = document.createElement("p");
+        const delta = item.originalSize ? Math.round((1 - item.blob.size/item.originalSize)*100) : 0;
+        sizes.textContent = "Original: " + formatBytes(item.originalSize) + " · JPG: " + formatBytes(item.blob.size) + (delta >= 0 ? " · " + delta + "% smaller" : " · " + Math.abs(delta) + "% larger");
+        const link = document.createElement("a"); link.href = item.url; link.download = item.name; link.textContent = "Download " + item.name;
+        details.append(heading, dimensions, sizes, link); card.append(img, details); resultsList.appendChild(card);
+      });
+    }
+    convertBtn.addEventListener("click", async () => {
+      if (!selectedFiles.length || isConverting) return;
+      const batch = selectedFiles.slice(); const currentId = ++conversionId;
+      isConverting = true; convertBtn.disabled = true; clearBtn.disabled = true;
+      convertBtn.textContent = "Converting…"; clearOutput(); hideMessages();
+      const converted = []; const failures = []; const used = new Set();
+      try {
+        for (let i = 0; i < batch.length; i++) {
+          if (currentId !== conversionId) return;
+          showMessage("Converting image " + (i+1) + " of " + batch.length + "…");
+          try {
+            const item = await convertFile(batch[i]);
+            item.name = uniqueName(batch[i].name, used); item.url = URL.createObjectURL(item.blob); outputUrls.push(item.url);
+            converted.push(item);
+          } catch (err) { failures.push(batch[i].name + ": " + (err && err.message ? err.message : "conversion failed")); }
         }
-
-        const width = image.naturalWidth;
-        const height = image.naturalHeight;
-
-        if (!width || !height || width * height > MAX_PIXELS) {
-          finish();
-          if (currentId === conversionId) {
-            showError("This image is too large to process safely. Please try a smaller image.");
+        if (currentId !== conversionId) return;
+        if (!converted.length) throw new Error("No images could be converted. Check that the files are valid WebP images and within the size limits.");
+        renderResults(converted);
+        resultSummary.textContent = converted.length + " of " + batch.length + " image(s) converted successfully" + (failures.length ? "; " + failures.length + " failed." : ".");
+        result.style.display = "block";
+        if (converted.length > 1) {
+          if (typeof JSZip === "undefined") {
+            showError("The images were converted, but the ZIP library did not load. Download each JPG using the links below.");
+          } else {
+            showMessage("Conversion complete. Click Download all JPGs as ZIP to save the batch.");
+            const zip = new JSZip();
+            converted.forEach(item => zip.file(item.name, item.blob));
+            const zipBlob = await zip.generateAsync({type:"blob"});
+            downloadZip.hidden = false;
+            downloadZip.textContent = "Download all JPGs as ZIP";
+            downloadZip.onclick = () => {
+              const zipName = makeZipFilename();
+              downloadBlob(zipBlob, zipName);
+              showMessage("ZIP downloaded: " + zipName);
+              downloadZip.textContent = "Download ZIP again with a new filename";
+            };
           }
-          return;
+        } else {
+          const one = converted[0]; downloadBlob(one.blob, one.name);
         }
-
-        try {
-          const canvas = document.createElement("canvas");
-          canvas.width = width;
-          canvas.height = height;
-
-          const context = canvas.getContext("2d");
-
-          if (!context) {
-            finish();
-            showError("Your browser could not process this image. Please try another browser.");
-            return;
-          }
-
-          context.fillStyle = "#ffffff";
-          context.fillRect(0, 0, width, height);
-          context.drawImage(image, 0, 0);
-
-          canvas.toBlob(function (blob) {
-            finish();
-
-            if (currentId !== conversionId) return;
-
-            if (!blob || blob.type !== "image/jpeg") {
-              showError("JPG conversion failed. Please try another browser or a smaller image.");
-              return;
-            }
-
-            previewUrl = URL.createObjectURL(blob);
-
-            originalFormat.textContent = "WebP";
-            newFormat.textContent = "JPG";
-            dimensions.textContent = width + " × " + height + " px";
-            newSize.textContent = formatBytes(blob.size);
-
-            preview.src = previewUrl;
-
-            const baseName = file.name.replace(/\.webp$/i, "") || "image";
-            download.href = previewUrl;
-            download.download = baseName + ".jpg";
-
-            result.style.display = "block";
-            showMessage("Your WebP image has been converted to JPG successfully.");
-            result.scrollIntoView({ behavior: "smooth", block: "start" });
-          }, "image/jpeg", 0.92);
-
-        } catch (error) {
-          finish();
-          if (currentId === conversionId) {
-            showError("Something went wrong during conversion. Please try a smaller image.");
-          }
-        }
-      };
-
-      image.onerror = function () {
-        finish();
+        if (failures.length) showError("Some files could not be converted: " + failures.join(" | "));
+        else if (converted.length === 1) showMessage("JPG created and downloaded. Your original image was not changed.");
+        result.scrollIntoView({behavior:"smooth", block:"start"});
+      } catch (err) {
+        if (currentId === conversionId) showError(err && err.message ? err.message : "Conversion failed. Please try another image.");
+      } finally {
         if (currentId === conversionId) {
-          showError("The browser could not open this WebP image. Please try another file.");
+          isConverting = false; convertBtn.disabled = selectedFiles.length === 0; clearBtn.disabled = false; convertBtn.textContent = "Convert to JPG";
         }
-      };
-
-      image.src = objectUrl;
+      }
     });
   </script>
 </body>
