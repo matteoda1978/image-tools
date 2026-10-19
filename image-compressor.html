@@ -621,24 +621,32 @@ footer a { margin: 0 8px; }
       throw new Error("Width and height must be whole numbers between 1 and 30,000.");
     }
 
-    if (!maxW && !maxH) return { width, height };
-
-    if ($("keepRatio").checked) {
+    let output;
+    if (!maxW && !maxH) {
+      output = { width, height };
+    } else if ($("keepRatio").checked) {
       const scale = Math.min(
         maxW ? maxW / width : Infinity,
         maxH ? maxH / height : Infinity,
         1
       );
-      return {
+      output = {
         width: Math.max(1, Math.round(width * scale)),
         height: Math.max(1, Math.round(height * scale))
       };
+    } else {
+      output = {
+        width: maxW || width,
+        height: maxH || height
+      };
     }
 
-    return {
-      width: maxW || width,
-      height: maxH || height
-    };
+    if (output.width > MAX_DIMENSION || output.height > MAX_DIMENSION ||
+        output.width * output.height > MAX_PIXELS) {
+      throw new Error("The output dimensions are too large. Use a smaller width or height (maximum 40 megapixels per image).");
+    }
+
+    return output;
   }
 
   function canvasBlob(canvas, mime, q) {
@@ -680,19 +688,24 @@ footer a { margin: 0 8px; }
       if (settings.targetBytes > 0 && blob.size > settings.targetBytes) {
         let low = 0.05;
         let high = q;
-        let best = blob;
+        let bestUnderTarget = null;
+        let smallestCandidate = blob;
 
         for (let i = 0; i < 7; i++) {
           const mid = (low + high) / 2;
           const candidate = await canvasBlob(canvas, settings.mime, mid);
+          if (candidate.size < smallestCandidate.size) {
+            smallestCandidate = candidate;
+          }
           if (candidate.size <= settings.targetBytes) {
-            best = candidate;
+            bestUnderTarget = candidate;
             low = mid;
           } else {
             high = mid;
           }
         }
-        blob = best;
+        // If the target cannot be reached, still return the smallest tested version.
+        blob = bestUnderTarget || smallestCandidate;
       }
     }
 
