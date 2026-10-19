@@ -245,6 +245,23 @@
       font-weight: 700;
     }
 
+    input[type="color"] {
+      width: 100%;
+      height: 42px;
+      padding: 4px;
+      border: 1px solid #3b4f6b;
+      border-radius: 8px;
+      background: #17263d;
+      cursor: pointer;
+    }
+
+    .file-comparison {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
     .section-heading {
       display: flex;
       align-items: center;
@@ -516,6 +533,12 @@
           >
           <small>Applies to JPG and WebP. PNG uses lossless compression.</small>
         </div>
+
+        <div class="setting" id="jpegBackgroundSetting">
+          <label for="jpegBackground">JPG background for transparent images</label>
+          <input type="color" id="jpegBackground" value="#ffffff">
+          <small>JPG cannot keep transparency. Transparent areas will use this color.</small>
+        </div>
       </div>
 
       <div class="section-heading">
@@ -587,8 +610,17 @@
       <p>
         Image conversion is performed in your browser using your device's
         processing capabilities. The tool does not upload your selected image
-        files to a conversion server.
+        files to a conversion server. Re-encoding can remove EXIF metadata and
+        embedded color-profile information, and this tool does not preserve animation
+        when converting animated files. Results depend on browser support and device memory.
       </p>
+      <h2>Before You Convert</h2>
+      <ul>
+        <li>JPG does not support transparency. Choose a background color above for transparent areas.</li>
+        <li>PNG keeps transparency and uses lossless compression; the quality slider does not affect PNG output.</li>
+        <li>The size comparison shows whether each converted file is smaller or larger than the original.</li>
+        <li>Some image formats may not open in your browser. If a file fails, try a supported JPG, PNG, or WebP image.</li>
+      </ul>
 
       <h2>More Free Image Tools</h2>
       <ul>
@@ -619,6 +651,8 @@
     const qualityRange = document.getElementById("qualityRange");
     const qualityValue = document.getElementById("qualityValue");
     const qualitySetting = document.getElementById("qualitySetting");
+    const jpegBackgroundSetting = document.getElementById("jpegBackgroundSetting");
+    const jpegBackground = document.getElementById("jpegBackground");
 
     const selectedGrid = document.getElementById("selectedGrid");
     const resultsGrid = document.getElementById("resultsGrid");
@@ -688,7 +722,9 @@
       browseButton.disabled = isConverting;
       fileInput.disabled = isConverting;
       formatSelect.disabled = isConverting;
-      qualityRange.disabled = isConverting;
+      qualityRange.disabled = isConverting || formatSelect.value === "image/png";
+      jpegBackground.disabled = isConverting || formatSelect.value !== "image/jpeg";
+      jpegBackgroundSetting.style.opacity = formatSelect.value === "image/jpeg" ? "1" : "0.65";
     }
 
     function revokePreviewUrls() {
@@ -714,6 +750,13 @@
       clearResults();
       progressTrack.style.display = "none";
       progressBar.style.width = "0%";
+    }
+
+    function invalidateResultsAfterSettingsChange() {
+      if (convertedFiles.length > 0) {
+        resetResultsForNewSelection();
+        setStatus("Conversion settings changed. Convert the images again to create updated files.");
+      }
     }
 
     function addFiles(fileList) {
@@ -893,6 +936,20 @@
       });
     }
 
+    function uniqueOutputName(baseName, extension) {
+      let candidate = baseName + "." + extension;
+      let counter = 2;
+      const used = new Set(convertedFiles.map(function(item) {
+        return item.name.toLowerCase();
+      }));
+
+      while (used.has(candidate.toLowerCase())) {
+        candidate = baseName + "-" + counter + "." + extension;
+        counter++;
+      }
+      return candidate;
+    }
+
     async function convertOne(file, mimeType, quality) {
       const image = await loadImage(file);
 
@@ -906,7 +963,7 @@
       }
 
       if (mimeType === "image/jpeg") {
-        context.fillStyle = "#ffffff";
+        context.fillStyle = jpegBackground.value || "#ffffff";
         context.fillRect(0, 0, canvas.width, canvas.height);
       }
 
@@ -918,13 +975,18 @@
       canvas.height = 0;
 
       const extension = outputExtension(mimeType);
-      const outputName = safeBaseName(file.name) + "." + extension;
+      const outputName = uniqueOutputName(safeBaseName(file.name), extension);
+      const difference = file.size > 0 ? Math.round(((file.size - blob.size) / file.size) * 100) : 0;
 
       return {
         name: outputName,
         blob: blob,
         url: URL.createObjectURL(blob),
         size: blob.size,
+        originalSize: file.size,
+        sizeDifferencePercent: difference,
+        width: image.naturalWidth,
+        height: image.naturalHeight,
         originalName: file.name
       };
     }
@@ -956,7 +1018,17 @@
 
         const info = document.createElement("div");
         info.className = "file-info";
-        info.textContent = formatBytes(item.size);
+        info.textContent = formatBytes(item.size) + " · " + item.width + " × " + item.height + " px";
+
+        const comparison = document.createElement("p");
+        comparison.className = "file-comparison";
+        const delta = item.sizeDifferencePercent;
+        const changeText = delta > 0
+          ? delta + "% smaller"
+          : delta < 0
+            ? Math.abs(delta) + "% larger"
+            : "about the same size";
+        comparison.textContent = "Original: " + formatBytes(item.originalSize) + " → Converted: " + formatBytes(item.size) + " (" + changeText + ")";
 
         const actions = document.createElement("div");
         actions.className = "card-actions";
@@ -970,7 +1042,7 @@
         });
 
         actions.appendChild(downloadButton);
-        content.append(name, info, actions);
+        content.append(name, info, comparison, actions);
         card.append(preview, content);
         resultsGrid.appendChild(card);
       });
@@ -1007,6 +1079,9 @@
       const quality = Number(qualityRange.value) / 100;
 
       isConverting = true;
+      convertedFiles.forEach(function(item) {
+        if (item.url) URL.revokeObjectURL(item.url);
+      });
       convertedFiles = [];
       resultsGrid.replaceChildren();
       progressTrack.style.display = "block";
@@ -1180,12 +1255,17 @@
 
     qualityRange.addEventListener("input", function() {
       qualityValue.textContent = qualityRange.value + "%";
+      invalidateResultsAfterSettingsChange();
     });
 
     formatSelect.addEventListener("change", function() {
-      qualitySetting.style.opacity =
-        formatSelect.value === "image/png" ? "0.65" : "1";
+      qualitySetting.style.opacity = formatSelect.value === "image/png" ? "0.65" : "1";
+      jpegBackgroundSetting.style.opacity = formatSelect.value === "image/jpeg" ? "1" : "0.65";
+      invalidateResultsAfterSettingsChange();
+      updateButtons();
     });
+
+    jpegBackground.addEventListener("input", invalidateResultsAfterSettingsChange);
 
     convertButton.addEventListener("click", convertAll);
     downloadZipButton.addEventListener("click", downloadAllAsZip);
