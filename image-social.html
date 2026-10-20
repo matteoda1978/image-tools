@@ -48,7 +48,7 @@ main{max-width:1240px;width:calc(100% - 36px);margin:auto;padding:44px 0 70px}.h
   <div class="divider"></div>
   <h2 class="section-label"><span class="step">2</span> Add your photo</h2>
   <div class="field"><button type="button" class="primary" id="chooseImage" style="width:100%"><span class="button-icon">＋</span> Choose photo</button><input type="file" id="fileInput" accept="image/*" hidden><p class="notice" id="fileLabel">JPG, PNG and WebP recommended. You can drag the photo directly inside the preview.</p></div>
-  <div class="field"><div class="field-title"><label for="fitMode" style="margin:0">Image placement</label></div><select id="fitMode" class="select"><option value="cover">Fill canvas (crop edges)</option><option value="contain">Fit whole photo</option></select></div>
+  <div class="field"><div class="field-title"><label for="fitMode" style="margin:0">Image placement</label></div><select id="fitMode" class="select"><option value="contain" selected>Fit whole photo (show entire image)</option><option value="cover">Fill canvas (crop edges)</option></select></div>
   <div class="field"><div class="field-title"><label for="zoom" style="margin:0">Photo zoom</label><span class="hint">Drag photo to reposition</span></div><div class="range-row"><input id="zoom" type="range" min="1" max="3" step="0.01" value="1"><output class="range-value" id="zoomValue">100%</output></div></div>
   <div class="actions"><button class="secondary" type="button" id="centerPhoto">Center photo</button><button class="secondary" type="button" id="removePhoto">Remove photo</button></div>
   <div class="divider"></div>
@@ -130,7 +130,7 @@ main{max-width:1240px;width:calc(100% - 36px);margin:auto;padding:44px 0 70px}.h
     nextImage.onload=()=>{
       if(imageUrl)URL.revokeObjectURL(imageUrl);
       imageUrl=nextUrl;image=nextImage;imageName=file.name.replace(/\.[^.]+$/,"").replace(/[^a-z0-9_-]+/gi,"-").replace(/^-|-$/g,"")||"social-image";
-      photo={x:0,y:0,zoom:Number(zoom.value)};
+      fitMode.value="contain";zoom.value="1";photo={x:0,y:0,zoom:1};
       emptyState.hidden=true;canvasShell.hidden=false;downloadButton.disabled=false;
       $("fileLabel").textContent=file.name+" · "+nextImage.naturalWidth+" × "+nextImage.naturalHeight+" px";
       $("designStatus").textContent="Photo added";clearStatus();render();
@@ -205,10 +205,10 @@ main{max-width:1240px;width:calc(100% - 36px);margin:auto;padding:44px 0 70px}.h
   fileInput.addEventListener("change",()=>{setImage(fileInput.files&&fileInput.files[0]);fileInput.value="";});
   presetSelect.addEventListener("change",()=>{currentPreset=presetSelect.value;updatePresetUI();});
   document.querySelectorAll("[data-preset]").forEach(button=>button.addEventListener("click",()=>{currentPreset=button.dataset.preset;updatePresetUI();}));
-  fitMode.addEventListener("change",()=>{photo.x=0;photo.y=0;render();});
+  fitMode.addEventListener("change",()=>{photo.x=0;photo.y=0;photo.zoom=1;zoom.value="1";render();});
   zoom.addEventListener("input",()=>{photo.zoom=Number(zoom.value);render();});
   [headline,subline,fontSize,fontFamily,textColor,bgColor,textPlate,safeGuides].forEach(el=>el.addEventListener("input",render));
-  $("centerPhoto").addEventListener("click",()=>{photo.x=0;photo.y=0;zoom.value="1";photo.zoom=1;render();});
+  $("centerPhoto").addEventListener("click",()=>{fitMode.value="contain";photo.x=0;photo.y=0;zoom.value="1";photo.zoom=1;render();});
   $("removePhoto").addEventListener("click",()=>{if(imageUrl)URL.revokeObjectURL(imageUrl);imageUrl=null;image=null;canvasShell.hidden=true;emptyState.hidden=false;downloadButton.disabled=true;$("fileLabel").textContent="JPG, PNG and WebP recommended. You can drag the photo directly inside the preview.";$("designStatus").textContent="Ready to create";render();});
   $("clearText").addEventListener("click",()=>{headline.value="";subline.value="";render();});
   $("resetDesign").addEventListener("click",()=>{headline.value="";subline.value="";textPos={x:.5,y:.76};subPos={x:.5,y:.88};photo={x:0,y:0,zoom:1};zoom.value="1";fitMode.value="cover";fontSize.value="0.075";fontFamily.value="Arial, sans-serif";textColor.value="#ffffff";bgColor.value="#18243a";textPlate.checked=true;safeGuides.checked=false;render();});
@@ -218,7 +218,29 @@ main{max-width:1240px;width:calc(100% - 36px);margin:auto;padding:44px 0 70px}.h
     try{const mime=exportType,extension=mime==="image/jpeg"?"jpg":"png";const showGuides=safeGuides.checked;if(showGuides){safeGuides.checked=false;render();}const exportCanvas=document.createElement("canvas");exportCanvas.width=canvas.width;exportCanvas.height=canvas.height;const exportCtx=exportCanvas.getContext("2d");exportCtx.drawImage(canvas,0,0);if(showGuides){safeGuides.checked=true;render();}if(mime==="image/jpeg"){const flat=document.createElement("canvas");flat.width=canvas.width;flat.height=canvas.height;const fctx=flat.getContext("2d");fctx.fillStyle=bgColor.value;fctx.fillRect(0,0,flat.width,flat.height);fctx.drawImage(exportCanvas,0,0);flat.toBlob(blob=>finishDownload(blob,extension),mime,.92);}else exportCanvas.toBlob(blob=>finishDownload(blob,extension),mime);
     }catch(error){busy=false;downloadButton.disabled=!image;setStatus("Could not export the design. Please try again.","error");}
   });
-  function finishDownload(blob,extension){busy=false;downloadButton.disabled=!image;if(!blob){setStatus("Your browser could not export this image. Try another browser or format.","error");return;}const url=URL.createObjectURL(blob),a=document.createElement("a"),p=activeSize();a.href=url;a.download=`${imageName}-${currentPreset}-${p.width}x${p.height}.${extension}`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);setStatus("Your design is ready. Check your downloads if the file does not appear automatically.","success");}
+  function nextDownloadNumber(){
+    const key="ritoccapix-social-download-number-v1";
+    try{
+      const previous=Number.parseInt(localStorage.getItem(key)||"0",10);
+      const next=(Number.isFinite(previous)&&previous>=0?previous:0)+1;
+      localStorage.setItem(key,String(next));
+      return String(next).padStart(3,"0");
+    }catch(error){
+      return String(Date.now());
+    }
+  }
+  function finishDownload(blob,extension){
+    busy=false;downloadButton.disabled=!image;
+    if(!blob){setStatus("Your browser could not export this image. Try another browser or format.","error");return;}
+    const url=URL.createObjectURL(blob),a=document.createElement("a"),p=activeSize();
+    const now=new Date();
+    const stamp=[now.getFullYear(),String(now.getMonth()+1).padStart(2,"0"),String(now.getDate()).padStart(2,"0"),String(now.getHours()).padStart(2,"0"),String(now.getMinutes()).padStart(2,"0"),String(now.getSeconds()).padStart(2,"0")].join("");
+    a.href=url;
+    a.download=`ritoccapix-social-${stamp}-${nextDownloadNumber()}-${currentPreset}-${p.width}x${p.height}.${extension}`;
+    document.body.appendChild(a);a.click();a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),5000);
+    setStatus(`Download started: ${a.download}. Each export gets a new numbered filename.`,"success");
+  }
   const templates={
     minimal:{headline:"A little inspiration",subline:"Simple ideas for everyday life",textColor:"#ffffff",bgColor:"#27372f",fontSize:"0.075",fontFamily:"Georgia, serif",plate:true,textPos:{x:.5,y:.76},subPos:{x:.5,y:.88}},
     sale:{headline:"SPECIAL OFFER",subline:"Limited time · Shop now",textColor:"#ffffff",bgColor:"#9e183f",fontSize:"0.10",fontFamily:"Impact, sans-serif",plate:true,textPos:{x:.5,y:.72},subPos:{x:.5,y:.86}},
