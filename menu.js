@@ -15,6 +15,7 @@
     { name: "Image Object Remover", url: "image-object-remover.html" },
     { name: "Image Smart", url: "image-smart.html" },
     { name: "Image Social", url: "image-social.html" },
+    { name: "Pixel Avatar Maker", url: "pixel-avatar-maker.html" },
     { name: "Social Video Maker", url: "social-video-maker.html" },
     { name: "AI Study Assistant", url: "ai-study-assistant.html" }
   ];
@@ -110,14 +111,13 @@
   `;
 
   document.head.appendChild(style);
-
   nav.classList.add("tools-dropdown");
 
-  // On the homepage, preserve the RitoccaPix logo and replace only the
-  // existing text link with the All Tools dropdown. Other pages keep the
-  // original dropdown-only navigation behavior.
-  const isHomePage = currentPage === "index.html" || currentPage === "";
+  const isHomePage =
+    currentPage === "index.html" || currentPage === "";
+
   const homeLogo = isHomePage ? nav.querySelector(".logo") : null;
+
   if (homeLogo) {
     nav.replaceChildren(homeLogo);
   } else {
@@ -162,7 +162,10 @@
     const menuWidth = menu.getBoundingClientRect().width;
     const left = Math.max(
       margin,
-      Math.min(buttonRect.left, viewportWidth - menuWidth - margin)
+      Math.min(
+        buttonRect.left,
+        viewportWidth - menuWidth - margin
+      )
     );
 
     const menuHeight = menu.getBoundingClientRect().height;
@@ -216,6 +219,7 @@
   });
 
   window.addEventListener("resize", positionMenu);
+
   window.addEventListener("orientationchange", function () {
     window.setTimeout(positionMenu, 150);
   });
