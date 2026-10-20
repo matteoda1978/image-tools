@@ -112,7 +112,17 @@
   document.head.appendChild(style);
 
   nav.classList.add("tools-dropdown");
-  nav.replaceChildren();
+
+  // On the homepage, preserve the RitoccaPix logo and replace only the
+  // existing text link with the All Tools dropdown. Other pages keep the
+  // original dropdown-only navigation behavior.
+  const isHomePage = currentPage === "index.html" || currentPage === "";
+  const homeLogo = isHomePage ? nav.querySelector(".logo") : null;
+  if (homeLogo) {
+    nav.replaceChildren(homeLogo);
+  } else {
+    nav.replaceChildren();
+  }
 
   const button = document.createElement("button");
   button.type = "button";
