@@ -8,6 +8,7 @@
     { name: "Image Converter", url: "image-converter.html" },
     { name: "HEIC to JPG", url: "heic-to-jpg.html" },
     { name: "WebP to JPG", url: "webp-to-jpg.html" },
+    { name: "WebP to PNG", url: "webp-to-png.html" },
     { name: "Image Analyzer", url: "image-analyzer.html" },
     { name: "Image Collage", url: "image-collage.html" },
     { name: "Image Optimizer", url: "image-optimizer.html" },
