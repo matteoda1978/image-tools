@@ -1,11 +1,21 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Analizza immagini online gratis. Scopri formato, dimensioni, peso, proporzioni, pixel, orientamento e trasparenza delle tue immagini.">
+  <meta name="description" content="Analyze images online for free. Check image format, dimensions, file size, aspect ratio, pixel count, orientation and transparency in your browser.">
   <meta name="robots" content="index, follow">
-  <title>Analizzatore immagini online gratis | RitoccaPix</title>
+  <title>Free Image Analyzer Online – Dimensions, Size & Format | RitoccaPix</title>
+
+  <link rel="canonical" href="https://ritoccapix.com/image-analyzer.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Free Image Analyzer Online | RitoccaPix">
+  <meta property="og:description" content="Check image dimensions, file size, format, aspect ratio and transparency for free in your browser.">
+  <meta property="og:url" content="https://ritoccapix.com/image-analyzer.html">
+  <meta property="og:site_name" content="RitoccaPix">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"SoftwareApplication","name":"RitoccaPix Image Analyzer","applicationCategory":"MultimediaApplication","operatingSystem":"Any","url":"https://ritoccapix.com/image-analyzer.html","description":"Free browser-based image analyzer for dimensions, file size, format, aspect ratio, pixel count, orientation and transparency.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+  </script>
 
   <script src="menu.js" defer></script>
 
@@ -336,165 +346,165 @@
 
   <main>
     <section class="hero">
-      <h1>Analizza immagini online gratis</h1>
+      <h1>Analyze Images Online for Free</h1>
       <p>
-        Scopri tutte le informazioni delle tue immagini in pochi secondi.
-        Controlla dimensioni, formato, peso, proporzioni e trasparenza
-        direttamente dal browser.
+        Check the key details of your images in seconds.
+        Check dimensions, format, file size, aspect ratio and transparency
+        directly in your browser.
       </p>
     </section>
 
     <section class="tool">
-      <h2>🔍 Analizzatore immagini</h2>
+      <h2>🔍 Image Analyzer</h2>
       <p class="tool-intro">
-        Seleziona un'immagine dal tuo dispositivo per visualizzarne
-        le caratteristiche tecniche.
+        Select an image from your device to view its
+        technical properties.
       </p>
 
       <div class="upload">
         <div class="upload-icon">🖼️</div>
-        <h3>Scegli un'immagine</h3>
-        <p>Seleziona un file dal computer o dal telefono.</p>
+        <h3>Choose an image</h3>
+        <p>Choose a file from your computer or phone.</p>
 
         <input
           type="file"
           id="imageInput"
           accept="image/*"
-          aria-label="Seleziona un'immagine da analizzare"
+          aria-label="Choose an image to analyze"
         />
       </div>
 
       <div class="error" id="error" role="alert"></div>
 
       <section class="result" id="result" aria-live="polite">
-        <h2>Risultati dell'analisi</h2>
+        <h2>Analysis Results</h2>
         <p class="result-description">
-          Ecco le caratteristiche del file selezionato.
+          Here are the details of the selected file.
         </p>
 
         <div class="stats">
           <div class="stat">
-            <strong>Nome file</strong>
+            <strong>File Name</strong>
             <span id="fileName">—</span>
           </div>
 
           <div class="stat">
-            <strong>Formato</strong>
+            <strong>Format</strong>
             <span id="fileFormat">—</span>
           </div>
 
           <div class="stat">
-            <strong>Dimensioni</strong>
+            <strong>Dimensions</strong>
             <span id="dimensions">—</span>
           </div>
 
           <div class="stat">
-            <strong>Peso del file</strong>
+            <strong>File Size</strong>
             <span id="fileSize">—</span>
           </div>
 
           <div class="stat">
-            <strong>Proporzioni</strong>
+            <strong>Aspect Ratio</strong>
             <span id="aspectRatio">—</span>
           </div>
 
           <div class="stat">
-            <strong>Numero di pixel</strong>
+            <strong>Pixel Count</strong>
             <span id="pixelCount">—</span>
           </div>
 
           <div class="stat">
-            <strong>Orientamento</strong>
+            <strong>Orientation</strong>
             <span id="orientation">—</span>
           </div>
 
           <div class="stat">
-            <strong>Trasparenza</strong>
+            <strong>Transparency</strong>
             <span id="transparency">—</span>
           </div>
         </div>
 
         <div class="preview">
-          <h3>Anteprima dell'immagine</h3>
-          <img id="previewImage" alt="Anteprima dell'immagine analizzata">
+          <h3>Image Preview</h3>
+          <img id="previewImage" alt="Image Preview analizzata">
         </div>
       </section>
     </section>
 
     <section class="content">
-      <h2>Come funziona l'analizzatore immagini?</h2>
+      <h2>How does the image analyzer work?</h2>
 
       <p>
-        Questo strumento gratuito ti permette di controllare rapidamente
-        le proprietà tecniche di un'immagine senza installare programmi.
-        Seleziona un file e i risultati verranno mostrati automaticamente.
+        This free tool lets you quickly check
+        an image’s technical properties without installing software.
+        Choose a file and the results will appear automatically.
       </p>
 
-      <h3>Quali informazioni puoi controllare?</h3>
+      <h3>What information can you check?</h3>
 
       <ul>
-        <li><strong>Formato:</strong> il tipo di immagine, quando identificabile dal browser.</li>
-        <li><strong>Dimensioni:</strong> larghezza e altezza in pixel.</li>
-        <li><strong>Peso:</strong> la dimensione del file in KB o MB.</li>
-        <li><strong>Proporzioni:</strong> il rapporto tra larghezza e altezza.</li>
-        <li><strong>Numero di pixel:</strong> il totale dei pixel dell'immagine.</li>
-        <li><strong>Orientamento:</strong> orizzontale, verticale o quadrato.</li>
-        <li><strong>Trasparenza:</strong> verifica indicativa della presenza di pixel trasparenti.</li>
+        <li><strong>Format:</strong> the image type, when identifiable by your browser.</li>
+        <li><strong>Dimensions:</strong> width and height in pixels.</li>
+        <li><strong>File size:</strong> the file size in KB or MB.</li>
+        <li><strong>Aspect Ratio:</strong> the ratio between width and height.</li>
+        <li><strong>Pixel Count:</strong> the total number of pixels in the image.</li>
+        <li><strong>Orientation:</strong> landscape, portrait or square.</li>
+        <li><strong>Transparency:</strong> an indication of whether the image contains transparent pixels.</li>
       </ul>
 
-      <h3>Le immagini vengono caricate su un server?</h3>
+      <h3>Are images uploaded to a server?</h3>
 
       <p>
-        L'analisi viene eseguita nel browser del tuo dispositivo.
-        Questo codice non invia intenzionalmente l'immagine a un server.
-        La privacy può comunque dipendere dalle altre funzionalità
-        o dagli script presenti sul sito.
+        Analysis runs in your device’s browser.
+        This tool’s code does not intentionally send the image to a server.
+        Privacy may still depend on other features
+        or scripts running on the website.
       </p>
     </section>
 
     <section class="content">
-      <h2>Domande frequenti</h2>
+      <h2>Frequently Asked Questions</h2>
 
       <div class="faq-item">
-        <h3>Questo strumento è gratuito?</h3>
+        <h3>Is this tool free?</h3>
         <p>
-          Sì, puoi usare l'analizzatore senza pagare e senza creare un account.
+          Yes. You can use the analyzer for free without creating an account.
         </p>
       </div>
 
       <div class="faq-item">
-        <h3>Quali immagini posso analizzare?</h3>
+        <h3>Which images can I analyze?</h3>
         <p>
-          Puoi provare i formati immagine supportati dal browser,
-          come JPEG, PNG, GIF, WebP e altri formati compatibili.
+          You can try image formats supported by your browser,
+          such as JPEG, PNG, GIF, WebP and other compatible formats.
         </p>
       </div>
 
       <div class="faq-item">
-        <h3>Che cosa significa il rapporto d'aspetto?</h3>
+        <h3>What does aspect ratio mean?</h3>
         <p>
-          Indica il rapporto tra la larghezza e l'altezza dell'immagine.
-          Per esempio, un'immagine da 1200 × 800 pixel ha un rapporto 3:2.
+          It describes the relationship between an image’s width and height.
+          For example, a 1200 × 800 pixel image has a 3:2 aspect ratio.
         </p>
       </div>
 
       <div class="faq-item">
-        <h3>Posso usare lo strumento sul telefono?</h3>
+        <h3>Can I use this tool on my phone?</h3>
         <p>
-          Sì, la pagina è progettata per adattarsi anche agli schermi più piccoli.
+          Yes. The page is designed to work on smaller screens too.
         </p>
       </div>
     </section>
   </main>
 
   <footer>
-    <p>© 2026 RitoccaPix · Strumenti gratuiti per le immagini</p>
+    <p>© 2026 RitoccaPix · Free Image Tools</p>
     <p>
       <a href="index.html">Home</a>
       ·
-      <a href="image-resizer.html">Ridimensiona immagini</a>
+      <a href="image-resizer.html">Resize Images</a>
       ·
-      <a href="image-compressor.html">Comprimi immagini</a>
+      <a href="image-compressor.html">Compress Images</a>
     </p>
   </footer>
 
@@ -508,7 +518,7 @@
 
     function formatBytes(bytes) {
       if (bytes < 1024) {
-        return bytes + " byte";
+        return bytes + " bytes";
       }
 
       if (bytes < 1024 * 1024) {
@@ -542,7 +552,7 @@
 
       return extension
         ? extension.toUpperCase()
-        : "Non identificato";
+        : "Unknown";
     }
 
     function checkTransparency(image) {
@@ -552,7 +562,7 @@
       });
 
       if (!context) {
-        return "Non verificabile";
+        return "Unable to check";
       }
 
       const maxSide = 150;
@@ -576,13 +586,13 @@
 
         for (let i = 3; i < imageData.length; i += 4) {
           if (imageData[i] < 255) {
-            return "Sì";
+            return "Yes";
           }
         }
 
         return "No";
       } catch (error) {
-        return "Non verificabile";
+        return "Unable to check";
       }
     }
 
@@ -608,7 +618,7 @@
       }
 
       if (!file.type.startsWith("image/")) {
-        showError("Seleziona un file immagine valido.");
+        showError("Choose a valid image file.");
         return;
       }
 
@@ -625,7 +635,7 @@
         const height = image.naturalHeight;
 
         if (!width || !height) {
-          showError("Impossibile leggere le dimensioni dell'immagine.");
+          showError("Unable to read the image dimensions.");
           URL.revokeObjectURL(currentObjectUrl);
           currentObjectUrl = null;
           return;
@@ -638,15 +648,15 @@
         setText("aspectRatio", getAspectRatio(width, height));
         setText(
           "pixelCount",
-          (width * height).toLocaleString("it-IT") + " pixel"
+          (width * height).toLocaleString("en-US") + " pixels"
         );
 
-        let orientation = "Quadrata";
+        let orientation = "Square";
 
         if (width > height) {
-          orientation = "Orizzontale";
+          orientation = "Landscape";
         } else if (height > width) {
-          orientation = "Verticale";
+          orientation = "Portrait";
         }
 
         setText("orientation", orientation);
@@ -664,7 +674,7 @@
 
       image.onerror = function () {
         showError(
-          "Non è stato possibile aprire questa immagine. Prova un altro file."
+          "Unable to open this image. Please try another file."
         );
 
         if (currentObjectUrl) {
