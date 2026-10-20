@@ -3,686 +3,210 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
-<title>Compress Image to 100KB Online Free | RitoccaPix</title>
-<meta name="description" content="Compress images to 100KB, 200KB or 500KB online for free. Reduce JPG, PNG and WebP images in your browser and download optimized results.">
-<meta name="robots" content="index, follow">
-<meta name="theme-color" content="#08111f">
-<link rel="canonical" href="https://ritoccapix.com/compress-image-to-100kb.html">
-<meta property="og:title" content="Compress Image to 100KB Online Free">
-<meta property="og:description" content="Reduce image file size to 100KB or another target for free. Private, browser-based image compression.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://ritoccapix.com/compress-image-to-100kb.html">
-
-<style>
-:root {
-  color-scheme: dark;
-  --bg: #08111f;
-  --panel: #111d30;
-  --panel2: #0c192b;
-  --border: #293a54;
-  --text: #f2f6fc;
-  --muted: #a9b8cc;
-  --accent: #60a5fa;
-  --success: #34d399;
-  --danger: #f87171;
-}
-* { box-sizing: border-box; }
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: Arial, Helvetica, sans-serif;
-  line-height: 1.65;
-}
-header {
-  padding: 17px 20px;
-  border-bottom: 1px solid var(--border);
-  background: #0b1627;
-}
-.header-inner {
-  max-width: 1000px;
-  margin: auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 15px;
-  flex-wrap: wrap;
-}
-.logo {
-  color: var(--text);
-  font-size: 21px;
-  font-weight: 800;
-  text-decoration: none;
-}
-nav { display: flex; gap: 16px; flex-wrap: wrap; }
-nav a, footer a {
-  color: var(--muted);
-  text-decoration: none;
-  font-size: 14px;
-}
-nav a:hover, footer a:hover { color: white; }
-main {
-  max-width: 1000px;
-  margin: auto;
-  padding: 35px 18px 55px;
-}
-.hero { text-align: center; margin-bottom: 26px; }
-h1 {
-  font-size: clamp(29px, 5vw, 43px);
-  line-height: 1.2;
-  margin: 0 0 14px;
-}
-.hero p {
-  max-width: 740px;
-  margin: auto;
-  color: var(--muted);
-}
-.panel, .content {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 17px;
-  padding: 23px;
-  margin-bottom: 25px;
-}
-.drop-zone {
-  border: 2px dashed #45617f;
-  border-radius: 13px;
-  padding: 30px 15px;
-  text-align: center;
-  background: var(--panel2);
-}
-.drop-zone.drag {
-  border-color: var(--accent);
-  background: #142b46;
-}
-.upload-icon { font-size: 38px; }
-.drop-zone h2 { margin: 5px 0; font-size: 21px; }
-.drop-zone p { color: var(--muted); font-size: 14px; }
-input[type=file] { display: none; }
-button, .download {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  border: 0;
-  border-radius: 9px;
-  padding: 12px 17px;
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-  text-decoration: none;
-}
-button:disabled { opacity: .45; cursor: not-allowed; }
-.primary, .download {
-  background: var(--accent);
-  color: #06111f;
-}
-.primary:hover:not(:disabled), .download:hover {
-  background: #3b82f6;
-  color: white;
-}
-.secondary {
-  color: var(--text);
-  background: #263750;
-  border: 1px solid #3b4f6b;
-}
-.settings {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-  gap: 14px;
-  margin-top: 20px;
-}
-.setting {
-  min-width: 0;
-  padding: 15px;
-  border: 1px solid var(--border);
-  border-radius: 11px;
-  background: var(--panel2);
-}
-label {
-  display: block;
-  font-size: 14px;
-  font-weight: 700;
-  margin-bottom: 8px;
-}
-select, input[type=number] {
-  width: 100%;
-  min-width: 0;
-  padding: 11px;
-  border: 1px solid #3b4f6b;
-  border-radius: 8px;
-  background: #17263d;
-  color: var(--text);
-  font-size: 15px;
-}
-small, .muted { color: var(--muted); }
-.setting small { display: block; margin-top: 7px; font-size: 12px; }
-.actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
-.status {
-  display: none;
-  margin-top: 18px;
-  padding: 13px;
-  border: 1px solid var(--border);
-  border-radius: 9px;
-  background: var(--panel2);
-  overflow-wrap: anywhere;
-}
-.status.show { display: block; }
-.status.error { color: #fecaca; border-color: #7f2932; }
-.status.success { color: #a7f3d0; border-color: #17634e; }
-.preview {
-  display: none;
-  margin-top: 20px;
-  padding: 15px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: var(--panel2);
-}
-.preview img {
-  display: block;
-  max-width: 100%;
-  max-height: 320px;
-  margin: 0 auto 12px;
-  object-fit: contain;
-}
-.result-info {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-  margin: 15px 0;
-}
-.stat {
-  background: #17263d;
-  border: 1px solid var(--border);
-  padding: 12px;
-  border-radius: 9px;
-}
-.stat small { display: block; font-size: 12px; }
-.stat strong { display: block; font-size: 18px; overflow-wrap: anywhere; }
-.content h2 { margin-top: 0; font-size: 23px; }
-.content h3 { font-size: 17px; margin-bottom: 5px; }
-.content p, .content li { color: var(--muted); }
-.content a { color: var(--accent); }
-.faq { border-bottom: 1px solid var(--border); padding: 13px 0; }
-.faq:last-child { border-bottom: 0; }
-.faq h3 { margin: 0 0 5px; }
-.faq p { margin: 0; }
-.related {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-  gap: 12px;
-  margin-top: 15px;
-}
-.related a {
-  display: block;
-  padding: 14px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  background: var(--panel2);
-  text-decoration: none;
-}
-.related strong, .related span { display: block; }
-.related span { font-size: 13px; margin-top: 5px; }
-footer {
-  padding: 25px 15px;
-  text-align: center;
-  border-top: 1px solid var(--border);
-  color: var(--muted);
-  font-size: 13px;
-}
-footer a { margin: 0 7px; }
-@media(max-width:600px) {
-  main { padding: 25px 12px 40px; }
-  .panel, .content { padding: 14px; }
-  .actions { flex-direction: column; }
-  .actions button, .actions .download { width: 100%; }
-  nav { gap: 10px; }
-}
-</style>
+<title>Free Social Media Image Maker &amp; Resizer | RitoccaPix</title>
+<meta name="description" content="Create social media images online for Instagram, Facebook, Pinterest, LinkedIn, X and YouTube. Resize photos, add text and download free designs in your browser.">
+<meta name="robots" content="index,follow">
+<meta name="theme-color" content="#080d18">
+<link rel="canonical" href="https://ritoccapix.com/image-social.html">
 <script src="menu.js" defer></script>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Free Social Media Image Maker | RitoccaPix">
+<meta property="og:description" content="Resize images for social media, add a headline and export a polished post directly in your browser.">
+<meta property="og:url" content="https://ritoccapix.com/image-social.html">
+<meta property="og:site_name" content="RitoccaPix">
+<style>
+:root{color-scheme:dark;--bg:#080d18;--panel:#101a2b;--panel2:#0b1424;--line:#273750;--text:#f4f7ff;--muted:#a4b2c8;--blue:#8ba8ff;--blue2:#b4c4ff;--mint:#7de6c0;--radius:18px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 50% -220px,#243d70 0,transparent 58%),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.55}a{color:var(--blue2)}button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid #b4c4ff;outline-offset:3px}.site-header{border-bottom:1px solid #23314a;background:rgba(8,13,24,.78);backdrop-filter:blur(12px)}.header-inner{max-width:1240px;width:calc(100% - 36px);margin:auto;min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}.logo{font-size:23px;font-weight:900;letter-spacing:-1px;text-decoration:none;color:#fff}.logo span{color:var(--blue)}header nav{max-width:70%}
+main{max-width:1240px;width:calc(100% - 36px);margin:auto;padding:44px 0 70px}.hero{text-align:center;max-width:850px;margin:0 auto 30px}.eyebrow{display:inline-flex;align-items:center;gap:8px;border:1px solid #354b73;background:#111e36;color:#c6d3ff;padding:7px 12px;border-radius:999px;font-size:12px;font-weight:800;letter-spacing:.09em;text-transform:uppercase}.eyebrow i{width:7px;height:7px;background:var(--mint);border-radius:50%;display:inline-block}.hero h1{font-size:clamp(32px,5vw,54px);line-height:1.08;letter-spacing:-.045em;margin:18px 0 14px}.hero h1 em{font-style:normal;color:var(--blue2)}.hero p{font-size:17px;color:var(--muted);max-width:740px;margin:0 auto}.trust-row{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-top:18px;color:#c1cce0;font-size:12px}.trust-row span{display:flex;align-items:center;gap:6px}.trust-row b{color:var(--mint);font-size:15px}
+.studio{display:grid;grid-template-columns:minmax(285px,350px) minmax(0,1fr);gap:18px;align-items:start}.panel{border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(180deg,rgba(18,29,48,.98),rgba(12,21,36,.98));box-shadow:0 18px 50px #0002;overflow:hidden}.controls{padding:19px}.section-label{display:flex;align-items:center;gap:9px;margin:0 0 13px;font-size:14px;font-weight:800;letter-spacing:.01em}.step{display:inline-grid;place-items:center;width:25px;height:25px;border-radius:8px;background:#26385c;color:#dbe5ff;font-size:12px}.field{margin:0 0 16px}.field label,.field-title{display:flex;justify-content:space-between;gap:10px;align-items:center;font-size:12px;color:#d8e0ef;font-weight:750;margin-bottom:7px}.hint{font-size:11px;color:var(--muted);font-weight:500}.select,.text-input,.color-input{width:100%;border:1px solid #344660;border-radius:10px;background:#0a1424;color:var(--text);padding:11px 12px;min-height:43px}.select option{background:#0a1424}.preset-chips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.chip{padding:9px 8px;border:1px solid #33445e;background:#0c1729;border-radius:10px;color:#dce5f5;text-align:left;font-size:11px;line-height:1.35;min-width:0}.chip strong{display:block;font-size:12px;color:#fff;margin-bottom:2px}.chip small{color:var(--muted);font-size:10px}.chip[aria-pressed="true"]{border-color:var(--blue);background:#1a2a4a;box-shadow:inset 0 0 0 1px #8ba8ff35}.divider{height:1px;background:#26364e;margin:18px 0}.range-row{display:flex;align-items:center;gap:10px}.range-row input{width:100%;accent-color:var(--blue)}.range-value{min-width:40px;text-align:right;font-size:12px;color:#dce5f5;font-variant-numeric:tabular-nums}.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px}.color-row{display:flex;align-items:center;gap:10px}.color-input{width:48px;height:42px;padding:4px;flex:0 0 48px}.toggle-row{display:flex;align-items:center;justify-content:space-between;gap:12px;color:#dce5f5;font-size:12px}.toggle-row input{width:18px;height:18px;accent-color:var(--blue)}.primary,.secondary,.download-btn{display:inline-flex;justify-content:center;align-items:center;gap:8px;border-radius:11px;padding:12px 15px;border:1px solid transparent;font-size:13px;font-weight:800;text-decoration:none;transition:transform .15s ease,background .15s ease}.primary{background:linear-gradient(135deg,#b7c6ff,#829fff);color:#101a31;box-shadow:0 7px 20px #718cf52a}.primary:hover{transform:translateY(-1px);background:#c8d3ff}.secondary{background:#1a2941;border-color:#344761;color:#eaf0ff}.secondary:hover{background:#233653}.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}.actions .primary{grid-column:1/-1}.button-icon{font-size:16px}.notice{font-size:11px;color:var(--muted);margin:12px 0 0;line-height:1.5}.status{display:none;padding:10px 12px;border-radius:10px;background:#0a1628;border:1px solid #334660;color:#dbe6f8;font-size:12px;margin-top:12px;overflow-wrap:anywhere}.status.show{display:block}.status.error{border-color:#8c3946;color:#ffc8ce}.status.success{border-color:#226d5a;color:#b7f7df}
+.workspace{min-width:0}.workspace-head{padding:16px 19px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.workspace-title{font-size:14px;font-weight:850}.workspace-sub{font-size:11px;color:var(--muted);margin-top:2px}.canvas-wrap{padding:22px;background:radial-gradient(ellipse at center,#19253b 0, #0b1322 75%);min-height:420px;display:flex;align-items:center;justify-content:center;position:relative}.canvas-stage{width:100%;display:flex;align-items:center;justify-content:center;min-height:360px}.canvas-shell{position:relative;max-width:100%;max-height:68vh;box-shadow:0 18px 50px #0007;border-radius:3px;overflow:hidden;background:#111c30}.canvas-shell canvas{display:block;width:100%;height:100%;max-height:68vh;object-fit:contain;touch-action:none;cursor:grab}.canvas-shell canvas:active{cursor:grabbing}.empty-state{width:min(390px,100%);padding:34px 20px;text-align:center;border:1px dashed #536887;border-radius:16px;background:#0e1a2d}.empty-icon{font-size:38px;margin-bottom:8px}.empty-state h2{font-size:18px;margin:0 0 6px}.empty-state p{font-size:12px;color:var(--muted);margin:0 0 17px}.preview-foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:12px 17px;border-top:1px solid var(--line);font-size:11px;color:var(--muted)}.preview-foot strong{color:#e5ecfa}.export-row{padding:15px 18px;display:flex;align-items:center;gap:9px;flex-wrap:wrap;border-top:1px solid var(--line)}.export-row .primary{margin-left:auto}.export-label{font-size:12px;color:var(--muted);font-weight:700}.pill{border:1px solid #334660;border-radius:999px;padding:6px 10px;background:#0b1526;color:#d9e4f5;font-size:11px}.pill.active{background:#26385c;border-color:#809bff;color:#fff}.below{margin-top:48px}.below-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}.info-card{border:1px solid var(--line);background:#0e1829;border-radius:15px;padding:19px}.info-card .icon{font-size:23px}.info-card h3{font-size:15px;margin:10px 0 6px}.info-card p{font-size:13px;color:var(--muted);margin:0}.content{max-width:900px;margin:38px auto 0;color:#d8e1f0}.content h2{font-size:24px;letter-spacing:-.025em;margin:34px 0 10px;color:#fff}.content h3{font-size:16px;margin:19px 0 5px;color:#fff}.content p,.content li{font-size:14px;color:var(--muted)}.content li{margin:7px 0}.faq{border-bottom:1px solid var(--line);padding:14px 0}.faq h3{margin:0 0 5px}.faq p{margin:0}.related{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:15px}.related a{padding:15px;border:1px solid var(--line);border-radius:12px;background:#0e1829;text-decoration:none}.related strong,.related span{display:block}.related strong{color:#fff;font-size:13px}.related span{color:var(--muted);font-size:11px;margin-top:4px}footer{border-top:1px solid #23314a;padding:25px 18px;text-align:center;color:var(--muted);font-size:12px}footer a{margin:0 8px;text-decoration:none}
+@media(max-width:900px){.studio{grid-template-columns:minmax(260px,320px) minmax(0,1fr)}.canvas-wrap{padding:14px;min-height:340px}.canvas-stage{min-height:310px}.below-grid{grid-template-columns:1fr 1fr}}@media(max-width:700px){.header-inner{width:calc(100% - 24px);min-height:62px}.logo{font-size:21px}main{width:calc(100% - 22px);padding-top:30px}.hero{margin-bottom:23px}.hero p{font-size:14px}.trust-row{gap:10px}.studio{grid-template-columns:1fr}.workspace{grid-row:1}.canvas-wrap{min-height:270px;padding:12px}.canvas-stage{min-height:245px}.canvas-shell canvas{max-height:54vh}.workspace-head{padding:13px}.controls{padding:15px}.below-grid{grid-template-columns:1fr}.related{grid-template-columns:1fr}.export-row .primary{margin-left:0;width:100%}.export-row{padding:13px}.actions{grid-template-columns:1fr 1fr}.content h2{font-size:21px}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
 </head>
-
 <body>
-<header>
-  <div class="header-inner">
-    <a class="logo" href="index.html">RitoccaPix</a>
-    <nav aria-label="Main navigation">
-      <a href="image-resizer.html">Image Resizer</a>
-      <a href="image-compressor.html">Image Compressor</a>
-      <a href="image-converter.html">Image Converter</a>
-    </nav>
-  </div>
-</header>
-
+<header class="site-header"><div class="header-inner"><a class="logo" href="index.html" aria-label="RitoccaPix home">Ritocca<span>Pix</span></a><nav aria-label="Main navigation"><a href="image-resizer.html">Image Resizer</a><a href="image-compressor.html">Image Compressor</a><a href="image-collage.html">Photo Collage</a></nav></div></header>
 <main>
-  <section class="hero">
-    <h1>Compress Image to 100KB Online Free</h1>
-    <p>
-      Reduce JPG, PNG and WebP images to 100KB or another target size.
-      Choose your file size, compress your image and download the result.
-      Free to use, with image processing directly in your browser.
-    </p>
-  </section>
-
-  <section class="panel" aria-label="Image compression tool">
-    <div class="drop-zone" id="dropZone">
-      <div class="upload-icon" aria-hidden="true">🖼️</div>
-      <h2>Choose an image</h2>
-      <p>Select a JPG, PNG or WebP image from your device.</p>
-      <button type="button" class="primary" id="browseButton">Choose Image</button>
-      <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp">
-      <p><small>Your image is processed locally in your browser.</small></p>
-    </div>
-
-    <div class="settings">
-      <div class="setting">
-        <label for="targetSize">Target file size</label>
-        <select id="targetSize">
-          <option value="50">50 KB</option>
-          <option value="100" selected>100 KB</option>
-          <option value="200">200 KB</option>
-          <option value="500">500 KB</option>
-          <option value="1024">1 MB</option>
-        </select>
-        <small>The tool will try to reach or go below this size.</small>
-      </div>
-      <div class="setting">
-        <label for="format">Output format</label>
-        <select id="format">
-          <option value="image/jpeg" selected>JPG</option>
-          <option value="image/webp">WebP</option>
-        </select>
-        <small>JPG is widely supported. WebP can produce smaller files.</small>
-      </div>
-    </div>
-
-    <div class="actions">
-      <button type="button" class="primary" id="compressButton" disabled>Compress Image</button>
-      <button type="button" class="secondary" id="clearButton" disabled>Clear</button>
-    </div>
-
-    <div class="status" id="status" role="status" aria-live="polite"></div>
-
-    <div class="preview" id="preview">
-      <h2>Compression result</h2>
-      <img id="resultImage" alt="Compressed image preview">
-      <div class="result-info">
-        <div class="stat">
-          <small>Original size</small>
-          <strong id="originalInfo">—</strong>
-        </div>
-        <div class="stat">
-          <small>Compressed size</small>
-          <strong id="compressedInfo">—</strong>
-        </div>
-        <div class="stat">
-          <small>Dimensions</small>
-          <strong id="dimensionsInfo">—</strong>
-        </div>
-        <div class="stat">
-          <small>Size reduction</small>
-          <strong id="reductionInfo">—</strong>
-        </div>
-      </div>
-      <p class="muted" id="targetInfo"></p>
-      <a class="download" id="downloadButton" href="#" download="compressed-image.jpg">Download Compressed Image</a>
-    </div>
-  </section>
-
-  <section class="content">
-    <h2>How to Compress an Image to 100KB</h2>
-    <ol>
-      <li>Choose a JPG, PNG or WebP image from your device.</li>
-      <li>Select 100KB or another target file size.</li>
-      <li>Choose JPG or WebP as the output format.</li>
-      <li>Click Compress Image and wait for the result.</li>
-      <li>Check the final file size and download your image.</li>
-    </ol>
-
-    <h2>Why Compress Images to 100KB?</h2>
-    <p>
-      A smaller image can be easier to upload to websites, online forms,
-      email services and applications that limit file size. The right
-      target depends on the upload requirements and the image itself.
-    </p>
-    <p>
-      This free image compressor works in your browser. Your selected
-      image is not uploaded to a RitoccaPix image-processing server.
-      Very small targets may require reducing image dimensions or quality,
-      which can affect visual detail.
-    </p>
-
-    <h2>Choose the Right Target Size</h2>
-    <h3>Compress to 50KB</h3>
-    <p>Useful when a website or form has a very strict file-size limit.</p>
-    <h3>Compress to 100KB</h3>
-    <p>A practical target for many online forms and small web images.</p>
-    <h3>Compress to 200KB or 500KB</h3>
-    <p>These larger targets can preserve more image detail when the original file is large.</p>
-
-    <h2>Frequently Asked Questions</h2>
-    <div class="faq">
-      <h3>How do I compress an image to 100KB online?</h3>
-      <p>Upload an image, select 100KB and click Compress Image. Download the result when processing finishes.</p>
-    </div>
-    <div class="faq">
-      <h3>Will every image become smaller than 100KB?</h3>
-      <p>The tool tries to reach the selected target by adjusting image quality and, if necessary, image dimensions. Some images may not reach the target without substantial quality loss.</p>
-    </div>
-    <div class="faq">
-      <h3>Are my images uploaded to a server?</h3>
-      <p>No. The image processing takes place locally in your browser. Your selected image is not sent to a RitoccaPix processing server.</p>
-    </div>
-    <div class="faq">
-      <h3>Can I compress PNG images?</h3>
-      <p>Yes. You can open PNG files and export them as JPG or WebP. These formats do not preserve PNG transparency in the same way, so check the result before using it.</p>
-    </div>
-    <div class="faq">
-      <h3>Is this image compressor free?</h3>
-      <p>Yes. You can use this tool for free in your browser without installing an application.</p>
-    </div>
-
-    <h2>Explore More Free Image Tools</h2>
-    <div class="related">
-      <a href="image-compressor.html">
-        <strong>Image Compressor</strong>
-        <span>Compress and resize multiple images.</span>
-      </a>
-      <a href="image-resizer.html">
-        <strong>Image Resizer</strong>
-        <span>Change image dimensions online.</span>
-      </a>
-      <a href="image-converter.html">
-        <strong>Image Converter</strong>
-        <span>Convert between image formats.</span>
-      </a>
-    </div>
-  </section>
-</main>
-
-<footer>
-  <p>Free online image tools by RitoccaPix.</p>
-  <a href="index.html">Home</a>
-  <a href="image-compressor.html">Image Compressor</a>
-  <a href="image-resizer.html">Image Resizer</a>
-  <a href="privacy.html">Privacy Policy</a>
-</footer>
-
+<section class="hero"><div class="eyebrow"><i></i> Social Media Studio</div><h1>Make every post <em>fit perfectly.</em></h1><p>Turn one photo into a polished social media graphic. Choose a platform size, reposition your image, add a headline and download a crisp design — free, right in your browser.</p><div class="trust-row"><span><b>✓</b> No account</span><span><b>✓</b> No watermark</span><span><b>✓</b> Local browser processing</span></div></section>
+<section class="studio" aria-label="Social media image editor">
+<aside class="panel controls">
+  <h2 class="section-label"><span class="step">1</span> Choose a platform size</h2>
+  <div class="field"><label for="presetSelect">Social format <span class="hint">Change any time</span></label><select id="presetSelect" class="select">
+    <optgroup label="Instagram"><option value="ig-square">Instagram Post · Square 1080 × 1080</option><option value="ig-portrait">Instagram Post · Portrait 1080 × 1350</option><option value="ig-story" selected>Story / Reel · 1080 × 1920</option></optgroup>
+    <optgroup label="Facebook"><option value="fb-post">Facebook Post · 1200 × 630</option><option value="fb-cover">Facebook Cover · 1640 × 624</option></optgroup>
+    <optgroup label="Pinterest"><option value="pin">Pinterest Pin · 1000 × 1500</option></optgroup>
+    <optgroup label="LinkedIn"><option value="li-post">LinkedIn Post · 1200 × 627</option></optgroup>
+    <optgroup label="X"><option value="x-post">X Post · 1600 × 900</option></optgroup>
+    <optgroup label="YouTube"><option value="yt-thumb">YouTube Thumbnail · 1280 × 720</option></optgroup>
+  </select></div>
+  <div class="preset-chips" aria-label="Quick social formats">
+    <button class="chip" type="button" data-preset="ig-square" aria-pressed="false"><strong>Instagram Post</strong><small>1:1 · 1080 × 1080</small></button>
+    <button class="chip" type="button" data-preset="ig-story" aria-pressed="true"><strong>Story / Reel</strong><small>9:16 · 1080 × 1920</small></button>
+    <button class="chip" type="button" data-preset="pin" aria-pressed="false"><strong>Pinterest Pin</strong><small>2:3 · 1000 × 1500</small></button>
+    <button class="chip" type="button" data-preset="yt-thumb" aria-pressed="false"><strong>YouTube Thumbnail</strong><small>16:9 · 1280 × 720</small></button>
+  </div>
+  <div class="divider"></div>
+  <h2 class="section-label"><span class="step">2</span> Add your photo</h2>
+  <div class="field"><button type="button" class="primary" id="chooseImage" style="width:100%"><span class="button-icon">＋</span> Choose photo</button><input type="file" id="fileInput" accept="image/*" hidden><p class="notice" id="fileLabel">JPG, PNG and WebP recommended. You can drag the photo directly inside the preview.</p></div>
+  <div class="field"><div class="field-title"><label for="fitMode" style="margin:0">Image placement</label></div><select id="fitMode" class="select"><option value="cover">Fill canvas (crop edges)</option><option value="contain">Fit whole photo</option></select></div>
+  <div class="field"><div class="field-title"><label for="zoom" style="margin:0">Photo zoom</label><span class="hint">Drag photo to reposition</span></div><div class="range-row"><input id="zoom" type="range" min="1" max="3" step="0.01" value="1"><output class="range-value" id="zoomValue">100%</output></div></div>
+  <div class="actions"><button class="secondary" type="button" id="centerPhoto">Center photo</button><button class="secondary" type="button" id="removePhoto">Remove photo</button></div>
+  <div class="divider"></div>
+  <h2 class="section-label"><span class="step">3</span> Make it yours</h2>
+  <div class="field"><label for="headline">Headline text</label><input class="text-input" id="headline" type="text" maxlength="90" placeholder="Your message goes here"></div>
+  <div class="field"><label for="subline">Small caption <span class="hint">Optional</span></label><input class="text-input" id="subline" type="text" maxlength="120" placeholder="Add a detail, date or call to action"></div>
+  <div class="two-col"><div class="field"><label for="fontSize">Headline size</label><select class="select" id="fontSize"><option value="0.055">Small</option><option value="0.075" selected>Medium</option><option value="0.10">Large</option><option value="0.13">Extra large</option></select></div><div class="field"><label for="fontFamily">Font style</label><select class="select" id="fontFamily"><option value="Arial, sans-serif">Modern</option><option value="Georgia, serif">Editorial</option><option value="Impact, sans-serif">Bold</option><option value="Trebuchet MS, sans-serif">Friendly</option></select></div></div>
+  <div class="two-col"><div class="field"><label for="textColor">Text color</label><div class="color-row"><input class="color-input" id="textColor" type="color" value="#ffffff"><span class="hint">Headline &amp; caption</span></div></div><div class="field"><label for="bgColor">Canvas background</label><div class="color-row"><input class="color-input" id="bgColor" type="color" value="#18243a"><span class="hint">Visible around photo</span></div></div></div>
+  <div class="field"><label class="toggle-row" for="textPlate"><span>Text background for contrast</span><input type="checkbox" id="textPlate" checked></label></div>
+  <div class="field"><label class="toggle-row" for="safeGuides"><span>Show safe-area guides</span><input type="checkbox" id="safeGuides"></label><p class="notice">Guides are for preview only and are not included in the downloaded image.</p></div>
+  <div class="actions"><button class="secondary" type="button" id="clearText">Clear text</button><button class="secondary" type="button" id="resetDesign">Reset design</button></div>
+  <div id="status" class="status" role="status" aria-live="polite"></div>
+</aside>
+<section class="workspace panel" aria-label="Design preview and export">
+  <div class="workspace-head"><div><div class="workspace-title">Live design preview</div><div class="workspace-sub" id="formatLabel">Instagram Story / Reel · 1080 × 1920 px</div></div><span class="pill" id="designStatus">Ready to create</span></div>
+  <div class="canvas-wrap"><div class="canvas-stage" id="canvasStage"><div class="empty-state" id="emptyState"><div class="empty-icon">✦</div><h2>Your canvas is ready</h2><p>Choose a photo to start designing. Your image will appear here in the selected social format.</p><button type="button" class="primary" id="emptyChoose">Choose a photo</button></div><div class="canvas-shell" id="canvasShell" hidden><canvas id="designCanvas" width="1080" height="1920" aria-label="Social media design preview. Drag the photo or text to reposition it."></canvas></div></div></div>
+  <div class="preview-foot"><span><strong id="dimensionsLabel">1080 × 1920 px</strong> · Export size</span><span id="dragHint">Tip: drag the photo or text to reposition it</span></div>
+  <div class="export-row"><span class="export-label">Export as</span><button class="pill active" type="button" data-export="image/png" aria-pressed="true">PNG</button><button class="pill" type="button" data-export="image/jpeg" aria-pressed="false">JPG</button><button type="button" class="primary" id="downloadButton" disabled><span class="button-icon">↓</span> Download design</button></div>
+</section>
+</section>
+<section class="below"><div class="below-grid"><article class="info-card"><div class="icon">▣</div><h3>Made for each platform</h3><p>Start with useful image dimensions for Instagram, Facebook, Pinterest, LinkedIn, X and YouTube.</p></article><article class="info-card"><div class="icon">✎</div><h3>Photo and text in one place</h3><p>Reposition your photo, add a headline and caption, and adjust the look before exporting.</p></article><article class="info-card"><div class="icon">⌁</div><h3>Your image stays on your device</h3><p>The editor processes your selected image locally in your browser. No account or watermark is required.</p></article></div></section>
+<section class="content"><h2>Free Social Media Image Maker</h2><p>RitoccaPix Social Media Studio helps you prepare images for social platforms without installing design software. Choose a platform preset, add your photo, adjust its position and zoom, then add a headline or short caption. Download the finished graphic as a PNG or JPG file.</p><h2>Supported social media image sizes</h2><ul><li><strong>Instagram:</strong> square feed posts, portrait posts and vertical Stories or Reels.</li><li><strong>Facebook:</strong> landscape posts and wide cover images.</li><li><strong>Pinterest:</strong> vertical Pins.</li><li><strong>LinkedIn:</strong> landscape feed posts.</li><li><strong>X:</strong> landscape posts.</li><li><strong>YouTube:</strong> 16:9 video thumbnails.</li></ul><p>Platform specifications can change and placements may crop images differently across devices. Keep important text away from the edges and review the preview before downloading.</p><h2>How to create a social media graphic</h2><ol><li>Choose the platform format you need.</li><li>Select a photo from your device.</li><li>Drag the photo in the preview to adjust the crop, or change zoom and placement settings.</li><li>Add a headline and optional caption, then choose text and background colors.</li><li>Download your finished design as PNG or JPG.</li></ol><h2>Frequently asked questions</h2><div class="faq"><h3>Is this social media image maker free?</h3><p>Yes. You can create and download designs without creating an account. There is no watermark added by the tool.</p></div><div class="faq"><h3>Which social platforms are supported?</h3><p>The preset list includes image sizes for Instagram, Facebook, Pinterest, LinkedIn, X and YouTube. You can switch formats before downloading.</p></div><div class="faq"><h3>Can I move the photo inside the design?</h3><p>Yes. After selecting a photo, drag it directly in the preview to adjust its position. Use the zoom slider to change the crop.</p></div><div class="faq"><h3>Are my photos uploaded?</h3><p>No image upload to a RitoccaPix processing server is performed by this editor. Your browser loads the website and any resources needed to display it, while your selected image is processed locally on your device.</p></div><div class="faq"><h3>Should I download PNG or JPG?</h3><p>PNG is useful for crisp graphics and text. JPG often creates a smaller file for photographs. JPG does not preserve transparency.</p></div><h2>Explore more free tools</h2><div class="related"><a href="image-collage.html"><strong>Photo Collage Maker</strong><span>Combine photos into a collage.</span></a><a href="social-video-maker.html"><strong>Social Video Maker</strong><span>Create a video for social platforms.</span></a><a href="image-resizer.html"><strong>Image Resizer</strong><span>Resize image dimensions online.</span></a><a href="image-compressor.html"><strong>Image Compressor</strong><span>Reduce image file size.</span></a><a href="image-object-remover.html"><strong>AI Object Remover</strong><span>Remove unwanted objects from photos.</span></a><a href="image-smart.html"><strong>AI Image Enhancer</strong><span>Improve image clarity in your browser.</span></a></div></section>
+</main><footer><p>Free online image tools by RitoccaPix.</p><a href="index.html">Home</a><a href="privacy.html">Privacy Policy</a><a href="image-collage.html">Photo Collage</a><a href="social-video-maker.html">Social Video Maker</a></footer>
 <script>
 (() => {
-  const fileInput = document.getElementById("fileInput");
-  const browseButton = document.getElementById("browseButton");
-  const dropZone = document.getElementById("dropZone");
-  const targetSize = document.getElementById("targetSize");
-  const format = document.getElementById("format");
-  const compressButton = document.getElementById("compressButton");
-  const clearButton = document.getElementById("clearButton");
-  const statusBox = document.getElementById("status");
-  const preview = document.getElementById("preview");
-  const resultImage = document.getElementById("resultImage");
-  const downloadButton = document.getElementById("downloadButton");
+  "use strict";
+  const presets = {
+    "ig-square": {label:"Instagram Post", width:1080,height:1080},
+    "ig-portrait": {label:"Instagram Portrait",width:1080,height:1350},
+    "ig-story": {label:"Instagram Story / Reel",width:1080,height:1920},
+    "fb-post": {label:"Facebook Post",width:1200,height:630},
+    "fb-cover": {label:"Facebook Cover",width:1640,height:624},
+    "pin": {label:"Pinterest Pin",width:1000,height:1500},
+    "li-post": {label:"LinkedIn Post",width:1200,height:627},
+    "x-post": {label:"X Post",width:1600,height:900},
+    "yt-thumb": {label:"YouTube Thumbnail",width:1280,height:720}
+  };
+  const $ = id => document.getElementById(id);
+  const canvas = $("designCanvas"), ctx = canvas.getContext("2d");
+  const fileInput=$("fileInput"), chooseImage=$("chooseImage"), emptyChoose=$("emptyChoose");
+  const presetSelect=$("presetSelect"), fitMode=$("fitMode"), zoom=$("zoom"), zoomValue=$("zoomValue");
+  const headline=$("headline"), subline=$("subline"), fontSize=$("fontSize"), fontFamily=$("fontFamily");
+  const textColor=$("textColor"), bgColor=$("bgColor"), textPlate=$("textPlate"), safeGuides=$("safeGuides");
+  const emptyState=$("emptyState"), canvasShell=$("canvasShell"), downloadButton=$("downloadButton"), status=$("status");
+  let image=null, imageUrl=null, imageName="social-image", exportType="image/png", busy=false;
+  let photo={x:0,y:0,zoom:1}, textPos={x:.5,y:.76}, subPos={x:.5,y:.88}, drag=null;
+  let currentPreset=presetSelect.value;
 
-  let selectedFile = null;
-  let resultUrl = null;
-  let busy = false;
-
-  function formatBytes(bytes) {
-    if (bytes < 1024) return bytes + " B";
-    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
-    return (bytes / (1024 * 1024)).toFixed(2) + " MB";
+  function setStatus(message,type=""){status.textContent=message;status.className="status show"+(type?" "+type:"");}
+  function clearStatus(){status.className="status";status.textContent="";}
+  function activeSize(){return presets[currentPreset]||presets["ig-story"];}
+  function updatePresetUI(){
+    const p=activeSize();
+    presetSelect.value=currentPreset;
+    document.querySelectorAll("[data-preset]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.preset===currentPreset)));
+    $("formatLabel").textContent=p.label+" · "+p.width+" × "+p.height+" px";
+    $("dimensionsLabel").textContent=p.width+" × "+p.height+" px";
+    canvas.width=p.width;canvas.height=p.height;
+    $("designStatus").textContent=image?"Design in progress":"Ready to create";
+    render();
   }
-
-  function setStatus(message, type = "") {
-    statusBox.textContent = message;
-    statusBox.className = "status show" + (type ? " " + type : "");
+  function setImage(file){
+    if(!file)return;
+    if(!file.type.startsWith("image/")){setStatus("Please choose a valid image file.","error");return;}
+    if(file.size>40*1024*1024){setStatus("Please choose an image smaller than 40MB.","error");return;}
+    const nextUrl=URL.createObjectURL(file), nextImage=new Image();
+    nextImage.onload=()=>{
+      if(imageUrl)URL.revokeObjectURL(imageUrl);
+      imageUrl=nextUrl;image=nextImage;imageName=file.name.replace(/\.[^.]+$/,"").replace(/[^a-z0-9_-]+/gi,"-").replace(/^-|-$/g,"")||"social-image";
+      photo={x:0,y:0,zoom:Number(zoom.value)};
+      emptyState.hidden=true;canvasShell.hidden=false;downloadButton.disabled=false;
+      $("fileLabel").textContent=file.name+" · "+nextImage.naturalWidth+" × "+nextImage.naturalHeight+" px";
+      $("designStatus").textContent="Photo added";clearStatus();render();
+    };
+    nextImage.onerror=()=>{URL.revokeObjectURL(nextUrl);setStatus("This image could not be opened. Try a JPG, PNG or WebP file.","error");};
+    nextImage.src=nextUrl;
   }
-
-  function setBusy(value) {
-    busy = value;
-    compressButton.disabled = busy || !selectedFile;
-    browseButton.disabled = busy;
-    clearButton.disabled = busy || !selectedFile;
-    fileInput.disabled = busy;
-    targetSize.disabled = busy;
-    format.disabled = busy;
+  function imageRect(){
+    if(!image)return null;
+    const W=canvas.width,H=canvas.height,iw=image.naturalWidth,ih=image.naturalHeight;
+    const base=fitMode.value==="contain"?Math.min(W/iw,H/ih):Math.max(W/iw,H/ih);
+    const scale=base*photo.zoom,w=iw*scale,h=ih*scale;
+    return{x:(W-w)/2+photo.x,y:(H-h)/2+photo.y,w,h};
   }
-
-  function resetResult() {
-    if (resultUrl) URL.revokeObjectURL(resultUrl);
-    resultUrl = null;
-    resultImage.removeAttribute("src");
-    downloadButton.removeAttribute("href");
-    preview.style.display = "none";
+  function roundedRect(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath();}
+  function drawWrappedText(text,x,y,maxWidth,lineHeight,font){
+    ctx.font=font;const words=text.trim().split(/\s+/);let lines=[],line="";
+    for(const word of words){const test=line?line+" "+word:word;if(ctx.measureText(test).width>maxWidth&&line){lines.push(line);line=word;}else line=test;}
+    if(line)lines.push(line);const maxLines=4;lines=lines.slice(0,maxLines);
+    lines.forEach((ln,i)=>ctx.fillText(ln,x,y+i*lineHeight));return {lines,height:lines.length*lineHeight};
   }
-
-  function clearAll() {
-    if (busy) return;
-    selectedFile = null;
-    fileInput.value = "";
-    resetResult();
-    statusBox.className = "status";
-    setBusy(false);
-    compressButton.disabled = true;
-    clearButton.disabled = true;
-    dropZone.querySelector("h2").textContent = "Choose an image";
-    dropZone.querySelector("p").textContent =
-      "Select a JPG, PNG or WebP image from your device.";
+  function drawTextLayer(text,pos,sizeRatio,isSub=false){
+    if(!text.trim())return;
+    const W=canvas.width,H=canvas.height,fontPx=Math.max(14,Math.round(W*sizeRatio*(isSub?.46:1)));
+    const fontWeight=isSub?600:850;const font=`${fontWeight} ${fontPx}px ${fontFamily.value}`;
+    const maxWidth=W*.82,lineHeight=fontPx*(isSub?1.35:1.12),x=pos.x*W,y=pos.y*H;
+    ctx.save();ctx.textAlign="center";ctx.textBaseline="middle";ctx.font=font;ctx.lineJoin="round";
+    const result=drawWrappedText(text,x,y,maxWidth,lineHeight,font);
+    const widest=Math.min(maxWidth,Math.max(...result.lines.map(line=>ctx.measureText(line).width),0));
+    const boxH=result.height+fontPx*.5,boxW=widest+fontPx*.75;
+    if(textPlate.checked){ctx.fillStyle="rgba(5,10,20,.66)";roundedRect(ctx,x-boxW/2,y-fontPx*.55,boxW,boxH,Math.max(5,fontPx*.16));ctx.fill();}
+    ctx.fillStyle=textColor.value;ctx.shadowColor="rgba(0,0,0,.48)";ctx.shadowBlur=fontPx*.12;ctx.shadowOffsetY=fontPx*.05;
+    drawWrappedText(text,x,y,maxWidth,lineHeight,font);ctx.restore();
   }
-
-  function acceptFile(file) {
-    if (!file) return;
-    if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
-      setStatus("Please choose a JPG, PNG or WebP image.", "error");
-      return;
-    }
-    if (file.size > 50 * 1024 * 1024) {
-      setStatus("Please choose an image smaller than 50MB.", "error");
-      return;
-    }
-
-    selectedFile = file;
-    resetResult();
-    dropZone.querySelector("h2").textContent = file.name;
-    dropZone.querySelector("p").textContent =
-      "Selected file: " + formatBytes(file.size);
-    setStatus("Image ready to compress.", "success");
-    setBusy(false);
+  function drawGuides(){
+    if(!safeGuides.checked)return;
+    const W=canvas.width,H=canvas.height;ctx.save();ctx.strokeStyle="rgba(255,255,255,.72)";ctx.lineWidth=Math.max(2,W/700);ctx.setLineDash([W/100,W/150]);ctx.strokeRect(W*.07,H*.07,W*.86,H*.86);
+    if(currentPreset==="ig-story") {ctx.strokeStyle="rgba(255,220,120,.9)";ctx.strokeRect(W*.06,H*.12,W*.88,H*.70);}
+    ctx.setLineDash([]);ctx.restore();
   }
-
-  function loadImage(file) {
-    return new Promise((resolve, reject) => {
-      const url = URL.createObjectURL(file);
-      const img = new Image();
-
-      img.onload = () => {
-        URL.revokeObjectURL(url);
-        if (!img.naturalWidth || !img.naturalHeight) {
-          reject(new Error("The image dimensions could not be read."));
-          return;
-        }
-        if (img.naturalWidth * img.naturalHeight > 40000000) {
-          reject(new Error("This image is too large to process safely (over 40 megapixels)."));
-          return;
-        }
-        resolve(img);
-      };
-      img.onerror = () => {
-        URL.revokeObjectURL(url);
-        reject(new Error("The browser could not open this image."));
-      };
-      img.src = url;
-    });
+  function render(){
+    if(!ctx)return;
+    const W=canvas.width,H=canvas.height;
+    ctx.clearRect(0,0,W,H);ctx.fillStyle=bgColor.value;ctx.fillRect(0,0,W,H);
+    if(image){const r=imageRect();ctx.save();ctx.beginPath();ctx.rect(0,0,W,H);ctx.clip();ctx.drawImage(image,r.x,r.y,r.w,r.h);ctx.restore();}
+    drawTextLayer(headline.value,textPos,Number(fontSize.value),false);
+    drawTextLayer(subline.value,subPos,Number(fontSize.value),true);
+    drawGuides();
+    if(image){$("designStatus").textContent="Live preview";downloadButton.disabled=false;}else downloadButton.disabled=true;
+    zoomValue.textContent=Math.round(Number(zoom.value)*100)+"%";
   }
-
-  function canvasToBlob(canvas, mime, quality) {
-    return new Promise((resolve, reject) => {
-      canvas.toBlob(blob => {
-        if (!blob) {
-          reject(new Error("The browser could not create the compressed image."));
-          return;
-        }
-        if (blob.type !== mime) {
-          reject(new Error("This browser does not support the selected output format."));
-          return;
-        }
-        resolve(blob);
-      }, mime, quality);
-    });
+  function canvasPoint(event){const rect=canvas.getBoundingClientRect();return{x:(event.clientX-rect.left)/rect.width*canvas.width,y:(event.clientY-rect.top)/rect.height*canvas.height};}
+  function inTextBox(p,pos,text,sizeRatio){
+    if(!text.trim())return false;const W=canvas.width,H=canvas.height;const fontPx=Math.max(14,Math.round(W*sizeRatio));ctx.save();ctx.font=`850 ${fontPx}px ${fontFamily.value}`;
+    const lines=text.trim().split(/\s+/);let line="",out=[];for(const word of lines){const test=line?line+" "+word:word;if(ctx.measureText(test).width>W*.82&&line){out.push(line);line=word;}else line=test;}if(line)out.push(line);const width=Math.min(W*.88,Math.max(...out.map(t=>ctx.measureText(t).width),0))+fontPx;const height=Math.max(1,out.length)*fontPx*1.12+fontPx;ctx.restore();return p.x>=pos.x*W-width/2&&p.x<=pos.x*W+width/2&&p.y>=pos.y*H-height/2&&p.y<=pos.y*H+height/2;
   }
-
-  async function encodeAtBestQuality(canvas, mime, targetBytes) {
-    let low = 0.10;
-    let high = 0.95;
-    let best = null;
-
-    for (let i = 0; i < 7; i++) {
-      const q = (low + high) / 2;
-      const blob = await canvasToBlob(canvas, mime, q);
-
-      if (blob.size <= targetBytes) {
-        best = blob;
-        low = q;
-      } else {
-        high = q;
-      }
-    }
-
-    if (best) return best;
-    return await canvasToBlob(canvas, mime, 0.10);
-  }
-
-  async function compressImage(file, mime, targetBytes) {
-    const img = await loadImage(file);
-    let width = img.naturalWidth;
-    let height = img.naturalHeight;
-    const canvas = document.createElement("canvas");
-    const context = canvas.getContext("2d");
-
-    if (!context) throw new Error("Canvas processing is not available in this browser.");
-
-    try {
-      let blob = null;
-      let attempts = 0;
-
-      while (attempts < 14) {
-        canvas.width = width;
-        canvas.height = height;
-
-        context.clearRect(0, 0, width, height);
-
-        if (mime === "image/jpeg") {
-          context.fillStyle = "#ffffff";
-          context.fillRect(0, 0, width, height);
-        }
-
-        context.drawImage(img, 0, 0, width, height);
-
-        blob = await encodeAtBestQuality(canvas, mime, targetBytes);
-
-        if (blob.size <= targetBytes) {
-          return { blob, width, height };
-        }
-
-        if (width <= 320 && height <= 320) break;
-
-        width = Math.max(1, Math.round(width * 0.82));
-        height = Math.max(1, Math.round(height * 0.82));
-        attempts++;
-      }
-
-      return { blob, width, height };
-    } finally {
-      canvas.width = 0;
-      canvas.height = 0;
-    }
-  }
-
-  function safeBaseName(filename) {
-    const dot = filename.lastIndexOf(".");
-    const base = dot > 0 ? filename.slice(0, dot) : filename;
-    return base.replace(/[<>:"/\\|?*\x00-\x1F]/g, "_") || "image";
-  }
-
-  browseButton.addEventListener("click", () => fileInput.click());
-
-  fileInput.addEventListener("change", () => {
-    acceptFile(fileInput.files && fileInput.files[0]);
-    fileInput.value = "";
+  canvas.addEventListener("pointerdown",event=>{
+    if(!image)return;const p=canvasPoint(event);
+    if(inTextBox(p,subPos,subline.value,Number(fontSize.value)*.46)){drag={type:"sub",start:p,orig:{...subPos}};}
+    else if(inTextBox(p,textPos,headline.value,Number(fontSize.value))){drag={type:"headline",start:p,orig:{...textPos}};}
+    else drag={type:"photo",start:p,orig:{...photo}};
+    canvas.setPointerCapture(event.pointerId);event.preventDefault();
   });
-
-  ["dragenter", "dragover"].forEach(eventName => {
-    dropZone.addEventListener(eventName, event => {
-      event.preventDefault();
-      if (!busy) dropZone.classList.add("drag");
-    });
+  canvas.addEventListener("pointermove",event=>{
+    if(!drag)return;const p=canvasPoint(event),dx=p.x-drag.start.x,dy=p.y-drag.start.y;
+    if(drag.type==="photo"){photo.x=drag.orig.x+dx;photo.y=drag.orig.y+dy;}
+    else {const pos=drag.type==="headline"?textPos:subPos;pos.x=Math.max(.08,Math.min(.92,drag.orig.x+dx/canvas.width));pos.y=Math.max(.04,Math.min(.96,drag.orig.y+dy/canvas.height));}
+    render();
   });
-
-  ["dragleave", "drop"].forEach(eventName => {
-    dropZone.addEventListener(eventName, event => {
-      event.preventDefault();
-      dropZone.classList.remove("drag");
-    });
+  function stopDrag(){drag=null;}canvas.addEventListener("pointerup",stopDrag);canvas.addEventListener("pointercancel",stopDrag);canvas.addEventListener("lostpointercapture",stopDrag);
+  chooseImage.addEventListener("click",()=>fileInput.click());emptyChoose.addEventListener("click",()=>fileInput.click());
+  fileInput.addEventListener("change",()=>{setImage(fileInput.files&&fileInput.files[0]);fileInput.value="";});
+  presetSelect.addEventListener("change",()=>{currentPreset=presetSelect.value;updatePresetUI();});
+  document.querySelectorAll("[data-preset]").forEach(button=>button.addEventListener("click",()=>{currentPreset=button.dataset.preset;updatePresetUI();}));
+  fitMode.addEventListener("change",()=>{photo.x=0;photo.y=0;render();});
+  zoom.addEventListener("input",()=>{photo.zoom=Number(zoom.value);render();});
+  [headline,subline,fontSize,fontFamily,textColor,bgColor,textPlate,safeGuides].forEach(el=>el.addEventListener("input",render));
+  $("centerPhoto").addEventListener("click",()=>{photo.x=0;photo.y=0;zoom.value="1";photo.zoom=1;render();});
+  $("removePhoto").addEventListener("click",()=>{if(imageUrl)URL.revokeObjectURL(imageUrl);imageUrl=null;image=null;canvasShell.hidden=true;emptyState.hidden=false;downloadButton.disabled=true;$("fileLabel").textContent="JPG, PNG and WebP recommended. You can drag the photo directly inside the preview.";$("designStatus").textContent="Ready to create";render();});
+  $("clearText").addEventListener("click",()=>{headline.value="";subline.value="";render();});
+  $("resetDesign").addEventListener("click",()=>{headline.value="";subline.value="";textPos={x:.5,y:.76};subPos={x:.5,y:.88};photo={x:0,y:0,zoom:1};zoom.value="1";fitMode.value="cover";fontSize.value="0.075";fontFamily.value="Arial, sans-serif";textColor.value="#ffffff";bgColor.value="#18243a";textPlate.checked=true;safeGuides.checked=false;render();});
+  document.querySelectorAll("[data-export]").forEach(button=>button.addEventListener("click",()=>{exportType=button.dataset.export;document.querySelectorAll("[data-export]").forEach(b=>{b.classList.toggle("active",b===button);b.setAttribute("aria-pressed",String(b===button));});}));
+  downloadButton.addEventListener("click",()=>{
+    if(!image||busy)return;busy=true;downloadButton.disabled=true;setStatus("Preparing your image…");
+    try{const mime=exportType,extension=mime==="image/jpeg"?"jpg":"png";const showGuides=safeGuides.checked;if(showGuides){safeGuides.checked=false;render();}const exportCanvas=document.createElement("canvas");exportCanvas.width=canvas.width;exportCanvas.height=canvas.height;const exportCtx=exportCanvas.getContext("2d");exportCtx.drawImage(canvas,0,0);if(showGuides){safeGuides.checked=true;render();}if(mime==="image/jpeg"){const flat=document.createElement("canvas");flat.width=canvas.width;flat.height=canvas.height;const fctx=flat.getContext("2d");fctx.fillStyle=bgColor.value;fctx.fillRect(0,0,flat.width,flat.height);fctx.drawImage(exportCanvas,0,0);flat.toBlob(blob=>finishDownload(blob,extension),mime,.92);}else exportCanvas.toBlob(blob=>finishDownload(blob,extension),mime);
+    }catch(error){busy=false;downloadButton.disabled=!image;setStatus("Could not export the design. Please try again.","error");}
   });
-
-  dropZone.addEventListener("drop", event => {
-    if (!busy && event.dataTransfer.files.length) {
-      acceptFile(event.dataTransfer.files[0]);
-    }
-  });
-
-  compressButton.addEventListener("click", async () => {
-    if (!selectedFile || busy) return;
-
-    resetResult();
-    setBusy(true);
-    setStatus("Compressing image. Please wait…");
-
-    try {
-      const targetBytes = Number(targetSize.value) * 1024;
-      const mime = format.value;
-      const result = await compressImage(selectedFile, mime, targetBytes);
-      const extension = mime === "image/jpeg" ? "jpg" : "webp";
-      const outputName = safeBaseName(selectedFile.name) + "-compressed." + extension;
-
-      resultUrl = URL.createObjectURL(result.blob);
-      resultImage.src = resultUrl;
-      resultImage.alt = "Compressed version of " + selectedFile.name;
-      downloadButton.href = resultUrl;
-      downloadButton.download = outputName;
-
-      document.getElementById("originalInfo").textContent =
-        formatBytes(selectedFile.size);
-      document.getElementById("compressedInfo").textContent =
-        formatBytes(result.blob.size);
-      document.getElementById("dimensionsInfo").textContent =
-        result.width + " × " + result.height + " px";
-
-      const reduction = (1 - result.blob.size / selectedFile.size) * 100;
-      document.getElementById("reductionInfo").textContent =
-        (reduction >= 0 ? reduction.toFixed(1) : Math.abs(reduction).toFixed(1)) +
-        "% " + (reduction >= 0 ? "smaller" : "larger");
-
-      const reached = result.blob.size <= targetBytes;
-      document.getElementById("targetInfo").textContent = reached
-        ? "Target reached: the image is at or below " + targetSize.value + " KB."
-        : "The image is still above " + targetSize.value +
-          " KB. Reaching the target may require more quality loss or smaller dimensions.";
-
-      preview.style.display = "block";
-      setStatus(
-        reached
-          ? "Compression complete. Your target size has been reached."
-          : "Compression complete, but the selected target could not be reached.",
-        reached ? "success" : "error"
-      );
-    } catch (error) {
-      setStatus(error.message || "An unexpected error occurred while compressing the image.", "error");
-    } finally {
-      setBusy(false);
-    }
-  });
-
-  clearButton.addEventListener("click", clearAll);
+  function finishDownload(blob,extension){busy=false;downloadButton.disabled=!image;if(!blob){setStatus("Your browser could not export this image. Try another browser or format.","error");return;}const url=URL.createObjectURL(blob),a=document.createElement("a"),p=activeSize();a.href=url;a.download=`${imageName}-${currentPreset}-${p.width}x${p.height}.${extension}`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);setStatus("Your design is ready. Check your downloads if the file does not appear automatically.","success");}
+  updatePresetUI();
 })();
 </script>
 </body>
