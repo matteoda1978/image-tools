@@ -33,9 +33,9 @@
     "mainEntity":[
       {"@type":"Question","name":"Is this a real AI image enhancer?","acceptedAnswer":{"@type":"Answer","text":"Yes. It uses an ESRGAN neural-network model through UpscalerJS and TensorFlow.js. It creates a 2× super-resolution output; it is not simply changing the image dimensions with a canvas resize."}},
       {"@type":"Question","name":"Are my photos uploaded?","acceptedAnswer":{"@type":"Answer","text":"No. Image pixels are processed in your browser. The browser downloads the JavaScript runtime and model files from a CDN, but your selected photo is not sent to RitoccaPix's server."}},
-      {"@type":"Question","name":"Why is the first run slower?","acceptedAnswer":{"@type":"Answer","text":"The browser must download the runtime and AI model the first time. The model may be cached by your browser for later use. Processing time also depends on your device. This version uses a smaller working copy to reduce processing time and memory use."}},
+      {"@type":"Question","name":"Why is the first run slower?","acceptedAnswer":{"@type":"Answer","text":"The browser must download the runtime and AI model the first time. The model may be cached by your browser for later use. Processing time also depends on your device. This version uses a smaller working copy of up to 640 px per side and about 350,000 pixels to reduce processing time and memory use."}},
       {"@type":"Question","name":"Can AI restore the exact original details?","acceptedAnswer":{"@type":"Answer","text":"No. Super-resolution estimates details and may introduce artifacts. Keep the original file and compare the output before using it for important work."}},
-      {"@type":"Question","name":"Can I upload a large photo?","acceptedAnswer":{"@type":"Answer","text":"Yes. Large files can be selected, but the tool automatically creates a smaller working copy of up to 1024 px per side and about 1 megapixel before AI processing. The 2× result is based on that working copy, so it may be smaller than 2× the original full-size photo. This helps avoid browser memory errors."}}
+      {"@type":"Question","name":"Can I upload a large photo?","acceptedAnswer":{"@type":"Answer","text":"Yes. Large files can be selected, but the tool automatically creates a smaller working copy of up to 640 px per side and about 350,000 pixels before AI processing. The 2× result is based on that working copy, so it may be smaller than 2× the original full-size photo. This helps avoid browser memory errors."}}
     ]
   }
   </script>
@@ -61,7 +61,7 @@
     <label class="upload" for="fileInput" id="dropZone">
       <strong>Choose an image or drop it here</strong>
       <span class="muted">JPG, PNG or WebP · Use a small image for the best first test</span>
-      <span class="hint" style="display:block;margin-top:8px">Large photos are accepted. To make AI processing faster, a temporary working copy is limited to 1024 px per side and about 1 megapixel. Your original file remains unchanged.</span>
+      <span class="hint" style="display:block;margin-top:8px">Large photos are accepted. For more reliable processing on phones and computers, AI uses a temporary working copy limited to 640 px per side and about 350,000 pixels. Your original file remains unchanged.</span>
     </label>
     <input id="fileInput" type="file" accept="image/jpeg,image/png,image/webp">
     <div id="inputMeta" class="metadata">No image selected.</div>
@@ -91,9 +91,9 @@
     <h2 class="section-title">Frequently asked questions</h2>
     <details><summary>Is this a real AI image enhancer?</summary><p>Yes. It uses an ESRGAN neural-network model through UpscalerJS and TensorFlow.js. It creates a 2× super-resolution output; it is not simply changing the image dimensions with a canvas resize.</p></details>
     <details><summary>Are my photos uploaded?</summary><p>No. Image pixels are processed in your browser. The browser does download the JavaScript runtime and model files from a CDN, but your selected photo is not sent to RitoccaPix's server.</p></details>
-    <details><summary>Why is the first run slower?</summary><p>The browser must download the runtime and AI model the first time. The model may be cached by your browser for later use. Processing time also depends on your device. This version uses a smaller working copy to reduce processing time and memory use.</p></details>
+    <details><summary>Why is the first run slower?</summary><p>The browser must download the runtime and AI model the first time. The model may be cached by your browser for later use. Processing time also depends on your device. This version uses a smaller working copy of up to 640 px per side and about 350,000 pixels to reduce processing time and memory use.</p></details>
     <details><summary>Can AI restore the exact original details?</summary><p>No. Super-resolution estimates details and may introduce artifacts. Keep the original file and compare the output before using it for important work.</p></details>
-    <details><summary>Can I upload a large photo?</summary><p>Yes. Large files can be selected, but the tool automatically creates a smaller working copy of up to 1024 px per side and about 1 megapixel before AI processing. The 2× result is based on that working copy, so it may be smaller than 2× the original full-size photo. This helps avoid browser memory errors.</p></details>
+    <details><summary>Can I upload a large photo?</summary><p>Yes. Large files can be selected, but the tool automatically creates a smaller working copy of up to 640 px per side and about 350,000 pixels before AI processing. The 2× result is based on that working copy, so it may be smaller than 2× the original full-size photo. This helps avoid browser memory errors.</p></details>
   </section>
   <p class="foot">RitoccaPix · Free browser-based image tools</p>
 </main>
@@ -116,10 +116,11 @@
   const progressTrack=document.getElementById('progressTrack');
   const progressBar=document.getElementById('progressBar');
   const dropZone=document.getElementById('dropZone');
-  let sourceFile=null, sourceUrl=null, resultUrl=null, busy=false, operation=0;
+  let sourceFile=null, sourceUrl=null, resultUrl=null, busy=false, operation=0, progressTimer=null, processingStarted=0;
   let upscaler=null;
-  const MAX_WORKING_SIDE=1024;
-  const MAX_WORKING_PIXELS=1000000;
+  const MAX_WORKING_SIDE=640;
+  const MAX_WORKING_PIXELS=350000;
+  let downloadCounter=0;
   function setStatus(message,type){status.textContent=message;status.className='status'+(type?' '+type:'');}
   function fmtBytes(bytes){if(bytes<1024)return bytes+' B';if(bytes<1048576)return (bytes/1024).toFixed(1)+' KB';return (bytes/1048576).toFixed(2)+' MB';}
   function setBusy(value){busy=value;enhanceBtn.disabled=value||!sourceFile;resetBtn.disabled=value||!sourceFile;fileInput.disabled=value;}
@@ -148,7 +149,8 @@
   dropZone.addEventListener('drop',e=>{const f=e.dataTransfer&&e.dataTransfer.files&&e.dataTransfer.files[0];if(f)selectFile(f);});
   enhanceBtn.addEventListener('click',async()=>{
     if(!sourceFile||busy)return;
-    const thisOperation=++operation;setBusy(true);clearResult();progressTrack.hidden=false;progressBar.style.width='8%';setStatus('Preparing the AI runtime… The first run may take a little longer.');
+    const thisOperation=++operation;setBusy(true);clearResult();progressTrack.hidden=false;progressBar.style.width='8%';processingStarted=Date.now();clearInterval(progressTimer);setStatus('Preparing the AI runtime… The first run may take a little longer.');
+    progressTimer=setInterval(()=>{const seconds=Math.floor((Date.now()-processingStarted)/1000);if(seconds>=120){setStatus('This is taking longer than expected ('+Math.floor(seconds/60)+' min). The AI may be struggling on this device. If it does not finish soon, reload the page and try again; the working image is already reduced for faster processing.');}else if(seconds>=30){setStatus('The AI is still working ('+seconds+' seconds elapsed). Keep this tab open while the model loads or processes the image.');}},15000);
     try{
       if(!window.tf||!window.Upscaler||!window.DefaultUpscalerJSModel)throw new Error('The AI libraries did not load. Check your internet connection and reload the page.');
       if(!upscaler){setStatus('Loading the ESRGAN model… On the first run, model files must be downloaded.');upscaler=new Upscaler({model:DefaultUpscalerJSModel});}
@@ -211,10 +213,11 @@
       await outImg.decode();
       if(outImg.naturalWidth!==outWidth||outImg.naturalHeight!==outHeight)throw new Error('The generated image could not be verified. Please try again.');
       resultMeta.textContent=outImg.naturalWidth+' × '+outImg.naturalHeight+' px · '+fmtBytes(blob.size);
-      downloadBtn.href=resultUrl;downloadBtn.download='ritoccapix-image-smart-enhanced.png';downloadBtn.style.display='inline-flex';progressBar.style.width='100%';setStatus('AI enhancement complete. Review the result, then download the PNG.','success');
+      downloadBtn.href=resultUrl;downloadBtn.download='ritoccapix-enhanced-001.png';downloadBtn.style.display='inline-flex';progressBar.style.width='100%';setStatus('AI enhancement complete. Review the result, then download the PNG. Each download receives a new numbered filename.','success');
     }catch(err){console.error(err);setStatus(err&&err.message?err.message:'AI enhancement failed. Try a smaller image or a different browser.','error');}
-    finally{setBusy(false);}
+    finally{clearInterval(progressTimer);progressTimer=null;setBusy(false);}
   });
+  downloadBtn.addEventListener('click',()=>{downloadCounter++;downloadBtn.download='ritoccapix-enhanced-'+String(downloadCounter).padStart(3,'0')+'.png';});
   resetBtn.addEventListener('click',()=>{operation++;revoke(sourceUrl);sourceUrl=null;sourceFile=null;fileInput.value='';clearResult();originalFrame.innerHTML='<div class="empty">Your original image will appear here.</div>';inputMeta.textContent='No image selected.';originalMeta.textContent='';enhanceBtn.disabled=true;resetBtn.disabled=true;setStatus('Choose an image to get started.');});
   window.addEventListener('beforeunload',()=>{revoke(sourceUrl);revoke(resultUrl);});
 })();
