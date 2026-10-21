@@ -224,7 +224,7 @@ footer a{color:var(--accent);text-decoration:none}
 
   <div class="custom-tools">
     <h3>7. Edit your frames</h3>
-    <p class="help">Drag directly on a photo to reposition it. Use Rotate frame and photo to rotate the entire frame together with its image. Drag close to a frame edge to move the frame, or drag a corner handle to resize it. On touch screens, press and drag the photo with your finger.</p>
+    <p class="help">Drag the circular ↻ handle attached to the selected photo to rotate the frame and image together right on the canvas. The angle updates live; use the slider below for exact adjustments. Drag the photo itself to reposition it. Drag close to a frame edge to move the frame, or drag a corner handle to resize it. On touch screens, press and drag the photo with your finger.</p>
     <div class="custom-buttons">
       <button id="addCell" class="secondary-btn" type="button">＋ Add frame</button>
       <button id="removeCell" class="secondary-btn" type="button">− Remove frame</button>
@@ -249,12 +249,12 @@ footer a{color:var(--accent);text-decoration:none}
         <button id="rotatePhotoRight" class="secondary-btn" type="button">↷ Rotate +90°</button>
       </div>
       <button id="resetPhotoRotation" class="secondary-btn" type="button" style="width:100%;margin-top:8px">Reset rotation</button>
-      <p class="help">Rotate the complete photo frame and image together, so the frame follows the photo instead of leaving a fixed square around it.</p>
+      <p class="help">Tip: rotate directly on the canvas with the circular ↻ handle attached to the selected frame. Watch the photo as you drag; the degree value and slider stay synchronized.</p>
     </div>
     <div class="control">
       <div class="control-top"><label for="cellZoom">Photo zoom</label><span id="cellZoomValue" class="value">1.0×</span></div>
       <input id="cellZoom" type="range" min="50" max="350" step="5" value="100">
-      <p class="help">Drag directly on the photo to reposition it, adjust its rotation, or zoom to crop closer.</p>
+      <p class="help">Drag the circular ↻ handle on the canvas to rotate the whole frame and photo while watching the preview. Use the slider below for precise angle adjustments.</p>
     </div>
     <div class="custom-buttons" style="margin-top:9px">
       <button id="fillFrame" class="secondary-btn" type="button">Fill frame</button>
@@ -1027,6 +1027,17 @@ function getFrameRect(cell){
   };
 }
 
+function getRotationHandle(cell){
+  const r=getFrameRect(cell);
+  const cx=r.x+r.w/2, cy=r.y+r.h/2;
+  const angle=(Number(cell.rotation)||0)*Math.PI/180;
+  const offset=Math.max(38,canvas.width*.045);
+  const localY=-r.h/2-offset;
+  const x=cx-localY*Math.sin(angle);
+  const y=cy+localY*Math.cos(angle);
+  return {x,y,cx,cy,topX:cx+(r.h/2)*Math.sin(angle),topY:cy-(r.h/2)*Math.cos(angle),radius:Math.max(18,canvas.width*.019)};
+}
+
 function drawPhoto(img,r,cell,cornerRadius){
   ctx.save();
 
@@ -1171,6 +1182,27 @@ function draw(includeSelection=true){
         ctx.fill();
         ctx.stroke();
       });
+      if(cell.photoIndex>=0){
+        const handle=getRotationHandle(cell);
+        ctx.strokeStyle='#6ea8ff';
+        ctx.lineWidth=Math.max(3,canvas.width*.0035);
+        ctx.beginPath();
+        ctx.moveTo(handle.topX,handle.topY);
+        ctx.lineTo(handle.x,handle.y);
+        ctx.stroke();
+        ctx.fillStyle='#6ea8ff';
+        ctx.strokeStyle='#ffffff';
+        ctx.lineWidth=Math.max(2,canvas.width*.0025);
+        ctx.beginPath();
+        ctx.arc(handle.x,handle.y,handle.radius,0,Math.PI*2);
+        ctx.fill();
+        ctx.stroke();
+        ctx.fillStyle='#071326';
+        ctx.font='bold '+Math.round(handle.radius*1.45)+'px Arial';
+        ctx.textAlign='center';
+        ctx.textBaseline='middle';
+        ctx.fillText('↻',handle.x,handle.y-1);
+      }
       ctx.restore();
     }
   });
@@ -1200,6 +1232,19 @@ canvas.addEventListener('pointerdown',event=>{
   const handleY=16*scaleY;
   const edgeX=18*scaleX;
   const edgeY=18*scaleY;
+
+  // The circular on-canvas handle rotates the selected frame and photo together.
+  if(cells[selectedCell]&&cells[selectedCell].photoIndex>=0){
+    const cell=cells[selectedCell];
+    const handle=getRotationHandle(cell);
+    if(Math.hypot(point.x-handle.x,point.y-handle.y)<=handle.radius*1.45){
+      const startAngle=Math.atan2(point.y-handle.cy,point.x-handle.cx);
+      dragging={mode:'rotate',startX:point.x,startY:point.y,centerX:handle.cx,centerY:handle.cy,startAngle,startRotation:Number(cell.rotation)||0,pointerId:event.pointerId};
+      if(canvas.setPointerCapture){try{canvas.setPointerCapture(event.pointerId)}catch(error){}}
+      event.preventDefault();
+      return;
+    }
+  }
 
   for(let i=cells.length-1;i>=0;i--){
     const cell=cells[i];
@@ -1262,7 +1307,16 @@ canvas.addEventListener('pointermove',event=>{
   const dxPercent=dx/canvas.width*100;
   const dyPercent=dy/canvas.height*100;
 
-  if(dragging.mode==='photo'){
+  if(dragging.mode==='rotate'){
+    const angle=Math.atan2(point.y-dragging.centerY,point.x-dragging.centerX);
+    let delta=(angle-dragging.startAngle)*180/Math.PI;
+    if(delta>180)delta-=360;
+    if(delta< -180)delta+=360;
+    let nextRotation=dragging.startRotation+delta;
+    nextRotation=((nextRotation+180)%360+360)%360-180;
+    cell.rotation=nextRotation;
+    cell.photoRotation=0;
+  }else if(dragging.mode==='photo'){
     cell.fit=false;
     cell.photoX=dragging.photoX+dx;
     cell.photoY=dragging.photoY+dy;
