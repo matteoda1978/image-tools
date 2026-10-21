@@ -1,746 +1,294 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Social Video Maker Gratis Online | RitoccaPix</title>
-<meta name="description" content="Crea video dalle tue foto per TikTok, Instagram Reels e YouTube Shorts. Personalizza formato, titolo e risoluzione.">
+<title>Free Social Video Maker Online | RitoccaPix</title>
+<meta name="description" content="Turn photos into videos for TikTok, Instagram Reels and YouTube Shorts. Choose the aspect ratio, add a title and export an HD or Full HD WebM video in your browser.">
 <meta name="theme-color" content="#10131c">
 <link rel="canonical" href="https://ritoccapix.com/social-video-maker.html">
-
 <style>
-:root {
-  --bg:#10131c;
-  --panel:#191e2b;
-  --panel2:#222a3b;
-  --text:#f4f6ff;
-  --muted:#aab3c7;
-  --accent:#8b7cff;
-  --border:#30394e;
-}
+:root{--bg:#10131c;--panel:#191e2b;--panel2:#222a3b;--text:#f4f6ff;--muted:#aab3c7;--accent:#8b7cff;--border:#30394e}
 *{box-sizing:border-box}
-html{width:100%;overflow-x:hidden}
-body{
-  margin:0;
-  width:100%;
-  overflow-x:hidden;
-  background:var(--bg);
-  color:var(--text);
-  font-family:Arial,Helvetica,sans-serif;
-  line-height:1.6
-}
-header{
-  padding:22px 16px;
-  text-align:center;
-  border-bottom:1px solid var(--border)
-}
-.logo{
-  font-size:26px;
-  font-weight:800;
-  color:white;
-  text-decoration:none
-}
-.logo span{color:var(--accent)}
+html,body{width:100%;overflow-x:hidden}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif;line-height:1.6}
+header{padding:22px 16px;text-align:center;border-bottom:1px solid var(--border)}
+.logo{font-size:26px;font-weight:800;color:white;text-decoration:none}.logo span{color:var(--accent)}
 header p{margin:5px 0 14px;color:var(--muted)}
 header nav{display:flex;justify-content:center;width:100%;flex-wrap:wrap}
-main{
-  width:min(1120px, calc(100% - 32px));
-  margin:30px auto 60px
-}
-h1{font-size:clamp(28px,5vw,42px);line-height:1.2;margin:0 0 12px}
-h2{font-size:21px;margin:0 0 15px}
-.intro,.muted,.note,small{color:var(--muted)}
-.intro{max-width:760px;margin-bottom:26px}
-.layout{
-  display:grid;
-  grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);
-  gap:22px;
-  align-items:start
-}
-.panel{
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:22px;
-  min-width:0;
-  width:100%
-}
-.field{margin-bottom:19px}
-label{display:block;font-weight:700;margin-bottom:7px}
+main{width:min(1120px,calc(100% - 32px));margin:30px auto 60px}
+h1{font-size:clamp(28px,5vw,42px);line-height:1.2;margin:0 0 12px}h2{font-size:21px;margin:0 0 15px}
+.intro,.muted,.note,small{color:var(--muted)}.intro{max-width:760px;margin-bottom:26px}
+.layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:22px;align-items:start}
+.panel{background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:22px;min-width:0;width:100%}
+.field{margin-bottom:19px}label{display:block;font-weight:700;margin-bottom:7px}
 input,select,button{font:inherit;max-width:100%}
-input[type="text"],select{
-  width:100%;
-  min-width:0;
-  padding:12px;
-  border-radius:10px;
-  border:1px solid var(--border);
-  background:#111725;
-  color:white
-}
-input[type="file"]{
-  display:block;
-  width:100%;
-  min-width:0;
-  padding:12px;
-  background:#111725;
-  color:white;
-  border:1px dashed #56617b;
-  border-radius:10px
-}
-input[type="range"]{display:block;width:100%;accent-color:var(--accent)}
-button{
-  border:0;
-  border-radius:10px;
-  padding:12px 16px;
-  cursor:pointer;
-  font-weight:700
-}
-.primary{background:var(--accent);color:white;width:100%}
-.secondary{background:var(--panel2);color:white;border:1px solid var(--border)}
+input[type=text],select{width:100%;min-width:0;padding:12px;border-radius:10px;border:1px solid var(--border);background:#111725;color:white}
+input[type=file]{display:block;width:100%;min-width:0;padding:12px;background:#111725;color:white;border:1px dashed #56617b;border-radius:10px}
+input[type=range]{display:block;width:100%;accent-color:var(--accent)}
+button{border:0;border-radius:10px;padding:12px 16px;cursor:pointer;font-weight:700}
+.primary{background:var(--accent);color:white;width:100%}.secondary{background:var(--panel2);color:white;border:1px solid var(--border)}
 button:disabled{opacity:.5;cursor:not-allowed}
 .preview-wrap{display:flex;justify-content:center;width:100%}
-.preview{
-  width:min(100%,300px);
-  aspect-ratio:9/16;
-  background:#080a10;
-  border:1px solid #434d65;
-  border-radius:16px;
-  overflow:hidden;
-  position:relative;
-  display:flex;
-  align-items:center;
-  justify-content:center
-}
-.preview img{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover
-}
-.overlay{
-  position:absolute;
-  left:7%;
-  right:7%;
-  bottom:9%;
-  text-align:center;
-  font-weight:800;
-  font-size:25px;
-  line-height:1.2;
-  color:white;
-  text-shadow:0 2px 7px #000,0 0 12px #000;
-  overflow-wrap:anywhere;
-  pointer-events:none
-}
-.preview-placeholder{
-  text-align:center;
-  color:var(--muted);
-  padding:20px;
-  z-index:1
-}
+.preview{width:min(100%,300px);aspect-ratio:9/16;background:#080a10;border:1px solid #434d65;border-radius:16px;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center}
+.preview img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.overlay{position:absolute;left:7%;right:7%;bottom:9%;text-align:center;font-weight:800;font-size:25px;line-height:1.2;color:white;text-shadow:0 2px 7px #000,0 0 12px #000;overflow-wrap:anywhere;pointer-events:none}
+.preview-placeholder{text-align:center;color:var(--muted);padding:20px;z-index:1}
 .file-list{display:grid;gap:8px;margin:12px 0}
-.file-item{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  padding:8px;
-  border:1px solid var(--border);
-  border-radius:10px;
-  background:#111725;
-  min-width:0
-}
-.file-item img{
-  width:45px;
-  height:45px;
-  object-fit:cover;
-  border-radius:6px;
-  flex-shrink:0
-}
-.file-item span{
-  font-size:13px;
-  overflow-wrap:anywhere;
-  flex:1;
-  min-width:0
-}
+.file-item{display:flex;align-items:center;gap:8px;padding:8px;border:1px solid var(--border);border-radius:10px;background:#111725;min-width:0}
+.file-item img{width:45px;height:45px;object-fit:cover;border-radius:6px;flex-shrink:0}
+.file-item span{font-size:13px;overflow-wrap:anywhere;flex:1;min-width:0}
 .file-item button{padding:5px 9px;flex-shrink:0}
 .actions{display:grid;gap:10px;margin-top:16px}
-#status{
-  margin-top:12px;
-  font-size:14px;
-  color:var(--muted);
-  overflow-wrap:anywhere
-}
-#downloadLink{
-  display:none;
-  text-align:center;
-  padding:12px;
-  background:#173c32;
-  border:1px solid #2e795e;
-  border-radius:10px;
-  color:#b8ffe4;
-  font-weight:bold;
-  text-decoration:none;
-  overflow-wrap:anywhere
-}
-.music-note{
-  padding:14px;
-  background:#20283a;
-  border:1px solid var(--border);
-  border-radius:12px;
-  font-size:14px;
-  color:var(--muted);
-  margin-top:16px
-}
+#status{margin-top:12px;font-size:14px;color:var(--muted);overflow-wrap:anywhere}
+#downloadLink{display:none;text-align:center;padding:12px;background:#173c32;border:1px solid #2e795e;border-radius:10px;color:#b8ffe4;font-weight:bold;text-decoration:none;overflow-wrap:anywhere}
+.music-note{padding:14px;background:#20283a;border:1px solid var(--border);border-radius:12px;font-size:14px;color:var(--muted);margin-top:16px}
 .music-note strong{color:var(--text)}
-footer{
-  text-align:center;
-  border-top:1px solid var(--border);
-  padding:24px;
-  color:var(--muted);
-  font-size:13px
-}
-
-/* TELEFONI: una colonna, pannelli a tutta larghezza */
-@media(max-width:760px){
-  main{
-    display:block;
-    width:calc(100% - 24px);
-    max-width:560px;
-    margin:20px auto 40px
-  }
-  .layout{
-    display:flex;
-    flex-direction:column;
-    align-items:stretch;
-    width:100%;
-    gap:16px
-  }
-  .layout > .panel{
-    display:block;
-    width:100%;
-    min-width:0;
-    padding:16px;
-    margin:0
-  }
-  .preview{
-    width:min(100%,280px);
-  }
-  .file-item{gap:5px}
-  .file-item button{padding:5px 8px}
-  h1{font-size:32px}
-}
-
-/* TELEFONI MOLTO PICCOLI */
-@media(max-width:390px){
-  main{width:calc(100% - 20px)}
-  .panel{padding:13px}
-  .layout > .panel{padding:13px}
-  .file-item{gap:4px;padding:6px}
-  .file-item img{width:34px;height:34px}
-  .file-item button{padding:5px;font-size:12px}
-  .file-item span{font-size:12px}
-}
+footer{text-align:center;border-top:1px solid var(--border);padding:24px;color:var(--muted);font-size:13px}
+@media(max-width:760px){main{display:block;width:calc(100% - 24px);max-width:560px;margin:20px auto 40px}.layout{display:flex;flex-direction:column;align-items:stretch;width:100%;gap:16px}.layout>.panel{display:block;width:100%;min-width:0;padding:16px;margin:0}.preview{width:min(100%,280px)}.file-item{gap:5px}.file-item button{padding:5px 8px}h1{font-size:32px}}
+@media(max-width:390px){main{width:calc(100% - 20px)}.panel{padding:13px}.layout>.panel{padding:13px}.file-item{gap:4px;padding:6px}.file-item img{width:34px;height:34px}.file-item button{padding:5px;font-size:12px}.file-item span{font-size:12px}}
 </style>
 </head>
-
 <body>
 <header>
   <a class="logo" href="index.html">Ritocca<span>Pix</span></a>
-  <p>Strumenti gratuiti per foto e video</p>
-  <nav aria-label="Menu strumenti"></nav>
+  <p>Free photo and video tools</p>
+  <nav aria-label="Tools menu"></nav>
 </header>
-
 <main>
   <h1>Social Video Maker</h1>
-  <p class="intro">
-    Trasforma le tue foto in video per TikTok, Instagram Reels e YouTube Shorts.
-    Scegli il formato, aggiungi un titolo e imposta la risoluzione.
-    Crea il video direttamente nel browser senza caricare le foto su un server.
-  </p>
-
+  <p class="intro">Turn your photos into videos for TikTok, Instagram Reels and YouTube Shorts. Choose a format, add a title and set the resolution. Create your video directly in your browser without uploading your photos to a server.</p>
   <div class="layout">
     <section class="panel">
-      <h2>1. Scegli le foto</h2>
+      <h2>1. Choose your photos</h2>
       <div class="field">
-        <label for="photos">Carica le immagini</label>
+        <label for="photos">Upload images</label>
         <input id="photos" type="file" accept="image/*" multiple>
-        <small>Puoi aggiungere foto in più riprese, cambiarne l'ordine o rimuoverle.</small>
+        <small>Add photos in multiple batches, change their order or remove them.</small>
       </div>
       <div id="fileList" class="file-list"></div>
-
-      <h2>2. Personalizza il video</h2>
+      <h2>2. Customize your video</h2>
       <div class="field">
-        <label for="format">Formato video social</label>
+        <label for="format">Social video format</label>
         <select id="format">
-          <option value="vertical">Verticale 9:16 – TikTok / Reels / Shorts</option>
-          <option value="square">Quadrato 1:1</option>
-          <option value="landscape">Orizzontale 16:9 – YouTube</option>
+          <option value="vertical">Vertical 9:16 – TikTok / Reels / Shorts</option>
+          <option value="square">Square 1:1</option>
+          <option value="landscape">Landscape 16:9 – YouTube</option>
         </select>
       </div>
-
       <div class="field">
-        <label for="titleText">Titolo del video</label>
-        <input id="titleText" type="text" maxlength="100" placeholder="Scrivi il tuo titolo">
+        <label for="titleText">Video title</label>
+        <input id="titleText" type="text" maxlength="100" placeholder="Enter your title">
       </div>
-
       <div class="field">
-        <label for="duration">Durata di ogni foto: <span id="durationValue">2</span> secondi</label>
+        <label for="duration">Duration per photo: <span id="durationValue">2</span> seconds</label>
         <input id="duration" type="range" min="1" max="6" value="2">
       </div>
-
       <div class="field">
-        <label for="quality">Risoluzione video</label>
+        <label for="quality">Video resolution</label>
         <select id="quality">
-          <option value="720">HD 720p – File più leggero</option>
-          <option value="1080" selected>Full HD 1080p – Alta qualità</option>
+          <option value="720">HD 720p – Smaller file</option>
+          <option value="1080" selected>Full HD 1080p – Higher quality</option>
         </select>
-        <small id="resolutionInfo">1080 × 1920 pixel · Full HD</small>
+        <small id="resolutionInfo">1080 × 1920 pixels · Full HD</small>
       </div>
-
       <div class="field">
-        <label for="outputFormat">Formato del file da scaricare</label>
+        <label for="outputFormat">Download format</label>
         <select id="outputFormat">
-          <option value="mp4" disabled>MP4 – Temporaneamente non disponibile</option>
-          <option value="webm" selected>WebM – Disponibile</option>
+          <option value="webm" selected>WebM – Available</option>
         </select>
-        <small>Per ora puoi creare e scaricare video in WebM. L'esportazione MP4 sarà aggiunta quando avremo una soluzione compatibile.</small>
+        <small>Videos are currently exported as WebM. MP4 export is not available yet.</small>
       </div>
-
-      <div class="music-note">
-        <strong>Musica</strong>
-        <p>Aggiungi la musica dopo aver scaricato il video, usando la libreria di TikTok, Instagram o YouTube.</p>
-      </div>
-
+      <div class="music-note"><strong>Music</strong><p>Add music after downloading your video, using the music library in TikTok, Instagram or YouTube.</p></div>
       <div class="actions">
-        <button class="secondary" id="previewButton" type="button">Aggiorna anteprima</button>
-        <button class="primary" id="exportButton" type="button">Crea video Full HD</button>
-        <a id="downloadLink" download>Scarica il video</a>
+        <button class="secondary" id="previewButton" type="button">Refresh preview</button>
+        <button class="primary" id="exportButton" type="button">Create Full HD video</button>
+        <a id="downloadLink" download>Download video</a>
       </div>
-      <p id="status" role="status" aria-live="polite">Carica le foto per iniziare.</p>
+      <p id="status" role="status" aria-live="polite">Upload photos to get started.</p>
     </section>
-
     <section class="panel">
-      <h2>Anteprima</h2>
-      <div class="preview-wrap">
-        <div class="preview" id="preview">
-          <div class="preview-placeholder">L'anteprima apparirà qui.</div>
-          <div class="overlay" id="previewTitle"></div>
-        </div>
-      </div>
-      <p class="note">L'anteprima mostra il ritaglio del formato scelto. Il video finale riprodurrà tutte le immagini nell'ordine selezionato.</p>
+      <h2>Preview</h2>
+      <div class="preview-wrap"><div class="preview" id="preview"><div class="preview-placeholder">Your preview will appear here.</div><div class="overlay" id="previewTitle"></div></div></div>
+      <p class="note">The preview shows the crop for the selected format. The final video will play all images in the selected order.</p>
       <div class="field">
-        <label for="previewIndex">Foto da visualizzare</label>
+        <label for="previewIndex">Preview photo</label>
         <input id="previewIndex" type="range" min="0" max="0" value="0" disabled>
       </div>
-      <div class="music-note">
-        <strong>Privacy</strong>
-        <p>Le foto vengono elaborate localmente nel browser e non vengono caricate su un server da questo strumento.</p>
-      </div>
+      <div class="music-note"><strong>Privacy</strong><p>This tool processes photos locally in your browser. They are not uploaded to a server by this tool.</p></div>
     </section>
   </div>
-
   <section class="panel" style="margin-top:22px">
-    <h2>Come creare un video dalle foto</h2>
+    <h2>How to create a video from photos</h2>
     <ol>
-      <li>Carica una o più foto dal dispositivo.</li>
-      <li>Scegli il formato verticale, quadrato oppure orizzontale.</li>
-      <li>Aggiungi un titolo e imposta la durata di ogni immagine.</li>
-      <li>Scegli la risoluzione HD o Full HD.</li>
-      <li>Premi «Crea video» e attendi il completamento.</li>
-      <li>Premi il link verde per scaricare il video WebM.</li>
+      <li>Upload one or more photos from your device.</li>
+      <li>Choose vertical, square or landscape format.</li>
+      <li>Add a title and set the duration of each image.</li>
+      <li>Choose HD or Full HD resolution.</li>
+      <li>Click “Create video” and wait for the export to finish.</li>
+      <li>Click the green link to download your WebM video.</li>
     </ol>
-    <p class="note">Se il telefono è lento, prova prima la risoluzione HD.</p>
+    <p class="note">If your phone is slow, try HD resolution first.</p>
   </section>
 </main>
-
-<footer>
-  <p>RitoccaPix – Strumenti gratuiti per foto e contenuti social.</p>
-</footer>
-
+<footer><p>RitoccaPix – Free tools for photos and social content.</p></footer>
 <script>
-(function() {
+(function(){
   'use strict';
-
-  const $ = id => document.getElementById(id);
-  let files = [];
-  let urls = [];
-  let currentBlobUrl = null;
-  let exporting = false;
-  let exportNumber = 0;
-
-  const canvas = document.createElement('canvas');
-  const ctx = canvas.getContext('2d');
-
-  function setStatus(message) {
-    $('status').textContent = message;
-  }
-
-  function resetExport() {
-    if (currentBlobUrl) {
-      URL.revokeObjectURL(currentBlobUrl);
-      currentBlobUrl = null;
-    }
-    $('downloadLink').style.display = 'none';
+  const $=id=>document.getElementById(id);
+  let files=[],urls=[],currentBlobUrl=null,exporting=false,exportNumber=0;
+  const canvas=document.createElement('canvas');
+  const ctx=canvas.getContext('2d');
+  function setStatus(message){$('status').textContent=message}
+  function resetExport(){
+    if(currentBlobUrl){URL.revokeObjectURL(currentBlobUrl);currentBlobUrl=null}
+    $('downloadLink').style.display='none';
     $('downloadLink').removeAttribute('href');
   }
-
-  function getDimensions() {
-    const q = Number($('quality').value);
-    const format = $('format').value;
-    if (format === 'square') return {w:q,h:q};
-    if (format === 'landscape') return {w:Math.round(q*16/9),h:q};
-    return {w:q,h:Math.round(q*16/9)};
+  function getDimensions(){
+    const q=Number($('quality').value),format=$('format').value;
+    if(format==='square')return{w:q,h:q};
+    if(format==='landscape')return{w:Math.round(q*16/9),h:q};
+    return{w:q,h:Math.round(q*16/9)};
   }
-
-  function updateResolutionInfo() {
-    const d = getDimensions();
-    const label = $('quality').value === '1080' ? 'Full HD' : 'HD';
-    $('resolutionInfo').textContent = `${d.w} × ${d.h} pixel · ${label}`;
-    $('exportButton').textContent = `Crea video ${label}`;
+  function updateResolutionInfo(){
+    const d=getDimensions(),label=$('quality').value==='1080'?'Full HD':'HD';
+    $('resolutionInfo').textContent=`${d.w} × ${d.h} pixels · ${label}`;
+    $('exportButton').textContent=`Create ${label} video`;
   }
-
-  function drawCover(context,img,w,h) {
-    const iw = img.naturalWidth || img.width;
-    const ih = img.naturalHeight || img.height;
-    const scale = Math.max(w/iw,h/ih);
-    const sw = w/scale;
-    const sh = h/scale;
+  function drawCover(context,img,w,h){
+    const iw=img.naturalWidth||img.width,ih=img.naturalHeight||img.height;
+    const scale=Math.max(w/iw,h/ih),sw=w/scale,sh=h/scale;
     context.drawImage(img,(iw-sw)/2,(ih-sh)/2,sw,sh,0,0,w,h);
   }
-
-  function drawTitle(context,text,w,h) {
-    text = text.trim();
-    if (!text) return;
-
-    const words = text.split(/\s+/);
-    const lines = [];
-    const fontSize = Math.max(22,Math.round(w*.055));
-    context.font = `bold ${fontSize}px Arial`;
-    const maxWidth = w*.84;
-    let line = '';
-
-    for (const word of words) {
-      const test = line ? line+' '+word : word;
-      if (context.measureText(test).width > maxWidth && line) {
-        lines.push(line);
-        line = word;
-      } else {
-        line = test;
-      }
+  function drawTitle(context,text,w,h){
+    text=text.trim();if(!text)return;
+    const words=text.split(/\s+/),lines=[],fontSize=Math.max(22,Math.round(w*.055));
+    context.font=`bold ${fontSize}px Arial`;
+    const maxWidth=w*.84;let line='';
+    for(const word of words){
+      const test=line?line+' '+word:word;
+      if(context.measureText(test).width>maxWidth&&line){lines.push(line);line=word}else line=test;
     }
-    if (line) lines.push(line);
-
-    const lineHeight = Math.max(28,Math.round(w*.065));
-    const startY = h*.82-(lines.length-1)*lineHeight/2;
-    context.textAlign = 'center';
-    context.textBaseline = 'middle';
-    context.lineJoin = 'round';
-    context.lineWidth = Math.max(4,w*.006);
-    context.strokeStyle = 'rgba(0,0,0,.95)';
-    context.fillStyle = '#fff';
-
-    lines.forEach((t,i) => {
-      const y = startY+i*lineHeight;
-      context.strokeText(t,w/2,y,maxWidth);
-      context.fillText(t,w/2,y,maxWidth);
+    if(line)lines.push(line);
+    const lineHeight=Math.max(28,Math.round(w*.065)),startY=h*.82-(lines.length-1)*lineHeight/2;
+    context.textAlign='center';context.textBaseline='middle';context.lineJoin='round';
+    context.lineWidth=Math.max(4,w*.006);context.strokeStyle='rgba(0,0,0,.95)';context.fillStyle='#fff';
+    lines.forEach((t,i)=>{const y=startY+i*lineHeight;context.strokeText(t,w/2,y,maxWidth);context.fillText(t,w/2,y,maxWidth)});
+  }
+  function renderList(){
+    const list=$('fileList');list.replaceChildren();
+    files.forEach((file,i)=>{
+      const row=document.createElement('div');row.className='file-item';
+      const img=document.createElement('img');img.src=urls[i];img.alt='';
+      const name=document.createElement('span');name.textContent=`${i+1}. ${file.name}`;
+      const up=document.createElement('button');up.className='secondary';up.type='button';up.textContent='↑';up.disabled=i===0;up.setAttribute('aria-label','Move photo up');up.onclick=()=>moveFile(i,-1);
+      const down=document.createElement('button');down.className='secondary';down.type='button';down.textContent='↓';down.disabled=i===files.length-1;down.setAttribute('aria-label','Move photo down');down.onclick=()=>moveFile(i,1);
+      const remove=document.createElement('button');remove.className='secondary';remove.type='button';remove.textContent='×';remove.setAttribute('aria-label','Remove photo');remove.onclick=()=>removeFile(i);
+      row.append(img,name,up,down,remove);list.append(row);
     });
+    $('previewIndex').max=Math.max(0,files.length-1);
+    $('previewIndex').disabled=files.length<2;
+    if(Number($('previewIndex').value)>=files.length)$('previewIndex').value=Math.max(0,files.length-1);
   }
-
-  function renderList() {
-    const list = $('fileList');
-    list.replaceChildren();
-
-    files.forEach((file,i) => {
-      const row = document.createElement('div');
-      row.className = 'file-item';
-
-      const img = document.createElement('img');
-      img.src = urls[i];
-      img.alt = '';
-
-      const name = document.createElement('span');
-      name.textContent = `${i+1}. ${file.name}`;
-
-      const up = document.createElement('button');
-      up.className = 'secondary';
-      up.type = 'button';
-      up.textContent = '↑';
-      up.disabled = i===0;
-      up.setAttribute('aria-label','Sposta foto in alto');
-      up.onclick = () => moveFile(i,-1);
-
-      const down = document.createElement('button');
-      down.className = 'secondary';
-      down.type = 'button';
-      down.textContent = '↓';
-      down.disabled = i===files.length-1;
-      down.setAttribute('aria-label','Sposta foto in basso');
-      down.onclick = () => moveFile(i,1);
-
-      const remove = document.createElement('button');
-      remove.className = 'secondary';
-      remove.type = 'button';
-      remove.textContent = '×';
-      remove.setAttribute('aria-label','Rimuovi foto');
-      remove.onclick = () => removeFile(i);
-
-      row.append(img,name,up,down,remove);
-      list.append(row);
-    });
-
-    $('previewIndex').max = Math.max(0,files.length-1);
-    $('previewIndex').disabled = files.length<2;
-
-    if (Number($('previewIndex').value)>=files.length) {
-      $('previewIndex').value = Math.max(0,files.length-1);
+  function updatePreview(){
+    const d=getDimensions(),preview=$('preview');
+    preview.style.aspectRatio=`${d.w}/${d.h}`;$('previewTitle').textContent=$('titleText').value;
+    const oldImage=preview.querySelector('img');if(oldImage)oldImage.remove();
+    let placeholder=preview.querySelector('.preview-placeholder');const idx=Number($('previewIndex').value);
+    if(files.length&&files[idx]){
+      if(placeholder)placeholder.remove();
+      const img=document.createElement('img');img.alt='Selected photo preview';img.src=urls[idx];preview.insertBefore(img,$('previewTitle'));
+    }else if(!placeholder){
+      placeholder=document.createElement('div');placeholder.className='preview-placeholder';placeholder.textContent='Your preview will appear here.';preview.insertBefore(placeholder,$('previewTitle'));
     }
+    renderList();updateResolutionInfo();
   }
-
-  function updatePreview() {
-    const d = getDimensions();
-    const preview = $('preview');
-    preview.style.aspectRatio = `${d.w}/${d.h}`;
-    $('previewTitle').textContent = $('titleText').value;
-
-    const oldImage = preview.querySelector('img');
-    if (oldImage) oldImage.remove();
-
-    let placeholder = preview.querySelector('.preview-placeholder');
-    const idx = Number($('previewIndex').value);
-
-    if (files.length && files[idx]) {
-      if (placeholder) placeholder.remove();
-      const img = document.createElement('img');
-      img.alt = 'Anteprima foto selezionata';
-      img.src = urls[idx];
-      preview.insertBefore(img,$('previewTitle'));
-    } else if (!placeholder) {
-      placeholder = document.createElement('div');
-      placeholder.className = 'preview-placeholder';
-      placeholder.textContent = "L'anteprima apparirà qui.";
-      preview.insertBefore(placeholder,$('previewTitle'));
-    }
-
-    renderList();
-    updateResolutionInfo();
+  function moveFile(index,delta){
+    const next=index+delta;if(next<0||next>=files.length)return;
+    [files[index],files[next]]=[files[next],files[index]];[urls[index],urls[next]]=[urls[next],urls[index]];
+    $('previewIndex').value=next;resetExport();updatePreview();
   }
-
-  function moveFile(index,delta) {
-    const next = index+delta;
-    if (next<0 || next>=files.length) return;
-    [files[index],files[next]] = [files[next],files[index]];
-    [urls[index],urls[next]] = [urls[next],urls[index]];
-    $('previewIndex').value = next;
-    resetExport();
-    updatePreview();
+  function removeFile(index){
+    URL.revokeObjectURL(urls[index]);files.splice(index,1);urls.splice(index,1);
+    $('previewIndex').value=Math.min(Number($('previewIndex').value),Math.max(0,files.length-1));
+    resetExport();updatePreview();setStatus(files.length?`${files.length} photos selected.`:'Upload photos to get started.');
   }
-
-  function removeFile(index) {
-    URL.revokeObjectURL(urls[index]);
-    files.splice(index,1);
-    urls.splice(index,1);
-    $('previewIndex').value = Math.min(
-      Number($('previewIndex').value),
-      Math.max(0,files.length-1)
-    );
-    resetExport();
-    updatePreview();
-    setStatus(files.length ? `${files.length} foto selezionate.` : 'Carica le foto per iniziare.');
-  }
-
-  $('photos').addEventListener('change',e => {
-    if (exporting) return;
-    const selected = Array.from(e.target.files||[])
-      .filter(file => file.type.startsWith('image/'));
-
-    if (!selected.length) {
-      setStatus('Seleziona file immagine validi.');
-      e.target.value = '';
-      return;
-    }
-
-    const existingKeys = new Set(files.map(file =>
-      `${file.name}|${file.size}|${file.lastModified}`
-    ));
-    const fresh = selected.filter(file =>
-      !existingKeys.has(`${file.name}|${file.size}|${file.lastModified}`)
-    );
-
-    if (!fresh.length) {
-      setStatus('Queste foto sono già nell’elenco.');
-      e.target.value = '';
-      return;
-    }
-
-    fresh.forEach(file => {
-      files.push(file);
-      urls.push(URL.createObjectURL(file));
-    });
-
-    $('previewIndex').value = files.length-fresh.length;
-    resetExport();
-    updatePreview();
-    setStatus(`${files.length} foto selezionate.`);
-    e.target.value = '';
+  $('photos').addEventListener('change',e=>{
+    if(exporting)return;
+    const selected=Array.from(e.target.files||[]).filter(file=>file.type.startsWith('image/'));
+    if(!selected.length){setStatus('Please select valid image files.');e.target.value='';return}
+    const existingKeys=new Set(files.map(file=>`${file.name}|${file.size}|${file.lastModified}`));
+    const fresh=selected.filter(file=>!existingKeys.has(`${file.name}|${file.size}|${file.lastModified}`));
+    if(!fresh.length){setStatus('These photos are already in the list.');e.target.value='';return}
+    fresh.forEach(file=>{files.push(file);urls.push(URL.createObjectURL(file))});
+    $('previewIndex').value=files.length-fresh.length;resetExport();updatePreview();
+    setStatus(`${files.length} photos selected.`);e.target.value='';
   });
-
-  ['format','quality','titleText'].forEach(id => {
-    $(id).addEventListener('input',() => {
-      resetExport();
-      updatePreview();
-    });
-  });
-
-  $('duration').addEventListener('input',() => {
-    $('durationValue').textContent = $('duration').value;
-    resetExport();
-  });
-
+  ['format','quality','titleText'].forEach(id=>$(id).addEventListener('input',()=>{resetExport();updatePreview()}));
+  $('duration').addEventListener('input',()=>{$('durationValue').textContent=$('duration').value;resetExport()});
   $('previewIndex').addEventListener('input',updatePreview);
   $('previewButton').addEventListener('click',updatePreview);
-
-  function loadImage(url) {
-    return new Promise((resolve,reject) => {
-      const img = new Image();
-      img.onload = () => resolve(img);
-      img.onerror = () => reject(new Error('Impossibile caricare una delle foto.'));
-      img.src = url;
-    });
+  function loadImage(url){
+    return new Promise((resolve,reject)=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=()=>reject(new Error('Could not load one of the photos.'));img.src=url});
   }
-
-  function supportedWebMMime() {
-    if (!window.MediaRecorder) return '';
-    return [
-      'video/webm;codecs=vp9',
-      'video/webm;codecs=vp8',
-      'video/webm'
-    ].find(type => MediaRecorder.isTypeSupported(type)) || '';
+  function supportedWebMMime(){
+    if(!window.MediaRecorder)return'';
+    return['video/webm;codecs=vp9','video/webm;codecs=vp8','video/webm'].find(type=>MediaRecorder.isTypeSupported(type))||'';
   }
-
-  function wait(ms) {
-    return new Promise(resolve => setTimeout(resolve,ms));
-  }
-
-  $('exportButton').addEventListener('click',async () => {
-    if (exporting) return;
-
-    if (!files.length) {
-      setStatus('Carica almeno una foto prima di creare il video.');
-      return;
-    }
-
-    if (!canvas.captureStream || !window.MediaRecorder) {
-      setStatus('Esportazione non supportata. Prova una versione aggiornata di Chrome.');
-      return;
-    }
-
-    const mime = supportedWebMMime();
-    if (!mime) {
-      setStatus('Questo browser non supporta WebM. Prova Chrome aggiornato.');
-      return;
-    }
-
-    exporting = true;
-    const button = $('exportButton');
-    button.disabled = true;
-    $('previewButton').disabled = true;
-    $('photos').disabled = true;
-
-    let recorder = null;
-    let stream = null;
-    let chunks = [];
-
+  function wait(ms){return new Promise(resolve=>setTimeout(resolve,ms))}
+  $('exportButton').addEventListener('click',async()=>{
+    if(exporting)return;
+    if(!files.length){setStatus('Upload at least one photo before creating a video.');return}
+    if(!canvas.captureStream||!window.MediaRecorder){setStatus('Video export is not supported. Try an up-to-date version of Chrome.');return}
+    const mime=supportedWebMMime();
+    if(!mime){setStatus('This browser does not support WebM export. Try an up-to-date version of Chrome.');return}
+    exporting=true;
+    const button=$('exportButton');button.disabled=true;$('previewButton').disabled=true;$('photos').disabled=true;
+    $('format').disabled=true;$('quality').disabled=true;$('titleText').disabled=true;$('duration').disabled=true;
+    let recorder=null,stream=null,chunks=[];
     resetExport();
-
-    try {
-      const d = getDimensions();
-      const seconds = Number($('duration').value);
-      const title = $('titleText').value;
-      const exportUrls = urls.slice();
-
-      setStatus('Caricamento delle foto…');
-      const images = await Promise.all(exportUrls.map(loadImage));
-
-      canvas.width = d.w;
-      canvas.height = d.h;
-      stream = canvas.captureStream(30);
-
-      const bitrate = $('quality').value === '1080' ? 12000000 : 8000000;
-      recorder = new MediaRecorder(stream,{
-        mimeType:mime,
-        videoBitsPerSecond:bitrate
-      });
-
-      recorder.ondataavailable = e => {
-        if (e.data && e.data.size) chunks.push(e.data);
-      };
-
-      const stopped = new Promise((resolve,reject) => {
-        recorder.onstop = resolve;
-        recorder.onerror = () => reject(new Error('Errore durante la registrazione video.'));
-      });
-
-      recorder.start(250);
-      const startedAt = performance.now();
-
-      for (let i=0;i<images.length;i++) {
-        ctx.fillStyle = '#000';
-        ctx.fillRect(0,0,d.w,d.h);
-        drawCover(ctx,images[i],d.w,d.h);
-        drawTitle(ctx,title,d.w,d.h);
-        setStatus(`Creazione video: foto ${i+1} di ${images.length}…`);
-
-        const target = (i+1)*seconds*1000;
-        await wait(Math.max(0,target-(performance.now()-startedAt)));
+    try{
+      const d=getDimensions(),seconds=Number($('duration').value),title=$('titleText').value,exportUrls=urls.slice();
+      setStatus('Loading photos…');
+      const images=await Promise.all(exportUrls.map(loadImage));
+      canvas.width=d.w;canvas.height=d.h;stream=canvas.captureStream(30);
+      const bitrate=$('quality').value==='1080'?12000000:8000000;
+      recorder=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:bitrate});
+      recorder.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};
+      const stopped=new Promise((resolve,reject)=>{recorder.onstop=resolve;recorder.onerror=()=>reject(new Error('An error occurred while recording the video.'))});
+      recorder.start(250);const startedAt=performance.now();
+      for(let i=0;i<images.length;i++){
+        ctx.fillStyle='#000';ctx.fillRect(0,0,d.w,d.h);drawCover(ctx,images[i],d.w,d.h);drawTitle(ctx,title,d.w,d.h);
+        setStatus(`Creating video: photo ${i+1} of ${images.length}…`);
+        const target=(i+1)*seconds*1000;await wait(Math.max(0,target-(performance.now()-startedAt)));
       }
-
-      if (recorder.state!=='inactive') recorder.stop();
-      await stopped;
-
-      stream.getTracks().forEach(track => track.stop());
-      stream = null;
-
-      if (!chunks.length) throw new Error('Il browser non ha generato il file video.');
-
-      const finalBlob = new Blob(chunks,{type:'video/webm'});
-      if (!finalBlob.size) throw new Error('Il file video creato è vuoto.');
-
-      currentBlobUrl = URL.createObjectURL(finalBlob);
-      exportNumber++;
-
-      const now = new Date();
-      const pad = n => String(n).padStart(2,'0');
-      const stamp = now.getFullYear()+pad(now.getMonth()+1)+pad(now.getDate())+'-'+
-        pad(now.getHours())+pad(now.getMinutes())+pad(now.getSeconds());
-
-      const link = $('downloadLink');
-      link.href = currentBlobUrl;
-      link.download = `ritoccapix-video-${stamp}-${exportNumber}.webm`;
-      link.textContent = `Scarica il video WEBM (${(finalBlob.size/1024/1024).toFixed(1)} MB)`;
-      link.style.display = 'block';
-
-      setStatus('Video WebM creato! Premi il link verde per scaricarlo.');
-    } catch(err) {
-      console.error(err);
-      setStatus(err && err.message ? err.message : 'Errore durante la creazione del video. Prova HD.');
-    } finally {
-      if (stream) stream.getTracks().forEach(track => track.stop());
-      exporting = false;
-      button.disabled = false;
-      $('previewButton').disabled = false;
-      $('photos').disabled = false;
+      if(recorder.state!=='inactive')recorder.stop();await stopped;
+      stream.getTracks().forEach(track=>track.stop());stream=null;
+      if(!chunks.length)throw new Error('The browser did not generate a video file.');
+      const finalBlob=new Blob(chunks,{type:'video/webm'});
+      if(!finalBlob.size)throw new Error('The generated video file is empty.');
+      currentBlobUrl=URL.createObjectURL(finalBlob);exportNumber++;
+      const now=new Date(),pad=n=>String(n).padStart(2,'0');
+      const stamp=now.getFullYear()+pad(now.getMonth()+1)+pad(now.getDate())+'-'+pad(now.getHours())+pad(now.getMinutes())+pad(now.getSeconds());
+      const link=$('downloadLink');link.href=currentBlobUrl;link.download=`ritoccapix-video-${stamp}-${exportNumber}.webm`;
+      link.textContent=`Download WebM video (${(finalBlob.size/1024/1024).toFixed(1)} MB)`;link.style.display='block';
+      setStatus('Your WebM video is ready. Click the green link to download it.');
+    }catch(err){
+      console.error(err);setStatus(err&&err.message?err.message:'Could not create the video. Try HD resolution.');
+    }finally{
+      if(stream)stream.getTracks().forEach(track=>track.stop());
+      exporting=false;button.disabled=false;$('previewButton').disabled=false;$('photos').disabled=false;
+      $('format').disabled=false;$('quality').disabled=false;$('titleText').disabled=false;$('duration').disabled=false;
     }
   });
-
   updatePreview();
+  window.addEventListener('beforeunload',()=>{urls.forEach(url=>URL.revokeObjectURL(url));if(currentBlobUrl)URL.revokeObjectURL(currentBlobUrl)});
 })();
-
-// Menu condiviso di RitoccaPix.
-(function() {
-  const script = document.createElement('script');
-  script.src = 'menu.js';
-  script.onerror = () => console.error('Impossibile caricare menu.js');
+(function(){
+  const script=document.createElement('script');
+  script.src='menu.js';
+  script.onerror=()=>console.error('Could not load menu.js');
   document.body.appendChild(script);
 })();
 </script>
