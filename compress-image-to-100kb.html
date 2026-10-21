@@ -307,16 +307,15 @@ footer a { margin: 0 7px; }
     <div class="actions">
       <button type="button" class="primary" id="compressButton" disabled>Compress Images</button>
       <button type="button" class="secondary" id="clearButton" disabled>Clear</button>
+      <button type="button" class="primary" id="downloadZipButton" disabled>Download All as ZIP</button>
     </div>
+    <p class="muted" id="zipHelp">The ZIP download becomes available after at least one image has been compressed.</p>
 
     <div class="status" id="status" role="status" aria-live="polite"></div>
 
     <div class="preview" id="preview">
       <h2>Compression results</h2>
-      <p class="muted">Check each result, download images individually, or save all successfully compressed images in one ZIP file.</p>
-      <div class="actions" style="margin:14px 0 18px;">
-        <button type="button" class="primary" id="downloadZipButton" disabled>Download All as ZIP</button>
-      </div>
+      <p class="muted">Check each result or download it individually. Use the Download All as ZIP button above to save all successfully compressed images together.</p>
       <div id="resultsList"></div>
     </div>
   </section>
