@@ -124,7 +124,7 @@ footer a{color:var(--accent);text-decoration:none}
 <main>
 <section class="hero">
   <h1>Free Online Photo Collage Maker with Creative Layouts</h1>
-  <p>Turn your photos into a creative collage with overlapping images, varied frame sizes and magazine-style layouts. Adjust photo position, zoom and rotation independently from frame shapes and spacing, then download your finished design as a JPG or PNG. No software installation required.</p>
+  <p>Turn your photos into a creative collage with overlapping images, varied frame sizes and magazine-style layouts. Adjust photo position and zoom, rotate each complete photo frame with its image, and download your finished design as a JPG or PNG. No software installation required.</p>
 </section>
 
 <div class="workspace">
@@ -224,7 +224,7 @@ footer a{color:var(--accent);text-decoration:none}
 
   <div class="custom-tools">
     <h3>7. Edit your frames</h3>
-    <p class="help">Drag directly on a photo to reposition it. Use Rotate photo to turn the image without rotating its frame. Drag close to a frame edge to move the frame, or drag a corner handle to resize it. On touch screens, press and drag the photo with your finger.</p>
+    <p class="help">Drag directly on a photo to reposition it. Use Rotate frame and photo to rotate the entire frame together with its image. Drag close to a frame edge to move the frame, or drag a corner handle to resize it. On touch screens, press and drag the photo with your finger.</p>
     <div class="custom-buttons">
       <button id="addCell" class="secondary-btn" type="button">＋ Add frame</button>
       <button id="removeCell" class="secondary-btn" type="button">− Remove frame</button>
@@ -242,14 +242,14 @@ footer a{color:var(--accent);text-decoration:none}
       <button id="clearPhoto" class="secondary-btn" type="button">Remove photo</button>
     </div>
     <div class="control">
-      <div class="control-top"><label for="photoRotation">Rotate photo</label><span id="photoRotationValue" class="value">0°</span></div>
-      <input id="photoRotation" type="range" min="-180" max="180" step="5" value="0" aria-label="Rotate selected photo from minus 180 to plus 180 degrees">
+      <div class="control-top"><label for="photoRotation">Rotate frame + photo</label><span id="photoRotationValue" class="value">0°</span></div>
+      <input id="photoRotation" type="range" min="-180" max="180" step="5" value="0" aria-label="Rotate selected photo frame and image from minus 180 to plus 180 degrees">
       <div class="custom-buttons" style="margin-top:8px">
         <button id="rotatePhotoLeft" class="secondary-btn" type="button">↶ Rotate −90°</button>
         <button id="rotatePhotoRight" class="secondary-btn" type="button">↷ Rotate +90°</button>
       </div>
       <button id="resetPhotoRotation" class="secondary-btn" type="button" style="width:100%;margin-top:8px">Reset rotation</button>
-      <p class="help">Rotate the photo inside its frame. The frame shape and position stay unchanged.</p>
+      <p class="help">Rotate the complete photo frame and image together, so the frame follows the photo instead of leaving a fixed square around it.</p>
     </div>
     <div class="control">
       <div class="control-top"><label for="cellZoom">Photo zoom</label><span id="cellZoomValue" class="value">1.0×</span></div>
@@ -307,7 +307,7 @@ footer a{color:var(--accent);text-decoration:none}
   <h3>Does Smart Collage use artificial intelligence?</h3>
   <p>Smart Collage uses layout rules to create varied, magazine-style arrangements; it does not use a generative AI model or send photos to a cloud AI service. Your photos remain on your device.</p>
   <h3>Can I center, zoom or show the whole photo?</h3>
-  <p>Yes. Select a frame, drag the photo to reposition it, adjust zoom, or rotate the photo independently from its frame using the rotation slider or 90-degree buttons. You can also use Fill frame, Fit whole photo, Center &amp; reset zoom, or Auto-fit all photos.</p>
+  <p>Yes. Select a frame, drag the photo to reposition it, adjust zoom, or rotate the complete photo frame together with its image using the rotation slider or 90-degree buttons. You can also use Fill frame, Fit whole photo, Center &amp; reset zoom, or Auto-fit all photos.</p>
   <h3>Does photo enhancement overwrite my original photos?</h3>
   <p>No. The original uploaded images remain unchanged. The selected enhancement is applied when the collage is drawn and exported.</p>
   <h3>Does this tool use a cloud AI service?</h3>
@@ -450,13 +450,13 @@ function updateControls(){
   const cell=cells[selectedCell];
   $('cellZoom').value=Math.max(50,Math.min(350,Math.round(cell.zoom*100)));
   $('cellZoomValue').textContent=cell.zoom.toFixed(1)+'×';
-  cell.photoRotation=Number(cell.photoRotation)||0;
-  $('photoRotation').value=String(Math.max(-180,Math.min(180,cell.photoRotation)));
-  $('photoRotationValue').textContent=Math.round(cell.photoRotation)+'°';
+  cell.rotation=Number(cell.rotation)||0;
+  $('photoRotation').value=String(Math.max(-180,Math.min(180,cell.rotation)));
+  $('photoRotationValue').textContent=Math.round(cell.rotation)+'°';
   $('photoRotation').disabled=cell.photoIndex<0;
   $('rotatePhotoLeft').disabled=cell.photoIndex<0;
   $('rotatePhotoRight').disabled=cell.photoIndex<0;
-  $('resetPhotoRotation').disabled=cell.photoIndex<0||cell.photoRotation===0;
+  $('resetPhotoRotation').disabled=cell.photoIndex<0||cell.rotation===0;
   $('removeCell').disabled=cells.length<=1;
   $('clearPhoto').disabled=cell.photoIndex<0;
   $('centerPhoto').disabled=cell.photoIndex<0;
@@ -926,7 +926,9 @@ function setSelectedPhotoRotation(value){
   if(!cell||cell.photoIndex<0)return;
   let angle=Number(value)||0;
   angle=((angle+180)%360+360)%360-180;
-  cell.photoRotation=angle;
+  // Rotate the whole photo frame and its clipped image as one unit.
+  cell.rotation=angle;
+  cell.photoRotation=0;
   updateControls();
   draw();
 }
@@ -937,18 +939,18 @@ $('photoRotation').addEventListener('input',()=>{
 $('rotatePhotoLeft').addEventListener('click',()=>{
   const cell=cells[selectedCell];
   if(!cell||cell.photoIndex<0)return;
-  setSelectedPhotoRotation((Number(cell.photoRotation)||0)-90);
-  status('Photo rotated 90 degrees counterclockwise.');
+  setSelectedPhotoRotation((Number(cell.rotation)||0)-90);
+  status('The photo frame and image rotated 90 degrees counterclockwise.');
 });
 $('rotatePhotoRight').addEventListener('click',()=>{
   const cell=cells[selectedCell];
   if(!cell||cell.photoIndex<0)return;
-  setSelectedPhotoRotation((Number(cell.photoRotation)||0)+90);
-  status('Photo rotated 90 degrees clockwise.');
+  setSelectedPhotoRotation((Number(cell.rotation)||0)+90);
+  status('The photo frame and image rotated 90 degrees clockwise.');
 });
 $('resetPhotoRotation').addEventListener('click',()=>{
   setSelectedPhotoRotation(0);
-  status('Photo rotation reset.');
+  status('The photo frame and image rotation have been reset.');
 });
 
 $('cellZoom').addEventListener('input',()=>{
