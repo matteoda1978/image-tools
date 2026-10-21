@@ -313,7 +313,10 @@ footer a { margin: 0 7px; }
 
     <div class="preview" id="preview">
       <h2>Compression results</h2>
-      <p class="muted">Check the final size of each image before downloading it.</p>
+      <p class="muted">Check each result, download images individually, or save all successfully compressed images in one ZIP file.</p>
+      <div class="actions" style="margin:14px 0 18px;">
+        <button type="button" class="primary" id="downloadZipButton" disabled>Download All as ZIP</button>
+      </div>
       <div id="resultsList"></div>
     </div>
   </section>
@@ -325,7 +328,7 @@ footer a { margin: 0 7px; }
       <li>Enter 100KB or a custom target from 1KB to 50,000KB.</li>
       <li>Choose JPG or WebP as the output format.</li>
       <li>Click Compress Images and wait while files are processed one by one.</li>
-      <li>Check the final file size and download your image.</li>
+      <li>Check the final file size, download images individually, or use Download All as ZIP.</li>
     </ol>
 
     <h2>Why Compress Images to 100KB?</h2>
@@ -347,7 +350,7 @@ footer a { margin: 0 7px; }
     <h2>Frequently Asked Questions</h2>
     <div class="faq">
       <h3>How do I compress an image to 100KB online?</h3>
-      <p>Select one or more images, enter 100KB (or another limit), and click Compress Images. Check the final size shown for each file, then download the results individually.</p>
+      <p>Select one or more images, enter 100KB (or another limit), and click Compress Images. Check each final size, download a result individually, or click Download All as ZIP to save all successfully processed images together.</p>
     </div>
     <div class="faq">
       <h3>Will every image become smaller than 100KB?</h3>
@@ -392,6 +395,7 @@ footer a { margin: 0 7px; }
   <a href="privacy.html">Privacy Policy</a>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
 (() => {
   const fileInput = document.getElementById("fileInput");
@@ -401,6 +405,7 @@ footer a { margin: 0 7px; }
   const format = document.getElementById("format");
   const compressButton = document.getElementById("compressButton");
   const clearButton = document.getElementById("clearButton");
+  const downloadZipButton = document.getElementById("downloadZipButton");
   const statusBox = document.getElementById("status");
   const preview = document.getElementById("preview");
   const resultsList = document.getElementById("resultsList");
@@ -410,6 +415,7 @@ footer a { margin: 0 7px; }
   const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
   let selectedFiles = [];
   let resultUrls = [];
+  let compressedResults = [];
   let busy = false;
 
   function formatBytes(bytes) {
@@ -428,6 +434,7 @@ footer a { margin: 0 7px; }
     compressButton.disabled = busy || !selectedFiles.length;
     browseButton.disabled = busy;
     clearButton.disabled = busy || !selectedFiles.length;
+    downloadZipButton.disabled = busy || !compressedResults.length || typeof window.JSZip === "undefined";
     fileInput.disabled = busy;
     targetSize.disabled = busy;
     format.disabled = busy;
@@ -436,6 +443,8 @@ footer a { margin: 0 7px; }
   function resetResults() {
     resultUrls.forEach(url => URL.revokeObjectURL(url));
     resultUrls = [];
+    compressedResults = [];
+    downloadZipButton.disabled = true;
     resultsList.replaceChildren();
     preview.style.display = "none";
   }
@@ -619,6 +628,12 @@ footer a { margin: 0 7px; }
       card.append(warning);
     }
     resultsList.append(card);
+    const extension = mime === "image/jpeg" ? "jpg" : "webp";
+    compressedResults.push({
+      filename: safeBaseName(file.name) + "-compressed." + extension,
+      blob: result.blob
+    });
+    downloadZipButton.disabled = typeof window.JSZip === "undefined";
     return reached;
   }
 
@@ -678,6 +693,48 @@ footer a { margin: 0 7px; }
     const total = selectedFiles.length;
     setStatus("Finished: " + successCount + " image(s) reached the target; " + errorCount + " image(s) did not reach it or could not be processed. Check each result below.", errorCount ? "error" : "success");
   });
+  downloadZipButton.addEventListener("click", async () => {
+    if (!compressedResults.length || busy) return;
+    if (typeof window.JSZip === "undefined") {
+      setStatus("The ZIP library could not be loaded. Please refresh the page and try again, or download each image individually.", "error");
+      return;
+    }
+    downloadZipButton.disabled = true;
+    downloadZipButton.textContent = "Creating ZIP…";
+    try {
+      const zip = new window.JSZip();
+      const usedNames = new Set();
+      compressedResults.forEach((item, index) => {
+        let name = item.filename;
+        if (usedNames.has(name)) {
+          const dot = name.lastIndexOf(".");
+          const stem = dot > -1 ? name.slice(0, dot) : name;
+          const ext = dot > -1 ? name.slice(dot) : "";
+          let suffix = 2;
+          while (usedNames.has(stem + "-" + suffix + ext)) suffix++;
+          name = stem + "-" + suffix + ext;
+        }
+        usedNames.add(name);
+        zip.file(name, item.blob);
+      });
+      const zipBlob = await zip.generateAsync({ type: "blob", compression: "DEFLATE", compressionOptions: { level: 6 } });
+      const zipUrl = URL.createObjectURL(zipBlob);
+      const link = document.createElement("a");
+      link.href = zipUrl;
+      link.download = "ritoccapix-compressed-images.zip";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(zipUrl), 1500);
+      setStatus("ZIP created with " + compressedResults.length + " compressed image(s).", "success");
+    } catch (error) {
+      setStatus("Could not create the ZIP file. Please download each image individually and try again.", "error");
+    } finally {
+      downloadZipButton.textContent = "Download All as ZIP";
+      downloadZipButton.disabled = !compressedResults.length || typeof window.JSZip === "undefined";
+    }
+  });
+
   clearButton.addEventListener("click", clearAll);
 })();
 </script>
