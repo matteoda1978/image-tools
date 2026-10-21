@@ -972,7 +972,22 @@ footer a { margin: 0 8px; }
       const url = URL.createObjectURL(archive);
       const a = document.createElement("a");
       a.href = url;
-      a.download = "ritoccapix-compressed-images.zip";
+      // Give every ZIP a unique, timestamped filename so repeated downloads
+      // are saved as separate files without the browser asking to download
+      // the same filename again.
+      const now = new Date();
+      const stamp = [
+        now.getFullYear(),
+        String(now.getMonth() + 1).padStart(2, "0"),
+        String(now.getDate()).padStart(2, "0"),
+        "-",
+        String(now.getHours()).padStart(2, "0"),
+        String(now.getMinutes()).padStart(2, "0"),
+        String(now.getSeconds()).padStart(2, "0"),
+        "-",
+        String(now.getMilliseconds()).padStart(3, "0")
+      ].join("");
+      a.download = "ritoccapix-compressed-images-" + stamp + ".zip";
       document.body.appendChild(a);
       a.click();
       a.remove();
