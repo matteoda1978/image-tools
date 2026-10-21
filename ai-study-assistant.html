@@ -47,7 +47,7 @@
 <div class="output" id="output" role="tabpanel" aria-live="polite"><p class="empty">Upload a PDF or paste your notes, then select “Generate study pack”.</p></div><div class="btnrow"><button class="btn" id="downloadBtn" type="button" disabled>Download study pack (.txt)</button></div>
 <p class="notice"><strong>How it works:</strong> this tool uses local text-processing rules, not a generative AI model. Flashcards and quiz prompts are built from your supplied text and may need review. Use them to practise recall, then verify important facts against your original material.</p>
 </section></div></section>
-<section class="section"><div class="container"><div class="how"><article><h3>Text stays in your browser</h3><p>This version does not send your notes to an AI provider or store them on RitoccaPix servers.</p></article><article><h3>Works with real source material</h3><p>Outputs are based on text you upload or paste, not fixed examples about an unrelated subject.</p></article><article><h3>Designed to improve</h3><p>The next step is a secure AI connection, with request limits and spending controls before public launch.</p></article></div></div></section>
+<section class="section"><div class="container"><div class="how"><article><h3>Text stays in your browser</h3><p>This version does not send your notes to an AI provider or store them on RitoccaPix servers.</p></article><article><h3>Works with real source material</h3><p>Outputs are based on text you upload or paste, not fixed examples about an unrelated subject.</p></article><article><h3>Designed to improve</h3><p>We are improving summaries, key points, flashcards and quizzes while keeping this version local and free to use.</p></article></div></div></section>
 </main><footer><div class="container">© <span id="year">2026</span> RitoccaPix · <a href="privacy.html">Privacy</a> · <a href="index.html">Home</a></div></footer>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
@@ -60,13 +60,65 @@ function setStatus(message,type=''){status.textContent=message;status.className=
 function countChars(){ $('charCount').textContent=source.value.length.toLocaleString(); }
 source.addEventListener('input',countChars);
 fileInput.addEventListener('change',async()=>{const file=fileInput.files&&fileInput.files[0];if(!file)return;if(file.type!=='application/pdf'&&!file.name.toLowerCase().endsWith('.pdf')){setStatus('Please choose a PDF file.','error');fileInput.value='';return;}if(file.size>8*1024*1024){setStatus('This PDF is larger than 8 MB. Please use a smaller file.','error');fileInput.value='';return;}if(!window.pdfjsLib){setStatus('The PDF reader could not load. Check your internet connection, then reload the page or paste your notes manually.','error');return;}try{setStatus('Reading PDF text…');const bytes=await file.arrayBuffer();const pdf=await pdfjsLib.getDocument({data:bytes}).promise;let parts=[];for(let i=1;i<=pdf.numPages;i++){const page=await pdf.getPage(i);const tc=await page.getTextContent();parts.push(tc.items.map(x=>x.str).join(' '));if(i%5===0)setStatus('Reading PDF text… page '+i+' of '+pdf.numPages);}const text=parts.join('\n\n').replace(/[ \t]+/g,' ').replace(/\n{3,}/g,'\n\n').trim();if(!text){setStatus('No selectable text was found. This may be a scanned PDF; paste text manually for now.','error');return;}source.value=text.slice(0,60000);countChars();if(!topic.value)topic.value=file.name.replace(/\.pdf$/i,'').replace(/[_-]+/g,' ');setStatus('Loaded '+pdf.numPages+' page(s) and extracted '+text.length.toLocaleString()+' characters. Review the text, then generate your study pack.','good');}catch(e){console.error(e);setStatus('Could not read this PDF. Try another text-based PDF or paste your notes manually.','error');}});
-function cleanSentences(text){return text.replace(/\s+/g,' ').split(/(?<=[.!?])\s+(?=[A-Z0-9“"(])/).map(s=>s.trim()).filter(s=>s.length>35);}
+function isHeadingLine(line){
+ const s=String(line||'').trim();
+ if(!s)return true;
+ if(s.length<3)return true;
+ // Recognize common standalone headings, including question-style headings.
+ if(/^(what is|why is|how does|how do|key vocabulary|key terms|summary|conclusion|introduction|human activities and|the main stages|why .+ important)[^.!]*[?]?$/i.test(s))return true;
+ // A heading is a short, standalone label without sentence-ending punctuation.
+ if(s.length<=100&&!/[.!?]$/.test(s)&&!/^[-*•]?\s*\d+[.)]\s+/.test(s)){
+  if(/^[A-Z][\w'’ -]{1,65}$/.test(s)&&s.split(/\s+/).length<=9&&!/\b(is|are|was|were|can|does|do|has|have|means|refers|causes|helps|supports|changes|moves|falls|flows|releases|heats|rises|cools)\b/i.test(s))return true;
+ }
+ return false;
+}
+function cleanSentences(text){
+ const normalized=String(text||'').replace(/\r/g,'').replace(/[ \t]+/g,' ');
+ const lines=normalized.split('\n').map(line=>line.replace(/^\s*(?:[-*•]|\d+[.)])\s*/,'').trim()).filter(Boolean);
+ const result=[];
+ for(const line of lines){
+  if(isHeadingLine(line))continue;
+  const chunks=line.split(/(?<=[.!?])\s+(?=[A-Z0-9“"(])/);
+  for(let chunk of chunks){
+   chunk=chunk.trim().replace(/^\s*(?:[-*•]|\d+[.)])\s*/,'');
+   if(chunk.length>=30&&!isHeadingLine(chunk))result.push(chunk);
+  }
+ }
+ const seen=new Set();
+ return result.filter(sentence=>{const key=sentence.toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();if(!key||seen.has(key))return false;seen.add(key);return true;});
+}
 function words(text){return (text.toLowerCase().match(/[a-zA-ZÀ-ÿ0-9][a-zA-ZÀ-ÿ0-9'-]*/g)||[]).filter(w=>w.length>3&&!STOP.has(w));}
 const STOP=new Set(('about above after again against all also among an and any are around because been before being between both but can could did does during each either else for from further had has have having here how into its itself just more most neither nor not off once only other our out over own same should since some such than that the their them then there these they this those through too under until very was were what when where which while who why will with would your you their about using used use based into upon each many much such make made may might must often several process processes plant plants green small rate factors available mainly main takes taking place places contain contains role roles using uses during also affect affects affected').split(/\s+/));
 'absorb absorbs absorbed produce produces produced convert converts converted release releases released require requires required support supports supported help helps helped maintain maintains maintained enter enters entered leave leaves left transport transports transported depend depends depended began begin begins begun contributed contribute contributes took take takes taken formed form forms met meet meets adopted adopt adopts changed change changes challenged challenge challenges occurred occur occurs happened happens created create creates established establish establishes declared declare declares started start starts ended ends led lead leads brought bring brings became become becomes built build builds increased increase increases reduced reduce reduces developed develop develops introduced introduce introduces wrote write writes published publish publishes resulted results'.split(/\s+/).forEach(w=>STOP.add(w));
 function frequency(text){const f=new Map();for(const w of words(text))f.set(w,(f.get(w)||0)+1);return f;}
-function summarize(text){const ss=cleanSentences(text);if(!ss.length)return text.slice(0,1400);const freq=frequency(text);const ranked=ss.map((s,i)=>({s,i,score:words(s).reduce((n,w)=>n+(freq.get(w)||0),0)/Math.sqrt(Math.max(1,words(s).length))}));const n=Math.max(3,Math.min(8,Math.ceil(ss.length*.22)));return ranked.sort((a,b)=>b.score-a.score).slice(0,n).sort((a,b)=>a.i-b.i).map(x=>x.s);}
-function keyPoints(text){const lines=text.split(/[\n•;]+/).map(s=>s.replace(/^\s*(?:[-*•]|\d+[.)])\s*/,'').trim()).filter(s=>s.length>25&&s.length<400);const ss=cleanSentences(text);const base=lines.length>=3?lines:ss;const seen=new Set();return base.filter(s=>{const k=s.toLowerCase();if(seen.has(k))return false;seen.add(k);return true;}).slice(0,14);}
+function summarize(text){
+ const ss=cleanSentences(text);
+ if(!ss.length)return String(text||'').trim().slice(0,900);
+ const freq=frequency(ss.join(' '));
+ const ranked=ss.map((sentence,index)=>{
+  const ws=words(sentence);
+  const score=ws.reduce((n,w)=>n+(freq.get(w)||0),0)/Math.sqrt(Math.max(1,ws.length));
+  // Reward informative sentences and preserve a little source-order context.
+  const lengthBonus=Math.min(sentence.length,220)/220;
+  return {sentence,index,score:score+lengthBonus};
+ });
+ const count=Math.max(3,Math.min(6,Math.ceil(ss.length*.18)));
+ const chosen=ranked.sort((a,b)=>b.score-a.score).slice(0,count).sort((a,b)=>a.index-b.index);
+ return chosen.map(x=>x.sentence);
+}
+function keyPoints(text){
+ const ss=cleanSentences(text);
+ const seen=new Set(),points=[];
+ for(const sentence of ss){
+  const s=sentence.replace(/\s+/g,' ').trim();
+  if(s.length<35||s.length>420||isHeadingLine(s))continue;
+  const key=s.toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+  if(seen.has(key))continue;
+  seen.add(key);points.push(s);
+ }
+ // Prefer substantive sentences, not section labels or short fragments.
+ return points.filter(s=>words(s).length>=6).slice(0,12);
+}
 function makeCards(text){
  const points=keyPoints(text),freq=frequency(text),cards=[],seen=new Set();
  const lowerFirst=value=>value?value.charAt(0).toLowerCase()+value.slice(1):value;
