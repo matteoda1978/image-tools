@@ -73,8 +73,13 @@ function isHeadingLine(line){
  return false;
 }
 function cleanSentences(text){
- // Strip Markdown artifacts sometimes present in copied notes (for example \\*\*Term:\\*\*).
- const normalized=String(text||'').replace(/\r/g,'').replace(/\\?\*{1,2}/g,'').replace(/__([^_]+)__/g,'$1').replace(/\[([^\]]+)\]\([^)]*\)/g,'$1').replace(/[ \t]+/g,' ');
+ // Remove Markdown artifacts and repair section headings that were joined to labels
+ // when notes were copied from a PDF or formatted document.
+ const normalized=String(text||'').replace(/\r/g,'').replace(/\\?\*{1,2}/g,'').replace(/__([^_]+)__/g,'$1').replace(/\[([^\]]+)\]\([^)]*\)/g,'$1')
+  .replace(/\b(?:the\s+)?main stages\s+(?=(?:Evaporation|Transpiration|Condensation|Precipitation|Infiltration|Runoff(?: and collection)?)\s*:)/gi,'')
+  .replace(/\bkey vocabulary\s+(?=[A-Z][A-Za-z -]{1,35}:)/gi,'')
+  .replace(/\bhuman activities and the water cycle\s+(?=Deforestation\b)/gi,'')
+  .replace(/[ \t]+/g,' ');
  const rawLines=normalized.split('\n').map(line=>line.replace(/^\s*(?:[-*•]|\d+[.)])\s*/,'').trim()).filter(Boolean);
  const lines=[];
  for(const line of rawLines){
@@ -241,7 +246,7 @@ function makeQuiz(text){
  for(const item of definitions){
   const distractors=definitions.filter(x=>x.term.toLowerCase()!==item.term.toLowerCase()).map(x=>x.term);
   if(distractors.length>=3){
-   const process=/^(evaporation|transpiration|condensation|precipitation|infiltration|runoff|collection)$/i.test(item.term);
+   const process=/^(evaporation|transpiration|condensation|precipitation|infiltration|runoff|collection|runoff and collection)$/i.test(item.term);
    addQuestion(process?'Which water-cycle process matches this description: '+item.definition.replace(/[.!?]+$/,'')+'?':'Which term matches this description: '+item.definition.replace(/[.!?]+$/,'')+'?',item.term,item.source,distractors);
   }
   if(quiz.length>=8)return quiz;
