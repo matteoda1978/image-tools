@@ -374,6 +374,7 @@ footer{
       </div>
 
       <div class="actions">
+        <button class="secondary" id="playPreviewButton" type="button" aria-pressed="false">▶ Play preview</button>
         <button class="secondary" id="previewButton" type="button">Refresh preview</button>
         <button class="primary" id="exportButton" type="button">Create Full HD video</button>
         <a id="downloadLink" download>Download video</a>
@@ -389,7 +390,7 @@ footer{
           <div class="overlay" id="previewTitle"></div>
         </div>
       </div>
-      <p class="note">The preview shows the crop for the selected format. The final video will play all images in the selected order.</p>
+      <p class="note">Press Play preview to watch all selected photos in order. This is a preview; use Create video to export the complete video file.</p>
       <div class="field">
         <label for="previewIndex">Photo to preview</label>
         <input id="previewIndex" type="range" min="0" max="0" value="0" disabled>
@@ -449,6 +450,8 @@ footer{
   let currentBlobUrl = null;
   let exporting = false;
   let exportNumber = 0;
+  let previewTimer = null;
+  let previewPlaying = false;
 
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
@@ -578,6 +581,48 @@ footer{
     }
   }
 
+  function stopPreview() {
+    if (previewTimer !== null) {
+      clearTimeout(previewTimer);
+      previewTimer = null;
+    }
+    previewPlaying = false;
+    const button = $('playPreviewButton');
+    if (button) {
+      button.textContent = '▶ Play preview';
+      button.setAttribute('aria-pressed', 'false');
+    }
+  }
+
+  function playPreviewStep() {
+    if (!previewPlaying || files.length < 2) {
+      stopPreview();
+      return;
+    }
+    let idx = Number($('previewIndex').value) || 0;
+    idx = (idx + 1) % files.length;
+    $('previewIndex').value = idx;
+    updatePreview();
+    previewTimer = setTimeout(playPreviewStep, Number($('duration').value) * 1000);
+  }
+
+  $('playPreviewButton').addEventListener('click', () => {
+    if (previewPlaying) {
+      stopPreview();
+      return;
+    }
+    if (files.length < 2) {
+      setStatus('Upload at least two photos to play the slideshow preview.');
+      return;
+    }
+    previewPlaying = true;
+    $('playPreviewButton').textContent = 'Ⅱ Pause preview';
+    $('playPreviewButton').setAttribute('aria-pressed', 'true');
+    // Show the first selected photo immediately, then advance automatically.
+    updatePreview();
+    previewTimer = setTimeout(playPreviewStep, Number($('duration').value) * 1000);
+  });
+
   function updatePreview() {
     const d = getDimensions();
     const preview = $('preview');
@@ -608,6 +653,7 @@ footer{
   }
 
   function moveFile(index,delta) {
+    stopPreview();
     const next = index+delta;
     if (next<0 || next>=files.length) return;
     [files[index],files[next]] = [files[next],files[index]];
@@ -618,6 +664,7 @@ footer{
   }
 
   function removeFile(index) {
+    stopPreview();
     URL.revokeObjectURL(urls[index]);
     files.splice(index,1);
     urls.splice(index,1);
@@ -632,6 +679,7 @@ footer{
 
   $('photos').addEventListener('change',e => {
     if (exporting) return;
+    stopPreview();
     const selected = Array.from(e.target.files||[])
       .filter(file => file.type.startsWith('image/'));
 
@@ -678,8 +726,8 @@ footer{
     resetExport();
   });
 
-  $('previewIndex').addEventListener('input',updatePreview);
-  $('previewButton').addEventListener('click',updatePreview);
+  $('previewIndex').addEventListener('input',() => { stopPreview(); updatePreview(); });
+  $('previewButton').addEventListener('click',() => { stopPreview(); updatePreview(); });
 
   function loadImage(url) {
     return new Promise((resolve,reject) => {
@@ -705,6 +753,7 @@ footer{
 
   $('exportButton').addEventListener('click',async () => {
     if (exporting) return;
+    stopPreview();
 
     if (!files.length) {
       setStatus('Upload at least one photo before creating the video.');
@@ -726,6 +775,7 @@ footer{
     const button = $('exportButton');
     button.disabled = true;
     $('previewButton').disabled = true;
+    $('playPreviewButton').disabled = true;
     $('photos').disabled = true;
     ['format','quality','outputFormat','titleText','duration','previewIndex'].forEach(id => {
       $(id).disabled = true;
@@ -766,17 +816,18 @@ footer{
       });
 
       recorder.start(250);
-      const startedAt = performance.now();
-
+      // Redraw continuously during every photo. This makes frame delivery more
+      // reliable across browsers than drawing only once per slide.
       for (let i=0;i<images.length;i++) {
-        ctx.fillStyle = '#000';
-        ctx.fillRect(0,0,d.w,d.h);
-        drawCover(ctx,images[i],d.w,d.h);
-        drawTitle(ctx,title,d.w,d.h);
         setStatus(`Creating video: photo ${i+1} of ${images.length}…`);
-
-        const target = (i+1)*seconds*1000;
-        await wait(Math.max(0,target-(performance.now()-startedAt)));
+        const slideStartedAt = performance.now();
+        while (performance.now() - slideStartedAt < seconds * 1000) {
+          ctx.fillStyle = '#000';
+          ctx.fillRect(0,0,d.w,d.h);
+          drawCover(ctx,images[i],d.w,d.h);
+          drawTitle(ctx,title,d.w,d.h);
+          await wait(33);
+        }
       }
 
       if (recorder.state!=='inactive') recorder.stop();
@@ -813,6 +864,7 @@ footer{
       exporting = false;
       button.disabled = false;
       $('previewButton').disabled = false;
+      $('playPreviewButton').disabled = false;
       $('photos').disabled = false;
       ['format','quality','outputFormat','titleText','duration'].forEach(id => {
         $(id).disabled = false;
@@ -823,6 +875,7 @@ footer{
 
   updatePreview();
   window.addEventListener('beforeunload', () => {
+    stopPreview();
     urls.forEach(url => URL.revokeObjectURL(url));
     if (currentBlobUrl) URL.revokeObjectURL(currentBlobUrl);
   });
