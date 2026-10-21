@@ -3,14 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Free AI Object Remover Online | RitoccaPix</title>
-<meta name="description" content="Remove unwanted objects from photos online for free with RitoccaPix. Brush over an object, let AI rebuild the background, and download your edited image privately in your browser.">
+<title>Free AI Object Remover for Photos | RitoccaPix</title>
+<meta name="description" content="Remove unwanted objects from photos for free with AI. Brush over people or distractions, rebuild the background, and download a PNG in your browser.">
+<meta name="robots" content="index,follow,max-image-preview:large">
 <meta name="theme-color" content="#0a0f1d">
 <link rel="canonical" href="https://ritoccapix.com/image-object-remover.html">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Free AI Object Remover Online | RitoccaPix">
-<meta property="og:description" content="Erase unwanted objects from photos with AI directly in your browser.">
+<meta property="og:site_name" content="RitoccaPix">
+<meta property="og:title" content="Free AI Object Remover for Photos | RitoccaPix">
+<meta property="og:description" content="Brush over unwanted objects and let AI reconstruct the selected area. Free photo cleanup in your browser.">
 <meta property="og:url" content="https://ritoccapix.com/image-object-remover.html">
+<meta property="og:image" content="https://ritoccapix.com/image-object-remover-preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Free AI Object Remover for Photos | RitoccaPix">
+<meta name="twitter:description" content="Remove unwanted objects from photos with AI. Brush, erase, compare, and download a PNG.">
+<meta name="twitter:image" content="https://ritoccapix.com/image-object-remover-preview.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "RitoccaPix AI Object Remover",
+  "url": "https://ritoccapix.com/image-object-remover.html",
+  "applicationCategory": "MultimediaApplication",
+  "operatingSystem": "Any modern browser",
+  "isAccessibleForFree": true,
+  "description": "A free browser-based AI tool for removing unwanted objects from photos and reconstructing the selected area."
+}
+</script>
 <style>
 :root{--bg:#0a0f1d;--panel:#121a2b;--panel2:#19243a;--text:#f4f7ff;--muted:#aab6cc;--accent:#8aa5ff;--accent2:#ad8aff;--border:#2b3852;--good:#8ce5b1;--danger:#ff9b9b}
 *{box-sizing:border-box}
@@ -60,9 +81,18 @@ canvas{display:block;max-width:100%;height:auto;cursor:crosshair;touch-action:no
 .feature-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
 .feature{padding:15px;background:#0e1627;border:1px solid var(--border);border-radius:12px}
 .feature p{margin:0;color:var(--muted);font-size:14px}
+.faq-list details{padding:14px 0;border-top:1px solid var(--border)}
+.faq-list details:first-child{border-top:0}
+.faq-list summary{cursor:pointer;font-weight:700}
+.faq-list p{margin:8px 0 0}
+.related-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.related-links a{display:flex;flex-direction:column;gap:4px;padding:14px;border:1px solid var(--border);border-radius:12px;background:#0e1627;color:var(--text);text-decoration:none}
+.related-links a:hover{border-color:var(--accent)}
+.related-links span{font-size:14px;color:var(--muted)}
 footer{text-align:center;color:var(--muted);padding:24px 16px;border-top:1px solid var(--border);font-size:13px}
+footer a{color:var(--muted)}
 [hidden]{display:none!important}
-@media(max-width:650px){.header-inner{padding:11px 12px}.brand{font-size:21px}.menu-button{padding:9px 10px;font-size:13px}main{margin-top:24px}.feature-grid{grid-template-columns:1fr}.canvas-wrap{min-height:180px}.controls .action{flex:1 1 auto}.hero p{font-size:16px}}
+@media(max-width:650px){.header-inner{padding:11px 12px}.brand{font-size:21px}.menu-button{padding:9px 10px;font-size:13px}main{margin-top:24px}.feature-grid,.related-links{grid-template-columns:1fr}.canvas-wrap{min-height:180px}.controls .action{flex:1 1 auto}.hero p{font-size:16px}}
 </style>
 </head>
 <body>
@@ -96,8 +126,8 @@ footer{text-align:center;color:var(--muted);padding:24px 16px;border-top:1px sol
 <main>
   <section class="hero">
     <span class="eyebrow">FREE ONLINE AI TOOL</span>
-    <h1>AI Object Remover</h1>
-    <p>Remove unwanted objects, distractions, or small items from your photos. Brush over what you want to erase and let AI fill the selected area with a best-effort background reconstruction.</p>
+    <h1>Remove Unwanted Objects from Photos with AI</h1>
+    <p>Clean up a photo by brushing over an unwanted person, object, or distraction. RitoccaPix uses AI in your browser to reconstruct the selected area, so you can compare the result and download your edited image for free.</p>
   </section>
 
   <section class="panel" aria-labelledby="uploadHeading">
@@ -155,11 +185,38 @@ footer{text-align:center;color:var(--muted);padding:24px 16px;border-top:1px sol
   </section>
 
   <section class="panel">
-    <h2>How to remove an object from a photo</h2>
-    <p class="muted">Upload your image, paint over the unwanted object, and select <strong>Remove object with AI</strong>. Review the result using <strong>Show original</strong>, then download the edited PNG if you are happy with it. This free online object remover works directly in a compatible browser without requiring an account.</p>
+    <h2>How to remove unwanted objects from a photo</h2>
+    <p class="muted">You do not need a complicated photo editor for a quick cleanup. Upload a JPG, PNG, or WebP photo, paint over the item you want to remove, and choose <strong>Remove object with AI</strong>. Compare the edited image with the original, then download the result as a PNG. The tool is free to use in a compatible browser and does not require an account.</p>
+    <div class="feature-grid">
+      <div class="feature"><h3>Remove distractions</h3><p>Try removing small objects, background clutter, or an unwanted passer-by from a photo.</p></div>
+      <div class="feature"><h3>Touch up photos</h3><p>Use the brush for unwanted details or small visual distractions that draw attention away from the subject.</p></div>
+      <div class="feature"><h3>Check the result</h3><p>AI reconstruction is an estimate, not a perfect restoration. Zoom in and compare the result before using it.</p></div>
+    </div>
+  </section>
+
+  <section class="panel" aria-labelledby="faqHeading">
+    <h2 id="faqHeading">AI Object Remover: frequently asked questions</h2>
+    <div class="faq-list">
+      <details><summary>Is this object remover free?</summary><p class="muted">Yes. You can use the object remover on this page without paying or creating an account. Processing speed depends on your device and browser.</p></details>
+      <details><summary>Are my photos uploaded to RitoccaPix?</summary><p class="muted">The image editing runs locally in your browser; the photo is not uploaded to a RitoccaPix image-processing server. The AI model itself is downloaded from a public model host when needed, so an internet connection is required to load it.</p></details>
+      <details><summary>Can I remove a person from a photo?</summary><p class="muted">You can try brushing over a person or another unwanted object. Results depend on the size of the selection and the background behind it. Large objects and complex scenes may leave visible artifacts.</p></details>
+      <details><summary>Which image formats can I use?</summary><p class="muted">Upload JPG, PNG, or WebP. The edited result is downloaded as a PNG file.</p></details>
+      <details><summary>Why does AI object removal take time?</summary><p class="muted">The AI model may need to download the first time you use the tool. Processing time also depends on your device, browser, image dimensions, and available memory.</p></details>
+    </div>
+  </section>
+
+  <section class="panel" aria-labelledby="relatedHeading">
+    <h2 id="relatedHeading">More free photo tools</h2>
+    <p class="muted">Continue editing your image with another RitoccaPix tool:</p>
+    <div class="related-links">
+      <a href="image-smart.html"><strong>AI Image Enhancer</strong><span>Improve the look of a photo.</span></a>
+      <a href="image-compressor.html"><strong>Image Compressor</strong><span>Reduce file size for sharing or websites.</span></a>
+      <a href="image-resizer.html"><strong>Image Resizer</strong><span>Change image dimensions.</span></a>
+      <a href="image-social.html"><strong>Social Media Image Tools</strong><span>Prepare images for social platforms.</span></a>
+    </div>
   </section>
 </main>
-<footer>© RitoccaPix · Free online image tools</footer>
+<footer>© RitoccaPix · Free online image tools · <a href="privacy.html">Privacy</a></footer>
 
 <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort.min.js"></script>
 <script>
