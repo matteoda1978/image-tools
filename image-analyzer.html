@@ -119,6 +119,45 @@
       padding: 35px 20px;
       text-align: center;
       background: var(--card2);
+      transition: border-color .18s ease, background .18s ease, transform .18s ease;
+    }
+
+    .upload.drag-over {
+      border-color: var(--accent);
+      background: #14213a;
+      transform: translateY(-2px);
+    }
+
+    .upload:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    .action-row {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .secondary-button {
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 10px 15px;
+      background: #18243a;
+      color: var(--text);
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .secondary-button:hover {
+      border-color: var(--accent);
+    }
+
+    .secondary-button:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 2px;
     }
 
     .upload-icon {
@@ -364,7 +403,8 @@
       <div class="upload">
         <div class="upload-icon">🖼️</div>
         <h3>Choose an image</h3>
-        <p>Choose a file from your computer or phone.</p>
+        <p>Choose a file from your computer or phone, or drag and drop it here.</p>
+        <p><small>Supported image formats depend on your browser · Maximum file size: 50 MB</small></p>
 
         <input
           type="file"
@@ -372,6 +412,9 @@
           accept="image/*"
           aria-label="Choose an image to analyze"
         />
+        <div class="action-row">
+          <button class="secondary-button" id="clearButton" type="button">Clear Image</button>
+        </div>
       </div>
 
       <div class="error" id="error" role="alert"></div>
@@ -426,7 +469,7 @@
 
         <div class="preview">
           <h3>Image Preview</h3>
-          <img id="previewImage" alt="Image Preview analizzata">
+          <img id="previewImage" alt="Preview of the selected image">
         </div>
       </section>
     </section>
@@ -456,9 +499,8 @@
 
       <p>
         Analysis runs in your device’s browser.
-        This tool’s code does not intentionally send the image to a server.
-        Privacy may still depend on other features
-        or scripts running on the website.
+        The selected image is not uploaded to RitoccaPix image-processing servers.
+        The page may still load website scripts and other external resources.
       </p>
     </section>
 
@@ -478,6 +520,11 @@
           You can try image formats supported by your browser,
           such as JPEG, PNG, GIF, WebP and other compatible formats.
         </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Can I drag and drop an image?</h3>
+        <p>Yes. Drag one image into the upload area, or use the file picker. The analyzer reads one image at a time.</p>
       </div>
 
       <div class="faq-item">
@@ -513,6 +560,9 @@
     const result = document.getElementById("result");
     const errorBox = document.getElementById("error");
     const previewImage = document.getElementById("previewImage");
+    const uploadArea = document.querySelector(".upload");
+    const clearButton = document.getElementById("clearButton");
+    const maxFileSize = 50 * 1024 * 1024;
 
     let currentObjectUrl = null;
 
@@ -606,37 +656,44 @@
       document.getElementById(id).textContent = value;
     }
 
-    imageInput.addEventListener("change", function () {
-      const file = imageInput.files && imageInput.files[0];
-
+    function clearImage() {
+      imageInput.value = "";
       errorBox.style.display = "none";
       result.style.display = "none";
       previewImage.style.display = "none";
-
-      if (!file) {
-        return;
-      }
-
-      if (!file.type.startsWith("image/")) {
-        showError("Choose a valid image file.");
-        return;
-      }
-
+      previewImage.removeAttribute("src");
       if (currentObjectUrl) {
         URL.revokeObjectURL(currentObjectUrl);
+        currentObjectUrl = null;
+      }
+    }
+
+    function analyzeFile(file) {
+      clearImage();
+      if (!file) return;
+
+      if (!file.type || !file.type.startsWith("image/")) {
+        showError("Choose a valid image file supported by your browser.");
+        return;
+      }
+
+      if (file.size > maxFileSize) {
+        showError("This image is larger than 50 MB. Please choose a smaller file.");
+        return;
       }
 
       currentObjectUrl = URL.createObjectURL(file);
-
+      const objectUrl = currentObjectUrl;
       const image = new Image();
 
       image.onload = function () {
+        if (objectUrl !== currentObjectUrl) return;
         const width = image.naturalWidth;
         const height = image.naturalHeight;
 
         if (!width || !height) {
-          showError("Unable to read the image dimensions.");
-          URL.revokeObjectURL(currentObjectUrl);
+          showError("Unable to read the image dimensions. Please try another file.");
+          URL.revokeObjectURL(objectUrl);
           currentObjectUrl = null;
           return;
         }
@@ -646,44 +703,55 @@
         setText("dimensions", width + " × " + height + " px");
         setText("fileSize", formatBytes(file.size));
         setText("aspectRatio", getAspectRatio(width, height));
-        setText(
-          "pixelCount",
-          (width * height).toLocaleString("en-US") + " pixels"
-        );
+        setText("pixelCount", (width * height).toLocaleString("en-US") + " pixels");
 
         let orientation = "Square";
-
-        if (width > height) {
-          orientation = "Landscape";
-        } else if (height > width) {
-          orientation = "Portrait";
-        }
+        if (width > height) orientation = "Landscape";
+        else if (height > width) orientation = "Portrait";
 
         setText("orientation", orientation);
         setText("transparency", checkTransparency(image));
-
-        previewImage.src = currentObjectUrl;
+        previewImage.src = objectUrl;
         previewImage.style.display = "inline-block";
-
         result.style.display = "block";
-        result.scrollIntoView({
-          behavior: "smooth",
-          block: "start"
-        });
+        result.scrollIntoView({ behavior: "smooth", block: "start" });
       };
 
       image.onerror = function () {
-        showError(
-          "Unable to open this image. Please try another file."
-        );
-
-        if (currentObjectUrl) {
-          URL.revokeObjectURL(currentObjectUrl);
-          currentObjectUrl = null;
-        }
+        if (objectUrl !== currentObjectUrl) return;
+        showError("Unable to open this image. Please try another file.");
+        URL.revokeObjectURL(objectUrl);
+        currentObjectUrl = null;
       };
 
-      image.src = currentObjectUrl;
+      image.src = objectUrl;
+    }
+
+    imageInput.addEventListener("change", function () {
+      analyzeFile(imageInput.files && imageInput.files[0]);
+    });
+
+    clearButton.addEventListener("click", clearImage);
+
+    ["dragenter", "dragover"].forEach(function (eventName) {
+      uploadArea.addEventListener(eventName, function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        uploadArea.classList.add("drag-over");
+      });
+    });
+
+    ["dragleave", "drop"].forEach(function (eventName) {
+      uploadArea.addEventListener(eventName, function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        uploadArea.classList.remove("drag-over");
+      });
+    });
+
+    uploadArea.addEventListener("drop", function (event) {
+      const files = event.dataTransfer && event.dataTransfer.files;
+      if (files && files.length) analyzeFile(files[0]);
     });
 
     window.addEventListener("beforeunload", function () {
