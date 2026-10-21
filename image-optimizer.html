@@ -142,6 +142,12 @@
       padding: 30px 16px;
       text-align: center;
       margin-bottom: 22px;
+      transition: border-color .15s ease, background .15s ease;
+    }
+
+    .upload-area.drag-over {
+      border-color: var(--green);
+      background: #102b2a;
     }
 
     .upload-icon {
@@ -565,7 +571,8 @@
     <div class="upload-area">
       <div class="upload-icon" aria-hidden="true">🖼️</div>
       <strong>Select an image to optimize</strong>
-      <p>Supported input formats: JPG, JPEG, PNG and WebP.</p>
+      <p>Drag and drop an image here, or choose one from your device.</p>
+      <p>Supported input formats: JPG, JPEG, PNG and WebP · Maximum file size: 50 MB.</p>
       <input
         id="fileInput"
         type="file"
@@ -834,6 +841,7 @@
   const $ = id => document.getElementById(id);
 
   const fileInput = $("fileInput");
+  const uploadArea = document.querySelector(".upload-area");
   const outputFormat = $("outputFormat");
   const qualityInput = $("quality");
   const qualityValue = $("qualityValue");
@@ -1027,14 +1035,26 @@
 
       context.drawImage(originalImage, 0, 0);
 
-      const blob = mime === "image/png"
+      let blob = mime === "image/png"
         ? await canvasToBlob(canvas, mime)
         : await canvasToBlob(canvas, mime, quality);
+
+      // Some browsers may return PNG when a requested encoder is unsupported.
+      if (blob.type !== mime) {
+        throw new Error("Your browser could not export this format. Please choose another output format.");
+      }
+
+      let keptOriginal = false;
+      const sourceMime = sourceFile.type.toLowerCase();
+      if (sourceMime === mime && blob.size >= sourceFile.size) {
+        blob = sourceFile;
+        keptOriginal = true;
+      }
 
       const resultUrl = URL.createObjectURL(blob);
       optimizedUrl = resultUrl;
 
-      const ext = extensionFor(mime);
+      const ext = extensionFor(blob.type);
       const baseName = cleanBaseName(sourceFile.name);
       const outputName = baseName + "-optimized." + ext;
 
@@ -1063,12 +1083,13 @@
         saving.textContent = Math.abs(percentage).toFixed(1) + "% larger";
         saving.className = "";
         $("resultNote").textContent =
-          "This output is larger than the original. Try a lower quality setting or another output format.";
+          "This converted output is larger than the original. Try another format or a lower quality setting. The tool keeps the original automatically when re-encoding in the same format would increase file size.";
       } else {
         saving.textContent = "Same size";
         saving.className = "";
-        $("resultNote").textContent =
-          "The optimized file has approximately the same size as the original.";
+        $("resultNote").textContent = keptOriginal
+          ? "Re-encoding did not reduce the file size, so the original file was kept to avoid an unnecessary larger download."
+          : "The output has approximately the same size as the original.";
       }
 
       downloadLink.href = resultUrl;
@@ -1089,6 +1110,27 @@
 
   fileInput.addEventListener("change", () => {
     handleFile(fileInput.files && fileInput.files[0]);
+  });
+
+  ["dragenter", "dragover"].forEach(eventName => {
+    uploadArea.addEventListener(eventName, event => {
+      event.preventDefault();
+      event.stopPropagation();
+      uploadArea.classList.add("drag-over");
+    });
+  });
+
+  ["dragleave", "drop"].forEach(eventName => {
+    uploadArea.addEventListener(eventName, event => {
+      event.preventDefault();
+      event.stopPropagation();
+      uploadArea.classList.remove("drag-over");
+    });
+  });
+
+  uploadArea.addEventListener("drop", event => {
+    const files = event.dataTransfer && event.dataTransfer.files;
+    if (files && files.length) handleFile(files[0]);
   });
 
   qualityInput.addEventListener("input", () => {
