@@ -26,6 +26,19 @@
     "featureList":["AI image super-resolution","2x image upscaling","Browser-based processing","PNG download"]
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[
+      {"@type":"Question","name":"Is this a real AI image enhancer?","acceptedAnswer":{"@type":"Answer","text":"Yes. It uses an ESRGAN neural-network model through UpscalerJS and TensorFlow.js. It creates a 2× super-resolution output; it is not simply changing the image dimensions with a canvas resize."}},
+      {"@type":"Question","name":"Are my photos uploaded?","acceptedAnswer":{"@type":"Answer","text":"No. Image pixels are processed in your browser. The browser downloads the JavaScript runtime and model files from a CDN, but your selected photo is not sent to RitoccaPix's server."}},
+      {"@type":"Question","name":"Why is the first run slower?","acceptedAnswer":{"@type":"Answer","text":"The browser must download the runtime and AI model the first time. The model may be cached by your browser for later use. Processing time also depends on your device. This version uses a smaller working copy to reduce processing time and memory use."}},
+      {"@type":"Question","name":"Can AI restore the exact original details?","acceptedAnswer":{"@type":"Answer","text":"No. Super-resolution estimates details and may introduce artifacts. Keep the original file and compare the output before using it for important work."}},
+      {"@type":"Question","name":"Can I upload a large photo?","acceptedAnswer":{"@type":"Answer","text":"Yes. Large files can be selected, but the tool automatically creates a smaller working copy of up to 1024 px per side and about 1 megapixel before AI processing. The 2× result is based on that working copy, so it may be smaller than 2× the original full-size photo. This helps avoid browser memory errors."}}
+    ]
+  }
+  </script>
   <style>
     :root{--bg:#080d18;--card:#111827;--text:#f5f7fb;--muted:#a0abc0;--border:#263249;--blue:#91aaff;--blue2:#263e68;--green:#70d99a;--red:#fca5a5}
     *{box-sizing:border-box}html{min-height:100%;background:var(--bg);color-scheme:dark}body{margin:0;min-height:100vh;background:var(--bg);color:var(--text);font:16px/1.6 Arial,Helvetica,sans-serif}
@@ -41,7 +54,7 @@
   <section class="hero">
     <span class="eyebrow">AI-POWERED SUPER-RESOLUTION</span>
     <h1>AI Image Enhancer</h1>
-    <p>Make small images larger with a neural network. This tool uses an ESRGAN super-resolution model to create a 2× image right in your browser — not just a standard resize.</p>
+    <p>Upscale small or low-resolution photos with an ESRGAN neural network. RitoccaPix creates a 2× super-resolution image directly in your browser, rather than simply stretching pixels with a standard resize. Your selected photo stays on your device.</p>
   </section>
   <section class="card" aria-labelledby="upload-title">
     <h2 id="upload-title" class="section-title">Enhance an image</h2>
@@ -80,7 +93,7 @@
     <details><summary>Are my photos uploaded?</summary><p>No. Image pixels are processed in your browser. The browser does download the JavaScript runtime and model files from a CDN, but your selected photo is not sent to RitoccaPix's server.</p></details>
     <details><summary>Why is the first run slower?</summary><p>The browser must download the runtime and AI model the first time. The model may be cached by your browser for later use. Processing time also depends on your device. This version uses a smaller working copy to reduce processing time and memory use.</p></details>
     <details><summary>Can AI restore the exact original details?</summary><p>No. Super-resolution estimates details and may introduce artifacts. Keep the original file and compare the output before using it for important work.</p></details>
-    <details><summary>Can I upload a large photo?</summary><p>Yes. Large files can be selected, but the tool automatically creates a smaller working copy of up to 1536 px per side and about 2.3 megapixels before AI processing. The 2× result is based on that working copy, so it may be smaller than 2× the original full-size photo. This helps avoid browser memory errors.</p></details>
+    <details><summary>Can I upload a large photo?</summary><p>Yes. Large files can be selected, but the tool automatically creates a smaller working copy of up to 1024 px per side and about 1 megapixel before AI processing. The 2× result is based on that working copy, so it may be smaller than 2× the original full-size photo. This helps avoid browser memory errors.</p></details>
   </section>
   <p class="foot">RitoccaPix · Free browser-based image tools</p>
 </main>
