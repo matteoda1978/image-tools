@@ -6,13 +6,30 @@
 
   <title>Free Image Converter Online – Convert JPG, PNG and WebP | RitoccaPix</title>
   <meta name="description" content="Convert images online for free with RitoccaPix. Convert JPG, PNG, and WebP images in batches, preview files instantly, and download converted images individually or as a ZIP.">
-  <meta name="robots" content="index, follow">
+  <meta name="robots" content="index,follow,max-image-preview:large">
   <link rel="canonical" href="https://ritoccapix.com/image-converter.html">
 
   <meta property="og:title" content="Free Image Converter Online | RitoccaPix">
   <meta property="og:description" content="Convert multiple images to JPG, PNG, or WebP directly in your browser with RitoccaPix.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://ritoccapix.com/image-converter.html">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Free Image Converter Online – JPG, PNG & WebP | RitoccaPix">
+  <meta name="twitter:description" content="Convert multiple images to JPG, PNG, or WebP in your browser. Adjust quality, compare file sizes, and download files individually or as a ZIP.">
+  <meta name="theme-color" content="#08111f">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "RitoccaPix Free Image Converter",
+    "url": "https://ritoccapix.com/image-converter.html",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "Any modern browser",
+    "description": "Free browser-based batch image converter for JPG, PNG, and WebP, with adjustable quality and individual or ZIP downloads.",
+    "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+    "featureList": ["Batch image conversion", "JPG output", "PNG output", "WebP output", "Adjustable JPG and WebP quality", "Individual downloads", "ZIP download", "Browser-based processing"]
+  }
+  </script>
 
   <style>
     :root {
@@ -238,6 +255,21 @@
       display: block;
       margin-top: 7px;
       color: var(--muted);
+    }
+
+    .faq-section details {
+      border-top: 1px solid var(--border);
+      padding: 14px 0;
+    }
+
+    .faq-section summary {
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .faq-section details p {
+      color: var(--muted);
+      margin: 9px 0 0;
     }
 
     .quality-value {
@@ -472,7 +504,7 @@
     <div class="header-inner">
       <a class="logo" href="index.html">RitoccaPix</a>
       <nav aria-label="Main navigation">
-        <a href="image-resizer.html">Image Resizer</a>
+        <a href="image-optimizer.html">Image Optimizer</a>
         <a href="image-compressor.html">Image Compressor</a>
         <a href="image-converter.html" aria-current="page">Image Converter</a>
       </nav>
@@ -485,7 +517,8 @@
       <p>
         Convert JPG, PNG, and WebP images directly in your browser.
         Select multiple images, preview them instantly, and download your
-        converted files individually or together in a ZIP archive.
+        converted files individually or together in a ZIP archive. No account is
+        required, and your selected image files are processed on your device.
       </p>
     </section>
 
@@ -504,7 +537,8 @@
           multiple
         >
         <p style="margin-top: 12px; margin-bottom: 0;">
-          Your images are processed locally in your browser.
+          Your images are processed locally in your browser. You can select up to 50 images,
+          with a maximum file size of 50 MB per image.
         </p>
       </div>
 
@@ -617,15 +651,45 @@
       <h2>Before You Convert</h2>
       <ul>
         <li>JPG does not support transparency. Choose a background color above for transparent areas.</li>
+        <li>You can add up to 50 images at once. Each image must be smaller than 50 MB, and very large images may exceed your device's available memory.</li>
         <li>PNG keeps transparency and uses lossless compression; the quality slider does not affect PNG output.</li>
         <li>The size comparison shows whether each converted file is smaller or larger than the original.</li>
         <li>Some image formats may not open in your browser. If a file fails, try a supported JPG, PNG, or WebP image.</li>
       </ul>
 
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-section">
+        <details>
+          <summary>Can I convert multiple images at once?</summary>
+          <p>Yes. Select or drag in multiple image files, choose an output format, and click Convert Images. You can download each result separately or collect the converted files in one ZIP archive.</p>
+        </details>
+        <details>
+          <summary>Are my images uploaded to a server?</summary>
+          <p>The conversion runs in your browser. This page does not send the selected image files to a conversion server. External libraries used by the page may still be loaded from their hosting provider.</p>
+        </details>
+        <details>
+          <summary>Which format should I use: JPG, PNG, or WebP?</summary>
+          <p>JPG is a common choice for photographs, PNG is useful for lossless graphics and transparency, and WebP often provides a good balance of quality and file size. The best option depends on how you plan to use the image.</p>
+        </details>
+        <details>
+          <summary>Will JPG preserve transparent areas?</summary>
+          <p>No. JPG does not support transparency. Choose a background color in the settings to fill transparent areas when converting to JPG.</p>
+        </details>
+        <details>
+          <summary>Why can a converted image be larger than the original?</summary>
+          <p>File size depends on the source format, image content, output format, and quality setting. Try WebP or a lower JPG/WebP quality setting if a smaller file is your priority.</p>
+        </details>
+        <details>
+          <summary>Does the converter preserve animation and metadata?</summary>
+          <p>Animated images are converted as a still image, and re-encoding may remove EXIF metadata or embedded color-profile information. Keep the original if these details are important.</p>
+        </details>
+      </div>
+
       <h2>More Free Image Tools</h2>
       <ul>
-        <li><a href="image-resizer.html">Resize images online</a></li>
+        <li><a href="image-optimizer.html">Optimize images online</a></li>
         <li><a href="image-compressor.html">Compress images online</a></li>
+        <li><a href="image-analyzer.html">Analyze image dimensions and details</a></li>
       </ul>
     </section>
   </main>
@@ -633,7 +697,7 @@
   <footer>
     <p>© 2026 RitoccaPix · Free online image tools.</p>
     <a href="index.html">Home</a>
-    <a href="image-resizer.html">Image Resizer</a>
+    <a href="image-optimizer.html">Image Optimizer</a>
     <a href="image-compressor.html">Image Compressor</a>
     <a href="image-converter.html">Image Converter</a>
   </footer>
