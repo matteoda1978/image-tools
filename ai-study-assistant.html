@@ -54,7 +54,7 @@
 (function(){
 'use strict';
 const $=id=>document.getElementById(id);const fileInput=$('pdfFile'),source=$('sourceText'),topic=$('topic'),level=$('level'),goal=$('goal'),status=$('status'),output=$('output'),tabs=[...document.querySelectorAll('[data-tab]')];
-let pack=null,activeTab='summary';
+let pack=null,activeTab='summary',downloadCount=0;
 if(window.pdfjsLib){pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';}
 function setStatus(message,type=''){status.textContent=message;status.className='status'+(type?' '+type:'');}
 function countChars(){ $('charCount').textContent=source.value.length.toLocaleString(); }
@@ -73,8 +73,15 @@ function isHeadingLine(line){
  return false;
 }
 function cleanSentences(text){
- const normalized=String(text||'').replace(/\r/g,'').replace(/[ \t]+/g,' ');
- const lines=normalized.split('\n').map(line=>line.replace(/^\s*(?:[-*•]|\d+[.)])\s*/,'').trim()).filter(Boolean);
+ // Strip Markdown artifacts sometimes present in copied notes (for example \\*\*Term:\\*\*).
+ const normalized=String(text||'').replace(/\r/g,'').replace(/\\?\*{1,2}/g,'').replace(/__([^_]+)__/g,'$1').replace(/\[([^\]]+)\]\([^)]*\)/g,'$1').replace(/[ \t]+/g,' ');
+ const rawLines=normalized.split('\n').map(line=>line.replace(/^\s*(?:[-*•]|\d+[.)])\s*/,'').trim()).filter(Boolean);
+ const lines=[];
+ for(const line of rawLines){
+  if(isHeadingLine(line))continue;
+  if(lines.length && !/[.!?][\"”’']?$/.test(lines[lines.length-1])) lines[lines.length-1]+=' '+line;
+  else lines.push(line);
+ }
  const result=[];
  for(const line of lines){
   if(isHeadingLine(line))continue;
@@ -93,7 +100,7 @@ const STOP=new Set(('about above after again against all also among an and any a
 function frequency(text){const f=new Map();for(const w of words(text))f.set(w,(f.get(w)||0)+1);return f;}
 function summarize(text){
  const ss=cleanSentences(text);
- if(!ss.length)return String(text||'').trim().slice(0,900);
+ if(!ss.length)return String(text||'').replace(/\\?\*{1,2}/g,'').trim().slice(0,900);
  // Prefer coverage across the source instead of repeatedly selecting sentences
  // that share common words. Exclude glossary-style definitions from the summary.
  const candidates=ss.map((sentence,index)=>{
@@ -154,7 +161,7 @@ function keyPoints(text){
 function makeCards(text){
  const sentences=cleanSentences(text),cards=[],seen=new Set();
  const add=(q,a)=>{
-  q=String(q||'').trim();a=String(a||'').trim().replace(/[.!?]+$/,'');
+  q=String(q||'').replace(/\\?\*{1,2}/g,'').trim();a=String(a||'').replace(/\\?\*{1,2}/g,'').replace(/\s+/g,' ').trim().replace(/[.!?]+$/,'');
   const key=q.toLowerCase();
   if(q&&a&&a.length>=8&&!seen.has(key)){seen.add(key);cards.push({q,a});}
  };
@@ -168,9 +175,11 @@ function makeCards(text){
    let explanation=m[2].trim();
    const next=sentences[sentences.indexOf(raw)+1];
    if(next && next.length<180 && !/^[A-Z][A-Za-z -]{1,45}:\s/.test(next) && /^(?:some|it|they|this|these|the sun|water vapor|water that|when|as)\b/i.test(next)) explanation += ' ' + next;
-   const q=/^(evaporation|transpiration|condensation|precipitation|infiltration|runoff|collection)$/i.test(term)
+   const q=/^(evaporation|transpiration|condensation|precipitation|infiltration)$/i.test(term)
     ? 'What happens during '+term.toLowerCase()+'?'
-    : 'What does the source say about '+term+'?';
+    : /^(runoff and collection|runoff|collection)$/i.test(term)
+      ? 'What is runoff and collection?'
+      : 'What is '+term.toLowerCase()+'?';
    add(q,explanation);
    continue;
   }
@@ -262,7 +271,7 @@ function render(){if(!pack){output.innerHTML='<p class="empty">Add source materi
 tabs.forEach(b=>b.addEventListener('click',()=>{activeTab=b.dataset.tab;tabs.forEach(t=>t.setAttribute('aria-selected',String(t===b)));render();}));
 $('generateBtn').addEventListener('click',()=>{const text=source.value.trim();if(text.length<80){setStatus('Please upload a text-based PDF or paste at least a few sentences of notes before generating.','error');return;}if(text.length>60000){setStatus('Please keep the source text within 60,000 characters.','error');return;}const ss=cleanSentences(text);const summary=summarize(text);const notes=keyPoints(text);const cards=makeCards(text);const quiz=makeQuiz(text);pack={topic:topic.value.trim(),level:level.value,goal:goal.value,summary,notes,cards,quiz,sourceLength:text.length};$('packSubtitle').textContent=level.value+' · '+goal.value+' · '+text.length.toLocaleString()+' source characters';render();$('downloadBtn').disabled=false;setStatus('Study pack created from your source text. '+cards.length+' flashcards and '+quiz.length+' quiz questions generated. Review all outputs against your original notes.','good');});
 $('clearBtn').addEventListener('click',()=>{source.value='';topic.value='';fileInput.value='';pack=null;countChars();$('packSubtitle').textContent='Your generated content will appear here.';$('downloadBtn').disabled=true;render();setStatus('Cleared. Add a PDF or paste your notes to begin.');});
-$('downloadBtn').addEventListener('click',()=>{if(!pack)return;const text=['RitoccaPix Study Pack','Topic: '+(pack.topic||'Not specified'),'Study level: '+pack.level,'Goal: '+pack.goal,'','SUMMARY',...pack.summary.map((s,i)=>(i+1)+'. '+s),'','KEY POINTS',...pack.notes.map((s,i)=>(i+1)+'. '+s),'','FLASHCARDS',...pack.cards.flatMap((c,i)=>['Card '+(i+1)+': '+c.q,'Answer: '+c.a]),'','PRACTICE QUIZ',...pack.quiz.flatMap((q,i)=>[(i+1)+'. '+q.q,'Options: '+q.options.join(' / '),'Correct answer: '+q.options[q.correct],'Source statement: '+q.answer]),'','Note: Generated locally using basic text-processing rules, not a generative AI model. Verify against the original source.'].join('\n');const blob=new Blob([text],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='ritoccapix-study-pack.txt';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);});
+$('downloadBtn').addEventListener('click',()=>{if(!pack)return;const text=['RitoccaPix Study Pack','Topic: '+(pack.topic||'Not specified'),'Study level: '+pack.level,'Goal: '+pack.goal,'','SUMMARY',...pack.summary.map((s,i)=>(i+1)+'. '+s),'','KEY POINTS',...pack.notes.map((s,i)=>(i+1)+'. '+s),'','FLASHCARDS',...pack.cards.flatMap((c,i)=>['Card '+(i+1)+': '+c.q,'Answer: '+c.a]),'','PRACTICE QUIZ',...pack.quiz.flatMap((q,i)=>[(i+1)+'. '+q.q,'Options: '+q.options.join(' / '),'Correct answer: '+q.options[q.correct],'Source statement: '+q.answer]),'','Note: Generated locally using basic text-processing rules, not a generative AI model. Verify against the original source.'].join('\n');const blob=new Blob([text],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;downloadCount++;a.download='ritoccapix-study-pack-'+String(downloadCount).padStart(3,'0')+'.txt';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);});
 $('year').textContent=new Date().getFullYear();countChars();
 })();
 </script>
