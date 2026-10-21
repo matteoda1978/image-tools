@@ -1,626 +1,742 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AI Study Assistant: PDF Notes, Flashcards & Quizzes | RitoccaPix</title>
-<meta name="description" content="Turn study notes and text-based PDFs into summaries, key points, flashcards and practice quizzes with RitoccaPix Study Assistant.">
-<meta name="robots" content="index,follow">
-<meta name="theme-color" content="#080d18">
-<link rel="canonical" href="https://ritoccapix.com/ai-study-assistant.html">
-<meta property="og:type" content="website">
-<meta property="og:title" content="AI Study Assistant | RitoccaPix">
-<meta property="og:description" content="Build a study pack from your own notes or PDF: summaries, key points, flashcards and quizzes.">
-<meta property="og:url" content="https://ritoccapix.com/ai-study-assistant.html">
-<meta property="og:site_name" content="RitoccaPix">
+<title>Free Online Social Video Maker | RitoccaPix</title>
+<meta name="description" content="Turn your photos into videos for TikTok, Instagram Reels and YouTube Shorts. Choose a format, add a title and set the resolution in your browser.">
+<meta name="theme-color" content="#10131c">
+<link rel="canonical" href="https://ritoccapix.com/social-video-maker.html">
+<script src="menu.js" defer></script>
 
 <style>
-:root{--bg:#080d18;--panel:#111a2a;--panel2:#0d1422;--text:#f5f7fb;--muted:#a0abc0;--border:#263249;--blue:#91aaff;--blue2:#b8c7ff;--green:#83e0ad;--yellow:#f4d28a;--red:#ffaaaa}
+:root {
+  --bg:#10131c;
+  --panel:#191e2b;
+  --panel2:#222a3b;
+  --text:#f4f6ff;
+  --muted:#aab3c7;
+  --accent:#8b7cff;
+  --border:#30394e;
+}
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:24px;background:var(--bg);color-scheme:dark}
-body{margin:0;background:radial-gradient(ellipse at 50% -280px,#243d70 0,transparent 65%),var(--bg);color:var(--text);font:16px/1.6 Arial,Helvetica,sans-serif}
-a{color:inherit}
-a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--blue2);outline-offset:3px}
-.container{width:min(1100px,92%);margin-inline:auto}
-header{border-bottom:1px solid var(--border);background:#080d18e8}
-.nav{min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:18px}
-.brand{font-size:26px;font-weight:900;letter-spacing:-1px;text-decoration:none;color:var(--blue)}
-.nav-link{color:var(--muted);font-size:14px;font-weight:700;text-decoration:none}
-.hero{padding:48px 0 28px;text-align:center}
-.eyebrow{display:inline-block;padding:6px 12px;border:1px solid #34496f;background:#111e35;border-radius:999px;color:#c3d0ff;font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase}
-h1{max-width:850px;margin:17px auto 12px;font-size:clamp(34px,5.5vw,58px);line-height:1.08;letter-spacing:-2px}
-.gradient{background:linear-gradient(100deg,#fff 10%,#a9bdff 55%,#6ea8ff);background-clip:text;-webkit-background-clip:text;color:transparent}
-.hero-copy{max-width:760px;margin:auto;color:var(--muted);font-size:17px}
-.section{padding:24px 0 44px}
-.panel{border:1px solid var(--border);background:linear-gradient(145deg,#121c2e,#0e1523);border-radius:18px;padding:23px;min-width:0}
-.panel h2,.panel h3{margin:0 0 5px}
-.intro{color:var(--muted);font-size:14px;margin:0 0 18px}
-.layout{display:grid;grid-template-columns:.92fr 1.08fr;gap:18px;align-items:start}
-.field{margin:14px 0}
-.field label{display:block;margin-bottom:6px;font-size:13px;font-weight:800;color:#dfe6f5}
-.field input[type=text],.field select,.field textarea{width:100%;border:1px solid #34415a;border-radius:10px;background:#0b1220;color:var(--text);padding:11px 12px;font:inherit;font-size:14px}
-.field textarea{min-height:180px;resize:vertical}
-.field input[type=file]{display:block;width:100%;padding:12px;border:1px dashed #435576;border-radius:10px;background:#0b1220;color:#dce5f7;font-size:13px}
-.hint{font-size:12px;color:#8998b2;margin-top:6px}
-.btn{display:inline-flex;justify-content:center;align-items:center;gap:8px;min-height:44px;padding:11px 16px;border-radius:10px;border:1px solid #34435e;background:#152139;color:white;text-decoration:none;font-weight:800;font-size:14px;cursor:pointer}
-.btn.primary{background:var(--blue);border-color:var(--blue);color:#08101d}
-.btn:disabled{opacity:.5;cursor:not-allowed}
-.btnrow{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
-.status{padding:10px 12px;border:1px solid #34435e;background:#101a2b;border-radius:10px;color:#c0cce0;font-size:13px;margin-top:14px;overflow-wrap:anywhere}
-.status.error{border-color:#754545;color:#ffd0d0}
-.status.good{border-color:#315e4a;color:#c7f7db}
-.privacy{font-size:12px;color:#8f9db4;margin:13px 0 0}
-.tabs{display:flex;gap:7px;flex-wrap:wrap;margin:17px 0}
-.tab{padding:8px 11px;border:1px solid #34415a;border-radius:8px;background:#0b1220;color:#c6d0e2;font-size:12px;font-weight:800;cursor:pointer}
-.tab[aria-selected=true]{background:var(--blue);color:#08101d;border-color:var(--blue)}
-.output{padding:18px;border:1px solid #293750;border-radius:12px;background:#0b1220;min-height:300px;overflow-wrap:anywhere}
-.output h3{font-size:18px;margin:0 0 12px}
-.output h4{margin:17px 0 7px;font-size:15px}
-.output p,.output li{font-size:14px;color:#c1cbdd}
-.output ul,.output ol{padding-left:22px}
-.empty{color:#91a0b8;font-size:14px}
-.flashcard{border:1px solid #34435e;border-radius:10px;padding:13px;margin:10px 0;background:#101a2b}
-.flashcard strong{display:block;margin-bottom:9px}
-.answer{color:#c1cbdd;font-size:14px}
-.quiz-item{padding:17px;margin:14px 0;border:1px solid #34435e;border-radius:13px;background:linear-gradient(145deg,#111b2d,#0d1524)}
-.quiz-item>p{margin:0 0 12px;color:#f5f7fb;font-size:15px;line-height:1.55}
-.quiz-item label{display:flex;gap:10px;align-items:flex-start;font-weight:600;margin:9px 0;padding:11px 12px;border:1px solid #34435e;border-radius:9px;background:#0a1220;color:#d5deef;font-size:14px;cursor:pointer}
-.quiz-item label:hover{border-color:#8298df;background:#121f35}
-.quiz-item label:has(input:checked){border-color:#91aaff;background:#192849;color:#fff}
-.quiz-item label input{flex:0 0 auto;margin-top:5px;accent-color:#91aaff}
-.quiz-feedback{margin-top:12px;padding:12px 14px;border:1px solid #3b506c;border-radius:10px;background:#101c2d;line-height:1.55;overflow-wrap:anywhere}
-.quiz-feedback.correct{border-color:#367653;background:#10271f;color:#c7f7db}
-.quiz-feedback.incorrect{border-color:#805050;background:#2a171b;color:#ffd3d3}
-.quiz-feedback.unanswered{border-color:#806b3d;background:#292214;color:#ffe7ac}
-.score{padding:12px 14px;border:1px solid #315e4a;border-radius:10px;background:#10271f;font-weight:800;color:var(--green);margin-top:14px}
-.notice{font-size:12px;color:#a0abc0;margin-top:15px}
-.how{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.how article{border:1px solid var(--border);border-radius:13px;background:#0e1625;padding:16px}
-.how h3{font-size:14px;margin:0 0 6px}
-.how p{font-size:13px;color:var(--muted);margin:0}
-footer{border-top:1px solid var(--border);padding:25px 0;color:#7f8ca5;font-size:12px;text-align:center}
-footer a{color:#b5c4ec;text-decoration:none}
-@media(max-width:780px){.layout{grid-template-columns:1fr}.how{grid-template-columns:1fr}.hero{padding-top:36px}.panel{padding:17px}}
-@media(max-width:520px){.brand{font-size:23px}.nav{min-height:62px}h1{letter-spacing:-1.3px}.btnrow .btn{width:100%}}
-</style>
+html{width:100%;overflow-x:hidden}
+body{
+  margin:0;
+  width:100%;
+  overflow-x:hidden;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
+  line-height:1.6
+}
+header{
+  padding:22px 16px;
+  text-align:center;
+  border-bottom:1px solid var(--border)
+}
+.logo{
+  font-size:26px;
+  font-weight:800;
+  color:white;
+  text-decoration:none
+}
+.logo span{color:var(--accent)}
+header p{margin:5px 0 14px;color:var(--muted)}
+header nav{display:flex;justify-content:center;width:100%;flex-wrap:wrap}
+main{
+  width:min(1120px, calc(100% - 32px));
+  margin:30px auto 60px
+}
+h1{font-size:clamp(28px,5vw,42px);line-height:1.2;margin:0 0 12px}
+h2{font-size:21px;margin:0 0 15px}
+.intro,.muted,.note,small{color:var(--muted)}
+.intro{max-width:760px;margin-bottom:26px}
+.layout{
+  display:grid;
+  grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);
+  gap:22px;
+  align-items:start
+}
+.panel{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:22px;
+  min-width:0;
+  width:100%
+}
+.field{margin-bottom:19px}
+label{display:block;font-weight:700;margin-bottom:7px}
+input,select,button{font:inherit;max-width:100%}
+input[type="text"],select{
+  width:100%;
+  min-width:0;
+  padding:12px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:#111725;
+  color:white
+}
+input[type="file"]{
+  display:block;
+  width:100%;
+  min-width:0;
+  padding:12px;
+  background:#111725;
+  color:white;
+  border:1px dashed #56617b;
+  border-radius:10px
+}
+input[type="range"]{display:block;width:100%;accent-color:var(--accent)}
+button{
+  border:0;
+  border-radius:10px;
+  padding:12px 16px;
+  cursor:pointer;
+  font-weight:700
+}
+.primary{background:var(--accent);color:white;width:100%}
+.secondary{background:var(--panel2);color:white;border:1px solid var(--border)}
+button:disabled{opacity:.5;cursor:not-allowed}
+.preview-wrap{display:flex;justify-content:center;width:100%}
+.preview{
+  width:min(100%,300px);
+  aspect-ratio:9/16;
+  background:#080a10;
+  border:1px solid #434d65;
+  border-radius:16px;
+  overflow:hidden;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center
+}
+.preview img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover
+}
+.overlay{
+  position:absolute;
+  left:7%;
+  right:7%;
+  bottom:9%;
+  text-align:center;
+  font-weight:800;
+  font-size:25px;
+  line-height:1.2;
+  color:white;
+  text-shadow:0 2px 7px #000,0 0 12px #000;
+  overflow-wrap:anywhere;
+  pointer-events:none
+}
+.preview-placeholder{
+  text-align:center;
+  color:var(--muted);
+  padding:20px;
+  z-index:1
+}
+.file-list{display:grid;gap:8px;margin:12px 0}
+.file-item{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:8px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:#111725;
+  min-width:0
+}
+.file-item img{
+  width:45px;
+  height:45px;
+  object-fit:cover;
+  border-radius:6px;
+  flex-shrink:0
+}
+.file-item span{
+  font-size:13px;
+  overflow-wrap:anywhere;
+  flex:1;
+  min-width:0
+}
+.file-item button{padding:5px 9px;flex-shrink:0}
+.actions{display:grid;gap:10px;margin-top:16px}
+#status{
+  margin-top:12px;
+  font-size:14px;
+  color:var(--muted);
+  overflow-wrap:anywhere
+}
+#downloadLink{
+  display:none;
+  text-align:center;
+  padding:12px;
+  background:#173c32;
+  border:1px solid #2e795e;
+  border-radius:10px;
+  color:#b8ffe4;
+  font-weight:bold;
+  text-decoration:none;
+  overflow-wrap:anywhere
+}
+.music-note{
+  padding:14px;
+  background:#20283a;
+  border:1px solid var(--border);
+  border-radius:12px;
+  font-size:14px;
+  color:var(--muted);
+  margin-top:16px
+}
+.music-note strong{color:var(--text)}
+footer{
+  text-align:center;
+  border-top:1px solid var(--border);
+  padding:24px;
+  color:var(--muted);
+  font-size:13px
+}
 
-<script src="menu.js" defer></script>
+/* TELEFONI: una colonna, pannelli a tutta larghezza */
+@media(max-width:760px){
+  main{
+    display:block;
+    width:calc(100% - 24px);
+    max-width:560px;
+    margin:20px auto 40px
+  }
+  .layout{
+    display:flex;
+    flex-direction:column;
+    align-items:stretch;
+    width:100%;
+    gap:16px
+  }
+  .layout > .panel{
+    display:block;
+    width:100%;
+    min-width:0;
+    padding:16px;
+    margin:0
+  }
+  .preview{
+    width:min(100%,280px);
+  }
+  .file-item{gap:5px}
+  .file-item button{padding:5px 8px}
+  h1{font-size:32px}
+}
+
+/* TELEFONI MOLTO PICCOLI */
+@media(max-width:390px){
+  main{width:calc(100% - 20px)}
+  .panel{padding:13px}
+  .layout > .panel{padding:13px}
+  .file-item{gap:4px;padding:6px}
+  .file-item img{width:34px;height:34px}
+  .file-item button{padding:5px;font-size:12px}
+  .file-item span{font-size:12px}
+}
+</style>
 </head>
+
 <body>
 <header>
-  <div class="container nav">
-    <a class="brand" href="index.html" aria-label="RitoccaPix home">RitoccaPix</a>
-    <nav aria-label="Main navigation"></nav>
-  </div>
+  <a class="logo" href="index.html">Ritocca<span>Pix</span></a>
+  <p>Free photo and video tools</p>
+  <nav aria-label="All tools"></nav>
 </header>
 
 <main>
-<section class="hero">
-  <div class="container">
-    <span class="eyebrow">✦ Study smarter</span>
-    <h1>Turn your material into <span class="gradient">a study pack.</span></h1>
-    <p class="hero-copy">Turn your notes or a text-based PDF into a focused summary, key points, recall flashcards and a source-based practice quiz — right in your browser.</p>
+  <h1>Social Video Maker</h1>
+  <p class="intro">
+    Turn your photos into videos for TikTok, Instagram Reels and YouTube Shorts.
+    Choose a format, add a title and set the resolution.
+    Create your video directly in your browser without uploading your photos to a server.
+  </p>
+
+  <div class="layout">
+    <section class="panel">
+      <h2>1. Choose photos</h2>
+      <div class="field">
+        <label for="photos">Upload images</label>
+        <input id="photos" type="file" accept="image/*" multiple>
+        <small>You can add photos in multiple batches, reorder them, or remove them.</small>
+      </div>
+      <div id="fileList" class="file-list"></div>
+
+      <h2>2. Customize your video</h2>
+      <div class="field">
+        <label for="format">Social video format</label>
+        <select id="format">
+          <option value="vertical">Vertical 9:16 – TikTok / Reels / Shorts</option>
+          <option value="square">Square 1:1</option>
+          <option value="landscape">Landscape 16:9 – YouTube</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="titleText">Video title</label>
+        <input id="titleText" type="text" maxlength="100" placeholder="Enter your title">
+      </div>
+
+      <div class="field">
+        <label for="duration">Duration per photo: <span id="durationValue">2</span> seconds</label>
+        <input id="duration" type="range" min="1" max="6" value="2">
+      </div>
+
+      <div class="field">
+        <label for="quality">Video resolution</label>
+        <select id="quality">
+          <option value="720">HD 720p – Smaller file</option>
+          <option value="1080" selected>Full HD 1080p – High quality</option>
+        </select>
+        <small id="resolutionInfo">1080 × 1920 pixel · Full HD</small>
+      </div>
+
+      <div class="field">
+        <label for="outputFormat">Download file format</label>
+        <select id="outputFormat">
+          <option value="mp4" disabled>MP4 – Temporarily unavailable</option>
+          <option value="webm" selected>WebM – Available</option>
+        </select>
+        <small>For now, you can create and download videos in WebM. MP4 export may be added when a compatible solution is available.</small>
+      </div>
+
+      <div class="music-note">
+        <strong>Music</strong>
+        <p>Add music after downloading your video, using the music library in TikTok, Instagram, or YouTube.</p>
+      </div>
+
+      <div class="actions">
+        <button class="secondary" id="previewButton" type="button">Refresh preview</button>
+        <button class="primary" id="exportButton" type="button">Create Full HD video</button>
+        <a id="downloadLink" download>Download video</a>
+      </div>
+      <p id="status" role="status" aria-live="polite">Upload photos to get started.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Preview</h2>
+      <div class="preview-wrap">
+        <div class="preview" id="preview">
+          <div class="preview-placeholder">Your preview will appear here.</div>
+          <div class="overlay" id="previewTitle"></div>
+        </div>
+      </div>
+      <p class="note">The preview shows the crop for the selected format. The final video will play all images in the selected order.</p>
+      <div class="field">
+        <label for="previewIndex">Photo to preview</label>
+        <input id="previewIndex" type="range" min="0" max="0" value="0" disabled>
+      </div>
+      <div class="music-note">
+        <strong>Privacy</strong>
+        <p>Photos are processed locally in your browser and are not uploaded to a server by this tool.</p>
+      </div>
+    </section>
   </div>
-</section>
 
-<section class="section">
-<div class="container layout">
-<section class="panel" aria-labelledby="source-title">
-  <h2 id="source-title">1. Add your study material</h2>
-  <p class="intro">Upload a PDF or paste your notes. Your notes are processed locally in your browser; no AI service is used.</p>
-
-  <div class="field">
-    <label for="pdfFile">Upload a PDF</label>
-    <input id="pdfFile" type="file" accept="application/pdf,.pdf">
-    <div class="hint">Text-based PDFs up to 8 MB. Scanned PDFs that contain only page images need OCR and are not supported yet.</div>
-  </div>
-
-  <div class="field">
-    <label for="sourceText">Your notes or extracted PDF text</label>
-    <textarea id="sourceText" maxlength="60000" placeholder="Paste your notes here, or upload a text-based PDF above…"></textarea>
-    <div class="hint"><span id="charCount">0</span>/60,000 characters</div>
-  </div>
-
-  <div class="field">
-    <label for="topic">Subject or topic (optional)</label>
-    <input id="topic" type="text" maxlength="120" placeholder="e.g. The French Revolution">
-  </div>
-
-  <div class="field">
-    <label for="level">Study level</label>
-    <select id="level">
-      <option>Middle school</option>
-      <option selected>High school</option>
-      <option>University</option>
-      <option>Independent learning</option>
-    </select>
-  </div>
-
-  <div class="field">
-    <label for="goal">Study goal</label>
-    <select id="goal">
-      <option>Understand a topic</option>
-      <option selected>Prepare for a test</option>
-      <option>Prepare for an oral exam</option>
-      <option>Review a lecture</option>
-    </select>
-  </div>
-
-  <div class="btnrow">
-    <button class="btn primary" id="generateBtn" type="button">Generate study pack</button>
-    <button class="btn" id="clearBtn" type="button">Clear</button>
-  </div>
-
-  <div class="status" id="status" role="status" aria-live="polite">Ready. Add a PDF or paste your notes to begin.</div>
-  <p class="privacy">Privacy: this first version extracts and processes text locally in your browser. It does not send your notes to RitoccaPix. PDF.js is loaded from a public CDN to read PDF files.</p>
-</section>
-
-<section class="panel" aria-labelledby="result-title">
-  <h2 id="result-title">2. Your study pack</h2>
-  <p class="intro" id="packSubtitle">Your generated content will appear here.</p>
-
-  <div class="tabs" role="tablist" aria-label="Study pack sections">
-    <button class="tab" type="button" role="tab" aria-selected="true" data-tab="summary">Summary</button>
-    <button class="tab" type="button" role="tab" aria-selected="false" data-tab="notes">Key points</button>
-    <button class="tab" type="button" role="tab" aria-selected="false" data-tab="flashcards">Flashcards</button>
-    <button class="tab" type="button" role="tab" aria-selected="false" data-tab="quiz">Quiz</button>
-  </div>
-
-  <div class="output" id="output" role="tabpanel" aria-live="polite">
-    <p class="empty">Upload a PDF or paste your notes, then select “Generate study pack”.</p>
-  </div>
-
-  <div class="btnrow">
-    <button class="btn" id="downloadBtn" type="button" disabled>Download study pack (.txt)</button>
-  </div>
-
-  <p class="notice"><strong>How it works:</strong> this tool uses local text-processing rules, not a generative AI model. Flashcards and quiz prompts are built from your supplied text and may need review. Use them to practise recall, then verify important facts against your original notes.</p>
-</section>
-</div>
-</section>
-
-<section class="section">
-<div class="container">
-  <div class="how">
-    <article><h3>Text stays in your browser</h3><p>This version does not send your notes to an AI provider or store them on RitoccaPix servers.</p></article>
-    <article><h3>Works with real source material</h3><p>Outputs are based on text you upload or paste, not fixed examples about an unrelated subject.</p></article>
-    <article><h3>Designed to improve</h3><p>The next step is a secure AI connection, with request limits and spending controls before public launch.</p></article>
-  </div>
-</div>
-</section>
+  <section class="panel" style="margin-top:22px">
+    <h2>How to create a video from photos</h2>
+    <ol>
+      <li>Upload one or more photos from your device.</li>
+      <li>Choose vertical, square, or landscape format.</li>
+      <li>Add a title and set the duration for each image.</li>
+      <li>Choose HD or Full HD resolution.</li>
+      <li>Click “Create video” and wait for it to finish.</li>
+      <li>Click the green link to download the WebM video.</li>
+    </ol>
+    <p class="note">If your phone is slow, try HD resolution first.</p>
+  </section>
 </main>
 
 <footer>
-  <div class="container">© <span id="year">2026</span> RitoccaPix · <a href="privacy.html">Privacy</a> · <a href="index.html">Home</a></div>
+  <p>RitoccaPix – Free tools for photos and social content.</p>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
-(function(){
-'use strict';
+(function() {
+  'use strict';
 
-const $=id=>document.getElementById(id);
-const fileInput=$('pdfFile'),source=$('sourceText'),topic=$('topic');
-const level=$('level'),goal=$('goal'),status=$('status'),output=$('output');
-const tabs=[...document.querySelectorAll('[data-tab]')];
-let pack=null,activeTab='summary';
+  const $ = id => document.getElementById(id);
+  let files = [];
+  let urls = [];
+  let currentBlobUrl = null;
+  let exporting = false;
+  let exportNumber = 0;
 
-if(window.pdfjsLib){
-  pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-}
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
 
-function setStatus(message,type=''){
-  status.textContent=message;
-  status.className='status'+(type?' '+type:'');
-}
-function countChars(){
-  $('charCount').textContent=source.value.length.toLocaleString();
-}
-source.addEventListener('input',countChars);
-
-fileInput.addEventListener('change',async()=>{
-  const file=fileInput.files&&fileInput.files[0];
-  if(!file)return;
-  if(file.type!=='application/pdf'&&!file.name.toLowerCase().endsWith('.pdf')){
-    setStatus('Please choose a PDF file.','error');fileInput.value='';return;
+  function setStatus(message) {
+    $('status').textContent = message;
   }
-  if(file.size>8*1024*1024){
-    setStatus('This PDF is larger than 8 MB. Please use a smaller file.','error');fileInput.value='';return;
-  }
-  if(!window.pdfjsLib){
-    setStatus('The PDF reader could not load. Check your internet connection, reload the page, or paste your notes manually.','error');return;
-  }
-  try{
-    setStatus('Reading PDF text…');
-    const bytes=await file.arrayBuffer();
-    const pdf=await pdfjsLib.getDocument({data:bytes}).promise;
-    const parts=[];
-    for(let i=1;i<=pdf.numPages;i++){
-      const page=await pdf.getPage(i);
-      const tc=await page.getTextContent();
-      parts.push(tc.items.map(x=>x.str).join(' '));
-      if(i%5===0)setStatus('Reading PDF text… page '+i+' of '+pdf.numPages);
+
+  function resetExport() {
+    if (currentBlobUrl) {
+      URL.revokeObjectURL(currentBlobUrl);
+      currentBlobUrl = null;
     }
-    const text=parts.join('\n\n').replace(/[ \t]+/g,' ').replace(/\n{3,}/g,'\n\n').trim();
-    if(!text){
-      setStatus('No selectable text was found. This may be a scanned PDF; paste text manually for now.','error');return;
-    }
-    source.value=text.slice(0,60000);
-    countChars();
-    if(!topic.value)topic.value=file.name.replace(/\.pdf$/i,'').replace(/[_-]+/g,' ');
-    setStatus('Loaded '+pdf.numPages+' page(s) and extracted '+text.length.toLocaleString()+' characters. Review the text, then generate your study pack.','good');
-  }catch(e){
-    console.error(e);
-    setStatus('Could not read this PDF. Try another text-based PDF or paste your notes manually.','error');
+    $('downloadLink').style.display = 'none';
+    $('downloadLink').removeAttribute('href');
   }
-});
 
-const STOP=new Set(('a an the and or but if then than so of to in on at by for from with without into onto over under after before during through between among is are was were be been being it its this that these those there here which who whom whose what when where why how as also very more most much many some any all each every both other another such only not no yes can could may might must should would will do does did done have has had having use used using make made making get got their them they we you your our us he she his her i about above across again against because below beyond per via own same still while once twice often usually generally mainly mostly however therefore thus rather quite than such well both either neither already yet first last new old one two three four five six seven eight nine ten chapter section lesson example examples introduction conclusion summary key points quick fact check test material notes note topic subject main inputs main products').split(/\s+/));
+  function getDimensions() {
+    const q = Number($('quality').value);
+    const format = $('format').value;
+    if (format === 'square') return {w:q,h:q};
+    if (format === 'landscape') return {w:Math.round(q*16/9),h:q};
+    return {w:q,h:Math.round(q*16/9)};
+  }
 
-function normaliseText(text){
-  return String(text||'')
-    .replace(/\u00a0/g,' ')
-    .replace(/[ \t]+/g,' ')
-    .replace(/\r/g,'\n')
-    .replace(/\n{3,}/g,'\n\n')
-    .trim();
-}
-function isHeading(s){
-  const t=s.trim().replace(/[:：]+$/,'');
-  if(!t||t.length<3||t.length>85)return true;
-  if(/^(?:test material|quick fact check|key points|summary|introduction|conclusion|chapter|section|lesson|contents|table of contents)\b/i.test(t))return true;
-  if(/^(?:why|how|what|when|where|factors|importance|role|definition|overview|background)\b.{0,55}$/i.test(t)&&!/[.!?]/.test(t))return true;
-  const words=t.split(/\s+/);
-  if(words.length<=7&&!/[.!?]/.test(t)&&!/\b(is|are|was|were|has|have|can|may|does|do|means|because|therefore|contains|produces|affects|requires|converts|supports|absorbs|reflects|reduces|increases|takes|uses|stores|helps|depends)\b/i.test(t))return true;
-  return false;
-}
-function cleanSentences(text){
-  const result=[];
-  const chunks=normaliseText(text).split(/\n+/);
-  for(const chunk of chunks){
-    const line=chunk.trim();
-    if(!line)continue;
-    const parts=line.split(/(?<=[.!?])\s+(?=[A-Z0-9“"(])/);
-    for(let part of parts){
-      part=part.replace(/^\s*(?:[-*•]|\d+[.)])\s*/,'').trim();
-      if(!part||isHeading(part))continue;
-      if(part.length>700){
-        const sub=part.match(/[^.!?]+[.!?]?/g)||[part];
-        for(const x of sub){
-          const s=x.trim();
-          if(s.length>25&&!isHeading(s))result.push(s);
-        }
-      }else if(part.length>25)result.push(part);
-    }
+  function updateResolutionInfo() {
+    const d = getDimensions();
+    const label = $('quality').value === '1080' ? 'Full HD' : 'HD';
+    $('resolutionInfo').textContent = `${d.w} × ${d.h} pixel · ${label}`;
+    $('exportButton').textContent = `Create ${label} video`;
   }
-  return result;
-}
-function words(text){
-  return (String(text).toLowerCase().match(/[a-zA-ZÀ-ÿ0-9][a-zA-ZÀ-ÿ0-9'-]*/g)||[])
-    .filter(w=>w.length>3&&!STOP.has(w));
-}
-function frequency(text){
-  const f=new Map();
-  for(const w of words(text))f.set(w,(f.get(w)||0)+1);
-  return f;
-}
-function uniqueSentences(sentences){
-  const seen=new Set();
-  return sentences.filter(s=>{
-    const key=s.toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
-    if(!key||seen.has(key))return false;
-    seen.add(key);return true;
-  });
-}
-function sentenceScore(s,freq,index,total){
-  const ws=words(s);
-  if(!ws.length)return 0;
-  const keywordScore=ws.reduce((n,w)=>n+Math.log(1+(freq.get(w)||0)),0)/Math.sqrt(ws.length);
-  const lengthPenalty=s.length>260?.65:s.length>190?.82:1;
-  const positionBonus=index<2?1.15:index>total-3?1.03:1;
-  return keywordScore*lengthPenalty*positionBonus;
-}
-function summarize(text){
-  const ss=uniqueSentences(cleanSentences(text));
-  if(!ss.length)return [normaliseText(text).slice(0,900)];
-  const freq=frequency(text);
-  const ranked=ss.map((s,i)=>({s,i,score:sentenceScore(s,freq,i,ss.length)}));
-  const count=Math.max(2,Math.min(6,Math.ceil(ss.length*.25)));
-  return ranked.sort((a,b)=>b.score-a.score).slice(0,count).sort((a,b)=>a.i-b.i).map(x=>x.s);
-}
-function keyPoints(text){
-  const ss=uniqueSentences(cleanSentences(text));
-  const freq=frequency(text);
-  const ranked=ss.map((s,i)=>({s,i,score:sentenceScore(s,freq,i,ss.length)}));
-  const selected=ranked
-    .sort((a,b)=>b.score-a.score)
-    .slice(0,Math.min(12,Math.max(5,Math.ceil(ss.length*.65))))
-    .sort((a,b)=>a.i-b.i)
-    .map(x=>x.s);
-  return uniqueSentences(selected);
-}
-function lowerFirst(s){return s?s.charAt(0).toLowerCase()+s.slice(1):s;}
-function trimEnd(s){return s.replace(/[.!?]+$/,'').trim();}
-function makeCards(text){
-  const points=keyPoints(text),cards=[],seen=new Set();
-  function add(q,a){
-    q=trimEnd(q);a=trimEnd(a);
-    const key=q.toLowerCase();
-    if(q&&a&&a.length>1&&!seen.has(key)&&cards.length<10){
-      seen.add(key);cards.push({q:q+'?',a});
-    }
+
+  function drawCover(context,img,w,h) {
+    const iw = img.naturalWidth || img.width;
+    const ih = img.naturalHeight || img.height;
+    const scale = Math.max(w/iw,h/ih);
+    const sw = w/scale;
+    const sh = h/scale;
+    context.drawImage(img,(iw-sw)/2,(ih-sh)/2,sw,sh,0,0,w,h);
   }
-  for(const original of points){
-    const s=trimEnd(original);
-    let m;
-    if((m=s.match(/^(.{2,75}?)\s+is the process by which\s+(.+)$/i))){
-      add('What is '+lowerFirst(m[1]),'The process by which '+m[2]);
-    }else if((m=s.match(/^(.{2,75}?)\s+is the process of\s+(.+)$/i))){
-      add('What is '+lowerFirst(m[1]),'The process of '+m[2]);
-    }else if((m=s.match(/^(.{2,75}?)\s+is defined as\s+(.+)$/i))){
-      add('How is '+lowerFirst(m[1])+' defined','It is '+m[2]);
-    }else if((m=s.match(/^(.{2,75}?)\s+is known as\s+(.+)$/i))){
-      add('What is '+lowerFirst(m[1])+' known as',m[2]);
-    }else if((m=s.match(/^(.{2,75}?)\s+contains\s+(.+)$/i))){
-      add('What does '+lowerFirst(m[1])+' contain',m[2]);
-    }else if((m=s.match(/^(.{2,75}?)\s+absorbs\s+(.+)$/i))){
-      add('What does '+lowerFirst(m[1])+' absorb',m[2]);
-    }else if((m=s.match(/^(.{2,75}?)\s+reflects\s+(.+)$/i))){
-      add('What does '+lowerFirst(m[1])+' reflect',m[2]);
-    }else if((m=s.match(/^(.{2,75}?)\s+stores energy in\s+(.+)$/i))){
-      add('Where does '+lowerFirst(m[1])+' store energy','In '+m[2]);
-    }else if((m=s.match(/^(.{2,75}?)\s+is affected by\s+(.+)$/i))){
-      add('What affects '+lowerFirst(m[1]),m[2]);
-    }else if((m=s.match(/^(.{2,75}?)\s+can reduce\s+(.+)$/i))){
-      add('What can '+lowerFirst(m[1])+' do','Reduce '+m[2]);
-    }else if((m=s.match(/^(.{2,75}?)\s+supplies the energy needed for\s+(.+)$/i))){
-      add('What supplies the energy needed for '+m[2],m[1]);
-    }else if((m=s.match(/^(.{2,75}?)\s+take in\s+(.+?)\s+from the air/i))){
-      add('What do '+lowerFirst(m[1])+' take in from the air',m[2]);
-    }else if((m=s.match(/^(.{2,75}?)\s+absorb\s+(.+?)\s+through their roots/i))){
-      add('What do '+lowerFirst(m[1])+' absorb through their roots',m[2]);
-    }else if((m=s.match(/^(.{2,75}?)\s+is released into the air/i))){
-      add('What is released into the air',m[1]);
-    }else if((m=s.match(/^(.{2,75}?)\s+is mainly located in\s+(.+)$/i))){
-      add('Where is '+lowerFirst(m[1])+' mainly located',m[2]);
-    }else if((m=s.match(/^(.{2,75}?)\s+depends on\s+(.+)$/i))){
-      add('What does '+lowerFirst(m[1])+' depend on',m[2]);
-    }
-    if(cards.length>=10)break;
-  }
-  if(cards.length<4){
-    for(const s of points){
-      const clean=trimEnd(s);
-      if(clean.length>35&&clean.length<220){
-        add('What is the main point of this statement',clean);
+
+  function drawTitle(context,text,w,h) {
+    text = text.trim();
+    if (!text) return;
+
+    const words = text.split(/\s+/);
+    const lines = [];
+    const fontSize = Math.max(22,Math.round(w*.055));
+    context.font = `bold ${fontSize}px Arial`;
+    const maxWidth = w*.84;
+    let line = '';
+
+    for (const word of words) {
+      const test = line ? line+' '+word : word;
+      if (context.measureText(test).width > maxWidth && line) {
+        lines.push(line);
+        line = word;
+      } else {
+        line = test;
       }
-      if(cards.length>=Math.min(8,points.length))break;
     }
-  }
-  return cards;
-}
-function escapeRegex(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');}
-function makeQuiz(text){
-  const sentences=uniqueSentences(cleanSentences(text));
-  const candidates=[];
-  const seenAnswers=new Set();
+    if (line) lines.push(line);
 
-  function addCandidate(sentence,answer,category){
-    answer=trimEnd(answer).replace(/^["“]|["”]$/g,'').trim();
-    if(!answer||answer.length<3||answer.length>65)return;
-    const key=answer.toLowerCase();
-    if(seenAnswers.has(key))return;
-    if(words(answer).length===0)return;
-    seenAnswers.add(key);
-    candidates.push({sentence,answer,category});
-  }
+    const lineHeight = Math.max(28,Math.round(w*.065));
+    const startY = h*.82-(lines.length-1)*lineHeight/2;
+    context.textAlign = 'center';
+    context.textBaseline = 'middle';
+    context.lineJoin = 'round';
+    context.lineWidth = Math.max(4,w*.006);
+    context.strokeStyle = 'rgba(0,0,0,.95)';
+    context.fillStyle = '#fff';
 
-  for(const s of sentences){
-    let m;
-    if((m=s.match(/\busing\s+(.{3,45}?)\s+from sunlight\b/i)))addCandidate(s,m[1],'energy');
-    if((m=s.match(/\buse\s+(.{3,45}?)\s+to\s+(?:make|produce|create|convert)\b/i)))addCandidate(s,m[1],'energy');
-    if((m=s.match(/\btake in\s+(.{3,45}?)\s+from the air\b/i)))addCandidate(s,m[1],'gas');
-    if((m=s.match(/\babsorb\s+(.{3,45}?)\s+through their roots\b/i)))addCandidate(s,m[1],'input');
-    if((m=s.match(/\bconvert\s+(.{3,45}?)\s+into\s+(.{3,45}?)(?:,|\.|$)/i)))addCandidate(s,m[1],'input');
-    if((m=s.match(/\bconvert\s+.{3,45}?\s+into\s+(.{3,45}?)(?:,|\.|$)/i)))addCandidate(s,m[1],'product');
-    if((m=s.match(/\bvery high\s+(.{3,30}?)\s+can reduce\b/i)))addCandidate(s,m[1],'factor');
-    if((m=s.match(/\b([a-z][a-z -]{2,40}?)\s+supplies the energy needed for\b/i)))addCandidate(s,m[1],'energy');
-    if((m=s.match(/\bthe rate of photosynthesis is affected by\s+(.{3,100}?)(?:\.|$)/i)))addCandidate(s,m[1].split(/,\s*/)[0],'factor');
-    if((m=s.match(/\b(photosynthesis|respiration|chlorophyll|glucose|oxygen|carbon dioxide|water|light energy)\s+(?:stores|supports|absorbs|reflects|releases|provides)\b/i)))addCandidate(s,m[1],'concept');
-    if((m=s.match(/^(.{3,55}?)\s+is the process by which\b/i)))addCandidate(s,m[1],'concept');
-  }
-
-  // Add important terms from the source as a fallback answer bank.
-  const termSet=new Set();
-  const tokenPattern=/[a-zA-ZÀ-ÿ][a-zA-ZÀ-ÿ'-]*/g;
-  const tokens=(text.toLowerCase().match(tokenPattern)||[]);
-  const excluded=new Set(['process','energy','factor','factors','rate','mainly','because','which','their','there','these','those','using','through','during','after','before','where','while','could','would','should','involved','available','necessary','important','different','several','organic','visible','concentration']);
-  for(let i=0;i<tokens.length;i++){
-    if(tokens[i].length>=6&&!STOP.has(tokens[i])&&!excluded.has(tokens[i]))termSet.add(tokens[i]);
-    if(i+1<tokens.length){
-      const phrase=tokens[i]+' '+tokens[i+1];
-      if(['carbon dioxide','light energy','chemical energy','water availability','light intensity','cell structures','food chains'].includes(phrase))termSet.add(phrase);
-    }
-  }
-  const answerBank=[...new Set([...candidates.map(c=>c.answer),...termSet])];
-
-  const quiz=[],usedSentences=new Set();
-  for(const c of candidates){
-    const sentenceKey=c.sentence.toLowerCase();
-    if(usedSentences.has(sentenceKey))continue;
-    const re=new RegExp('\\b'+escapeRegex(c.answer).replace(/\s+/g,'\\s+')+'\\b','i');
-    if(!re.test(c.sentence))continue;
-    const question=c.sentence.replace(re,'________');
-    if(question===c.sentence)continue;
-
-    const distractors=[];
-    const preferred=answerBank.filter(x=>x.toLowerCase()!==c.answer.toLowerCase())
-      .filter(x=>x.split(/\s+/).length===c.answer.split(/\s+/).length)
-      .filter(x=>!c.sentence.toLowerCase().includes(x.toLowerCase()))
-      .sort((a,b)=>Math.abs(a.length-c.answer.length)-Math.abs(b.length-c.answer.length));
-
-    for(const candidate of preferred){
-      if(distractors.some(x=>x.toLowerCase()===candidate.toLowerCase()))continue;
-      if(distractors.some(x=>x.toLowerCase().includes(candidate.toLowerCase())||candidate.toLowerCase().includes(x.toLowerCase())))continue;
-      distractors.push(candidate);
-      if(distractors.length===3)break;
-    }
-    if(distractors.length<3)continue;
-
-    const options=[c.answer,...distractors];
-    // Deterministic rotation avoids placing every correct answer first.
-    const shift=quiz.length%options.length;
-    const ordered=options.slice(shift).concat(options.slice(0,shift));
-    quiz.push({q:question,source:c.sentence,options:ordered,correct:ordered.findIndex(x=>x.toLowerCase()===c.answer.toLowerCase())});
-    usedSentences.add(sentenceKey);
-    if(quiz.length>=8)break;
-  }
-  return quiz;
-}
-function escapeHTML(s){
-  return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-}
-
-function render(){
-  if(!pack){
-    output.innerHTML='<p class="empty">Add source material and generate a study pack to see results here.</p>';
-    return;
-  }
-  const title=escapeHTML(pack.topic||'Study material');
-
-  if(activeTab==='summary'){
-    output.innerHTML='<h3>Summary: '+title+'</h3><ul>'+pack.summary.map(s=>'<li>'+escapeHTML(s)+'</li>').join('')+'</ul><p class="notice">Created from the text you provided using local extraction and ranking rules; it is not AI-generated.</p>';
-    return;
-  }
-  if(activeTab==='notes'){
-    output.innerHTML='<h3>Key points: '+title+'</h3><ol>'+pack.notes.map(s=>'<li>'+escapeHTML(s)+'</li>').join('')+'</ol>';
-    return;
-  }
-  if(activeTab==='flashcards'){
-    output.innerHTML='<h3>Flashcards: '+title+'</h3>'+pack.cards.map((c,i)=>'<article class="flashcard"><strong>Card '+(i+1)+': '+escapeHTML(c.q)+'</strong><button type="button" class="btn reveal" data-card="'+i+'">Reveal answer</button><div class="answer" hidden>'+escapeHTML(c.a)+'</div></article>').join('');
-    output.querySelectorAll('.reveal').forEach(b=>b.addEventListener('click',()=>{
-      const a=b.nextElementSibling;
-      a.hidden=!a.hidden;
-      b.textContent=a.hidden?'Reveal answer':'Hide answer';
-    }));
-    return;
-  }
-
-  if(!pack.quiz.length){
-    output.innerHTML='<h3>Practice quiz: '+title+'</h3><p class="empty">There is not enough suitable source text to build a multiple-choice quiz with reliable alternatives. Try adding notes with more complete sentences and key terms. The summary, key points and flashcards may still be available.</p>';
-    return;
-  }
-
-  output.innerHTML='<h3>Practice quiz: '+title+'</h3><p class="intro">Choose the best answer for each statement. Questions are based on your source text. Because this version uses local rules, check the source whenever an option seems ambiguous.</p><form id="quizForm">'+
-    pack.quiz.map((q,i)=>'<div class="quiz-item"><p><strong>'+(i+1)+'. '+escapeHTML(q.q)+'</strong></p>'+
-    q.options.map((op,j)=>'<label><input type="radio" name="q'+i+'" value="'+j+'"><span>'+String.fromCharCode(65+j)+'. '+escapeHTML(op)+'</span></label>').join('')+
-    '<div class="answer quiz-feedback" id="feedback'+i+'" hidden></div></div>').join('')+
-    '<button class="btn primary" type="submit" style="margin-top:14px">Check answers</button><div id="quizScore" class="score" aria-live="polite"></div></form>';
-
-  const form=$('quizForm');
-  form.addEventListener('submit',e=>{
-    e.preventDefault();
-    let correct=0,answered=0;
-    pack.quiz.forEach((q,i)=>{
-      const chosen=form.querySelector('input[name="q'+i+'"]:checked');
-      const fb=$('feedback'+i);
-      fb.hidden=false;
-      fb.className='answer quiz-feedback';
-      if(chosen){
-        answered++;
-        if(Number(chosen.value)===q.correct){
-          correct++;
-          fb.classList.add('correct');
-          fb.textContent='Correct. Answer: '+q.options[q.correct]+'. Source statement: '+q.source;
-        }else{
-          fb.classList.add('incorrect');
-          fb.textContent='Not quite. Correct answer: '+q.options[q.correct]+'. Source statement: '+q.source;
-        }
-      }else{
-        fb.classList.add('unanswered');
-        fb.textContent='Not answered. Correct answer: '+q.options[q.correct]+'. Source statement: '+q.source;
-      }
+    lines.forEach((t,i) => {
+      const y = startY+i*lineHeight;
+      context.strokeText(t,w/2,y,maxWidth);
+      context.fillText(t,w/2,y,maxWidth);
     });
-    const score=$('quizScore');
-    score.textContent='Score: '+correct+' / '+pack.quiz.length+' ('+Math.round(correct/pack.quiz.length*100)+'% correct). '+answered+' of '+pack.quiz.length+' questions answered.';
+  }
+
+  function renderList() {
+    const list = $('fileList');
+    list.replaceChildren();
+
+    files.forEach((file,i) => {
+      const row = document.createElement('div');
+      row.className = 'file-item';
+
+      const img = document.createElement('img');
+      img.src = urls[i];
+      img.alt = '';
+
+      const name = document.createElement('span');
+      name.textContent = `${i+1}. ${file.name}`;
+
+      const up = document.createElement('button');
+      up.className = 'secondary';
+      up.type = 'button';
+      up.textContent = '↑';
+      up.disabled = i===0;
+      up.setAttribute('aria-label','Move photo up');
+      up.onclick = () => moveFile(i,-1);
+
+      const down = document.createElement('button');
+      down.className = 'secondary';
+      down.type = 'button';
+      down.textContent = '↓';
+      down.disabled = i===files.length-1;
+      down.setAttribute('aria-label','Move photo down');
+      down.onclick = () => moveFile(i,1);
+
+      const remove = document.createElement('button');
+      remove.className = 'secondary';
+      remove.type = 'button';
+      remove.textContent = '×';
+      remove.setAttribute('aria-label','Remove photo');
+      remove.onclick = () => removeFile(i);
+
+      row.append(img,name,up,down,remove);
+      list.append(row);
+    });
+
+    $('previewIndex').max = Math.max(0,files.length-1);
+    $('previewIndex').disabled = files.length<2;
+
+    if (Number($('previewIndex').value)>=files.length) {
+      $('previewIndex').value = Math.max(0,files.length-1);
+    }
+  }
+
+  function updatePreview() {
+    const d = getDimensions();
+    const preview = $('preview');
+    preview.style.aspectRatio = `${d.w}/${d.h}`;
+    $('previewTitle').textContent = $('titleText').value;
+
+    const oldImage = preview.querySelector('img');
+    if (oldImage) oldImage.remove();
+
+    let placeholder = preview.querySelector('.preview-placeholder');
+    const idx = Number($('previewIndex').value);
+
+    if (files.length && files[idx]) {
+      if (placeholder) placeholder.remove();
+      const img = document.createElement('img');
+      img.alt = 'Selected photo preview';
+      img.src = urls[idx];
+      preview.insertBefore(img,$('previewTitle'));
+    } else if (!placeholder) {
+      placeholder = document.createElement('div');
+      placeholder.className = 'preview-placeholder';
+      placeholder.textContent = "Your preview will appear here.";
+      preview.insertBefore(placeholder,$('previewTitle'));
+    }
+
+    renderList();
+    updateResolutionInfo();
+  }
+
+  function moveFile(index,delta) {
+    const next = index+delta;
+    if (next<0 || next>=files.length) return;
+    [files[index],files[next]] = [files[next],files[index]];
+    [urls[index],urls[next]] = [urls[next],urls[index]];
+    $('previewIndex').value = next;
+    resetExport();
+    updatePreview();
+  }
+
+  function removeFile(index) {
+    URL.revokeObjectURL(urls[index]);
+    files.splice(index,1);
+    urls.splice(index,1);
+    $('previewIndex').value = Math.min(
+      Number($('previewIndex').value),
+      Math.max(0,files.length-1)
+    );
+    resetExport();
+    updatePreview();
+    setStatus(files.length ? `${files.length} photo(s) selected.` : 'Upload photos to get started.');
+  }
+
+  $('photos').addEventListener('change',e => {
+    if (exporting) return;
+    const selected = Array.from(e.target.files||[])
+      .filter(file => file.type.startsWith('image/'));
+
+    if (!selected.length) {
+      setStatus('Select valid image files.');
+      e.target.value = '';
+      return;
+    }
+
+    const existingKeys = new Set(files.map(file =>
+      `${file.name}|${file.size}|${file.lastModified}`
+    ));
+    const fresh = selected.filter(file =>
+      !existingKeys.has(`${file.name}|${file.size}|${file.lastModified}`)
+    );
+
+    if (!fresh.length) {
+      setStatus('These photos are already in the list.');
+      e.target.value = '';
+      return;
+    }
+
+    fresh.forEach(file => {
+      files.push(file);
+      urls.push(URL.createObjectURL(file));
+    });
+
+    $('previewIndex').value = files.length-fresh.length;
+    resetExport();
+    updatePreview();
+    setStatus(`${files.length} photo(s) selected.`);
+    e.target.value = '';
   });
-}
 
-tabs.forEach(b=>b.addEventListener('click',()=>{
-  activeTab=b.dataset.tab;
-  tabs.forEach(t=>t.setAttribute('aria-selected',String(t===b)));
-  render();
-}));
+  ['format','quality','titleText'].forEach(id => {
+    $(id).addEventListener('input',() => {
+      resetExport();
+      updatePreview();
+    });
+  });
 
-$('generateBtn').addEventListener('click',()=>{
-  const text=source.value.trim();
-  if(text.length<80){
-    setStatus('Please upload a text-based PDF or paste at least a few sentences of notes before generating.','error');
-    return;
+  $('duration').addEventListener('input',() => {
+    $('durationValue').textContent = $('duration').value;
+    resetExport();
+  });
+
+  $('previewIndex').addEventListener('input',updatePreview);
+  $('previewButton').addEventListener('click',updatePreview);
+
+  function loadImage(url) {
+    return new Promise((resolve,reject) => {
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.onerror = () => reject(new Error('Could not load one of the photos.'));
+      img.src = url;
+    });
   }
-  if(text.length>60000){
-    setStatus('Please keep the source text within 60,000 characters.','error');
-    return;
+
+  function supportedWebMMime() {
+    if (!window.MediaRecorder) return '';
+    return [
+      'video/webm;codecs=vp9',
+      'video/webm;codecs=vp8',
+      'video/webm'
+    ].find(type => MediaRecorder.isTypeSupported(type)) || '';
   }
-  const summary=summarize(text);
-  const notes=keyPoints(text);
-  const cards=makeCards(text);
-  const quiz=makeQuiz(text);
-  pack={topic:topic.value.trim(),level:level.value,goal:goal.value,summary,notes,cards,quiz,sourceLength:text.length};
-  $('packSubtitle').textContent=level.value+' · '+goal.value+' · '+text.length.toLocaleString()+' source characters';
-  render();
-  $('downloadBtn').disabled=false;
-  setStatus('Study pack created. '+cards.length+' flashcards and '+quiz.length+' quiz questions generated. Review all outputs against your original notes.','good');
-});
 
-$('clearBtn').addEventListener('click',()=>{
-  source.value='';
-  topic.value='';
-  fileInput.value='';
-  pack=null;
-  countChars();
-  $('packSubtitle').textContent='Your generated content will appear here.';
-  $('downloadBtn').disabled=true;
-  render();
-  setStatus('Cleared. Add a PDF or paste your notes to begin.');
-});
+  function wait(ms) {
+    return new Promise(resolve => setTimeout(resolve,ms));
+  }
 
-$('downloadBtn').addEventListener('click',()=>{
-  if(!pack)return;
-  const lines=[
-    'RitoccaPix Study Pack',
-    'Topic: '+(pack.topic||'Not specified'),
-    'Study level: '+pack.level,
-    'Goal: '+pack.goal,
-    '',
-    'SUMMARY',
-    ...pack.summary.map((s,i)=>(i+1)+'. '+s),
-    '',
-    'KEY POINTS',
-    ...pack.notes.map((s,i)=>(i+1)+'. '+s),
-    '',
-    'FLASHCARDS',
-    ...pack.cards.flatMap((c,i)=>['Card '+(i+1)+': '+c.q,'Answer: '+c.a]),
-    '',
-    'PRACTICE QUIZ',
-    ...pack.quiz.flatMap((q,i)=>[(i+1)+'. '+q.q,'Options: '+q.options.join(' / '),'Correct answer: '+q.options[q.correct],'Source statement: '+q.source]),
-    '',
-    'Note: Generated locally using basic text-processing rules, not a generative AI model. Verify against the original source.'
-  ];
-  const blob=new Blob([lines.join('\n')],{type:'text/plain;charset=utf-8'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url;
-  a.download='ritoccapix-study-pack.txt';
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  setTimeout(()=>URL.revokeObjectURL(url),1000);
-});
+  $('exportButton').addEventListener('click',async () => {
+    if (exporting) return;
 
-$('year').textContent=new Date().getFullYear();
-countChars();
+    if (!files.length) {
+      setStatus('Upload at least one photo before creating the video.');
+      return;
+    }
+
+    if (!canvas.captureStream || !window.MediaRecorder) {
+      setStatus('Video export is not supported. Try an up-to-date version of Chrome.');
+      return;
+    }
+
+    const mime = supportedWebMMime();
+    if (!mime) {
+      setStatus('This browser does not support WebM. Try an up-to-date version of Chrome.');
+      return;
+    }
+
+    exporting = true;
+    const button = $('exportButton');
+    button.disabled = true;
+    $('previewButton').disabled = true;
+    $('photos').disabled = true;
+
+    let recorder = null;
+    let stream = null;
+    let chunks = [];
+
+    resetExport();
+
+    try {
+      const d = getDimensions();
+      const seconds = Number($('duration').value);
+      const title = $('titleText').value;
+      const exportUrls = urls.slice();
+
+      setStatus('Loading photos…');
+      const images = await Promise.all(exportUrls.map(loadImage));
+
+      canvas.width = d.w;
+      canvas.height = d.h;
+      stream = canvas.captureStream(30);
+
+      const bitrate = $('quality').value === '1080' ? 12000000 : 8000000;
+      recorder = new MediaRecorder(stream,{
+        mimeType:mime,
+        videoBitsPerSecond:bitrate
+      });
+
+      recorder.ondataavailable = e => {
+        if (e.data && e.data.size) chunks.push(e.data);
+      };
+
+      const stopped = new Promise((resolve,reject) => {
+        recorder.onstop = resolve;
+        recorder.onerror = () => reject(new Error('An error occurred while recording the video.'));
+      });
+
+      recorder.start(250);
+      const startedAt = performance.now();
+
+      for (let i=0;i<images.length;i++) {
+        ctx.fillStyle = '#000';
+        ctx.fillRect(0,0,d.w,d.h);
+        drawCover(ctx,images[i],d.w,d.h);
+        drawTitle(ctx,title,d.w,d.h);
+        setStatus(`Creating video: photo ${i+1} of ${images.length}…`);
+
+        const target = (i+1)*seconds*1000;
+        await wait(Math.max(0,target-(performance.now()-startedAt)));
+      }
+
+      if (recorder.state!=='inactive') recorder.stop();
+      await stopped;
+
+      stream.getTracks().forEach(track => track.stop());
+      stream = null;
+
+      if (!chunks.length) throw new Error('The browser did not generate a video file.');
+
+      const finalBlob = new Blob(chunks,{type:'video/webm'});
+      if (!finalBlob.size) throw new Error('The generated video file is empty.');
+
+      currentBlobUrl = URL.createObjectURL(finalBlob);
+      exportNumber++;
+
+      const now = new Date();
+      const pad = n => String(n).padStart(2,'0');
+      const stamp = now.getFullYear()+pad(now.getMonth()+1)+pad(now.getDate())+'-'+
+        pad(now.getHours())+pad(now.getMinutes())+pad(now.getSeconds());
+
+      const link = $('downloadLink');
+      link.href = currentBlobUrl;
+      link.download = `ritoccapix-video-${stamp}-${exportNumber}.webm`;
+      link.textContent = `Download video WEBM (${(finalBlob.size/1024/1024).toFixed(1)} MB)`;
+      link.style.display = 'block';
+
+      setStatus('WebM video created! Click the green link to download it.');
+    } catch(err) {
+      console.error(err);
+      setStatus(err && err.message ? err.message : 'An error occurred while creating the video. Try HD resolution.');
+    } finally {
+      if (stream) stream.getTracks().forEach(track => track.stop());
+      exporting = false;
+      button.disabled = false;
+      $('previewButton').disabled = false;
+      $('photos').disabled = false;
+    }
+  });
+
+  updatePreview();
 })();
+
 </script>
 </body>
 </html>
