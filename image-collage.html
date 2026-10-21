@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Free Photo Collage Maker – Creative Layouts | RitoccaPix</title>
-<meta name="description" content="Create a free photo collage online with creative layouts, custom frame shapes and a smart layout tool. Arrange up to 12 photos and download a JPG or PNG.">
+<meta name="description" content="Make a free photo collage online with up to 12 pictures. Drag photos to reposition them, create creative layouts, customize frames and download your collage as JPG or PNG.">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#0a0f1d">
 <link rel="canonical" href="https://ritoccapix.com/image-collage.html">
@@ -97,6 +97,21 @@ footer a{color:var(--accent);text-decoration:none}
 @media(max-width:850px){.workspace{grid-template-columns:1fr}.preview-panel{order:1}.panel{order:2}#canvas{max-height:560px}}
 @media(max-width:520px){main{padding:24px 10px 35px}.panel,.preview-panel,.content{padding:13px}.canvas-wrap{padding:6px;min-height:180px}.downloads{grid-template-columns:1fr}.layout-grid{gap:5px}}
 </style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"Does Smart Collage use artificial intelligence?","acceptedAnswer":{"@type":"Answer","text":"Smart Collage uses layout rules to create varied, magazine-style arrangements; it does not use a generative AI model or send photos to a cloud AI service. Your photos remain on your device."}},
+    {"@type":"Question","name":"Can I center, zoom or show the whole photo?","acceptedAnswer":{"@type":"Answer","text":"Yes. Select a frame, adjust the zoom slider, drag the photo to reposition it, or use Fill frame, Fit whole photo, Center & reset zoom, or Auto-fit all photos."}},
+    {"@type":"Question","name":"Does photo enhancement overwrite my original photos?","acceptedAnswer":{"@type":"Answer","text":"No. The original uploaded images remain unchanged. The selected enhancement is applied when the collage is drawn and exported."}},
+    {"@type":"Question","name":"Does this tool use a cloud AI service?","acceptedAnswer":{"@type":"Answer","text":"No. Layout generation and photo appearance adjustments run in your browser. The composition feature uses smart layout rules and variation rather than a generative AI model."}},
+    {"@type":"Question","name":"Can I use the tool on my phone?","acceptedAnswer":{"@type":"Answer","text":"Yes. You can upload photos, choose frame shapes, create layouts, apply enhancement styles and export your collage on supported mobile browsers."}},
+    {"@type":"Question","name":"Are my photos uploaded?","acceptedAnswer":{"@type":"Answer","text":"No. Images are processed locally in your browser and are not uploaded by this tool."}}
+  ]
+}
+</script>
 </head>
 <body>
 <header>
@@ -123,7 +138,7 @@ footer a{color:var(--accent);text-decoration:none}
   <input id="fileInput" type="file" accept="image/*" multiple>
   <div id="photoList" class="photo-list"></div>
   <div id="photoCount" class="photo-count">No photos selected</div>
-  <p class="photo-help">Tap a thumbnail to select it, then use “Place photo in frame” to replace the photo in the selected frame.</p>
+  <p class="photo-help">Tap a thumbnail to select it, then choose “Place photo in frame” to assign it. Once placed, drag the photo directly on the canvas to reposition it.</p>
 
   <div class="section smart-box">
     <h3>✦ Smart composition</h3>
@@ -209,7 +224,7 @@ footer a{color:var(--accent);text-decoration:none}
 
   <div class="custom-tools">
     <h3>7. Edit your frames</h3>
-    <p class="help">Drag inside a photo to reposition it. Drag near a frame edge to move the frame. Drag a corner handle to resize it. Rotated frames can be adjusted approximately by their visible bounds.</p>
+    <p class="help">Drag directly on a photo to reposition it. Drag close to a frame edge to move the frame, or drag a corner handle to resize it. On touch screens, press and drag the photo with your finger.</p>
     <div class="custom-buttons">
       <button id="addCell" class="secondary-btn" type="button">＋ Add frame</button>
       <button id="removeCell" class="secondary-btn" type="button">− Remove frame</button>
@@ -229,7 +244,7 @@ footer a{color:var(--accent);text-decoration:none}
     <div class="control">
       <div class="control-top"><label for="cellZoom">Photo zoom</label><span id="cellZoomValue" class="value">1.0×</span></div>
       <input id="cellZoom" type="range" min="50" max="350" step="5" value="100">
-      <p class="help">Drag a photo to reposition it. Zoom out to show more, or zoom in to crop closer.</p>
+      <p class="help">Drag directly on the photo in the canvas to reposition it. Zoom out to show more, or zoom in to crop closer.</p>
     </div>
     <div class="custom-buttons" style="margin-top:9px">
       <button id="fillFrame" class="secondary-btn" type="button">Fill frame</button>
@@ -1126,8 +1141,8 @@ canvas.addEventListener('pointerdown',event=>{
   const scaleY=canvas.height/Math.max(1,rect.height);
   const handleX=16*scaleX;
   const handleY=16*scaleY;
-  const edgeX=40*scaleX;
-  const edgeY=40*scaleY;
+  const edgeX=18*scaleX;
+  const edgeY=18*scaleY;
 
   for(let i=cells.length-1;i>=0;i--){
     const cell=cells[i];
