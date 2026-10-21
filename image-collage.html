@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Free Photo Collage Maker – Creative Layouts | RitoccaPix</title>
-<meta name="description" content="Make a free photo collage online with up to 12 pictures. Drag photos to reposition them, create creative layouts, customize frames and download your collage as JPG or PNG.">
+<meta name="description" content="Make a free photo collage online with up to 12 pictures. Drag, zoom and rotate photos, create creative layouts, customize frames and download your collage as JPG or PNG.">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#0a0f1d">
 <link rel="canonical" href="https://ritoccapix.com/image-collage.html">
@@ -124,7 +124,7 @@ footer a{color:var(--accent);text-decoration:none}
 <main>
 <section class="hero">
   <h1>Free Online Photo Collage Maker with Creative Layouts</h1>
-  <p>Turn your photos into a creative collage with overlapping images, varied frame sizes and magazine-style layouts. Adjust photo position, zoom, shapes and spacing, then download your finished design as a JPG or PNG. No software installation required.</p>
+  <p>Turn your photos into a creative collage with overlapping images, varied frame sizes and magazine-style layouts. Adjust photo position, zoom and rotation independently from frame shapes and spacing, then download your finished design as a JPG or PNG. No software installation required.</p>
 </section>
 
 <div class="workspace">
@@ -224,7 +224,7 @@ footer a{color:var(--accent);text-decoration:none}
 
   <div class="custom-tools">
     <h3>7. Edit your frames</h3>
-    <p class="help">Drag directly on a photo to reposition it. Drag close to a frame edge to move the frame, or drag a corner handle to resize it. On touch screens, press and drag the photo with your finger.</p>
+    <p class="help">Drag directly on a photo to reposition it. Use Rotate photo to turn the image without rotating its frame. Drag close to a frame edge to move the frame, or drag a corner handle to resize it. On touch screens, press and drag the photo with your finger.</p>
     <div class="custom-buttons">
       <button id="addCell" class="secondary-btn" type="button">＋ Add frame</button>
       <button id="removeCell" class="secondary-btn" type="button">− Remove frame</button>
@@ -242,9 +242,19 @@ footer a{color:var(--accent);text-decoration:none}
       <button id="clearPhoto" class="secondary-btn" type="button">Remove photo</button>
     </div>
     <div class="control">
+      <div class="control-top"><label for="photoRotation">Rotate photo</label><span id="photoRotationValue" class="value">0°</span></div>
+      <input id="photoRotation" type="range" min="-180" max="180" step="5" value="0" aria-label="Rotate selected photo from minus 180 to plus 180 degrees">
+      <div class="custom-buttons" style="margin-top:8px">
+        <button id="rotatePhotoLeft" class="secondary-btn" type="button">↶ Rotate −90°</button>
+        <button id="rotatePhotoRight" class="secondary-btn" type="button">↷ Rotate +90°</button>
+      </div>
+      <button id="resetPhotoRotation" class="secondary-btn" type="button" style="width:100%;margin-top:8px">Reset rotation</button>
+      <p class="help">Rotate the photo inside its frame. The frame shape and position stay unchanged.</p>
+    </div>
+    <div class="control">
       <div class="control-top"><label for="cellZoom">Photo zoom</label><span id="cellZoomValue" class="value">1.0×</span></div>
       <input id="cellZoom" type="range" min="50" max="350" step="5" value="100">
-      <p class="help">Drag directly on the photo in the canvas to reposition it. Zoom out to show more, or zoom in to crop closer.</p>
+      <p class="help">Drag directly on the photo to reposition it, adjust its rotation, or zoom to crop closer.</p>
     </div>
     <div class="custom-buttons" style="margin-top:9px">
       <button id="fillFrame" class="secondary-btn" type="button">Fill frame</button>
@@ -297,7 +307,7 @@ footer a{color:var(--accent);text-decoration:none}
   <h3>Does Smart Collage use artificial intelligence?</h3>
   <p>Smart Collage uses layout rules to create varied, magazine-style arrangements; it does not use a generative AI model or send photos to a cloud AI service. Your photos remain on your device.</p>
   <h3>Can I center, zoom or show the whole photo?</h3>
-  <p>Yes. Select a frame, adjust the zoom slider, drag the photo to reposition it, or use Fill frame, Fit whole photo, Center &amp; reset zoom, or Auto-fit all photos.</p>
+  <p>Yes. Select a frame, drag the photo to reposition it, adjust zoom, or rotate the photo independently from its frame using the rotation slider or 90-degree buttons. You can also use Fill frame, Fit whole photo, Center &amp; reset zoom, or Auto-fit all photos.</p>
   <h3>Does photo enhancement overwrite my original photos?</h3>
   <p>No. The original uploaded images remain unchanged. The selected enhancement is applied when the collage is drawn and exported.</p>
   <h3>Does this tool use a cloud AI service?</h3>
@@ -354,7 +364,7 @@ const styles={
 };
 
 function makeCell(x,y,w,h,photoIndex=-1,rotation=0){
-  return {x,y,w,h,photoIndex,rotation,zoom:1,photoX:0,photoY:0,fit:true,fitMode:'cover'};
+  return {x,y,w,h,photoIndex,rotation,photoRotation:0,zoom:1,photoX:0,photoY:0,fit:true,fitMode:'cover'};
 }
 
 const templates={
@@ -440,6 +450,13 @@ function updateControls(){
   const cell=cells[selectedCell];
   $('cellZoom').value=Math.max(50,Math.min(350,Math.round(cell.zoom*100)));
   $('cellZoomValue').textContent=cell.zoom.toFixed(1)+'×';
+  cell.photoRotation=Number(cell.photoRotation)||0;
+  $('photoRotation').value=String(Math.max(-180,Math.min(180,cell.photoRotation)));
+  $('photoRotationValue').textContent=Math.round(cell.photoRotation)+'°';
+  $('photoRotation').disabled=cell.photoIndex<0;
+  $('rotatePhotoLeft').disabled=cell.photoIndex<0;
+  $('rotatePhotoRight').disabled=cell.photoIndex<0;
+  $('resetPhotoRotation').disabled=cell.photoIndex<0||cell.photoRotation===0;
   $('removeCell').disabled=cells.length<=1;
   $('clearPhoto').disabled=cell.photoIndex<0;
   $('centerPhoto').disabled=cell.photoIndex<0;
@@ -722,6 +739,7 @@ $('placePhoto').addEventListener('click',()=>{
   cell.photoIndex=selectedPhoto;
   cell.photoX=0;
   cell.photoY=0;
+  cell.photoRotation=0;
   cell.zoom=1;
   cell.fit=true;
   cell.fitMode='cover';
@@ -737,6 +755,7 @@ $('clearPhoto').addEventListener('click',()=>{
   cell.photoIndex=-1;
   cell.photoX=0;
   cell.photoY=0;
+  cell.photoRotation=0;
   updateSelect();
   draw();
   status('Photo removed from the selected frame.');
@@ -902,6 +921,36 @@ $('radius').addEventListener('input',()=>{
 $('bgColor').addEventListener('input',draw);
 $('caption').addEventListener('input',draw);
 
+function setSelectedPhotoRotation(value){
+  const cell=cells[selectedCell];
+  if(!cell||cell.photoIndex<0)return;
+  let angle=Number(value)||0;
+  angle=((angle+180)%360+360)%360-180;
+  cell.photoRotation=angle;
+  updateControls();
+  draw();
+}
+
+$('photoRotation').addEventListener('input',()=>{
+  setSelectedPhotoRotation(Number($('photoRotation').value));
+});
+$('rotatePhotoLeft').addEventListener('click',()=>{
+  const cell=cells[selectedCell];
+  if(!cell||cell.photoIndex<0)return;
+  setSelectedPhotoRotation((Number(cell.photoRotation)||0)-90);
+  status('Photo rotated 90 degrees counterclockwise.');
+});
+$('rotatePhotoRight').addEventListener('click',()=>{
+  const cell=cells[selectedCell];
+  if(!cell||cell.photoIndex<0)return;
+  setSelectedPhotoRotation((Number(cell.photoRotation)||0)+90);
+  status('Photo rotated 90 degrees clockwise.');
+});
+$('resetPhotoRotation').addEventListener('click',()=>{
+  setSelectedPhotoRotation(0);
+  status('Photo rotation reset.');
+});
+
 $('cellZoom').addEventListener('input',()=>{
   const cell=cells[selectedCell];
   if(!cell)return;
@@ -1010,26 +1059,32 @@ function drawPhoto(img,r,cell,cornerRadius){
   shapePath(frameShape,ix,iy,iw,ih,frameShape==='rounded'?innerRadius:0);
   ctx.clip();
 
-  const coverScale=Math.max(iw/img.naturalWidth,ih/img.naturalHeight);
-  const containScale=Math.min(iw/img.naturalWidth,ih/img.naturalHeight);
+  const photoAngle=(Number(cell.photoRotation)||0)*Math.PI/180;
+  const absCos=Math.abs(Math.cos(photoAngle));
+  const absSin=Math.abs(Math.sin(photoAngle));
+  const rotatedWidth=img.naturalWidth*absCos+img.naturalHeight*absSin;
+  const rotatedHeight=img.naturalWidth*absSin+img.naturalHeight*absCos;
+  const coverScale=Math.max(iw/Math.max(1,rotatedWidth),ih/Math.max(1,rotatedHeight));
+  const containScale=Math.min(iw/Math.max(1,rotatedWidth),ih/Math.max(1,rotatedHeight));
   const baseScale=(cell.fitMode==='contain'?containScale:coverScale);
   const scale=baseScale*(cell.zoom||1);
   const dw=img.naturalWidth*scale;
   const dh=img.naturalHeight*scale;
-  const maxX=cell.fitMode==='contain'?Math.max(0,(dw-iw)/2):Math.max(0,(dw-iw)/2);
-  const maxY=cell.fitMode==='contain'?Math.max(0,(dh-ih)/2):Math.max(0,(dh-ih)/2);
+  const rotatedDrawWidth=dw*absCos+dh*absSin;
+  const rotatedDrawHeight=dw*absSin+dh*absCos;
+  const maxX=Math.max(0,(rotatedDrawWidth-iw)/2);
+  const maxY=Math.max(0,(rotatedDrawHeight-ih)/2);
 
   cell.photoX=Math.max(-maxX,Math.min(maxX,cell.photoX||0));
   cell.photoY=Math.max(-maxY,Math.min(maxY,cell.photoY||0));
 
+  ctx.save();
+  ctx.translate(ix+iw/2+cell.photoX,iy+ih/2+cell.photoY);
+  ctx.rotate(photoAngle);
   ctx.filter=styles[activeStyle]||'none';
-  ctx.drawImage(
-    img,
-    ix+(iw-dw)/2+cell.photoX,
-    iy+(ih-dh)/2+cell.photoY,
-    dw,dh
-  );
+  ctx.drawImage(img,-dw/2,-dh/2,dw,dh);
   ctx.filter='none';
+  ctx.restore();
   ctx.restore();
 }
 
