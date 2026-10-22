@@ -293,7 +293,19 @@
       .panel, .content { padding: 18px; }
       .result-item { grid-template-columns: 1fr; }
     }
-  </style>
+  
+    .related-tools {
+      margin: 28px 0 8px;
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--card);
+    }
+    .related-tools h2 { margin-top: 0; }
+    .related-tools p, .related-tools li { color: var(--muted); }
+    .related-tools a { color: var(--accent); }
+    .related-tools li { margin: 7px 0; }
+</style>
 
   <script src="menu.js" defer></script>
 </head>
@@ -426,6 +438,17 @@
         intentionally uploaded to RitoccaPix servers. The page loads its website
         code and an external ZIP library for batch downloads.
       </p>
+    </section>
+
+    <section class="related-tools" aria-labelledby="related-tools-title">
+      <h2 id="related-tools-title">Explore more free image tools</h2>
+      <p>Need a different format or a smaller file? Try another free RitoccaPix tool.</p>
+      <ul>
+        <li><a href="webp-to-jpg.html">Convert WebP to JPG</a> — create JPG images from WebP files.</li>
+        <li><a href="image-converter.html">Image Converter</a> — convert between supported image formats.</li>
+        <li><a href="image-compressor.html">Image Compressor</a> — reduce image file size.</li>
+        <li><a href="image-resizer.html">Image Resizer</a> — resize images to your preferred dimensions.</li>
+      </ul>
     </section>
   </main>
 
