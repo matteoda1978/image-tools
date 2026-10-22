@@ -35,6 +35,7 @@
 <section class="section"><div class="container layout">
 <section class="panel" aria-labelledby="source-title"><h2 id="source-title">1. Start with what you have</h2><p class="intro">No complicated setup. Add textbook photos, a PDF, or notes copied from class.</p>
 <div class="field"><label for="pdfFile">Upload textbook photos or a PDF</label><input id="pdfFile" type="file" accept="application/pdf,.pdf,image/*" multiple><div class="hint">Add up to 8 photos (JPG, PNG, WebP) and/or PDFs. Text extraction and photo OCR run in your browser; clear, well-lit, straight photos work best.</div><div id="fileList" class="file-list" aria-live="polite"></div></div>
+<div class="field"><label for="materialLanguage">Language of your textbook</label><select id="materialLanguage"><option value="auto" selected>English + Italian (recommended)</option><option value="eng">English</option><option value="ita">Italian</option></select><div class="hint">Choose the main language for clearer photo reading. You can still paste notes in another language.</div></div>
 <div class="field"><label for="sourceText">Your study material</label><textarea id="sourceText" maxlength="60000" placeholder="Your extracted text will appear here. You can also paste textbook passages, class notes, or teacher instructions…"></textarea><div class="hint"><span id="charCount">0</span>/60,000 characters</div></div>
 <div class="field"><label for="homeworkQuestion">What do you need help with?</label><textarea id="homeworkQuestion" maxlength="5000" style="min-height:100px" placeholder="Paste the exercise or question here. Example: Explain the causes of the French Revolution using the textbook page."></textarea><div class="hint">Include the exact question from your teacher when you have one.</div></div>
 <div class="field"><label for="topic">Subject or topic (optional)</label><input id="topic" type="text" maxlength="120" placeholder="e.g. The French Revolution"></div>
@@ -56,11 +57,12 @@
 <script>
 (function(){
 'use strict';
-const $=id=>document.getElementById(id);const fileInput=$('pdfFile'),source=$('sourceText'),topic=$('topic'),level=$('level'),goal=$('goal'),summaryLength=$('summaryLength'),status=$('status'),output=$('output'),tabs=[...document.querySelectorAll('[data-tab]')],homeworkQuestion=$('homeworkQuestion');
+const $=id=>document.getElementById(id);const fileInput=$('pdfFile'),source=$('sourceText'),topic=$('topic'),level=$('level'),goal=$('goal'),summaryLength=$('summaryLength'),status=$('status'),output=$('output'),tabs=[...document.querySelectorAll('[data-tab]')],homeworkQuestion=$('homeworkQuestion'),materialLanguage=$('materialLanguage');
 let pack=null,activeTab='summary',downloadCount=0,loadedFiles=[];
 const MAX_FILE_SIZE=8*1024*1024, MAX_FILES=8;
 if(window.pdfjsLib){pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';}
 function setStatus(message,type=''){status.textContent=message;status.className='status'+(type?' '+type:'');}
+function getOcrLanguage(){return materialLanguage.value==='auto'?'eng+ita':materialLanguage.value;}
 function countChars(){ $('charCount').textContent=source.value.length.toLocaleString(); }
 source.addEventListener('input',countChars);
 fileInput.addEventListener('change',async()=>{
@@ -80,7 +82,7 @@ fileInput.addEventListener('change',async()=>{
      if(pageText.length<30 && i<=6){
       if(!window.Tesseract)await waitForTesseract();
       const viewport=page.getViewport({scale:1.6});const canvas=document.createElement('canvas');canvas.width=Math.ceil(viewport.width);canvas.height=Math.ceil(viewport.height);const ctx=canvas.getContext('2d');await page.render({canvasContext:ctx,viewport}).promise;
-      const result=await Tesseract.recognize(canvas,'eng+ita',{logger:m=>{if(m.status==='recognizing text')setStatus('Reading scanned PDF page '+i+' of '+pdf.numPages+'… '+Math.round((m.progress||0)*100)+'%');}});pageText=result.data.text||'';canvas.width=canvas.height=1;
+      const result=await Tesseract.recognize(canvas,getOcrLanguage(),{logger:m=>{if(m.status==='recognizing text')setStatus('Reading scanned PDF page '+i+' of '+pdf.numPages+'… '+Math.round((m.progress||0)*100)+'%');}});pageText=result.data.text||'';canvas.width=canvas.height=1;
      }
      if(pageText)parts.push(pageText);if(i%4===0)setStatus('Reading PDF pages '+i+' of '+pdf.numPages+'…');
     }
@@ -89,7 +91,7 @@ fileInput.addEventListener('change',async()=>{
    }else if(file.type.startsWith('image/')){
     if(!window.Tesseract)await waitForTesseract();
     setStatus('Reading photo '+(idx+1)+' of '+files.length+': '+file.name+'… This can take a moment.');
-    const result=await Tesseract.recognize(file,'eng+ita',{logger:m=>{if(m.status==='recognizing text')setStatus('Reading '+file.name+'… '+Math.round((m.progress||0)*100)+'%');}});
+    const result=await Tesseract.recognize(file,getOcrLanguage(),{logger:m=>{if(m.status==='recognizing text')setStatus('Reading '+file.name+'… '+Math.round((m.progress||0)*100)+'%');}});
     const t=(result.data.text||'').trim();if(t)extracted.push('--- '+file.name+' ---\n'+t);else setStatus('Could not read text from '+file.name+'. Try a brighter, sharper, straight-on photo.');
     loadedFiles.push({name:file.name,kind:'Photo',chars:t.length});
    }else{setStatus('Skipped unsupported file: '+file.name+'. Please use photos or PDF files.','error');}
@@ -106,7 +108,7 @@ function isHeadingLine(line){
  if(!s)return true;
  if(s.length<3)return true;
  // Recognize common standalone headings, including question-style headings.
- if(/^(what is|why is|how does|how do|key vocabulary|key terms|summary|conclusion|introduction|human activities and|the main stages|why .+ important)[^.!]*[?]?$/i.test(s))return true;
+ if(/^(what is|why is|how does|how do|key vocabulary|key terms|summary|conclusion|introduction|human activities and|the main stages|why .+ important|che cos[eè]|perch[eé]|come funziona|parole chiave|termini chiave|riassunto|conclusione|introduzione|attivit[aà] umane|le fasi principali|perch[eé] .+ importante)[^.!]*[?]?$/i.test(s))return true;
  // A heading is a short, standalone label without sentence-ending punctuation.
  if(s.length<=100&&!/[.!?]$/.test(s)&&!/^[-*•]?\s*\d+[.)]\s+/.test(s)){
   if(/^[A-Z][\w'’ -]{1,65}$/.test(s)&&s.split(/\s+/).length<=9&&!/\b(is|are|was|were|can|does|do|has|have|means|refers|causes|helps|supports|changes|moves|falls|flows|releases|heats|rises|cools)\b/i.test(s))return true;
@@ -143,6 +145,7 @@ function cleanSentences(text){
 function words(text){return (text.toLowerCase().match(/[a-zA-ZÀ-ÿ0-9][a-zA-ZÀ-ÿ0-9'-]*/g)||[]).filter(w=>w.length>3&&!STOP.has(w));}
 const STOP=new Set(('about above after again against all also among an and any are around because been before being between both but can could did does during each either else for from further had has have having here how into its itself just more most neither nor not off once only other our out over own same should since some such than that the their them then there these they this those through too under until very was were what when where which while who why will with would your you their about using used use based into upon each many much such make made may might must often several process processes plant plants green small rate factors available mainly main takes taking place places contain contains role roles using uses during also affect affects affected').split(/\s+/));
 'absorb absorbs absorbed produce produces produced convert converts converted release releases released require requires required support supports supported help helps helped maintain maintains maintained enter enters entered leave leaves left transport transports transported depend depends depended began begin begins begun contributed contribute contributes took take takes taken formed form forms met meet meets adopted adopt adopts changed change changes challenged challenge challenges occurred occur occurs happened happens created create creates established establish establishes declared declare declares started start starts ended ends led lead leads brought bring brings became become becomes built build builds increased increase increases reduced reduce reduces developed develop develops introduced introduce introduces wrote write writes published publish publishes resulted results'.split(/\s+/).forEach(w=>STOP.add(w));
+'adesso alcuni alcune all altro altra anche ancora avere abbiamo avendo aveva avevano avrai avranno avrei avrebbe avrebbero avute avuti agli alle allo allora altre altri altrimenti abbiamo avvenuto ben buona buono circa cioè come comunque contro cosa cui da dagli dai dal dalla dalle dallo dentro dopo dunque durante e ed era erano essere essi essa esso fare fatto fatti facendo fanno farà faranno farei fosse fossero fra già gli ha hai hanno ho i il in infatti invece io la le lei li lo loro lui ma mai mentre molto nei negli nel nella nelle nello non noi nome nostra nostre nostri nostro oppure ogni per perché però più poi quale quali quando quanto quanti quanta quello questa queste questi questo qui quindi se senza si sia siamo siano siete sono sopra sotto su sua sue sui sul sulla sulle sullo tra tramite tu tutta tutte tutti tutto vi voi vostra vostre vostri vostro spiegare spiega definisce definito significa consiste formato formata formati formate causa cause causato causata aumenta diminuisce permette consente avviene avvengono comprende deriva derivano dipende dipendono processo processi fenomeno fenomeni caratteristica caratteristiche importante importanti principale principali esempio esempi inoltre infine prima dopo poi attraverso rispetto riguarda riguardo tuttavia poiché dove chi che ciò soprattutto spesso sempre soltanto solo viene vengono stata stati state stesso stessa stessi stesse'.split(/\s+/).forEach(w=>STOP.add(w));
 function frequency(text){const f=new Map();for(const w of words(text))f.set(w,(f.get(w)||0)+1);return f;}
 function summarize(text,targetCount=8){
  const ss=cleanSentences(text);
@@ -151,9 +154,9 @@ function summarize(text,targetCount=8){
   const clean=sentence.replace(/^[A-Z][A-Za-z -]{1,55}:\s*/,'').trim();
   const ws=words(clean);
   const isLabeled=/^[A-Z][A-Za-z][A-Za-z -]{1,45}:\s+\S/.test(sentence);
-  const isCoreDefinition=/^(?:The\s+)?[A-Z][A-Za-z -]{1,45}\s+(?:is|are|means|refers to|is defined as)\b/i.test(sentence);
+  const isCoreDefinition=/^(?:The\s+)?[A-ZÀ-Ý][A-Za-zÀ-ÿ -]{1,55}\s+(?:is|are|means|refers to|is defined as|significa|si definisce|è|consiste in)\b/i.test(sentence);
   const score=ws.length + (/[.!?]$/.test(sentence)?2:0)
-   + (/\b(because|therefore|as a result|which|when|while|although|however|important|allows|causes|leads to|contributes|supports|affects|increases|reduces|replenishes|influences)\b/i.test(sentence)?3:0)
+   + (/\b(because|therefore|as a result|which|when|while|although|however|important|allows|causes|leads to|contributes|supports|affects|increases|reduces|replenishes|influences|perché|quindi|di conseguenza|inoltre|tuttavia|infatti|per esempio|ad esempio|importante|permette|causa|provoca|porta a|contribuisce|influisce|aumenta|riduce|dipende da|consiste in)\b/i.test(sentence)?3:0)
    + (isLabeled?9:0) + (isCoreDefinition?10:0)
    - (/^(?:Key vocabulary|Vocabulary|Glossary):/i.test(sentence)?12:0);
   const usable=(ws.length>=7&&sentence.length>=45&&!/^(?:Key vocabulary|Vocabulary|Glossary):/i.test(sentence)) || (isLabeled&&sentence.length>=35);
@@ -188,8 +191,8 @@ function keyPoints(text){
   const ws=words(s);if(ws.length<6)continue;
   const key=s.toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();if(seen.has(key))continue;seen.add(key);
   const unique=new Set(ws),freqScore=[...unique].reduce((sum,w)=>sum+Math.log(1+(freq.get(w)||0)),0)/Math.sqrt(unique.size||1);
-  const emphasis=/\b(important|therefore|because|as a result|causes|leads to|depends on|consists of|includes|such as|for example|in contrast|however|first|finally|main|primary|key)\b/i.test(s)?2:0;
-  const definition=/\b(is defined as|means|refers to|is the process|is responsible for|is called)\b/i.test(s)?1.5:0;
+  const emphasis=/\b(important|therefore|because|as a result|causes|leads to|depends on|consists of|includes|such as|for example|in contrast|however|first|finally|main|primary|key|importante|quindi|perché|di conseguenza|causa|provoca|porta a|dipende da|consiste in|comprende|include|ad esempio|tuttavia|infine|principale|chiave)\b/i.test(s)?2:0;
+  const definition=/\b(is defined as|means|refers to|is the process|is responsible for|is called|significa|si definisce|è il processo|è responsabile di|è chiamato|è chiamata|consiste in)\b/i.test(s)?1.5:0;
   candidates.push({s,index,score:freqScore+emphasis+definition+Math.min(ws.length,28)*.04,words:unique});
  }
  const selected=[];
@@ -240,6 +243,8 @@ function makeCards(text){
   // Definition patterns: ask for the meaning, not for an arbitrary frequent word.
   m=sentence.match(/^(.{2,65}?)\s+(?:is defined as|is known as|refers to|means)\s+(.{8,})$/i);
   if(m){add('What is '+m[1].trim().replace(/^the\s+/i,'')+'?',m[2]);continue;}
+  m=sentence.match(/^(.{2,65}?)\s+(?:significa|si definisce|è definito come|è definita come|consiste in|è il processo di|è un processo che)\s+(.{8,})$/i);
+  if(m){add('Che cos’è '+m[1].trim().replace(/^(?:il|lo|la|l[’\']|un|una)\s+/i,'')+'?',m[2]);continue;}
   m=sentence.match(/^The\s+([A-Za-z][A-Za-z -]{1,45}?)\s+is\s+(.{12,})$/i);
   if(m && !/^(it|there|this|that|they|these|those)\b/i.test(m[1])){
    add('What is the '+m[1].trim()+'?',m[2]);continue;
@@ -351,7 +356,7 @@ function relevantSentences(question,text){
 }
 tabs.forEach(b=>b.addEventListener('click',()=>{activeTab=b.dataset.tab;tabs.forEach(t=>t.setAttribute('aria-selected',String(t===b)));render();}));
 $('generateBtn').addEventListener('click',()=>{const text=source.value.trim(),question=homeworkQuestion.value.trim();if(text.length<80){setStatus('Please add a little more study material first. Upload a readable photo/PDF or paste a few sentences.','error');return;}if(text.length>60000){setStatus('Please keep the source text within 60,000 characters.','error');return;}const summary=summarize(text,Number(summaryLength.value));const notes=keyPoints(text);const cards=makeCards(text);const quiz=makeQuiz(text);const homework=question?relevantSentences(question,text):[];pack={topic:topic.value.trim(),level:level.value,goal:goal.value,summaryLength:Number(summaryLength.value),summary,notes,cards,quiz,homework,homeworkQuestion:question,sourceLength:text.length};activeTab=question?'homework':'summary';tabs.forEach(t=>t.setAttribute('aria-selected',String(t.dataset.tab===activeTab)));$('packSubtitle').textContent=level.value+' · '+goal.value+' · '+summary.length+' summary ideas · '+text.length.toLocaleString()+' source characters';render();$('downloadBtn').disabled=false;setStatus('Study workspace created from your material. Review OCR text carefully; the homework tab shows relevant source passages, not a guaranteed final answer.','good');});
-$('clearBtn').addEventListener('click',()=>{source.value='';topic.value='';homeworkQuestion.value='';fileInput.value='';loadedFiles=[];$('fileList').innerHTML='';summaryLength.value='8';pack=null;activeTab='summary';tabs.forEach(t=>t.setAttribute('aria-selected',String(t.dataset.tab===activeTab)));countChars();$('packSubtitle').textContent='Your generated content will appear here.';$('downloadBtn').disabled=true;render();setStatus('Cleared. Add a photo, PDF or notes to begin.');});
+$('clearBtn').addEventListener('click',()=>{source.value='';topic.value='';homeworkQuestion.value='';fileInput.value='';loadedFiles=[];$('fileList').innerHTML='';materialLanguage.value='auto';summaryLength.value='8';pack=null;activeTab='summary';tabs.forEach(t=>t.setAttribute('aria-selected',String(t.dataset.tab===activeTab)));countChars();$('packSubtitle').textContent='Your generated content will appear here.';$('downloadBtn').disabled=true;render();setStatus('Cleared. Add a photo, PDF or notes to begin.');});
 $('downloadBtn').addEventListener('click',()=>{if(!pack)return;const text=['RitoccaPix Study Pack','Topic: '+(pack.topic||'Not specified'),'Study level: '+pack.level,'Goal: '+pack.goal,'Summary length: '+pack.summaryLength+' main ideas','Homework question: '+(pack.homeworkQuestion||'Not provided'),'','HOMEWORK GUIDANCE (source-based draft)',...pack.homework.map((s,i)=>(i+1)+'. '+s),'','SUMMARY',...pack.summary.map((s,i)=>(i+1)+'. '+s),'','KEY POINTS',...pack.notes.map((s,i)=>(i+1)+'. '+s),'','FLASHCARDS',...pack.cards.flatMap((c,i)=>['Card '+(i+1)+': '+c.q,'Answer: '+c.a]),'','PRACTICE QUIZ',...pack.quiz.flatMap((q,i)=>[(i+1)+'. '+q.q,'Options: '+q.options.join(' / '),'Correct answer: '+q.options[q.correct],'Source statement: '+q.answer]),'','Note: This study pack was generated locally using text extraction and ranking rules, not a generative AI model. Homework guidance matches source sentences and is not a guaranteed complete answer. Verify against the original source.'].join('\n');const blob=new Blob([text],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;downloadCount++;a.download='ritoccapix-study-pack-'+String(downloadCount).padStart(3,'0')+'.txt';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);});
 $('year').textContent=new Date().getFullYear();countChars();
 })();
