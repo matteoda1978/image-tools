@@ -4,1020 +4,1269 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
-<title>Free Image Compressor Online – Batch JPG, PNG &amp; WebP | RitoccaPix</title>
-<meta name="description" content="Compress JPG, PNG and WebP images online for free. Resize up to 50 images, adjust quality, target a file size and download files or a ZIP.">
+<title>Free Photo Collage Maker – Creative Layouts | RitoccaPix</title>
+<meta name="description" content="Create a free photo collage online with creative layouts, custom frame shapes and a smart layout tool. Arrange up to 12 photos and download a JPG or PNG.">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://ritoccapix.com/image-compressor.html">
-<meta name="theme-color" content="#08111f">
-<meta name="google-adsense-account" content="ca-pub-6073041470046597">
-
-<meta property="og:type" content="website">
-<meta property="og:title" content="Free Image Compressor Online | RitoccaPix">
-<meta property="og:description" content="Compress JPG, PNG and WebP images in batches. Resize, adjust quality and download results directly in your browser.">
-<meta property="og:url" content="https://ritoccapix.com/image-compressor.html">
-<meta property="og:site_name" content="RitoccaPix">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Free Image Compressor Online | RitoccaPix">
-<meta name="twitter:description" content="Compress JPG, PNG and WebP images in batches. Resize, adjust quality and download results directly in your browser.">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "WebApplication",
-      "name": "RitoccaPix Image Compressor",
-      "url": "https://ritoccapix.com/image-compressor.html",
-      "description": "Free browser-based image compressor for JPG, PNG and WebP images, with batch processing, resizing, quality controls and ZIP downloads.",
-      "applicationCategory": "UtilitiesApplication",
-      "operatingSystem": "Any",
-      "browserRequirements": "Requires a modern browser with Canvas support.",
-      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-      "featureList": [
-        "Batch compress up to 50 images",
-        "Resize images by maximum width and height",
-        "Adjust JPG and WebP quality",
-        "Best-effort target file size for JPG and WebP",
-        "Download individual images or a ZIP archive",
-        "Process selected image files locally in the browser"
-      ]
-    },
-    {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ritoccapix.com/" },
-        { "@type": "ListItem", "position": 2, "name": "Image Compressor", "item": "https://ritoccapix.com/image-compressor.html" }
-      ]
-    }
-  ]
-}
-</script>
-
-<style>
-:root {
-  --bg: #08111f;
-  --panel: #101d30;
-  --panel2: #13243b;
-  --text: #f3f7ff;
-  --muted: #a9b9d0;
-  --blue: #4f8cff;
-  --blue2: #76a8ff;
-  --border: #263b57;
-  --green: #3bd69a;
-  --red: #ff7777;
-}
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: Arial, Helvetica, sans-serif;
-  line-height: 1.6;
-}
-a { color: var(--blue2); }
-a:hover { color: white; }
-button, input, select { font: inherit; }
-button { cursor: pointer; }
-header {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background: rgba(8,17,31,.96);
-  border-bottom: 1px solid var(--border);
-  backdrop-filter: blur(12px);
-}
-.nav {
-  max-width: 1180px;
-  margin: auto;
-  padding: 14px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-}
-.logo {
-  font-size: 23px;
-  font-weight: 800;
-  text-decoration: none;
-  color: white;
-  letter-spacing: -.5px;
-}
-.logo span { color: var(--blue2); }
-nav { display: flex; gap: 16px; flex-wrap: wrap; }
-nav a {
-  color: var(--muted);
-  text-decoration: none;
-  font-size: 14px;
-}
-nav a:hover { color: white; }
-main { max-width: 1080px; margin: auto; padding: 35px 18px 70px; }
-.hero { text-align: center; padding: 22px 0 25px; }
-.eyebrow {
-  display: inline-block;
-  color: #b8d0ff;
-  background: #142b4d;
-  border: 1px solid #294a79;
-  border-radius: 30px;
-  padding: 5px 13px;
-  font-size: 13px;
-}
-h1 { font-size: clamp(30px,5vw,47px); line-height: 1.15; margin: 17px 0; letter-spacing: -1px; }
-.hero p { max-width: 720px; margin: 0 auto; color: var(--muted); font-size: 17px; }
-.panel {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 24px;
-  margin: 20px 0;
-  box-shadow: 0 12px 40px rgba(0,0,0,.12);
-}
-.privacy {
-  display: flex;
-  gap: 14px;
-  align-items: flex-start;
-  background: #102c29;
-  border: 1px solid #286354;
-  border-radius: 13px;
-  padding: 16px;
-  margin-bottom: 20px;
-}
-.privacy-icon { font-size: 25px; }
-.privacy strong { color: #a9f3d3; display: block; margin-bottom: 3px; }
-.privacy p { margin: 0; color: #d0eee3; font-size: 14px; }
-.drop-zone {
-  border: 2px dashed #41618b;
-  background: #0c192b;
-  border-radius: 15px;
-  padding: 32px 18px;
-  text-align: center;
-  transition: .2s;
-}
-.drop-zone.dragging { border-color: var(--green); background: #102b2a; }
-.upload-icon { font-size: 40px; margin-bottom: 5px; }
-.drop-zone h2 { font-size: 21px; margin: 5px 0; }
-.drop-zone p { color: var(--muted); margin: 5px 0 15px; }
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  border: 0;
-  border-radius: 9px;
-  padding: 11px 17px;
-  font-weight: 700;
-  text-decoration: none;
-  transition: .2s;
-}
-.btn-primary { background: var(--blue); color: white; }
-.btn-primary:hover { background: #3475ed; }
-.btn-secondary { background: #233955; color: white; border: 1px solid #385575; }
-.btn-secondary:hover { background: #304b6d; }
-.btn-danger { background: #45252e; color: #ffd5d5; border: 1px solid #75404b; }
-.btn:disabled { opacity: .45; cursor: not-allowed; }
-.small { font-size: 12px; color: var(--muted); }
-.settings-title { font-size: 21px; margin: 0 0 16px; }
-.settings-grid {
-  display: grid;
-  grid-template-columns: repeat(3,minmax(0,1fr));
-  gap: 17px;
-}
-.field { min-width: 0; }
-.field label { display: block; font-weight: 700; font-size: 14px; margin-bottom: 7px; }
-.field input[type="number"], .field select {
-  width: 100%;
-  background: #0a1626;
-  color: white;
-  border: 1px solid #354b67;
-  border-radius: 8px;
-  padding: 10px;
-  min-height: 43px;
-}
-.field input[type="range"] { width: 100%; accent-color: var(--blue); }
-.inline-fields { display: flex; gap: 8px; }
-.inline-fields > * { min-width: 0; flex: 1; }
-.check-row {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  margin-top: 13px;
-  color: #d9e4f4;
-  font-size: 14px;
-}
-.check-row input { accent-color: var(--blue); width: 17px; height: 17px; }
-.target-help { color: var(--muted); font-size: 12px; margin-top: 5px; }
-.actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
-.progress-wrap { margin-top: 18px; display: none; }
-.progress-track { height: 9px; background: #23354c; border-radius: 20px; overflow: hidden; }
-.progress-bar { height: 100%; width: 0; background: var(--green); transition: width .15s; }
-.progress-label { font-size: 13px; color: var(--muted); margin-top: 6px; }
-.status { margin-top: 15px; font-size: 14px; }
-.status.error { color: var(--red); }
-.status.success { color: var(--green); }
-.stats {
-  display: grid;
-  grid-template-columns: repeat(3,minmax(0,1fr));
-  gap: 12px;
-  margin: 18px 0;
-}
-.stat { background: var(--panel2); padding: 13px; border-radius: 10px; text-align: center; }
-.stat strong { display: block; font-size: 22px; }
-.stat span { color: var(--muted); font-size: 12px; }
-.results-heading { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
-.results-heading h2 { margin: 0; font-size: 22px; }
-.result-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 15px; margin-top: 17px; }
-.result-card { background: #0b1829; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; min-width: 0; }
-.preview {
-  height: 155px;
-  background: repeating-conic-gradient(#1c2b40 0% 25%,#132136 0% 50%) 50% / 20px 20px;
-  display: flex; align-items: center; justify-content: center; padding: 8px;
-}
-.preview img { max-width: 100%; max-height: 100%; object-fit: contain; }
-.result-info { padding: 12px; }
-.filename { font-weight: 700; overflow-wrap: anywhere; font-size: 14px; }
-.file-details { color: var(--muted); font-size: 12px; margin: 6px 0; }
-.saving { color: var(--green); font-size: 13px; }
-.result-info .btn { width: 100%; margin-top: 9px; }
-.content-section { margin-top: 34px; }
-.content-section h2 { font-size: 25px; }
-.content-section h3 { font-size: 18px; }
-.content-section p, .content-section li { color: #c0cde0; }
-.content-section li { margin: 8px 0; }
-.faq-item { border-bottom: 1px solid var(--border); padding: 15px 0; }
-.faq-item h3 { margin: 0 0 7px; }
-.faq-item p { margin: 0; }
-.related { display: flex; flex-wrap: wrap; gap: 10px; }
-.related a {
-  background: #14243a; border: 1px solid var(--border);
-  border-radius: 9px; padding: 9px 12px; text-decoration: none;
-}
-footer { border-top: 1px solid var(--border); padding: 28px 18px; text-align: center; color: var(--muted); font-size: 13px; }
-footer a { margin: 0 8px; }
-[hidden] { display: none !important; }
-@media(max-width:760px) {
-  .settings-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
-  .result-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
-  nav { gap: 10px; }
-}
-@media(max-width:520px) {
-  .nav { align-items: flex-start; flex-direction: column; gap: 8px; }
-  nav { gap: 8px 13px; }
-  main { padding: 22px 12px 50px; }
-  .panel { padding: 16px; }
-  .settings-grid, .result-grid { grid-template-columns: 1fr; }
-  .stats { gap: 7px; }
-  .stat { padding: 10px 4px; }
-  .stat strong { font-size: 18px; }
-  .actions .btn { flex: 1; }
-}
-</style>
-
+<meta name="theme-color" content="#0a0f1d">
+<link rel="canonical" href="https://ritoccapix.com/image-collage.html">
 <script src="menu.js" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
+<style>
+*{box-sizing:border-box}
+:root{--bg:#0a0f1d;--panel:#11192b;--panel2:#0c1323;--border:#26324a;--text:#f5f7ff;--muted:#9da8bd;--accent:#6ea8ff}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,Arial,Helvetica,sans-serif;line-height:1.6}
+a{color:var(--accent)}
+header{padding:20px 0;border-bottom:1px solid #1e293b}
+.container{width:min(1200px,94%);margin:auto}
+.logo{font-size:24px;font-weight:800;letter-spacing:-.5px}
+.logo span{color:var(--accent)}
+main{max-width:1200px;margin:auto;padding:30px 16px 50px}
+.hero{text-align:center;margin:0 auto 28px}
+.hero h1{font-size:clamp(30px,5vw,44px);line-height:1.15;margin:0}
+.hero p{max-width:760px;margin:12px auto;color:var(--muted)}
+.workspace{display:grid;grid-template-columns:350px minmax(0,1fr);gap:20px;align-items:start}
+.panel,.preview-panel,.content{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:18px;min-width:0}
+.panel-title,.preview-title{font-size:18px;font-weight:800;margin:0 0 14px}
+.upload{display:block;text-align:center;padding:20px 12px;border:2px dashed #465775;border-radius:12px;background:var(--panel2);cursor:pointer}
+.upload:hover{border-color:var(--accent)}
+.upload strong,.upload span{display:block}
+.upload span{font-size:12px;color:var(--muted)}
+.upload-icon{font-size:28px;color:var(--accent)}
+#fileInput{display:none}
+.section{margin-top:22px}
+.section-label{font-size:12px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);font-weight:800;margin-bottom:10px}
+.layout-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+.shape-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+.shape-btn{border:1px solid var(--border);background:var(--panel2);color:var(--muted);border-radius:10px;padding:10px 5px;cursor:pointer;font-size:12px;font-weight:700;min-height:66px}
+.shape-btn .shape-icon{display:block;font-size:23px;line-height:1.15;margin-bottom:5px}
+.shape-btn.active{border-color:var(--accent);background:#1a2b49;color:#fff}
+.shape-btn:hover{border-color:var(--accent);color:#fff}
+.layout-btn,.format-btn,.secondary-btn,.shuffle,.style-btn{border:1px solid var(--border);background:var(--panel2);color:var(--muted);border-radius:9px;padding:9px 5px;cursor:pointer;font-size:12px;font-weight:700}
+.layout-btn.active,.format-btn.active{border-color:var(--accent);background:#1a2b49;color:white}
+.layout-btn:hover,.format-btn:hover,.secondary-btn:hover,.shuffle:hover{border-color:var(--accent);color:white}
+.layout-preview{width:46px;height:34px;margin:0 auto 6px;display:grid;gap:2px}
+.layout-preview span{background:currentColor;border-radius:2px;min-width:0;min-height:0}
+.lp2{grid-template-columns:1fr 1fr}
+.lp3{grid-template-columns:1.4fr 1fr;grid-template-rows:1fr 1fr}
+.lp3 span:first-child{grid-row:1/3}
+.lp4{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}
+.lp6{grid-template-columns:repeat(3,1fr);grid-template-rows:1fr 1fr}
+.lp9{grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr)}
+.layout-name{display:block;font-size:10px;line-height:1.3}
+.format-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.control{margin-top:15px}
+.control-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px}
+.control-top label{font-size:13px;font-weight:700}
+.value,.help,.photo-count,.color-info{font-size:12px;color:var(--muted)}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.color-row{display:flex;align-items:center;gap:10px}
+#bgColor{width:45px;height:38px;border:1px solid var(--border);border-radius:8px;padding:3px;background:var(--panel2)}
+.text-input,select{width:100%;padding:10px;border:1px solid var(--border);border-radius:9px;background:var(--panel2);color:var(--text);font-size:13px}
+.photo-list{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-top:12px}
+.photo-thumb{display:block;width:100%;aspect-ratio:1;object-fit:cover;border-radius:8px;border:2px solid var(--border);cursor:pointer}
+.photo-thumb.active{border:3px solid var(--accent)}
+.photo-help{font-size:12px;color:var(--muted);margin:8px 0 0}
+.smart-box{padding:13px;background:#101e35;border:1px solid #304d75;border-radius:12px}
+.smart-box h3{font-size:15px;margin:0 0 8px}
+.smart-btn{width:100%;border:1px solid #6ea8ff;border-radius:10px;padding:12px;background:linear-gradient(110deg,#203d68,#172947);color:#fff;font-size:14px;font-weight:800;cursor:pointer;margin-bottom:8px}
+.smart-btn:hover{filter:brightness(1.15)}
+.smart-btn:disabled{opacity:.5;cursor:not-allowed}
+.smart-btn.secondary{background:#172235;border-color:#394761}
+.smart-btn.enhance{background:linear-gradient(110deg,#33406a,#242b4a)}
+.smart-box p{margin:5px 0 0;font-size:12px;color:var(--muted)}
+.custom-tools{margin-top:22px;padding-top:17px;border-top:1px solid var(--border)}
+.custom-tools h3{font-size:16px;margin:0 0 6px}
+.custom-buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.secondary-btn{padding:11px;color:var(--text)}
+.secondary-btn:disabled{opacity:.35;cursor:not-allowed}
+.preview-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.preview-title{margin:0}
+.shuffle{padding:9px 11px;color:var(--text)}
+.canvas-wrap{background-color:var(--panel2);background-image:linear-gradient(45deg,#1a2538 25%,transparent 25%),linear-gradient(-45deg,#1a2538 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#1a2538 75%),linear-gradient(-45deg,transparent 75%,#1a2538 75%);background-size:20px 20px;background-position:0 0,0 10px,10px -10px,-10px 0;border:1px solid var(--border);border-radius:12px;padding:12px;min-height:250px;display:flex;align-items:center;justify-content:center;overflow:auto}
+#canvas{display:block;width:auto;height:auto;max-width:100%;max-height:680px;touch-action:none;box-shadow:0 12px 35px #0005;cursor:move}
+.downloads{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.download-btn{border:0;border-radius:9px;padding:13px;font-weight:800;cursor:pointer;font-size:13px}
+.download-jpg{background:var(--accent);color:#081326}
+.download-png{background:#253149;color:white;border:1px solid #394761}
+.download-btn:disabled{opacity:.4;cursor:not-allowed}
+.content{margin-top:22px}
+.content h2{margin-top:0}
+.content h3{margin-top:20px}
+.content p,.content li{color:var(--muted);line-height:1.8}
+footer{border-top:1px solid #1e293b;text-align:center;color:#778398;font-size:13px;margin-top:30px;padding:24px 15px}
+footer a{color:var(--accent);text-decoration:none}
+@media(max-width:850px){.workspace{grid-template-columns:1fr}.preview-panel{order:1}.panel{order:2}#canvas{max-height:560px}}
+@media(max-width:520px){main{padding:24px 10px 35px}.panel,.preview-panel,.content{padding:13px}.canvas-wrap{padding:6px;min-height:180px}.downloads{grid-template-columns:1fr}.layout-grid{gap:5px}}
+</style>
 </head>
-
 <body>
 <header>
-  <div class="nav">
-    <a class="logo" href="https://ritoccapix.com/">Ritocca<span>Pix</span></a>
-    <nav aria-label="Main navigation">
-      <a href="image-resizer.html">Image Resizer</a>
-      <a href="image-compressor.html">Image Compressor</a>
-      <a href="compress-image-to-100kb.html">Compress to 100KB</a>
-      <a href="image-converter.html">Image Converter</a>
-    </nav>
+  <div class="container">
+    <div class="logo"><a href="index.html" style="color:inherit;text-decoration:none">Ritocca<span>Pix</span></a></div>
+    <nav aria-label="Main navigation"></nav>
   </div>
 </header>
 
 <main>
-  <section class="hero">
-    <span class="eyebrow">Free online image tool</span>
-    <h1>Compress Images Online for Free</h1>
-    <p>Reduce image file sizes, resize pictures and process multiple images at once. Choose your quality and output format, then download your optimized files.</p>
-  </section>
+<section class="hero">
+  <h1>Free Online Photo Collage Maker with Creative Layouts</h1>
+  <p>Turn your photos into a creative collage with overlapping images, varied frame sizes and magazine-style layouts. Adjust photo position, zoom, shapes and spacing, then download your finished design as a JPG or PNG. No software installation required.</p>
+</section>
 
-  <section class="panel" aria-label="Image compression tool">
-    <div class="privacy">
-      <div class="privacy-icon" aria-hidden="true">🔒</div>
-      <div>
-        <strong>Your privacy matters</strong>
-        <p>Your selected images are processed locally in your browser. This tool does not upload your image files to RitoccaPix servers. The optional ZIP download uses a library loaded from a third-party CDN. You stay in control of which files you download.</p>
-      </div>
-    </div>
+<div class="workspace">
+<aside class="panel">
+  <div class="panel-title">1. Add your photos</div>
+  <label class="upload" for="fileInput">
+    <div class="upload-icon">＋</div>
+    <strong>Choose photos</strong>
+    <span>JPG, PNG or WebP · Up to 12 images</span>
+  </label>
+  <input id="fileInput" type="file" accept="image/*" multiple>
+  <div id="photoList" class="photo-list"></div>
+  <div id="photoCount" class="photo-count">No photos selected</div>
+  <p class="photo-help">Tap a thumbnail to select it, then use “Place photo in frame” to replace the photo in the selected frame.</p>
 
-    <div class="drop-zone" id="dropZone" tabindex="0" role="button" aria-label="Choose images or drop them here">
-      <div class="upload-icon" aria-hidden="true">🖼️</div>
-      <h2>Choose images to compress</h2>
-      <p>Drag and drop your images here, or select them from your device.</p>
-      <button type="button" class="btn btn-primary" id="browseBtn">Choose Images</button>
-      <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp" multiple hidden>
-      <p class="small">JPG, PNG and WebP · Up to 50 images · 50 MB per image</p>
-    </div>
+  <div class="section smart-box">
+    <h3>✦ Smart composition</h3>
+    <button id="smartLayout" class="smart-btn" type="button">Create a Smart Collage</button>
+    <button id="tryAnother" class="smart-btn secondary" type="button">Try Another Design</button>
+    <button id="autoPlacePhotos" class="secondary-btn" type="button" style="width:100%;margin-top:2px">Auto-place photos in frames</button>
+    <p>Creates magazine-style layouts with a hero photo, varied frame sizes and asymmetrical arrangements. Photos stay on your device; this is a smart layout algorithm, not a generative AI service.</p>
+  </div>
 
-    <div id="selectionInfo" class="status" aria-live="polite">No images selected yet.</div>
+  <div class="section">
+    <div class="section-label">2. Creative photo shapes</div>
+    <div class="shape-grid" role="group" aria-label="Choose photo frame shape">
+      <button class="shape-btn active" data-shape="rounded" type="button" aria-pressed="true"><span class="shape-icon">▧</span>Rounded</button>
+      <button class="shape-btn" data-shape="rectangle" type="button" aria-pressed="false"><span class="shape-icon">▭</span>Rectangle</button>
+      <button class="shape-btn" data-shape="circle" type="button" aria-pressed="false"><span class="shape-icon">●</span>Circle</button>
+      <button class="shape-btn" data-shape="oval" type="button" aria-pressed="false"><span class="shape-icon">⬭</span>Oval</button>
+      <button class="shape-btn" data-shape="heart" type="button" aria-pressed="false"><span class="shape-icon">♥</span>Heart</button>
+      <button class="shape-btn" data-shape="cloud" type="button" aria-pressed="false"><span class="shape-icon">☁</span>Cloud</button>
+      <button class="shape-btn" data-shape="star" type="button" aria-pressed="false"><span class="shape-icon">★</span>Star</button>
+    </div>
+    <p class="help">Choose a shape, then pick a layout and add your photos. The shape is applied to every photo frame. Circle and heart are great for creative collages.</p>
+  </div>
 
-    <div class="settings-grid" style="margin-top:22px">
-      <div class="field">
-        <label for="maxWidth">Maximum width (px)</label>
-        <input type="number" id="maxWidth" min="1" max="30000" placeholder="Original width">
-      </div>
-      <div class="field">
-        <label for="maxHeight">Maximum height (px)</label>
-        <input type="number" id="maxHeight" min="1" max="30000" placeholder="Original height">
-      </div>
-      <div class="field">
-        <label for="outputFormat">Output format</label>
-        <select id="outputFormat">
-          <option value="original">Keep original format</option>
-          <option value="image/jpeg">JPG</option>
-          <option value="image/webp">WebP</option>
-          <option value="image/png">PNG</option>
-        </select>
-      </div>
+  <div class="section">
+    <div class="section-label">3. Ready-made layouts</div>
+    <div class="layout-grid">
+      <button class="layout-btn active" data-layout="blank" type="button"><div class="layout-preview"><span></span></div><span class="layout-name">Blank canvas</span></button>
+      <button class="layout-btn" data-layout="2" type="button"><div class="layout-preview lp2"><span></span><span></span></div><span class="layout-name">2 photos</span></button>
+      <button class="layout-btn" data-layout="3" type="button"><div class="layout-preview lp3"><span></span><span></span><span></span></div><span class="layout-name">3 photos</span></button>
+      <button class="layout-btn" data-layout="4" type="button"><div class="layout-preview lp4"><span></span><span></span><span></span><span></span></div><span class="layout-name">4 photos</span></button>
+      <button class="layout-btn" data-layout="6" type="button"><div class="layout-preview lp6"><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="layout-name">6 photos</span></button>
+      <button class="layout-btn" data-layout="9" type="button"><div class="layout-preview lp9"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="layout-name">9 photos</span></button>
     </div>
+    <p class="help">Choose a preset for a simple starting point, or use Smart Collage for a more creative arrangement.</p>
+  </div>
 
-    <label class="check-row">
-      <input type="checkbox" id="keepRatio" checked>
-      Keep original aspect ratio when resizing
-    </label>
+  <div class="section">
+    <div class="section-label">4. Canvas format</div>
+    <div class="format-grid">
+      <button class="format-btn active" data-format="square" type="button">Square</button>
+      <button class="format-btn" data-format="portrait" type="button">Portrait</button>
+      <button class="format-btn" data-format="story" type="button">Story 9:16</button>
+      <button class="format-btn" data-format="landscape" type="button">Landscape</button>
+    </div>
+  </div>
 
-    <div class="settings-grid" style="margin-top:18px">
-      <div class="field">
-        <label for="quality">Image quality: <span id="qualityValue">80%</span></label>
-        <input type="range" id="quality" min="10" max="100" value="80">
-        <div class="small">Lower quality usually means smaller files. JPG and WebP support quality adjustment.</div>
-      </div>
-      <div class="field">
-        <label for="targetSize">Target file size (optional)</label>
-        <input type="number" id="targetSize" min="1" max="100000" placeholder="e.g. 100">
-        <div class="target-help">Best-effort target, not a guaranteed maximum. Target-size adjustment works with JPG and WebP, not PNG. If you keep the original format, PNG files will not be reduced to the target size.</div>
-      </div>
-      <div class="field">
-        <label for="targetUnit">Target size unit</label>
-        <select id="targetUnit">
-          <option value="KB">KB</option>
-          <option value="MB">MB</option>
-        </select>
-        <div class="small">The target applies to each image separately.</div>
-      </div>
-    </div>
+  <div class="section">
+    <div class="section-label">5. Enhance collage photos</div>
+    <label class="help" for="photoStyle">Choose an enhancement style</label>
+    <select id="photoStyle" class="text-input">
+      <option value="auto">Auto Enhance</option>
+      <option value="natural">Natural</option>
+      <option value="vivid">Vivid</option>
+      <option value="warm">Warm</option>
+      <option value="cinematic">Cinematic</option>
+      <option value="bw">Black &amp; White</option>
+      <option value="soft">Soft &amp; Bright</option>
+    </select>
+    <button id="enhancePhotos" class="smart-btn enhance" type="button" style="margin-top:10px">Enhance Collage Photos</button>
+    <button id="restorePhotos" class="secondary-btn" type="button" style="width:100%">Restore Original Look</button>
+    <p class="help">Enhancement changes the appearance of photos in the preview and exported image. Your uploaded originals are not overwritten.</p>
+  </div>
 
-    <div class="actions">
-      <button type="button" class="btn btn-primary" id="processBtn" disabled>Compress Images</button>
-      <button type="button" class="btn btn-secondary" id="zipBtn" disabled>Download All as ZIP</button>
-      <button type="button" class="btn btn-danger" id="clearBtn" disabled>Clear All</button>
+  <div class="section">
+    <div class="section-label">6. Appearance</div>
+    <div class="control">
+      <div class="control-top"><label for="spacing">Frame spacing</label><span id="spacingValue" class="value">12 px</span></div>
+      <input id="spacing" type="range" min="0" max="40" value="12">
     </div>
+    <div class="control">
+      <div class="control-top"><label for="radius">Rounded corners</label><span id="radiusValue" class="value">12 px</span></div>
+      <input id="radius" type="range" min="0" max="40" value="12">
+    </div>
+    <div class="control">
+      <div class="control-top"><label for="bgColor">Background color</label></div>
+      <div class="color-row"><input id="bgColor" type="color" value="#ffffff"><span class="color-info">Color between photos</span></div>
+    </div>
+    <div class="control">
+      <div class="control-top"><label for="caption">Caption</label></div>
+      <input id="caption" class="text-input" type="text" maxlength="80" placeholder="Add a caption...">
+    </div>
+  </div>
 
-    <div class="progress-wrap" id="progressWrap">
-      <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
-      <div class="progress-label" id="progressLabel" aria-live="polite">Preparing...</div>
+  <div class="custom-tools">
+    <h3>7. Edit your frames</h3>
+    <p class="help">Drag inside a photo to reposition it. Drag near a frame edge to move the frame. Drag a corner handle to resize it. Rotated frames can be adjusted approximately by their visible bounds.</p>
+    <div class="custom-buttons">
+      <button id="addCell" class="secondary-btn" type="button">＋ Add frame</button>
+      <button id="removeCell" class="secondary-btn" type="button">− Remove frame</button>
     </div>
-    <div id="status" class="status" role="status" aria-live="polite"></div>
+    <div class="control">
+      <div class="control-top"><label for="cellSelect">Selected frame</label></div>
+      <select id="cellSelect" class="text-input"></select>
+    </div>
+    <div class="control">
+      <div class="control-top"><label for="photoSelect">Photo to place</label></div>
+      <select id="photoSelect" class="text-input"><option value="-1">No photo selected</option></select>
+    </div>
+    <div class="custom-buttons" style="margin-top:9px">
+      <button id="placePhoto" class="secondary-btn" type="button">Place photo in frame</button>
+      <button id="clearPhoto" class="secondary-btn" type="button">Remove photo</button>
+    </div>
+    <div class="control">
+      <div class="control-top"><label for="cellZoom">Photo zoom</label><span id="cellZoomValue" class="value">1.0×</span></div>
+      <input id="cellZoom" type="range" min="50" max="350" step="5" value="100">
+      <p class="help">Drag a photo to reposition it. Zoom out to show more, or zoom in to crop closer.</p>
+    </div>
+    <div class="custom-buttons" style="margin-top:9px">
+      <button id="fillFrame" class="secondary-btn" type="button">Fill frame</button>
+      <button id="fitWholePhoto" class="secondary-btn" type="button">Fit whole photo</button>
+    </div>
+    <div class="custom-buttons" style="margin-top:8px">
+      <button id="centerPhoto" class="secondary-btn" type="button">Center & reset zoom</button>
+      <button id="resetLayout" class="secondary-btn" type="button">Reset layout</button>
+    </div>
+    <button id="autoFitAll" class="secondary-btn" type="button" style="width:100%;margin-top:8px">Auto-fit all photos</button>
+  </div>
+</aside>
 
-    <div id="resultsSection" hidden>
-      <div class="stats">
-        <div class="stat"><strong id="statCount">0</strong><span>Images processed</span></div>
-        <div class="stat"><strong id="statOriginal">0 KB</strong><span>Original total</span></div>
-        <div class="stat"><strong id="statSaved">0%</strong><span id="statSavedLabel">Net size change</span></div>
-      </div>
-      <div class="results-heading">
-        <h2>Your compressed images</h2>
-        <span class="small">Review each file before downloading.</span>
-      </div>
-      <div class="result-grid" id="resultGrid"></div>
-    </div>
-  </section>
+<section class="preview-panel">
+  <div class="preview-top">
+    <h2 class="preview-title">Collage preview</h2>
+    <button id="shuffle" class="shuffle" type="button">Shuffle photos</button>
+  </div>
+  <div class="canvas-wrap">
+    <canvas id="canvas" aria-label="Interactive collage preview"></canvas>
+  </div>
+  <div class="downloads">
+    <button id="downloadJpg" class="download-btn download-jpg" type="button" disabled>Download JPG</button>
+    <button id="downloadPng" class="download-btn download-png" type="button" disabled>Download PNG</button>
+  </div>
+  <p id="status" class="help" role="status" aria-live="polite">Upload photos to begin creating your collage.</p>
+</section>
+</div>
 
-  <section class="content-section">
-    <h2>Compress images without complicated software</h2>
-    <p>Large images can take longer to load on websites and may be difficult to send by email or messaging apps. RitoccaPix helps you reduce file sizes directly in your browser, with controls for image dimensions, quality and output format.</p>
+<section class="content">
+  <h2>How to create a creative photo collage</h2>
+  <ol>
+    <li>Upload your photos from your device.</li>
+    <li>Click Create a Smart Collage to create an asymmetrical, magazine-style arrangement. Click Try Another Design to explore alternative compositions.</li>
+    <li>Choose an enhancement style and apply it to your collage photos.</li>
+    <li>Choose a creative frame shape, then adjust the canvas format, frame spacing, background and caption.</li>
+    <li>Download your finished collage as a high-resolution JPG or PNG.</li>
+  </ol>
+  <p>Photos are processed locally in your browser. This tool does not upload your images to a server.</p>
+</section>
 
-    <h3>How to compress images</h3>
-    <ol>
-      <li>Select one or more JPG, PNG or WebP images.</li>
-      <li>Optionally enter a maximum width or height to resize your images.</li>
-      <li>Choose an output format and adjust image quality.</li>
-      <li>If needed, enter a target file size in KB or MB.</li>
-      <li>Select <strong>Compress Images</strong> and wait for processing to finish.</li>
-      <li>Preview the results and download individual files or a ZIP archive.</li>
-    </ol>
+<section class="content">
+  <h2>Make a photo collage online with your own style</h2>
+  <p>Use RitoccaPix as a free photo collage creator for family memories, travel photos, creative projects or social media posts. Combine up to 12 pictures, give the main image more space, and mix rounded, circular, heart, star and other frame shapes for a design that feels less like a fixed grid.</p>
+  <p>Start with the smart composition tool if you want a magazine-style arrangement, then fine-tune the photo position, zoom, spacing, background and caption yourself. When your collage is ready, export it as a JPG or PNG. If you need to prepare an image first, use the <a href="image-resizer.html">online image resizer</a> or the <a href="image-compressor.html">image compressor</a>.</p>
+</section>
 
-    <h3>Which image format should you choose?</h3>
-    <ul>
-      <li><strong>JPG:</strong> often useful for photographs and smaller photo files.</li>
-      <li><strong>WebP:</strong> a modern format that can provide compact images for websites.</li>
-      <li><strong>PNG:</strong> useful for graphics and transparency, although files can be larger.</li>
-    </ul>
-    <p>Converting between formats can affect transparency, image quality and file size. Always check the preview and choose the format that fits your needs.</p>
-
-    <h3>Privacy and local processing</h3>
-    <p>Image processing takes place in your browser on your device. The selected image files are not sent to RitoccaPix servers by this tool. Your browser still needs to load the website and its external resources, including the optional ZIP library. Avoid using any online tool for confidential images unless its privacy characteristics meet your requirements.</p>
-
-    <h2>Frequently asked questions</h2>
-    <div class="faq-item">
-      <h3>Is this image compressor free?</h3>
-      <p>Yes. You can use the tool in your browser without creating an account.</p>
-    </div>
-    <div class="faq-item">
-      <h3>Are my images uploaded to a server?</h3>
-      <p>This tool processes the selected image files locally in your browser and does not upload them to RitoccaPix servers. The page may load external resources needed for the website and ZIP functionality.</p>
-    </div>
-    <div class="faq-item">
-      <h3>Can I compress multiple images at once?</h3>
-      <p>Yes. You can select up to 50 images in one batch. Each image is processed separately using your selected settings.</p>
-    </div>
-    <div class="faq-item">
-      <h3>Can I make an image smaller than 100 KB?</h3>
-      <p>You can enter 100 in the target size field and select KB. For target-size adjustment, choose JPG or WebP. PNG output is lossless and the target-size setting does not apply to it. Even with JPG or WebP, the requested size is not guaranteed because image dimensions, content and quality affect the result.</p>
-    </div>
-    <div class="faq-item">
-      <h3>Will compression reduce image quality?</h3>
-      <p>It can. Lower quality settings may reduce file size but can also introduce visible artifacts. PNG output is not controlled by the same lossy quality setting as JPG and WebP.</p>
-    </div>
-    <div class="faq-item">
-      <h3>Why is the compressed file sometimes larger?</h3>
-      <p>Some images are already optimized. Converting a small image or using PNG for a photograph may increase its file size.</p>
-    </div>
-    <div class="faq-item">
-      <h3>Does the target size always work?</h3>
-      <p>No. The target is best-effort for JPG and WebP. Some images cannot reach the requested size at the chosen dimensions and format without substantial quality loss. PNG uses lossless output here, so the target-size setting does not apply when PNG is selected or when the original PNG format is kept.</p>
-    </div>
-    <div class="faq-item">
-      <h3>How do I download all my results?</h3>
-      <p>After processing, select Download All as ZIP. Your browser will create an archive containing the successfully processed images. The ZIP option requires its external JavaScript library to load successfully.</p>
-    </div>
-
-    <h2>Explore more free image tools</h2>
-    <div class="related">
-      <a href="image-resizer.html">Image Resizer</a>
-      <a href="compress-image-to-100kb.html">Compress Image to 100KB</a>
-      <a href="image-converter.html">Image Converter</a>
-      <a href="image-optimizer.html">Image Optimizer</a>
-      <a href="image-analyzer.html">Image Analyzer</a>
-      <a href="https://ritoccapix.com/">All Image Tools</a>
-    </div>
-  </section>
+<section class="content">
+  <h2>Frequently asked questions</h2>
+  <h3>Does Smart Collage use artificial intelligence?</h3>
+  <p>Smart Collage uses layout rules to create varied, magazine-style arrangements; it does not use a generative AI model or send photos to a cloud AI service. Your photos remain on your device.</p>
+  <h3>Can I center, zoom or show the whole photo?</h3>
+  <p>Yes. Select a frame, adjust the zoom slider, drag the photo to reposition it, or use Fill frame, Fit whole photo, Center &amp; reset zoom, or Auto-fit all photos.</p>
+  <h3>Does photo enhancement overwrite my original photos?</h3>
+  <p>No. The original uploaded images remain unchanged. The selected enhancement is applied when the collage is drawn and exported.</p>
+  <h3>Does this tool use a cloud AI service?</h3>
+  <p>No. Layout generation and photo appearance adjustments run in your browser. The composition feature uses smart layout rules and variation rather than a generative AI model.</p>
+  <h3>Can I use the tool on my phone?</h3>
+  <p>Yes. You can upload photos, choose rounded, rectangular, circular, oval, heart, cloud or star-shaped frames, create layouts, apply enhancement styles and export your collage on supported mobile browsers.</p>
+  <h3>Are my photos uploaded?</h3>
+  <p>No. Images are processed locally in your browser and are not uploaded by this tool.</p>
+</section>
 </main>
 
 <footer>
-  <p>RitoccaPix — Free online image tools.</p>
-  <p>
-    <a href="https://ritoccapix.com/">Home</a>
-    <a href="image-resizer.html">Image Resizer</a>
-    <a href="image-converter.html">Image Converter</a>
-  </p>
-  <p>Process images in your browser and download only the results you need.</p>
+  <p>© 2026 RitoccaPix · Free online image tools</p>
+  <p><a href="index.html">Home</a> · <a href="image-resizer.html">Image Resizer</a> · <a href="image-compressor.html">Image Compressor</a> · <a href="image-analyzer.html">Image Analyzer</a> · <a href="privacy.html">Privacy Policy</a></p>
 </footer>
 
 <script>
-(() => {
-  "use strict";
+'use strict';
 
-  const MAX_FILES = 50;
-  const MAX_FILE_SIZE = 50 * 1024 * 1024;
-  const MAX_PIXELS = 40000000;
-  const MAX_DIMENSION = 30000;
+const $=id=>document.getElementById(id);
+const canvas=$('canvas');
+const ctx=canvas.getContext('2d');
+const fileInput=$('fileInput');
+const photoList=$('photoList');
+const photoCount=$('photoCount');
 
-  const $ = id => document.getElementById(id);
-  const dropZone = $("dropZone");
-  const fileInput = $("fileInput");
-  const browseBtn = $("browseBtn");
-  const processBtn = $("processBtn");
-  const zipBtn = $("zipBtn");
-  const clearBtn = $("clearBtn");
-  const quality = $("quality");
-  const qualityValue = $("qualityValue");
-  const progressWrap = $("progressWrap");
-  const progressBar = $("progressBar");
-  const progressLabel = $("progressLabel");
-  const statusBox = $("status");
-  const selectionInfo = $("selectionInfo");
-  const resultsSection = $("resultsSection");
-  const resultGrid = $("resultGrid");
+let images=[];
+let cells=[];
+let selectedCell=0;
+let selectedPhoto=-1;
+let selectedFormat='square';
+let currentLayout='blank';
+let frameShape='rounded';
+let dragging=null;
+let designVersion=0;
+let activeStyle='original';
 
-  let selectedFiles = [];
-  let results = [];
-  let busy = false;
-  let generation = 0;
+const formats={
+  square:{width:1080,height:1080},
+  portrait:{width:1080,height:1350},
+  story:{width:1080,height:1920},
+  landscape:{width:1200,height:800}
+};
 
-  function formatBytes(bytes) {
-    if (!Number.isFinite(bytes) || bytes < 0) return "—";
-    if (bytes < 1024) return bytes + " B";
-    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
-    return (bytes / (1024 * 1024)).toFixed(2) + " MB";
-  }
+const styles={
+  original:'none',
+  auto:'brightness(1.06) contrast(1.10) saturate(1.10)',
+  natural:'brightness(1.03) contrast(1.04) saturate(1.04)',
+  vivid:'brightness(1.04) contrast(1.14) saturate(1.35)',
+  warm:'brightness(1.05) contrast(1.07) saturate(1.12) sepia(0.16)',
+  cinematic:'brightness(0.98) contrast(1.18) saturate(0.88)',
+  bw:'grayscale(1) contrast(1.12)',
+  soft:'brightness(1.10) contrast(0.94) saturate(1.03)'
+};
 
-  function setStatus(message, type = "") {
-    statusBox.textContent = message;
-    statusBox.className = "status" + (type ? " " + type : "");
-  }
+function makeCell(x,y,w,h,photoIndex=-1,rotation=0){
+  return {x,y,w,h,photoIndex,rotation,zoom:1,photoX:0,photoY:0,fit:true,fitMode:'cover'};
+}
 
-  function supportedFile(file) {
-    const allowed = ["image/jpeg", "image/png", "image/webp"];
-    return allowed.includes(file.type) ||
-      /\.(jpe?g|png|webp)$/i.test(file.name);
-  }
+const templates={
+  blank:()=>[makeCell(0,0,100,100,-1)],
+  '2':()=>[makeCell(0,0,50,100,0),makeCell(50,0,50,100,1)],
+  '3':()=>[makeCell(0,0,58,100,0),makeCell(58,0,42,50,1),makeCell(58,50,42,50,2)],
+  '4':()=>[makeCell(0,0,50,50,0),makeCell(50,0,50,50,1),makeCell(0,50,50,50,2),makeCell(50,50,50,50,3)],
+  '6':()=>Array.from({length:6},(_,i)=>makeCell(i%3*100/3,Math.floor(i/3)*50,100/3,50,i)),
+  '9':()=>Array.from({length:9},(_,i)=>makeCell(i%3*100/3,Math.floor(i/3)*100/3,100/3,100/3,i))
+};
 
-  function cleanName(name) {
-    return name.replace(/\.[^.]+$/, "").replace(/[<>:"/\\|?*\x00-\x1F]/g, "_") || "image";
-  }
+function status(message){
+  $('status').textContent=message;
+}
 
-  function outputExtension(mime, originalName) {
-    if (mime === "image/jpeg") return "jpg";
-    if (mime === "image/png") return "png";
-    if (mime === "image/webp") return "webp";
-    const match = originalName.match(/\.([^.]+)$/);
-    return match ? match[1].toLowerCase() : "img";
-  }
+function updatePhotoSelect(){
+  const select=$('photoSelect');
+  select.replaceChildren();
+  const empty=document.createElement('option');
+  empty.value='-1';
+  empty.textContent='No photo selected';
+  select.appendChild(empty);
 
-  function updateSelection() {
-    selectionInfo.textContent = selectedFiles.length
-      ? selectedFiles.length + " image(s) selected. Maximum " + MAX_FILES + " images per batch."
-      : "No images selected yet.";
-    processBtn.disabled = !selectedFiles.length || busy;
-    clearBtn.disabled = !selectedFiles.length && !results.length;
-    zipBtn.disabled = !results.some(r => r.blob) || busy;
-  }
+  images.forEach((item,i)=>{
+    const option=document.createElement('option');
+    option.value=String(i);
+    option.textContent=(i+1)+'. '+item.name;
+    select.appendChild(option);
+  });
+  select.value=String(selectedPhoto);
+}
 
-  function releaseResults() {
-    results.forEach(r => {
-      if (r.url) URL.revokeObjectURL(r.url);
+function renderPhotos(){
+  photoList.replaceChildren();
+  images.forEach((item,i)=>{
+    const img=document.createElement('img');
+    img.src=item.image.src;
+    img.alt='Photo '+(i+1)+': '+item.name;
+    img.title='Select '+item.name;
+    img.className='photo-thumb'+(i===selectedPhoto?' active':'');
+    img.addEventListener('click',()=>{
+      selectedPhoto=i;
+      updatePhotoSelect();
+      renderPhotos();
+      status('Photo selected. Choose a frame and press Place photo in frame to assign it.');
     });
-    results = [];
-    resultGrid.replaceChildren();
-    resultsSection.hidden = true;
+    photoList.appendChild(img);
+  });
+
+  photoCount.textContent=images.length
+    ? images.length+' photo'+(images.length===1?'':'s')+' loaded'
+    : 'No photos selected';
+  updatePhotoSelect();
+}
+
+function updateSelect(){
+  const select=$('cellSelect');
+  select.replaceChildren();
+
+  cells.forEach((cell,i)=>{
+    const option=document.createElement('option');
+    option.value=String(i);
+    const photo=cell.photoIndex>=0&&images[cell.photoIndex];
+    option.textContent='Frame '+(i+1)+(photo?' — '+images[cell.photoIndex].name:' — empty');
+    select.appendChild(option);
+  });
+
+  if(cells.length){
+    selectedCell=Math.max(0,Math.min(selectedCell,cells.length-1));
+    select.value=String(selectedCell);
+  }
+  updateControls();
+}
+
+function updateControls(){
+  if(!cells.length){
+    $('removeCell').disabled=true;
+    $('clearPhoto').disabled=true;
+    $('centerPhoto').disabled=true;
+    return;
   }
 
-  function addFiles(fileList) {
-    if (busy) return;
-    const incoming = Array.from(fileList || []);
-    if (!incoming.length) return;
+  const cell=cells[selectedCell];
+  $('cellZoom').value=Math.max(50,Math.min(350,Math.round(cell.zoom*100)));
+  $('cellZoomValue').textContent=cell.zoom.toFixed(1)+'×';
+  $('removeCell').disabled=cells.length<=1;
+  $('clearPhoto').disabled=cell.photoIndex<0;
+  $('centerPhoto').disabled=cell.photoIndex<0;
+  $('fillFrame').disabled=cell.photoIndex<0;
+  $('fitWholePhoto').disabled=cell.photoIndex<0;
+  $('autoFitAll').disabled=!images.length;
+}
 
-    const valid = [];
-    const issues = [];
+function selectCell(index){
+  if(!cells.length)return;
+  selectedCell=Math.max(0,Math.min(index,cells.length-1));
+  $('cellSelect').value=String(selectedCell);
+  updateControls();
+  draw();
+}
 
-    for (const file of incoming) {
-      if (!supportedFile(file)) {
-        issues.push(file.name + ": unsupported format");
-        continue;
-      }
-      if (file.size > MAX_FILE_SIZE) {
-        issues.push(file.name + ": larger than 50 MB");
-        continue;
-      }
-      if (selectedFiles.length + valid.length >= MAX_FILES) {
-        issues.push("Maximum of 50 images reached");
-        break;
-      }
-      valid.push(file);
-    }
+function applyLayout(layout){
+  currentLayout=layout;
+  cells=templates[layout]();
+  cells.forEach(cell=>{
+    if(cell.photoIndex<0||!images[cell.photoIndex])cell.photoIndex=-1;
+  });
+  selectedCell=0;
 
-    if (valid.length) {
-      selectedFiles = selectedFiles.concat(valid);
-      releaseResults();
-      updateSelection();
-    }
+document.querySelectorAll('.layout-btn').forEach(button=>{
+    button.classList.toggle('active',button.dataset.layout===layout);
+  });
 
-    if (issues.length) {
-      setStatus(issues.slice(0, 4).join(" · ") +
-        (issues.length > 4 ? " · and more" : ""), "error");
-    } else if (valid.length) {
-      setStatus("Images selected. Review your settings, then select Compress Images.", "success");
-    }
+  updateSelect();
+  draw();
+  status('Layout selected. You can move, resize and edit its frames.');
+}
+
+function rand(min,max){
+  return min+Math.random()*(max-min);
+}
+
+function variedRotation(){
+  return rand(-5,5);
+}
+
+function assignPhotosToCells(){
+  if(!images.length)return;
+  const order=images.map((_,i)=>i);
+
+  for(let i=order.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [order[i],order[j]]=[order[j],order[i]];
   }
 
-  browseBtn.addEventListener("click", () => fileInput.click());
-  dropZone.addEventListener("click", event => {
-    if (event.target.closest("button")) return;
+  cells.forEach((cell,i)=>{
+    cell.photoIndex=i<order.length?order[i]:-1;
+    cell.zoom=1;
+    cell.photoX=0;
+    cell.photoY=0;
+    cell.fit=true;
+    cell.fitMode='cover';
+  });
+
+  selectedPhoto=order[0]??-1;
+  renderPhotos();
+  updateSelect();
+}
+
+function createSmartComposition(){
+  if(!images.length){
+    status('Choose at least one photo before creating a smart collage.');
     fileInput.click();
-  });
-  dropZone.addEventListener("keydown", event => {
-    if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault();
-      fileInput.click();
-    }
-  });
-
-  fileInput.addEventListener("change", () => {
-    addFiles(fileInput.files);
-    fileInput.value = "";
-  });
-
-  ["dragenter", "dragover"].forEach(name => {
-    dropZone.addEventListener(name, event => {
-      event.preventDefault();
-      dropZone.classList.add("dragging");
-    });
-  });
-  ["dragleave", "drop"].forEach(name => {
-    dropZone.addEventListener(name, event => {
-      event.preventDefault();
-      dropZone.classList.remove("dragging");
-    });
-  });
-  dropZone.addEventListener("drop", event => addFiles(event.dataTransfer.files));
-
-  quality.addEventListener("input", () => {
-    qualityValue.textContent = quality.value + "%";
-  });
-
-  function loadImage(file) {
-    return new Promise((resolve, reject) => {
-      const url = URL.createObjectURL(file);
-      const img = new Image();
-      img.onload = () => {
-        URL.revokeObjectURL(url);
-        if (!img.naturalWidth || !img.naturalHeight) {
-          reject(new Error("Could not read image dimensions."));
-          return;
-        }
-        if (img.naturalWidth > MAX_DIMENSION || img.naturalHeight > MAX_DIMENSION ||
-            img.naturalWidth * img.naturalHeight > MAX_PIXELS) {
-          reject(new Error("Image dimensions are too large for safe browser processing."));
-          return;
-        }
-        resolve({ img, width: img.naturalWidth, height: img.naturalHeight });
-      };
-      img.onerror = () => {
-        URL.revokeObjectURL(url);
-        reject(new Error("The image could not be opened by your browser."));
-      };
-      img.src = url;
-    });
+    return;
   }
 
-  function getDimensions(width, height) {
-    const maxWRaw = $("maxWidth").value.trim();
-    const maxHRaw = $("maxHeight").value.trim();
-    const maxW = maxWRaw ? Number(maxWRaw) : 0;
-    const maxH = maxHRaw ? Number(maxHRaw) : 0;
+  const n=images.length;
+  const variant=designVersion++;
+  // Smart layouts deliberately overlap; remove ordinary grid spacing for a full-bleed look.
+  $('spacing').value='0';
+  $('spacingValue').textContent='0 px';
+  const gap=0;
+  const layouts={
+    1:[[[0,-2,100,104,-1]],[[2,0,96,100,2]],[[0,3,100,94,-2]]],
+    2:[
+      [[-3,-2,70,105,-4],[55,14,49,78,5]],
+      [[-2,1,104,58,-2],[15,45,83,59,3]],
+      [[-4,8,57,96,4],[48,-4,58,101,-3]],
+      [[-3,-3,58,106,-5],[43,7,62,98,4]]
+    ],
+    3:[
+      [[-5,-3,75,107,-4],[54,-4,52,48,5],[58,43,49,63,-3]],
+      [[-3,-5,106,62,-2],[2,43,60,62,4],[51,37,54,68,-4]],
+      [[-5,3,63,103,3],[43,-5,62,65,-4],[39,48,65,58,4]],
+      [[-4,-4,59,66,-4],[43,-5,62,66,4],[15,43,77,64,-2]]
+    ],
+    4:[
+      [[-5,-5,69,80,-4],[52,-4,54,53,4],[56,39,49,66,-3],[-4,66,57,39,3]],
+      [[-4,-5,56,64,-4],[42,-4,63,64,4],[-5,48,57,59,3],[45,48,61,59,-3]],
+      [[-5,-3,72,55,-3],[54,-5,53,75,4],[-4,46,49,59,4],[38,57,66,48,-4]],
+      [[-5,-5,53,108,-4],[38,-5,66,54,4],[38,42,67,65,-3],[-4,72,48,34,3]]
+    ],
+    5:[
+      [[-5,-5,68,77,-4],[51,-4,55,45,4],[55,32,50,53,-3],[-4,65,50,42,3],[38,68,66,38,-4]],
+      [[-4,-5,57,61,-4],[43,-4,62,61,4],[-4,43,43,62,3],[30,44,43,62,-4],[58,48,47,57,3]],
+      [[-5,-4,68,106,-3],[53,-4,53,37,4],[54,27,52,38,-4],[-4,69,49,38,4],[38,66,66,40,-3]],
+      [[-5,-4,53,66,-4],[39,-4,66,63,4],[-5,47,53,60,3],[39,43,66,61,-3],[18,70,66,36,2]]
+    ],
+    6:[
+      [[-5,-5,70,79,-4],[51,-5,56,42,4],[55,29,51,48,-3],[-5,65,43,42,3],[30,67,45,38,-4],[66,64,39,42,4]],
+      [[-5,-4,56,62,-4],[42,-5,63,61,4],[-5,43,42,62,3],[29,43,43,62,-4],[57,43,47,60,3],[23,68,57,38,-2]],
+      [[-5,-5,66,105,-3],[51,-5,53,36,4],[53,24,53,38,-4],[-5,69,39,37,4],[27,66,42,39,-3],[62,63,42,42,3]],
+      [[-5,-4,54,66,-4],[39,-5,66,64,4],[-5,48,51,57,3],[36,44,66,60,-3],[14,68,49,39,-2],[59,67,44,39,4]]
+    ]
+  };
 
-    if ((maxWRaw && (!Number.isInteger(maxW) || maxW < 1 || maxW > MAX_DIMENSION)) ||
-        (maxHRaw && (!Number.isInteger(maxH) || maxH < 1 || maxH > MAX_DIMENSION))) {
-      throw new Error("Width and height must be whole numbers between 1 and 30,000.");
+  // More than six photos use a hero image plus a varied editorial mosaic,
+  // rather than forcing every photo into an identical square tile.
+  function makeGeneratedLayout(count, family){
+    // Layered poster compositions: large edge-to-edge hero, with smaller photos
+    // intentionally overlapping it and one another. Later items are drawn on top.
+    const out=[];
+    const heroSets=[
+      [[-5,-4,72,82,-4],[53,-4,54,43,5],[57,30,49,48,-4],[-4,65,47,42,3],[35,66,45,39,-3],[68,64,38,42,4]],
+      [[-4,-4,58,68,-4],[42,-4,64,67,4],[-5,47,47,57,3],[35,43,67,61,-3],[8,70,53,37,-2],[59,68,44,39,4]],
+      [[-5,-4,70,106,-3],[52,-4,54,35,4],[53,24,53,38,-4],[-4,68,40,38,4],[27,66,43,40,-3],[62,64,42,42,3]],
+      [[-5,-4,54,66,-4],[39,-4,67,64,4],[-5,47,52,59,3],[36,44,67,61,-3],[13,69,50,39,-2],[59,66,45,41,4]]
+    ];
+    const base=heroSets[family%heroSets.length].map(box=>box.slice());
+    for(let i=6;i<count;i++){
+      const spots=[[-3,4,34,35,rand(-7,7)],[66,4,38,32,rand(-7,7)],[-2,43,32,39,rand(-7,7)],[68,39,36,37,rand(-7,7)],[28,72,42,34,rand(-6,6)],[39,6,36,31,rand(-7,7)]];
+      base.push(spots[(i-6)%spots.length]);
     }
-
-    let output;
-    if (!maxW && !maxH) {
-      output = { width, height };
-    } else if ($("keepRatio").checked) {
-      const scale = Math.min(
-        maxW ? maxW / width : Infinity,
-        maxH ? maxH / height : Infinity,
-        1
-      );
-      output = {
-        width: Math.max(1, Math.round(width * scale)),
-        height: Math.max(1, Math.round(height * scale))
-      };
-    } else {
-      output = {
-        width: maxW || width,
-        height: maxH || height
-      };
-    }
-
-    if (output.width > MAX_DIMENSION || output.height > MAX_DIMENSION ||
-        output.width * output.height > MAX_PIXELS) {
-      throw new Error("The output dimensions are too large. Use a smaller width or height (maximum 40 megapixels per image).");
-    }
-
-    return output;
+    return base.slice(0,count);
   }
 
-  function canvasBlob(canvas, mime, q) {
-    return new Promise((resolve, reject) => {
-      canvas.toBlob(blob => {
-        if (!blob) {
-          reject(new Error("Your browser could not create the output image."));
-          return;
-        }
-        resolve(blob);
-      }, mime, q);
-    });
+  let chosen;
+  if(n<=6){
+    const choices=layouts[n]||layouts[6];
+    // Rotate through the available editorial designs, then vary the photo order.
+    chosen=choices[variant%choices.length].map(box=>box.slice());
+  }else{
+    chosen=makeGeneratedLayout(n,variant%4);
   }
 
-  async function compressOne(file, settings) {
-    const { img, width, height } = await loadImage(file);
-    const dims = getDimensions(width, height);
-    const canvas = document.createElement("canvas");
-    canvas.width = dims.width;
-    canvas.height = dims.height;
+  // Occasionally mirror the composition so the focal photo is not always on the same side.
+  if(n>=3 && variant%3===2){
+    chosen=chosen.map(([x,y,w,h,r])=>[100-x-w,y,w,h,-r]);
+  }
 
-    const ctx = canvas.getContext("2d", { alpha: true });
-    if (!ctx) throw new Error("Canvas is not available in this browser.");
+  const order=images.map((_,i)=>i);
+  for(let i=order.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [order[i],order[j]]=[order[j],order[i]];
+  }
+  cells=chosen.map((box,i)=>{
+    const [x,y,w,h,rotation]=box;
+    return makeCell(x,y,w,h,order[i]??-1,rotation);
+  });
+  cells.forEach(cell=>{
+    cell.zoom=1;
+    cell.photoX=0;
+    cell.photoY=0;
+    cell.fit=true;
+    cell.fitMode='cover';
+  });
 
-    // JPG does not support transparency, so use a white background.
-    if (settings.mime === "image/jpeg") {
-      ctx.fillStyle = "#ffffff";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-    }
-    ctx.drawImage(img, 0, 0, dims.width, dims.height);
+  currentLayout='smart';
+  document.querySelectorAll('.layout-btn').forEach(button=>button.classList.remove('active'));
+  selectedCell=0;
+  selectedPhoto=order[0]??-1;
+  renderPhotos();
+  updateSelect();
+  draw();
+  status('Layered creative collage '+(variant+1)+' is ready. Photos overlap to fill the canvas. Choose “Try Another Design” for a new composition.');
+}
 
-    let blob;
-    if (settings.mime === "image/png") {
-      blob = await canvasBlob(canvas, "image/png");
-    } else {
-      let q = settings.quality;
-      blob = await canvasBlob(canvas, settings.mime, q);
+fileInput.addEventListener('change',async()=>{
+  const files=Array.from(fileInput.files||[])
+    .filter(file=>file.type.startsWith('image/'))
+    .slice(0,12);
 
-      if (settings.targetBytes > 0 && blob.size > settings.targetBytes) {
-        let low = 0.05;
-        let high = q;
-        let bestUnderTarget = null;
-        let smallestCandidate = blob;
+  if(!files.length){
+    status('Please choose at least one valid image.');
+    return;
+  }
 
-        for (let i = 0; i < 7; i++) {
-          const mid = (low + high) / 2;
-          const candidate = await canvasBlob(canvas, settings.mime, mid);
-          if (candidate.size < smallestCandidate.size) {
-            smallestCandidate = candidate;
-          }
-          if (candidate.size <= settings.targetBytes) {
-            bestUnderTarget = candidate;
-            low = mid;
-          } else {
-            high = mid;
-          }
-        }
-        // If the target cannot be reached, still return the smallest tested version.
-        blob = bestUnderTarget || smallestCandidate;
-      }
-    }
+  status('Loading photos…');
 
-    // Never make a same-format image larger when no resizing was requested.
-    // This is especially important for PNG: canvas re-encoding often increases its size.
-    const sameDimensions = dims.width === width && dims.height === height;
-    if (settings.mime === file.type && sameDimensions && blob.size >= file.size) {
-      blob = file;
-    }
-
-    // Explicitly release the canvas pixel buffer after encoding.
-    canvas.width = 1;
-    canvas.height = 1;
-
-    const ext = outputExtension(settings.mime, file.name);
-    const outputName = cleanName(file.name) + "-compressed." + ext;
-
-    return {
-      original: file,
-      blob,
-      name: outputName,
-      originalSize: file.size,
-      width: dims.width,
-      height: dims.height,
-      mime: settings.mime,
-      url: URL.createObjectURL(blob)
+  const loaded=await Promise.all(files.map(file=>new Promise(resolve=>{
+    const reader=new FileReader();
+    reader.onload=event=>{
+      const img=new Image();
+      img.onload=()=>resolve({image:img,name:file.name});
+      img.onerror=()=>resolve(null);
+      img.src=event.target.result;
     };
+    reader.onerror=()=>resolve(null);
+    reader.readAsDataURL(file);
+  })));
+
+  images=loaded.filter(Boolean);
+  selectedPhoto=images.length?0:-1;
+
+  cells.forEach(cell=>{
+    if(cell.photoIndex<0||cell.photoIndex>=images.length)cell.photoIndex=-1;
+  });
+
+  renderPhotos();
+  updateSelect();
+  draw();
+
+  status(images.length+' photo(s) loaded. Use Create a Smart Collage or choose a layout.');
+});
+
+document.querySelectorAll('.layout-btn').forEach(button=>{
+  button.addEventListener('click',()=>applyLayout(button.dataset.layout));
+});
+
+document.querySelectorAll('.shape-btn').forEach(button=>{
+  button.addEventListener('click',()=>{
+    frameShape=button.dataset.shape;
+    document.querySelectorAll('.shape-btn').forEach(item=>{
+      const active=item===button;
+      item.classList.toggle('active',active);
+      item.setAttribute('aria-pressed',String(active));
+    });
+    draw();
+    const shapeName=button.textContent.trim();
+    status(shapeName+' photo frames selected. Choose a layout and add your photos.');
+  });
+});
+
+$('smartLayout').addEventListener('click',createSmartComposition);
+$('tryAnother').addEventListener('click',createSmartComposition);
+
+document.querySelectorAll('.format-btn').forEach(button=>{
+  button.addEventListener('click',()=>{
+    selectedFormat=button.dataset.format;
+    document.querySelectorAll('.format-btn').forEach(item=>{
+      item.classList.toggle('active',item===button);
+    });
+    draw();
+  });
+});
+
+$('enhancePhotos').addEventListener('click',()=>{
+  if(!images.length){
+    status('Upload photos before enhancing them.');
+    return;
+  }
+  activeStyle=$('photoStyle').value;
+  draw();
+  status('Photo style applied: '+$('photoStyle').selectedOptions[0].text+'. Your original images remain unchanged.');
+});
+
+$('restorePhotos').addEventListener('click',()=>{
+  activeStyle='original';
+  $('photoStyle').value='auto';
+  draw();
+  status('Original photo appearance restored.');
+});
+
+$('photoStyle').addEventListener('change',()=>{
+  activeStyle=$('photoStyle').value;
+  draw();
+});
+
+$('cellSelect').addEventListener('change',()=>{
+  selectCell(Number($('cellSelect').value));
+});
+
+$('photoSelect').addEventListener('change',()=>{
+  selectedPhoto=Number($('photoSelect').value);
+  renderPhotos();
+});
+
+$('placePhoto').addEventListener('click',()=>{
+  if(!cells.length||selectedPhoto<0||!images[selectedPhoto]){
+    status('Choose a photo first.');
+    return;
   }
 
-  function getSettings() {
-    const format = $("outputFormat").value;
-    const targetInput = $("targetSize").value.trim();
-    const targetNumber = targetInput ? Number(targetInput) : 0;
+  const cell=cells[selectedCell];
+  cell.photoIndex=selectedPhoto;
+  cell.photoX=0;
+  cell.photoY=0;
+  cell.zoom=1;
+  cell.fit=true;
+  cell.fitMode='cover';
 
-    if (targetInput && (!Number.isFinite(targetNumber) || targetNumber <= 0)) {
-      throw new Error("Target file size must be a positive number.");
+  updateSelect();
+  draw();
+  status('Photo placed in frame '+(selectedCell+1)+'.');
+});
+
+$('clearPhoto').addEventListener('click',()=>{
+  if(!cells.length)return;
+  const cell=cells[selectedCell];
+  cell.photoIndex=-1;
+  cell.photoX=0;
+  cell.photoY=0;
+  updateSelect();
+  draw();
+  status('Photo removed from the selected frame.');
+});
+
+$('centerPhoto').addEventListener('click',()=>{
+  const cell=cells[selectedCell];
+  if(!cell||cell.photoIndex<0)return;
+  cell.photoX=0;
+  cell.photoY=0;
+  cell.zoom=1;
+  cell.fit=true;
+  cell.fitMode='cover';
+  updateControls();
+  draw();
+  status('Photo centered and zoom reset.');
+});
+
+$('fillFrame').addEventListener('click',()=>{
+  const cell=cells[selectedCell];
+  if(!cell||cell.photoIndex<0)return;
+  cell.fitMode='cover';
+  cell.zoom=1;
+  cell.photoX=0;
+  cell.photoY=0;
+  cell.fit=true;
+  updateControls();
+  draw();
+  status('Photo fills the frame. Drag it to adjust the crop.');
+});
+
+$('fitWholePhoto').addEventListener('click',()=>{
+  const cell=cells[selectedCell];
+  if(!cell||cell.photoIndex<0)return;
+  cell.fitMode='contain';
+  cell.zoom=1;
+  cell.photoX=0;
+  cell.photoY=0;
+  cell.fit=true;
+  updateControls();
+  draw();
+  status('Whole photo shown without cropping. Empty space may remain around it.');
+});
+
+$('autoFitAll').addEventListener('click',()=>{
+  let count=0;
+  cells.forEach(cell=>{
+    if(cell.photoIndex>=0&&images[cell.photoIndex]){
+      cell.zoom=1;
+      cell.photoX=0;
+      cell.photoY=0;
+      cell.fit=true;
+      cell.fitMode='cover';
+      count++;
     }
-    if (targetNumber > 100000) {
-      throw new Error("Target file size cannot exceed 100,000 KB or MB.");
+  });
+  updateControls();
+  draw();
+  status(count ? 'All '+count+' photos centered and fitted to their frames.' : 'Add photos to the collage first.');
+});
+
+$('autoPlacePhotos').addEventListener('click',()=>{
+  if(!images.length){status('Upload photos first.');fileInput.click();return;}
+  const count=Math.min(images.length,12);
+  if(cells.length<count){
+    if(templates[String(count)]){
+      cells=templates[String(count)]();
+      currentLayout=String(count);
+      document.querySelectorAll('.layout-btn').forEach(button=>button.classList.toggle('active',button.dataset.layout===currentLayout));
+    }else{
+      const cols=count<=3?count:3;
+      const rows=Math.ceil(count/cols);
+      cells=Array.from({length:count},(_,i)=>makeCell((i%cols)*100/cols,Math.floor(i/cols)*100/rows,100/cols,100/rows,-1));
+      currentLayout='custom';
+      document.querySelectorAll('.layout-btn').forEach(button=>button.classList.remove('active'));
+    }
+  }
+  cells.forEach((cell,i)=>{
+    cell.photoIndex=i<count?i:-1;
+    cell.zoom=1;
+    cell.photoX=0;
+    cell.photoY=0;
+    cell.fit=true;
+    cell.fitMode='cover';
+  });
+  selectedCell=0;
+  selectedPhoto=0;
+  renderPhotos();
+  updateSelect();
+  draw();
+  status(count+' photo(s) placed in frames and centered automatically.');
+});
+
+$('addCell').addEventListener('click',()=>{
+  if(cells.length>=12){
+    status('You can add up to 12 frames.');
+    return;
+  }
+  cells.push(makeCell(10,10,35,35,-1));
+  selectedCell=cells.length-1;
+  updateSelect();
+  draw();
+  status('New frame added. Move, resize or overlap it.');
+});
+
+$('removeCell').addEventListener('click',()=>{
+  if(cells.length<=1)return;
+  cells.splice(selectedCell,1);
+  selectedCell=Math.min(selectedCell,cells.length-1);
+  updateSelect();
+  draw();
+  status('Frame removed.');
+});
+
+$('resetLayout').addEventListener('click',()=>{
+  if(currentLayout==='smart'){
+    createSmartComposition();
+  }else{
+    applyLayout(templates[currentLayout]?currentLayout:'blank');
+  }
+});
+
+$('shuffle').addEventListener('click',()=>{
+  if(!images.length){
+    status('Add photos before shuffling.');
+    return;
+  }
+
+  const order=images.map((_,i)=>i);
+  for(let i=order.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [order[i],order[j]]=[order[j],order[i]];
+  }
+
+  cells.forEach(cell=>{
+    if(cell.photoIndex>=0&&cell.photoIndex<order.length){
+      cell.photoIndex=order[cell.photoIndex];
+      cell.photoX=0;
+      cell.photoY=0;
+      cell.zoom=1;
+      cell.fit=true;
+      cell.fitMode='cover';
+    }
+  });
+
+  selectedPhoto=selectedPhoto>=0?order[selectedPhoto]:-1;
+  renderPhotos();
+  updateSelect();
+  draw();
+  status('Photos shuffled.');
+});
+
+$('spacing').addEventListener('input',()=>{
+  $('spacingValue').textContent=$('spacing').value+' px';
+  draw();
+});
+
+$('radius').addEventListener('input',()=>{
+  $('radiusValue').textContent=$('radius').value+' px';
+  draw();
+});
+
+$('bgColor').addEventListener('input',draw);
+$('caption').addEventListener('input',draw);
+
+$('cellZoom').addEventListener('input',()=>{
+  const cell=cells[selectedCell];
+  if(!cell)return;
+  cell.zoom=Number($('cellZoom').value)/100;
+  cell.fit=false;
+  $('cellZoomValue').textContent=cell.zoom.toFixed(1)+'×';
+  draw();
+});
+
+function roundedRect(x,y,w,h,r){
+  r=Math.max(0,Math.min(r,w/2,h/2));
+  ctx.beginPath();
+  ctx.moveTo(x+r,y);
+  ctx.lineTo(x+w-r,y);
+  ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+  ctx.lineTo(x+w,y+h-r);
+  ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+  ctx.lineTo(x+r,y+h);
+  ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+  ctx.lineTo(x,y+r);
+  ctx.quadraticCurveTo(x,y,x+r,y);
+  ctx.closePath();
+}
+
+function shapePath(shape,x,y,w,h,r){
+  ctx.beginPath();
+  if(shape==='circle'){
+    const radius=Math.min(w,h)/2;
+    ctx.arc(x+w/2,y+h/2,radius,0,Math.PI*2);
+  }else if(shape==='oval'){
+    ctx.ellipse(x+w/2,y+h/2,w/2,h/2,0,0,Math.PI*2);
+  }else if(shape==='heart'){
+    ctx.moveTo(x+w*.5,y+h*.92);
+    ctx.bezierCurveTo(x+w*.38,y+h*.81,x+w*.03,y+h*.57,x+w*.06,y+h*.32);
+    ctx.bezierCurveTo(x+w*.09,y+h*.06,x+w*.39,y+h*.02,x+w*.5,y+h*.24);
+    ctx.bezierCurveTo(x+w*.61,y+h*.02,x+w*.91,y+h*.06,x+w*.94,y+h*.32);
+    ctx.bezierCurveTo(x+w*.97,y+h*.57,x+w*.62,y+h*.81,x+w*.5,y+h*.92);
+    ctx.closePath();
+  }else if(shape==='star'){
+    const cx=x+w/2,cy=y+h/2,outer=Math.min(w,h)*.49,inner=outer*.43;
+    for(let i=0;i<10;i++){
+      const a=-Math.PI/2+i*Math.PI/5;
+      const rad=i%2===0?outer:inner;
+      const px=cx+Math.cos(a)*rad,py=cy+Math.sin(a)*rad;
+      if(i===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);
+    }
+    ctx.closePath();
+  }else if(shape==='cloud'){
+    ctx.moveTo(x+w*.18,y+h*.78);
+    ctx.bezierCurveTo(x+w*.03,y+h*.78,x+w*.01,y+h*.59,x+w*.14,y+h*.51);
+    ctx.bezierCurveTo(x+w*.09,y+h*.34,x+w*.25,y+h*.21,x+w*.39,y+h*.32);
+    ctx.bezierCurveTo(x+w*.44,y+h*.08,x+w*.73,y+h*.08,x+w*.77,y+h*.34);
+    ctx.bezierCurveTo(x+w*.96,y+h*.29,x+w*1.02,y+h*.51,x+w*.89,y+h*.61);
+    ctx.bezierCurveTo(x+w*.94,y+h*.78,x+w*.79,y+h*.83,x+w*.68,y+h*.78);
+    ctx.bezierCurveTo(x+w*.54,y+h*.91,x+w*.37,y+h*.88,x+w*.31,y+h*.79);
+    ctx.quadraticCurveTo(x+w*.23,y+h*.84,x+w*.18,y+h*.78);
+    ctx.closePath();
+  }else if(shape==='rectangle'){
+    ctx.rect(x,y,w,h);
+  }else{
+    roundedRect(x,y,w,h,r);
+  }
+}
+
+function getFrameRect(cell){
+  const gap=Number($('spacing').value);
+  return {
+    x:cell.x/100*canvas.width+gap/2,
+    y:cell.y/100*canvas.height+gap/2,
+    w:Math.max(1,cell.w/100*canvas.width-gap),
+    h:Math.max(1,cell.h/100*canvas.height-gap)
+  };
+}
+
+function drawPhoto(img,r,cell,cornerRadius){
+  ctx.save();
+
+  const cx=r.x+r.w/2;
+  const cy=r.y+r.h/2;
+  ctx.translate(cx,cy);
+  ctx.rotate((cell.rotation||0)*Math.PI/180);
+
+  const frameX=-r.w/2;
+  const frameY=-r.h/2;
+
+  ctx.shadowColor='rgba(0,0,0,.38)';
+  ctx.shadowBlur=Math.max(8,canvas.width*.012);
+  ctx.shadowOffsetX=0;
+  ctx.shadowOffsetY=Math.max(4,canvas.width*.006);
+
+  shapePath(frameShape,frameX,frameY,r.w,r.h,frameShape==='rounded'?cornerRadius:0);
+  ctx.fillStyle='#ffffff';
+  ctx.fill();
+
+  ctx.shadowColor='transparent';
+  ctx.shadowBlur=0;
+  ctx.shadowOffsetY=0;
+
+  const border=Math.max(5,canvas.width*.008);
+  const ix=frameX+border;
+  const iy=frameY+border;
+  const iw=Math.max(1,r.w-border*2);
+  const ih=Math.max(1,r.h-border*2);
+  const innerRadius=Math.max(0,cornerRadius-border);
+
+  shapePath(frameShape,ix,iy,iw,ih,frameShape==='rounded'?innerRadius:0);
+  ctx.clip();
+
+  const coverScale=Math.max(iw/img.naturalWidth,ih/img.naturalHeight);
+  const containScale=Math.min(iw/img.naturalWidth,ih/img.naturalHeight);
+  const baseScale=(cell.fitMode==='contain'?containScale:coverScale);
+  const scale=baseScale*(cell.zoom||1);
+  const dw=img.naturalWidth*scale;
+  const dh=img.naturalHeight*scale;
+  const maxX=cell.fitMode==='contain'?Math.max(0,(dw-iw)/2):Math.max(0,(dw-iw)/2);
+  const maxY=cell.fitMode==='contain'?Math.max(0,(dh-ih)/2):Math.max(0,(dh-ih)/2);
+
+  cell.photoX=Math.max(-maxX,Math.min(maxX,cell.photoX||0));
+  cell.photoY=Math.max(-maxY,Math.min(maxY,cell.photoY||0));
+
+  ctx.filter=styles[activeStyle]||'none';
+  ctx.drawImage(
+    img,
+    ix+(iw-dw)/2+cell.photoX,
+    iy+(ih-dh)/2+cell.photoY,
+    dw,dh
+  );
+  ctx.filter='none';
+  ctx.restore();
+}
+
+function drawCaption(){
+  const text=$('caption').value.trim();
+  if(!text)return;
+
+  const fontSize=Math.max(24,Math.round(canvas.width/28));
+  ctx.save();
+  ctx.font='800 '+fontSize+'px Arial';
+  ctx.textAlign='center';
+  ctx.textBaseline='middle';
+
+  const maxWidth=canvas.width*.88;
+  let output=text;
+  while(ctx.measureText(output).width>maxWidth&&output.length>4){
+    output=output.slice(0,-2)+'…';
+  }
+
+  const textWidth=ctx.measureText(output).width;
+  const boxWidth=Math.min(canvas.width-30,textWidth+36);
+  const boxHeight=fontSize+24;
+  const x=canvas.width/2;
+  const y=canvas.height-Math.max(45,canvas.height*.06);
+
+  ctx.fillStyle='rgba(0,0,0,.72)';
+  roundedRect(x-boxWidth/2,y-boxHeight/2,boxWidth,boxHeight,10);
+  ctx.fill();
+  ctx.fillStyle='#fff';
+  ctx.fillText(output,x,y,maxWidth);
+  ctx.restore();
+}
+
+function draw(includeSelection=true){
+  const format=formats[selectedFormat];
+  canvas.width=format.width;
+  canvas.height=format.height;
+
+  ctx.fillStyle=$('bgColor').value;
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  const radius=Number($('radius').value);
+
+  cells.forEach((cell,i)=>{
+    const rect=getFrameRect(cell);
+    const item=cell.photoIndex>=0?images[cell.photoIndex]:null;
+
+    if(item){
+      drawPhoto(item.image,rect,cell,radius);
+    }else{
+      ctx.save();
+      ctx.translate(rect.x+rect.w/2,rect.y+rect.h/2);
+      ctx.rotate((cell.rotation||0)*Math.PI/180);
+      shapePath(frameShape,-rect.w/2,-rect.h/2,rect.w,rect.h,frameShape==='rounded'?radius:0);
+      ctx.fillStyle=$('bgColor').value;
+      ctx.fill();
+      ctx.strokeStyle='#7184a3';
+      ctx.lineWidth=3;
+      ctx.setLineDash([12,8]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle='#7184a3';
+      ctx.textAlign='center';
+      ctx.textBaseline='middle';
+      ctx.font='bold '+Math.max(22,Math.round(canvas.width/45))+'px Arial';
+      ctx.fillText('+',0,0);
+      ctx.restore();
     }
 
-    const unit = $("targetUnit").value;
-    const targetBytes = targetNumber
-      ? targetNumber * (unit === "MB" ? 1024 * 1024 : 1024)
-      : 0;
+    if(includeSelection&&i===selectedCell){
+      ctx.save();
+      ctx.strokeStyle='#6ea8ff';
+      ctx.lineWidth=Math.max(4,canvas.width/300);
+      ctx.strokeRect(rect.x,rect.y,rect.w,rect.h);
+      const size=Math.max(24,canvas.width*.028);
+      [[rect.x,rect.y],[rect.x+rect.w,rect.y],[rect.x,rect.y+rect.h],[rect.x+rect.w,rect.y+rect.h]].forEach(([x,y])=>{
+        ctx.fillStyle='#fff';
+        ctx.strokeStyle='#2563eb';
+        ctx.lineWidth=4;
+        ctx.beginPath();
+        ctx.rect(x-size/2,y-size/2,size,size);
+        ctx.fill();
+        ctx.stroke();
+      });
+      ctx.restore();
+    }
+  });
 
-    return {
-      mime: format === "original" ? null : format,
-      quality: Number(quality.value) / 100,
-      targetBytes
+  drawCaption();
+  $('downloadJpg').disabled=!images.length;
+  $('downloadPng').disabled=!images.length;
+  updateControls();
+}
+
+function pointerPoint(event){
+  const rect=canvas.getBoundingClientRect();
+  return {
+    x:(event.clientX-rect.left)/rect.width*canvas.width,
+    y:(event.clientY-rect.top)/rect.height*canvas.height
+  };
+}
+
+canvas.addEventListener('pointerdown',event=>{
+  if(!cells.length)return;
+
+  const point=pointerPoint(event);
+  const rect=canvas.getBoundingClientRect();
+  const scaleX=canvas.width/Math.max(1,rect.width);
+  const scaleY=canvas.height/Math.max(1,rect.height);
+  const handleX=16*scaleX;
+  const handleY=16*scaleY;
+  const edgeX=40*scaleX;
+  const edgeY=40*scaleY;
+
+  for(let i=cells.length-1;i>=0;i--){
+    const cell=cells[i];
+    const r=getFrameRect(cell);
+    const corners=[
+      {name:'nw',x:r.x,y:r.y},
+      {name:'ne',x:r.x+r.w,y:r.y},
+      {name:'sw',x:r.x,y:r.y+r.h},
+      {name:'se',x:r.x+r.w,y:r.y+r.h}
+    ];
+
+    const corner=corners.find(item=>
+      Math.abs(point.x-item.x)<=handleX&&Math.abs(point.y-item.y)<=handleY
+    );
+
+    const inside=point.x>=r.x&&point.x<=r.x+r.w&&point.y>=r.y&&point.y<=r.y+r.h;
+    if(!corner&&!inside)continue;
+
+    selectedCell=i;
+    const nearEdge=
+      point.x<=r.x+edgeX||
+      point.x>=r.x+r.w-edgeX||
+      point.y<=r.y+edgeY||
+      point.y>=r.y+r.h-edgeY;
+
+    let mode=corner?'resize':nearEdge?'move':(cell.photoIndex>=0?'photo':'move');
+
+    dragging={
+      mode,
+      corner:corner?corner.name:null,
+      startX:point.x,
+      startY:point.y,
+      x:cell.x,y:cell.y,w:cell.w,h:cell.h,
+      photoX:cell.photoX||0,
+      photoY:cell.photoY||0,
+      pointerId:event.pointerId
     };
-  }
 
-  function createResultCard(result) {
-    const card = document.createElement("article");
-    card.className = "result-card";
+    $('cellSelect').value=String(i);
+    updateControls();
 
-    const preview = document.createElement("div");
-    preview.className = "preview";
-    const img = document.createElement("img");
-    img.src = result.url;
-    img.alt = "Preview of " + result.name;
-    img.loading = "lazy";
-    preview.appendChild(img);
-
-    const info = document.createElement("div");
-    info.className = "result-info";
-
-    const name = document.createElement("div");
-    name.className = "filename";
-    name.textContent = result.name;
-
-    const details = document.createElement("div");
-    details.className = "file-details";
-    details.textContent = formatBytes(result.originalSize) + " → " +
-      formatBytes(result.blob.size) + " · " +
-      result.width + " × " + result.height + " px";
-
-    const saving = document.createElement("div");
-    saving.className = "saving";
-    if (result.blob.size < result.originalSize) {
-      const pct = Math.round((1 - result.blob.size / result.originalSize) * 100);
-      saving.textContent = pct + "% smaller";
-    } else if (result.blob.size > result.originalSize) {
-      saving.textContent = "File size increased";
-    } else {
-      saving.textContent = "Same file size";
+    if(canvas.setPointerCapture){
+      try{canvas.setPointerCapture(event.pointerId)}catch(error){}
     }
 
-    const download = document.createElement("a");
-    download.className = "btn btn-secondary";
-    download.href = result.url;
-    download.download = result.name;
-    download.textContent = "Download Image";
-
-    info.append(name, details, saving, download);
-    card.append(preview, info);
-    resultGrid.appendChild(card);
+    draw();
+    event.preventDefault();
+    return;
   }
+});
 
-  function updateStats() {
-    const valid = results.filter(r => r.blob);
-    const originalTotal = valid.reduce((sum, r) => sum + r.originalSize, 0);
-    const compressedTotal = valid.reduce((sum, r) => sum + r.blob.size, 0);
-    const saved = originalTotal
-      ? Math.round((1 - compressedTotal / originalTotal) * 100)
-      : 0;
+canvas.addEventListener('pointermove',event=>{
+  if(!dragging)return;
+  const point=pointerPoint(event);
+  const cell=cells[selectedCell];
+  if(!cell)return;
 
-    $("statCount").textContent = String(valid.length);
-    $("statOriginal").textContent = formatBytes(originalTotal);
-    if (saved > 0) {
-      $("statSaved").textContent = saved + "% smaller";
-    } else if (saved < 0) {
-      $("statSaved").textContent = Math.abs(saved) + "% larger";
-    } else {
-      $("statSaved").textContent = "0%";
+  const dx=point.x-dragging.startX;
+  const dy=point.y-dragging.startY;
+  const dxPercent=dx/canvas.width*100;
+  const dyPercent=dy/canvas.height*100;
+
+  if(dragging.mode==='photo'){
+    cell.fit=false;
+    cell.photoX=dragging.photoX+dx;
+    cell.photoY=dragging.photoY+dy;
+  }else if(dragging.mode==='move'){
+    cell.x=Math.max(0,Math.min(100-cell.w,dragging.x+dxPercent));
+    cell.y=Math.max(0,Math.min(100-cell.h,dragging.y+dyPercent));
+  }else{
+    const min=8;
+    const right=dragging.x+dragging.w;
+    const bottom=dragging.y+dragging.h;
+    const corner=dragging.corner;
+
+    if(corner.includes('w')){
+      cell.x=Math.max(0,Math.min(right-min,dragging.x+dxPercent));
+      cell.w=right-cell.x;
+    }else{
+      cell.w=Math.max(min,Math.min(100-dragging.x,dragging.w+dxPercent));
     }
-    $("statSavedLabel").textContent = "Net size change";
+
+    if(corner.includes('n')){
+      cell.y=Math.max(0,Math.min(bottom-min,dragging.y+dyPercent));
+      cell.h=bottom-cell.y;
+    }else{
+      cell.h=Math.max(min,Math.min(100-dragging.y,dragging.h+dyPercent));
+    }
   }
 
-  processBtn.addEventListener("click", async () => {
-    if (busy || !selectedFiles.length) return;
+  updateControls();
+  draw();
+});
 
-    let settings;
-    try {
-      settings = getSettings();
-      if (settings.mime === null) {
-        // Keep the original format separately for each input file.
-      }
-    } catch (error) {
-      setStatus(error.message, "error");
+function stopDragging(){
+  dragging=null;
+}
+canvas.addEventListener('pointerup',stopDragging);
+canvas.addEventListener('pointercancel',stopDragging);
+canvas.addEventListener('lostpointercapture',stopDragging);
+
+function download(format){
+  if(!images.length){
+    status('Add at least one photo before exporting.');
+    return;
+  }
+
+  // Export a clean version without the editor selection handles.
+  draw(false);
+  const mime=format==='jpg'?'image/jpeg':'image/png';
+
+  canvas.toBlob(blob=>{
+    draw(true);
+
+    if(!blob){
+      status('Export failed. Please try again.');
       return;
     }
 
-    busy = true;
-    const thisGeneration = ++generation;
-    processBtn.disabled = true;
-    zipBtn.disabled = true;
-    clearBtn.disabled = true;
-    progressWrap.style.display = "block";
-    progressBar.style.width = "0%";
-    progressLabel.textContent = "Starting compression...";
-    setStatus("Processing images in your browser. Keep this page open.");
+    const url=URL.createObjectURL(blob);
+    const link=document.createElement('a');
+    const stamp=new Date().toISOString().replace(/[:.]/g,'-');
+    link.href=url;
+    link.download='ritoccapix-collage-'+stamp+'.'+format;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),10000);
+    status('Download started: '+link.download);
+  },mime,format==='jpg'?.94:undefined);
+}
 
-    releaseResults();
-    const files = selectedFiles.slice();
-    let completed = 0;
-    let failures = [];
+$('downloadJpg').addEventListener('click',()=>download('jpg'));
+$('downloadPng').addEventListener('click',()=>download('png'));
 
-    for (let i = 0; i < files.length; i++) {
-      if (thisGeneration !== generation) return;
-      const file = files[i];
-      progressLabel.textContent = "Processing image " + (i + 1) + " of " + files.length + ": " + file.name;
-
-      try {
-        const perFileSettings = {
-          ...settings,
-          mime: settings.mime || file.type
-        };
-        if (!["image/jpeg", "image/png", "image/webp"].includes(perFileSettings.mime)) {
-          perFileSettings.mime = "image/jpeg";
-        }
-        const result = await compressOne(file, perFileSettings);
-        results.push(result);
-        createResultCard(result);
-      } catch (error) {
-        failures.push(file.name + ": " + error.message);
-      }
-
-      completed++;
-      progressBar.style.width = Math.round(completed / files.length * 100) + "%";
-      await new Promise(resolve => setTimeout(resolve, 0));
-    }
-
-    updateStats();
-    resultsSection.hidden = results.length === 0;
-    busy = false;
-    progressLabel.textContent = "Finished: " + results.length + " successful, " + failures.length + " failed.";
-    processBtn.disabled = !selectedFiles.length;
-    clearBtn.disabled = !selectedFiles.length && !results.length;
-    zipBtn.disabled = !results.length;
-
-    if (failures.length) {
-      setStatus(
-        "Finished with " + failures.length + " error(s). " +
-        failures.slice(0, 3).join(" · ") +
-        (failures.length > 3 ? " · More errors occurred." : ""),
-        "error"
-      );
-    } else {
-      setStatus("All " + results.length + " image(s) processed successfully. Review the results below.", "success");
-    }
-  });
-
-  zipBtn.addEventListener("click", async () => {
-    const valid = results.filter(r => r.blob);
-    if (!valid.length || busy) return;
-
-    if (typeof JSZip === "undefined") {
-      setStatus("The ZIP library could not be loaded. Check your internet connection or download images individually.", "error");
-      return;
-    }
-
-    busy = true;
-    zipBtn.disabled = true;
-    processBtn.disabled = true;
-    clearBtn.disabled = true;
-    setStatus("Preparing your ZIP archive...");
-
-    try {
-      const zip = new JSZip();
-      valid.forEach((result, index) => {
-        let name = result.name;
-        if (valid.filter(r => r.name === name).length > 1) {
-          const dot = name.lastIndexOf(".");
-          name = (dot > 0 ? name.slice(0, dot) : name) +
-            "-" + (index + 1) + (dot > 0 ? name.slice(dot) : "");
-        }
-        zip.file(name, result.blob);
-      });
-
-      const archive = await zip.generateAsync({
-        type: "blob",
-        compression: "DEFLATE",
-        compressionOptions: { level: 5 }
-      });
-
-      const url = URL.createObjectURL(archive);
-      const a = document.createElement("a");
-      a.href = url;
-      // Give every ZIP a unique, timestamped filename so repeated downloads
-      // are saved as separate files without the browser asking to download
-      // the same filename again.
-      const now = new Date();
-      const stamp = [
-        now.getFullYear(),
-        String(now.getMonth() + 1).padStart(2, "0"),
-        String(now.getDate()).padStart(2, "0"),
-        "-",
-        String(now.getHours()).padStart(2, "0"),
-        String(now.getMinutes()).padStart(2, "0"),
-        String(now.getSeconds()).padStart(2, "0"),
-        "-",
-        String(now.getMilliseconds()).padStart(3, "0")
-      ].join("");
-      a.download = "ritoccapix-compressed-images-" + stamp + ".zip";
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 30000);
-      setStatus("Your ZIP archive is ready. If the download did not start, download images individually.", "success");
-    } catch (error) {
-      setStatus("Could not create the ZIP archive. Please download the images individually.", "error");
-    } finally {
-      busy = false;
-      processBtn.disabled = !selectedFiles.length;
-      clearBtn.disabled = !selectedFiles.length && !results.length;
-      zipBtn.disabled = !results.length;
-    }
-  });
-
-  clearBtn.addEventListener("click", () => {
-    if (busy) return;
-    generation++;
-    selectedFiles = [];
-    releaseResults();
-    fileInput.value = "";
-    progressWrap.style.display = "none";
-    progressBar.style.width = "0%";
-    progressLabel.textContent = "";
-    setStatus("");
-    updateSelection();
-  });
-
-  updateSelection();
-})();
+cells=templates.blank();
+updateSelect();
+draw();
+status('Upload photos, then create a smart collage or choose a ready-made layout.');
 </script>
 </body>
 </html>
