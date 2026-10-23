@@ -1,4 +1,3 @@
-
 /* RitoccaPix - Responsive Dropdown Navigation */
 (function () {
   const tools = [
@@ -16,6 +15,7 @@
     { name: "Image Smart", url: "image-smart.html" },
     { name: "Image Social", url: "image-social.html" },
     { name: "Pixel Avatar Maker", url: "pixel-avatar-maker.html" },
+    { name: "Photo to Coloring Page", url: "photo-to-coloring-page.html" },
     { name: "Social Video Maker", url: "social-video-maker.html" },
     { name: "AI Study Assistant", url: "ai-study-assistant.html" }
   ];
