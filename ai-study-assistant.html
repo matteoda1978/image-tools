@@ -232,11 +232,12 @@ function makeCards(text){
    let explanation=m[2].trim();
    const next=sentences[sentences.indexOf(raw)+1];
    if(next && next.length<180 && !/^[A-Z][A-Za-z -]{1,45}:\s/.test(next) && /^(?:some|it|they|this|these|the sun|water vapor|water that|when|as)\b/i.test(next)) explanation += ' ' + next;
-   const q=/^(evaporation|transpiration|condensation|precipitation|infiltration)$/i.test(term)
-    ? 'What happens during '+term.toLowerCase()+'?'
-    : /^(runoff and collection|runoff|collection)$/i.test(term)
-      ? 'What is runoff and collection?'
-      : 'What is '+term.toLowerCase()+'?';
+   const lowerTerm=term.toLowerCase();
+   const q=/^(evaporation|transpiration|condensation|precipitation|infiltration|runoff|collection)$/i.test(term)
+    ? 'What happens during '+lowerTerm+'?'
+    : /^runoff and collection$/i.test(term)
+      ? 'How do runoff and collection move water through the environment?'
+      : 'What is '+lowerTerm+'?';
    add(q,explanation);
    continue;
   }
@@ -264,9 +265,26 @@ function makeCards(text){
    if(cards.length>=8)break;
    const clean=sentence.replace(/[.!?]+$/,'').trim();
    if(clean.length<45)continue;
-   let q='What is the key idea in this statement?';
-   const m=clean.match(/^(The [A-Za-z][A-Za-z -]{1,45}?)\s+(is|are|was|were)\s+(.+)$/i);
-   if(m)q='How does the source describe '+m[1].toLowerCase()+'?';
+   let q='';
+   let m=clean.match(/^(The [A-Za-z][A-Za-z -]{1,55}?)\s+(is|are|was|were)\s+(.+)$/i);
+   if(m){
+    q='How does the source describe '+m[1].replace(/^The\s+/i,'').trim().toLowerCase()+'?';
+   }else{
+    m=clean.match(/^(.{2,70}?)\s+(describes|explains|includes|contains|causes|leads to|results in|produces|creates|provides|affects|influences|increases|reduces|supports|depends on|consists of|occurs|happens|forms|changes|moves|flows|falls|rises|releases|absorbs|evaporates|condenses|precipitates|returns|return|allows|allow|helps|help|uses|use|converts|turns into|changes into|is made of)\b/i);
+    if(m){
+     const subject=m[1].replace(/^(?:the|a|an)\s+/i,'').trim().toLowerCase();
+     const verb=m[2].toLowerCase();
+     if(/^(causes|leads to|results in|produces|creates)$/.test(verb))q='What effect does '+subject+' have?';
+     else if(/^(occurs|happens)$/.test(verb))q='When does '+subject+' occur?';
+     else if(verb==='includes'||verb==='contains')q='What does '+subject+' include?';
+     else if(verb==='depends on')q='What does '+subject+' depend on?';
+     else q='What does the source say about '+subject+'?';
+    }else{
+     const wordsInSentence=clean.match(/[A-Za-zÀ-ÿ0-9][A-Za-zÀ-ÿ0-9'-]*/g)||[];
+     const topic=wordsInSentence.slice(0,Math.min(5,wordsInSentence.length)).join(' ').replace(/[.!?]+$/,'').toLowerCase();
+     q=topic?'What is an important point about '+topic+'?':'What is an important point in this material?';
+    }
+   }
    add(q,clean);
   }
  }
@@ -283,7 +301,13 @@ function makeQuiz(text){
   const unique=[];
   for(const x of opts){if(!unique.some(y=>y.toLowerCase()===x.toLowerCase()))unique.push(x);}
   if(unique.length<4)return;
-  const selected=unique.slice(0,4);
+  // Rotate distractor selection as well as answer positions, so longer lists
+  // do not reuse the same first three wrong answers in every question.
+  const alternatives=unique.filter(x=>x.toLowerCase()!==answer.toLowerCase());
+  if(alternatives.length<3)return;
+  const offset=quiz.length%alternatives.length;
+  const rotated=alternatives.slice(offset).concat(alternatives.slice(0,offset));
+  const selected=[answer,...rotated.slice(0,3)];
   // Rotate answer positions deterministically so correct answers are not always A.
   const shift=quiz.length%selected.length;
   const ordered=selected.slice(shift).concat(selected.slice(0,shift));
