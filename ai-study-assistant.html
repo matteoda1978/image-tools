@@ -283,10 +283,18 @@ function makeQuiz(text){
  // Water-cycle material is often written as full definitions rather than a "Term: definition" glossary.
  const processItems=[];
  for(const term of processNames){const source=sentences.find(s=>new RegExp('^'+term+'\\b','i').test(s)||new RegExp('^'+term+'\\s*:','i').test(s));if(source)processItems.push({term,source});}
+ const processPrompts={
+  evaporation:'Which process happens when the Sun heats water and changes it into water vapor?',
+  transpiration:'Which process releases water vapor from plants?',
+  condensation:'Which process happens when water vapor cools and forms tiny water droplets?',
+  precipitation:'Which process brings water from clouds as rain, snow, sleet, or hail?',
+  infiltration:'Which process happens when water soaks into the ground?',
+  runoff:'Which process describes water flowing over land into rivers and lakes?',
+  collection:'Which process happens when water gathers in oceans, lakes, and rivers?'
+ };
  for(const item of processItems){
-  const definition=item.source.replace(new RegExp('^'+item.term+'\\s*:?\\s*','i'),'').replace(/[.!?]+$/,'').trim();
-  if(definition.length<10)continue;
-  const prompt=/^(evaporation|transpiration|condensation|precipitation|infiltration|runoff|collection)$/i.test(item.term)?'Which water-cycle process is described: '+definition+'?':'Which term matches this description: '+definition+'?';
+  const term=item.term.toLowerCase();
+  const prompt=processPrompts[term]||('Which term best matches this description: '+item.source.replace(new RegExp('^'+item.term+'\\s*:?\\s*','i'),'').replace(/[.!?]+$/,'').trim()+'?');
   addQuestion(prompt,item.term,item.source,processItems.map(x=>x.term));
   if(quiz.length>=8)break;
  }
@@ -309,8 +317,21 @@ function render(){
   const processOrder=['evaporation','transpiration','condensation','precipitation','infiltration','runoff','collection'];
   const ordered=points.slice().sort((a,b)=>{const ai=processOrder.findIndex(t=>new RegExp('^'+t+'\\b','i').test(a)),bi=processOrder.findIndex(t=>new RegExp('^'+t+'\\b','i').test(b));if(ai>=0&&bi>=0)return ai-bi;if(ai>=0)return -1;if(bi>=0)return 1;return points.indexOf(a)-points.indexOf(b);});
   const firstCard=pack.cards[0];
+  const sourceByProcess={};
+  for(const term of processOrder){const sentence=cleanSentences(pack.sourceText||'').find(s=>new RegExp('^'+term+'\\b','i').test(s));if(sentence)sourceByProcess[term]=sentence;}
+  const hasCycle=processOrder.filter(term=>sourceByProcess[term]).length>=4;
+  const bigPicture=hasCycle?[
+   sourceByProcess.evaporation,
+   sourceByProcess.transpiration,
+   sourceByProcess.condensation,
+   sourceByProcess.precipitation,
+   sourceByProcess.infiltration,
+   sourceByProcess.runoff,
+   sourceByProcess.collection
+  ].filter(Boolean).join(' '):first;
+  const connectionText=hasCycle?'The connections in your source form a sequence: water enters the air as vapor, cools into droplets, falls from clouds, and then soaks into the ground or flows across land before gathering in bodies of water. The source also identifies transpiration as another way water vapor is released by plants.':'Start with the main point above, then ask how each following point explains, causes, or gives an example of it. The links between points may need more context than the source provides.';
   output.innerHTML='<h3>Understand it step by step: '+title+'</h3>'+
-   '<div class="homework-box"><h4>1. The big picture</h4><p>'+escapeHTML(first)+'</p><p class="notice">This starting point is selected from your material. It is not a new explanation invented by an AI model.</p></div>'+
+   '<div class="homework-box"><h4>1. The big picture</h4><p>'+escapeHTML(bigPicture)+'</p>'+(hasCycle?'<p>'+escapeHTML(connectionText)+'</p>':'')+'<p class="notice">This overview is assembled from sentences in your material using local rules. The connecting sentence is a simple summary of those source points, not a personalized AI explanation.</p></div>'+
    '<div class="homework-box"><h4>2. Build the idea</h4><ol>'+ordered.map(s=>'<li>'+escapeHTML(s)+'</li>').join('')+'</ol><p>Read the points in order. Ask yourself: what is happening, why does it happen, and how does it connect to the main idea?</p></div>'+
    '<div class="homework-box"><h4>3. Check your understanding</h4><p>Close the source and try to explain the main idea aloud in your own words. Then compare your explanation with the points above.</p>'+(firstCard?'<p><strong>Practice question:</strong> '+escapeHTML(firstCard.q)+'</p><button type="button" class="btn reveal" id="explainAnswerBtn">Show a source-based answer</button><p id="explainAnswer" hidden>'+escapeHTML(firstCard.a)+'</p>':'')+'</div>'+
    '<p class="notice">For a genuinely conversational explanation tailored to a student’s confusion, this tool will need a secure connection to a generative AI model. This section uses only your source text and transparent local rules.</p>';
@@ -344,7 +365,7 @@ function relevantSentences(question,text){
  return chosen;
 }
 tabs.forEach(b=>b.addEventListener('click',()=>{activeTab=b.dataset.tab;tabs.forEach(t=>t.setAttribute('aria-selected',String(t===b)));render();}));
-$('generateBtn').addEventListener('click',()=>{const text=source.value.trim(),question=homeworkQuestion.value.trim();if(text.length<80){setStatus('Please add a little more study material first. Upload a readable photo/PDF or paste a few sentences.','error');return;}if(text.length>60000){setStatus('Please keep the source text within 60,000 characters.','error');return;}const summary=summarize(text,Number(summaryLength.value));const notes=keyPoints(text);const cards=makeCards(text);const quiz=makeQuiz(text);const homework=question?relevantSentences(question,text):[];pack={topic:topic.value.trim(),level:level.value,goal:goal.value,summaryLength:Number(summaryLength.value),summary,notes,cards,quiz,homework,homeworkQuestion:question,sourceLength:text.length};activeTab=question?'homework':'summary';tabs.forEach(t=>t.setAttribute('aria-selected',String(t.dataset.tab===activeTab)));$('packSubtitle').textContent=level.value+' · '+goal.value+' · '+summary.length+' summary ideas · '+text.length.toLocaleString()+' source characters';render();$('downloadBtn').disabled=false;setStatus('Study workspace created from your material. Review OCR text carefully; the homework tab shows relevant source passages, not a guaranteed final answer.','good');});
+$('generateBtn').addEventListener('click',()=>{const text=source.value.trim(),question=homeworkQuestion.value.trim();if(text.length<80){setStatus('Please add a little more study material first. Upload a readable photo/PDF or paste a few sentences.','error');return;}if(text.length>60000){setStatus('Please keep the source text within 60,000 characters.','error');return;}const summary=summarize(text,Number(summaryLength.value));const notes=keyPoints(text);const cards=makeCards(text);const quiz=makeQuiz(text);const homework=question?relevantSentences(question,text):[];pack={topic:topic.value.trim(),level:level.value,goal:goal.value,summaryLength:Number(summaryLength.value),summary,notes,cards,quiz,homework,homeworkQuestion:question,sourceText:text,sourceLength:text.length};activeTab=question?'homework':'summary';tabs.forEach(t=>t.setAttribute('aria-selected',String(t.dataset.tab===activeTab)));$('packSubtitle').textContent=level.value+' · '+goal.value+' · '+summary.length+' summary ideas · '+text.length.toLocaleString()+' source characters';render();$('downloadBtn').disabled=false;setStatus('Study workspace created from your material. Review OCR text carefully; the homework tab shows relevant source passages, not a guaranteed final answer.','good');});
 $('clearBtn').addEventListener('click',()=>{source.value='';topic.value='';homeworkQuestion.value='';fileInput.value='';loadedFiles=[];$('fileList').innerHTML='';materialLanguage.value='auto';summaryLength.value='8';pack=null;activeTab='summary';tabs.forEach(t=>t.setAttribute('aria-selected',String(t.dataset.tab===activeTab)));countChars();$('packSubtitle').textContent='Your generated content will appear here.';$('downloadBtn').disabled=true;render();setStatus('Cleared. Add a photo, PDF or notes to begin.');});
 $('downloadBtn').addEventListener('click',()=>{if(!pack)return;const text=['RitoccaPix Study Pack','Topic: '+(pack.topic||'Not specified'),'Study level: '+pack.level,'Goal: '+pack.goal,'Summary length: '+pack.summaryLength+' main ideas','Homework question: '+(pack.homeworkQuestion||'Not provided'),'','HOMEWORK GUIDANCE (source-based draft)',...pack.homework.map((s,i)=>(i+1)+'. '+s),'','SUMMARY',...pack.summary.map((s,i)=>(i+1)+'. '+s),'','KEY POINTS',...pack.notes.map((s,i)=>(i+1)+'. '+s),'','FLASHCARDS',...pack.cards.flatMap((c,i)=>['Card '+(i+1)+': '+c.q,'Answer: '+c.a]),'','PRACTICE QUIZ',...pack.quiz.flatMap((q,i)=>[(i+1)+'. '+q.q,'Options: '+q.options.join(' / '),'Correct answer: '+q.options[q.correct],'Source statement: '+q.answer]),'','Note: This study pack was generated locally using text extraction and ranking rules, not a generative AI model. Homework guidance matches source sentences and is not a guaranteed complete answer. Verify against the original source.'].join('\n');const blob=new Blob([text],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;downloadCount++;a.download='ritoccapix-study-pack-'+String(downloadCount).padStart(3,'0')+'.txt';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);});
 $('year').textContent=new Date().getFullYear();countChars();
