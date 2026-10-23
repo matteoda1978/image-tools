@@ -46,7 +46,7 @@
 <div class="status" id="status" role="status" aria-live="polite">Ready when you are. Add a photo, PDF, or notes to begin.</div><p class="privacy">Privacy: text extraction and OCR run in your browser. Your files are not uploaded to RitoccaPix. PDF.js and Tesseract.js are loaded from public CDNs when needed. This version does not yet connect to a generative AI service.</p>
 </section>
 <section class="panel" aria-labelledby="result-title"><h2 id="result-title">2. Your study pack</h2><p class="intro" id="packSubtitle">Your generated content will appear here.</p>
-<div class="tabs" role="tablist" aria-label="Study pack sections"><button class="tab" type="button" role="tab" aria-selected="true" data-tab="summary">Summary</button><button class="tab" type="button" role="tab" aria-selected="false" data-tab="notes">Key points</button><button class="tab" type="button" role="tab" aria-selected="false" data-tab="flashcards">Flashcards</button><button class="tab" type="button" role="tab" aria-selected="false" data-tab="quiz">Quiz</button><button class="tab" type="button" role="tab" aria-selected="false" data-tab="homework">Homework help</button></div>
+<div class="tabs" role="tablist" aria-label="Study pack sections"><button class="tab" type="button" role="tab" aria-selected="true" data-tab="summary">Summary</button><button class="tab" type="button" role="tab" aria-selected="false" data-tab="notes">Key points</button><button class="tab" type="button" role="tab" aria-selected="false" data-tab="flashcards">Flashcards</button><button class="tab" type="button" role="tab" aria-selected="false" data-tab="quiz">Quiz</button><button class="tab" type="button" role="tab" aria-selected="false" data-tab="explain">Explain it simply</button><button class="tab" type="button" role="tab" aria-selected="false" data-tab="homework">Homework help</button></div>
 <div class="output" id="output" role="tabpanel" aria-live="polite"><p class="empty">Upload a PDF or paste your notes, then select “Generate study pack”.</p></div><div class="btnrow"><button class="btn" id="downloadBtn" type="button" disabled>Download study pack (.txt)</button></div>
 <p class="notice"><strong>Honest limitation:</strong> this version can extract text from photos/PDFs and build source-based study aids locally, but it does not yet reason like a generative AI tutor. Homework guidance is a source-based draft, not a guaranteed complete solution. A secure AI connection is the next step for explanations and step-by-step answers.</p>
 </section></div></section>
@@ -148,72 +148,40 @@ const STOP=new Set(('about above after again against all also among an and any a
 'adesso alcuni alcune all altro altra anche ancora avere abbiamo avendo aveva avevano avrai avranno avrei avrebbe avrebbero avute avuti agli alle allo allora altre altri altrimenti abbiamo avvenuto ben buona buono circa cioè come comunque contro cosa cui da dagli dai dal dalla dalle dallo dentro dopo dunque durante e ed era erano essere essi essa esso fare fatto fatti facendo fanno farà faranno farei fosse fossero fra già gli ha hai hanno ho i il in infatti invece io la le lei li lo loro lui ma mai mentre molto nei negli nel nella nelle nello non noi nome nostra nostre nostri nostro oppure ogni per perché però più poi quale quali quando quanto quanti quanta quello questa queste questi questo qui quindi se senza si sia siamo siano siete sono sopra sotto su sua sue sui sul sulla sulle sullo tra tramite tu tutta tutte tutti tutto vi voi vostra vostre vostri vostro spiegare spiega definisce definito significa consiste formato formata formati formate causa cause causato causata aumenta diminuisce permette consente avviene avvengono comprende deriva derivano dipende dipendono processo processi fenomeno fenomeni caratteristica caratteristiche importante importanti principale principali esempio esempi inoltre infine prima dopo poi attraverso rispetto riguarda riguardo tuttavia poiché dove chi che ciò soprattutto spesso sempre soltanto solo viene vengono stata stati state stesso stessa stessi stesse'.split(/\s+/).forEach(w=>STOP.add(w));
 function frequency(text){const f=new Map();for(const w of words(text))f.set(w,(f.get(w)||0)+1);return f;}
 function summarize(text,targetCount=8){
- const ss=cleanSentences(text);
- if(!ss.length)return String(text||'').replace(/\?\*{1,2}/g,'').trim().slice(0,900);
+ const ss=cleanSentences(text); if(!ss.length)return String(text||'').trim().slice(0,900);
+ const processNames=['evaporation','transpiration','condensation','precipitation','infiltration','runoff','collection'];
+ const processSentences=ss.filter(s=>processNames.some(t=>new RegExp('\\b'+t+'\\b','i').test(s)));
  const candidates=ss.map((sentence,index)=>{
-  const clean=sentence.replace(/^[A-Z][A-Za-z -]{1,55}:\s*/,'').trim();
-  const ws=words(clean);
-  const isLabeled=/^[A-Z][A-Za-z][A-Za-z -]{1,45}:\s+\S/.test(sentence);
-  const isCoreDefinition=/^(?:The\s+)?[A-ZÀ-Ý][A-Za-zÀ-ÿ -]{1,55}\s+(?:is|are|means|refers to|is defined as|significa|si definisce|è|consiste in)\b/i.test(sentence);
-  const score=ws.length + (/[.!?]$/.test(sentence)?2:0)
-   + (/\b(because|therefore|as a result|which|when|while|although|however|important|allows|causes|leads to|contributes|supports|affects|increases|reduces|replenishes|influences|perché|quindi|di conseguenza|inoltre|tuttavia|infatti|per esempio|ad esempio|importante|permette|causa|provoca|porta a|contribuisce|influisce|aumenta|riduce|dipende da|consiste in)\b/i.test(sentence)?3:0)
-   + (isLabeled?9:0) + (isCoreDefinition?10:0)
-   - (/^(?:Key vocabulary|Vocabulary|Glossary):/i.test(sentence)?12:0);
-  const usable=(ws.length>=7&&sentence.length>=45&&!/^(?:Key vocabulary|Vocabulary|Glossary):/i.test(sentence)) || (isLabeled&&sentence.length>=35);
-  return {sentence,index,score,usable,isLabeled,isCoreDefinition};
+  const ws=words(sentence), label=/^[A-Z][A-Za-z][A-Za-z -]{1,45}:\s+\S/.test(sentence);
+  const process=processNames.some(t=>new RegExp('^'+t+'\\b','i').test(sentence));
+  const definition=/\b(is|are|means|refers to|occurs when|happens when|is the process|significa|è il processo)\b/i.test(sentence);
+  const score=ws.length*.25+(label?8:0)+(definition?4:0)+(process?12:0)+(/because|therefore|as a result|causes|leads to|important|perché|quindi|di conseguenza/i.test(sentence)?2:0);
+  return {sentence,index,score,usable:sentence.length>=35&&ws.length>=5};
  }).filter(x=>x.usable);
- if(!candidates.length)return ss.slice(0,Math.min(5,Number(targetCount)||5));
- const count=Math.min(candidates.length,Math.max(3,Math.min(12,Number(targetCount)||8)));
- const chosen=[];
- // Keep explicit definitions and labeled concepts together when possible; these are often
- // the most examinable parts of school notes (e.g. stages, causes, dates and key terms).
- const priority=candidates.filter(x=>x.isLabeled||x.isCoreDefinition)
-  .sort((a,b)=>b.score-a.score||a.index-b.index);
- for(const c of priority){if(chosen.length>=count)break;if(!chosen.some(x=>x.index===c.index))chosen.push(c);}
- // Add coverage from different parts of the source, not only the opening paragraph.
- const regions=Math.min(count,candidates.length);
- for(let r=0;r<regions&&chosen.length<count;r++){
+ const limit=Math.max(3,Math.min(12,Number(targetCount)||8)),chosen=[];
+ // Preserve every explicitly named process first; these are high-value concepts in science notes.
+ for(const s of processSentences){if(chosen.length>=limit)break;if(!chosen.includes(s))chosen.push(s);}
+ // Then distribute remaining slots across the whole source and fill by relevance.
+ const regions=Math.min(limit,ss.length);
+ for(let r=0;r<regions&&chosen.length<limit;r++){
   const lo=Math.floor(r*ss.length/regions),hi=Math.floor((r+1)*ss.length/regions);
-  const inRegion=candidates.filter(x=>x.index>=lo&&x.index<hi&&!chosen.some(y=>y.index===x.index));
-  if(inRegion.length){inRegion.sort((a,b)=>b.score-a.score||a.index-b.index);chosen.push(inRegion[0]);}
+  const group=candidates.filter(x=>x.index>=lo&&x.index<hi&&!chosen.includes(x.sentence)).sort((a,b)=>b.score-a.score);
+  if(group.length)chosen.push(group[0].sentence);
  }
- for(const c of [...candidates].sort((a,b)=>b.score-a.score||a.index-b.index)){
-  if(chosen.length>=count)break;
-  if(!chosen.some(x=>x.index===c.index))chosen.push(c);
- }
- return chosen.sort((a,b)=>a.index-b.index).slice(0,count).map(x=>x.sentence);
+ for(const c of [...candidates].sort((a,b)=>b.score-a.score||a.index-b.index)){if(chosen.length>=limit)break;if(!chosen.includes(c.sentence))chosen.push(c.sentence);}
+ return chosen.sort((a,b)=>ss.indexOf(a)-ss.indexOf(b)).slice(0,limit);
 }
 function keyPoints(text){
- const ss=cleanSentences(text),freq=frequency(text),candidates=[],seen=new Set();
- for(let index=0;index<ss.length;index++){
-  const s=ss[index].replace(/\s+/g,' ').trim();
-  if(s.length<35||s.length>420||isHeadingLine(s)||!/([.!?])$/.test(s))continue;
-  const ws=words(s);if(ws.length<6)continue;
-  const key=s.toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();if(seen.has(key))continue;seen.add(key);
-  const unique=new Set(ws),freqScore=[...unique].reduce((sum,w)=>sum+Math.log(1+(freq.get(w)||0)),0)/Math.sqrt(unique.size||1);
-  const emphasis=/\b(important|therefore|because|as a result|causes|leads to|depends on|consists of|includes|such as|for example|in contrast|however|first|finally|main|primary|key|importante|quindi|perché|di conseguenza|causa|provoca|porta a|dipende da|consiste in|comprende|include|ad esempio|tuttavia|infine|principale|chiave)\b/i.test(s)?2:0;
-  const definition=/\b(is defined as|means|refers to|is the process|is responsible for|is called|significa|si definisce|è il processo|è responsabile di|è chiamato|è chiamata|consiste in)\b/i.test(s)?1.5:0;
-  candidates.push({s,index,score:freqScore+emphasis+definition+Math.min(ws.length,28)*.04,words:unique});
- }
+ const ss=cleanSentences(text),processNames=['evaporation','transpiration','condensation','precipitation','infiltration','runoff','collection'];
+ const valid=ss.filter(s=>s.length>=35&&s.length<=420&&/[.!?]$/.test(s));
  const selected=[];
- // First choose across the whole source so the first paragraph does not dominate.
- const wanted=Math.min(12,candidates.length);
- for(let i=0;i<wanted;i++){
-  const lo=Math.floor(i*ss.length/wanted),hi=Math.floor((i+1)*ss.length/wanted);
-  const region=candidates.filter(c=>c.index>=lo&&c.index<hi&&!selected.some(x=>x.index===c.index));
-  if(region.length){region.sort((a,b)=>b.score-a.score);selected.push(region[0]);}
- }
- for(const c of [...candidates].sort((a,b)=>b.score-a.score)){
-  if(selected.length>=wanted)break;
-  if(!selected.some(x=>x.index===c.index))selected.push(c);
- }
- // Remove near-duplicate ideas and keep the original reading order.
- const filtered=[];
- for(const c of selected.sort((a,b)=>a.index-b.index)){
-  if(filtered.some(old=>{const overlap=[...c.words].filter(w=>old.words.has(w)).length/Math.max(1,Math.min(c.words.size,old.words.size));return overlap>.88;}))continue;
-  filtered.push(c);
- }
- return filtered.slice(0,12).map(x=>x.s);
+ // Scientific processes and explicitly named definitions are prioritized instead of lost to word-frequency ranking.
+ for(const term of processNames){const found=valid.find(s=>new RegExp('^'+term+'\\b','i').test(s)||new RegExp('\\b'+term+'\\s+(?:is|means|occurs|happens)','i').test(s));if(found&&!selected.includes(found))selected.push(found);}
+ const freq=frequency(text),scored=valid.map((s,index)=>{const ws=words(s),uniq=new Set(ws);const score=[...uniq].reduce((a,w)=>a+Math.log(1+(freq.get(w)||0)),0)/Math.sqrt(uniq.size||1)+Math.min(ws.length,25)*.08+(/because|therefore|as a result|means|is the process|important|causes|leads to|significa|quindi|importante/i.test(s)?2:0);return {s,index,score,uniq};});
+ const max=Math.min(12,scored.length);
+ for(let i=0;i<max&&selected.length<12;i++){const lo=Math.floor(i*valid.length/max),hi=Math.floor((i+1)*valid.length/max);const group=scored.filter(x=>x.index>=lo&&x.index<hi&&!selected.includes(x.s)).sort((a,b)=>b.score-a.score);if(group.length)selected.push(group[0].s);}
+ for(const x of [...scored].sort((a,b)=>b.score-a.score)){if(selected.length>=12)break;if(!selected.includes(x.s))selected.push(x.s);}
+ return selected.slice(0,12);
 }
 function makeCards(text){
  const sentences=cleanSentences(text),cards=[],seen=new Set();
@@ -222,6 +190,18 @@ function makeCards(text){
   const key=q.toLowerCase();
   if(q&&a&&a.length>=8&&!seen.has(key)){seen.add(key);cards.push({q,a});}
  };
+ // Recognize process descriptions written as full sentences, not only "Term: definition" lists.
+ const processNames=['evaporation','transpiration','condensation','precipitation','infiltration','runoff','collection'];
+ for(const term of processNames){
+  const sentence=sentences.find(s=>new RegExp('^'+term+'\\b','i').test(s));
+  if(!sentence)continue;
+  const rest=sentence.replace(new RegExp('^'+term+'\\s*','i'),'').trim();
+  let question='What happens during '+term+'?';
+  if(term==='runoff')question='What is runoff, and where does the water flow?';
+  if(term==='collection')question='What happens during collection in the water cycle?';
+  add(question,rest?sentence.replace(/[.!?]+$/,''):sentence);
+ }
+
  for(const raw of sentences){
   const sentence=raw.trim();
   let m;
@@ -292,61 +272,29 @@ function makeCards(text){
 }
 function makeQuiz(text){
  const sentences=cleanSentences(text),quiz=[],used=new Set();
- const stopWords=new Set([...STOP,'earth','water','water vapor','liquid','solid','gas','surface','environment','planet','around','tiny','large','heavy','enough','amount','fresh','mainly']);
- const escapeRegExp=s=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+ const processNames=['evaporation','transpiration','condensation','precipitation','infiltration','runoff','collection'];
  const addQuestion=(q,answer,source,distractors)=>{
-  const key=q.toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
-  if(!q||!answer||used.has(key))return;
-  const opts=[answer,...distractors.filter(x=>x&&x.toLowerCase()!==answer.toLowerCase())];
-  const unique=[];
-  for(const x of opts){if(!unique.some(y=>y.toLowerCase()===x.toLowerCase()))unique.push(x);}
-  if(unique.length<4)return;
-  // Rotate distractor selection as well as answer positions, so longer lists
-  // do not reuse the same first three wrong answers in every question.
-  const alternatives=unique.filter(x=>x.toLowerCase()!==answer.toLowerCase());
-  if(alternatives.length<3)return;
-  const offset=quiz.length%alternatives.length;
-  const rotated=alternatives.slice(offset).concat(alternatives.slice(0,offset));
-  const selected=[answer,...rotated.slice(0,3)];
-  // Rotate answer positions deterministically so correct answers are not always A.
-  const shift=quiz.length%selected.length;
-  const ordered=selected.slice(shift).concat(selected.slice(0,shift));
-  quiz.push({q,answer:source,options:ordered,correct:ordered.findIndex(x=>x.toLowerCase()===answer.toLowerCase()),term:answer});
-  used.add(key);
+  const key=q.toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();if(!q||!answer||used.has(key))return;
+  const alternatives=[...new Set(distractors.filter(x=>x&&x.toLowerCase()!==answer.toLowerCase()))];if(alternatives.length<3)return;
+  const offset=quiz.length%alternatives.length,rot=alternatives.slice(offset).concat(alternatives.slice(0,offset));
+  const opts=[answer,...rot.slice(0,3)],shift=quiz.length%4,ordered=opts.slice(shift).concat(opts.slice(0,shift));
+  quiz.push({q,answer:source,options:ordered,correct:ordered.findIndex(x=>x.toLowerCase()===answer.toLowerCase()),term:answer});used.add(key);
  };
- // First use explicit "Term: definition" entries. These support a natural question
- // and distractors from other terms of the same kind.
- const definitions=[];
- for(const sentence of sentences){
-  const m=sentence.match(/^([A-Z][A-Za-z][A-Za-z -]{1,45}):\s*(.+)$/);
-  if(m&&m[2].length>=15)definitions.push({term:m[1].trim(),definition:m[2].trim(),source:sentence});
- }
- for(const item of definitions){
-  const distractors=definitions.filter(x=>x.term.toLowerCase()!==item.term.toLowerCase()).map(x=>x.term);
-  if(distractors.length>=3){
-   const process=/^(evaporation|transpiration|condensation|precipitation|infiltration|runoff|collection|runoff and collection)$/i.test(item.term);
-   addQuestion(process?'Which water-cycle process matches this description: '+item.definition.replace(/[.!?]+$/,'')+'?':'Which term matches this description: '+item.definition.replace(/[.!?]+$/,'')+'?',item.term,item.source,distractors);
-  }
-  if(quiz.length>=8)return quiz;
- }
- // For other sentences, only blank a meaningful subject or object phrase if the
- // resulting sentence remains grammatical. Avoid arbitrary word fragments such as "ground flows".
- const conceptCandidates=[];
- for(const sentence of sentences){
-  let m=sentence.match(/^(The [A-Za-z][A-Za-z -]{1,40}?)\s+(is|are)\s+(.{12,})$/i);
-  if(m)conceptCandidates.push({sentence,term:m[1].replace(/^The\s+/i,'').trim(),question:sentence.replace(m[1],'________')});
-  m=sentence.match(/^([A-Z][A-Za-z -]{2,35}):\s*(.+)$/);
-  if(m&&!definitions.some(x=>x.term.toLowerCase()===m[1].toLowerCase()))conceptCandidates.push({sentence,term:m[1].trim(),question:'________: '+m[2]});
- }
- const concepts=[...new Set(conceptCandidates.map(x=>x.term))];
- for(const item of conceptCandidates){
+ // Water-cycle material is often written as full definitions rather than a "Term: definition" glossary.
+ const processItems=[];
+ for(const term of processNames){const source=sentences.find(s=>new RegExp('^'+term+'\\b','i').test(s)||new RegExp('^'+term+'\\s*:','i').test(s));if(source)processItems.push({term,source});}
+ for(const item of processItems){
+  const definition=item.source.replace(new RegExp('^'+item.term+'\\s*:?\\s*','i'),'').replace(/[.!?]+$/,'').trim();
+  if(definition.length<10)continue;
+  const prompt=/^(evaporation|transpiration|condensation|precipitation|infiltration|runoff|collection)$/i.test(item.term)?'Which water-cycle process is described: '+definition+'?':'Which term matches this description: '+definition+'?';
+  addQuestion(prompt,item.term,item.source,processItems.map(x=>x.term));
   if(quiz.length>=8)break;
-  if(!item.term||item.term.split(/\s+/).length>5)continue;
-  const distractors=concepts.filter(x=>x.toLowerCase()!==item.term.toLowerCase());
-  if(distractors.length<3)continue;
-  addQuestion(item.question,item.term,item.sentence,distractors);
  }
- // If the source does not contain enough clear definitions, do not invent answers.
+ // Also support conventional "Term: definition" notes in other subjects.
+ if(quiz.length<4){
+  const defs=[];for(const sentence of sentences){const m=sentence.match(/^([A-Z][A-Za-z][A-Za-z -]{1,45}):\s*(.+)$/);if(m&&m[2].length>=15)defs.push({term:m[1].trim(),definition:m[2].trim(),source:sentence});}
+  for(const item of defs){const others=defs.filter(x=>x.term.toLowerCase()!==item.term.toLowerCase()).map(x=>x.term);if(others.length>=3)addQuestion('Which term matches this description: '+item.definition.replace(/[.!?]+$/,'')+'?',item.term,item.source,others);if(quiz.length>=8)break;}
+ }
  return quiz;
 }
 function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
@@ -356,13 +304,25 @@ function render(){
  if(activeTab==='summary'){output.innerHTML='<h3>Summary: '+title+'</h3><ul>'+pack.summary.map(s=>'<li>'+escapeHTML(s)+'</li>').join('')+'</ul><p class="notice">Built from your source using local text-selection rules, not a generative AI model.</p>';}
  else if(activeTab==='notes'){output.innerHTML='<h3>Key points: '+title+'</h3><ol>'+pack.notes.map(s=>'<li>'+escapeHTML(s)+'</li>').join('')+'</ol>';}
  else if(activeTab==='flashcards'){output.innerHTML='<h3>Flashcards: '+title+'</h3>'+pack.cards.map((c,i)=>'<article class="flashcard"><strong>Card '+(i+1)+': '+escapeHTML(c.q)+'</strong><button type="button" class="btn reveal" data-card="'+i+'">Reveal answer</button><div class="answer" hidden>'+escapeHTML(c.a)+'</div></article>').join('');output.querySelectorAll('.reveal').forEach(b=>b.addEventListener('click',()=>{const a=b.nextElementSibling;a.hidden=!a.hidden;b.textContent=a.hidden?'Reveal answer':'Hide answer';}));}
+ else if(activeTab==='explain'){
+  const points=pack.notes.slice(0,8),first=points[0]||'Start by reading the source carefully and identifying its main idea.';
+  const processOrder=['evaporation','transpiration','condensation','precipitation','infiltration','runoff','collection'];
+  const ordered=points.slice().sort((a,b)=>{const ai=processOrder.findIndex(t=>new RegExp('^'+t+'\\b','i').test(a)),bi=processOrder.findIndex(t=>new RegExp('^'+t+'\\b','i').test(b));if(ai>=0&&bi>=0)return ai-bi;if(ai>=0)return -1;if(bi>=0)return 1;return points.indexOf(a)-points.indexOf(b);});
+  const firstCard=pack.cards[0];
+  output.innerHTML='<h3>Understand it step by step: '+title+'</h3>'+
+   '<div class="homework-box"><h4>1. The big picture</h4><p>'+escapeHTML(first)+'</p><p class="notice">This starting point is selected from your material. It is not a new explanation invented by an AI model.</p></div>'+
+   '<div class="homework-box"><h4>2. Build the idea</h4><ol>'+ordered.map(s=>'<li>'+escapeHTML(s)+'</li>').join('')+'</ol><p>Read the points in order. Ask yourself: what is happening, why does it happen, and how does it connect to the main idea?</p></div>'+
+   '<div class="homework-box"><h4>3. Check your understanding</h4><p>Close the source and try to explain the main idea aloud in your own words. Then compare your explanation with the points above.</p>'+(firstCard?'<p><strong>Practice question:</strong> '+escapeHTML(firstCard.q)+'</p><button type="button" class="btn reveal" id="explainAnswerBtn">Show a source-based answer</button><p id="explainAnswer" hidden>'+escapeHTML(firstCard.a)+'</p>':'')+'</div>'+
+   '<p class="notice">For a genuinely conversational explanation tailored to a student’s confusion, this tool will need a secure connection to a generative AI model. This section uses only your source text and transparent local rules.</p>';
+  const answerBtn=$('explainAnswerBtn');if(answerBtn)answerBtn.addEventListener('click',()=>{const a=$('explainAnswer');a.hidden=!a.hidden;answerBtn.textContent=a.hidden?'Show a source-based answer':'Hide answer';});
+ }
  else if(activeTab==='quiz'){
-  if(!pack.quiz.length){output.innerHTML='<h3>Practice quiz: '+title+'</h3><p class="empty">There is not enough suitable text to build a reliable multiple-choice quiz. Add complete sentences and key terms. You can still use the summary and flashcards.</p>';return;}
+  if(!pack.quiz.length){output.innerHTML='<h3>Practice quiz: '+title+'</h3><p class="empty">I could not find at least four distinct answer choices in this source, so I will not invent a quiz. Try adding the section with definitions, or use the flashcards to review the material.</p>';return;}
   output.innerHTML='<h3>Practice quiz: '+title+'</h3><p class="intro">Choose the best answer for each question. Check the source explanation under every answer.</p><form id="quizForm">'+pack.quiz.map((q,i)=>'<div class="quiz-item"><p><strong>'+(i+1)+'. '+escapeHTML(q.q)+'</strong></p>'+q.options.map((op,j)=>'<label><input type="radio" name="q'+i+'" value="'+j+'"> <span>'+String.fromCharCode(65+j)+'. '+escapeHTML(op)+'</span></label>').join('')+'<div class="answer quiz-feedback" id="feedback'+i+'" hidden></div></div>').join('')+'<button class="btn primary" type="submit" style="margin-top:14px">Check answers</button><div id="quizScore" class="score" aria-live="polite"></div></form>';
   const form=$('quizForm');form.addEventListener('submit',e=>{e.preventDefault();let correct=0,answered=0;pack.quiz.forEach((q,i)=>{const chosen=form.querySelector('input[name="q'+i+'"]:checked'),fb=$('feedback'+i);fb.hidden=false;fb.className='answer quiz-feedback';if(chosen){answered++;if(Number(chosen.value)===q.correct){correct++;fb.classList.add('correct');fb.textContent='✓ Correct answer: '+q.options[q.correct]+'. Source: '+q.answer;}else{fb.classList.add('incorrect');fb.textContent='✕ Not quite. Correct answer: '+q.options[q.correct]+'. Source: '+q.answer;}}else{fb.classList.add('unanswered');fb.textContent='No answer selected. Correct answer: '+q.options[q.correct]+'. Source: '+q.answer;}});$('quizScore').textContent='Your score: '+correct+' / '+pack.quiz.length+' ('+Math.round(correct/pack.quiz.length*100)+'%). '+answered+' of '+pack.quiz.length+' questions answered.';});
  }else{
   output.innerHTML='<h3>Homework guidance: '+title+'</h3>';
-  if(!pack.homeworkQuestion){output.innerHTML+='<p class="empty">Go back to “Start with what you have” and paste the exact homework question. Then choose “Help me study” again.</p>';return;}
+  if(!pack.homeworkQuestion){output.innerHTML+='<p class="empty">To get focused help, paste your teacher’s exact question in “What do you need help with?” and choose “Help me study” again. Your study material is still here; you do not need to start over.</p>';return;}
   output.innerHTML+='<div class="homework-box"><h4>Your question</h4><p>'+escapeHTML(pack.homeworkQuestion)+'</p></div>';
   if(!pack.homework.length){output.innerHTML+='<p class="empty">I could not find enough relevant sentences in your source to build a source-based draft. Try adding the textbook section that covers this question.</p>';return;}
   output.innerHTML+='<div class="homework-box"><h4>Relevant information from your material</h4><ol>'+pack.homework.map(s=>'<li>'+escapeHTML(s)+'</li>').join('')+'</ol></div>';
@@ -375,8 +335,13 @@ function makeHomeworkDraft(question,items,studyLevel,studyGoal){
  return intro+'\n\n'+items.map((x,i)=>(i+1)+'. '+x).join('\n\n')+'\n\nTo finish the answer, connect these points in a clear order, explain any important terms, and check that every statement matches the textbook. If your teacher expects a full paragraph, rewrite the points as connected sentences in your own words.';
 }
 function relevantSentences(question,text){
- const stop=new Set(['what','when','where','which','who','whom','whose','that','this','with','from','into','about','does','have','were','will','would','could','should','explain','describe','write','give','tell','make','your','the','and','for','are','was','how','why','perche','cosa','come','quale','quali','quando','dove','della','delle','dello','degli','delle','che','con','per','una','uno','gli','dai','del','dei','delle','sulla','sulle','nel','nella','nello','alla','alle','agli','come','sono','era','essere','fare']);
- const terms=(question.toLowerCase().match(/[a-zà-ÿ0-9]{3,}/g)||[]).filter(w=>!stop.has(w));const sentences=cleanSentences(text);const scored=sentences.map(s=>{const low=s.toLowerCase();const hits=terms.filter(w=>low.includes(w)).length;return {s,score:hits/(Math.max(terms.length,1)**0.55)};}).filter(x=>x.score>0).sort((a,b)=>b.score-a.score);const chosen=[];for(const x of scored){if(!chosen.includes(x.s))chosen.push(x.s);if(chosen.length>=5)break;}return chosen;
+ const stop=new Set(['what','when','where','which','who','whom','whose','that','this','with','from','into','about','does','have','were','will','would','could','should','explain','describe','write','give','tell','make','your','the','and','for','are','was','how','why','perche','cosa','come','quale','quali','quando','dove','della','delle','dello','degli','che','con','per','una','uno','gli','dai','del','dei','sulla','sulle','nel','nella','nello','alla','alle','agli','sono','era','essere','help','homework','question','please']);
+ const terms=(question.toLowerCase().match(/[a-zà-ÿ0-9]{3,}/g)||[]).filter(w=>!stop.has(w));const sentences=cleanSentences(text);
+ const scored=sentences.map((s,index)=>{const low=s.toLowerCase();let hits=0;for(const term of terms){if(low.includes(term))hits+=term.length>=7?1.5:1;}const overlap=hits/Math.sqrt(Math.max(terms.length,1));const definition=/\b(is|are|means|refers to|occurs|happens|because|therefore|significa|è|sono)\b/i.test(s)?0.15:0;return {s,index,score:overlap+definition};}).filter(x=>x.score>0).sort((a,b)=>b.score-a.score||a.index-b.index);
+ let chosen=scored.filter(x=>x.score>0.12).slice(0,5).map(x=>x.s);
+ // If the student's wording does not share textbook vocabulary, still provide a useful starting set rather than a dead end.
+ if(!chosen.length)chosen=keyPoints(text).slice(0,5);
+ return chosen;
 }
 tabs.forEach(b=>b.addEventListener('click',()=>{activeTab=b.dataset.tab;tabs.forEach(t=>t.setAttribute('aria-selected',String(t===b)));render();}));
 $('generateBtn').addEventListener('click',()=>{const text=source.value.trim(),question=homeworkQuestion.value.trim();if(text.length<80){setStatus('Please add a little more study material first. Upload a readable photo/PDF or paste a few sentences.','error');return;}if(text.length>60000){setStatus('Please keep the source text within 60,000 characters.','error');return;}const summary=summarize(text,Number(summaryLength.value));const notes=keyPoints(text);const cards=makeCards(text);const quiz=makeQuiz(text);const homework=question?relevantSentences(question,text):[];pack={topic:topic.value.trim(),level:level.value,goal:goal.value,summaryLength:Number(summaryLength.value),summary,notes,cards,quiz,homework,homeworkQuestion:question,sourceLength:text.length};activeTab=question?'homework':'summary';tabs.forEach(t=>t.setAttribute('aria-selected',String(t.dataset.tab===activeTab)));$('packSubtitle').textContent=level.value+' · '+goal.value+' · '+summary.length+' summary ideas · '+text.length.toLocaleString()+' source characters';render();$('downloadBtn').disabled=false;setStatus('Study workspace created from your material. Review OCR text carefully; the homework tab shows relevant source passages, not a guaranteed final answer.','good');});
