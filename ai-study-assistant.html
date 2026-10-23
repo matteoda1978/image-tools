@@ -352,8 +352,28 @@ function render(){
  }
 }
 function makeHomeworkDraft(question,items,studyLevel,studyGoal){
- const q=question.trim();const intro=/\b(why|cause|causes|reason|reasons|perché|causa|cause|pourquoi|warum)\b/i.test(q)?'The main reasons or causes highlighted by the supplied material are: ':/\b(compare|difference|differ|compare|confront|differenza|differenze)\b/i.test(q)?'The material suggests the following points for comparison: ':/\b(define|what is|explain|describe|che cos|spiega|definisci|describe|explain)\b/i.test(q)?'A source-based explanation can be built from these key points: ':'The most relevant information in the supplied material is: ';
- return intro+'\n\n'+items.map((x,i)=>(i+1)+'. '+x).join('\n\n')+'\n\nTo finish the answer, connect these points in a clear order, explain any important terms, and check that every statement matches the textbook. If your teacher expects a full paragraph, rewrite the points as connected sentences in your own words.';
+ const q=question.trim();
+ const all=(items||[]).join(' ');
+ const cycleQuestion=/\b(water cycle|evaporation|condensation|precipitation)\b/i.test(q) && /\b(evaporation|condensation|precipitation)\b/i.test(all);
+ if(cycleQuestion){
+  const find=(term)=>items.find(s=>new RegExp('\\b'+term+'\\b','i').test(s))||'';
+  const evaporation=find('evaporation'),condensation=find('condensation'),precipitation=find('precipitation');
+  if(evaporation&&condensation&&precipitation){
+   const intro=/\bwork together|together|how .* work|come together/i.test(q)
+    ?'Evaporation, condensation, and precipitation work together as connected stages of the water cycle.'
+    :'The water cycle includes several connected processes.';
+   return intro+' '+evaporation.replace(/\s+/g,' ').replace(/[.\s]+$/,'')+'. '+condensation.replace(/\s+/g,' ').replace(/[.\s]+$/,'')+'. '+precipitation.replace(/\s+/g,' ').replace(/[.\s]+$/,'')+'. After precipitation, water can collect in bodies of water or move across and into the ground, allowing the cycle to continue.';
+  }
+ }
+ const why=/\b(why|cause|causes|reason|reasons|perché|causa|cause|pourquoi|warum)\b/i.test(q);
+ const compare=/\b(compare|difference|differ|confront|differenza|differenze)\b/i.test(q);
+ const explain=/\b(define|what is|explain|describe|che cos|spiega|definisci)\b/i.test(q);
+ const intro=why?'The source identifies the following causes or reasons: ':compare?'The source provides these points to compare: ':explain?'A source-based answer can be built from the following relevant information: ':'The most relevant information in the supplied material is: ';
+ const clean=[...new Set(items.map(x=>x.trim().replace(/\s+/g,' ')).filter(Boolean))];
+ if(clean.length>=2 && explain && !compare && !why){
+  return intro+clean.map((x,i)=>(i===0?'First, ':i===1?'Next, ':i===2?'Then, ':'Also, ')+x.charAt(0).toLowerCase()+x.slice(1).replace(/[.\s]+$/,'')+'.').join(' ')+' Check that the order and any links between these points match your textbook, and rewrite the answer in your own words.';
+ }
+ return intro+'\n\n'+clean.map((x,i)=>(i+1)+'. '+x).join('\n\n')+'\n\nTo finish the answer, connect the points in a clear order, explain important terms, and check each statement against the textbook. Rewrite the answer in your own words.';
 }
 function relevantSentences(question,text){
  const stop=new Set(['what','when','where','which','who','whom','whose','that','this','with','from','into','about','does','have','were','will','would','could','should','explain','describe','write','give','tell','make','your','the','and','for','are','was','how','why','perche','cosa','come','quale','quali','quando','dove','della','delle','dello','degli','che','con','per','una','uno','gli','dai','del','dei','sulla','sulle','nel','nella','nello','alla','alle','agli','sono','era','essere','help','homework','question','please']);
