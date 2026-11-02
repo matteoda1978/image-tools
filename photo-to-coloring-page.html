@@ -180,7 +180,46 @@ button:disabled{opacity:.45;cursor:not-allowed}
 .privacy-note{
  color:var(--muted);font-size:.77rem;line-height:1.55;margin:12px 0 0
 }
+
+/* Account and credits */
+.account-panel{margin:0 0 18px}
+.account-panel h2{margin-bottom:8px}
+.account-intro{color:var(--muted);font-size:.86rem;margin:0 0 14px}
+.account-grid{
+ display:grid;grid-template-columns:1fr 1fr;gap:12px
+}
+.account-field label{
+ display:block;font-size:.83rem;font-weight:700;margin-bottom:6px
+}
+.account-field input{
+ width:100%;padding:11px 12px;border-radius:10px;
+ border:1px solid var(--line);background:#0d1525;color:var(--text);
+ font:inherit;min-width:0
+}
+.account-buttons{
+ display:flex;flex-wrap:wrap;gap:9px;margin-top:12px
+}
+.account-buttons button{flex:1 1 130px}
+.account-status{
+ margin-top:12px;padding:12px;border-radius:11px;
+ background:#0d1525;border:1px solid var(--line);
+ color:var(--muted);font-size:.85rem;overflow-wrap:anywhere
+}
+.account-status strong{color:var(--text)}
+.account-status .credit-number{
+ color:var(--accent2);font-size:1.15rem;font-weight:850
+}
+.account-message{
+ color:var(--accent2);font-size:.83rem;margin-top:10px;
+ min-height:1.2em;overflow-wrap:anywhere
+}
+.account-message.error{color:var(--danger)}
+.account-logged-in{display:none}
+.account-logged-in.active{display:block}
+.auth-form.hidden{display:none}
+.auth-help{color:var(--muted);font-size:.78rem;margin-top:9px}
 [hidden]{display:none!important}
+
 @media(max-width:800px){
  .workspace{grid-template-columns:1fr}
  .stage{min-height:320px;padding:14px}
@@ -188,6 +227,9 @@ button:disabled{opacity:.45;cursor:not-allowed}
  .featuregrid{grid-template-columns:1fr}
  .top{margin-bottom:25px}
  .previewhead{align-items:flex-start;flex-direction:column}
+}
+@media(max-width:520px){
+ .account-grid{grid-template-columns:1fr}
 }
 @media(max-width:420px){
  .wrap{padding:18px 12px 36px}
@@ -201,7 +243,7 @@ button:disabled{opacity:.45;cursor:not-allowed}
 }
 @media print{
  body{background:white!important;color:#111!important}
- .top,.hero,.controls,.below,.footer,.previewhead,.tips{display:none!important}
+ .top,.hero,.controls,.account-panel,.below,.footer,.previewhead,.tips{display:none!important}
  .wrap{max-width:none;padding:0}
  .workspace{display:block}
  .previewpanel,.panel{padding:0;border:0;background:white}
@@ -233,6 +275,64 @@ button:disabled{opacity:.45;cursor:not-allowed}
   Transform your photo into a clean black-and-white coloring illustration.
   Choose your detail level, preview the result, then download or print your page.
  </p>
+</section>
+
+<!-- ACCOUNT -->
+<section class="panel account-panel" aria-label="Your RitoccaPix account">
+ <h2>Your account and credits</h2>
+ <p class="account-intro">
+  Create an account or sign in to use the AI coloring page generator.
+  One free credit is added after your email address is verified.
+ </p>
+
+ <div id="authForm" class="auth-form">
+  <div class="account-grid">
+   <div class="account-field">
+    <label for="accountEmail">Email address</label>
+    <input id="accountEmail" type="email" autocomplete="email"
+     placeholder="you@example.com" required>
+   </div>
+   <div class="account-field">
+    <label for="accountPassword">Password</label>
+    <input id="accountPassword" type="password"
+     autocomplete="current-password" placeholder="At least 8 characters"
+     minlength="8" required>
+   </div>
+  </div>
+
+  <div class="account-buttons">
+   <button id="registerBtn" class="primary" type="button">
+    Create account
+   </button>
+   <button id="loginBtn" class="secondary" type="button">
+    Sign in
+   </button>
+  </div>
+
+  <p class="auth-help">
+   New accounts must verify their email address before using the free credit.
+  </p>
+ </div>
+
+ <div id="loggedInPanel" class="account-logged-in">
+  <div class="account-status">
+   Signed in as <strong id="accountUserEmail"></strong><br>
+   Available credits:
+   <span class="credit-number" id="creditBalance">—</span>
+   <span id="creditLabel">credits</span>
+  </div>
+  <div class="account-buttons">
+   <button id="refreshCreditsBtn" class="secondary" type="button">
+    Refresh balance
+   </button>
+   <button id="logoutBtn" class="secondary" type="button">
+    Sign out
+   </button>
+  </div>
+ </div>
+
+ <div id="accountMessage" class="account-message"
+  role="status" aria-live="polite"></div>
 </section>
 
 <main class="workspace">
@@ -334,7 +434,7 @@ button:disabled{opacity:.45;cursor:not-allowed}
  <div class="previewhead">
   <h2>Preview</h2>
   <span class="status" id="statusText" aria-live="polite">
-   Upload a photo to begin
+   Sign in and upload a photo to begin
   </span>
  </div>
 
@@ -406,6 +506,15 @@ button:disabled{opacity:.45;cursor:not-allowed}
  <h2 style="margin-top:30px">Frequently asked questions</h2>
 
  <details class="faq">
+  <summary>How do I get my free credit?</summary>
+  <p>
+   Create an account and verify your email address using the confirmation
+   link sent to your inbox. One free credit is added to your account after
+   your email is verified.
+  </p>
+ </details>
+
+ <details class="faq">
   <summary>What kind of photo works best?</summary>
   <p>
    Use a sharp, well-lit photo with a clear subject and a simple background.
@@ -460,10 +569,21 @@ button:disabled{opacity:.45;cursor:not-allowed}
 
 </div>
 
+<!-- Supabase JavaScript client -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
 (()=>{
 "use strict";
 
+/* Supabase public configuration */
+const SUPABASE_URL =
+ "https://eckppexmaihbzbtunhnp.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+ "sb_publishable_h4NECcXTuSS7R-BDSAwIVQ_WKKolNKW";
+
+/* Cloudflare Worker */
 const WORKER_URL =
  "https://ritoccapix-coloring-ai.ritoccapix.workers.dev/";
 
@@ -485,14 +605,51 @@ const strengthValue = document.getElementById("strengthValue");
 const invertBg = document.getElementById("invertBg");
 const privacyConsent = document.getElementById("privacyConsent");
 
+const accountEmail = document.getElementById("accountEmail");
+const accountPassword = document.getElementById("accountPassword");
+const registerBtn = document.getElementById("registerBtn");
+const loginBtn = document.getElementById("loginBtn");
+const logoutBtn = document.getElementById("logoutBtn");
+const refreshCreditsBtn = document.getElementById("refreshCreditsBtn");
+const authForm = document.getElementById("authForm");
+const loggedInPanel = document.getElementById("loggedInPanel");
+const accountUserEmail = document.getElementById("accountUserEmail");
+const creditBalance = document.getElementById("creditBalance");
+const creditLabel = document.getElementById("creditLabel");
+const accountMessage = document.getElementById("accountMessage");
+
 let selectedFile = null;
 let sourceName = "coloring-page";
 let hasResult = false;
 let isGenerating = false;
 let currentRequest = null;
+let currentSession = null;
+let currentBalance = 0;
+let authBusy = false;
 
 document.getElementById("year").textContent =
  new Date().getFullYear();
+
+if(!window.supabase || !window.supabase.createClient){
+ setAccountMessage(
+  "The account service could not be loaded. Please refresh the page.",
+  true
+ );
+ generateBtn.disabled = true;
+ return;
+}
+
+const supabaseClient = window.supabase.createClient(
+ SUPABASE_URL,
+ SUPABASE_PUBLISHABLE_KEY,
+ {
+  auth:{
+   persistSession:true,
+   autoRefreshToken:true,
+   detectSessionInUrl:true
+  }
+ }
+);
 
 const strengthLabels = [
  "Very fine",
@@ -515,9 +672,35 @@ function setStatus(message){
  statusText.textContent = message;
 }
 
+function setAccountMessage(message,isError=false){
+ accountMessage.textContent = message || "";
+ accountMessage.classList.toggle("error",Boolean(isError));
+}
+
+function updateAccountButtons(disabled){
+ registerBtn.disabled = disabled;
+ loginBtn.disabled = disabled;
+}
+
 function updateGenerateButton(){
- generateBtn.disabled =
-  !selectedFile || !privacyConsent.checked || isGenerating;
+ const canGenerate =
+  Boolean(selectedFile) &&
+  privacyConsent.checked &&
+  Boolean(currentSession) &&
+  currentBalance > 0 &&
+  !isGenerating;
+
+ generateBtn.disabled = !canGenerate;
+
+ if(!currentSession){
+  generateBtn.textContent = "Sign in to use this tool";
+ }else if(currentBalance <= 0){
+  generateBtn.textContent = "No credits available";
+ }else if(isGenerating){
+  generateBtn.textContent = "Generating…";
+ }else{
+  generateBtn.textContent = "Make coloring page with AI · 1 credit";
+ }
 }
 
 function clearResult(){
@@ -589,7 +772,7 @@ function loadSelectedFile(file){
  placeholder.hidden = false;
  placeholder.querySelector("b").textContent = "Photo selected";
  placeholder.querySelector("span").textContent =
-  "Your photo is ready. Agree to the processing notice to continue.";
+  "Your photo is ready. Sign in, check your credits and agree to the processing notice.";
 
  img.onload = ()=>{
   URL.revokeObjectURL(url);
@@ -660,9 +843,306 @@ function base64ToBlob(base64,mimeType){
  return new Blob([bytes],{type:mimeType});
 }
 
+/* Load the authenticated user's credit balance */
+async function refreshCreditBalance(){
+
+ if(!currentSession){
+  currentBalance = 0;
+  creditBalance.textContent = "—";
+  creditLabel.textContent = "credits";
+  updateGenerateButton();
+  return;
+ }
+
+ const userId = currentSession.user.id;
+
+ const {data,error} = await supabaseClient
+  .from("credit_balances")
+  .select("balance")
+  .eq("user_id",userId)
+  .maybeSingle();
+
+ if(error){
+  console.error("Credit balance error:",error);
+  setAccountMessage(
+   "Could not load your credit balance. Please refresh and try again.",
+   true
+  );
+  currentBalance = 0;
+ }else if(!data){
+  currentBalance = 0;
+  setAccountMessage(
+   "Your credit account is not ready yet. Please try again shortly.",
+   true
+  );
+ }else{
+  currentBalance = Number(data.balance) || 0;
+  setAccountMessage("");
+ }
+
+ creditBalance.textContent = String(currentBalance);
+ creditLabel.textContent =
+  currentBalance === 1 ? "credit" : "credits";
+
+ updateGenerateButton();
+}
+
+/* Update the account interface after login or logout */
+async function applySession(session){
+
+ currentSession = session || null;
+
+ if(currentSession){
+
+  authForm.classList.add("hidden");
+  loggedInPanel.classList.add("active");
+
+  accountUserEmail.textContent =
+   currentSession.user.email || "Account";
+
+  creditBalance.textContent = "…";
+  creditLabel.textContent = "credits";
+
+  await refreshCreditBalance();
+
+  if(currentBalance > 0){
+   setAccountMessage("You are signed in and ready to create.");
+  }else{
+   setAccountMessage(
+    "You are signed in, but there are no available credits."
+   );
+  }
+
+ }else{
+
+  authForm.classList.remove("hidden");
+  loggedInPanel.classList.remove("active");
+
+  accountUserEmail.textContent = "";
+  creditBalance.textContent = "—";
+  creditLabel.textContent = "credits";
+
+  currentBalance = 0;
+  setAccountMessage("Sign in or create an account to continue.");
+ }
+
+ updateGenerateButton();
+}
+
+/* Create account */
+registerBtn.addEventListener("click",async()=>{
+
+ if(authBusy) return;
+
+ const email = accountEmail.value.trim();
+ const password = accountPassword.value;
+
+ if(!email || !accountEmail.validity.valid){
+  setAccountMessage("Please enter a valid email address.",true);
+  accountEmail.focus();
+  return;
+ }
+
+ if(password.length < 8){
+  setAccountMessage("Your password must contain at least 8 characters.",true);
+  accountPassword.focus();
+  return;
+ }
+
+ authBusy = true;
+ updateAccountButtons(true);
+ setAccountMessage("Creating your account…");
+
+ try{
+
+  const {data,error} = await supabaseClient.auth.signUp({
+   email,
+   password,
+   options:{
+    emailRedirectTo:
+     "https://ritoccapix.com/photo-to-coloring-page.html"
+   }
+  });
+
+  if(error) throw error;
+
+  if(data.session){
+   await applySession(data.session);
+   setAccountMessage(
+    "Your account is ready. Check your email for any confirmation message."
+   );
+  }else{
+   setAccountMessage(
+    "Account created. Please check your inbox and click the confirmation link. Then return here and sign in."
+   );
+  }
+
+ }catch(error){
+  console.error("Registration error:",error);
+  setAccountMessage(
+   error.message || "Could not create your account. Please try again.",
+   true
+  );
+ }finally{
+  authBusy = false;
+  updateAccountButtons(false);
+ }
+});
+
+/* Sign in */
+loginBtn.addEventListener("click",async()=>{
+
+ if(authBusy) return;
+
+ const email = accountEmail.value.trim();
+ const password = accountPassword.value;
+
+ if(!email || !accountEmail.validity.valid){
+  setAccountMessage("Please enter your registered email address.",true);
+  accountEmail.focus();
+  return;
+ }
+
+ if(!password){
+  setAccountMessage("Please enter your password.",true);
+  accountPassword.focus();
+  return;
+ }
+
+ authBusy = true;
+ updateAccountButtons(true);
+ setAccountMessage("Signing in…");
+
+ try{
+
+  const {data,error} =
+   await supabaseClient.auth.signInWithPassword({
+    email,
+    password
+   });
+
+  if(error) throw error;
+
+  await applySession(data.session);
+
+  setAccountMessage("You are signed in.");
+
+ }catch(error){
+  console.error("Login error:",error);
+  setAccountMessage(
+   error.message || "Sign-in failed. Check your email and password.",
+   true
+  );
+ }finally{
+  authBusy = false;
+  updateAccountButtons(false);
+ }
+});
+
+/* Sign out */
+logoutBtn.addEventListener("click",async()=>{
+
+ logoutBtn.disabled = true;
+
+ try{
+
+  const {error} = await supabaseClient.auth.signOut();
+
+  if(error) throw error;
+
+  await applySession(null);
+  setAccountMessage("You have signed out.");
+
+ }catch(error){
+  console.error("Sign-out error:",error);
+  setAccountMessage(
+   error.message || "Could not sign out. Please try again.",
+   true
+  );
+ }finally{
+  logoutBtn.disabled = false;
+ }
+});
+
+/* Manually refresh credits */
+refreshCreditsBtn.addEventListener("click",async()=>{
+
+ refreshCreditsBtn.disabled = true;
+ setAccountMessage("Refreshing your credit balance…");
+
+ try{
+  await refreshCreditBalance();
+  setAccountMessage("Credit balance updated.");
+ }finally{
+  refreshCreditsBtn.disabled = false;
+ }
+});
+
+/* Watch authentication changes */
+supabaseClient.auth.onAuthStateChange((event,session)=>{
+
+ if(event === "SIGNED_OUT"){
+  currentSession = null;
+  currentBalance = 0;
+  applySession(null);
+  return;
+ }
+
+ if(
+  event === "SIGNED_IN" ||
+  event === "INITIAL_SESSION" ||
+  event === "TOKEN_REFRESHED" ||
+  event === "USER_UPDATED"
+ ){
+  currentSession = session || null;
+
+  if(currentSession){
+   authForm.classList.add("hidden");
+   loggedInPanel.classList.add("active");
+   accountUserEmail.textContent =
+    currentSession.user.email || "Account";
+
+   refreshCreditBalance();
+  }else{
+   applySession(null);
+  }
+ }
+});
+
+/* Restore existing login session */
+(async()=>{
+ try{
+  const {data,error} = await supabaseClient.auth.getSession();
+
+  if(error) throw error;
+
+  await applySession(data.session);
+
+ }catch(error){
+  console.error("Session restore error:",error);
+  await applySession(null);
+  setAccountMessage(
+   "Could not restore your session. Please sign in again.",
+   true
+  );
+ }
+})();
+
+/* AI generation */
 async function generateColoringPage(){
 
  if(!selectedFile || isGenerating) return;
+
+ if(!currentSession){
+  setError("Please sign in before generating a coloring page.");
+  return;
+ }
+
+ if(currentBalance < 1){
+  setError("You do not have any available credits.");
+  updateGenerateButton();
+  return;
+ }
 
  if(!privacyConsent.checked){
   setError("Please agree to the image processing notice first.");
@@ -685,7 +1165,7 @@ async function generateColoringPage(){
  placeholder.querySelector("span").textContent =
   "AI is transforming your photo. This may take a little while.";
 
- setStatus("Sending photo securely…");
+ setStatus("Preparing secure request…");
 
  const formData = new FormData();
 
@@ -702,10 +1182,27 @@ async function generateColoringPage(){
 
  try{
 
+  /* Get the latest access token before calling the Worker */
+  const {data:sessionData,error:sessionError} =
+   await supabaseClient.auth.getSession();
+
+  if(sessionError) throw sessionError;
+
+  const session = sessionData.session;
+
+  if(!session){
+   throw new Error("Your session has expired. Please sign in again.");
+  }
+
+  currentSession = session;
+
   setStatus("AI is creating your coloring page…");
 
   const response = await fetch(WORKER_URL,{
    method:"POST",
+   headers:{
+    "Authorization":"Bearer " + session.access_token
+   },
    body:formData,
    signal:controller.signal
   });
@@ -719,6 +1216,18 @@ async function generateColoringPage(){
   }
 
   if(!response.ok){
+
+   if(response.status === 401){
+    throw new Error(
+     "Your session is not valid. Please sign out and sign in again."
+    );
+   }
+
+   if(response.status === 402){
+    throw new Error(
+     result.error || "You do not have any available credits."
+    );
+   }
 
    if(response.status === 429){
     throw new Error(
@@ -754,38 +1263,40 @@ async function generateColoringPage(){
   const imageUrl = URL.createObjectURL(blob);
   const generatedImage = new Image();
 
-  await new Promise((resolve,reject)=>{
+  try{
+   await new Promise((resolve,reject)=>{
 
-   generatedImage.onload = resolve;
+    generatedImage.onload = resolve;
 
-   generatedImage.onerror = ()=>{
-    reject(new Error("The generated image could not be opened."));
-   };
+    generatedImage.onerror = ()=>{
+     reject(new Error("The generated image could not be opened."));
+    };
 
-   generatedImage.src = imageUrl;
-  });
+    generatedImage.src = imageUrl;
+   });
 
-  const width = generatedImage.naturalWidth;
-  const height = generatedImage.naturalHeight;
+   const width = generatedImage.naturalWidth;
+   const height = generatedImage.naturalHeight;
 
-  if(!width || !height){
+   if(!width || !height){
+    throw new Error("The generated image has invalid dimensions.");
+   }
+
+   canvas.width = width;
+   canvas.height = height;
+
+   ctx.clearRect(0,0,width,height);
+   ctx.drawImage(generatedImage,0,0,width,height);
+
+   if(invertBg.checked){
+    const pixels = ctx.getImageData(0,0,width,height);
+    applyInvert(pixels);
+    ctx.putImageData(pixels,0,0);
+   }
+
+  }finally{
    URL.revokeObjectURL(imageUrl);
-   throw new Error("The generated image has invalid dimensions.");
   }
-
-  canvas.width = width;
-  canvas.height = height;
-
-  ctx.clearRect(0,0,width,height);
-  ctx.drawImage(generatedImage,0,0,width,height);
-
-  if(invertBg.checked){
-   const pixels = ctx.getImageData(0,0,width,height);
-   applyInvert(pixels);
-   ctx.putImageData(pixels,0,0);
-  }
-
-  URL.revokeObjectURL(imageUrl);
 
   canvas.hidden = false;
   placeholder.hidden = true;
@@ -794,7 +1305,10 @@ async function generateColoringPage(){
   downloadBtn.disabled = false;
   printBtn.disabled = false;
 
-  setStatus(`Ready · ${width} × ${height} px`);
+  setStatus(`Ready · ${canvas.width} × ${canvas.height} px`);
+
+  setError("");
+  setAccountMessage("Coloring page created successfully.");
 
  }catch(error){
 
@@ -813,13 +1327,26 @@ async function generateColoringPage(){
   clearTimeout(timeout);
   currentRequest = null;
   isGenerating = false;
-  updateGenerateButton();
 
+  /* Refresh balance even after an error, in case the Worker refunded a credit */
+  try{
+   const {data:sessionData} = await supabaseClient.auth.getSession();
+
+   if(sessionData.session){
+    currentSession = sessionData.session;
+    await refreshCreditBalance();
+   }
+  }catch(refreshError){
+   console.error("Balance refresh error:",refreshError);
+  }
+
+  updateGenerateButton();
  }
 }
 
 generateBtn.addEventListener("click",generateColoringPage);
 
+/* Download PNG */
 downloadBtn.addEventListener("click",()=>{
 
  if(!hasResult) return;
@@ -846,6 +1373,7 @@ downloadBtn.addEventListener("click",()=>{
  },"image/png");
 });
 
+/* Print A4 */
 printBtn.addEventListener("click",()=>{
 
  if(!hasResult) return;
@@ -901,6 +1429,7 @@ printBtn.addEventListener("click",()=>{
  win.document.close();
 });
 
+/* Settings changes */
 document.querySelectorAll('input[name="detail"]').forEach(input=>{
  input.addEventListener("change",()=>{
   if(hasResult){
