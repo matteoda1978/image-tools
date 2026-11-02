@@ -5,93 +5,175 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Photo to Coloring Page Online Free | RitoccaPix</title>
-<meta name="description" content="Turn your photos into printable coloring pages for kids and adults. Choose a detail level, preview the line art, download PNG, or print on A4. Free and private in your browser.">
+<meta name="description" content="Turn photos into printable coloring pages with cleaner outlines. Choose a detail level, adjust line strength, download PNG or print on A4. Free and private in your browser.">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://ritoccapix.com/photo-to-coloring-page.html">
 
 <style>
-:root{color-scheme:dark;--bg:#0a0f1d;--panel:#111a2c;--panel2:#172238;--line:#293750;--text:#f4f7fc;--muted:#a9b5ca;--accent:#8b7cff;--accent2:#5eead4;--danger:#ff9a9a}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
-a{color:#bdb5ff}
-.wrap{max-width:1120px;margin:auto;padding:24px 18px 52px}
-.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:36px}
-.brand{font-size:1.35rem;font-weight:850;letter-spacing:-.04em;color:#fff;text-decoration:none}
-.brand span{color:var(--accent)}
-.top small{color:var(--muted)}
-.hero{text-align:center;max-width:760px;margin:0 auto 28px}
-.eyebrow{color:var(--accent2);font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.14em}
-.hero h1{font-size:clamp(2rem,5vw,3.25rem);line-height:1.08;letter-spacing:-.045em;margin:12px 0}
-.hero p{color:var(--muted);margin:0 auto;max-width:650px}
-.workspace{display:grid;grid-template-columns:330px minmax(0,1fr);gap:18px;align-items:start}
-.panel{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:20px;min-width:0}
-.panel h2{font-size:1.05rem;margin:0 0 14px}
-.upload{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;padding:22px 14px;border:1.5px dashed #566584;border-radius:15px;background:#0d1525;cursor:pointer}
-.upload:hover,.upload:focus-within{border-color:var(--accent)}
-.upload strong{font-size:.98rem}
-.upload span{color:var(--muted);font-size:.83rem}
-.upload input{max-width:100%;font-size:.8rem}
-.field{margin-top:20px}
-.field>label{display:block;font-weight:700;font-size:.9rem;margin-bottom:8px}
-.options{display:grid;gap:8px}
-.option{display:flex;align-items:flex-start;gap:10px;border:1px solid var(--line);border-radius:12px;padding:11px;background:#0d1525;cursor:pointer}
-.option:has(input:checked){border-color:var(--accent);background:#1b2040}
-.option input{margin-top:4px;accent-color:var(--accent)}
-.option b{display:block;font-size:.9rem}
-.option small{display:block;color:var(--muted);font-size:.79rem}
-.rangehead{display:flex;justify-content:space-between;gap:10px;font-size:.87rem}
-.rangehead span:last-child{color:var(--muted)}
-input[type=range]{width:100%;accent-color:var(--accent)}
-.check{display:flex;gap:9px;align-items:center;color:var(--muted);font-size:.88rem;margin-top:14px}
-.check input{accent-color:var(--accent)}
-button{font:inherit;cursor:pointer;border:0;border-radius:11px;padding:12px 15px;font-weight:750}
-.primary{width:100%;margin-top:20px;background:var(--accent);color:#fff}
-.upload-actions{display:grid;grid-template-columns:1fr;gap:8px;margin-top:9px}
-.upload-actions button{width:100%}
-.primary:hover{filter:brightness(1.08)}
-.secondary{background:var(--panel2);border:1px solid var(--line);color:var(--text)}
-button:disabled{opacity:.45;cursor:not-allowed}
-.privacy{font-size:.78rem;color:var(--muted);margin:13px 0 0}
-.previewpanel{padding:18px}
-.previewhead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px}
-.previewhead h2{margin:0}
-.status{color:var(--muted);font-size:.82rem}
-.stage{min-height:440px;border:1px solid var(--line);border-radius:15px;background:#202a3d;display:flex;align-items:center;justify-content:center;padding:18px;overflow:hidden}
-.stage canvas{display:block;max-width:100%;max-height:68vh;object-fit:contain;background:white;box-shadow:0 8px 30px #0004}
-.placeholder{text-align:center;max-width:330px;color:var(--muted);padding:28px}
-.placeholder .icon{font-size:3rem;margin-bottom:10px}
-.placeholder b{display:block;color:var(--text);font-size:1.1rem;margin-bottom:6px}
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
-.tips{color:var(--muted);font-size:.82rem;margin:13px 2px 0}
-.below{margin-top:30px}
-.below h2{font-size:1.3rem;letter-spacing:-.02em}
-.featuregrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.feature{padding:16px;border-radius:15px;background:var(--panel);border:1px solid var(--line)}
-.feature b{display:block;margin-bottom:5px}
-.feature p{margin:0;color:var(--muted);font-size:.88rem}
-.faq{border-top:1px solid var(--line);padding:14px 0}
-.faq summary{font-weight:750;cursor:pointer}
-.faq p{color:var(--muted);margin-bottom:0}
-.footer{border-top:1px solid var(--line);margin-top:34px;padding-top:20px;color:var(--muted);font-size:.82rem;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.footer a{margin-right:12px}
-.message{color:var(--danger);font-size:.83rem;margin-top:10px;min-height:1.2em}
-@media(max-width:800px){
-.workspace{grid-template-columns:1fr}
-.stage{min-height:320px}
-.stage canvas{max-height:60vh}
-.featuregrid{grid-template-columns:1fr}
-.top{margin-bottom:25px}
-.previewhead{align-items:flex-start;flex-direction:column}
+:root {
+  color-scheme: dark;
+  --bg:#0a0f1d;
+  --panel:#111a2c;
+  --panel2:#172238;
+  --line:#293750;
+  --text:#f4f7fc;
+  --muted:#a9b5ca;
+  --accent:#8b7cff;
+  --accent2:#5eead4;
+  --danger:#ffaaaa;
 }
-@media print{
-body{background:white!important;color:#111!important}
-.top,.hero,.controls,.below,.footer,.previewhead,.tips{display:none!important}
-.wrap{max-width:none;padding:0}
-.workspace{display:block}
-.previewpanel,.panel{padding:0;border:0;background:white}
-.stage{display:block;min-height:0;padding:0;border:0;background:white;overflow:visible}
-.stage canvas{max-width:100%;max-height:none;width:auto!important;height:auto!important;box-shadow:none;margin:auto;object-fit:contain;print-color-adjust:exact;-webkit-print-color-adjust:exact}
-.print-title{display:none}
+* { box-sizing:border-box; }
+body {
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+}
+a { color:#bdb5ff; }
+button,input { font:inherit; }
+button { cursor:pointer; }
+button:disabled { opacity:.45; cursor:not-allowed; }
+.wrap { max-width:1120px; margin:auto; padding:24px 18px 52px; }
+.top {
+  display:flex; align-items:center; justify-content:space-between;
+  gap:16px; margin-bottom:36px;
+}
+.brand {
+  color:#fff; text-decoration:none; font-size:1.35rem;
+  font-weight:850; letter-spacing:-.04em;
+}
+.brand span { color:var(--accent); }
+.top small { color:var(--muted); }
+.hero { text-align:center; max-width:760px; margin:0 auto 28px; }
+.eyebrow {
+  color:var(--accent2); font-size:.78rem; font-weight:800;
+  text-transform:uppercase; letter-spacing:.14em;
+}
+.hero h1 {
+  font-size:clamp(2rem,5vw,3.25rem); line-height:1.08;
+  letter-spacing:-.045em; margin:12px 0;
+}
+.hero p { color:var(--muted); margin:0 auto; max-width:650px; }
+.workspace {
+  display:grid; grid-template-columns:330px minmax(0,1fr);
+  gap:18px; align-items:start;
+}
+.panel {
+  background:var(--panel); border:1px solid var(--line);
+  border-radius:20px; padding:20px; min-width:0;
+}
+.panel h2 { font-size:1.05rem; margin:0 0 14px; }
+.upload {
+  display:flex; flex-direction:column; align-items:center;
+  text-align:center; gap:8px; padding:22px 14px;
+  border:1.5px dashed #566584; border-radius:15px;
+  background:#0d1525; cursor:pointer;
+}
+.upload:hover { border-color:var(--accent); }
+.upload strong { font-size:.98rem; }
+.upload span { color:var(--muted); font-size:.83rem; }
+.upload input { max-width:100%; font-size:.8rem; }
+.field { margin-top:20px; }
+.field>label,.field-label {
+  display:block; font-weight:700; font-size:.9rem; margin-bottom:8px;
+}
+.options { display:grid; gap:8px; }
+.option {
+  display:flex; align-items:flex-start; gap:10px;
+  border:1px solid var(--line); border-radius:12px;
+  padding:11px; background:#0d1525; cursor:pointer;
+}
+.option:has(input:checked) { border-color:var(--accent); background:#1b2040; }
+.option input { margin-top:4px; accent-color:var(--accent); }
+.option b { display:block; font-size:.9rem; }
+.option small { display:block; color:var(--muted); font-size:.79rem; }
+.rangehead { display:flex; justify-content:space-between; gap:10px; font-size:.87rem; }
+.rangehead span:last-child { color:var(--muted); }
+input[type=range] { width:100%; accent-color:var(--accent); }
+.check {
+  display:flex; gap:9px; align-items:center;
+  color:var(--muted); font-size:.88rem; margin-top:14px;
+}
+.check input { accent-color:var(--accent); }
+.primary {
+  width:100%; margin-top:20px; background:var(--accent);
+  color:#fff; border:0; border-radius:11px; padding:12px 15px;
+  font-weight:750;
+}
+.primary:hover { filter:brightness(1.08); }
+.secondary {
+  background:var(--panel2); border:1px solid var(--line);
+  color:var(--text); border-radius:11px; padding:12px 15px;
+  font-weight:750;
+}
+.upload-actions { display:grid; gap:8px; margin-top:9px; }
+.upload-actions button { width:100%; }
+.privacy,.tips { color:var(--muted); font-size:.8rem; }
+.privacy { margin:13px 0 0; }
+.previewpanel { padding:18px; }
+.previewhead {
+  display:flex; justify-content:space-between; align-items:center;
+  gap:10px; margin-bottom:14px;
+}
+.previewhead h2 { margin:0; }
+.status { color:var(--muted); font-size:.82rem; }
+.stage {
+  min-height:440px; border:1px solid var(--line); border-radius:15px;
+  background:#202a3d; display:flex; align-items:center;
+  justify-content:center; padding:18px; overflow:hidden;
+}
+.stage canvas {
+  display:block; max-width:100%; max-height:68vh;
+  object-fit:contain; background:white;
+}
+.placeholder { text-align:center; max-width:330px; color:var(--muted); padding:28px; }
+.placeholder .icon { font-size:3rem; margin-bottom:10px; }
+.placeholder b { display:block; color:var(--text); font-size:1.1rem; margin-bottom:6px; }
+.actions { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px; }
+.tips { margin:13px 2px 0; }
+.message { color:var(--danger); font-size:.83rem; margin-top:10px; min-height:1.2em; }
+.below { margin-top:30px; }
+.below h2 { font-size:1.3rem; letter-spacing:-.02em; }
+.featuregrid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.feature { padding:16px; border-radius:15px; background:var(--panel); border:1px solid var(--line); }
+.feature b { display:block; margin-bottom:5px; }
+.feature p,.faq p { margin:0; color:var(--muted); font-size:.88rem; }
+.faq { border-top:1px solid var(--line); padding:14px 0; }
+.faq summary { font-weight:750; cursor:pointer; }
+.faq p { margin-top:8px; }
+.footer {
+  border-top:1px solid var(--line); margin-top:34px; padding-top:20px;
+  color:var(--muted); font-size:.82rem;
+  display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
+}
+.footer a { margin-right:12px; }
+@media(max-width:800px) {
+  .workspace { grid-template-columns:1fr; }
+  .stage { min-height:320px; }
+  .stage canvas { max-height:60vh; }
+  .featuregrid { grid-template-columns:1fr; }
+  .top { margin-bottom:25px; }
+  .previewhead { align-items:flex-start; flex-direction:column; }
+}
+@media print {
+  @page { size:A4 portrait; margin:10mm; }
+  body { background:white!important; color:#111!important; }
+  .top,.hero,.controls,.below,.footer,.previewhead,.tips,.actions {
+    display:none!important;
+  }
+  .wrap { max-width:none; padding:0; }
+  .workspace { display:block; }
+  .previewpanel { padding:0; border:0; background:white; }
+  .stage {
+    display:block; min-height:0; padding:0; border:0;
+    background:white; overflow:visible;
+  }
+  .stage canvas {
+    max-width:100%; max-height:270mm; width:auto!important;
+    height:auto!important; box-shadow:none; margin:auto;
+    object-fit:contain; print-color-adjust:exact;
+    -webkit-print-color-adjust:exact;
+  }
 }
 </style>
 </head>
@@ -100,155 +182,135 @@ body{background:white!important;color:#111!important}
 <div class="wrap">
 
 <header class="top">
-<a class="brand" href="https://ritoccapix.com/">Ritocca<span>Pix</span></a>
-<small>Free browser-based image tools</small>
+  <a class="brand" href="https://ritoccapix.com/">Ritocca<span>Pix</span></a>
+  <small>Free browser-based image tools</small>
 </header>
 
 <section class="hero">
-<div class="eyebrow">Creative tool · Free to use</div>
-<h1>Turn any photo into a coloring page</h1>
-<p>Create a cleaner coloring sheet with clearer contours and less photographic texture. Choose a detail level, preview the result, then download or print your page.</p>
+  <div class="eyebrow">Creative tool · Free to use</div>
+  <h1>Turn any photo into a coloring page</h1>
+  <p>Create printable line art from your photos. Adjust detail and line strength, preview the result, and download or print your coloring page.</p>
 </section>
 
 <main class="workspace">
-
 <section class="panel controls" aria-label="Coloring page settings">
-<h2>1. Choose a photo</h2>
+  <h2>1. Choose a photo</h2>
 
-<label class="upload" for="fileInput">
-<div style="font-size:1.8rem">＋</div>
-<strong>Upload your image</strong>
-<span>JPG, PNG or WebP · processed on your device</span>
-<input id="fileInput" type="file" accept="image/png,image/jpeg,image/webp,image/bmp,image/gif">
-</label>
+  <label class="upload" for="fileInput">
+    <div style="font-size:1.8rem">＋</div>
+    <strong>Upload your image</strong>
+    <span>JPG, PNG or WebP · processed on your device</span>
+    <input id="fileInput" type="file" accept="image/png,image/jpeg,image/webp,image/bmp,image/gif">
+  </label>
 
-<div class="upload-actions">
-<button id="replacePhotoBtn" class="secondary" type="button">Choose another photo</button>
-<button id="resetPhotoBtn" class="secondary" type="button" disabled>Remove photo / Start over</button>
-</div>
+  <div class="upload-actions">
+    <button id="replacePhotoBtn" class="secondary" type="button">Choose another photo</button>
+    <button id="resetPhotoBtn" class="secondary" type="button" disabled>Remove photo / Start over</button>
+  </div>
 
-<div class="field">
-<label>2. Select detail level</label>
-<div class="options">
-<label class="option">
-<input type="radio" name="detail" value="simple">
-<span><b>Simple</b><small>Fewer small details and simpler outlines — ideal for young children.</small></span>
-</label>
-<label class="option">
-<input type="radio" name="detail" value="balanced" checked>
-<span><b>Balanced</b><small>Balanced contours for a recognizable subject and useful details.</small></span>
-</label>
-<label class="option">
-<input type="radio" name="detail" value="detailed">
-<span><b>Detailed</b><small>Keeps more fine contours for older children and adults.</small></span>
-</label>
-</div>
-</div>
+  <div class="field">
+    <label class="field-label">2. Select detail level</label>
+    <div class="options">
+      <label class="option">
+        <input type="radio" name="detail" value="simple">
+        <span><b>Simple</b><small>Fewer details and cleaner, simpler outlines.</small></span>
+      </label>
+      <label class="option">
+        <input type="radio" name="detail" value="balanced" checked>
+        <span><b>Balanced</b><small>A balance of clean shapes and recognizable details.</small></span>
+      </label>
+      <label class="option">
+        <input type="radio" name="detail" value="detailed">
+        <span><b>Detailed</b><small>Preserves more smaller shapes and contours.</small></span>
+      </label>
+    </div>
+  </div>
 
-<div class="field">
-<div class="rangehead">
-<label for="lineStrength">Line strength</label>
-<span id="strengthValue">Medium</span>
-</div>
-<input id="lineStrength" type="range" min="1" max="5" value="3">
-<div class="rangehead"><span>Fine</span><span>Bold</span></div>
-</div>
+  <div class="field">
+    <div class="rangehead">
+      <label for="lineStrength">Line strength</label>
+      <span id="strengthValue">Medium</span>
+    </div>
+    <input id="lineStrength" type="range" min="1" max="5" value="3">
+    <div class="rangehead"><span>Fine</span><span>Bold</span></div>
+  </div>
 
-<label class="check"><input id="invertBg" type="checkbox"> Invert colors (white lines on black)</label>
+  <label class="check"><input id="invertBg" type="checkbox"> Invert colors (white lines on black)</label>
 
-<button id="generateBtn" class="primary" disabled>Make coloring page</button>
-<div id="errorMsg" class="message" role="status"></div>
-<p class="privacy">🔒 Your photo stays in your browser. It is not uploaded to RitoccaPix.</p>
+  <button id="generateBtn" class="primary" type="button" disabled>Make coloring page</button>
+  <div id="errorMsg" class="message" role="status"></div>
+  <p class="privacy">🔒 Your photo stays in your browser. It is not uploaded to RitoccaPix.</p>
 </section>
 
 <section class="panel previewpanel">
-<div class="previewhead">
-<h2>Preview</h2>
-<span class="status" id="statusText" aria-live="polite">Upload a photo to begin</span>
-</div>
+  <div class="previewhead">
+    <h2>Preview</h2>
+    <span class="status" id="statusText" aria-live="polite">Upload a photo to begin</span>
+  </div>
 
-<div class="stage" id="stage">
-<div class="placeholder" id="placeholder">
-<div class="icon">✎</div>
-<b>Your coloring page will appear here</b>
-<span>For best results, use a clear photo with a well-defined subject and good lighting.</span>
-</div>
-<canvas id="resultCanvas" hidden aria-label="Generated coloring page preview"></canvas>
-</div>
+  <div class="stage">
+    <div class="placeholder" id="placeholder">
+      <div class="icon">✎</div>
+      <b>Your coloring page will appear here</b>
+      <span>Clear photos with a well-defined subject usually work best.</span>
+    </div>
+    <canvas id="resultCanvas" hidden aria-label="Generated coloring page preview"></canvas>
+  </div>
 
-<div class="actions">
-<button id="downloadBtn" class="secondary" disabled>Download PNG</button>
-<button id="printBtn" class="secondary" disabled>Print A4</button>
-</div>
-
-<p class="tips">Tip: portraits, pets, toys and objects with clear edges usually produce the cleanest coloring pages.</p>
+  <div class="actions">
+    <button id="downloadBtn" class="secondary" type="button" disabled>Download PNG</button>
+    <button id="printBtn" class="secondary" type="button" disabled>Print A4</button>
+  </div>
+  <p class="tips">Tip: pets, toys and objects with clear edges usually produce the cleanest coloring pages.</p>
 </section>
-
 </main>
 
 <section class="below">
-<h2>How it works</h2>
+  <h2>How it works</h2>
+  <div class="featuregrid">
+    <article class="feature"><b>✦ Adjustable detail</b><p>Choose a simpler or more detailed result to suit different ages.</p></article>
+    <article class="feature"><b>◉ Private by design</b><p>Image processing runs locally in your browser; your photo is not sent to our server.</p></article>
+    <article class="feature"><b>▤ Ready to print</b><p>Download a PNG or print your result on A4 paper.</p></article>
+  </div>
 
-<div class="featuregrid">
-<article class="feature">
-<b>✦ Choose your detail</b>
-<p>Simple, balanced or detailed outlines let you adapt the page to different ages and interests.</p>
-</article>
-<article class="feature">
-<b>◉ Private by design</b>
-<p>Image processing happens locally in your browser. Your picture is not sent to a server.</p>
-</article>
-<article class="feature">
-<b>▤ Ready to print</b>
-<p>Save a crisp PNG or use the A4 print option to make a paper coloring sheet.</p>
-</article>
-</div>
-
-<h2 style="margin-top:30px">Frequently asked questions</h2>
-
-<details class="faq">
-<summary>What kind of photo works best?</summary>
-<p>Use a sharp, well-lit photo with a clear subject and a simple background. Very dark, blurry or crowded pictures may create less distinct lines.</p>
-</details>
-
-<details class="faq">
-<summary>Is the coloring page generated online?</summary>
-<p>The tool runs in your browser. Your selected photo is processed on your device and is not uploaded to a RitoccaPix server.</p>
-</details>
-
-<details class="faq">
-<summary>Can I print it on A4 paper?</summary>
-<p>Yes. Select Print A4 and choose A4 paper in your browser's print dialog. The browser controls the final printer margins and scaling.</p>
-</details>
-
-<details class="faq">
-<summary>Will every photo look like a professional illustration?</summary>
-<p>Results depend on the original photo. This tool detects visible brightness and colour boundaries and filters some small marks. It does not understand objects like a human illustrator, so clear photos with simple backgrounds usually work best.</p>
-</details>
+  <h2 style="margin-top:30px">Frequently asked questions</h2>
+  <details class="faq">
+    <summary>What kind of photo works best?</summary>
+    <p>Use a sharp, well-lit photo with a clear subject. Busy backgrounds, shadows and complex textures can still produce extra lines.</p>
+  </details>
+  <details class="faq">
+    <summary>Is my photo uploaded?</summary>
+    <p>No. The image is processed locally in your browser and is not uploaded to a RitoccaPix server.</p>
+  </details>
+  <details class="faq">
+    <summary>Can I print on A4 paper?</summary>
+    <p>Yes. Select Print A4 and choose A4 paper in your browser's print dialog. Printer margins and scaling depend on your browser and printer.</p>
+  </details>
+  <details class="faq">
+    <summary>Will every photo look like a professional illustration?</summary>
+    <p>Results depend on the original image. This tool simplifies colours and detects boundaries; it does not semantically recognize objects or replace a human illustrator.</p>
+  </details>
 </section>
 
 <footer class="footer">
-<span>© <span id="year"></span> RitoccaPix</span>
-<span><a href="https://ritoccapix.com/">Home</a><a href="https://ritoccapix.com/privacy.html">Privacy Policy</a></span>
+  <span>© <span id="year"></span> RitoccaPix</span>
+  <span><a href="https://ritoccapix.com/">Home</a><a href="https://ritoccapix.com/privacy.html">Privacy Policy</a></span>
 </footer>
-
 </div>
 
 <script>
 (() => {
   const $ = id => document.getElementById(id);
-
   const fileInput = $('fileInput');
-  const replacePhotoBtn = $('replacePhotoBtn');
-  const resetPhotoBtn = $('resetPhotoBtn');
-  const generateBtn = $('generateBtn');
-  const downloadBtn = $('downloadBtn');
-  const printBtn = $('printBtn');
   const canvas = $('resultCanvas');
-  const ctx = canvas.getContext('2d', { willReadFrequently: true });
+  const ctx = canvas.getContext('2d', { willReadFrequently:true });
   const placeholder = $('placeholder');
   const statusText = $('statusText');
   const errorMsg = $('errorMsg');
+  const generateBtn = $('generateBtn');
+  const downloadBtn = $('downloadBtn');
+  const printBtn = $('printBtn');
+  const resetBtn = $('resetPhotoBtn');
   const strength = $('lineStrength');
   const strengthValue = $('strengthValue');
   const invertBg = $('invertBg');
@@ -256,17 +318,16 @@ body{background:white!important;color:#111!important}
   let sourceImage = null;
   let sourceName = 'coloring-page';
   let hasResult = false;
+  let job = 0;
 
   $('year').textContent = new Date().getFullYear();
 
   strength.addEventListener('input', () => {
     strengthValue.textContent =
-      ['Very fine', 'Fine', 'Medium', 'Strong', 'Extra bold'][
-        Number(strength.value) - 1
-      ];
+      ['Very fine','Fine','Medium','Strong','Extra bold'][Number(strength.value)-1];
   });
 
-  replacePhotoBtn.addEventListener('click', () => {
+  $('replacePhotoBtn').addEventListener('click', () => {
     fileInput.value = '';
     fileInput.click();
   });
@@ -275,621 +336,471 @@ body{background:white!important;color:#111!important}
     const file = fileInput.files && fileInput.files[0];
     if (!file) return;
 
-    errorMsg.textContent = '';
+    job++;
     sourceImage = null;
     hasResult = false;
-
+    canvas.hidden = true;
+    placeholder.hidden = false;
     generateBtn.disabled = true;
     downloadBtn.disabled = true;
     printBtn.disabled = true;
-    canvas.hidden = true;
-    placeholder.hidden = false;
-
-    statusText.textContent = 'Loading photo…';
-    placeholder.querySelector('b').textContent = 'Loading your photo…';
-    placeholder.querySelector('span').textContent =
-      'Preparing your image on this device.';
+    resetBtn.disabled = true;
+    errorMsg.textContent = '';
 
     if (!file.type.startsWith('image/')) {
       errorMsg.textContent = 'Please select a valid image file.';
-      statusText.textContent = 'Unsupported file';
-      fileInput.value = '';
       return;
     }
 
     if (file.size > 20 * 1024 * 1024) {
       errorMsg.textContent = 'Please choose an image smaller than 20 MB.';
-      statusText.textContent = 'File too large';
-      fileInput.value = '';
       return;
     }
 
+    statusText.textContent = 'Loading photo…';
     const url = URL.createObjectURL(file);
     const img = new Image();
 
     img.onload = () => {
       URL.revokeObjectURL(url);
       sourceImage = img;
-
       sourceName = (file.name || 'coloring-page')
         .replace(/\.[^.]+$/, '')
         .replace(/[^a-z0-9_-]+/gi, '-')
-        .slice(0, 60) || 'coloring-page';
+        .slice(0,60) || 'coloring-page';
 
       generateBtn.disabled = false;
-      resetPhotoBtn.disabled = false;
-
-      statusText.textContent =
-        `Photo ready · ${img.naturalWidth} × ${img.naturalHeight}`;
-
+      resetBtn.disabled = false;
+      statusText.textContent = `Photo ready · ${img.naturalWidth} × ${img.naturalHeight}`;
       placeholder.querySelector('b').textContent = 'Ready to create';
-      placeholder.querySelector('span').textContent =
-        'Choose your settings and select “Make coloring page”.';
+      placeholder.querySelector('span').textContent = 'Choose your settings and make your coloring page.';
     };
 
     img.onerror = () => {
       URL.revokeObjectURL(url);
-      sourceImage = null;
-      generateBtn.disabled = true;
-      resetPhotoBtn.disabled = true;
-      errorMsg.textContent =
-        'Could not open this image. Try a JPG or PNG file.';
+      errorMsg.textContent = 'Could not open this image. Try a JPG or PNG file.';
       statusText.textContent = 'Could not open photo';
-      fileInput.value = '';
     };
 
     img.src = url;
   });
 
-  resetPhotoBtn.addEventListener('click', () => {
+  $('resetPhotoBtn').addEventListener('click', () => {
+    job++;
     sourceImage = null;
-    sourceName = 'coloring-page';
     hasResult = false;
     fileInput.value = '';
-
     canvas.hidden = true;
-    canvas.width = 1;
-    canvas.height = 1;
+    canvas.width = canvas.height = 1;
     placeholder.hidden = false;
-
-    placeholder.querySelector('b').textContent =
-      'Your coloring page will appear here';
-    placeholder.querySelector('span').textContent =
-      'Upload a photo to create a new coloring page.';
-
+    placeholder.querySelector('b').textContent = 'Your coloring page will appear here';
+    placeholder.querySelector('span').textContent = 'Upload a photo to create a new coloring page.';
     generateBtn.disabled = true;
     downloadBtn.disabled = true;
     printBtn.disabled = true;
-    resetPhotoBtn.disabled = true;
-
+    resetBtn.disabled = true;
     errorMsg.textContent = '';
     statusText.textContent = 'Upload a photo to begin';
   });
 
-  /*
-   * Separable blur:
-   * reduces tiny photographic textures while preserving larger shapes.
-   */
-  function blur3(src, w, h) {
-    const temp = new Float32Array(src.length);
+  function blur(src, w, h) {
+    const tmp = new Float32Array(src.length);
     const out = new Float32Array(src.length);
 
-    for (let y = 0; y < h; y++) {
-      const row = y * w;
-
-      for (let x = 0; x < w; x++) {
-        const left = src[row + Math.max(0, x - 1)];
-        const mid = src[row + x];
-        const right = src[row + Math.min(w - 1, x + 1)];
-
-        temp[row + x] = (left + 2 * mid + right) / 4;
+    for (let y=0; y<h; y++) {
+      const row=y*w;
+      for (let x=0; x<w; x++) {
+        tmp[row+x]=(
+          src[row+Math.max(0,x-1)] +
+          2*src[row+x] +
+          src[row+Math.min(w-1,x+1)]
+        )/4;
       }
     }
 
-    for (let y = 0; y < h; y++) {
-      const topRow = Math.max(0, y - 1) * w;
-      const row = y * w;
-      const bottomRow = Math.min(h - 1, y + 1) * w;
-
-      for (let x = 0; x < w; x++) {
-        out[row + x] =
-          (temp[topRow + x] +
-           2 * temp[row + x] +
-           temp[bottomRow + x]) / 4;
+    for (let y=0; y<h; y++) {
+      const row=y*w;
+      const top=Math.max(0,y-1)*w;
+      const bottom=Math.min(h-1,y+1)*w;
+      for (let x=0; x<w; x++) {
+        out[row+x]=(tmp[top+x]+2*tmp[row+x]+tmp[bottom+x])/4;
       }
     }
-
     return out;
   }
 
-  function smoothChannel(channel, w, h, passes) {
-    let result = channel;
-
-    for (let i = 0; i < passes; i++) {
-      result = blur3(result, w, h);
-    }
-
+  function smooth(src,w,h,passes) {
+    let result=src;
+    for(let i=0;i<passes;i++) result=blur(result,w,h);
     return result;
   }
 
-  function percentile(values, fraction) {
-    if (!values.length) return 0;
+  function quantize(src, levels) {
+    const out=new Float32Array(src.length);
+    const step=255/(levels-1);
+    for(let i=0;i<src.length;i++) {
+      out[i]=Math.round(src[i]/step)*step;
+    }
+    return out;
+  }
 
-    values.sort((a, b) => a - b);
-
-    const index = Math.min(
-      values.length - 1,
-      Math.floor((values.length - 1) * fraction)
-    );
-
-    return values[index];
+  function median(values) {
+    if(!values.length) return 0;
+    values.sort((a,b)=>a-b);
+    return values[Math.floor(values.length/2)];
   }
 
   function makePage() {
-    if (!sourceImage) return;
+    if(!sourceImage) return;
 
-    generateBtn.disabled = true;
-    errorMsg.textContent = '';
-    statusText.textContent = 'Cleaning the image and tracing contours…';
+    const thisJob=++job;
+    generateBtn.disabled=true;
+    errorMsg.textContent='';
+    statusText.textContent='Simplifying shapes and cleaning contours…';
 
-    requestAnimationFrame(() => {
+    /*
+     * Let the browser paint the progress status before processing.
+     */
+    setTimeout(() => {
+      if(thisJob!==job) return;
+
       try {
-        const detail =
-          document.querySelector('input[name="detail"]:checked').value;
+        const detail=document.querySelector('input[name="detail"]:checked').value;
+        const bold=Number(strength.value);
 
-        const bold = Number(strength.value);
+        const maxSide=detail==='simple'?950:detail==='balanced'?1250:1500;
+        const scale=Math.min(1,maxSide/Math.max(sourceImage.naturalWidth,sourceImage.naturalHeight));
+        const w=Math.max(1,Math.round(sourceImage.naturalWidth*scale));
+        const h=Math.max(1,Math.round(sourceImage.naturalHeight*scale));
+        const n=w*h;
 
-        /*
-         * Lower working resolutions simplify busy backgrounds.
-         */
-        const maxSide =
-          detail === 'simple' ? 1000 :
-          detail === 'balanced' ? 1400 : 1700;
+        const work=document.createElement('canvas');
+        work.width=w;
+        work.height=h;
+        const wc=work.getContext('2d',{willReadFrequently:true});
+        wc.fillStyle='#fff';
+        wc.fillRect(0,0,w,h);
+        wc.drawImage(sourceImage,0,0,w,h);
 
-        const scale = Math.min(
-          1,
-          maxSide / Math.max(
-            sourceImage.naturalWidth,
-            sourceImage.naturalHeight
-          )
-        );
+        const rgba=wc.getImageData(0,0,w,h).data;
+        let r=new Float32Array(n),g=new Float32Array(n),b=new Float32Array(n);
+        let gray=new Float32Array(n);
 
-        const w = Math.max(
-          1, Math.round(sourceImage.naturalWidth * scale)
-        );
-
-        const h = Math.max(
-          1, Math.round(sourceImage.naturalHeight * scale)
-        );
-
-        const work = document.createElement('canvas');
-        work.width = w;
-        work.height = h;
-
-        const wc = work.getContext('2d', {
-          willReadFrequently: true
-        });
-
-        wc.fillStyle = '#fff';
-        wc.fillRect(0, 0, w, h);
-        wc.drawImage(sourceImage, 0, 0, w, h);
-
-        const imageData = wc.getImageData(0, 0, w, h);
-        const rgba = imageData.data;
-        const n = w * h;
-
-        let red = new Float32Array(n);
-        let green = new Float32Array(n);
-        let blue = new Float32Array(n);
-        let gray = new Float32Array(n);
-
-        for (let i = 0, p = 0; i < n; i++, p += 4) {
-          red[i] = rgba[p];
-          green[i] = rgba[p + 1];
-          blue[i] = rgba[p + 2];
-
-          gray[i] =
-            0.299 * rgba[p] +
-            0.587 * rgba[p + 1] +
-            0.114 * rgba[p + 2];
+        for(let i=0,p=0;i<n;i++,p+=4) {
+          r[i]=rgba[p];
+          g[i]=rgba[p+1];
+          b[i]=rgba[p+2];
+          gray[i]=0.299*r[i]+0.587*g[i]+0.114*b[i];
         }
 
         /*
-         * Simple smooths more aggressively.
-         * Detailed retains more small shapes and boundaries.
+         * Smooth the photograph before quantization.
+         * Stronger smoothing suppresses texture in Simple mode.
          */
-        const passes =
-          detail === 'simple' ? 5 :
-          detail === 'balanced' ? 4 : 3;
-
-        red = smoothChannel(red, w, h, passes);
-        green = smoothChannel(green, w, h, passes);
-        blue = smoothChannel(blue, w, h, passes);
-        gray = smoothChannel(gray, w, h, passes);
-
-        const magnitude = new Float32Array(n);
-        const direction = new Uint8Array(n);
-        const thin = new Float32Array(n);
-
-        const kx = [-1, 0, 1, -2, 0, 2, -1, 0, 1];
-        const ky = [-1, -2, -1, 0, 0, 0, 1, 2, 1];
+        const passes=detail==='simple'?5:detail==='balanced'?3:2;
+        r=smooth(r,w,h,passes);
+        g=smooth(g,w,h,passes);
+        b=smooth(b,w,h,passes);
+        gray=smooth(gray,w,h,passes);
 
         /*
-         * Combine brightness and colour boundaries.
-         * Colour helps where adjacent regions have similar brightness.
+         * Posterization creates flatter regions instead of tracing
+         * every tiny shade variation in the original photograph.
          */
-        for (let y = 1; y < h - 1; y++) {
-          for (let x = 1; x < w - 1; x++) {
-            const i = y * w + x;
+        const levels=detail==='simple'?4:detail==='balanced'?6:9;
+        const qr=quantize(r,levels);
+        const qg=quantize(g,levels);
+        const qb=quantize(b,levels);
+        const qgray=quantize(gray,levels);
 
-            let gxGray = 0;
-            let gyGray = 0;
-            let gxR = 0;
-            let gyR = 0;
-            let gxG = 0;
-            let gyG = 0;
-            let gxB = 0;
-            let gyB = 0;
+        const edge=new Float32Array(n);
+        const thin=new Float32Array(n);
+        const direction=new Uint8Array(n);
 
-            let k = 0;
+        const kx=[-1,0,1,-2,0,2,-1,0,1];
+        const ky=[-1,-2,-1,0,0,0,1,2,1];
 
-            for (let dy = -1; dy <= 1; dy++) {
-              for (let dx = -1; dx <= 1; dx++) {
-                const q = (y + dy) * w + (x + dx);
-                const sx = kx[k];
-                const sy = ky[k];
+        for(let y=1;y<h-1;y++) {
+          for(let x=1;x<w-1;x++) {
+            const i=y*w+x;
+            let gx=0,gy=0,cx=0,cy=0;
+            let k=0;
 
-                gxGray += gray[q] * sx;
-                gyGray += gray[q] * sy;
+            for(let dy=-1;dy<=1;dy++) {
+              for(let dx=-1;dx<=1;dx++) {
+                const q=(y+dy)*w+x+dx;
+                gx+=qgray[q]*kx[k];
+                gy+=qgray[q]*ky[k];
 
-                gxR += red[q] * sx;
-                gyR += red[q] * sy;
-
-                gxG += green[q] * sx;
-                gyG += green[q] * sy;
-
-                gxB += blue[q] * sx;
-                gyB += blue[q] * sy;
-
+                /*
+                 * Colour-distance response detects borders between
+                 * flat posterized regions with different colours.
+                 */
+                const qx=(y+dy)*w+x+dx+1;
+                const qy=(y+dy+1)*w+x+dx;
+                if(dx<1) {
+                  cx+=Math.abs(qr[qx]-qr[q])+Math.abs(qg[qx]-qg[q])+Math.abs(qb[qx]-qb[q]);
+                }
+                if(dy<1) {
+                  cy+=Math.abs(qr[qy]-qr[q])+Math.abs(qg[qy]-qg[q])+Math.abs(qb[qy]-qb[q]);
+                }
                 k++;
               }
             }
 
-            const lum = Math.hypot(gxGray, gyGray);
+            const luminance=Math.hypot(gx,gy);
+            const colour=Math.hypot(cx,cy)*0.75;
+            edge[i]=0.72*luminance+0.28*colour;
 
-            const colour = Math.sqrt(
-              (gxR * gxR + gyR * gyR +
-               gxG * gxG + gyG * gyG +
-               gxB * gxB + gyB * gyB) / 3
-            );
-
-            magnitude[i] = 0.72 * lum + 0.28 * colour;
-
-            let angle = Math.atan2(gyGray, gxGray) * 180 / Math.PI;
-
-            if (angle < 0) angle += 180;
-
-            direction[i] =
-              angle < 22.5 || angle >= 157.5 ? 0 :
-              angle < 67.5 ? 1 :
-              angle < 112.5 ? 2 : 3;
+            let angle=Math.atan2(gy,gx)*180/Math.PI;
+            if(angle<0) angle+=180;
+            direction[i]=angle<22.5||angle>=157.5?0:angle<67.5?1:angle<112.5?2:3;
           }
         }
 
         /*
-         * Non-maximum suppression makes edges thinner.
+         * Non-maximum suppression retains a thin ridge along each edge.
          */
-        for (let y = 1; y < h - 1; y++) {
-          for (let x = 1; x < w - 1; x++) {
-            const i = y * w + x;
-            const d = direction[i];
-            const m = magnitude[i];
+        for(let y=1;y<h-1;y++) {
+          for(let x=1;x<w-1;x++) {
+            const i=y*w+x,d=direction[i],m=edge[i];
+            let a,bv;
 
-            let a;
-            let b;
+            if(d===0) { a=edge[i-1]; bv=edge[i+1]; }
+            else if(d===1) { a=edge[i-w+1]; bv=edge[i+w-1]; }
+            else if(d===2) { a=edge[i-w]; bv=edge[i+w]; }
+            else { a=edge[i-w-1]; bv=edge[i+w+1]; }
 
-            if (d === 0) {
-              a = magnitude[i - 1];
-              b = magnitude[i + 1];
-            } else if (d === 1) {
-              a = magnitude[i - w + 1];
-              b = magnitude[i + w - 1];
-            } else if (d === 2) {
-              a = magnitude[i - w];
-              b = magnitude[i + w];
-            } else {
-              a = magnitude[i - w - 1];
-              b = magnitude[i + w + 1];
-            }
-
-            if (m >= a && m >= b) {
-              thin[i] = m;
-            }
+            if(m>=a&&m>=bv) thin[i]=m;
           }
         }
 
         /*
-         * Estimate a threshold from the actual image.
-         * This is more adaptable than one fixed threshold for every photo.
+         * Derive adaptive thresholds from the strongest edge responses.
          */
-        const sample = [];
-        const step = Math.max(1, Math.floor(n / 18000));
+        const samples=[];
+        const step=Math.max(1,Math.floor(n/16000));
+        for(let i=0;i<n;i+=step) if(thin[i]>0) samples.push(thin[i]);
 
-        for (let i = 0; i < n; i += step) {
-          if (thin[i] > 0) sample.push(thin[i]);
-        }
-
-        const percentileLevel =
-          detail === 'simple' ? 0.78 :
-          detail === 'balanced' ? 0.68 : 0.57;
-
-        const reference = percentile(sample, percentileLevel);
-
-        const detailFactor =
-          detail === 'simple' ? 1.22 :
-          detail === 'balanced' ? 0.96 : 0.76;
-
-        const strengthFactor =
-          [1.28, 1.12, 1, 0.86, 0.73][bold - 1];
-
-        const high = Math.max(
-          17,
-          reference * detailFactor * strengthFactor
-        );
-
-        const low = high * 0.43;
+        const reference=median(samples);
+        const factor=detail==='simple'?2.6:detail==='balanced'?1.85:1.35;
+        const strengthFactor=[1.25,1.12,1,0.88,0.76][bold-1];
+        const high=Math.max(25,reference*factor*strengthFactor);
+        const low=high*0.42;
 
         /*
-         * Hysteresis:
-         * retain weak edges only when connected to a strong edge.
+         * Hysteresis links weak contour segments to stronger ones.
          */
-        const edges = new Uint8Array(n);
-        const visited = new Uint8Array(n);
-        const queue = new Int32Array(n);
+        const edges=new Uint8Array(n);
+        const visited=new Uint8Array(n);
+        const queue=new Int32Array(n);
+        let head=0,tail=0;
 
-        let head = 0;
-        let tail = 0;
-
-        for (let i = 0; i < n; i++) {
-          if (thin[i] >= high) {
-            edges[i] = 1;
-            visited[i] = 1;
-            queue[tail++] = i;
+        for(let i=0;i<n;i++) {
+          if(thin[i]>=high) {
+            edges[i]=1;
+            visited[i]=1;
+            queue[tail++]=i;
           }
         }
 
-        while (head < tail) {
-          const i = queue[head++];
-          const x = i % w;
-          const y = Math.floor(i / w);
+        while(head<tail) {
+          const i=queue[head++];
+          const x=i%w,y=Math.floor(i/w);
 
-          for (let dy = -1; dy <= 1; dy++) {
-            for (let dx = -1; dx <= 1; dx++) {
-              if (dx === 0 && dy === 0) continue;
+          for(let dy=-1;dy<=1;dy++) {
+            for(let dx=-1;dx<=1;dx++) {
+              if(dx===0&&dy===0) continue;
+              const xx=x+dx,yy=y+dy;
+              if(xx<1||xx>=w-1||yy<1||yy>=h-1) continue;
 
-              const xx = x + dx;
-              const yy = y + dy;
-
-              if (
-                xx < 1 || xx >= w - 1 ||
-                yy < 1 || yy >= h - 1
-              ) continue;
-
-              const q = yy * w + xx;
-
-              if (!visited[q] && thin[q] >= low) {
-                visited[q] = 1;
-                edges[q] = 1;
-                queue[tail++] = q;
+              const q=yy*w+xx;
+              if(!visited[q]&&thin[q]>=low) {
+                visited[q]=1;
+                edges[q]=1;
+                queue[tail++]=q;
               }
             }
           }
         }
 
         /*
-         * Remove tiny disconnected marks.
+         * Remove isolated dots and short texture fragments.
          */
-        const minSize =
-          detail === 'simple' ? 14 :
-          detail === 'balanced' ? 7 : 3;
+        const seen=new Uint8Array(n);
+        const component=new Int32Array(n);
+        const minSize=detail==='simple'?16:detail==='balanced'?8:4;
 
-        const seen = new Uint8Array(n);
-        const component = new Int32Array(n);
+        for(let start=0;start<n;start++) {
+          if(!edges[start]||seen[start]) continue;
 
-        for (let start = 0; start < n; start++) {
-          if (!edges[start] || seen[start]) continue;
+          let ch=0,ct=0;
+          component[ct++]=start;
+          seen[start]=1;
 
-          let ch = 0;
-          let ct = 0;
+          while(ch<ct) {
+            const i=component[ch++];
+            const x=i%w,y=Math.floor(i/w);
 
-          component[ct++] = start;
-          seen[start] = 1;
+            for(let dy=-1;dy<=1;dy++) {
+              for(let dx=-1;dx<=1;dx++) {
+                if(dx===0&&dy===0) continue;
+                const xx=x+dx,yy=y+dy;
+                if(xx<1||xx>=w-1||yy<1||yy>=h-1) continue;
 
-          while (ch < ct) {
-            const i = component[ch++];
-            const x = i % w;
-            const y = Math.floor(i / w);
-
-            for (let dy = -1; dy <= 1; dy++) {
-              for (let dx = -1; dx <= 1; dx++) {
-                if (dx === 0 && dy === 0) continue;
-
-                const xx = x + dx;
-                const yy = y + dy;
-
-                if (
-                  xx < 1 || xx >= w - 1 ||
-                  yy < 1 || yy >= h - 1
-                ) continue;
-
-                const q = yy * w + xx;
-
-                if (edges[q] && !seen[q]) {
-                  seen[q] = 1;
-                  component[ct++] = q;
+                const q=yy*w+xx;
+                if(edges[q]&&!seen[q]) {
+                  seen[q]=1;
+                  component[ct++]=q;
                 }
               }
             }
           }
 
-          if (ct < minSize) {
-            for (let j = 0; j < ct; j++) {
-              edges[component[j]] = 0;
-            }
+          if(ct<minSize) {
+            for(let j=0;j<ct;j++) edges[component[j]]=0;
           }
         }
 
         /*
-         * Render black contours on white paper.
+         * Remove single-pixel gaps and gently regularize contours.
          */
-        const output = wc.createImageData(w, h);
+        const cleaned=new Uint8Array(edges);
 
-        for (let i = 0; i < n; i++) {
-          const ink = edges[i] ? 0 : 255;
-          const value = invertBg.checked ? 255 - ink : ink;
-          const p = i * 4;
+        for(let y=1;y<h-1;y++) {
+          for(let x=1;x<w-1;x++) {
+            const i=y*w+x;
+            if(edges[i]) continue;
 
-          output.data[p] = value;
-          output.data[p + 1] = value;
-          output.data[p + 2] = value;
-          output.data[p + 3] = 255;
+            let count=0;
+            for(let dy=-1;dy<=1;dy++) {
+              for(let dx=-1;dx<=1;dx++) {
+                if(dx===0&&dy===0) continue;
+                count+=edges[(y+dy)*w+x+dx];
+              }
+            }
+
+            if(count>=6) cleaned[i]=1;
+          }
         }
 
         /*
-         * Add modest thickness for the two boldest settings.
+         * Fine/medium lines stay narrow. Strong settings thicken
+         * the contours slightly for easier colouring and printing.
          */
-        if (bold >= 4 && !invertBg.checked) {
-          const original = new Uint8Array(edges);
+        let finalEdges=cleaned;
 
-          for (let y = 1; y < h - 1; y++) {
-            for (let x = 1; x < w - 1; x++) {
-              const i = y * w + x;
+        if(bold>=4) {
+          finalEdges=new Uint8Array(cleaned);
 
-              if (original[i]) continue;
+          for(let y=1;y<h-1;y++) {
+            for(let x=1;x<w-1;x++) {
+              const i=y*w+x;
+              if(cleaned[i]) continue;
 
-              let neighbours = 0;
-
-              for (let dy = -1; dy <= 1; dy++) {
-                for (let dx = -1; dx <= 1; dx++) {
-                  if (original[(y + dy) * w + x + dx]) {
-                    neighbours++;
-                  }
+              let count=0;
+              for(let dy=-1;dy<=1;dy++) {
+                for(let dx=-1;dx<=1;dx++) {
+                  if(dx===0&&dy===0) continue;
+                  count+=cleaned[(y+dy)*w+x+dx];
                 }
               }
 
-              if (neighbours >= 3) {
-                const p = i * 4;
-                output.data[p] = 0;
-                output.data[p + 1] = 0;
-                output.data[p + 2] = 0;
-              }
+              if(count>=3) finalEdges[i]=1;
             }
           }
         }
 
-        canvas.width = w;
-        canvas.height = h;
-        ctx.putImageData(output, 0, 0);
+        const output=wc.createImageData(w,h);
+        for(let i=0,p=0;i<n;i++,p+=4) {
+          const black=finalEdges[i]===1;
+          let value=black?0:255;
+          if(invertBg.checked) value=255-value;
 
-        canvas.hidden = false;
-        placeholder.hidden = true;
-        hasResult = true;
+          output.data[p]=value;
+          output.data[p+1]=value;
+          output.data[p+2]=value;
+          output.data[p+3]=255;
+        }
 
-        downloadBtn.disabled = false;
-        printBtn.disabled = false;
+        canvas.width=w;
+        canvas.height=h;
+        ctx.putImageData(output,0,0);
 
-        statusText.textContent = `Ready · ${w} × ${h} px`;
+        canvas.hidden=false;
+        placeholder.hidden=true;
+        hasResult=true;
+        downloadBtn.disabled=false;
+        printBtn.disabled=false;
+        statusText.textContent=`Ready · ${w} × ${h} px`;
 
-      } catch (error) {
-        console.error(error);
-
-        errorMsg.textContent =
-          'Could not process this photo. Try a smaller image.';
-
-        statusText.textContent = 'Could not create coloring page';
-
+      } catch(err) {
+        console.error(err);
+        errorMsg.textContent='Could not process this image. Try a smaller photo.';
+        statusText.textContent='Could not create coloring page';
       } finally {
-        generateBtn.disabled = !sourceImage;
+        if(thisJob===job) generateBtn.disabled=!sourceImage;
       }
-    });
+    },20);
   }
 
-  generateBtn.addEventListener('click', makePage);
+  generateBtn.addEventListener('click',makePage);
 
-  document.querySelectorAll('input[name="detail"]').forEach(input => {
-    input.addEventListener('change', () => {
-      if (sourceImage) {
-        statusText.textContent =
-          'Settings changed · make the coloring page again';
-      }
+  document.querySelectorAll('input[name="detail"]').forEach(el=>{
+    el.addEventListener('change',()=>{
+      if(sourceImage) statusText.textContent='Settings changed · make the page again';
     });
   });
 
-  strength.addEventListener('change', () => {
-    if (sourceImage) {
-      statusText.textContent =
-        'Settings changed · make the coloring page again';
-    }
+  strength.addEventListener('change',()=>{
+    if(sourceImage) statusText.textContent='Settings changed · make the page again';
   });
 
-  invertBg.addEventListener('change', () => {
-    if (sourceImage) {
-      statusText.textContent =
-        'Settings changed · make the coloring page again';
-    }
+  invertBg.addEventListener('change',()=>{
+    if(sourceImage) statusText.textContent='Settings changed · make the page again';
   });
 
-  downloadBtn.addEventListener('click', () => {
-    if (!hasResult) return;
+  downloadBtn.addEventListener('click',()=>{
+    if(!hasResult) return;
 
-    canvas.toBlob(blob => {
-      if (!blob) {
-        errorMsg.textContent =
-          'Could not export the image. Please try again.';
+    canvas.toBlob(blob=>{
+      if(!blob) {
+        errorMsg.textContent='Could not export the image. Please try again.';
         return;
       }
 
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-
-      a.href = url;
-      a.download = sourceName + '-coloring-page.png';
-
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement('a');
+      a.href=url;
+      a.download=sourceName+'-coloring-page.png';
       document.body.appendChild(a);
       a.click();
       a.remove();
-
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
-    }, 'image/png');
+      setTimeout(()=>URL.revokeObjectURL(url),1500);
+    },'image/png');
   });
 
-  printBtn.addEventListener('click', () => {
-    if (!hasResult) return;
+  printBtn.addEventListener('click',()=>{
+    if(!hasResult) return;
 
-    const data = canvas.toDataURL('image/png');
-    const win = window.open('', '_blank');
+    const data=canvas.toDataURL('image/png');
+    const win=window.open('','_blank');
 
-    if (!win) {
-      errorMsg.textContent =
-        'Your browser blocked the print window. Allow pop-ups and try again.';
+    if(!win) {
+      errorMsg.textContent='The print window was blocked. Allow pop-ups and try again.';
       return;
     }
 
     win.document.write(
-      '<!doctype html><html><head><title>Coloring Page - A4 Print</title>' +
-      '<style>@page{size:A4 portrait;margin:10mm}' +
-      'html,body{margin:0;padding:0;background:#fff}' +
-      'body{height:277mm;display:flex;align-items:center;' +
-      'justify-content:center}' +
-      'img{display:block;max-width:190mm;max-height:277mm;' +
-      'width:auto;height:auto;object-fit:contain}' +
-      '</style></head><body><img src="' + data +
-      '" alt="Printable coloring page"><script>' +
-      'window.onload=()=>setTimeout(()=>window.print(),250);' +
-      'window.onafterprint=()=>window.close();' +
-      '<\/script></body></html>'
+      '<!doctype html><html><head><title>Coloring Page - A4</title>'+
+      '<style>@page{size:A4 portrait;margin:10mm}'+
+      'html,body{margin:0;padding:0;background:white}'+
+      'body{height:277mm;display:flex;align-items:center;justify-content:center}'+
+      'img{display:block;max-width:190mm;max-height:277mm;width:auto;height:auto;object-fit:contain}'+
+      '</style></head><body><img src="'+data+'" alt="Printable coloring page">'+
+      '<script>window.onload=()=>setTimeout(()=>window.print(),300);'+
+      'window.onafterprint=()=>window.close();<\/script></body></html>'
     );
-
     win.document.close();
   });
 })();
