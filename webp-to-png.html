@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -293,7 +292,7 @@
       .panel, .content { padding: 18px; }
       .result-item { grid-template-columns: 1fr; }
     }
-  
+
     .related-tools {
       margin: 28px 0 8px;
       padding: 20px;
@@ -301,11 +300,12 @@
       border-radius: 14px;
       background: var(--card);
     }
+
     .related-tools h2 { margin-top: 0; }
     .related-tools p, .related-tools li { color: var(--muted); }
     .related-tools a { color: var(--accent); }
     .related-tools li { margin: 7px 0; }
-</style>
+  </style>
 
   <script src="menu.js" defer></script>
 </head>
@@ -342,8 +342,14 @@
       </div>
 
       <div id="selectedFiles" class="status" style="display:block" role="status">No images selected.</div>
+
+      <p class="status" style="display:block; border-left:4px solid var(--accent); padding:12px 14px; margin:12px 0;">
+        <strong>Note:</strong> PNG files can be much larger than WebP files, especially for photographs. Check the total output size before downloading a large batch.
+      </p>
+
       <button type="button" id="convertBtn" class="primary" disabled>Convert to PNG</button>
       <button type="button" id="clearBtn" class="secondary">Clear and start again</button>
+
       <div id="error" class="status error" role="alert"></div>
       <div id="message" class="status success" role="status"></div>
 
@@ -360,7 +366,7 @@
       <p>
         RitoccaPix converts one or multiple WebP images to PNG in your browser.
         PNG supports transparency, so transparent areas in the original WebP can
-        remain transparent in the converted file. Preview each result and
+        remain transparent in the PNG output. Preview each result and
         download individual PNGs or a ZIP archive. Your selected image files
         are processed locally and are not intentionally uploaded to our server.
       </p>
@@ -459,6 +465,7 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+
   <script>
     "use strict";
 
@@ -513,6 +520,7 @@
       downloadZip.hidden = true;
       downloadZip.disabled = false;
       downloadZip.onclick = null;
+
       outputUrls.forEach(url => URL.revokeObjectURL(url));
       outputUrls = [];
     }
@@ -542,6 +550,7 @@
     function makeZipFilename() {
       zipDownloadCounter++;
       const d = new Date();
+
       const stamp =
         d.getFullYear() +
         String(d.getMonth() + 1).padStart(2, "0") +
@@ -585,6 +594,7 @@
       }
 
       const webpFiles = all.filter(isWebP);
+
       selectedFiles = webpFiles
         .filter(file => file.size <= MAX_FILE_SIZE)
         .slice(0, MAX_FILES);
@@ -629,7 +639,10 @@
     dropZone.addEventListener("drop", event => {
       event.preventDefault();
       dropZone.style.borderColor = "#526483";
-      if (!isConverting) updateSelectedFiles(event.dataTransfer.files);
+
+      if (!isConverting) {
+        updateSelectedFiles(event.dataTransfer.files);
+      }
     });
 
     clearBtn.addEventListener("click", () => {
@@ -640,6 +653,7 @@
       fileInput.value = "";
       convertBtn.disabled = true;
       selectedFilesBox.textContent = "No images selected.";
+
       clearOutput();
       hideMessages();
     });
@@ -651,6 +665,7 @@
 
         img.onload = () => {
           URL.revokeObjectURL(url);
+
           resolve({
             img,
             width: img.naturalWidth,
@@ -712,6 +727,7 @@
 
       link.href = url;
       link.download = filename;
+
       document.body.appendChild(link);
       link.click();
       link.remove();
@@ -740,6 +756,7 @@
           "Dimensions: " + item.width + " × " + item.height + " px";
 
         const sizes = document.createElement("p");
+
         const delta = item.originalSize
           ? Math.round((1 - item.blob.size / item.originalSize) * 100)
           : 0;
@@ -784,12 +801,16 @@
         for (let i = 0; i < batch.length; i++) {
           if (currentId !== conversionId) return;
 
-          showMessage("Converting image " + (i + 1) + " of " + batch.length + "…");
+          showMessage(
+            "Converting image " + (i + 1) + " of " + batch.length + "…"
+          );
 
           try {
             const item = await convertFile(batch[i]);
+
             item.name = uniqueName(batch[i].name, used);
             item.url = URL.createObjectURL(item.blob);
+
             outputUrls.push(item.url);
             converted.push(item);
           } catch (err) {
@@ -810,10 +831,25 @@
 
         renderResults(converted);
 
+        const originalTotal = converted.reduce(
+          (sum, item) => sum + item.originalSize, 0
+        );
+
+        const pngTotal = converted.reduce(
+          (sum, item) => sum + item.blob.size, 0
+        );
+
+        const sizeRatio = originalTotal > 0
+          ? (pngTotal / originalTotal).toFixed(1)
+          : "—";
+
         resultSummary.textContent =
           converted.length + " of " + batch.length +
           " image(s) converted successfully" +
-          (failures.length ? "; " + failures.length + " failed." : ".");
+          (failures.length ? "; " + failures.length + " failed." : ".") +
+          " Original total: " + formatBytes(originalTotal) +
+          ". PNG total: " + formatBytes(pngTotal) +
+          ". Output size: " + sizeRatio + "× the original size.";
 
         result.style.display = "block";
 
@@ -823,10 +859,15 @@
               "The images were converted, but the ZIP library did not load. Download each PNG using the links below."
             );
           } else {
-            showMessage("Conversion complete. Click Download all PNGs as ZIP to save the batch.");
+            showMessage(
+              "Conversion complete. Click Download all PNGs as ZIP to save the batch."
+            );
 
             const zip = new JSZip();
-            converted.forEach(item => zip.file(item.name, item.blob));
+
+            converted.forEach(item => {
+              zip.file(item.name, item.blob);
+            });
 
             const zipBlob = await zip.generateAsync({ type: "blob" });
 
@@ -835,9 +876,12 @@
 
             downloadZip.onclick = () => {
               const zipName = makeZipFilename();
+
               downloadBlob(zipBlob, zipName);
               showMessage("ZIP downloaded: " + zipName);
-              downloadZip.textContent = "Download ZIP again with a new filename";
+
+              downloadZip.textContent =
+                "Download ZIP again with a new filename";
             };
           }
         } else {
@@ -846,12 +890,20 @@
         }
 
         if (failures.length) {
-          showError("Some files could not be converted: " + failures.join(" | "));
+          showError(
+            "Some files could not be converted: " + failures.join(" | ")
+          );
         } else if (converted.length === 1) {
-          showMessage("PNG created and downloaded. Your original image was not changed.");
+          showMessage(
+            "PNG created and downloaded. Your original image was not changed."
+          );
         }
 
-        result.scrollIntoView({ behavior: "smooth", block: "start" });
+        result.scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+
       } catch (err) {
         if (currentId === conversionId) {
           showError(
