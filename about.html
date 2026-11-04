@@ -1,0 +1,448 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>About RitoccaPix | Free Online Image Tools</title>
+  <meta name="description" content="Learn about RitoccaPix, an independent project offering practical online tools for image conversion, compression, resizing and creative projects.">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#080d18">
+  <link rel="canonical" href="https://ritoccapix.com/about.html">
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="About RitoccaPix">
+  <meta property="og:description" content="Discover the purpose, tools and approach behind RitoccaPix.">
+  <meta property="og:url" content="https://ritoccapix.com/about.html">
+  <meta property="og:site_name" content="RitoccaPix">
+
+  <script src="menu.js" defer></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #080d18;
+      color: #f5f7fb;
+      line-height: 1.7;
+    }
+
+    a {
+      color: #91aaff;
+    }
+
+    a:focus-visible {
+      outline: 3px solid #91aaff;
+      outline-offset: 4px;
+    }
+
+    .container {
+      width: min(1000px, 92%);
+      margin: auto;
+    }
+
+    header {
+      padding: 20px 0;
+      border-bottom: 1px solid #263249;
+    }
+
+    header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      color: #ffffff;
+      font-size: 30px;
+      font-weight: 900;
+      letter-spacing: -1.5px;
+    }
+
+    .logo span {
+      color: #91aaff;
+    }
+
+    header nav {
+      min-width: 0;
+    }
+
+    main {
+      padding: 45px 0 65px;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 55px 25px;
+      margin-bottom: 25px;
+      border: 1px solid #263b60;
+      border-radius: 20px;
+      background:
+        radial-gradient(ellipse at top, #263f78 0%, #101b30 48%, #101827 100%);
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 7px 14px;
+      border: 1px solid #405987;
+      border-radius: 30px;
+      color: #b1c5ff;
+      background: #101b30;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 18px 0 12px;
+      font-size: clamp(36px, 7vw, 54px);
+      line-height: 1.15;
+    }
+
+    .hero p {
+      max-width: 720px;
+      margin: auto;
+      color: #c4d0e4;
+      font-size: 18px;
+    }
+
+    .content-section {
+      padding: 28px;
+      margin-bottom: 20px;
+      border: 1px solid #263249;
+      border-radius: 16px;
+      background: #101827;
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      color: #ffffff;
+      font-size: 24px;
+      line-height: 1.3;
+    }
+
+    h3 {
+      margin: 22px 0 8px;
+      color: #dce5ff;
+      font-size: 18px;
+    }
+
+    p,
+    li {
+      color: #b6c3d9;
+    }
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    strong {
+      color: #f5f7fb;
+    }
+
+    .tool-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .tool-list li {
+      padding: 13px 15px;
+      margin: 0;
+      border: 1px solid #293b59;
+      border-radius: 10px;
+      background: #0b1424;
+    }
+
+    .contact {
+      border-color: #405987;
+      background: #111e35;
+    }
+
+    .contact a {
+      font-weight: 700;
+    }
+
+    footer {
+      border-top: 1px solid #263249;
+      padding: 25px 0 35px;
+      color: #9eacc3;
+      font-size: 14px;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .footer-brand {
+      color: #ffffff;
+      font-size: 19px;
+      font-weight: 900;
+    }
+
+    .footer-brand span {
+      color: #91aaff;
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: #b6c3d9;
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      color: #ffffff;
+      text-decoration: underline;
+    }
+
+    @media (max-width: 650px) {
+      header .container {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      main {
+        padding-top: 25px;
+      }
+
+      .hero {
+        padding: 38px 18px;
+      }
+
+      .content-section {
+        padding: 20px;
+      }
+
+      .tool-list {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="container">
+      <div class="logo">
+        <a href="/" style="color:inherit;text-decoration:none;">
+          Ritocca<span>Pix</span>
+        </a>
+      </div>
+      <nav aria-label="Main navigation"></nav>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <section class="hero">
+      <span class="eyebrow">About the project</span>
+      <h1>About RitoccaPix</h1>
+      <p>
+        Practical online tools for everyday image tasks,
+        creative projects and visual content.
+      </p>
+    </section>
+
+    <section class="content-section">
+      <h2>What is RitoccaPix?</h2>
+      <p>
+        RitoccaPix is an independent web project created to make
+        common image tasks easier to access through a simple
+        online experience.
+      </p>
+      <p>
+        The website brings together tools for changing image formats,
+        reducing file sizes, resizing pictures, inspecting image
+        information and creating visual projects.
+      </p>
+      <p>
+        The goal is to provide practical features with clear
+        instructions, understandable settings and results that
+        users can review before downloading.
+      </p>
+    </section>
+
+    <section class="content-section">
+      <h2>What can you do with RitoccaPix?</h2>
+      <p>
+        The available tools cover several different tasks.
+        Each tool has its own options, supported formats and
+        technical limitations.
+      </p>
+
+      <ul class="tool-list">
+        <li>
+          <strong>Image compression</strong><br>
+          Reduce image file sizes for websites, forms, email
+          and everyday sharing.
+        </li>
+        <li>
+          <strong>Image resizing</strong><br>
+          Change image dimensions while reviewing the
+          available sizing options.
+        </li>
+        <li>
+          <strong>Image conversion</strong><br>
+          Convert supported image formats, including
+          WebP, JPG, PNG and HEIC.
+        </li>
+        <li>
+          <strong>Image analysis</strong><br>
+          Inspect technical details such as dimensions,
+          format and file size.
+        </li>
+        <li>
+          <strong>Creative image tools</strong><br>
+          Make collages, pixel-style avatars and
+          coloring-page versions of photographs.
+        </li>
+        <li>
+          <strong>Social media tools</strong><br>
+          Prepare visual content and simple video projects
+          for common social media formats.
+        </li>
+      </ul>
+
+      <p>
+        You can find the available features in the
+        <a href="/">RitoccaPix tools collection</a>.
+      </p>
+    </section>
+
+    <section class="content-section">
+      <h2>How the tools work</h2>
+      <p>
+        RitoccaPix includes different types of image-processing
+        features. The way a file is handled depends on the
+        individual tool and the services it uses.
+      </p>
+      <p>
+        Some operations are performed directly in the browser.
+        Other features may use external processing services.
+        For this reason, users should read the instructions
+        on each tool page before selecting or processing files.
+      </p>
+      <p>
+        Supported formats, maximum file sizes, image dimensions,
+        processing time and output quality can vary. Results may
+        also depend on the original image and the device or browser.
+      </p>
+    </section>
+
+    <section class="content-section">
+      <h2>Our approach</h2>
+
+      <h3>Clear instructions</h3>
+      <p>
+        Each tool should explain its purpose, the basic steps
+        and the options available to users.
+      </p>
+
+      <h3>Practical results</h3>
+      <p>
+        Users should be able to review available previews and
+        output settings before deciding whether to download
+        or use a processed image.
+      </p>
+
+      <h3>Continuous improvement</h3>
+      <p>
+        RitoccaPix is an ongoing project. Tools, instructions
+        and website features may be reviewed and improved
+        as the project develops.
+      </p>
+
+      <h3>Transparent information</h3>
+      <p>
+        We aim to describe features and limitations clearly.
+        A tool should not be understood to provide a particular
+        result or level of quality beyond what its page explains.
+      </p>
+    </section>
+
+    <section class="content-section">
+      <h2>Privacy and responsible use</h2>
+      <p>
+        File handling is not identical across all RitoccaPix tools.
+        Before using a feature with personal or confidential images,
+        check the relevant tool instructions and read our
+        <a href="privacy.html">Privacy Policy</a>.
+      </p>
+      <p>
+        Always review processed files before sharing, publishing
+        or printing them. Keep your original files when the
+        original quality or metadata is important.
+      </p>
+    </section>
+
+    <section class="content-section contact">
+      <h2>Contact RitoccaPix</h2>
+      <p>
+        Questions, feedback and reports about website features
+        are welcome. If you notice a problem or have a suggestion,
+        you can contact us by email.
+      </p>
+      <p>
+        Email:
+        <a href="mailto:ritoccapix@gmail.com">
+          ritoccapix@gmail.com
+        </a>
+      </p>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <span class="footer-brand">Ritocca<span>Pix</span></span>
+
+      <div class="footer-links">
+        <span>© 2026 RitoccaPix</span>
+        <a href="/">Home</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="about.html">About</a>
+        <a href="mailto:ritoccapix@gmail.com">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
