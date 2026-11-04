@@ -6,24 +6,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Privacy Policy | RitoccaPix</title>
-  <meta name="description" content="Read the RitoccaPix Privacy Policy to learn how our online image tools, hosting, third-party services, cookies and advertising may process information.">
+  <meta name="description" content="Read the RitoccaPix Privacy Policy to understand how website data, image files, accounts, cookies and third-party services are handled.">
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://ritoccapix.com/privacy.html">
-  <meta name="theme-color" content="#101827">
+  <meta name="theme-color" content="#080d18">
 
   <style>
+    * { box-sizing: border-box; }
+
     :root {
       color-scheme: dark;
-      --bg: #0b1120;
-      --panel: #121d30;
-      --text: #edf3ff;
-      --muted: #b6c3d9;
-      --accent: #72a7ff;
-      --border: #293851;
-    }
-
-    * {
-      box-sizing: border-box;
+      --bg: #080d18;
+      --panel: #111827;
+      --panel2: #0d1422;
+      --text: #f5f7fb;
+      --muted: #a0abc0;
+      --accent: #91aaff;
+      --border: #263249;
     }
 
     body {
@@ -35,13 +34,11 @@
     }
 
     header {
+      background: var(--panel);
       border-bottom: 1px solid var(--border);
-      background: #101827;
     }
 
-    .nav,
-    main,
-    footer {
+    .nav, main, footer {
       width: min(920px, 92%);
       margin: auto;
     }
@@ -55,36 +52,38 @@
     }
 
     .brand {
-      color: white;
-      font-size: 1.35rem;
-      font-weight: 800;
+      color: var(--text);
+      font-size: 1.4rem;
+      font-weight: 900;
       text-decoration: none;
+      letter-spacing: -1px;
     }
 
-    a {
+    .brand span { color: var(--accent); }
+
+    nav a, a {
       color: var(--accent);
     }
 
-    .nav a:last-child {
+    nav a {
       text-decoration: none;
       font-weight: 700;
     }
 
     main {
-      padding: 42px 0 64px;
+      padding: 38px 0 60px;
     }
 
-    .intro,
-    section {
+    .intro, section {
       background: var(--panel);
       border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 22px;
+      border-radius: 14px;
+      padding: 24px;
       margin-bottom: 18px;
     }
 
     h1 {
-      font-size: clamp(2rem, 5vw, 2.8rem);
+      font-size: clamp(2rem, 5vw, 2.7rem);
       line-height: 1.2;
       margin: 0 0 12px;
     }
@@ -95,25 +94,27 @@
       margin: 0 0 12px;
     }
 
-    p,
-    li {
+    h3 {
+      font-size: 1.05rem;
+      margin: 20px 0 8px;
+    }
+
+    p, li {
       color: var(--muted);
     }
 
-    strong {
-      color: var(--text);
-    }
+    strong { color: var(--text); }
 
     .updated {
+      font-size: .9rem;
       color: var(--muted);
-      font-size: 0.92rem;
     }
 
     footer {
       border-top: 1px solid var(--border);
       padding: 24px 0 36px;
       color: var(--muted);
-      font-size: 0.9rem;
+      font-size: .9rem;
     }
 
     footer a {
@@ -122,232 +123,379 @@
     }
 
     @media (max-width: 600px) {
-      .nav {
-        min-height: 64px;
-      }
-
-      main {
-        padding-top: 26px;
-      }
-
-      .intro,
-      section {
-        padding: 18px;
-      }
+      .nav { min-height: 64px; }
+      main { padding-top: 24px; }
+      .intro, section { padding: 18px; }
     }
   </style>
 </head>
 
 <body>
-  <header>
-    <nav class="nav" aria-label="Main navigation">
-      <a class="brand" href="https://ritoccapix.com/">RitoccaPix</a>
-      <a href="https://ritoccapix.com/">Home</a>
-    </nav>
-  </header>
-
-  <main>
-    <div class="intro">
-      <h1>Privacy Policy</h1>
-      <p>
-        This Privacy Policy explains how information may be handled
-        when you visit RitoccaPix and use its online image tools.
-      </p>
-      <p class="updated">Last updated: October 13, 2026</p>
-    </div>
-
-    <section>
-      <h2>1. About RitoccaPix</h2>
-      <p>
-        RitoccaPix provides online tools for working with images
-        and other visual content.
-      </p>
-      <p>
-        For privacy questions or requests, contact:
-        <a href="mailto:ritoccapix@gmail.com">
-          ritoccapix@gmail.com
-        </a>
-      </p>
-    </section>
-
-    <section>
-      <h2>2. Information processed when you visit</h2>
-      <p>
-        When you access a website, the hosting provider and other
-        technical service providers may process technical information,
-        such as your IP address, browser type, device information,
-        requested page, and the date and time of the request.
-      </p>
-      <p>
-        RitoccaPix is hosted using GitHub Pages. GitHub may process
-        technical information as described in its own privacy notices.
-        For more information, consult
-        <a href="https://docs.github.com/en/site-policy/privacy-policies"
-           target="_blank" rel="noopener noreferrer">
-          GitHub's privacy policies
-        </a>.
-      </p>
-    </section>
-
-    <section>
-      <h2>3. Images and files you use</h2>
-      <p>
-        Many RitoccaPix tools are designed to process selected images
-        directly in your browser, without uploading the image to a
-        RitoccaPix-operated image-processing server.
-      </p>
-      <p>
-        Processing methods may differ between tools. Some features
-        may load software libraries, services or AI models from
-        third-party providers. Those requests may disclose technical
-        information to the relevant provider.
-      </p>
-      <p>
-        Check the instructions displayed on each tool page to
-        understand how that feature works. Do not use a tool for
-        confidential material unless you have verified its processing
-        method and the services it uses.
-      </p>
-    </section>
-
-    <section>
-      <h2>4. Cookies and similar technologies</h2>
-      <p>
-        The website or third-party services integrated into it may
-        use cookies, local storage or similar technologies for
-        functionality, security, preferences, measurement or
-        advertising, where applicable.
-      </p>
-      <p>
-        The technologies used depend on the features and third-party
-        services that are active. You can manage cookies through your
-        browser settings, although blocking some technologies may
-        affect how certain services work.
-      </p>
-    </section>
-
-    <section>
-      <h2>5. Google AdSense and advertising</h2>
-      <p>
-        RitoccaPix may use Google AdSense to display advertisements.
-        If advertising is enabled, Google and its partners may use
-        cookies or similar technologies to deliver, limit, personalize
-        or measure ads, subject to applicable settings, consent choices
-        and legal requirements.
-      </p>
-      <p>
-        Depending on your location and the advertising settings,
-        Google may process information such as device identifiers,
-        browser information, approximate location derived from
-        technical data, and interactions with advertisements.
-      </p>
-      <p>
-        For more information, visit
-        <a href="https://policies.google.com/technologies/ads"
-           target="_blank" rel="noopener noreferrer">
-          Google's Advertising Privacy and Terms
-        </a>.
-      </p>
-      <p>
-        Where required by law, an appropriate consent mechanism must
-        be provided before using advertising technologies that require
-        consent. Users can manage available advertising and privacy
-        controls through Google's services.
-      </p>
-    </section>
-
-    <section>
-      <h2>6. Third-party services and external links</h2>
-      <p>
-        Some tools may rely on external libraries, content delivery
-        networks, AI models or other third-party services. When your
-        browser requests resources from those providers, they may
-        receive technical request information under their own
-        privacy policies.
-      </p>
-      <p>
-        RitoccaPix does not control the privacy practices of external
-        websites or service providers. Please review their policies
-        before interacting with those services.
-      </p>
-    </section>
-
-    <section>
-      <h2>7. Purposes and legal bases</h2>
-      <p>
-        Where applicable data protection law requires a legal basis,
-        technical processing may be necessary to deliver and secure
-        the website, comply with legal obligations, or pursue legitimate
-        interests such as preventing abuse and maintaining the service.
-      </p>
-      <p>
-        Optional analytics or advertising technologies that require
-        consent should only be used in accordance with applicable
-        consent requirements. The legal basis depends on the specific
-        processing activity and the user's location.
-      </p>
-    </section>
-
-    <section>
-      <h2>8. Data sharing and retention</h2>
-      <p>
-        Technical information may be processed by hosting providers,
-        infrastructure providers and third-party services needed to
-        operate the website. Information may also be disclosed where
-        required by law or necessary to protect the website and its users.
-      </p>
-      <p>
-        Retention periods depend on the type of information and the
-        provider involved. Please consult the relevant provider's
-        privacy documentation for details of its retention practices.
-      </p>
-    </section>
-
-    <section>
-      <h2>9. Your privacy rights</h2>
-      <p>
-        Depending on your location and applicable law, you may have
-        rights to request access to personal information, correction,
-        deletion, restriction of processing, objection or data
-        portability. You may also have the right to withdraw consent
-        where processing is based on consent.
-      </p>
-      <p>
-        To make a privacy request, contact
-        <a href="mailto:ritoccapix@gmail.com">
-          ritoccapix@gmail.com
-        </a>.
-        You may also have the right to complain to your local
-        data protection authority.
-      </p>
-    </section>
-
-    <section>
-      <h2>10. Children's privacy</h2>
-      <p>
-        RitoccaPix is a general-purpose website and is not specifically
-        directed at children. If you believe a child has provided
-        personal information in a way that raises a privacy concern,
-        please contact the website operator.
-      </p>
-    </section>
-
-    <section>
-      <h2>11. Changes to this policy</h2>
-      <p>
-        This Privacy Policy may be updated when the website, its tools,
-        advertising settings or applicable legal requirements change.
-        The latest version will be published on this page with an
-        updated revision date.
-      </p>
-    </section>
-  </main>
-
-  <footer>
-    <p>RitoccaPix — Free online image tools.</p>
+<header>
+  <nav class="nav" aria-label="Main navigation">
+    <a class="brand" href="https://ritoccapix.com/">Ritocca<span>Pix</span></a>
     <a href="https://ritoccapix.com/">Home</a>
-    <a href="https://ritoccapix.com/privacy.html">Privacy Policy</a>
-    <a href="mailto:ritoccapix@gmail.com">Contact</a>
-  </footer>
+  </nav>
+</header>
+
+<main>
+  <div class="intro">
+    <h1>Privacy Policy</h1>
+    <p>
+      This Privacy Policy explains how information is handled when
+      you visit RitoccaPix and use its online tools.
+    </p>
+    <p class="updated">Last updated: November 4, 2026</p>
+  </div>
+
+  <section>
+    <h2>1. Website and Data Controller</h2>
+    <p>
+      RitoccaPix is a website offering online image editing,
+      conversion, creative and study tools.
+    </p>
+    <p>
+      <strong>Data Controller:</strong>
+      [LEGAL NAME OR LEGAL ENTITY TO BE COMPLETED BEFORE PUBLICATION]
+    </p>
+    <p>
+      <strong>Website:</strong>
+      <a href="https://ritoccapix.com/">https://ritoccapix.com/</a>
+    </p>
+    <p>
+      <strong>Privacy contact:</strong>
+      <a href="mailto:ritoccapix@gmail.com">ritoccapix@gmail.com</a>
+    </p>
+    <p>
+      The website name RitoccaPix is a public-facing name and does not
+      replace the identification of the data controller required by
+      applicable data protection law.
+    </p>
+  </section>
+
+  <section>
+    <h2>2. Information processed when you visit</h2>
+    <p>
+      When you visit a website, hosting and infrastructure providers
+      may process technical information needed to deliver and secure
+      the requested pages.
+    </p>
+    <p>
+      This information may include IP address, browser and device
+      information, requested pages, timestamps and technical log data.
+    </p>
+    <p>
+      RitoccaPix is hosted using GitHub Pages. GitHub may process
+      technical information under its own privacy practices.
+      See
+      <a href="https://docs.github.com/en/site-policy/privacy-policies"
+         target="_blank" rel="noopener noreferrer">
+        GitHub's privacy policies
+      </a>.
+    </p>
+  </section>
+
+  <section>
+    <h2>3. Images and files processed by the tools</h2>
+    <p>
+      The way files are handled depends on the individual tool.
+      Not every feature uses the same processing method.
+    </p>
+
+    <h3>Tools that process files in your browser</h3>
+    <p>
+      Several tools are designed to process selected images directly
+      in your browser. For these operations, the image itself is not
+      intentionally uploaded to a RitoccaPix image-processing server.
+    </p>
+    <p>
+      Examples include image conversion and editing tools, Photo to
+      Coloring Page, Image Smart, Object Remover, Pixel Avatar Maker
+      and AI Study Assistant, according to their current implementations.
+    </p>
+    <p>
+      Some of these pages load JavaScript libraries, OCR software,
+      AI runtimes or model files from external content delivery
+      networks or model hosts. Those providers may receive technical
+      information when your browser requests those resources.
+    </p>
+
+    <h3>Photo to Coloring Page</h3>
+    <p>
+      This feature has a separate account and AI processing workflow.
+      Users may create an account, verify an email address, sign in
+      and use available processing credits.
+    </p>
+    <p>
+      The account and authentication functions use Supabase.
+      Account-related information may include an email address,
+      authentication and session information, and credit balance data.
+    </p>
+    <p>
+      When a user requests an AI-generated coloring page, the selected
+      image and processing settings are sent to a RitoccaPix Cloudflare
+      Worker. The request uses an authenticated session.
+      The image is therefore not processed exclusively in the browser.
+    </p>
+    <p>
+      Do not upload confidential or sensitive images unless you have
+      considered this external processing and the relevant provider
+      policies.
+    </p>
+
+    <h3>AI Study Assistant</h3>
+    <p>
+      The current version extracts text from uploaded PDFs and images
+      in the browser. It uses external PDF and OCR libraries loaded
+      from public CDNs when needed.
+    </p>
+    <p>
+      The current version creates study materials using local
+      text-processing rules and is not connected to a generative
+      AI tutor service.
+    </p>
+  </section>
+
+  <section>
+    <h2>4. Accounts and credits</h2>
+    <p>
+      The Photo to Coloring Page feature allows users to register
+      and sign in. The account service is provided through Supabase.
+    </p>
+    <p>
+      Information processed for this feature may include the email
+      address supplied during registration, authentication data,
+      session tokens and information about available credits.
+    </p>
+    <p>
+      Account information is used to provide authentication,
+      manage access to the feature and check available credits.
+      The service may also send account-related emails, such as
+      email verification messages.
+    </p>
+    <p>
+      For more information about the provider, consult
+      <a href="https://supabase.com/privacy"
+         target="_blank" rel="noopener noreferrer">
+        Supabase's Privacy Policy
+      </a>.
+    </p>
+  </section>
+
+  <section>
+    <h2>5. Cookies and local storage</h2>
+    <p>
+      RitoccaPix and its integrated providers may use cookies,
+      local storage, session storage or similar technologies.
+      Their use depends on the specific tool and service.
+    </p>
+    <p>
+      These technologies may support essential functions such as
+      account sessions, security, saved preferences and service
+      operation. Third-party advertising or analytics technologies
+      may also use cookies or similar identifiers where enabled.
+    </p>
+    <p>
+      You can manage cookies through your browser settings.
+      Blocking essential technologies may affect some features,
+      including account sign-in.
+    </p>
+  </section>
+
+  <section>
+    <h2>6. Advertising and Google AdSense</h2>
+    <p>
+      RitoccaPix may display advertisements through Google AdSense.
+      When advertising is enabled, Google and its advertising partners
+      may process information using cookies or similar technologies
+      to deliver, limit, personalize or measure advertisements.
+    </p>
+    <p>
+      Depending on your location, consent choices and advertising
+      settings, information may include browser or device identifiers,
+      approximate location derived from technical information,
+      and interactions with advertisements.
+    </p>
+    <p>
+      For more information, visit
+      <a href="https://policies.google.com/technologies/ads"
+         target="_blank" rel="noopener noreferrer">
+        Google's advertising technologies information
+      </a>.
+    </p>
+    <p>
+      Where required, advertising technologies that rely on consent
+      must be used only after an appropriate consent choice has
+      been obtained. Available privacy and advertising controls
+      depend on the relevant Google services and settings.
+    </p>
+  </section>
+
+  <section>
+    <h2>7. External service providers</h2>
+    <p>
+      Depending on the feature used, your browser may connect to
+      third-party providers for hosting, authentication, account
+      management, AI processing, software libraries, model downloads,
+      advertising or other technical functions.
+    </p>
+    <p>Examples of providers and services used by the website include:</p>
+    <ul>
+      <li>
+        <strong>GitHub Pages</strong> — website hosting.
+      </li>
+      <li>
+        <strong>Supabase</strong> — account authentication and
+        credit-related functions for Photo to Coloring Page.
+      </li>
+      <li>
+        <strong>Cloudflare Workers</strong> — request handling for
+        the AI coloring-page service.
+      </li>
+      <li>
+        <strong>Public CDNs and model hosts</strong> — delivery of
+        software libraries and AI model files used by certain tools.
+      </li>
+      <li>
+        <strong>Google</strong> — advertising services where enabled.
+      </li>
+    </ul>
+    <p>
+      When your browser connects to an external provider, that provider
+      may process technical information under its own privacy policy.
+      The exact information and retention periods depend on the
+      provider and the service configuration.
+    </p>
+  </section>
+
+  <section>
+    <h2>8. Purposes and legal bases</h2>
+    <p>
+      Personal information may be processed, where applicable,
+      for the following purposes:
+    </p>
+    <ul>
+      <li>Providing and maintaining the website and its tools.</li>
+      <li>Protecting the website against abuse and security threats.</li>
+      <li>Creating and managing user accounts where a feature requires one.</li>
+      <li>Processing AI requests and managing available credits.</li>
+      <li>Displaying and measuring advertising where enabled.</li>
+      <li>Responding to privacy requests and complying with legal obligations.</li>
+    </ul>
+    <p>
+      Depending on the specific activity, the applicable legal basis
+      may include performance of a requested service, legitimate
+      interests, compliance with legal obligations or consent.
+      Consent is used where required by law, including for non-essential
+      cookies and advertising technologies that require it.
+    </p>
+  </section>
+
+  <section>
+    <h2>9. Data sharing and international transfers</h2>
+    <p>
+      Information may be processed by hosting, authentication,
+      infrastructure, AI processing, advertising and other technical
+      providers where necessary to operate the relevant feature.
+    </p>
+    <p>
+      Some providers may process information in countries outside
+      your country of residence, including outside the European
+      Economic Area. Where applicable, international transfers
+      should rely on a valid transfer mechanism under data protection
+      law, such as an adequacy decision or appropriate safeguards.
+    </p>
+    <p>
+      The specific providers, locations and safeguards depend on
+      the service configuration in use.
+    </p>
+  </section>
+
+  <section>
+    <h2>10. Data retention</h2>
+    <p>
+      RitoccaPix does not apply one single retention period to all
+      information. Retention depends on the type of data, the purpose
+      of processing and the provider involved.
+    </p>
+    <p>
+      Account information, authentication records, credit records,
+      technical logs and information processed by external providers
+      may be retained according to the relevant service configuration,
+      operational requirements and legal obligations.
+    </p>
+    <p>
+      Users should consult the relevant provider's privacy information
+      for details about its own retention practices.
+    </p>
+  </section>
+
+  <section>
+    <h2>11. Your data protection rights</h2>
+    <p>
+      If the GDPR or other applicable data protection law applies,
+      you may have the right to request access to your personal data,
+      rectification, erasure, restriction of processing, data
+      portability or to object to certain processing activities.
+    </p>
+    <p>
+      Where processing is based on consent, you may withdraw that
+      consent at any time. Withdrawal does not affect the lawfulness
+      of processing carried out before withdrawal.
+    </p>
+    <p>
+      To submit a privacy request, contact
+      <a href="mailto:ritoccapix@gmail.com">ritoccapix@gmail.com</a>.
+      You may also lodge a complaint with the competent data
+      protection supervisory authority.
+    </p>
+  </section>
+
+  <section>
+    <h2>12. Children's privacy</h2>
+    <p>
+      RitoccaPix is a general-purpose website and is not specifically
+      directed at children. Users should not submit personal
+      information about children unless they have the legal authority
+      to do so.
+    </p>
+    <p>
+      If you believe that personal information has been submitted
+      inappropriately, contact us using the email address above.
+    </p>
+  </section>
+
+  <section>
+    <h2>13. Security</h2>
+    <p>
+      Reasonable technical and organizational measures should be
+      used to protect information processed through the website
+      and its providers. However, no internet transmission or
+      electronic storage method can be guaranteed to be completely
+      secure.
+    </p>
+  </section>
+
+  <section>
+    <h2>14. Changes to this Privacy Policy</h2>
+    <p>
+      This Privacy Policy may be updated when RitoccaPix changes
+      its tools, service providers, advertising configuration
+      or data-processing practices, or when legal requirements change.
+    </p>
+    <p>
+      The latest version will be published on this page with
+      its revision date.
+    </p>
+  </section>
+</main>
+
+<footer>
+  <p>© 2026 RitoccaPix · Free online image tools</p>
+  <a href="https://ritoccapix.com/">Home</a>
+  <a href="https://ritoccapix.com/about.html">About</a>
+  <a href="https://ritoccapix.com/privacy.html">Privacy Policy</a>
+  <a href="mailto:ritoccapix@gmail.com">Contact</a>
+</footer>
 </body>
 </html>
