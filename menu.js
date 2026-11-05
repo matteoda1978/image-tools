@@ -1,3 +1,4 @@
+
 /* RitoccaPix - Responsive Dropdown Navigation */
 (function () {
   const tools = [
@@ -27,14 +28,34 @@
     window.location.pathname.split("/").pop() || "index.html";
 
   const style = document.createElement("style");
+
   style.textContent = `
     header nav.tools-dropdown {
       position: relative;
       display: flex;
       align-items: center;
+      justify-content: space-between;
+      gap: 16px;
       width: 100%;
       min-width: 0;
       box-sizing: border-box;
+    }
+
+    .tools-dropdown .logo {
+      display: inline-flex;
+      align-items: center;
+      margin-right: auto;
+      color: #ffffff;
+      font-size: 22px;
+      font-weight: 850;
+      letter-spacing: -0.04em;
+      text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .tools-dropdown .logo span {
+      color: #91aaff;
     }
 
     .tools-dropdown .tools-toggle {
@@ -50,6 +71,7 @@
       font: inherit;
       font-weight: 600;
       cursor: pointer;
+      flex-shrink: 0;
     }
 
     .tools-dropdown .tools-toggle:hover {
@@ -108,6 +130,17 @@
       color: #93c5fd;
       font-weight: 700;
     }
+
+    @media (max-width: 480px) {
+      .tools-dropdown .logo {
+        font-size: 20px;
+      }
+
+      .tools-dropdown .tools-toggle {
+        padding: 10px 12px;
+        font-size: 14px;
+      }
+    }
   `;
 
   document.head.appendChild(style);
@@ -116,13 +149,20 @@
   const isHomePage =
     currentPage === "index.html" || currentPage === "";
 
-  const homeLogo = isHomePage ? nav.querySelector(".logo") : null;
+  // Preserve the existing brand or create it on pages without one.
+  let brand = nav.querySelector(".logo, .brand");
 
-  if (homeLogo) {
-    nav.replaceChildren(homeLogo);
+  if (!brand) {
+    brand = document.createElement("a");
+    brand.className = "logo";
+    brand.href = isHomePage ? "./" : "index.html";
+    brand.setAttribute("aria-label", "RitoccaPix homepage");
+    brand.innerHTML = 'Ritocca<span>Pix</span>';
   } else {
-    nav.replaceChildren();
+    brand.classList.add("logo");
   }
+
+  nav.replaceChildren(brand);
 
   const button = document.createElement("button");
   button.type = "button";
@@ -160,6 +200,7 @@
     menu.style.maxHeight = Math.max(120, viewportHeight - 16) + "px";
 
     const menuWidth = menu.getBoundingClientRect().width;
+
     const left = Math.max(
       margin,
       Math.min(
