@@ -41,6 +41,9 @@ a{color:#bdb5ff}
  display:flex;align-items:center;justify-content:space-between;
  gap:16px;margin-bottom:36px
 }
+.top nav{
+ display:flex;align-items:center;gap:12px;min-width:0
+}
 .brand{
  font-size:1.35rem;font-weight:850;letter-spacing:-.04em;
  color:#fff;text-decoration:none
@@ -264,7 +267,9 @@ button:disabled{opacity:.45;cursor:not-allowed}
 <div class="wrap">
 
 <header class="top">
- <a class="brand" href="https://ritoccapix.com/">Ritocca<span>Pix</span></a>
+ <nav aria-label="Main navigation">
+  <a class="brand logo" href="index.html" aria-label="RitoccaPix homepage">Ritocca<span>Pix</span></a>
+ </nav>
  <small>Free online image tools</small>
 </header>
 
@@ -1452,6 +1457,7 @@ invertBg.addEventListener("change",()=>{
 
 })();
 </script>
+<script src="menu.js"></script>
 
 </body>
 </html>
