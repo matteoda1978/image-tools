@@ -21,7 +21,10 @@
     { name: "AI Study Assistant", url: "ai-study-assistant.html" }
   ];
 
-  const nav = document.querySelector("header nav");
+  const header = document.querySelector("header");
+  if (!header) return;
+
+  const nav = header.querySelector("nav");
   if (!nav) return;
 
   const currentPage =
@@ -146,22 +149,34 @@
   document.head.appendChild(style);
   nav.classList.add("tools-dropdown");
 
-  const isHomePage =
-    currentPage === "index.html" || currentPage === "";
+  // Find the existing brand anywhere inside the header.
+  // This prevents creating a second RitoccaPix logo.
+  const brandCandidates = header.querySelectorAll(".logo, .brand");
+  let brand = brandCandidates.length ? brandCandidates[0] : null;
 
-  // Preserve the existing brand or create it on pages without one.
-  let brand = nav.querySelector(".logo, .brand");
+  // Remove any accidental duplicate brand elements.
+  brandCandidates.forEach(function (candidate) {
+    if (candidate !== brand) {
+      candidate.remove();
+    }
+  });
 
+  // Create a logo only if the header does not already have one.
   if (!brand) {
     brand = document.createElement("a");
-    brand.className = "logo";
-    brand.href = isHomePage ? "./" : "index.html";
-    brand.setAttribute("aria-label", "RitoccaPix homepage");
     brand.innerHTML = 'Ritocca<span>Pix</span>';
-  } else {
-    brand.classList.add("logo");
+    brand.href = currentPage === "index.html" ? "./" : "index.html";
+    brand.setAttribute("aria-label", "RitoccaPix homepage");
   }
 
+  brand.classList.add("logo");
+
+  if (!brand.hasAttribute("aria-label")) {
+    brand.setAttribute("aria-label", "RitoccaPix homepage");
+  }
+
+  // Move the existing logo into the navigation.
+  // Moving it automatically removes it from its old position.
   nav.replaceChildren(brand);
 
   const button = document.createElement("button");
