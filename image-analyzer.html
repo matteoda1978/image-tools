@@ -1,335 +1,269 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Analyze images online for free. Check image format, dimensions, file size, aspect ratio, pixel count, orientation and transparency in your browser.">
+  <meta name="description" content="Analyze an image online for free. Check dimensions, megapixels, file size, format, aspect ratio, orientation, estimated print size and transparency in your browser.">
   <meta name="robots" content="index, follow">
-  <title>Free Image Analyzer Online – Dimensions, Size & Format | RitoccaPix</title>
-
+  <title>Free Image Analyzer – Size, Dimensions & Format | RitoccaPix</title>
   <link rel="canonical" href="https://ritoccapix.com/image-analyzer.html">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Free Image Analyzer Online | RitoccaPix">
-  <meta property="og:description" content="Check image dimensions, file size, format, aspect ratio and transparency for free in your browser.">
+  <meta property="og:description" content="Check image dimensions, megapixels, file size, format, aspect ratio and transparency directly in your browser.">
   <meta property="og:url" content="https://ritoccapix.com/image-analyzer.html">
   <meta property="og:site_name" content="RitoccaPix">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Free Image Analyzer Online – Dimensions, Size & Format | RitoccaPix">
-  <meta name="twitter:description" content="Check image dimensions, file size, format, aspect ratio, pixel count and transparency for free in your browser.">
+  <meta name="twitter:title" content="Free Image Analyzer Online | RitoccaPix">
+  <meta name="twitter:description" content="Check image dimensions, megapixels, file size, format, aspect ratio and transparency in your browser.">
+
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"SoftwareApplication","name":"RitoccaPix Image Analyzer","applicationCategory":"MultimediaApplication","operatingSystem":"Any","url":"https://ritoccapix.com/image-analyzer.html","description":"Free browser-based image analyzer for dimensions, file size, format, aspect ratio, pixel count, orientation and transparency.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+  {
+    "@context":"https://schema.org",
+    "@type":"SoftwareApplication",
+    "name":"RitoccaPix Image Analyzer",
+    "applicationCategory":"MultimediaApplication",
+    "operatingSystem":"Any",
+    "url":"https://ritoccapix.com/image-analyzer.html",
+    "description":"A free browser-based tool for checking image dimensions, file size, format, aspect ratio, megapixels, orientation, estimated print size and transparency.",
+    "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}
+  }
   </script>
 
   <script src="menu.js" defer></script>
 
   <style>
-    * {
-      box-sizing: border-box;
+    *{box-sizing:border-box}
+    :root{
+      --bg:#0a0f1d;
+      --card:#11192b;
+      --card2:#0c1323;
+      --border:#26324a;
+      --text:#f5f7ff;
+      --muted:#9da8bd;
+      --accent:#6ea8ff;
+      --accent-hover:#8bbaff;
+      --danger:#451d29
     }
-
-    :root {
-      --bg: #0a0f1d;
-      --card: #11192b;
-      --card2: #0c1323;
-      --border: #26324a;
-      --text: #f5f7ff;
-      --muted: #9da8bd;
-      --accent: #6ea8ff;
-      --accent-hover: #8bbaff;
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Arial,Helvetica,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.6
     }
-
-    html {
-      scroll-behavior: smooth;
+    .container,main{
+      width:min(920px,92%);
+      margin:0 auto
     }
-
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
+    header{
+      padding:24px 0;
+      border-bottom:1px solid #1e293b
     }
-
-    .container {
-      width: min(920px, 92%);
-      margin: 0 auto;
+    .logo{
+      font-size:23px;
+      font-weight:800;
+      letter-spacing:-.5px
     }
-
-    header {
-      padding: 24px 0;
-      border-bottom: 1px solid #1e293b;
+    .logo span{color:var(--accent)}
+    .hero{
+      text-align:center;
+      padding:42px 0 32px
     }
-
-    .logo {
-      font-size: 23px;
-      font-weight: 800;
-      letter-spacing: -0.5px;
+    .hero h1{
+      margin:0;
+      font-size:clamp(30px,5vw,46px);
+      line-height:1.15;
+      letter-spacing:-1px
     }
-
-    .logo span {
-      color: var(--accent);
+    .hero p{
+      max-width:700px;
+      margin:17px auto 0;
+      color:var(--muted);
+      font-size:17px;
+      line-height:1.7
     }
-
-    .hero {
-      text-align: center;
-      padding: 42px 0 32px;
+    main{padding-bottom:50px}
+    .tool,.content{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:20px;
+      padding:26px;
+      margin-bottom:24px
     }
-
-    .hero h1 {
-      margin: 0;
-      font-size: clamp(30px, 5vw, 46px);
-      line-height: 1.15;
-      letter-spacing: -1px;
+    .tool h2,.content h2{
+      margin-top:0;
+      font-size:24px
     }
-
-    .hero p {
-      max-width: 680px;
-      margin: 17px auto 0;
-      color: var(--muted);
-      font-size: 17px;
-      line-height: 1.7;
+    .tool-intro,.muted{color:var(--muted)}
+    .upload{
+      border:2px dashed #465775;
+      border-radius:16px;
+      padding:32px 20px;
+      text-align:center;
+      background:var(--card2);
+      transition:border-color .2s,background .2s
     }
-
-    main {
-      max-width: 920px;
-      width: 92%;
-      margin: 0 auto;
-      padding: 0 0 50px;
+    .upload.dragover{
+      border-color:var(--accent);
+      background:#14233b
     }
-
-    .tool,
-    .content {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 26px;
-      margin-bottom: 24px;
+    .upload-icon{
+      font-size:40px;
+      margin-bottom:8px
     }
-
-    .tool h2 {
-      margin-top: 0;
-      font-size: 24px;
+    .upload h3{
+      margin:0 0 8px;
+      font-size:20px
     }
-
-    .tool-intro {
-      color: var(--muted);
-      margin-bottom: 22px;
+    .upload p{
+      color:var(--muted);
+      margin:0 0 18px
     }
-
-    .upload {
-      border: 2px dashed #465775;
-      border-radius: 16px;
-      padding: 35px 20px;
-      text-align: center;
-      background: var(--card2);
+    input[type=file]{
+      display:block;
+      width:100%;
+      max-width:450px;
+      margin:0 auto;
+      font-size:14px;
+      color:var(--muted)
     }
-
-    .upload-icon {
-      font-size: 42px;
-      margin-bottom: 8px;
+    input[type=file]::file-selector-button,.btn{
+      border:0;
+      border-radius:9px;
+      padding:11px 16px;
+      background:var(--accent);
+      color:#081326;
+      font-weight:700;
+      cursor:pointer
     }
-
-    .upload h3 {
-      margin: 0 0 8px;
-      font-size: 20px;
+    input[type=file]::file-selector-button{margin-right:12px}
+    .btn:hover,input[type=file]::file-selector-button:hover{
+      background:var(--accent-hover)
     }
-
-    .upload p {
-      color: var(--muted);
-      margin: 0 0 20px;
+    .btn.secondary{
+      background:#263650;
+      color:var(--text)
     }
-
-    input[type="file"] {
-      display: block;
-      width: 100%;
-      max-width: 450px;
-      margin: 0 auto;
-      font-size: 14px;
-      color: var(--muted);
+    .btn.secondary:hover{background:#344765}
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:18px;
+      justify-content:center
     }
-
-    input[type="file"]::file-selector-button {
-      border: 0;
-      border-radius: 9px;
-      padding: 12px 16px;
-      margin-right: 12px;
-      background: var(--accent);
-      color: #081326;
-      font-weight: 700;
-      cursor: pointer;
+    button:focus-visible,input:focus-visible{
+      outline:3px solid #fff;
+      outline-offset:3px
     }
-
-    input[type="file"]::file-selector-button:hover {
-      background: var(--accent-hover);
+    .notice,.error{
+      margin-top:16px;
+      padding:13px;
+      border-radius:10px;
+      overflow-wrap:anywhere
     }
-
-    .error {
-      display: none;
-      margin-top: 16px;
-      padding: 13px;
-      background: #451d29;
-      color: #fecaca;
-      border-radius: 10px;
-      overflow-wrap: anywhere;
+    .notice{
+      background:#14233b;
+      color:#c8d9f5
     }
-
-    .result {
-      display: none;
-      margin-top: 28px;
+    .error{
+      display:none;
+      background:var(--danger);
+      color:#fecaca
     }
-
-    .result h2 {
-      margin-bottom: 8px;
+    .result{
+      display:none;
+      margin-top:28px
     }
-
-    .result-description {
-      color: var(--muted);
-      margin-top: 0;
+    .result h2{margin-bottom:6px}
+    .result-description{
+      color:var(--muted);
+      margin-top:0
     }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 22px;
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:12px;
+      margin-top:22px
     }
-
-    .stat {
-      min-width: 0;
-      background: var(--card2);
-      border: 1px solid var(--border);
-      padding: 16px;
-      border-radius: 13px;
+    .stat{
+      min-width:0;
+      background:var(--card2);
+      border:1px solid var(--border);
+      padding:15px;
+      border-radius:13px
     }
-
-    .stat strong {
-      display: block;
-      color: var(--muted);
-      font-size: 13px;
-      font-weight: 500;
-      margin-bottom: 6px;
+    .stat strong{
+      display:block;
+      color:var(--muted);
+      font-size:13px;
+      font-weight:500;
+      margin-bottom:6px
     }
-
-    .stat span {
-      display: block;
-      font-size: 16px;
-      font-weight: 700;
-      overflow-wrap: anywhere;
-      word-break: break-word;
+    .stat span{
+      display:block;
+      font-size:16px;
+      font-weight:700;
+      overflow-wrap:anywhere;
+      word-break:break-word
     }
-
-    .preview {
-      margin-top: 28px;
-      text-align: center;
+    .preview{
+      margin-top:26px;
+      text-align:center
     }
-
-    .preview h3 {
-      margin-bottom: 15px;
+    .preview img{
+      display:none;
+      max-width:100%;
+      max-height:420px;
+      height:auto;
+      border-radius:12px;
+      border:1px solid var(--border);
+      object-fit:contain;
+      background:#fff
     }
-
-    .preview img {
-      display: none;
-      max-width: 100%;
-      max-height: 450px;
-      height: auto;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      object-fit: contain;
+    .content h3{
+      margin-top:25px;
+      font-size:19px
     }
-
-    .content h2 {
-      margin-top: 0;
-      font-size: 24px;
+    .content p,.content li{
+      color:var(--muted);
+      line-height:1.8
     }
-
-    .content h3 {
-      margin-top: 25px;
-      font-size: 19px;
+    .content ul{padding-left:22px}
+    .content strong{color:var(--text)}
+    .faq-item{
+      padding:15px 0;
+      border-bottom:1px solid var(--border)
     }
-
-    .content p,
-    .content li {
-      color: var(--muted);
-      line-height: 1.8;
+    .faq-item:last-child{border-bottom:0}
+    .faq-item h3{margin:0 0 8px}
+    .faq-item p{margin:0}
+    footer{
+      border-top:1px solid #1e293b;
+      text-align:center;
+      padding:25px 15px;
+      color:#778398;
+      font-size:13px
     }
-
-    .content ul {
-      padding-left: 22px;
+    footer a{
+      color:var(--accent);
+      text-decoration:none
     }
-
-    .content strong {
-      color: var(--text);
-    }
-
-    .faq-item {
-      padding: 15px 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .faq-item:last-child {
-      border-bottom: 0;
-    }
-
-    .faq-item h3 {
-      margin: 0 0 8px;
-    }
-
-    .faq-item p {
-      margin: 0;
-    }
-
-    footer {
-      border-top: 1px solid #1e293b;
-      text-align: center;
-      padding: 25px 15px;
-      color: #778398;
-      font-size: 13px;
-    }
-
-    footer a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-
-    footer a:hover {
-      text-decoration: underline;
-    }
-
-    @media (max-width: 600px) {
-      .container,
-      main {
-        width: 92%;
+    footer a:hover{text-decoration:underline}
+    @media(max-width:600px){
+      header{padding:20px 0}
+      .hero{padding:30px 0 24px}
+      .hero h1{font-size:33px}
+      .hero p{font-size:15px}
+      .tool,.content{
+        padding:18px;
+        border-radius:16px
       }
-
-      header {
-        padding: 20px 0;
-      }
-
-      .hero {
-        padding: 30px 0 24px;
-      }
-
-      .hero h1 {
-        font-size: 33px;
-      }
-
-      .hero p {
-        font-size: 15px;
-      }
-
-      .tool,
-      .content {
-        padding: 18px;
-        border-radius: 16px;
-      }
-
-      .stats {
-        grid-template-columns: 1fr;
-      }
-
-      .upload {
-        padding: 28px 14px;
-      }
+      .stats{grid-template-columns:1fr}
+      .upload{padding:26px 14px}
+      .actions .btn{flex:1 1 140px}
     }
   </style>
 </head>
@@ -339,7 +273,7 @@
   <div class="container">
     <header>
       <div class="logo">
-        <a href="index.html" style="color:inherit;text-decoration:none;">
+        <a href="index.html" style="color:inherit;text-decoration:none">
           Ritocca<span>Pix</span>
         </a>
       </div>
@@ -348,51 +282,77 @@
   </div>
 
   <main>
+
     <section class="hero">
-      <h1>Analyze Images Online for Free</h1>
+      <h1>Free Online Image Analyzer</h1>
       <p>
-        Check the key details of your images in seconds.
-        Check dimensions, format, file size, aspect ratio and transparency
-        directly in your browser.
+        Check an image's dimensions, file size, format, megapixels,
+        aspect ratio, orientation and transparency.
+        The analysis runs in your browser, without uploading
+        the selected image to this tool's server.
       </p>
     </section>
 
-    <section class="tool">
-      <h2>🔍 Image Analyzer</h2>
+    <section class="tool" aria-labelledby="tool-title">
+
+      <h2 id="tool-title">Image Analyzer</h2>
+
       <p class="tool-intro">
-        Select an image from your device to view its
-        technical properties.
+        Choose an image or drag it into the area below.
+        Its technical details will appear automatically.
       </p>
 
-      <div class="upload">
-        <div class="upload-icon">🖼️</div>
-        <h3>Choose an image</h3>
-        <p>Choose a file from your computer or phone.</p>
+      <div class="upload" id="dropZone">
+
+        <div class="upload-icon" aria-hidden="true">🖼️</div>
+
+        <h3>Choose or drop an image</h3>
+
+        <p>
+          JPG, PNG, WebP, GIF, AVIF and other formats
+          supported by your browser.
+          Maximum file size: 25 MB.
+        </p>
 
         <input
           type="file"
           id="imageInput"
           accept="image/*"
           aria-label="Choose an image to analyze"
-        />
+        >
+
+      </div>
+
+      <div class="notice">
+        Your image is read locally by your browser.
+        Transparency is checked on a reduced sample,
+        so very small transparent details may not be detected.
       </div>
 
       <div class="error" id="error" role="alert"></div>
 
-      <section class="result" id="result" aria-live="polite">
-        <h2>Analysis Results</h2>
+      <section
+        class="result"
+        id="result"
+        aria-live="polite"
+        aria-labelledby="result-title"
+      >
+
+        <h2 id="result-title">Analysis Results</h2>
+
         <p class="result-description">
-          Here are the details of the selected file.
+          Technical information for the selected image.
         </p>
 
         <div class="stats">
+
           <div class="stat">
-            <strong>File Name</strong>
+            <strong>File name</strong>
             <span id="fileName">—</span>
           </div>
 
           <div class="stat">
-            <strong>Format</strong>
+            <strong>Detected file type</strong>
             <span id="fileFormat">—</span>
           </div>
 
@@ -402,18 +362,18 @@
           </div>
 
           <div class="stat">
-            <strong>File Size</strong>
+            <strong>File size</strong>
             <span id="fileSize">—</span>
           </div>
 
           <div class="stat">
-            <strong>Aspect Ratio</strong>
-            <span id="aspectRatio">—</span>
+            <strong>Megapixels</strong>
+            <span id="megapixels">—</span>
           </div>
 
           <div class="stat">
-            <strong>Pixel Count</strong>
-            <span id="pixelCount">—</span>
+            <strong>Aspect ratio</strong>
+            <span id="aspectRatio">—</span>
           </div>
 
           <div class="stat">
@@ -422,86 +382,204 @@
           </div>
 
           <div class="stat">
-            <strong>Transparency</strong>
+            <strong>Transparency check</strong>
             <span id="transparency">—</span>
           </div>
+
+          <div class="stat">
+            <strong>Estimated print size at 300 PPI</strong>
+            <span id="printSize">—</span>
+          </div>
+
+          <div class="stat">
+            <strong>Common aspect ratio</strong>
+            <span id="ratioName">—</span>
+          </div>
+
         </div>
 
         <div class="preview">
           <h3>Image Preview</h3>
-          <img id="previewImage" alt="Image Preview analizzata">
+          <img id="previewImage" alt="Preview of the selected image">
         </div>
+
+        <div class="actions">
+          <button class="btn" type="button" id="copyButton">
+            Copy analysis
+          </button>
+
+          <button class="btn secondary" type="button" id="downloadButton">
+            Download report
+          </button>
+
+          <button class="btn secondary" type="button" id="clearButton">
+            Clear image
+          </button>
+        </div>
+
+        <p class="muted" id="actionStatus" role="status" aria-live="polite"></p>
+
       </section>
     </section>
 
     <section class="content">
-      <h2>How does the image analyzer work?</h2>
+
+      <h2>What can the image analyzer tell you?</h2>
 
       <p>
-        This free tool lets you quickly check
-        an image’s technical properties without installing software.
-        Choose a file and the results will appear automatically.
+        An image can look sharp on a phone but be too small for a large
+        print, or have a file size that is unnecessarily large for a
+        website. Checking its technical properties helps you decide
+        what to do next.
       </p>
-
-      <h3>What information can you check?</h3>
 
       <ul>
-        <li><strong>Format:</strong> the image type, when identifiable by your browser.</li>
-        <li><strong>Dimensions:</strong> width and height in pixels.</li>
-        <li><strong>File size:</strong> the file size in KB or MB.</li>
-        <li><strong>Aspect Ratio:</strong> the ratio between width and height.</li>
-        <li><strong>Pixel Count:</strong> the total number of pixels in the image.</li>
-        <li><strong>Orientation:</strong> landscape, portrait or square.</li>
-        <li><strong>Transparency:</strong> an indication of whether the image contains transparent pixels.</li>
+        <li>
+          <strong>Dimensions:</strong>
+          the width and height of the decoded image, measured in pixels.
+        </li>
+
+        <li>
+          <strong>File size:</strong>
+          the size of the original file selected from your device,
+          shown in bytes, KB or MB.
+        </li>
+
+        <li>
+          <strong>Megapixels:</strong>
+          the total pixel count divided by one million.
+          This describes image resolution, not necessarily image quality.
+        </li>
+
+        <li>
+          <strong>Aspect ratio:</strong>
+          the proportional relationship between width and height,
+          reduced to its simplest whole-number ratio.
+        </li>
+
+        <li>
+          <strong>Orientation:</strong>
+          landscape, portrait or square, based on the decoded dimensions.
+        </li>
+
+        <li>
+          <strong>Transparency:</strong>
+          a browser-based sample check for pixels with partial
+          or full transparency.
+        </li>
+
+        <li>
+          <strong>Estimated print size:</strong>
+          an approximate print width and height at 300 pixels per inch
+          (PPI). This is a calculation, not embedded print metadata.
+        </li>
       </ul>
 
-      <h3>Are images uploaded to a server?</h3>
+      <h3>How to use the results</h3>
 
       <p>
-        Analysis runs in your device’s browser.
-        This tool’s code does not intentionally send the image to a server.
-        Privacy may still depend on other features
-        or scripts running on the website.
+        If an image is too large to upload, use the
+        <a href="image-compressor.html">Image Compressor</a>
+        to reduce its file size. If its pixel dimensions do not fit
+        the intended use, try the
+        <a href="image-resizer.html">Image Resizer</a>.
+        If you need a different file type, use the
+        <a href="image-converter.html">Image Converter</a>.
       </p>
+
+      <h3>Does the analyzer upload my image?</h3>
+
+      <p>
+        No image upload is performed by this analyzer's processing code.
+        The selected file is opened locally in your browser to read
+        its dimensions and create a preview. The page may still load
+        shared website resources, such as navigation scripts;
+        this statement refers to the image-analysis feature itself.
+      </p>
+
+      <h3>Understanding the transparency result</h3>
+
+      <p>
+        The tool draws a reduced version of the image to a browser canvas
+        and checks the sampled alpha values. A positive result means
+        transparency was found in the sample. A negative result means
+        none was found in that sample; it is not a guarantee that every
+        original pixel was checked.
+      </p>
+
     </section>
 
     <section class="content">
+
       <h2>Frequently Asked Questions</h2>
 
       <div class="faq-item">
-        <h3>Is this tool free?</h3>
+        <h3>Is the image analyzer free?</h3>
         <p>
-          Yes. You can use the analyzer for free without creating an account.
+          Yes. You can use it without creating an account
+          or installing software.
         </p>
       </div>
 
       <div class="faq-item">
-        <h3>Which images can I analyze?</h3>
+        <h3>Which image formats can I analyze?</h3>
         <p>
-          You can try image formats supported by your browser,
-          such as JPEG, PNG, GIF, WebP and other compatible formats.
+          The tool can open formats that your browser supports.
+          Common examples include JPEG, PNG, GIF, WebP and AVIF.
+          Support for formats such as HEIC depends on the browser and device.
         </p>
       </div>
 
       <div class="faq-item">
-        <h3>What does aspect ratio mean?</h3>
+        <h3>What is a megapixel?</h3>
         <p>
-          It describes the relationship between an image’s width and height.
-          For example, a 1200 × 800 pixel image has a 3:2 aspect ratio.
+          One megapixel is one million pixels.
+          A 4000 × 3000 image contains 12 million pixels,
+          or 12 megapixels.
         </p>
       </div>
 
       <div class="faq-item">
-        <h3>Can I use this tool on my phone?</h3>
+        <h3>What does a 3:2 aspect ratio mean?</h3>
         <p>
-          Yes. The page is designed to work on smaller screens too.
+          It means the image is one and a half times as wide as it is high.
+          For example, 3000 × 2000 pixels has a 3:2 aspect ratio.
         </p>
       </div>
+
+      <div class="faq-item">
+        <h3>Does the estimated print size show the actual print setting?</h3>
+        <p>
+          No. It estimates the physical size if the image is printed
+          at 300 PPI. The actual result depends on the print settings
+          and the printer.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Why can't my image be opened?</h3>
+        <p>
+          Your browser may not support its format, or the file may be damaged.
+          Try another browser or convert the image to a widely supported
+          format such as JPG or PNG.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Can I use the analyzer on a phone?</h3>
+        <p>
+          Yes. You can select an image from a compatible phone or tablet,
+          and the layout adapts to smaller screens.
+        </p>
+      </div>
+
     </section>
+
   </main>
 
   <footer>
     <p>© 2026 RitoccaPix · Free Image Tools</p>
+
     <p>
       <a href="index.html">Home</a>
       ·
@@ -514,17 +592,22 @@
   </footer>
 
   <script>
+    "use strict";
+
     const imageInput = document.getElementById("imageInput");
+    const dropZone = document.getElementById("dropZone");
     const result = document.getElementById("result");
     const errorBox = document.getElementById("error");
     const previewImage = document.getElementById("previewImage");
+    const actionStatus = document.getElementById("actionStatus");
+
+    const MAX_FILE_SIZE = 25 * 1024 * 1024;
 
     let currentObjectUrl = null;
+    let currentReport = "";
 
     function formatBytes(bytes) {
-      if (bytes < 1024) {
-        return bytes + " bytes";
-      }
+      if (bytes < 1024) return bytes + " bytes";
 
       if (bytes < 1024 * 1024) {
         return (bytes / 1024).toFixed(2) + " KB";
@@ -545,60 +628,105 @@
 
     function getAspectRatio(width, height) {
       const divisor = gcd(width, height);
+
       return (width / divisor) + ":" + (height / divisor);
     }
 
     function getFormat(file) {
-      if (file.type) {
-        return file.type.replace("image/", "").toUpperCase();
-      }
+      if (file.type) return file.type.toUpperCase();
 
-      const extension = file.name.split(".").pop();
-
-      return extension
-        ? extension.toUpperCase()
+      const extension = file.name.includes(".")
+        ? file.name.split(".").pop()
         : "Unknown";
+
+      return extension.toUpperCase() +
+        " (browser did not provide MIME type)";
+    }
+
+    function getCommonRatio(width, height) {
+      const ratio = width / height;
+
+      const known = [
+        { value: 1, label: "1:1 (square)" },
+        { value: 4 / 3, label: "4:3" },
+        { value: 3 / 2, label: "3:2" },
+        { value: 16 / 9, label: "16:9" },
+        {
+          value: 1.61803398875,
+          label: "Approximately 1.618:1 (golden ratio)"
+        },
+        { value: 9 / 16, label: "9:16 (vertical video)" },
+        { value: 2 / 3, label: "2:3 (portrait)" },
+        { value: 3 / 4, label: "3:4 (portrait)" }
+      ];
+
+      const match = known.find(
+        item => Math.abs(ratio - item.value) < 0.015
+      );
+
+      return match ? match.label : "Custom ratio";
     }
 
     function checkTransparency(image) {
+      const maxSide = 350;
+
+      const scale = Math.min(
+        1,
+        maxSide / Math.max(
+          image.naturalWidth,
+          image.naturalHeight
+        )
+      );
+
       const canvas = document.createElement("canvas");
+
+      canvas.width = Math.max(
+        1,
+        Math.round(image.naturalWidth * scale)
+      );
+
+      canvas.height = Math.max(
+        1,
+        Math.round(image.naturalHeight * scale)
+      );
+
       const context = canvas.getContext("2d", {
         willReadFrequently: true
       });
 
-      if (!context) {
-        return "Unable to check";
-      }
-
-      const maxSide = 150;
-      const scale = Math.min(
-        1,
-        maxSide / Math.max(image.naturalWidth, image.naturalHeight)
-      );
-
-      canvas.width = Math.max(1, Math.round(image.naturalWidth * scale));
-      canvas.height = Math.max(1, Math.round(image.naturalHeight * scale));
+      if (!context) return "Unable to check";
 
       try {
-        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+        context.drawImage(
+          image,
+          0,
+          0,
+          canvas.width,
+          canvas.height
+        );
 
-        const imageData = context.getImageData(
+        const pixels = context.getImageData(
           0,
           0,
           canvas.width,
           canvas.height
         ).data;
 
-        for (let i = 3; i < imageData.length; i += 4) {
-          if (imageData[i] < 255) {
-            return "Yes";
+        for (let i = 3; i < pixels.length; i += 4) {
+          if (pixels[i] < 255) {
+            return "Detected in sample";
           }
         }
 
-        return "No";
+        return "Not detected in sample";
+
       } catch (error) {
         return "Unable to check";
       }
+    }
+
+    function setText(id, value) {
+      document.getElementById(id).textContent = value;
     }
 
     function showError(message) {
@@ -607,28 +735,41 @@
       result.style.display = "none";
     }
 
-    function setText(id, value) {
-      document.getElementById(id).textContent = value;
-    }
-
-    imageInput.addEventListener("change", function () {
-      const file = imageInput.files && imageInput.files[0];
-
-      errorBox.style.display = "none";
-      result.style.display = "none";
-      previewImage.style.display = "none";
-
-      if (!file) {
-        return;
-      }
-
-      if (!file.type.startsWith("image/")) {
-        showError("Choose a valid image file.");
-        return;
-      }
-
+    function releaseCurrentImage() {
       if (currentObjectUrl) {
         URL.revokeObjectURL(currentObjectUrl);
+        currentObjectUrl = null;
+      }
+
+      previewImage.removeAttribute("src");
+      previewImage.style.display = "none";
+    }
+
+    function clearAnalyzer() {
+      releaseCurrentImage();
+
+      imageInput.value = "";
+      result.style.display = "none";
+      errorBox.style.display = "none";
+      actionStatus.textContent = "";
+      currentReport = "";
+    }
+
+    function analyzeFile(file) {
+      clearAnalyzer();
+
+      if (!file) return;
+
+      if (file.size > MAX_FILE_SIZE) {
+        showError(
+          "This file is larger than 25 MB. Please choose a smaller image."
+        );
+        return;
+      }
+
+      if (file.type && !file.type.startsWith("image/")) {
+        showError("Please choose a valid image file.");
+        return;
       }
 
       currentObjectUrl = URL.createObjectURL(file);
@@ -640,37 +781,79 @@
         const height = image.naturalHeight;
 
         if (!width || !height) {
-          showError("Unable to read the image dimensions.");
-          URL.revokeObjectURL(currentObjectUrl);
-          currentObjectUrl = null;
+          showError(
+            "Unable to read the image dimensions. Please try another file."
+          );
+
+          releaseCurrentImage();
           return;
         }
 
-        setText("fileName", file.name);
+        const ratio = getAspectRatio(width, height);
+
+        const megapixels =
+          (width * height / 1000000).toFixed(2) + " MP";
+
+        const orientation =
+          width > height
+            ? "Landscape"
+            : height > width
+              ? "Portrait"
+              : "Square";
+
+        const printWidth = (width / 300).toFixed(2);
+        const printHeight = (height / 300).toFixed(2);
+
+        const printSize =
+          printWidth + " × " + printHeight + " inches";
+
+        const transparency = checkTransparency(image);
+
+        setText("fileName", file.name || "Unnamed image");
         setText("fileFormat", getFormat(file));
-        setText("dimensions", width + " × " + height + " px");
-        setText("fileSize", formatBytes(file.size));
-        setText("aspectRatio", getAspectRatio(width, height));
+
         setText(
-          "pixelCount",
-          (width * height).toLocaleString("en-US") + " pixels"
+          "dimensions",
+          width.toLocaleString("en-US") +
+          " × " +
+          height.toLocaleString("en-US") +
+          " px"
         );
 
-        let orientation = "Square";
-
-        if (width > height) {
-          orientation = "Landscape";
-        } else if (height > width) {
-          orientation = "Portrait";
-        }
-
+        setText("fileSize", formatBytes(file.size));
+        setText("megapixels", megapixels);
+        setText("aspectRatio", ratio);
         setText("orientation", orientation);
-        setText("transparency", checkTransparency(image));
+        setText("transparency", transparency);
+        setText("printSize", printSize);
+
+        setText(
+          "ratioName",
+          getCommonRatio(width, height)
+        );
+
+        currentReport = [
+          "RitoccaPix Image Analysis",
+          "File name: " + (file.name || "Unnamed image"),
+          "File type: " + getFormat(file),
+          "Dimensions: " + width + " × " + height + " px",
+          "File size: " + formatBytes(file.size),
+          "Megapixels: " + megapixels,
+          "Aspect ratio: " + ratio,
+          "Orientation: " + orientation,
+          "Transparency: " + transparency,
+          "Estimated print size at 300 PPI: " + printSize,
+          "Common aspect ratio: " + getCommonRatio(width, height),
+          "",
+          "Note: transparency is checked on a reduced sample. Print size is an estimate at 300 PPI."
+        ].join("\n");
 
         previewImage.src = currentObjectUrl;
         previewImage.style.display = "inline-block";
 
         result.style.display = "block";
+        actionStatus.textContent = "";
+
         result.scrollIntoView({
           behavior: "smooth",
           block: "start"
@@ -679,23 +862,100 @@
 
       image.onerror = function () {
         showError(
-          "Unable to open this image. Please try another file."
+          "Your browser could not open this image. " +
+          "The format may not be supported, or the file may be damaged."
         );
 
-        if (currentObjectUrl) {
-          URL.revokeObjectURL(currentObjectUrl);
-          currentObjectUrl = null;
-        }
+        releaseCurrentImage();
       };
 
       image.src = currentObjectUrl;
+    }
+
+    imageInput.addEventListener("change", function () {
+      analyzeFile(
+        imageInput.files && imageInput.files[0]
+      );
     });
 
-    window.addEventListener("beforeunload", function () {
-      if (currentObjectUrl) {
-        URL.revokeObjectURL(currentObjectUrl);
-      }
+    ["dragenter", "dragover"].forEach(eventName => {
+      dropZone.addEventListener(eventName, event => {
+        event.preventDefault();
+        dropZone.classList.add("dragover");
+      });
     });
+
+    ["dragleave", "drop"].forEach(eventName => {
+      dropZone.addEventListener(eventName, event => {
+        event.preventDefault();
+        dropZone.classList.remove("dragover");
+      });
+    });
+
+    dropZone.addEventListener("drop", event => {
+      const file =
+        event.dataTransfer &&
+        event.dataTransfer.files[0];
+
+      if (file) analyzeFile(file);
+    });
+
+    document.getElementById("copyButton").addEventListener(
+      "click",
+      async function () {
+        if (!currentReport) return;
+
+        try {
+          await navigator.clipboard.writeText(currentReport);
+
+          actionStatus.textContent =
+            "Analysis copied to clipboard.";
+
+        } catch (error) {
+          actionStatus.textContent =
+            "Clipboard access is unavailable in this browser. " +
+            "Use Download report instead.";
+        }
+      }
+    );
+
+    document.getElementById("downloadButton").addEventListener(
+      "click",
+      function () {
+        if (!currentReport) return;
+
+        const blob = new Blob(
+          [currentReport],
+          { type: "text/plain;charset=utf-8" }
+        );
+
+        const url = URL.createObjectURL(blob);
+
+        const link = document.createElement("a");
+
+        link.href = url;
+        link.download = "ritoccapix-image-analysis.txt";
+
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+        actionStatus.textContent =
+          "Analysis report downloaded.";
+      }
+    );
+
+    document.getElementById("clearButton").addEventListener(
+      "click",
+      clearAnalyzer
+    );
+
+    window.addEventListener(
+      "beforeunload",
+      releaseCurrentImage
+    );
   </script>
 
 </body>
