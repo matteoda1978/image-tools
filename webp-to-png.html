@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,10 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>WebP to PNG Converter Online Free | RitoccaPix</title>
-  <meta name="description" content="Convert WebP to PNG online for free. Batch convert images in your browser, preserve transparency, preview results, and download PNGs or a ZIP.">
+  <meta name="description" content="Convert WebP to PNG online for free. Convert multiple images in your browser, preserve transparency, preview results and download PNG files or a ZIP.">
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://ritoccapix.com/webp-to-png.html">
   <meta name="theme-color" content="#080d18">
+
   <meta property="og:title" content="WebP to PNG Converter Online Free">
   <meta property="og:description" content="Convert WebP images to PNG online. Preserve transparency, preview results and download individual PNGs or a ZIP.">
   <meta property="og:type" content="website">
@@ -16,7 +18,7 @@
   <meta property="og:site_name" content="RitoccaPix">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="WebP to PNG Converter Online Free | RitoccaPix">
-  <meta name="twitter:description" content="Convert WebP images to PNG online, preserve transparency, preview results, and download individual PNGs or a ZIP for free.">
+  <meta name="twitter:description" content="Convert WebP images to PNG in your browser. Preserve transparency and download PNG files individually or as a ZIP.">
 
   <style>
     * { box-sizing: border-box; }
@@ -81,7 +83,10 @@
       font-weight: bold;
     }
 
-    nav a:hover, .text-link:hover { text-decoration: underline; }
+    nav a:hover, .text-link:hover,
+    .content a:hover, footer a:hover {
+      text-decoration: underline;
+    }
 
     main {
       max-width: 900px;
@@ -106,7 +111,7 @@
       margin: auto;
     }
 
-    .panel, .content {
+    .panel, .content, .related-tools {
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 18px;
@@ -120,10 +125,20 @@
       background: var(--card2);
       border: 2px dashed #526483;
       border-radius: 15px;
+      transition: border-color .2s, background .2s;
+    }
+
+    .drop-zone.dragging {
+      border-color: var(--accent);
+      background: #17243a;
     }
 
     .upload-icon { font-size: 38px; }
-    .drop-zone p, .content p, .content li { color: var(--muted); }
+
+    .drop-zone p, .content p, .content li,
+    .related-tools p, .related-tools li {
+      color: var(--muted);
+    }
 
     input[type="file"] {
       display: block;
@@ -144,14 +159,23 @@
       cursor: pointer;
     }
 
-    button { font-family: inherit; cursor: pointer; }
+    button {
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    button:focus-visible, a:focus-visible,
+    input:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 3px;
+    }
 
     .primary, .secondary, .download {
       display: block;
       width: 100%;
       text-align: center;
       border-radius: 12px;
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 800;
       padding: 15px;
       text-decoration: none;
@@ -168,7 +192,8 @@
 
     .primary:hover { background: #a5b8ff; }
 
-    .primary:disabled {
+    .primary:disabled, .secondary:disabled,
+    .download:disabled {
       opacity: .5;
       cursor: not-allowed;
       box-shadow: none;
@@ -181,11 +206,11 @@
       border: 1px solid #526483;
     }
 
-    .secondary:hover { background: #202d45; }
+    .secondary:hover:not(:disabled) { background: #202d45; }
 
     .status {
       display: none;
-      margin-top: 18px;
+      margin-top: 16px;
       padding: 13px 15px;
       border-radius: 10px;
       overflow-wrap: anywhere;
@@ -203,6 +228,16 @@
       border: 1px solid #267a50;
     }
 
+    .info {
+      display: block;
+      border-left: 4px solid var(--accent);
+      background: var(--card2);
+      color: var(--muted);
+      padding: 12px 14px;
+      margin: 14px 0;
+      border-radius: 8px;
+    }
+
     .result {
       display: none;
       margin-top: 25px;
@@ -213,7 +248,7 @@
     }
 
     .download {
-      margin-top: 20px;
+      margin-top: 16px;
       color: #062316;
       background: var(--green);
       border: 0;
@@ -265,15 +300,17 @@
 
     .result-item a {
       display: inline-block;
-      margin-top: 8px;
+      margin-top: 10px;
       color: var(--accent);
       font-weight: 700;
       overflow-wrap: anywhere;
     }
 
-    .content h2 { margin-top: 0; }
+    .content h2, .related-tools h2 { margin-top: 0; }
     .content h3 { margin-top: 25px; }
-    .content a { overflow-wrap: anywhere; }
+    .content a, .related-tools a { overflow-wrap: anywhere; }
+
+    .related-tools li { margin: 7px 0; }
 
     footer {
       text-align: center;
@@ -283,28 +320,18 @@
       font-size: 14px;
     }
 
-    footer a { color: var(--accent); }
+    footer a {
+      color: var(--accent);
+      margin: 0 7px;
+    }
 
     @media (max-width: 600px) {
       .header-inner { justify-content: center; }
       nav { justify-content: center; }
       main { padding: 24px 12px 40px; }
-      .panel, .content { padding: 18px; }
+      .panel, .content, .related-tools { padding: 18px; }
       .result-item { grid-template-columns: 1fr; }
     }
-
-    .related-tools {
-      margin: 28px 0 8px;
-      padding: 20px;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      background: var(--card);
-    }
-
-    .related-tools h2 { margin-top: 0; }
-    .related-tools p, .related-tools li { color: var(--muted); }
-    .related-tools a { color: var(--accent); }
-    .related-tools li { margin: 7px 0; }
   </style>
 
   <script src="menu.js" defer></script>
@@ -313,7 +340,9 @@
 <body>
   <header>
     <div class="header-inner">
-      <a class="logo" href="index.html" aria-label="RitoccaPix Home"><span class="logo-ritocca">Ritocca</span><span class="logo-pix">Pix</span></a>
+      <a class="logo" href="index.html" aria-label="RitoccaPix Home">
+        <span class="logo-ritocca">Ritocca</span><span class="logo-pix">Pix</span>
+      </a>
       <nav aria-label="Main navigation">
         <a href="image-resizer.html">Image Resizer</a>
         <a href="image-compressor.html">Image Compressor</a>
@@ -336,27 +365,44 @@
       <div class="drop-zone" id="dropZone">
         <div class="upload-icon" aria-hidden="true">🖼️</div>
         <h2>Select WebP Images</h2>
-        <p>Choose one or multiple WebP files. Batch conversion runs on your device.</p>
-        <input type="file" id="fileInput" accept="image/webp,.webp" multiple>
-        <p>Up to 50 images per batch · 50 MB per file · 40 megapixels per image.</p>
+        <p>Choose one or multiple WebP files. Conversion runs on your device.</p>
+        <input
+          type="file"
+          id="fileInput"
+          accept="image/webp,.webp"
+          multiple
+          aria-label="Select WebP images"
+        >
+        <p>Up to 50 images per batch · 50 MB per file · 20 megapixels per image.</p>
       </div>
 
-      <div id="selectedFiles" class="status" style="display:block" role="status">No images selected.</div>
+      <div id="selectedFiles" class="status info" role="status" aria-live="polite">
+        No images selected.
+      </div>
 
-      <p class="status" style="display:block; border-left:4px solid var(--accent); padding:12px 14px; margin:12px 0;">
-        <strong>Note:</strong> PNG files can be much larger than WebP files, especially for photographs. Check the total output size before downloading a large batch.
-      </p>
+      <div class="info">
+        <strong>Note:</strong> PNG files can be much larger than WebP files,
+        especially for photographs. Check the output size before downloading
+        a large batch.
+      </div>
 
-      <button type="button" id="convertBtn" class="primary" disabled>Convert to PNG</button>
-      <button type="button" id="clearBtn" class="secondary">Clear and start again</button>
+      <button type="button" id="convertBtn" class="primary" disabled>
+        Convert to PNG
+      </button>
+
+      <button type="button" id="clearBtn" class="secondary">
+        Clear and start again
+      </button>
 
       <div id="error" class="status error" role="alert"></div>
-      <div id="message" class="status success" role="status"></div>
+      <div id="message" class="status success" role="status" aria-live="polite"></div>
 
       <div id="result" class="result">
-        <h2>Conversion complete</h2>
+        <h2>Conversion results</h2>
         <p id="resultSummary"></p>
-        <button type="button" id="downloadZip" class="download" hidden>Download all PNGs as ZIP</button>
+        <button type="button" id="downloadZip" class="download" hidden>
+          Download all PNGs as ZIP
+        </button>
         <div id="resultsList" class="results-list"></div>
       </div>
     </section>
@@ -364,38 +410,41 @@
     <section class="content">
       <h2>Free WebP to PNG Converter</h2>
       <p>
-        RitoccaPix converts one or multiple WebP images to PNG in your browser.
-        PNG supports transparency, so transparent areas in the original WebP can
-        remain transparent in the PNG output. Preview each result and
-        download individual PNGs or a ZIP archive. Your selected image files
-        are processed locally and are not intentionally uploaded to our server.
+        RitoccaPix converts one or multiple WebP images to PNG directly in
+        your browser. PNG supports transparency, so transparent areas in
+        the original WebP can remain transparent in the converted image.
+        Preview your results and download individual PNG files or a ZIP archive.
+        Your selected image files are processed locally on your device.
       </p>
 
       <h3>Why convert WebP to PNG?</h3>
       <p>
-        WebP is a modern image format often used on websites to reduce file sizes.
-        Some apps, editing workflows and online services require PNG files.
-        Converting WebP to PNG can make an image easier to use in those
-        situations, especially when transparency matters.
+        WebP is a modern image format commonly used on websites to reduce
+        file sizes. Some apps, editing workflows and online services require
+        PNG files. Converting WebP to PNG can make an image easier to use
+        in those situations, especially when transparency matters.
       </p>
 
       <h3>Does PNG preserve transparency?</h3>
       <p>
-        Yes. PNG supports transparency. This converter uses a transparent canvas
-        so transparent areas can remain transparent in the PNG output.
+        Yes. PNG supports transparency. This converter uses a transparent
+        canvas, allowing transparent areas in the original image to remain
+        transparent in the PNG output.
       </p>
 
       <h3>Will the converted PNG look exactly the same?</h3>
       <p>
-        PNG uses lossless compression, but the original WebP may already use
-        lossy compression. The converter keeps the image dimensions unchanged.
+        The converter keeps the original image dimensions. PNG uses lossless
+        compression, but a WebP image that was originally saved with lossy
+        compression cannot regain detail that was already lost.
       </p>
 
       <h3>Are my images uploaded?</h3>
       <p>
-        The conversion is performed locally in your browser. Image files are
-        not intentionally sent to our server. The page loads the external ZIP
-        library only to prepare ZIP downloads.
+        The conversion is performed locally in your browser. The selected
+        image files are not intentionally uploaded to RitoccaPix servers.
+        The page loads an external ZIP library only when needed for batch
+        downloads.
       </p>
 
       <h3>More free image tools</h3>
@@ -413,8 +462,8 @@
 
       <h3>How do I convert WebP to PNG?</h3>
       <p>
-        Select one or more WebP images and click Convert to PNG. Download
-        individual results or download the batch as a ZIP file.
+        Select one or more WebP images and click Convert to PNG.
+        Download each result separately or download the batch as a ZIP file.
       </p>
 
       <h3>Is this WebP to PNG converter free?</h3>
@@ -422,27 +471,27 @@
 
       <h3>Can I use it on my phone?</h3>
       <p>
-        Yes. You can use the tool on most modern mobile phones, tablets and
-        computers. Very large images may take longer to process.
+        Yes. You can use the tool on most modern mobile phones, tablets
+        and computers. Very large images may take longer to process.
       </p>
 
       <h3>Does PNG support transparent backgrounds?</h3>
       <p>
-        Yes. PNG supports transparency, and this converter preserves transparent
-        areas when they are present in the original image.
+        Yes. PNG supports transparency, and this converter preserves
+        transparent areas when they are present in the original image.
       </p>
 
       <h3>Can I convert multiple WebP images at once?</h3>
       <p>
-        Yes. Select up to 50 WebP images. Successful results can be downloaded
-        individually or together as a ZIP archive.
+        Yes. Select up to 50 WebP images. Successful results can be
+        downloaded individually or together as a ZIP archive.
       </p>
 
       <h3>Are my images uploaded to a server?</h3>
       <p>
         The selected image files are processed in your browser and are not
-        intentionally uploaded to RitoccaPix servers. The page loads its website
-        code and an external ZIP library for batch downloads.
+        intentionally uploaded to RitoccaPix servers. The page loads its
+        website code and an external ZIP library for batch downloads.
       </p>
     </section>
 
@@ -464,12 +513,13 @@
     <a href="privacy.html">Privacy Policy</a>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js" defer></script>
 
   <script>
     "use strict";
 
     const $ = id => document.getElementById(id);
+
     const fileInput = $("fileInput");
     const dropZone = $("dropZone");
     const convertBtn = $("convertBtn");
@@ -483,8 +533,9 @@
     const downloadZip = $("downloadZip");
 
     const MAX_FILE_SIZE = 50 * 1024 * 1024;
-    const MAX_PIXELS = 40000000;
+    const MAX_PIXELS = 20_000_000;
     const MAX_FILES = 50;
+    const MAX_BATCH_SIZE = 150 * 1024 * 1024;
 
     let selectedFiles = [];
     let outputUrls = [];
@@ -515,7 +566,7 @@
 
     function clearOutput() {
       result.style.display = "none";
-      resultsList.innerHTML = "";
+      resultsList.replaceChildren();
       resultSummary.textContent = "";
       downloadZip.hidden = true;
       downloadZip.disabled = false;
@@ -581,40 +632,57 @@
       }
 
       const invalid = all.filter(file => !isWebP(file));
-      const oversized = all.filter(file => isWebP(file) && file.size > MAX_FILE_SIZE);
+      const webpFiles = all.filter(isWebP);
+      const oversized = webpFiles.filter(file => file.size > MAX_FILE_SIZE);
 
       if (invalid.length) {
-        showError("Please select only WebP (.webp) images. " +
-          invalid.length + " unsupported file(s) were ignored.");
+        showError(
+          invalid.length +
+          " unsupported file(s) ignored. Please select WebP images only."
+        );
       }
 
       if (oversized.length) {
-        showError("Files larger than 50 MB were excluded: " +
-          oversized.map(file => file.name).join(", "));
+        showError(
+          "Files larger than 50 MB were excluded: " +
+          oversized.map(file => file.name).join(", ")
+        );
       }
 
-      const webpFiles = all.filter(isWebP);
-
-      selectedFiles = webpFiles
+      const valid = webpFiles
         .filter(file => file.size <= MAX_FILE_SIZE)
         .slice(0, MAX_FILES);
 
       if (webpFiles.length > MAX_FILES) {
-        showError("Only the first 50 WebP images can be converted in one batch.");
+        showError("Only the first 50 WebP images can be selected per batch.");
+      }
+
+      let total = 0;
+
+      for (const file of valid) {
+        if (total + file.size > MAX_BATCH_SIZE) {
+          showError(
+            "The batch exceeds the 150 MB total limit. " +
+            "Some files were not added. Select a smaller batch."
+          );
+          break;
+        }
+
+        selectedFiles.push(file);
+        total += file.size;
       }
 
       if (selectedFiles.length) {
-        const totalMB = (
-          selectedFiles.reduce((sum, file) => sum + file.size, 0) /
-          (1024 * 1024)
-        ).toFixed(2);
-
         selectedFilesBox.textContent =
           selectedFiles.length + " WebP image(s) selected · " +
-          totalMB + " MB total.";
+          formatBytes(total) + " total.";
 
-        if (!oversized.length && !invalid.length && webpFiles.length <= MAX_FILES) {
-          showMessage("Ready to convert. Your image files are processed locally in this browser.");
+        if (!invalid.length && !oversized.length &&
+            webpFiles.length <= MAX_FILES &&
+            total <= MAX_BATCH_SIZE) {
+          showMessage(
+            "Ready to convert. Your image files are processed locally in this browser."
+          );
         }
       } else {
         selectedFilesBox.textContent = "No supported images selected.";
@@ -629,16 +697,16 @@
 
     dropZone.addEventListener("dragover", event => {
       event.preventDefault();
-      if (!isConverting) dropZone.style.borderColor = "var(--accent)";
+      if (!isConverting) dropZone.classList.add("dragging");
     });
 
     dropZone.addEventListener("dragleave", () => {
-      dropZone.style.borderColor = "#526483";
+      dropZone.classList.remove("dragging");
     });
 
     dropZone.addEventListener("drop", event => {
       event.preventDefault();
-      dropZone.style.borderColor = "#526483";
+      dropZone.classList.remove("dragging");
 
       if (!isConverting) {
         updateSelectedFiles(event.dataTransfer.files);
@@ -664,13 +732,21 @@
         const img = new Image();
 
         img.onload = () => {
+          const width = img.naturalWidth;
+          const height = img.naturalHeight;
           URL.revokeObjectURL(url);
 
-          resolve({
-            img,
-            width: img.naturalWidth,
-            height: img.naturalHeight
-          });
+          if (!width || !height) {
+            reject(new Error("The image has invalid dimensions."));
+            return;
+          }
+
+          if (width * height > MAX_PIXELS) {
+            reject(new Error("Image exceeds the 20-megapixel limit."));
+            return;
+          }
+
+          resolve({ img, width, height });
         };
 
         img.onerror = () => {
@@ -686,10 +762,6 @@
       const loaded = await loadImage(file);
       const { img, width, height } = loaded;
 
-      if (!width || !height || width * height > MAX_PIXELS) {
-        throw new Error("Image exceeds the 40-megapixel processing limit.");
-      }
-
       const canvas = document.createElement("canvas");
       canvas.width = width;
       canvas.height = height;
@@ -697,6 +769,8 @@
       const ctx = canvas.getContext("2d", { alpha: true });
 
       if (!ctx) {
+        canvas.width = 0;
+        canvas.height = 0;
         throw new Error("Canvas processing is unavailable in this browser.");
       }
 
@@ -711,6 +785,9 @@
           "image/png"
         );
       });
+
+      canvas.width = 0;
+      canvas.height = 0;
 
       return {
         blob,
@@ -727,16 +804,17 @@
 
       link.href = url;
       link.download = filename;
+      link.style.display = "none";
 
       document.body.appendChild(link);
       link.click();
       link.remove();
 
-      setTimeout(() => URL.revokeObjectURL(url), 1500);
+      setTimeout(() => URL.revokeObjectURL(url), 3000);
     }
 
     function renderResults(items) {
-      resultsList.innerHTML = "";
+      resultsList.replaceChildren();
 
       items.forEach(item => {
         const card = document.createElement("article");
@@ -745,6 +823,7 @@
         const img = document.createElement("img");
         img.src = item.url;
         img.alt = "Converted PNG preview: " + item.name;
+        img.loading = "lazy";
 
         const details = document.createElement("div");
 
@@ -756,10 +835,9 @@
           "Dimensions: " + item.width + " × " + item.height + " px";
 
         const sizes = document.createElement("p");
-
-        const delta = item.originalSize
-          ? Math.round((1 - item.blob.size / item.originalSize) * 100)
-          : 0;
+        const delta = Math.round(
+          (1 - item.blob.size / item.originalSize) * 100
+        );
 
         sizes.textContent =
           "Original: " + formatBytes(item.originalSize) +
@@ -771,12 +849,39 @@
         const link = document.createElement("a");
         link.href = item.url;
         link.download = item.name;
-        link.textContent = "Download " + item.name;
+        link.textContent = "Download PNG";
+        link.setAttribute("aria-label", "Download " + item.name);
 
         details.append(heading, dimensions, sizes, link);
         card.append(img, details);
         resultsList.appendChild(card);
       });
+    }
+
+    async function createZip(items, currentId) {
+      if (typeof JSZip === "undefined") {
+        throw new Error("The ZIP library could not be loaded.");
+      }
+
+      const zip = new JSZip();
+
+      items.forEach(item => {
+        zip.file(item.name, item.blob);
+      });
+
+      const zipBlob = await zip.generateAsync(
+        { type: "blob" },
+        metadata => {
+          if (currentId === conversionId) {
+            showMessage(
+              "Preparing ZIP download: " +
+              Math.round(metadata.percent) + "%"
+            );
+          }
+        }
+      );
+
+      return zipBlob;
     }
 
     convertBtn.addEventListener("click", async () => {
@@ -839,63 +944,46 @@
           (sum, item) => sum + item.blob.size, 0
         );
 
-        const sizeRatio = originalTotal > 0
-          ? (pngTotal / originalTotal).toFixed(1)
-          : "—";
-
         resultSummary.textContent =
           converted.length + " of " + batch.length +
-          " image(s) converted successfully" +
-          (failures.length ? "; " + failures.length + " failed." : ".") +
+          " image(s) converted successfully." +
+          (failures.length ? " " + failures.length + " failed." : "") +
           " Original total: " + formatBytes(originalTotal) +
-          ". PNG total: " + formatBytes(pngTotal) +
-          ". Output size: " + sizeRatio + "× the original size.";
+          ". PNG total: " + formatBytes(pngTotal) + ".";
 
         result.style.display = "block";
 
-        if (converted.length > 1) {
-          if (typeof JSZip === "undefined") {
-            showError(
-              "The images were converted, but the ZIP library did not load. Download each PNG using the links below."
-            );
-          } else {
-            showMessage(
-              "Conversion complete. Click Download all PNGs as ZIP to save the batch."
-            );
+        if (converted.length === 1) {
+          showMessage("PNG created. Use the Download PNG link below to save it.");
+        } else {
+          try {
+            showMessage("Images converted. Preparing your ZIP file…");
 
-            const zip = new JSZip();
+            const zipBlob = await createZip(converted, currentId);
 
-            converted.forEach(item => {
-              zip.file(item.name, item.blob);
-            });
-
-            const zipBlob = await zip.generateAsync({ type: "blob" });
+            if (currentId !== conversionId) return;
 
             downloadZip.hidden = false;
             downloadZip.textContent = "Download all PNGs as ZIP";
 
             downloadZip.onclick = () => {
-              const zipName = makeZipFilename();
-
-              downloadBlob(zipBlob, zipName);
-              showMessage("ZIP downloaded: " + zipName);
-
-              downloadZip.textContent =
-                "Download ZIP again with a new filename";
+              downloadBlob(zipBlob, makeZipFilename());
+              showMessage("Your ZIP download has started.");
             };
+
+            showMessage(
+              "Conversion complete. Your individual PNG files and ZIP download are ready."
+            );
+          } catch (zipError) {
+            showError(
+              "Your PNG files were converted successfully, but the ZIP could not be created. Download each PNG individually below."
+            );
           }
-        } else {
-          const one = converted[0];
-          downloadBlob(one.blob, one.name);
         }
 
         if (failures.length) {
           showError(
             "Some files could not be converted: " + failures.join(" | ")
-          );
-        } else if (converted.length === 1) {
-          showMessage(
-            "PNG created and downloaded. Your original image was not changed."
           );
         }
 
