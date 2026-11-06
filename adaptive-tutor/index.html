@@ -361,6 +361,25 @@
       color: inherit;
     }
 
+    .math-fraction {
+      display: inline-flex;
+      flex-direction: column;
+      vertical-align: middle;
+      text-align: center;
+      line-height: 1.2;
+      margin: 0 3px;
+      font-size: 1em;
+    }
+
+    .math-numerator {
+      padding: 0 5px 3px;
+      border-bottom: 1px solid currentColor;
+    }
+
+    .math-denominator {
+      padding: 3px 5px 0;
+    }
+
     .typing {
       color: var(--muted);
       font-size: 13px;
@@ -713,11 +732,11 @@
   </div>
 
   <div class="notice">
-    <strong>Development preview:</strong>
-    The AI tutor connection is not active yet. This page is a development
-    interface and is not ready for use with children's personal information.
-    Do not upload real student documents until the secure backend,
-    parental consent and privacy controls are implemented.
+    <strong>Technical preview:</strong>
+    The AI tutor is connected for testing. Do not upload children's names,
+    contact details, school records or other personal information.
+    The service is not ready for real student data until authentication,
+    parental consent, data protection and privacy controls are implemented.
   </div>
 
   <div class="footer">
@@ -732,9 +751,7 @@
 /*
   ADAPTIVE TUTOR FRONTEND
 
-  The API endpoint will be connected after the Cloudflare Worker
-  has been created and configured.
-
+  The AI service is called through the Cloudflare Worker.
   Never put the Gemini API key in this file.
 */
 
@@ -778,9 +795,46 @@ function addMessage(role, text) {
   const bubble = document.createElement("div");
   bubble.className = "bubble";
 
-  // Use textContent to prevent untrusted AI or user text
-  // from being interpreted as HTML.
-  bubble.textContent = text;
+  // Format a small, safe subset of Markdown without inserting HTML.
+  // This supports bold text and simple LaTeX fractions.
+  const content = String(text ?? "");
+  const tokenPattern = /(\\?\*\\?\*.*?\\?\*\\?\*|\$\\frac\{[^{}]+\}\{[^{}]+\}\$)/gs;
+  const parts = content.split(tokenPattern);
+
+  parts.forEach(part => {
+    if (!part) return;
+
+    const boldMatch = part.match(/^\\?\*\\?\*(.*?)\\?\*\\?\*$/s);
+
+    if (boldMatch) {
+      const strong = document.createElement("strong");
+      strong.textContent = boldMatch[1];
+      bubble.appendChild(strong);
+      return;
+    }
+
+    const fractionMatch = part.match(/^\$\\frac\{([^{}]+)\}\{([^{}]+)\}\$$/);
+
+    if (fractionMatch) {
+      const fraction = document.createElement("span");
+      fraction.className = "math-fraction";
+
+      const numerator = document.createElement("span");
+      numerator.className = "math-numerator";
+      numerator.textContent = fractionMatch[1];
+
+      const denominator = document.createElement("span");
+      denominator.className = "math-denominator";
+      denominator.textContent = fractionMatch[2];
+
+      fraction.appendChild(numerator);
+      fraction.appendChild(denominator);
+      bubble.appendChild(fraction);
+      return;
+    }
+
+    bubble.appendChild(document.createTextNode(part));
+  });
 
   wrapper.appendChild(icon);
   wrapper.appendChild(bubble);
