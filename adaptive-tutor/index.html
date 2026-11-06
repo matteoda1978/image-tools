@@ -2,557 +2,516 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <title>Adaptive Tutor | Personalized AI Learning Support</title>
-  <meta name="description" content="A supportive AI learning tutor for students ages 8–14. Learn step by step with personalized explanations, examples and guided practice.">
-  <meta name="robots" content="noindex, nofollow">
-  <meta name="theme-color" content="#10233f">
-
-  <link rel="canonical" href="https://ritoccapix.com/adaptive-tutor/">
-
-  <style>
-    :root {
-      --navy: #10233f;
-      --navy-light: #19385f;
-      --blue: #3478d4;
-      --blue-light: #eaf2ff;
-      --background: #f4f7fb;
-      --surface: #ffffff;
-      --text: #18263a;
-      --muted: #69788c;
-      --border: #e1e7ef;
-      --success: #21865a;
-      --danger: #bd4141;
-      --radius: 16px;
-      --shadow: 0 8px 28px rgba(16, 35, 63, .07);
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      background: var(--background);
-      color: var(--text);
-      font-family: Inter, -apple-system, BlinkMacSystemFont,
-        "Segoe UI", Roboto, Arial, sans-serif;
-      line-height: 1.55;
-    }
-
-    button, input, select {
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    .topbar {
-      background: var(--navy);
-      color: white;
-      padding: 15px 22px;
-    }
-
-    .topbar-inner {
-      max-width: 1180px;
-      margin: auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      font-weight: 800;
-      font-size: 19px;
-      letter-spacing: -.4px;
-    }
-
-    .brand-mark {
-      width: 36px;
-      height: 36px;
-      display: grid;
-      place-items: center;
-      background: #3478d4;
-      border-radius: 10px;
-      font-weight: 900;
-    }
-
-    .brand span:last-child {
-      color: #a9c9f6;
-    }
-
-    .top-label {
-      font-size: 12px;
-      color: #d4e3f8;
-      border: 1px solid rgba(255,255,255,.2);
-      padding: 6px 11px;
-      border-radius: 30px;
-      white-space: nowrap;
-    }
-
-    .page {
-      max-width: 1180px;
-      margin: 30px auto;
-      padding: 0 18px 45px;
-    }
-
-    .intro {
-      margin-bottom: 23px;
-    }
-
-    .intro h1 {
-      margin: 0 0 7px;
-      font-size: clamp(25px, 4vw, 34px);
-      letter-spacing: -1px;
-      color: var(--navy);
-    }
-
-    .intro p {
-      margin: 0;
-      color: var(--muted);
-      max-width: 700px;
-    }
-
-    .workspace {
-      display: grid;
-      grid-template-columns: 275px minmax(0, 1fr);
-      gap: 20px;
-      align-items: start;
-    }
-
-    .panel {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-
-    .sidebar {
-      padding: 20px;
-    }
-
-    .section-title {
-      font-size: 14px;
-      font-weight: 800;
-      color: var(--navy);
-      margin: 0 0 12px;
-    }
-
-    .field {
-      margin-bottom: 22px;
-    }
-
-    .field label {
-      display: block;
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 7px;
-    }
-
-    select {
-      width: 100%;
-      padding: 11px 12px;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      color: var(--text);
-      background: white;
-      outline: none;
-    }
-
-    select:focus,
-    input:focus {
-      border-color: var(--blue);
-      box-shadow: 0 0 0 3px rgba(52,120,212,.12);
-    }
-
-    .choice-list {
-      display: grid;
-      gap: 8px;
-    }
-
-    .choice {
-      width: 100%;
-      text-align: left;
-      padding: 10px 11px;
-      border: 1px solid var(--border);
-      background: white;
-      border-radius: 10px;
-      color: var(--text);
-      font-size: 13px;
-      transition: .15s;
-    }
-
-    .choice:hover {
-      border-color: #a7c4eb;
-      background: #f8fbff;
-    }
-
-    .choice.active {
-      border-color: var(--blue);
-      background: var(--blue-light);
-      color: #164f9a;
-      font-weight: 700;
-    }
-
-    .choice .symbol {
-      display: inline-block;
-      width: 22px;
-    }
-
-    .sidebar-note {
-      border-radius: 11px;
-      padding: 12px;
-      background: #f1f6fd;
-      color: #49617e;
-      font-size: 12px;
-      margin-top: 7px;
-    }
-
-    .tutor {
-      min-height: 690px;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-
-    .tutor-header {
-      padding: 17px 20px;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .tutor-identity {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .avatar {
-      width: 42px;
-      height: 42px;
-      display: grid;
-      place-items: center;
-      background: var(--blue-light);
-      color: var(--blue);
-      border-radius: 13px;
-      font-size: 21px;
-    }
-
-    .tutor-name {
-      font-weight: 800;
-      color: var(--navy);
-      font-size: 15px;
-    }
-
-    .tutor-status {
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    .reset-btn {
-      border: 1px solid var(--border);
-      background: white;
-      color: var(--muted);
-      border-radius: 9px;
-      padding: 8px 11px;
-      font-size: 12px;
-    }
-
-    .reset-btn:hover {
-      background: #f5f7fa;
-    }
-
-    .chat-area {
-      flex: 1;
-      min-height: 390px;
-      max-height: 570px;
-      overflow-y: auto;
-      padding: 23px;
-      display: flex;
-      flex-direction: column;
-      gap: 17px;
-    }
-
-    .welcome {
-      max-width: 570px;
-      margin: 22px auto;
-      text-align: center;
-    }
-
-    .welcome-icon {
-      width: 65px;
-      height: 65px;
-      display: grid;
-      place-items: center;
-      margin: 0 auto 14px;
-      background: var(--blue-light);
-      color: var(--blue);
-      border-radius: 20px;
-      font-size: 30px;
-    }
-
-    .welcome h2 {
-      margin: 0 0 8px;
-      font-size: 21px;
-      color: var(--navy);
-    }
-
-    .welcome p {
-      color: var(--muted);
-      font-size: 14px;
-      margin: 0;
-    }
-
-    .message {
-      display: flex;
-      gap: 10px;
-      max-width: 88%;
-      align-items: flex-start;
-    }
-
-    .message.user {
-      align-self: flex-end;
-      flex-direction: row-reverse;
-    }
-
-    .message-icon {
-      flex: 0 0 31px;
-      width: 31px;
-      height: 31px;
-      display: grid;
-      place-items: center;
-      border-radius: 10px;
-      background: var(--blue-light);
-      color: var(--blue);
-      font-size: 15px;
-    }
-
-    .message.user .message-icon {
-      background: var(--navy);
-      color: white;
-    }
-
-    .bubble {
-      padding: 12px 15px;
-      border-radius: 4px 15px 15px 15px;
-      background: #f0f4f9;
-      font-size: 14px;
-      overflow-wrap: anywhere;
-      white-space: pre-wrap;
-    }
-
-    .message.user .bubble {
-      background: var(--navy);
-      color: white;
-      border-radius: 15px 4px 15px 15px;
-    }
-
-    .bubble strong {
-      color: inherit;
-    }
-
-    .math-fraction {
-      display: inline-flex;
-      flex-direction: column;
-      vertical-align: middle;
-      text-align: center;
-      line-height: 1.2;
-      margin: 0 3px;
-      font-size: 1em;
-    }
-
-    .math-numerator {
-      padding: 0 5px 3px;
-      border-bottom: 1px solid currentColor;
-    }
-
-    .math-denominator {
-      padding: 3px 5px 0;
-    }
-
-    .typing {
-      color: var(--muted);
-      font-size: 13px;
-      padding: 4px 0;
-    }
-
-    .composer {
-      border-top: 1px solid var(--border);
-      padding: 16px 19px 19px;
-      background: #fff;
-    }
-
-    .attachment-info {
-      display: none;
-      margin-bottom: 9px;
-      font-size: 12px;
-      color: var(--success);
-      align-items: center;
-      gap: 7px;
-    }
-
-    .attachment-info.visible {
-      display: flex;
-    }
-
-    .input-row {
-      display: flex;
-      gap: 9px;
-      align-items: center;
-    }
-
-    .message-input {
-      flex: 1;
-      min-width: 0;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 13px 14px;
-      outline: none;
-      font-size: 14px;
-    }
-
-    .attach-btn {
-      width: 45px;
-      height: 45px;
-      border: 1px solid var(--border);
-      background: white;
-      color: var(--navy);
-      border-radius: 12px;
-      font-size: 20px;
-    }
-
-    .attach-btn:hover {
-      background: var(--blue-light);
-    }
-
-    .send-btn {
-      height: 45px;
-      padding: 0 18px;
-      border: none;
-      border-radius: 12px;
-      background: var(--blue);
-      color: white;
-      font-weight: 700;
-    }
-
-    .send-btn:hover {
-      background: #2867bd;
-    }
-
-    .send-btn:disabled,
-    .attach-btn:disabled {
-      opacity: .55;
-      cursor: not-allowed;
-    }
-
-    .composer-hint {
-      margin-top: 9px;
-      font-size: 11px;
-      color: var(--muted);
-      text-align: center;
-    }
-
-    .notice {
-      margin-top: 18px;
-      padding: 13px 15px;
-      background: #fff8e9;
-      border: 1px solid #f0dfb5;
-      color: #775a20;
-      border-radius: 11px;
-      font-size: 12px;
-      line-height: 1.5;
-    }
-
-    .footer {
-      text-align: center;
-      color: var(--muted);
-      font-size: 11px;
-      margin-top: 24px;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    @media (max-width: 760px) {
-      .page {
-        margin-top: 21px;
-        padding-left: 12px;
-        padding-right: 12px;
-      }
-
-      .workspace {
-        grid-template-columns: 1fr;
-      }
-
-      .sidebar {
-        padding: 16px;
-      }
-
-      .choice-list {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .field {
-        margin-bottom: 17px;
-      }
-
-      .tutor {
-        min-height: 600px;
-      }
-
-      .chat-area {
-        min-height: 350px;
-        padding: 16px;
-      }
-
-      .message {
-        max-width: 96%;
-      }
-
-      .topbar {
-        padding: 12px 14px;
-      }
-
-      .top-label {
-        font-size: 10px;
-      }
-    }
-
-    @media (max-width: 430px) {
-      .input-row {
-        flex-wrap: wrap;
-      }
-
-      .message-input {
-        order: 1;
-        flex-basis: 100%;
-      }
-
-      .attach-btn {
-        order: 2;
-      }
-
-      .send-btn {
-        order: 3;
-        flex: 1;
-      }
-
-      .choice-list {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Adaptive Tutor | Personalized AI Learning Support</title>
+<meta name="description" content="A supportive AI learning tutor for students ages 8–14. Learn step by step with personalized explanations, examples and guided practice.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#10233f">
+<link rel="canonical" href="https://ritoccapix.com/adaptive-tutor/">
+
+<style>
+:root {
+  --navy:#10233f;
+  --navy-light:#19385f;
+  --blue:#3478d4;
+  --blue-light:#eaf2ff;
+  --background:#f4f7fb;
+  --surface:#fff;
+  --text:#18263a;
+  --muted:#69788c;
+  --border:#e1e7ef;
+  --success:#21865a;
+  --danger:#bd4141;
+  --radius:16px;
+  --shadow:0 8px 28px rgba(16,35,63,.07);
+}
+
+* { box-sizing:border-box; }
+
+body {
+  margin:0;
+  background:var(--background);
+  color:var(--text);
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  line-height:1.55;
+}
+
+button,input,select { font:inherit; }
+button { cursor:pointer; }
+
+.topbar {
+  background:var(--navy);
+  color:white;
+  padding:15px 22px;
+}
+
+.topbar-inner {
+  max-width:1420px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+}
+
+.brand {
+  display:flex;
+  align-items:center;
+  gap:11px;
+  font-weight:800;
+  font-size:19px;
+  letter-spacing:-.4px;
+}
+
+.brand-mark {
+  width:36px;
+  height:36px;
+  display:grid;
+  place-items:center;
+  background:#3478d4;
+  border-radius:10px;
+  font-weight:900;
+}
+
+.brand span:last-child { color:#a9c9f6; }
+
+.top-label {
+  font-size:12px;
+  color:#d4e3f8;
+  border:1px solid rgba(255,255,255,.2);
+  padding:6px 11px;
+  border-radius:30px;
+  white-space:nowrap;
+}
+
+.page {
+  max-width:1420px;
+  margin:30px auto;
+  padding:0 20px 45px;
+}
+
+.intro { margin-bottom:23px; }
+
+.intro h1 {
+  margin:0 0 7px;
+  font-size:clamp(25px,4vw,34px);
+  letter-spacing:-1px;
+  color:var(--navy);
+}
+
+.intro p {
+  margin:0;
+  color:var(--muted);
+  max-width:800px;
+}
+
+.workspace {
+  display:grid;
+  grid-template-columns:280px minmax(0,1fr);
+  gap:22px;
+  align-items:stretch;
+}
+
+.panel {
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+}
+
+.sidebar { padding:20px; }
+
+.section-title {
+  font-size:14px;
+  font-weight:800;
+  color:var(--navy);
+  margin:0 0 12px;
+}
+
+.field { margin-bottom:22px; }
+
+.field label {
+  display:block;
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:7px;
+}
+
+select {
+  width:100%;
+  padding:11px 12px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  color:var(--text);
+  background:white;
+  outline:none;
+}
+
+select:focus,input:focus {
+  border-color:var(--blue);
+  box-shadow:0 0 0 3px rgba(52,120,212,.12);
+}
+
+.choice-list { display:grid; gap:8px; }
+
+.choice {
+  width:100%;
+  text-align:left;
+  padding:10px 11px;
+  border:1px solid var(--border);
+  background:white;
+  border-radius:10px;
+  color:var(--text);
+  font-size:13px;
+  transition:.15s;
+}
+
+.choice:hover {
+  border-color:#a7c4eb;
+  background:#f8fbff;
+}
+
+.choice.active {
+  border-color:var(--blue);
+  background:var(--blue-light);
+  color:#164f9a;
+  font-weight:700;
+}
+
+.choice .symbol {
+  display:inline-block;
+  width:22px;
+}
+
+.sidebar-note {
+  border-radius:11px;
+  padding:12px;
+  background:#f1f6fd;
+  color:#49617e;
+  font-size:12px;
+  margin-top:7px;
+}
+
+.tutor {
+  min-height:820px;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+
+.tutor-header {
+  padding:18px 22px;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+}
+
+.tutor-identity {
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.avatar {
+  width:44px;
+  height:44px;
+  display:grid;
+  place-items:center;
+  background:var(--blue-light);
+  color:var(--blue);
+  border-radius:13px;
+  font-size:21px;
+}
+
+.tutor-name {
+  font-weight:800;
+  color:var(--navy);
+  font-size:15px;
+}
+
+.tutor-status {
+  font-size:12px;
+  color:var(--muted);
+}
+
+.reset-btn {
+  border:1px solid var(--border);
+  background:white;
+  color:var(--muted);
+  border-radius:9px;
+  padding:8px 11px;
+  font-size:12px;
+}
+
+.reset-btn:hover { background:#f5f7fa; }
+
+.chat-area {
+  flex:1;
+  min-height:620px;
+  max-height:850px;
+  overflow-y:auto;
+  padding:30px;
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+  scroll-behavior:smooth;
+}
+
+.welcome {
+  max-width:680px;
+  margin:auto;
+  padding:35px 15px;
+  text-align:center;
+}
+
+.welcome-icon {
+  width:68px;
+  height:68px;
+  display:grid;
+  place-items:center;
+  margin:0 auto 16px;
+  background:var(--blue-light);
+  color:var(--blue);
+  border-radius:20px;
+  font-size:30px;
+}
+
+.welcome h2 {
+  margin:0 0 9px;
+  font-size:23px;
+  color:var(--navy);
+}
+
+.welcome p {
+  color:var(--muted);
+  font-size:15px;
+  margin:0;
+}
+
+.message {
+  display:flex;
+  gap:12px;
+  max-width:94%;
+  align-items:flex-start;
+}
+
+.message.user {
+  align-self:flex-end;
+  flex-direction:row-reverse;
+}
+
+.message-icon {
+  flex:0 0 34px;
+  width:34px;
+  height:34px;
+  display:grid;
+  place-items:center;
+  border-radius:10px;
+  background:var(--blue-light);
+  color:var(--blue);
+  font-size:13px;
+  font-weight:700;
+}
+
+.message.user .message-icon {
+  background:var(--navy);
+  color:white;
+}
+
+.bubble {
+  padding:15px 18px;
+  border-radius:4px 16px 16px 16px;
+  background:#f0f4f9;
+  font-size:15px;
+  line-height:1.7;
+  overflow-wrap:anywhere;
+  white-space:pre-wrap;
+  min-width:80px;
+}
+
+.message.user .bubble {
+  background:var(--navy);
+  color:white;
+  border-radius:16px 4px 16px 16px;
+}
+
+.bubble strong { color:inherit; }
+
+.math-fraction {
+  display:inline-flex;
+  flex-direction:column;
+  vertical-align:middle;
+  text-align:center;
+  line-height:1.2;
+  margin:0 3px;
+  font-size:1em;
+}
+
+.math-numerator {
+  padding:0 5px 3px;
+  border-bottom:1px solid currentColor;
+}
+
+.math-denominator { padding:3px 5px 0; }
+
+.typing {
+  color:var(--muted);
+  font-size:13px;
+  padding:4px 0;
+}
+
+.composer {
+  border-top:1px solid var(--border);
+  padding:20px 22px 21px;
+  background:#fff;
+}
+
+.attachment-info {
+  display:none;
+  margin-bottom:9px;
+  font-size:12px;
+  color:var(--success);
+  align-items:center;
+  gap:7px;
+}
+
+.attachment-info.visible { display:flex; }
+
+.input-row {
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.message-input {
+  flex:1;
+  min-width:0;
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:15px 16px;
+  outline:none;
+  font-size:15px;
+  min-height:52px;
+}
+
+.attach-btn {
+  width:52px;
+  height:52px;
+  border:1px solid var(--border);
+  background:white;
+  color:var(--navy);
+  border-radius:12px;
+  font-size:22px;
+}
+
+.attach-btn:hover { background:var(--blue-light); }
+
+.send-btn {
+  height:52px;
+  padding:0 23px;
+  border:none;
+  border-radius:12px;
+  background:var(--blue);
+  color:white;
+  font-weight:700;
+}
+
+.send-btn:hover { background:#2867bd; }
+
+.send-btn:disabled,.attach-btn:disabled {
+  opacity:.55;
+  cursor:not-allowed;
+}
+
+.composer-hint {
+  margin-top:10px;
+  font-size:11px;
+  color:var(--muted);
+  text-align:center;
+}
+
+.notice {
+  margin-top:18px;
+  padding:13px 15px;
+  background:#fff8e9;
+  border:1px solid #f0dfb5;
+  color:#775a20;
+  border-radius:11px;
+  font-size:12px;
+  line-height:1.5;
+}
+
+.footer {
+  text-align:center;
+  color:var(--muted);
+  font-size:11px;
+  margin-top:24px;
+}
+
+.hidden { display:none!important; }
+
+@media(max-width:900px) {
+  .workspace { grid-template-columns:240px minmax(0,1fr); }
+  .chat-area { padding:22px; }
+}
+
+@media(max-width:760px) {
+  .page {
+    margin-top:21px;
+    padding-left:12px;
+    padding-right:12px;
+  }
+
+  .workspace { grid-template-columns:1fr; }
+
+  .sidebar { padding:16px; }
+
+  .choice-list {
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  .field { margin-bottom:17px; }
+
+  .tutor { min-height:650px; }
+
+  .chat-area {
+    min-height:480px;
+    max-height:72vh;
+    padding:17px;
+  }
+
+  .message { max-width:98%; }
+
+  .topbar { padding:12px 14px; }
+  .top-label { font-size:10px; }
+}
+
+@media(max-width:430px) {
+  .input-row { flex-wrap:wrap; }
+
+  .message-input {
+    order:1;
+    flex-basis:100%;
+  }
+
+  .attach-btn { order:2; }
+
+  .send-btn {
+    order:3;
+    flex:1;
+  }
+
+  .choice-list { grid-template-columns:1fr 1fr; }
+
+  .tutor-header { padding:14px; }
+  .chat-area { padding:13px; }
+  .bubble { padding:12px 14px; font-size:14px; }
+}
+</style>
 </head>
 
 <body>
@@ -563,15 +522,15 @@
       <div class="brand-mark">R</div>
       <div>Ritocca<span>Pix</span></div>
     </div>
-    <div class="top-label">ADAPTIVE TUTOR · AGES 8–14</div>
+    <div class="top-label" id="topLabel">ADAPTIVE TUTOR · AGES 8–14</div>
   </div>
 </header>
 
 <main class="page">
 
   <section class="intro">
-    <h1>Your personal learning space</h1>
-    <p>
+    <h1 id="pageTitle">Your personal learning space</h1>
+    <p id="pageSubtitle">
       Learn at your own pace. Ask questions, explore ideas and work
       through each lesson one step at a time.
     </p>
@@ -582,62 +541,74 @@
     <aside class="panel sidebar">
 
       <div class="field">
-        <h2 class="section-title">Choose a subject</h2>
-        <label for="subject">What are you learning?</label>
-        <select id="subject">
-          <option value="General">Choose a subject</option>
-          <option value="Mathematics">Mathematics</option>
-          <option value="English">English</option>
-          <option value="Reading and writing">Reading and writing</option>
-          <option value="Science">Science</option>
-          <option value="History">History</option>
-          <option value="Geography">Geography</option>
-          <option value="Biology">Biology</option>
-          <option value="Physics">Physics</option>
-          <option value="Chemistry">Chemistry</option>
-          <option value="Social studies">Social studies</option>
-          <option value="Foreign languages">Foreign languages</option>
-          <option value="Other">Other subject</option>
+        <h2 class="section-title" id="languageHeading">Language</h2>
+        <label for="languageSelect" id="languageLabel">Choose your language</label>
+        <select id="languageSelect">
+          <option value="en">🇬🇧 English</option>
+          <option value="it">🇮🇹 Italiano</option>
+          <option value="es">🇪🇸 Español</option>
+          <option value="fr">🇫🇷 Français</option>
+          <option value="de">🇩🇪 Deutsch</option>
         </select>
       </div>
 
       <div class="field">
-        <h2 class="section-title">How should I explain?</h2>
+        <h2 class="section-title" id="subjectHeading">Choose a subject</h2>
+        <label for="subject" id="subjectLabel">What are you learning?</label>
+        <select id="subject">
+          <option value="General" data-key="general">Choose a subject</option>
+          <option value="Mathematics" data-key="math">Mathematics</option>
+          <option value="English" data-key="english">English</option>
+          <option value="Reading and writing" data-key="reading">Reading and writing</option>
+          <option value="Science" data-key="science">Science</option>
+          <option value="History" data-key="history">History</option>
+          <option value="Geography" data-key="geography">Geography</option>
+          <option value="Biology" data-key="biology">Biology</option>
+          <option value="Physics" data-key="physics">Physics</option>
+          <option value="Chemistry" data-key="chemistry">Chemistry</option>
+          <option value="Social studies" data-key="social">Social studies</option>
+          <option value="Foreign languages" data-key="foreign">Foreign languages</option>
+          <option value="Other" data-key="other">Other subject</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <h2 class="section-title" id="styleHeading">How should I explain?</h2>
         <div class="choice-list" id="styleChoices">
           <button class="choice active" data-style="step-by-step">
-            <span class="symbol">①</span> One step at a time
+            <span class="symbol">①</span><span data-key="step">One step at a time</span>
           </button>
           <button class="choice" data-style="simple">
-            <span class="symbol">✦</span> Simple words
+            <span class="symbol">✦</span><span data-key="simple">Simple words</span>
           </button>
           <button class="choice" data-style="examples">
-            <span class="symbol">▤</span> More examples
+            <span class="symbol">▤</span><span data-key="examples">More examples</span>
           </button>
           <button class="choice" data-style="visual">
-            <span class="symbol">◉</span> Visual explanations
+            <span class="symbol">◉</span><span data-key="visual">Visual explanations</span>
           </button>
         </div>
       </div>
 
       <div class="field">
-        <h2 class="section-title">Learning preferences</h2>
+        <h2 class="section-title" id="preferenceHeading">Learning preferences</h2>
         <div class="choice-list" id="preferenceChoices">
           <button class="choice active" data-preference="one-question">
-            <span class="symbol">?</span> One question at a time
+            <span class="symbol">?</span><span data-key="oneQuestion">One question at a time</span>
           </button>
           <button class="choice" data-preference="short-sections">
-            <span class="symbol">≡</span> Short sections
+            <span class="symbol">≡</span><span data-key="short">Short sections</span>
           </button>
           <button class="choice" data-preference="repeat">
-            <span class="symbol">↻</span> Repeat when needed
+            <span class="symbol">↻</span><span data-key="repeat">Repeat when needed</span>
           </button>
           <button class="choice" data-preference="encouragement">
-            <span class="symbol">★</span> Encouraging feedback
+            <span class="symbol">★</span><span data-key="encouragement">Encouraging feedback</span>
           </button>
         </div>
       </div>
 
-      <div class="sidebar-note">
+      <div class="sidebar-note" id="sidebarNote">
         Your learning preferences can be changed whenever you need.
         Everyone learns in their own way.
       </div>
@@ -650,7 +621,7 @@
         <div class="tutor-identity">
           <div class="avatar">✦</div>
           <div>
-            <div class="tutor-name">Your Learning Tutor</div>
+            <div class="tutor-name" id="tutorName">Your Learning Tutor</div>
             <div class="tutor-status" id="connectionStatus">
               Preparing your learning space
             </div>
@@ -663,17 +634,15 @@
       </div>
 
       <div class="chat-area" id="chatArea" aria-live="polite">
-
         <div class="welcome" id="welcome">
           <div class="welcome-icon">✦</div>
-          <h2>What would you like to learn today?</h2>
-          <p>
+          <h2 id="welcomeTitle">What would you like to learn today?</h2>
+          <p id="welcomeText">
             Tell me what you are working on. We will take it one step
             at a time, and I will change my explanations when you need
             a different approach.
           </p>
         </div>
-
       </div>
 
       <div class="composer">
@@ -689,7 +658,6 @@
         </div>
 
         <div class="input-row">
-
           <input
             class="message-input"
             id="messageInput"
@@ -707,31 +675,21 @@
             class="hidden"
           >
 
-          <button
-            class="attach-btn"
-            id="attachButton"
-            type="button"
-            aria-label="Attach a photo or PDF"
-            title="Attach a photo or PDF"
-          >＋</button>
+          <button class="attach-btn" id="attachButton" type="button"
+            aria-label="Attach a photo or PDF" title="Attach a photo or PDF">＋</button>
 
-          <button class="send-btn" id="sendButton" type="button">
-            Send
-          </button>
-
+          <button class="send-btn" id="sendButton" type="button">Send</button>
         </div>
 
-        <div class="composer-hint">
+        <div class="composer-hint" id="composerHint">
           You can ask questions or attach one photo or PDF (maximum 5 MB).
         </div>
-
       </div>
 
     </section>
-
   </div>
 
-  <div class="notice">
+  <div class="notice" id="notice">
     <strong>Technical preview:</strong>
     The AI tutor is connected for testing. Do not upload children's names,
     contact details, school records or other personal information.
@@ -739,7 +697,7 @@
     parental consent, data protection and privacy controls are implemented.
   </div>
 
-  <div class="footer">
+  <div class="footer" id="footer">
     RitoccaPix Adaptive Tutor · Educational support, not medical advice
   </div>
 
@@ -748,45 +706,287 @@
 <script>
 "use strict";
 
-/*
-  ADAPTIVE TUTOR FRONTEND
-
-  The AI service is called through the Cloudflare Worker.
-  Never put the Gemini API key in this file.
-
-  Automatic voice:
-  - English is the default.
-  - Italian replies are detected and spoken in Italian.
-  - Uses the browser's built-in speech synthesis.
-  - No additional AI API calls or API costs.
-*/
-
 const API_ENDPOINT = "https://adaptive-tutor-api.ritoccapix.workers.dev/api/tutor";
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const MAX_HISTORY_MESSAGES = 12;
 
+const translations = {
+  en: {
+    pageTitle:"Your personal learning space",
+    pageSubtitle:"Learn at your own pace. Ask questions, explore ideas and work through each lesson one step at a time.",
+    languageHeading:"Language",languageLabel:"Choose your language",
+    subjectHeading:"Choose a subject",subjectLabel:"What are you learning?",
+    styleHeading:"How should I explain?",preferenceHeading:"Learning preferences",
+    general:"Choose a subject",math:"Mathematics",english:"English",
+    reading:"Reading and writing",science:"Science",history:"History",
+    geography:"Geography",biology:"Biology",physics:"Physics",
+    chemistry:"Chemistry",social:"Social studies",foreign:"Foreign languages",other:"Other subject",
+    step:"One step at a time",simple:"Simple words",examples:"More examples",visual:"Visual explanations",
+    oneQuestion:"One question at a time",short:"Short sections",repeat:"Repeat when needed",encouragement:"Encouraging feedback",
+    sidebarNote:"Your learning preferences can be changed whenever you need. Everyone learns in their own way.",
+    tutorName:"Your Learning Tutor",status:"Preparing your learning space",
+    newLesson:"New lesson",welcomeTitle:"What would you like to learn today?",
+    welcomeText:"Tell me what you are working on. We will take it one step at a time, and I will change my explanations when you need a different approach.",
+    placeholder:"Ask a question or tell me what you need help with...",
+    send:"Send",working:"Working...",remove:"Remove",
+    attachTitle:"Attach a photo or PDF",
+    composerHint:"You can ask questions or attach one photo or PDF (maximum 5 MB).",
+    noticeTitle:"Technical preview:",
+    notice:"The AI tutor is connected for testing. Do not upload children's names, contact details, school records or other personal information. The service is not ready for real student data until authentication, parental consent, data protection and privacy controls are implemented.",
+    footer:"RitoccaPix Adaptive Tutor · Educational support, not medical advice",
+    ready:"Ready to keep learning",newReady:"Ready for a new lesson",
+    connection:"Learning service configured",errorStatus:"Connection problem",
+    connectionError:"I couldn't connect to the learning service right now. Please try again in a moment.",
+    invalidFile:"Please choose a JPG, PNG, WebP or PDF file.",
+    largeFile:"The file is too large. Maximum size is 5 MB.",
+    readFileError:"Unable to read the selected file.",
+    aiNotConfigured:"AI connection not configured",
+    notConfiguredMessage:"The tutor is not connected yet. The learning interface is ready, but the secure AI service must be configured before lessons can begin. Please do not upload personal student information during this preview.",
+    typing:"Your tutor is preparing a response..."
+  },
+  it: {
+    pageTitle:"Il tuo spazio di apprendimento",
+    pageSubtitle:"Impara con i tuoi tempi. Fai domande, esplora nuove idee e affronta ogni lezione un passo alla volta.",
+    languageHeading:"Lingua",languageLabel:"Scegli la lingua",
+    subjectHeading:"Scegli una materia",subjectLabel:"Che cosa stai studiando?",
+    styleHeading:"Come preferisci le spiegazioni?",preferenceHeading:"Preferenze di apprendimento",
+    general:"Scegli una materia",math:"Matematica",english:"Inglese",
+    reading:"Lettura e scrittura",science:"Scienze",history:"Storia",
+    geography:"Geografia",biology:"Biologia",physics:"Fisica",
+    chemistry:"Chimica",social:"Educazione civica",foreign:"Lingue straniere",other:"Altra materia",
+    step:"Un passo alla volta",simple:"Parole semplici",examples:"Più esempi",visual:"Spiegazioni visive",
+    oneQuestion:"Una domanda alla volta",short:"Brevi sezioni",repeat:"Ripeti se necessario",encouragement:"Incoraggiamento",
+    sidebarNote:"Puoi cambiare le tue preferenze quando vuoi. Ognuno impara a modo suo.",
+    tutorName:"Il tuo tutor per lo studio",status:"Preparazione dello spazio di studio",
+    newLesson:"Nuova lezione",welcomeTitle:"Che cosa vuoi imparare oggi?",
+    welcomeText:"Raccontami su cosa stai lavorando. Procederemo un passo alla volta e cambierò il modo di spiegare quando avrai bisogno di un approccio diverso.",
+    placeholder:"Fai una domanda o dimmi in cosa hai bisogno di aiuto...",
+    send:"Invia",working:"Un momento...",remove:"Rimuovi",
+    attachTitle:"Allega una foto o un PDF",
+    composerHint:"Puoi fare domande o allegare una foto o un PDF (massimo 5 MB).",
+    noticeTitle:"Anteprima tecnica:",
+    notice:"Il tutor AI è collegato per i test. Non caricare nomi di bambini, recapiti, documenti scolastici o altre informazioni personali. Il servizio non è pronto per dati reali degli studenti finché non saranno implementati autenticazione, consenso dei genitori, protezione dei dati e controlli sulla privacy.",
+    footer:"RitoccaPix Adaptive Tutor · Supporto didattico, non consulenza medica",
+    ready:"Pronto per continuare a imparare",newReady:"Pronto per una nuova lezione",
+    connection:"Servizio di apprendimento configurato",errorStatus:"Problema di connessione",
+    connectionError:"Non riesco a collegarmi al servizio in questo momento. Riprova tra poco.",
+    invalidFile:"Scegli un file JPG, PNG, WebP o PDF.",
+    largeFile:"Il file è troppo grande. La dimensione massima è 5 MB.",
+    readFileError:"Impossibile leggere il file selezionato.",
+    aiNotConfigured:"Connessione AI non configurata",
+    notConfiguredMessage:"Il tutor non è ancora collegato. L'interfaccia è pronta, ma il servizio AI deve essere configurato prima di iniziare. Durante questa anteprima non caricare informazioni personali degli studenti.",
+    typing:"Il tutor sta preparando una risposta..."
+  },
+  es: {
+    pageTitle:"Tu espacio personal de aprendizaje",
+    pageSubtitle:"Aprende a tu ritmo. Haz preguntas, explora ideas y avanza paso a paso.",
+    languageHeading:"Idioma",languageLabel:"Elige tu idioma",
+    subjectHeading:"Elige una asignatura",subjectLabel:"¿Qué estás estudiando?",
+    styleHeading:"¿Cómo quieres que te explique?",preferenceHeading:"Preferencias de aprendizaje",
+    general:"Elige una asignatura",math:"Matemáticas",english:"Inglés",
+    reading:"Lectura y escritura",science:"Ciencias",history:"Historia",
+    geography:"Geografía",biology:"Biología",physics:"Física",
+    chemistry:"Química",social:"Estudios sociales",foreign:"Idiomas extranjeros",other:"Otra asignatura",
+    step:"Paso a paso",simple:"Palabras sencillas",examples:"Más ejemplos",visual:"Explicaciones visuales",
+    oneQuestion:"Una pregunta a la vez",short:"Secciones cortas",repeat:"Repetir cuando sea necesario",encouragement:"Comentarios positivos",
+    sidebarNote:"Puedes cambiar tus preferencias cuando quieras. Cada persona aprende a su manera.",
+    tutorName:"Tu tutor de aprendizaje",status:"Preparando tu espacio de aprendizaje",
+    newLesson:"Nueva lección",welcomeTitle:"¿Qué te gustaría aprender hoy?",
+    welcomeText:"Cuéntame qué estás estudiando. Iremos paso a paso y cambiaré mis explicaciones cuando necesites otro enfoque.",
+    placeholder:"Haz una pregunta o dime en qué necesitas ayuda...",
+    send:"Enviar",working:"Trabajando...",remove:"Eliminar",
+    attachTitle:"Adjuntar una foto o PDF",
+    composerHint:"Puedes hacer preguntas o adjuntar una foto o PDF (máximo 5 MB).",
+    noticeTitle:"Vista previa técnica:",
+    notice:"El tutor de IA está conectado para pruebas. No subas nombres, datos de contacto, expedientes escolares ni otra información personal de niños. El servicio aún no está preparado para datos reales de estudiantes.",
+    footer:"RitoccaPix Adaptive Tutor · Apoyo educativo, no asesoramiento médico",
+    ready:"Listo para seguir aprendiendo",newReady:"Listo para una nueva lección",
+    connection:"Servicio de aprendizaje configurado",errorStatus:"Problema de conexión",
+    connectionError:"No puedo conectar con el servicio ahora. Inténtalo de nuevo en un momento.",
+    invalidFile:"Elige un archivo JPG, PNG, WebP o PDF.",
+    largeFile:"El archivo es demasiado grande. El máximo es 5 MB.",
+    readFileError:"No se puede leer el archivo seleccionado.",
+    aiNotConfigured:"Conexión de IA no configurada",
+    notConfiguredMessage:"El tutor aún no está conectado. No subas información personal durante esta vista previa.",
+    typing:"Tu tutor está preparando una respuesta..."
+  },
+  fr: {
+    pageTitle:"Ton espace personnel d'apprentissage",
+    pageSubtitle:"Apprends à ton rythme. Pose des questions et avance étape par étape.",
+    languageHeading:"Langue",languageLabel:"Choisis ta langue",
+    subjectHeading:"Choisis une matière",subjectLabel:"Qu'étudies-tu ?",
+    styleHeading:"Comment préfères-tu les explications ?",preferenceHeading:"Préférences d'apprentissage",
+    general:"Choisir une matière",math:"Mathématiques",english:"Anglais",
+    reading:"Lecture et écriture",science:"Sciences",history:"Histoire",
+    geography:"Géographie",biology:"Biologie",physics:"Physique",
+    chemistry:"Chimie",social:"Sciences sociales",foreign:"Langues étrangères",other:"Autre matière",
+    step:"Une étape à la fois",simple:"Mots simples",examples:"Plus d'exemples",visual:"Explications visuelles",
+    oneQuestion:"Une question à la fois",short:"Sections courtes",repeat:"Répéter si nécessaire",encouragement:"Encouragements",
+    sidebarNote:"Tu peux modifier tes préférences quand tu le souhaites. Chacun apprend à sa manière.",
+    tutorName:"Ton tuteur d'apprentissage",status:"Préparation de ton espace d'apprentissage",
+    newLesson:"Nouvelle leçon",welcomeTitle:"Que voudrais-tu apprendre aujourd'hui ?",
+    welcomeText:"Dis-moi ce que tu étudies. Nous avancerons étape par étape et je changerai ma façon d'expliquer si nécessaire.",
+    placeholder:"Pose une question ou dis-moi ce dont tu as besoin...",
+    send:"Envoyer",working:"En cours...",remove:"Supprimer",
+    attachTitle:"Joindre une photo ou un PDF",
+    composerHint:"Tu peux poser des questions ou joindre une photo ou un PDF (5 Mo maximum).",
+    noticeTitle:"Aperçu technique :",
+    notice:"Le tuteur IA est connecté pour les tests. Ne télécharge pas de noms, coordonnées, dossiers scolaires ou autres informations personnelles d'enfants. Le service n'est pas encore prêt pour les données réelles des élèves.",
+    footer:"RitoccaPix Adaptive Tutor · Soutien éducatif, pas un avis médical",
+    ready:"Prêt à continuer",newReady:"Prêt pour une nouvelle leçon",
+    connection:"Service d'apprentissage configuré",errorStatus:"Problème de connexion",
+    connectionError:"Je n'arrive pas à me connecter au service. Réessaie dans un instant.",
+    invalidFile:"Choisis un fichier JPG, PNG, WebP ou PDF.",
+    largeFile:"Le fichier est trop volumineux. Maximum : 5 Mo.",
+    readFileError:"Impossible de lire le fichier sélectionné.",
+    aiNotConfigured:"Connexion IA non configurée",
+    notConfiguredMessage:"Le tuteur n'est pas encore connecté. Ne télécharge pas d'informations personnelles pendant cet aperçu.",
+    typing:"Ton tuteur prépare une réponse..."
+  },
+  de: {
+    pageTitle:"Dein persönlicher Lernbereich",
+    pageSubtitle:"Lerne in deinem Tempo. Stelle Fragen und gehe Schritt für Schritt vor.",
+    languageHeading:"Sprache",languageLabel:"Wähle deine Sprache",
+    subjectHeading:"Wähle ein Fach",subjectLabel:"Was lernst du gerade?",
+    styleHeading:"Wie soll ich es erklären?",preferenceHeading:"Lernvorlieben",
+    general:"Fach auswählen",math:"Mathematik",english:"Englisch",
+    reading:"Lesen und Schreiben",science:"Naturwissenschaften",history:"Geschichte",
+    geography:"Geografie",biology:"Biologie",physics:"Physik",
+    chemistry:"Chemie",social:"Sozialkunde",foreign:"Fremdsprachen",other:"Anderes Fach",
+    step:"Schritt für Schritt",simple:"Einfache Wörter",examples:"Mehr Beispiele",visual:"Visuelle Erklärungen",
+    oneQuestion:"Eine Frage nach der anderen",short:"Kurze Abschnitte",repeat:"Bei Bedarf wiederholen",encouragement:"Ermutigendes Feedback",
+    sidebarNote:"Du kannst deine Lernvorlieben jederzeit ändern. Jeder lernt auf seine eigene Weise.",
+    tutorName:"Dein Lerntutor",status:"Dein Lernbereich wird vorbereitet",
+    newLesson:"Neue Lektion",welcomeTitle:"Was möchtest du heute lernen?",
+    welcomeText:"Erzähl mir, woran du gerade arbeitest. Wir gehen Schritt für Schritt vor und ich erkläre es auf eine andere Weise, wenn du möchtest.",
+    placeholder:"Stelle eine Frage oder sag mir, wobei du Hilfe brauchst...",
+    send:"Senden",working:"Einen Moment...",remove:"Entfernen",
+    attachTitle:"Foto oder PDF anhängen",
+    composerHint:"Du kannst Fragen stellen oder ein Foto oder PDF anhängen (maximal 5 MB).",
+    noticeTitle:"Technische Vorschau:",
+    notice:"Der KI-Tutor ist zum Testen verbunden. Lade keine Namen, Kontaktdaten, Schulunterlagen oder andere persönliche Daten von Kindern hoch. Der Dienst ist noch nicht für echte Schülerdaten bereit.",
+    footer:"RitoccaPix Adaptive Tutor · Lernhilfe, keine medizinische Beratung",
+    ready:"Bereit zum Weiterlernen",newReady:"Bereit für eine neue Lektion",
+    connection:"Lerndienst eingerichtet",errorStatus:"Verbindungsproblem",
+    connectionError:"Ich kann gerade keine Verbindung zum Lerndienst herstellen. Bitte versuche es gleich noch einmal.",
+    invalidFile:"Bitte wähle eine JPG-, PNG-, WebP- oder PDF-Datei.",
+    largeFile:"Die Datei ist zu groß. Maximal 5 MB.",
+    readFileError:"Die ausgewählte Datei kann nicht gelesen werden.",
+    aiNotConfigured:"KI-Verbindung nicht eingerichtet",
+    notConfiguredMessage:"Der Tutor ist noch nicht verbunden. Lade während dieser Vorschau keine persönlichen Schülerdaten hoch.",
+    typing:"Dein Tutor bereitet eine Antwort vor..."
+  }
+};
+
 const state = {
-  history: [],
-  selectedStyles: ["step-by-step"],
-  preferences: ["one-question"],
-  attachment: null,
-  busy: false
+  history:[],
+  selectedStyles:["step-by-step"],
+  preferences:["one-question"],
+  attachment:null,
+  busy:false,
+  language:"en"
 };
 
 const elements = {
-  subject: document.getElementById("subject"),
-  chatArea: document.getElementById("chatArea"),
-  welcome: document.getElementById("welcome"),
-  messageInput: document.getElementById("messageInput"),
-  sendButton: document.getElementById("sendButton"),
-  resetChat: document.getElementById("resetChat"),
-  fileInput: document.getElementById("fileInput"),
-  attachButton: document.getElementById("attachButton"),
-  attachmentInfo: document.getElementById("attachmentInfo"),
-  attachmentName: document.getElementById("attachmentName"),
-  removeAttachment: document.getElementById("removeAttachment"),
-  connectionStatus: document.getElementById("connectionStatus")
+  languageSelect:document.getElementById("languageSelect"),
+  subject:document.getElementById("subject"),
+  chatArea:document.getElementById("chatArea"),
+  welcome:document.getElementById("welcome"),
+  messageInput:document.getElementById("messageInput"),
+  sendButton:document.getElementById("sendButton"),
+  resetChat:document.getElementById("resetChat"),
+  fileInput:document.getElementById("fileInput"),
+  attachButton:document.getElementById("attachButton"),
+  attachmentInfo:document.getElementById("attachmentInfo"),
+  attachmentName:document.getElementById("attachmentName"),
+  removeAttachment:document.getElementById("removeAttachment"),
+  connectionStatus:document.getElementById("connectionStatus")
 };
+
+function t(key) {
+  return translations[state.language]?.[key] || translations.en[key] || key;
+}
+
+/* -----------------------------------------
+   LANGUAGE AND INTERFACE
+----------------------------------------- */
+
+function applyLanguage(language) {
+  if (!translations[language]) language = "en";
+
+  state.language = language;
+  document.documentElement.lang = language;
+
+  const textMap = {
+    pageTitle:"pageTitle",
+    pageSubtitle:"pageSubtitle",
+    languageHeading:"languageHeading",
+    languageLabel:"languageLabel",
+    subjectHeading:"subjectHeading",
+    subjectLabel:"subjectLabel",
+    styleHeading:"styleHeading",
+    preferenceHeading:"preferenceHeading",
+    sidebarNote:"sidebarNote",
+    tutorName:"tutorName",
+    welcomeTitle:"welcomeTitle",
+    welcomeText:"welcomeText",
+    composerHint:"composerHint",
+    footer:"footer"
+  };
+
+  Object.entries(textMap).forEach(([id,key]) => {
+    const node = document.getElementById(id);
+    if (node) node.textContent = t(key);
+  });
+
+  document.querySelectorAll("[data-key]").forEach(node => {
+    node.textContent = t(node.dataset.key);
+  });
+
+  Array.from(elements.subject.options).forEach(option => {
+    const key = option.dataset.key;
+    if (key) option.textContent = t(key);
+  });
+
+  elements.messageInput.placeholder = t("placeholder");
+  elements.messageInput.setAttribute("aria-label",t("placeholder"));
+
+  elements.sendButton.textContent = state.busy ? t("working") : t("send");
+  elements.resetChat.textContent = t("newLesson");
+  elements.removeAttachment.textContent = t("remove");
+  elements.attachButton.title = t("attachTitle");
+  elements.attachButton.setAttribute("aria-label",t("attachTitle"));
+
+  document.getElementById("notice").innerHTML =
+    "<strong>" + t("noticeTitle") + "</strong> " + t("notice");
+
+  if (!state.busy) {
+    elements.connectionStatus.textContent =
+      state.history.length ? t("ready") : t("connection");
+  }
+
+  // The selected language is also sent to the AI service.
+  // Start a new lesson when changing language so old-language
+  // conversation history is not mixed with the new language.
+}
+
+elements.languageSelect.addEventListener("change",() => {
+  const newLanguage = elements.languageSelect.value;
+
+  if (newLanguage === state.language) return;
+
+  stopTutorSpeech();
+
+  state.history = [];
+  clearAttachment();
+  elements.chatArea.innerHTML = "";
+  elements.chatArea.appendChild(elements.welcome);
+  elements.welcome.classList.remove("hidden");
+  elements.messageInput.value = "";
+
+  applyLanguage(newLanguage);
+  elements.connectionStatus.textContent = t("newReady");
+});
 
 /* -----------------------------------------
    MATHEMATICAL NOTATION
@@ -794,31 +994,26 @@ const elements = {
 
 function normalizeMath(text) {
   return String(text ?? "")
-    .replace(/\\times\b/g, "×")
-    .replace(/\\div\b/g, "÷")
-    .replace(/\\cdot\b/g, "·")
-    .replace(/\\pm\b/g, "±")
-    .replace(/\\leq\b|\\le\b/g, "≤")
-    .replace(/\\geq\b|\\ge\b/g, "≥")
-    .replace(/\\neq\b/g, "≠")
-    .replace(/\\approx\b/g, "≈")
-    .replace(/\\pi\b/g, "π")
-    .replace(/\\infty\b/g, "∞")
-    .replace(/\\sqrt\{([^{}]+)\}/g, "√($1)");
+    .replace(/\\times\b/g,"×")
+    .replace(/\\div\b/g,"÷")
+    .replace(/\\cdot\b/g,"·")
+    .replace(/\\pm\b/g,"±")
+    .replace(/\\leq\b|\\le\b/g,"≤")
+    .replace(/\\geq\b|\\ge\b/g,"≥")
+    .replace(/\\neq\b/g,"≠")
+    .replace(/\\approx\b/g,"≈")
+    .replace(/\\pi\b/g,"π")
+    .replace(/\\infty\b/g,"∞")
+    .replace(/\\sqrt\{([^{}]+)\}/g,"√($1)");
 }
 
 /* -----------------------------------------
    SAFE MESSAGE FORMATTING
 ----------------------------------------- */
 
-function appendFormattedText(target, value) {
-  let content = String(value ?? "");
-
-  // Convert common LaTeX commands into readable mathematical symbols.
-  content = normalizeMath(content);
-
-  // Convert simple Markdown bullet points.
-  content = content.replace(/^\\?\*\s+/gm, "• ");
+function appendFormattedText(target,value) {
+  let content = normalizeMath(String(value ?? ""));
+  content = content.replace(/^\\?\*\s+/gm,"• ");
 
   const tokenPattern =
     /(?<bold>\\?\*\\?\*[\s\S]*?\\?\*\\?\*)|(?<fraction>\$?\\(?:dfrac|tfrac|frac)\{([^{}]+)\}\{([^{}]+)\}\$?)|(?<inlineMath>\$[^$\n]+\$)/g;
@@ -828,19 +1023,15 @@ function appendFormattedText(target, value) {
 
   while ((match = tokenPattern.exec(content)) !== null) {
     if (match.index > lastIndex) {
-      target.appendChild(
-        document.createTextNode(content.slice(lastIndex, match.index))
-      );
+      target.appendChild(document.createTextNode(content.slice(lastIndex,match.index)));
     }
 
     if (match.groups.bold) {
       const strong = document.createElement("strong");
-
       const inner = match.groups.bold
-        .replace(/^\\?\*\\?\*/, "")
-        .replace(/\\?\*\\?\*$/, "");
-
-      appendFormattedText(strong, inner);
+        .replace(/^\\?\*\\?\*/,"")
+        .replace(/\\?\*\\?\*$/,"");
+      appendFormattedText(strong,inner);
       target.appendChild(strong);
 
     } else if (match.groups.fraction) {
@@ -857,23 +1048,19 @@ function appendFormattedText(target, value) {
 
       fraction.appendChild(numerator);
       fraction.appendChild(denominator);
-
       target.appendChild(fraction);
 
     } else if (match.groups.inlineMath) {
-      const mathText = match.groups.inlineMath.slice(1, -1);
-      target.appendChild(
-        document.createTextNode(normalizeMath(mathText))
-      );
+      target.appendChild(document.createTextNode(
+        normalizeMath(match.groups.inlineMath.slice(1,-1))
+      ));
     }
 
     lastIndex = tokenPattern.lastIndex;
   }
 
   if (lastIndex < content.length) {
-    target.appendChild(
-      document.createTextNode(content.slice(lastIndex))
-    );
+    target.appendChild(document.createTextNode(content.slice(lastIndex)));
   }
 }
 
@@ -881,134 +1068,81 @@ function appendFormattedText(target, value) {
    AUTOMATIC VOICE
 ----------------------------------------- */
 
-function detectSpeechLanguage(text) {
-  const value = String(text || "").toLowerCase();
-
-  const italianWords = [
-    " il ", " lo ", " la ", " gli ", " le ",
-    " che ", " per ", " con ", " una ", " uno ",
-    " sono ", " sei ", " puoi ", " prova ",
-    " allora ", " perché ", " quindi ",
-    " questo ", " questa ", " anche ",
-    " insieme ", " passaggio ", " facciamo ",
-    " vediamo ", " tranquillo ", " brava ",
-    " bravo ", " matematica ", " esercizio ",
-    " risposta ", " domanda ", " spiegazione ",
-    " adesso ", " molto ", " bene "
-  ];
-
-  const padded = " " + value.replace(/[.,!?;:()[\]"]/g, " ") + " ";
-
-  let italianScore = 0;
-
-  for (const word of italianWords) {
-    if (padded.includes(word)) {
-      italianScore++;
-    }
-  }
-
-  // Italian accented characters are a useful additional signal.
-  if (/[àèéìòù]/i.test(value)) {
-    italianScore += 2;
-  }
-
-  return italianScore >= 2 ? "it-IT" : "en-US";
-}
+const speechLanguages = {
+  en:"en-US",
+  it:"it-IT",
+  es:"es-ES",
+  fr:"fr-FR",
+  de:"de-DE"
+};
 
 function normalizeSpeechText(text) {
   let value = String(text || "");
 
-  // Remove Markdown formatting.
-  value = value.replace(/\*\*(.*?)\*\*/g, "$1");
-  value = value.replace(/\*(.*?)\*/g, "$1");
-  value = value.replace(/`([^`]+)`/g, "$1");
+  value = value.replace(/\*\*(.*?)\*\*/g,"$1");
+  value = value.replace(/\*(.*?)\*/g,"$1");
+  value = value.replace(/`([^`]+)`/g,"$1");
 
-  // Convert simple fractions into spoken form.
   value = value.replace(
     /\\(?:dfrac|tfrac|frac)\{([^{}]+)\}\{([^{}]+)\}/g,
     "$1 divided by $2"
   );
 
-  // Remove remaining LaTeX delimiters.
-  value = value.replace(/\$\$?/g, "");
-  value = value.replace(/\\\(/g, "");
-  value = value.replace(/\\\)/g, "");
-  value = value.replace(/\\\[/g, "");
-  value = value.replace(/\\\]/g, "");
+  value = value.replace(/\$\$?/g,"");
+  value = value.replace(/\\\(/g,"").replace(/\\\)/g,"");
+  value = value.replace(/\\\[/g,"").replace(/\\\]/g,"");
 
-  // Convert mathematical commands into spoken words.
   value = value
-    .replace(/\\times\b/g, " times ")
-    .replace(/\\cdot\b/g, " times ")
-    .replace(/\\div\b/g, " divided by ")
-    .replace(/\\pm\b/g, " plus or minus ")
-    .replace(/\\leq\b|\\le\b/g, " less than or equal to ")
-    .replace(/\\geq\b|\\ge\b/g, " greater than or equal to ")
-    .replace(/\\neq\b/g, " not equal to ")
-    .replace(/\\approx\b/g, " approximately ")
-    .replace(/\\pi\b/g, " pi ")
-    .replace(/\\sqrt\{([^{}]+)\}/g, " square root of $1 ");
+    .replace(/\\times\b/g," times ")
+    .replace(/\\cdot\b/g," times ")
+    .replace(/\\div\b/g," divided by ")
+    .replace(/\\pm\b/g," plus or minus ")
+    .replace(/\\leq\b|\\le\b/g," less than or equal to ")
+    .replace(/\\geq\b|\\ge\b/g," greater than or equal to ")
+    .replace(/\\neq\b/g," not equal to ")
+    .replace(/\\approx\b/g," approximately ")
+    .replace(/\\pi\b/g," pi ")
+    .replace(/\\sqrt\{([^{}]+)\}/g," square root of $1 ");
 
-  // Read visible mathematical symbols naturally.
   value = value
-    .replace(/×/g, " times ")
-    .replace(/÷/g, " divided by ")
-    .replace(/·/g, " times ")
-    .replace(/≤/g, " less than or equal to ")
-    .replace(/≥/g, " greater than or equal to ")
-    .replace(/≠/g, " not equal to ")
-    .replace(/≈/g, " approximately ")
-    .replace(/√/g, " square root ");
+    .replace(/×/g," times ")
+    .replace(/÷/g," divided by ")
+    .replace(/·/g," times ")
+    .replace(/≤/g," less than or equal to ")
+    .replace(/≥/g," greater than or equal to ")
+    .replace(/≠/g," not equal to ")
+    .replace(/≈/g," approximately ")
+    .replace(/√/g," square root ");
 
-  // Remove decorative symbols that do not need to be spoken.
-  value = value.replace(/[★✦▤◉①②③④⑤]/g, " ");
+  value = value.replace(/[★✦▤◉①②③④⑤]/g," ");
 
-  // Normalize whitespace.
-  return value.replace(/\s+/g, " ").trim();
+  return value.replace(/\s+/g," ").trim();
 }
 
 function getBestVoice(language) {
-  if (!("speechSynthesis" in window)) {
-    return null;
-  }
+  if (!("speechSynthesis" in window)) return null;
 
   const voices = window.speechSynthesis.getVoices();
-
-  if (!voices.length) {
-    return null;
-  }
+  if (!voices.length) return null;
 
   const prefix = language.split("-")[0].toLowerCase();
 
-  // Prefer the exact language, for example it-IT or en-US.
-  let voice = voices.find(item =>
-    item.lang.toLowerCase() === language.toLowerCase()
-  );
-
-  // Otherwise choose another voice in the same language.
-  if (!voice) {
-    voice = voices.find(item =>
-      item.lang.toLowerCase().startsWith(prefix)
-    );
-  }
-
-  return voice || null;
+  return voices.find(v => v.lang.toLowerCase() === language.toLowerCase())
+    || voices.find(v => v.lang.toLowerCase().startsWith(prefix))
+    || null;
 }
 
 function speakTutorReply(text) {
   if (!("speechSynthesis" in window) ||
-      typeof window.SpeechSynthesisUtterance === "undefined") {
-    return;
-  }
+      typeof window.SpeechSynthesisUtterance === "undefined") return;
 
   const speechText = normalizeSpeechText(text);
-
   if (!speechText) return;
 
-  // Stop any previous tutor speech before starting the new reply.
   window.speechSynthesis.cancel();
 
-  const language = detectSpeechLanguage(text);
+  // Use the language explicitly selected by the student.
+  const language = speechLanguages[state.language] || "en-US";
   const utterance = new SpeechSynthesisUtterance(speechText);
 
   utterance.lang = language;
@@ -1017,15 +1151,11 @@ function speakTutorReply(text) {
   utterance.volume = 1;
 
   const voice = getBestVoice(language);
-
-  if (voice) {
-    utterance.voice = voice;
-  }
+  if (voice) utterance.voice = voice;
 
   utterance.onerror = event => {
-    // Do not interrupt the chat if the browser cannot play speech.
     if (event.error !== "canceled" && event.error !== "interrupted") {
-      console.warn("Tutor speech could not be played:", event.error);
+      console.warn("Tutor speech could not be played:",event.error);
     }
   };
 
@@ -1042,26 +1172,27 @@ function stopTutorSpeech() {
    CHAT MESSAGES
 ----------------------------------------- */
 
-function addMessage(role, text) {
+function addMessage(role,text) {
   elements.welcome.classList.add("hidden");
 
   const wrapper = document.createElement("div");
-  wrapper.className =
-    "message " + (role === "user" ? "user" : "assistant");
+  wrapper.className = "message " + (role === "user" ? "user" : "assistant");
 
   const icon = document.createElement("div");
   icon.className = "message-icon";
-  icon.textContent = role === "user" ? "You" : "✦";
+  icon.textContent = role === "user"
+    ? (state.language === "it" ? "Tu" : "You")
+    : "✦";
 
   const bubble = document.createElement("div");
   bubble.className = "bubble";
 
-  appendFormattedText(bubble, text);
+  appendFormattedText(bubble,text);
 
   wrapper.appendChild(icon);
   wrapper.appendChild(bubble);
-
   elements.chatArea.appendChild(wrapper);
+
   elements.chatArea.scrollTop = elements.chatArea.scrollHeight;
 
   return wrapper;
@@ -1072,14 +1203,22 @@ function setBusy(value) {
   elements.sendButton.disabled = value;
   elements.attachButton.disabled = value;
   elements.messageInput.disabled = value;
-  elements.sendButton.textContent = value ? "Working..." : "Send";
+  elements.sendButton.textContent = value ? t("working") : t("send");
 }
 
 function getLearningProfile() {
   return {
-    subject: elements.subject.value,
-    explanationStyles: [...state.selectedStyles],
-    preferences: [...state.preferences]
+    subject:elements.subject.value,
+    language:state.language,
+    languageName:{
+      en:"English",
+      it:"Italian",
+      es:"Spanish",
+      fr:"French",
+      de:"German"
+    }[state.language],
+    explanationStyles:[...state.selectedStyles],
+    preferences:[...state.preferences]
   };
 }
 
@@ -1091,11 +1230,11 @@ function setConnectionStatus(text) {
    LEARNING PREFERENCES
 ----------------------------------------- */
 
-function updateChoice(button, collection, value, multiSelect) {
+function updateChoice(button,collection,value,multiSelect) {
   const index = collection.indexOf(value);
 
   if (multiSelect && index >= 0) {
-    collection.splice(index, 1);
+    collection.splice(index,1);
     button.classList.remove("active");
     return;
   }
@@ -1117,24 +1256,14 @@ function updateChoice(button, collection, value, multiSelect) {
 }
 
 document.querySelectorAll("#styleChoices .choice").forEach(button => {
-  button.addEventListener("click", () => {
-    updateChoice(
-      button,
-      state.selectedStyles,
-      button.dataset.style,
-      false
-    );
+  button.addEventListener("click",() => {
+    updateChoice(button,state.selectedStyles,button.dataset.style,false);
   });
 });
 
 document.querySelectorAll("#preferenceChoices .choice").forEach(button => {
-  button.addEventListener("click", () => {
-    updateChoice(
-      button,
-      state.preferences,
-      button.dataset.preference,
-      true
-    );
+  button.addEventListener("click",() => {
+    updateChoice(button,state.preferences,button.dataset.preference,true);
   });
 });
 
@@ -1142,30 +1271,26 @@ document.querySelectorAll("#preferenceChoices .choice").forEach(button => {
    FILE ATTACHMENTS
 ----------------------------------------- */
 
-elements.attachButton.addEventListener("click", () => {
+elements.attachButton.addEventListener("click",() => {
   elements.fileInput.click();
 });
 
-elements.fileInput.addEventListener("change", event => {
+elements.fileInput.addEventListener("change",event => {
   const file = event.target.files[0];
-
   if (!file) return;
 
   const allowedTypes = [
-    "image/jpeg",
-    "image/png",
-    "image/webp",
-    "application/pdf"
+    "image/jpeg","image/png","image/webp","application/pdf"
   ];
 
   if (!allowedTypes.includes(file.type)) {
-    alert("Please choose a JPG, PNG, WebP or PDF file.");
+    alert(t("invalidFile"));
     elements.fileInput.value = "";
     return;
   }
 
   if (file.size > MAX_FILE_SIZE) {
-    alert("The file is too large. Maximum size is 5 MB.");
+    alert(t("largeFile"));
     elements.fileInput.value = "";
     return;
   }
@@ -1182,10 +1307,10 @@ function clearAttachment() {
   elements.attachmentInfo.classList.remove("visible");
 }
 
-elements.removeAttachment.addEventListener("click", clearAttachment);
+elements.removeAttachment.addEventListener("click",clearAttachment);
 
 function fileToBase64(file) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve,reject) => {
     const reader = new FileReader();
 
     reader.onload = () => {
@@ -1193,17 +1318,14 @@ function fileToBase64(file) {
       const comma = result.indexOf(",");
 
       if (comma < 0) {
-        reject(new Error("Unable to read the selected file."));
+        reject(new Error(t("readFileError")));
         return;
       }
 
       resolve(result.substring(comma + 1));
     };
 
-    reader.onerror = () => {
-      reject(new Error("Unable to read the selected file."));
-    };
-
+    reader.onerror = () => reject(new Error(t("readFileError")));
     reader.readAsDataURL(file);
   });
 }
@@ -1215,7 +1337,7 @@ function fileToBase64(file) {
 function addTypingIndicator() {
   const indicator = document.createElement("div");
   indicator.className = "typing";
-  indicator.textContent = "Your tutor is preparing a response...";
+  indicator.textContent = t("typing");
   indicator.id = "typingIndicator";
 
   elements.chatArea.appendChild(indicator);
@@ -1240,32 +1362,20 @@ async function sendMessage() {
   }
 
   if (!API_ENDPOINT) {
-    setConnectionStatus("AI connection not configured");
-
-    addMessage(
-      "assistant",
-      "The tutor is not connected yet. The learning interface is ready, " +
-      "but the secure AI service must be configured before lessons can begin. " +
-      "Please do not upload personal student information during this preview."
-    );
-
+    setConnectionStatus(t("aiNotConfigured"));
+    addMessage("assistant",t("notConfiguredMessage"));
     return;
   }
 
-  // Stop any previous speech when the student starts a new message.
   stopTutorSpeech();
 
   const profile = getLearningProfile();
 
-  addMessage(
-    "user",
-    message || ("Uploaded file: " + attachment.name)
-  );
-
+  addMessage("user",message || ("Uploaded file: " + attachment.name));
   elements.messageInput.value = "";
 
   setBusy(true);
-  setConnectionStatus("Tutor is working...");
+  setConnectionStatus(t("working"));
 
   const typing = addTypingIndicator();
 
@@ -1274,25 +1384,24 @@ async function sendMessage() {
 
     if (attachment) {
       encodedAttachment = {
-        name: attachment.name,
-        mimeType: attachment.type,
-        data: await fileToBase64(attachment)
+        name:attachment.name,
+        mimeType:attachment.type,
+        data:await fileToBase64(attachment)
       };
     }
 
     const payload = {
       message,
       profile,
-      history: state.history.slice(-MAX_HISTORY_MESSAGES),
-      attachment: encodedAttachment
+      language:state.language,
+      history:state.history.slice(-MAX_HISTORY_MESSAGES),
+      attachment:encodedAttachment
     };
 
-    const response = await fetch(API_ENDPOINT, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(payload)
+    const response = await fetch(API_ENDPOINT,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify(payload)
     });
 
     if (!response.ok) {
@@ -1306,39 +1415,33 @@ async function sendMessage() {
     }
 
     typing.remove();
-
-    addMessage("assistant", result.reply);
+    addMessage("assistant",result.reply);
 
     state.history.push(
       {
-        role: "user",
-        content: message || "Uploaded learning material."
+        role:"user",
+        content:message || "Uploaded learning material."
       },
       {
-        role: "assistant",
-        content: result.reply
+        role:"assistant",
+        content:result.reply
       }
     );
 
     state.history = state.history.slice(-MAX_HISTORY_MESSAGES);
 
-    setConnectionStatus("Ready to keep learning");
-
+    setConnectionStatus(t("ready"));
     clearAttachment();
 
-    // Automatically read every new tutor response.
     speakTutorReply(result.reply);
 
   } catch (error) {
     typing.remove();
 
-    addMessage(
-      "assistant",
-      "I couldn't connect to the learning service right now. " +
-      "Please try again in a moment."
-    );
+    addMessage("assistant",t("connectionError"));
+    setConnectionStatus(t("errorStatus"));
 
-    setConnectionStatus("Connection problem");
+    console.error("Tutor request failed:",error);
 
   } finally {
     setBusy(false);
@@ -1350,16 +1453,16 @@ async function sendMessage() {
    CHAT CONTROLS
 ----------------------------------------- */
 
-elements.sendButton.addEventListener("click", sendMessage);
+elements.sendButton.addEventListener("click",sendMessage);
 
-elements.messageInput.addEventListener("keydown", event => {
+elements.messageInput.addEventListener("keydown",event => {
   if (event.key === "Enter" && !event.shiftKey) {
     event.preventDefault();
     sendMessage();
   }
 });
 
-elements.resetChat.addEventListener("click", () => {
+elements.resetChat.addEventListener("click",() => {
   stopTutorSpeech();
 
   state.history = [];
@@ -1370,21 +1473,17 @@ elements.resetChat.addEventListener("click", () => {
   elements.welcome.classList.remove("hidden");
 
   elements.messageInput.value = "";
-
-  setConnectionStatus(
-    API_ENDPOINT ? "Ready for a new lesson" : "AI connection not configured"
-  );
+  setConnectionStatus(t("newReady"));
 });
 
 /* -----------------------------------------
    INITIALIZATION
 ----------------------------------------- */
 
-setConnectionStatus(
-  API_ENDPOINT ? "Learning service configured" : "AI connection not configured"
-);
+applyLanguage("en");
 
-// Load available browser voices when the browser makes them available.
+setConnectionStatus(t("connection"));
+
 if ("speechSynthesis" in window) {
   window.speechSynthesis.getVoices();
 
@@ -1392,7 +1491,6 @@ if ("speechSynthesis" in window) {
     window.speechSynthesis.getVoices();
   };
 }
-
 </script>
 
 </body>
