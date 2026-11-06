@@ -753,6 +753,12 @@
 
   The AI service is called through the Cloudflare Worker.
   Never put the Gemini API key in this file.
+
+  Automatic voice:
+  - English is the default.
+  - Italian replies are detected and spoken in Italian.
+  - Uses the browser's built-in speech synthesis.
+  - No additional AI API calls or API costs.
 */
 
 const API_ENDPOINT = "https://adaptive-tutor-api.ritoccapix.workers.dev/api/tutor";
@@ -782,26 +788,61 @@ const elements = {
   connectionStatus: document.getElementById("connectionStatus")
 };
 
+/* -----------------------------------------
+   MATHEMATICAL NOTATION
+----------------------------------------- */
+
+function normalizeMath(text) {
+  return String(text ?? "")
+    .replace(/\\times\b/g, "×")
+    .replace(/\\div\b/g, "÷")
+    .replace(/\\cdot\b/g, "·")
+    .replace(/\\pm\b/g, "±")
+    .replace(/\\leq\b|\\le\b/g, "≤")
+    .replace(/\\geq\b|\\ge\b/g, "≥")
+    .replace(/\\neq\b/g, "≠")
+    .replace(/\\approx\b/g, "≈")
+    .replace(/\\pi\b/g, "π")
+    .replace(/\\infty\b/g, "∞")
+    .replace(/\\sqrt\{([^{}]+)\}/g, "√($1)");
+}
+
+/* -----------------------------------------
+   SAFE MESSAGE FORMATTING
+----------------------------------------- */
+
 function appendFormattedText(target, value) {
-  // Render a safe subset of Markdown and inline LaTeX without inserting HTML.
-  // Supports **bold**, \* bullets, $inline math$, and vertical \frac fractions.
-  const content = String(value ?? "").replace(/^\\?\*\s+/gm, "• ");
-  const tokenPattern = /(?<bold>\\?\*\\?\*[\s\S]*?\\?\*\\?\*)|(?<fraction>\$?\\{1,2}frac\{([^{}]+)\}\{([^{}]+)\}\$?)|(?<inlineMath>\$[^$\n]+\$)/g;
+  let content = String(value ?? "");
+
+  // Convert common LaTeX commands into readable mathematical symbols.
+  content = normalizeMath(content);
+
+  // Convert simple Markdown bullet points.
+  content = content.replace(/^\\?\*\s+/gm, "• ");
+
+  const tokenPattern =
+    /(?<bold>\\?\*\\?\*[\s\S]*?\\?\*\\?\*)|(?<fraction>\$?\\(?:dfrac|tfrac|frac)\{([^{}]+)\}\{([^{}]+)\}\$?)|(?<inlineMath>\$[^$\n]+\$)/g;
+
   let lastIndex = 0;
   let match;
 
   while ((match = tokenPattern.exec(content)) !== null) {
     if (match.index > lastIndex) {
-      target.appendChild(document.createTextNode(content.slice(lastIndex, match.index)));
+      target.appendChild(
+        document.createTextNode(content.slice(lastIndex, match.index))
+      );
     }
 
     if (match.groups.bold) {
       const strong = document.createElement("strong");
+
       const inner = match.groups.bold
         .replace(/^\\?\*\\?\*/, "")
         .replace(/\\?\*\\?\*$/, "");
+
       appendFormattedText(strong, inner);
       target.appendChild(strong);
+
     } else if (match.groups.fraction) {
       const fraction = document.createElement("span");
       fraction.className = "math-fraction";
@@ -816,25 +857,197 @@ function appendFormattedText(target, value) {
 
       fraction.appendChild(numerator);
       fraction.appendChild(denominator);
+
       target.appendChild(fraction);
+
     } else if (match.groups.inlineMath) {
-      // Remove only the surrounding dollar delimiters; keep the math text.
-      target.appendChild(document.createTextNode(match.groups.inlineMath.slice(1, -1)));
+      const mathText = match.groups.inlineMath.slice(1, -1);
+      target.appendChild(
+        document.createTextNode(normalizeMath(mathText))
+      );
     }
 
     lastIndex = tokenPattern.lastIndex;
   }
 
   if (lastIndex < content.length) {
-    target.appendChild(document.createTextNode(content.slice(lastIndex)));
+    target.appendChild(
+      document.createTextNode(content.slice(lastIndex))
+    );
   }
 }
+
+/* -----------------------------------------
+   AUTOMATIC VOICE
+----------------------------------------- */
+
+function detectSpeechLanguage(text) {
+  const value = String(text || "").toLowerCase();
+
+  const italianWords = [
+    " il ", " lo ", " la ", " gli ", " le ",
+    " che ", " per ", " con ", " una ", " uno ",
+    " sono ", " sei ", " puoi ", " prova ",
+    " allora ", " perché ", " quindi ",
+    " questo ", " questa ", " anche ",
+    " insieme ", " passaggio ", " facciamo ",
+    " vediamo ", " tranquillo ", " brava ",
+    " bravo ", " matematica ", " esercizio ",
+    " risposta ", " domanda ", " spiegazione ",
+    " adesso ", " molto ", " bene "
+  ];
+
+  const padded = " " + value.replace(/[.,!?;:()[\]"]/g, " ") + " ";
+
+  let italianScore = 0;
+
+  for (const word of italianWords) {
+    if (padded.includes(word)) {
+      italianScore++;
+    }
+  }
+
+  // Italian accented characters are a useful additional signal.
+  if (/[àèéìòù]/i.test(value)) {
+    italianScore += 2;
+  }
+
+  return italianScore >= 2 ? "it-IT" : "en-US";
+}
+
+function normalizeSpeechText(text) {
+  let value = String(text || "");
+
+  // Remove Markdown formatting.
+  value = value.replace(/\*\*(.*?)\*\*/g, "$1");
+  value = value.replace(/\*(.*?)\*/g, "$1");
+  value = value.replace(/`([^`]+)`/g, "$1");
+
+  // Convert simple fractions into spoken form.
+  value = value.replace(
+    /\\(?:dfrac|tfrac|frac)\{([^{}]+)\}\{([^{}]+)\}/g,
+    "$1 divided by $2"
+  );
+
+  // Remove remaining LaTeX delimiters.
+  value = value.replace(/\$\$?/g, "");
+  value = value.replace(/\\\(/g, "");
+  value = value.replace(/\\\)/g, "");
+  value = value.replace(/\\\[/g, "");
+  value = value.replace(/\\\]/g, "");
+
+  // Convert mathematical commands into spoken words.
+  value = value
+    .replace(/\\times\b/g, " times ")
+    .replace(/\\cdot\b/g, " times ")
+    .replace(/\\div\b/g, " divided by ")
+    .replace(/\\pm\b/g, " plus or minus ")
+    .replace(/\\leq\b|\\le\b/g, " less than or equal to ")
+    .replace(/\\geq\b|\\ge\b/g, " greater than or equal to ")
+    .replace(/\\neq\b/g, " not equal to ")
+    .replace(/\\approx\b/g, " approximately ")
+    .replace(/\\pi\b/g, " pi ")
+    .replace(/\\sqrt\{([^{}]+)\}/g, " square root of $1 ");
+
+  // Read visible mathematical symbols naturally.
+  value = value
+    .replace(/×/g, " times ")
+    .replace(/÷/g, " divided by ")
+    .replace(/·/g, " times ")
+    .replace(/≤/g, " less than or equal to ")
+    .replace(/≥/g, " greater than or equal to ")
+    .replace(/≠/g, " not equal to ")
+    .replace(/≈/g, " approximately ")
+    .replace(/√/g, " square root ");
+
+  // Remove decorative symbols that do not need to be spoken.
+  value = value.replace(/[★✦▤◉①②③④⑤]/g, " ");
+
+  // Normalize whitespace.
+  return value.replace(/\s+/g, " ").trim();
+}
+
+function getBestVoice(language) {
+  if (!("speechSynthesis" in window)) {
+    return null;
+  }
+
+  const voices = window.speechSynthesis.getVoices();
+
+  if (!voices.length) {
+    return null;
+  }
+
+  const prefix = language.split("-")[0].toLowerCase();
+
+  // Prefer the exact language, for example it-IT or en-US.
+  let voice = voices.find(item =>
+    item.lang.toLowerCase() === language.toLowerCase()
+  );
+
+  // Otherwise choose another voice in the same language.
+  if (!voice) {
+    voice = voices.find(item =>
+      item.lang.toLowerCase().startsWith(prefix)
+    );
+  }
+
+  return voice || null;
+}
+
+function speakTutorReply(text) {
+  if (!("speechSynthesis" in window) ||
+      typeof window.SpeechSynthesisUtterance === "undefined") {
+    return;
+  }
+
+  const speechText = normalizeSpeechText(text);
+
+  if (!speechText) return;
+
+  // Stop any previous tutor speech before starting the new reply.
+  window.speechSynthesis.cancel();
+
+  const language = detectSpeechLanguage(text);
+  const utterance = new SpeechSynthesisUtterance(speechText);
+
+  utterance.lang = language;
+  utterance.rate = 0.92;
+  utterance.pitch = 1.03;
+  utterance.volume = 1;
+
+  const voice = getBestVoice(language);
+
+  if (voice) {
+    utterance.voice = voice;
+  }
+
+  utterance.onerror = event => {
+    // Do not interrupt the chat if the browser cannot play speech.
+    if (event.error !== "canceled" && event.error !== "interrupted") {
+      console.warn("Tutor speech could not be played:", event.error);
+    }
+  };
+
+  window.speechSynthesis.speak(utterance);
+}
+
+function stopTutorSpeech() {
+  if ("speechSynthesis" in window) {
+    window.speechSynthesis.cancel();
+  }
+}
+
+/* -----------------------------------------
+   CHAT MESSAGES
+----------------------------------------- */
 
 function addMessage(role, text) {
   elements.welcome.classList.add("hidden");
 
   const wrapper = document.createElement("div");
-  wrapper.className = "message " + (role === "user" ? "user" : "assistant");
+  wrapper.className =
+    "message " + (role === "user" ? "user" : "assistant");
 
   const icon = document.createElement("div");
   icon.className = "message-icon";
@@ -842,10 +1055,12 @@ function addMessage(role, text) {
 
   const bubble = document.createElement("div");
   bubble.className = "bubble";
+
   appendFormattedText(bubble, text);
 
   wrapper.appendChild(icon);
   wrapper.appendChild(bubble);
+
   elements.chatArea.appendChild(wrapper);
   elements.chatArea.scrollTop = elements.chatArea.scrollHeight;
 
@@ -871,6 +1086,10 @@ function getLearningProfile() {
 function setConnectionStatus(text) {
   elements.connectionStatus.textContent = text;
 }
+
+/* -----------------------------------------
+   LEARNING PREFERENCES
+----------------------------------------- */
 
 function updateChoice(button, collection, value, multiSelect) {
   const index = collection.indexOf(value);
@@ -918,6 +1137,10 @@ document.querySelectorAll("#preferenceChoices .choice").forEach(button => {
     );
   });
 });
+
+/* -----------------------------------------
+   FILE ATTACHMENTS
+----------------------------------------- */
 
 elements.attachButton.addEventListener("click", () => {
   elements.fileInput.click();
@@ -985,6 +1208,10 @@ function fileToBase64(file) {
   });
 }
 
+/* -----------------------------------------
+   TYPING INDICATOR
+----------------------------------------- */
+
 function addTypingIndicator() {
   const indicator = document.createElement("div");
   indicator.className = "typing";
@@ -996,6 +1223,10 @@ function addTypingIndicator() {
 
   return indicator;
 }
+
+/* -----------------------------------------
+   SEND MESSAGE TO THE AI WORKER
+----------------------------------------- */
 
 async function sendMessage() {
   if (state.busy) return;
@@ -1020,6 +1251,9 @@ async function sendMessage() {
 
     return;
   }
+
+  // Stop any previous speech when the student starts a new message.
+  stopTutorSpeech();
 
   const profile = getLearningProfile();
 
@@ -1076,8 +1310,14 @@ async function sendMessage() {
     addMessage("assistant", result.reply);
 
     state.history.push(
-      { role: "user", content: message || "Uploaded learning material." },
-      { role: "assistant", content: result.reply }
+      {
+        role: "user",
+        content: message || "Uploaded learning material."
+      },
+      {
+        role: "assistant",
+        content: result.reply
+      }
     );
 
     state.history = state.history.slice(-MAX_HISTORY_MESSAGES);
@@ -1085,6 +1325,9 @@ async function sendMessage() {
     setConnectionStatus("Ready to keep learning");
 
     clearAttachment();
+
+    // Automatically read every new tutor response.
+    speakTutorReply(result.reply);
 
   } catch (error) {
     typing.remove();
@@ -1096,11 +1339,16 @@ async function sendMessage() {
     );
 
     setConnectionStatus("Connection problem");
+
   } finally {
     setBusy(false);
     elements.messageInput.focus();
   }
 }
+
+/* -----------------------------------------
+   CHAT CONTROLS
+----------------------------------------- */
 
 elements.sendButton.addEventListener("click", sendMessage);
 
@@ -1112,6 +1360,8 @@ elements.messageInput.addEventListener("keydown", event => {
 });
 
 elements.resetChat.addEventListener("click", () => {
+  stopTutorSpeech();
+
   state.history = [];
   clearAttachment();
 
@@ -1126,9 +1376,22 @@ elements.resetChat.addEventListener("click", () => {
   );
 });
 
+/* -----------------------------------------
+   INITIALIZATION
+----------------------------------------- */
+
 setConnectionStatus(
   API_ENDPOINT ? "Learning service configured" : "AI connection not configured"
 );
+
+// Load available browser voices when the browser makes them available.
+if ("speechSynthesis" in window) {
+  window.speechSynthesis.getVoices();
+
+  window.speechSynthesis.onvoiceschanged = () => {
+    window.speechSynthesis.getVoices();
+  };
+}
 
 </script>
 
