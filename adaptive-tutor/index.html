@@ -782,6 +782,54 @@ const elements = {
   connectionStatus: document.getElementById("connectionStatus")
 };
 
+function appendFormattedText(target, value) {
+  // Render a safe subset of Markdown and inline LaTeX without inserting HTML.
+  // Supports **bold**, \* bullets, $inline math$, and vertical \frac fractions.
+  const content = String(value ?? "").replace(/^\\?\*\s+/gm, "• ");
+  const tokenPattern = /(?<bold>\\?\*\\?\*[\s\S]*?\\?\*\\?\*)|(?<fraction>\$?\\{1,2}frac\{([^{}]+)\}\{([^{}]+)\}\$?)|(?<inlineMath>\$[^$\n]+\$)/g;
+  let lastIndex = 0;
+  let match;
+
+  while ((match = tokenPattern.exec(content)) !== null) {
+    if (match.index > lastIndex) {
+      target.appendChild(document.createTextNode(content.slice(lastIndex, match.index)));
+    }
+
+    if (match.groups.bold) {
+      const strong = document.createElement("strong");
+      const inner = match.groups.bold
+        .replace(/^\\?\*\\?\*/, "")
+        .replace(/\\?\*\\?\*$/, "");
+      appendFormattedText(strong, inner);
+      target.appendChild(strong);
+    } else if (match.groups.fraction) {
+      const fraction = document.createElement("span");
+      fraction.className = "math-fraction";
+
+      const numerator = document.createElement("span");
+      numerator.className = "math-numerator";
+      numerator.textContent = match[3];
+
+      const denominator = document.createElement("span");
+      denominator.className = "math-denominator";
+      denominator.textContent = match[4];
+
+      fraction.appendChild(numerator);
+      fraction.appendChild(denominator);
+      target.appendChild(fraction);
+    } else if (match.groups.inlineMath) {
+      // Remove only the surrounding dollar delimiters; keep the math text.
+      target.appendChild(document.createTextNode(match.groups.inlineMath.slice(1, -1)));
+    }
+
+    lastIndex = tokenPattern.lastIndex;
+  }
+
+  if (lastIndex < content.length) {
+    target.appendChild(document.createTextNode(content.slice(lastIndex)));
+  }
+}
+
 function addMessage(role, text) {
   elements.welcome.classList.add("hidden");
 
@@ -794,67 +842,10 @@ function addMessage(role, text) {
 
   const bubble = document.createElement("div");
   bubble.className = "bubble";
-
-  // Safely render bold text and simple LaTeX fractions using DOM text nodes.
-  // Supports **bold**, \*\*bold\*\*, $\frac{1}{2}$ and **$\frac{1}{2}$**.
-  const content = String(text ?? "");
-  const tokenPattern = /(\*\*[\s\S]*?\*\*|\\\*\\\*[\s\S]*?\\\*\\\*|\$\\frac\{[^{}]+\}\{[^{}]+\}\$)/g;
-
-  function appendFraction(target, value) {
-    const fractionMatch = value.match(/^\$\\frac\{([^{}]+)\}\{([^{}]+)\}\$$/);
-    if (!fractionMatch) {
-      target.appendChild(document.createTextNode(value));
-      return;
-    }
-
-    const fraction = document.createElement("span");
-    fraction.className = "math-fraction";
-
-    const numerator = document.createElement("span");
-    numerator.className = "math-numerator";
-    numerator.textContent = fractionMatch[1];
-
-    const denominator = document.createElement("span");
-    denominator.className = "math-denominator";
-    denominator.textContent = fractionMatch[2];
-
-    fraction.appendChild(numerator);
-    fraction.appendChild(denominator);
-    target.appendChild(fraction);
-  }
-
-  let lastIndex = 0;
-  let match;
-
-  while ((match = tokenPattern.exec(content)) !== null) {
-    if (match.index > lastIndex) {
-      bubble.appendChild(document.createTextNode(content.slice(lastIndex, match.index)));
-    }
-
-    const token = match[0];
-    const isBold = (token.startsWith("**") && token.endsWith("**")) ||
-      (token.startsWith("\\*\\*") && token.endsWith("\\*\\*"));
-
-    if (isBold) {
-      const escaped = token.startsWith("\\*\\*");
-      const inner = token.slice(escaped ? 4 : 2, escaped ? -4 : -2);
-      const strong = document.createElement("strong");
-      appendFraction(strong, inner);
-      bubble.appendChild(strong);
-    } else {
-      appendFraction(bubble, token);
-    }
-
-    lastIndex = tokenPattern.lastIndex;
-  }
-
-  if (lastIndex < content.length) {
-    bubble.appendChild(document.createTextNode(content.slice(lastIndex)));
-  }
+  appendFormattedText(bubble, text);
 
   wrapper.appendChild(icon);
   wrapper.appendChild(bubble);
-
   elements.chatArea.appendChild(wrapper);
   elements.chatArea.scrollTop = elements.chatArea.scrollHeight;
 
