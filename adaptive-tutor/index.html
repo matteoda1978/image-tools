@@ -1,0 +1,1076 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Adaptive Tutor | Personalized AI Learning Support</title>
+  <meta name="description" content="A supportive AI learning tutor for students ages 8–14. Learn step by step with personalized explanations, examples and guided practice.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#10233f">
+
+  <link rel="canonical" href="https://ritoccapix.com/adaptive-tutor/">
+
+  <style>
+    :root {
+      --navy: #10233f;
+      --navy-light: #19385f;
+      --blue: #3478d4;
+      --blue-light: #eaf2ff;
+      --background: #f4f7fb;
+      --surface: #ffffff;
+      --text: #18263a;
+      --muted: #69788c;
+      --border: #e1e7ef;
+      --success: #21865a;
+      --danger: #bd4141;
+      --radius: 16px;
+      --shadow: 0 8px 28px rgba(16, 35, 63, .07);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--background);
+      color: var(--text);
+      font-family: Inter, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, Arial, sans-serif;
+      line-height: 1.55;
+    }
+
+    button, input, select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .topbar {
+      background: var(--navy);
+      color: white;
+      padding: 15px 22px;
+    }
+
+    .topbar-inner {
+      max-width: 1180px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-weight: 800;
+      font-size: 19px;
+      letter-spacing: -.4px;
+    }
+
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      background: #3478d4;
+      border-radius: 10px;
+      font-weight: 900;
+    }
+
+    .brand span:last-child {
+      color: #a9c9f6;
+    }
+
+    .top-label {
+      font-size: 12px;
+      color: #d4e3f8;
+      border: 1px solid rgba(255,255,255,.2);
+      padding: 6px 11px;
+      border-radius: 30px;
+      white-space: nowrap;
+    }
+
+    .page {
+      max-width: 1180px;
+      margin: 30px auto;
+      padding: 0 18px 45px;
+    }
+
+    .intro {
+      margin-bottom: 23px;
+    }
+
+    .intro h1 {
+      margin: 0 0 7px;
+      font-size: clamp(25px, 4vw, 34px);
+      letter-spacing: -1px;
+      color: var(--navy);
+    }
+
+    .intro p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 700px;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: 275px minmax(0, 1fr);
+      gap: 20px;
+      align-items: start;
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .sidebar {
+      padding: 20px;
+    }
+
+    .section-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--navy);
+      margin: 0 0 12px;
+    }
+
+    .field {
+      margin-bottom: 22px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 7px;
+    }
+
+    select {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      background: white;
+      outline: none;
+    }
+
+    select:focus,
+    input:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(52,120,212,.12);
+    }
+
+    .choice-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .choice {
+      width: 100%;
+      text-align: left;
+      padding: 10px 11px;
+      border: 1px solid var(--border);
+      background: white;
+      border-radius: 10px;
+      color: var(--text);
+      font-size: 13px;
+      transition: .15s;
+    }
+
+    .choice:hover {
+      border-color: #a7c4eb;
+      background: #f8fbff;
+    }
+
+    .choice.active {
+      border-color: var(--blue);
+      background: var(--blue-light);
+      color: #164f9a;
+      font-weight: 700;
+    }
+
+    .choice .symbol {
+      display: inline-block;
+      width: 22px;
+    }
+
+    .sidebar-note {
+      border-radius: 11px;
+      padding: 12px;
+      background: #f1f6fd;
+      color: #49617e;
+      font-size: 12px;
+      margin-top: 7px;
+    }
+
+    .tutor {
+      min-height: 690px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .tutor-header {
+      padding: 17px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .tutor-identity {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .avatar {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      background: var(--blue-light);
+      color: var(--blue);
+      border-radius: 13px;
+      font-size: 21px;
+    }
+
+    .tutor-name {
+      font-weight: 800;
+      color: var(--navy);
+      font-size: 15px;
+    }
+
+    .tutor-status {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .reset-btn {
+      border: 1px solid var(--border);
+      background: white;
+      color: var(--muted);
+      border-radius: 9px;
+      padding: 8px 11px;
+      font-size: 12px;
+    }
+
+    .reset-btn:hover {
+      background: #f5f7fa;
+    }
+
+    .chat-area {
+      flex: 1;
+      min-height: 390px;
+      max-height: 570px;
+      overflow-y: auto;
+      padding: 23px;
+      display: flex;
+      flex-direction: column;
+      gap: 17px;
+    }
+
+    .welcome {
+      max-width: 570px;
+      margin: 22px auto;
+      text-align: center;
+    }
+
+    .welcome-icon {
+      width: 65px;
+      height: 65px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 14px;
+      background: var(--blue-light);
+      color: var(--blue);
+      border-radius: 20px;
+      font-size: 30px;
+    }
+
+    .welcome h2 {
+      margin: 0 0 8px;
+      font-size: 21px;
+      color: var(--navy);
+    }
+
+    .welcome p {
+      color: var(--muted);
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .message {
+      display: flex;
+      gap: 10px;
+      max-width: 88%;
+      align-items: flex-start;
+    }
+
+    .message.user {
+      align-self: flex-end;
+      flex-direction: row-reverse;
+    }
+
+    .message-icon {
+      flex: 0 0 31px;
+      width: 31px;
+      height: 31px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      background: var(--blue-light);
+      color: var(--blue);
+      font-size: 15px;
+    }
+
+    .message.user .message-icon {
+      background: var(--navy);
+      color: white;
+    }
+
+    .bubble {
+      padding: 12px 15px;
+      border-radius: 4px 15px 15px 15px;
+      background: #f0f4f9;
+      font-size: 14px;
+      overflow-wrap: anywhere;
+      white-space: pre-wrap;
+    }
+
+    .message.user .bubble {
+      background: var(--navy);
+      color: white;
+      border-radius: 15px 4px 15px 15px;
+    }
+
+    .bubble strong {
+      color: inherit;
+    }
+
+    .typing {
+      color: var(--muted);
+      font-size: 13px;
+      padding: 4px 0;
+    }
+
+    .composer {
+      border-top: 1px solid var(--border);
+      padding: 16px 19px 19px;
+      background: #fff;
+    }
+
+    .attachment-info {
+      display: none;
+      margin-bottom: 9px;
+      font-size: 12px;
+      color: var(--success);
+      align-items: center;
+      gap: 7px;
+    }
+
+    .attachment-info.visible {
+      display: flex;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 9px;
+      align-items: center;
+    }
+
+    .message-input {
+      flex: 1;
+      min-width: 0;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 13px 14px;
+      outline: none;
+      font-size: 14px;
+    }
+
+    .attach-btn {
+      width: 45px;
+      height: 45px;
+      border: 1px solid var(--border);
+      background: white;
+      color: var(--navy);
+      border-radius: 12px;
+      font-size: 20px;
+    }
+
+    .attach-btn:hover {
+      background: var(--blue-light);
+    }
+
+    .send-btn {
+      height: 45px;
+      padding: 0 18px;
+      border: none;
+      border-radius: 12px;
+      background: var(--blue);
+      color: white;
+      font-weight: 700;
+    }
+
+    .send-btn:hover {
+      background: #2867bd;
+    }
+
+    .send-btn:disabled,
+    .attach-btn:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+    }
+
+    .composer-hint {
+      margin-top: 9px;
+      font-size: 11px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .notice {
+      margin-top: 18px;
+      padding: 13px 15px;
+      background: #fff8e9;
+      border: 1px solid #f0dfb5;
+      color: #775a20;
+      border-radius: 11px;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 24px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 760px) {
+      .page {
+        margin-top: 21px;
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+
+      .workspace {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        padding: 16px;
+      }
+
+      .choice-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .field {
+        margin-bottom: 17px;
+      }
+
+      .tutor {
+        min-height: 600px;
+      }
+
+      .chat-area {
+        min-height: 350px;
+        padding: 16px;
+      }
+
+      .message {
+        max-width: 96%;
+      }
+
+      .topbar {
+        padding: 12px 14px;
+      }
+
+      .top-label {
+        font-size: 10px;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .input-row {
+        flex-wrap: wrap;
+      }
+
+      .message-input {
+        order: 1;
+        flex-basis: 100%;
+      }
+
+      .attach-btn {
+        order: 2;
+      }
+
+      .send-btn {
+        order: 3;
+        flex: 1;
+      }
+
+      .choice-list {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <div class="brand-mark">R</div>
+      <div>Ritocca<span>Pix</span></div>
+    </div>
+    <div class="top-label">ADAPTIVE TUTOR · AGES 8–14</div>
+  </div>
+</header>
+
+<main class="page">
+
+  <section class="intro">
+    <h1>Your personal learning space</h1>
+    <p>
+      Learn at your own pace. Ask questions, explore ideas and work
+      through each lesson one step at a time.
+    </p>
+  </section>
+
+  <div class="workspace">
+
+    <aside class="panel sidebar">
+
+      <div class="field">
+        <h2 class="section-title">Choose a subject</h2>
+        <label for="subject">What are you learning?</label>
+        <select id="subject">
+          <option value="General">Choose a subject</option>
+          <option value="Mathematics">Mathematics</option>
+          <option value="English">English</option>
+          <option value="Reading and writing">Reading and writing</option>
+          <option value="Science">Science</option>
+          <option value="History">History</option>
+          <option value="Geography">Geography</option>
+          <option value="Biology">Biology</option>
+          <option value="Physics">Physics</option>
+          <option value="Chemistry">Chemistry</option>
+          <option value="Social studies">Social studies</option>
+          <option value="Foreign languages">Foreign languages</option>
+          <option value="Other">Other subject</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <h2 class="section-title">How should I explain?</h2>
+        <div class="choice-list" id="styleChoices">
+          <button class="choice active" data-style="step-by-step">
+            <span class="symbol">①</span> One step at a time
+          </button>
+          <button class="choice" data-style="simple">
+            <span class="symbol">✦</span> Simple words
+          </button>
+          <button class="choice" data-style="examples">
+            <span class="symbol">▤</span> More examples
+          </button>
+          <button class="choice" data-style="visual">
+            <span class="symbol">◉</span> Visual explanations
+          </button>
+        </div>
+      </div>
+
+      <div class="field">
+        <h2 class="section-title">Learning preferences</h2>
+        <div class="choice-list" id="preferenceChoices">
+          <button class="choice active" data-preference="one-question">
+            <span class="symbol">?</span> One question at a time
+          </button>
+          <button class="choice" data-preference="short-sections">
+            <span class="symbol">≡</span> Short sections
+          </button>
+          <button class="choice" data-preference="repeat">
+            <span class="symbol">↻</span> Repeat when needed
+          </button>
+          <button class="choice" data-preference="encouragement">
+            <span class="symbol">★</span> Encouraging feedback
+          </button>
+        </div>
+      </div>
+
+      <div class="sidebar-note">
+        Your learning preferences can be changed whenever you need.
+        Everyone learns in their own way.
+      </div>
+
+    </aside>
+
+    <section class="panel tutor">
+
+      <div class="tutor-header">
+        <div class="tutor-identity">
+          <div class="avatar">✦</div>
+          <div>
+            <div class="tutor-name">Your Learning Tutor</div>
+            <div class="tutor-status" id="connectionStatus">
+              Preparing your learning space
+            </div>
+          </div>
+        </div>
+
+        <button class="reset-btn" id="resetChat" type="button">
+          New lesson
+        </button>
+      </div>
+
+      <div class="chat-area" id="chatArea" aria-live="polite">
+
+        <div class="welcome" id="welcome">
+          <div class="welcome-icon">✦</div>
+          <h2>What would you like to learn today?</h2>
+          <p>
+            Tell me what you are working on. We will take it one step
+            at a time, and I will change my explanations when you need
+            a different approach.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="composer">
+
+        <div class="attachment-info" id="attachmentInfo">
+          <span>📎</span>
+          <span id="attachmentName"></span>
+          <button id="removeAttachment" type="button"
+            aria-label="Remove attachment"
+            style="border:0;background:none;color:#bd4141;cursor:pointer;">
+            Remove
+          </button>
+        </div>
+
+        <div class="input-row">
+
+          <input
+            class="message-input"
+            id="messageInput"
+            type="text"
+            maxlength="3000"
+            placeholder="Ask a question or tell me what you need help with..."
+            autocomplete="off"
+            aria-label="Your message"
+          >
+
+          <input
+            type="file"
+            id="fileInput"
+            accept="image/jpeg,image/png,image/webp,application/pdf"
+            class="hidden"
+          >
+
+          <button
+            class="attach-btn"
+            id="attachButton"
+            type="button"
+            aria-label="Attach a photo or PDF"
+            title="Attach a photo or PDF"
+          >＋</button>
+
+          <button class="send-btn" id="sendButton" type="button">
+            Send
+          </button>
+
+        </div>
+
+        <div class="composer-hint">
+          You can ask questions or attach one photo or PDF (maximum 5 MB).
+        </div>
+
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="notice">
+    <strong>Development preview:</strong>
+    The AI tutor connection is not active yet. This page is a development
+    interface and is not ready for use with children's personal information.
+    Do not upload real student documents until the secure backend,
+    parental consent and privacy controls are implemented.
+  </div>
+
+  <div class="footer">
+    RitoccaPix Adaptive Tutor · Educational support, not medical advice
+  </div>
+
+</main>
+
+<script>
+"use strict";
+
+/*
+  ADAPTIVE TUTOR FRONTEND
+
+  The API endpoint will be connected after the Cloudflare Worker
+  has been created and configured.
+
+  Never put the Gemini API key in this file.
+*/
+
+const API_ENDPOINT = "";
+
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
+const MAX_HISTORY_MESSAGES = 12;
+
+const state = {
+  history: [],
+  selectedStyles: ["step-by-step"],
+  preferences: ["one-question"],
+  attachment: null,
+  busy: false
+};
+
+const elements = {
+  subject: document.getElementById("subject"),
+  chatArea: document.getElementById("chatArea"),
+  welcome: document.getElementById("welcome"),
+  messageInput: document.getElementById("messageInput"),
+  sendButton: document.getElementById("sendButton"),
+  resetChat: document.getElementById("resetChat"),
+  fileInput: document.getElementById("fileInput"),
+  attachButton: document.getElementById("attachButton"),
+  attachmentInfo: document.getElementById("attachmentInfo"),
+  attachmentName: document.getElementById("attachmentName"),
+  removeAttachment: document.getElementById("removeAttachment"),
+  connectionStatus: document.getElementById("connectionStatus")
+};
+
+function addMessage(role, text) {
+  elements.welcome.classList.add("hidden");
+
+  const wrapper = document.createElement("div");
+  wrapper.className = "message " + (role === "user" ? "user" : "assistant");
+
+  const icon = document.createElement("div");
+  icon.className = "message-icon";
+  icon.textContent = role === "user" ? "You" : "✦";
+
+  const bubble = document.createElement("div");
+  bubble.className = "bubble";
+
+  // Use textContent to prevent untrusted AI or user text
+  // from being interpreted as HTML.
+  bubble.textContent = text;
+
+  wrapper.appendChild(icon);
+  wrapper.appendChild(bubble);
+
+  elements.chatArea.appendChild(wrapper);
+  elements.chatArea.scrollTop = elements.chatArea.scrollHeight;
+
+  return wrapper;
+}
+
+function setBusy(value) {
+  state.busy = value;
+  elements.sendButton.disabled = value;
+  elements.attachButton.disabled = value;
+  elements.messageInput.disabled = value;
+  elements.sendButton.textContent = value ? "Working..." : "Send";
+}
+
+function getLearningProfile() {
+  return {
+    subject: elements.subject.value,
+    explanationStyles: [...state.selectedStyles],
+    preferences: [...state.preferences]
+  };
+}
+
+function setConnectionStatus(text) {
+  elements.connectionStatus.textContent = text;
+}
+
+function updateChoice(button, collection, value, multiSelect) {
+  const index = collection.indexOf(value);
+
+  if (multiSelect && index >= 0) {
+    collection.splice(index, 1);
+    button.classList.remove("active");
+    return;
+  }
+
+  if (multiSelect) {
+    collection.push(value);
+    button.classList.add("active");
+    return;
+  }
+
+  collection.length = 0;
+  collection.push(value);
+
+  button.parentElement.querySelectorAll(".choice").forEach(item => {
+    item.classList.remove("active");
+  });
+
+  button.classList.add("active");
+}
+
+document.querySelectorAll("#styleChoices .choice").forEach(button => {
+  button.addEventListener("click", () => {
+    updateChoice(
+      button,
+      state.selectedStyles,
+      button.dataset.style,
+      false
+    );
+  });
+});
+
+document.querySelectorAll("#preferenceChoices .choice").forEach(button => {
+  button.addEventListener("click", () => {
+    updateChoice(
+      button,
+      state.preferences,
+      button.dataset.preference,
+      true
+    );
+  });
+});
+
+elements.attachButton.addEventListener("click", () => {
+  elements.fileInput.click();
+});
+
+elements.fileInput.addEventListener("change", event => {
+  const file = event.target.files[0];
+
+  if (!file) return;
+
+  const allowedTypes = [
+    "image/jpeg",
+    "image/png",
+    "image/webp",
+    "application/pdf"
+  ];
+
+  if (!allowedTypes.includes(file.type)) {
+    alert("Please choose a JPG, PNG, WebP or PDF file.");
+    elements.fileInput.value = "";
+    return;
+  }
+
+  if (file.size > MAX_FILE_SIZE) {
+    alert("The file is too large. Maximum size is 5 MB.");
+    elements.fileInput.value = "";
+    return;
+  }
+
+  state.attachment = file;
+  elements.attachmentName.textContent = file.name;
+  elements.attachmentInfo.classList.add("visible");
+});
+
+function clearAttachment() {
+  state.attachment = null;
+  elements.fileInput.value = "";
+  elements.attachmentName.textContent = "";
+  elements.attachmentInfo.classList.remove("visible");
+}
+
+elements.removeAttachment.addEventListener("click", clearAttachment);
+
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      const result = String(reader.result);
+      const comma = result.indexOf(",");
+
+      if (comma < 0) {
+        reject(new Error("Unable to read the selected file."));
+        return;
+      }
+
+      resolve(result.substring(comma + 1));
+    };
+
+    reader.onerror = () => {
+      reject(new Error("Unable to read the selected file."));
+    };
+
+    reader.readAsDataURL(file);
+  });
+}
+
+function addTypingIndicator() {
+  const indicator = document.createElement("div");
+  indicator.className = "typing";
+  indicator.textContent = "Your tutor is preparing a response...";
+  indicator.id = "typingIndicator";
+
+  elements.chatArea.appendChild(indicator);
+  elements.chatArea.scrollTop = elements.chatArea.scrollHeight;
+
+  return indicator;
+}
+
+async function sendMessage() {
+  if (state.busy) return;
+
+  const message = elements.messageInput.value.trim();
+  const attachment = state.attachment;
+
+  if (!message && !attachment) {
+    elements.messageInput.focus();
+    return;
+  }
+
+  if (!API_ENDPOINT) {
+    setConnectionStatus("AI connection not configured");
+
+    addMessage(
+      "assistant",
+      "The tutor is not connected yet. The learning interface is ready, " +
+      "but the secure AI service must be configured before lessons can begin. " +
+      "Please do not upload personal student information during this preview."
+    );
+
+    return;
+  }
+
+  const profile = getLearningProfile();
+
+  addMessage(
+    "user",
+    message || ("Uploaded file: " + attachment.name)
+  );
+
+  elements.messageInput.value = "";
+
+  setBusy(true);
+  setConnectionStatus("Tutor is working...");
+
+  const typing = addTypingIndicator();
+
+  try {
+    let encodedAttachment = null;
+
+    if (attachment) {
+      encodedAttachment = {
+        name: attachment.name,
+        mimeType: attachment.type,
+        data: await fileToBase64(attachment)
+      };
+    }
+
+    const payload = {
+      message,
+      profile,
+      history: state.history.slice(-MAX_HISTORY_MESSAGES),
+      attachment: encodedAttachment
+    };
+
+    const response = await fetch(API_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+      throw new Error("The tutor service returned an error.");
+    }
+
+    const result = await response.json();
+
+    if (!result || typeof result.reply !== "string") {
+      throw new Error("The tutor returned an invalid response.");
+    }
+
+    typing.remove();
+
+    addMessage("assistant", result.reply);
+
+    state.history.push(
+      { role: "user", content: message || "Uploaded learning material." },
+      { role: "assistant", content: result.reply }
+    );
+
+    state.history = state.history.slice(-MAX_HISTORY_MESSAGES);
+
+    setConnectionStatus("Ready to keep learning");
+
+    clearAttachment();
+
+  } catch (error) {
+    typing.remove();
+
+    addMessage(
+      "assistant",
+      "I couldn't connect to the learning service right now. " +
+      "Please try again in a moment."
+    );
+
+    setConnectionStatus("Connection problem");
+  } finally {
+    setBusy(false);
+    elements.messageInput.focus();
+  }
+}
+
+elements.sendButton.addEventListener("click", sendMessage);
+
+elements.messageInput.addEventListener("keydown", event => {
+  if (event.key === "Enter" && !event.shiftKey) {
+    event.preventDefault();
+    sendMessage();
+  }
+});
+
+elements.resetChat.addEventListener("click", () => {
+  state.history = [];
+  clearAttachment();
+
+  elements.chatArea.innerHTML = "";
+  elements.chatArea.appendChild(elements.welcome);
+  elements.welcome.classList.remove("hidden");
+
+  elements.messageInput.value = "";
+
+  setConnectionStatus(
+    API_ENDPOINT ? "Ready for a new lesson" : "AI connection not configured"
+  );
+});
+
+setConnectionStatus(
+  API_ENDPOINT ? "Learning service configured" : "AI connection not configured"
+);
+
+</script>
+
+</body>
+</html>
