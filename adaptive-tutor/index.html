@@ -795,46 +795,62 @@ function addMessage(role, text) {
   const bubble = document.createElement("div");
   bubble.className = "bubble";
 
-  // Format a small, safe subset of Markdown without inserting HTML.
-  // This supports bold text and simple LaTeX fractions.
+  // Safely render bold text and simple LaTeX fractions using DOM text nodes.
+  // Supports **bold**, \*\*bold\*\*, $\frac{1}{2}$ and **$\frac{1}{2}$**.
   const content = String(text ?? "");
-  const tokenPattern = /(\\?\*\\?\*.*?\\?\*\\?\*|\$\\frac\{[^{}]+\}\{[^{}]+\}\$)/gs;
-  const parts = content.split(tokenPattern);
+  const tokenPattern = /(\*\*[\s\S]*?\*\*|\\\*\\\*[\s\S]*?\\\*\\\*|\$\\frac\{[^{}]+\}\{[^{}]+\}\$)/g;
 
-  parts.forEach(part => {
-    if (!part) return;
+  function appendFraction(target, value) {
+    const fractionMatch = value.match(/^\$\\frac\{([^{}]+)\}\{([^{}]+)\}\$$/);
+    if (!fractionMatch) {
+      target.appendChild(document.createTextNode(value));
+      return;
+    }
 
-    const boldMatch = part.match(/^\\?\*\\?\*(.*?)\\?\*\\?\*$/s);
+    const fraction = document.createElement("span");
+    fraction.className = "math-fraction";
 
-    if (boldMatch) {
+    const numerator = document.createElement("span");
+    numerator.className = "math-numerator";
+    numerator.textContent = fractionMatch[1];
+
+    const denominator = document.createElement("span");
+    denominator.className = "math-denominator";
+    denominator.textContent = fractionMatch[2];
+
+    fraction.appendChild(numerator);
+    fraction.appendChild(denominator);
+    target.appendChild(fraction);
+  }
+
+  let lastIndex = 0;
+  let match;
+
+  while ((match = tokenPattern.exec(content)) !== null) {
+    if (match.index > lastIndex) {
+      bubble.appendChild(document.createTextNode(content.slice(lastIndex, match.index)));
+    }
+
+    const token = match[0];
+    const isBold = (token.startsWith("**") && token.endsWith("**")) ||
+      (token.startsWith("\\*\\*") && token.endsWith("\\*\\*"));
+
+    if (isBold) {
+      const escaped = token.startsWith("\\*\\*");
+      const inner = token.slice(escaped ? 4 : 2, escaped ? -4 : -2);
       const strong = document.createElement("strong");
-      strong.textContent = boldMatch[1];
+      appendFraction(strong, inner);
       bubble.appendChild(strong);
-      return;
+    } else {
+      appendFraction(bubble, token);
     }
 
-    const fractionMatch = part.match(/^\$\\frac\{([^{}]+)\}\{([^{}]+)\}\$$/);
+    lastIndex = tokenPattern.lastIndex;
+  }
 
-    if (fractionMatch) {
-      const fraction = document.createElement("span");
-      fraction.className = "math-fraction";
-
-      const numerator = document.createElement("span");
-      numerator.className = "math-numerator";
-      numerator.textContent = fractionMatch[1];
-
-      const denominator = document.createElement("span");
-      denominator.className = "math-denominator";
-      denominator.textContent = fractionMatch[2];
-
-      fraction.appendChild(numerator);
-      fraction.appendChild(denominator);
-      bubble.appendChild(fraction);
-      return;
-    }
-
-    bubble.appendChild(document.createTextNode(part));
-  });
+  if (lastIndex < content.length) {
+    bubble.appendChild(document.createTextNode(content.slice(lastIndex)));
+  }
 
   wrapper.appendChild(icon);
   wrapper.appendChild(bubble);
