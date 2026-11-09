@@ -1000,6 +1000,12 @@ elements.languageSelect.addEventListener("change",() => {
 
 function normalizeMath(text) {
   return String(text ?? "")
+    // Remove common math delimiters before displaying the expression.
+    // Supports $...$, $$...$$, \( ... \), and \[ ... \].
+    .replace(/\$\$([\s\S]+?)\$\$/g,"$1")
+    .replace(/\\\(([\s\S]+?)\\\)/g,"$1")
+    .replace(/\\\[([\s\S]+?)\\\]/g,"$1")
+    .replace(/\\?\$([^$\n]+?)\\?\$/g,"$1")
     .replace(/\\times\b/g,"×")
     .replace(/\\div\b/g,"÷")
     .replace(/\\cdot\b/g,"·")
@@ -1022,7 +1028,7 @@ function appendFormattedText(target,value) {
   content = content.replace(/^\\?\*\s+/gm,"• ");
 
   const tokenPattern =
-    /(?<bold>\\?\*\\?\*[\s\S]*?\\?\*\\?\*)|(?<fraction>\$?\\(?:dfrac|tfrac|frac)\{([^{}]+)\}\{([^{}]+)\}\$?)|(?<inlineMath>\$[^$\n]+\$)/g;
+    /(?<bold>\\?\*\\?\*[\s\S]*?\\?\*\\?\*)|(?<fraction>\$?\\(?:dfrac|tfrac|frac)\{([^{}]+)\}\{([^{}]+)\}\$?)/g;
 
   let lastIndex = 0;
   let match;
@@ -1056,10 +1062,6 @@ function appendFormattedText(target,value) {
       fraction.appendChild(denominator);
       target.appendChild(fraction);
 
-    } else if (match.groups.inlineMath) {
-      target.appendChild(document.createTextNode(
-        normalizeMath(match.groups.inlineMath.slice(1,-1))
-      ));
     }
 
     lastIndex = tokenPattern.lastIndex;
