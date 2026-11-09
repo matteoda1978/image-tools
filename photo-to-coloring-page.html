@@ -862,8 +862,8 @@ async function refreshCreditBalance(){
  const userId = currentSession.user.id;
 
  const {data,error} = await supabaseClient
-  .from("credit_balance")
-  .select("balance")
+  .from("credit_balances")
+  .select("balances")
   .eq("user_id",userId)
   .maybeSingle();
 
