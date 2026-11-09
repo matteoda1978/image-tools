@@ -862,10 +862,10 @@ async function refreshCreditBalance(){
  const userId = currentSession.user.id;
 
  const {data,error} = await supabaseClient
-  .from("credit_balances")
-  .select("balances")
-  .eq("user_id",userId)
-  .maybeSingle();
+ .from("credit_balances")
+ .select("balance")
+ .eq("user_id",userId)
+ .maybeSingle();
 
  if(error){
   console.error("Credit balance error:",error);
