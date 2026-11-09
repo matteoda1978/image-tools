@@ -729,6 +729,7 @@ const translations = {
     welcomeText:"Tell me what you are working on. We will take it one step at a time, and I will change my explanations when you need a different approach.",
     placeholder:"Ask a question or tell me what you need help with...",
     send:"Send",working:"Working...",remove:"Remove",
+    referenceLabel:"kept as lesson reference",
     attachTitle:"Attach a photo or PDF",
     composerHint:"You can ask questions or attach one photo or PDF (maximum 5 MB).",
     noticeTitle:"Technical preview:",
@@ -762,6 +763,7 @@ const translations = {
     welcomeText:"Raccontami su cosa stai lavorando. Procederemo un passo alla volta e cambierò il modo di spiegare quando avrai bisogno di un approccio diverso.",
     placeholder:"Fai una domanda o dimmi in cosa hai bisogno di aiuto...",
     send:"Invia",working:"Un momento...",remove:"Rimuovi",
+    referenceLabel:"conservato come materiale della lezione",
     attachTitle:"Allega una foto o un PDF",
     composerHint:"Puoi fare domande o allegare una foto o un PDF (massimo 5 MB).",
     noticeTitle:"Anteprima tecnica:",
@@ -795,6 +797,7 @@ const translations = {
     welcomeText:"Cuéntame qué estás estudiando. Iremos paso a paso y cambiaré mis explicaciones cuando necesites otro enfoque.",
     placeholder:"Haz una pregunta o dime en qué necesitas ayuda...",
     send:"Enviar",working:"Trabajando...",remove:"Eliminar",
+    referenceLabel:"guardado como material de la lección",
     attachTitle:"Adjuntar una foto o PDF",
     composerHint:"Puedes hacer preguntas o adjuntar una foto o PDF (máximo 5 MB).",
     noticeTitle:"Vista previa técnica:",
@@ -828,6 +831,7 @@ const translations = {
     welcomeText:"Dis-moi ce que tu étudies. Nous avancerons étape par étape et je changerai ma façon d'expliquer si nécessaire.",
     placeholder:"Pose une question ou dis-moi ce dont tu as besoin...",
     send:"Envoyer",working:"En cours...",remove:"Supprimer",
+    referenceLabel:"conservé comme document de la leçon",
     attachTitle:"Joindre une photo ou un PDF",
     composerHint:"Tu peux poser des questions ou joindre une photo ou un PDF (5 Mo maximum).",
     noticeTitle:"Aperçu technique :",
@@ -861,6 +865,7 @@ const translations = {
     welcomeText:"Erzähl mir, woran du gerade arbeitest. Wir gehen Schritt für Schritt vor und ich erkläre es auf eine andere Weise, wenn du möchtest.",
     placeholder:"Stelle eine Frage oder sag mir, wobei du Hilfe brauchst...",
     send:"Senden",working:"Einen Moment...",remove:"Entfernen",
+    referenceLabel:"als Unterrichtsmaterial gespeichert",
     attachTitle:"Foto oder PDF anhängen",
     composerHint:"Du kannst Fragen stellen oder ein Foto oder PDF anhängen (maximal 5 MB).",
     noticeTitle:"Technische Vorschau:",
@@ -883,6 +888,7 @@ const state = {
   selectedStyles:["step-by-step"],
   preferences:["one-question"],
   attachment:null,
+  documentAttachment:null,
   busy:false,
   language:"en"
 };
@@ -1296,15 +1302,38 @@ elements.fileInput.addEventListener("change",event => {
   }
 
   state.attachment = file;
-  elements.attachmentName.textContent = file.name;
-  elements.attachmentInfo.classList.add("visible");
+  renderAttachmentInfo();
 });
 
-function clearAttachment() {
+// Keep the current lesson document separate from a newly selected file.
+// This lets the tutor inspect the same source again on later turns.
+function renderAttachmentInfo() {
+  const activeFile = state.attachment || state.documentAttachment;
+
+  if (!activeFile) {
+    elements.attachmentName.textContent = "";
+    elements.attachmentInfo.classList.remove("visible");
+    return;
+  }
+
+  const suffix = !state.attachment && state.documentAttachment
+    ? " · " + t("referenceLabel")
+    : "";
+
+  elements.attachmentName.textContent = activeFile.name + suffix;
+  elements.attachmentInfo.classList.add("visible");
+}
+
+function clearSelectedAttachment() {
   state.attachment = null;
   elements.fileInput.value = "";
-  elements.attachmentName.textContent = "";
-  elements.attachmentInfo.classList.remove("visible");
+}
+
+// The Remove control clears both the pending file and the lesson reference.
+function clearAttachment() {
+  clearSelectedAttachment();
+  state.documentAttachment = null;
+  renderAttachmentInfo();
 }
 
 elements.removeAttachment.addEventListener("click",clearAttachment);
@@ -1380,7 +1409,9 @@ async function sendMessage() {
   const typing = addTypingIndicator();
 
   try {
-    let encodedAttachment = null;
+    // Encode a newly selected file once. Otherwise reuse the document
+    // already attached to this lesson on every subsequent request.
+    let encodedAttachment = state.documentAttachment;
 
     if (attachment) {
       encodedAttachment = {
@@ -1420,7 +1451,9 @@ async function sendMessage() {
     state.history.push(
       {
         role:"user",
-        content:message || "Uploaded learning material."
+        content:message || (attachment
+          ? "Uploaded learning material: " + attachment.name
+          : "Uploaded learning material.")
       },
       {
         role:"assistant",
@@ -1430,8 +1463,14 @@ async function sendMessage() {
 
     state.history = state.history.slice(-MAX_HISTORY_MESSAGES);
 
+    // Replace the lesson reference only after a successful response.
+    if (attachment && encodedAttachment) {
+      state.documentAttachment = encodedAttachment;
+    }
+
+    clearSelectedAttachment();
+    renderAttachmentInfo();
     setConnectionStatus(t("ready"));
-    clearAttachment();
 
     speakTutorReply(result.reply);
 
