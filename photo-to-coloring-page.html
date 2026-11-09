@@ -60,6 +60,61 @@ a{color:#bdb5ff}
  letter-spacing:-.045em;margin:12px 0
 }
 .hero p{color:var(--muted);margin:0 auto;max-width:650px}
+
+/* Before and after demonstration */
+.demo-section{
+ margin:0 0 28px;
+ padding:22px;
+ background:var(--panel);
+ border:1px solid var(--line);
+ border-radius:20px;
+}
+.demo-heading{
+ text-align:center;
+ margin:0 auto 20px;
+ max-width:650px;
+}
+.demo-heading h2{
+ font-size:1.35rem;
+ margin:0 0 7px;
+}
+.demo-heading p{
+ color:var(--muted);
+ font-size:.9rem;
+ margin:0;
+}
+.demo-grid{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:16px;
+}
+.demo-card{
+ min-width:0;
+ overflow:hidden;
+ border:1px solid var(--line);
+ border-radius:14px;
+ background:#0d1525;
+}
+.demo-label{
+ padding:10px 13px;
+ font-weight:800;
+ font-size:.9rem;
+ text-align:center;
+}
+.demo-card img{
+ display:block;
+ width:100%;
+ height:300px;
+ object-fit:contain;
+ background:#fff;
+}
+.demo-caption{
+ padding:10px 13px;
+ color:var(--muted);
+ font-size:.8rem;
+ text-align:center;
+}
+
 .workspace{
  display:grid;grid-template-columns:330px minmax(0,1fr);
  gap:18px;align-items:start
@@ -231,6 +286,11 @@ button:disabled{opacity:.45;cursor:not-allowed}
  .top{margin-bottom:25px}
  .previewhead{align-items:flex-start;flex-direction:column}
 }
+@media(max-width:600px){
+ .demo-section{padding:14px}
+ .demo-grid{grid-template-columns:1fr}
+ .demo-card img{height:260px}
+}
 @media(max-width:520px){
  .account-grid{grid-template-columns:1fr}
 }
@@ -246,7 +306,7 @@ button:disabled{opacity:.45;cursor:not-allowed}
 }
 @media print{
  body{background:white!important;color:#111!important}
- .top,.hero,.controls,.account-panel,.below,.footer,.previewhead,.tips{display:none!important}
+ .top,.hero,.controls,.account-panel,.below,.footer,.previewhead,.tips,.demo-section{display:none!important}
  .wrap{max-width:none;padding:0}
  .workspace{display:block}
  .previewpanel,.panel{padding:0;border:0;background:white}
@@ -280,6 +340,47 @@ button:disabled{opacity:.45;cursor:not-allowed}
   Transform your photo into a clean black-and-white coloring illustration.
   Choose your detail level, preview the result, then download or print your page.
  </p>
+</section>
+
+<!-- BEFORE AND AFTER DEMONSTRATION -->
+<section class="demo-section" aria-label="Photo to coloring page example">
+
+ <div class="demo-heading">
+  <h2>See the photo transformation</h2>
+  <p>
+   Compare an original photograph with the AI-generated coloring page.
+   Upload your own photo to create a printable illustration.
+  </p>
+ </div>
+
+ <div class="demo-grid">
+
+  <article class="demo-card">
+   <div class="demo-label">Original photo</div>
+   <img
+    src="images/coloring-demo-before.jpg"
+    alt="Original photograph before conversion into a coloring page"
+    loading="lazy"
+    width="800"
+    height="600"
+   >
+   <div class="demo-caption">The original image</div>
+  </article>
+
+  <article class="demo-card">
+   <div class="demo-label">AI coloring page</div>
+   <img
+    src="images/coloring-demo-after.png"
+    alt="Black and white AI-generated coloring page created from the original photograph"
+    loading="lazy"
+    width="800"
+    height="600"
+   >
+   <div class="demo-caption">The printable coloring illustration</div>
+  </article>
+
+ </div>
+
 </section>
 
 <!-- ACCOUNT -->
@@ -862,10 +963,10 @@ async function refreshCreditBalance(){
  const userId = currentSession.user.id;
 
  const {data,error} = await supabaseClient
- .from("credit_balances")
- .select("balance")
- .eq("user_id",userId)
- .maybeSingle();
+  .from("credit_balances")
+  .select("balance")
+  .eq("user_id",userId)
+  .maybeSingle();
 
  if(error){
   console.error("Credit balance error:",error);
