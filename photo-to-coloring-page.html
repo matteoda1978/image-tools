@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Photo to Coloring Page Online Free | RitoccaPix</title>
-<meta name="description" content="Turn your photos into AI coloring pages online. Choose simple, balanced or detailed outlines, preview your result, download PNG or print on A4.">
+<meta name="description" content="Turn your photos into AI coloring pages online. Choose simple, balanced or detailed outlines, then download PNG or print on A4.">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://ritoccapix.com/photo-to-coloring-page.html">
 
@@ -176,6 +176,41 @@ button{
  background:var(--panel2);border:1px solid var(--line);color:var(--text)
 }
 button:disabled{opacity:.45;cursor:not-allowed}
+
+/* Selected original photo preview */
+.selected-photo{
+ display:none;
+ margin-top:12px;
+ padding:12px;
+ border:1px solid var(--line);
+ border-radius:14px;
+ background:#0d1525;
+}
+.selected-photo.active{display:block}
+.selected-photo-heading{
+ font-size:.83rem;
+ font-weight:800;
+ margin-bottom:9px;
+}
+.selected-photo img{
+ display:block;
+ width:100%;
+ max-height:210px;
+ object-fit:contain;
+ border-radius:9px;
+ background:#080d17;
+}
+.selected-photo-info{
+ margin-top:9px;
+ color:var(--muted);
+ font-size:.8rem;
+ overflow-wrap:anywhere;
+}
+.selected-photo-info strong{
+ display:block;
+ color:var(--text);
+ margin-bottom:3px;
+}
 .previewpanel{padding:18px;min-width:0}
 .previewhead{
  display:flex;justify-content:space-between;align-items:center;
@@ -338,7 +373,7 @@ button:disabled{opacity:.45;cursor:not-allowed}
  <h1>Turn any photo into a coloring page</h1>
  <p>
   Transform your photo into a clean black-and-white coloring illustration.
-  Choose your detail level, preview the result, then download or print your page.
+  Choose your detail level and create your printable coloring page using credits.
  </p>
 </section>
 
@@ -464,6 +499,17 @@ button:disabled{opacity:.45;cursor:not-allowed}
   </button>
  </div>
 
+ <!-- ORIGINAL PHOTO PREVIEW -->
+ <div id="selectedPhoto" class="selected-photo">
+  <div class="selected-photo-heading">Your selected original photo</div>
+  <img id="selectedPhotoImage" src=""
+   alt="Preview of your selected original photo">
+  <div class="selected-photo-info">
+   <strong id="selectedPhotoName"></strong>
+   <span id="selectedPhotoDimensions"></span>
+  </div>
+ </div>
+
  <div class="field">
   <label>2. Select detail level</label>
   <div class="options">
@@ -538,7 +584,7 @@ button:disabled{opacity:.45;cursor:not-allowed}
 <section class="panel previewpanel">
 
  <div class="previewhead">
-  <h2>Preview</h2>
+  <h2>Generated coloring page</h2>
   <span class="status" id="statusText" aria-live="polite">
    Sign in and upload a photo to begin
   </span>
@@ -556,7 +602,8 @@ button:disabled{opacity:.45;cursor:not-allowed}
    </div>
    <b>Your coloring page will appear here</b>
    <span>
-    For best results, use a clear photo with a well-defined subject and good lighting.
+    Select your original photo on the left. Your generated coloring page
+    will appear here after successful AI processing.
    </span>
   </div>
 
@@ -711,6 +758,13 @@ const strengthValue = document.getElementById("strengthValue");
 const invertBg = document.getElementById("invertBg");
 const privacyConsent = document.getElementById("privacyConsent");
 
+/* Original photo preview elements */
+const selectedPhoto = document.getElementById("selectedPhoto");
+const selectedPhotoImage = document.getElementById("selectedPhotoImage");
+const selectedPhotoName = document.getElementById("selectedPhotoName");
+const selectedPhotoDimensions =
+ document.getElementById("selectedPhotoDimensions");
+
 const accountEmail = document.getElementById("accountEmail");
 const accountPassword = document.getElementById("accountPassword");
 const registerBtn = document.getElementById("registerBtn");
@@ -725,6 +779,7 @@ const creditLabel = document.getElementById("creditLabel");
 const accountMessage = document.getElementById("accountMessage");
 
 let selectedFile = null;
+let selectedPhotoUrl = null;
 let sourceName = "coloring-page";
 let hasResult = false;
 let isGenerating = false;
@@ -818,9 +873,28 @@ function clearResult(){
  printBtn.disabled = true;
 }
 
-function resetPage(){
+/* Clear the original photo preview and release its memory */
+function clearSelectedPhoto(){
+
+ if(selectedPhotoUrl){
+  URL.revokeObjectURL(selectedPhotoUrl);
+  selectedPhotoUrl = null;
+ }
+
+ selectedPhotoImage.removeAttribute("src");
+ selectedPhotoName.textContent = "";
+ selectedPhotoDimensions.textContent = "";
+ selectedPhoto.classList.remove("active");
+
  selectedFile = null;
  sourceName = "coloring-page";
+ resetPhotoBtn.disabled = true;
+}
+
+function resetPage(){
+
+ clearSelectedPhoto();
+
  fileInput.value = "";
  clearResult();
 
@@ -828,14 +902,14 @@ function resetPage(){
  placeholder.querySelector("b").textContent =
   "Your coloring page will appear here";
  placeholder.querySelector("span").textContent =
-  "Upload a new photo to create another coloring page.";
+  "Upload a photo to create another coloring page.";
 
- resetPhotoBtn.disabled = true;
  setError("");
  setStatus("Upload a photo to begin");
  updateGenerateButton();
 }
 
+/* Load and display the original selected photo */
 function loadSelectedFile(file){
 
  setError("");
@@ -846,8 +920,13 @@ function loadSelectedFile(file){
  }
 
  if(!["image/jpeg","image/png","image/webp"].includes(file.type)){
-  selectedFile = null;
-  resetPhotoBtn.disabled = true;
+  clearSelectedPhoto();
+  fileInput.value = "";
+
+  placeholder.hidden = false;
+  placeholder.querySelector("b").textContent =
+   "Your coloring page will appear here";
+
   setError("Please select a JPG, PNG or WebP image.");
   setStatus("Unsupported file");
   updateGenerateButton();
@@ -855,13 +934,21 @@ function loadSelectedFile(file){
  }
 
  if(file.size > MAX_FILE_SIZE){
-  selectedFile = null;
-  resetPhotoBtn.disabled = true;
+  clearSelectedPhoto();
+  fileInput.value = "";
+
+  placeholder.hidden = false;
+  placeholder.querySelector("b").textContent =
+   "Your coloring page will appear here";
+
   setError("Please choose an image smaller than 8 MB.");
   setStatus("File too large");
   updateGenerateButton();
   return;
  }
+
+ /* Release the previous image before loading another one */
+ clearSelectedPhoto();
 
  selectedFile = file;
  resetPhotoBtn.disabled = false;
@@ -872,31 +959,50 @@ function loadSelectedFile(file){
   .slice(0,60) || "coloring-page";
 
  const url = URL.createObjectURL(file);
- const img = new Image();
+ selectedPhotoUrl = url;
 
- setStatus("Checking photo…");
+ setStatus("Loading your photo…");
+
  placeholder.hidden = false;
- placeholder.querySelector("b").textContent = "Photo selected";
+ placeholder.querySelector("b").textContent =
+  "Your coloring page will appear here";
  placeholder.querySelector("span").textContent =
-  "Your photo is ready. Sign in, check your credits and agree to the processing notice.";
+  "Your original photo is shown on the left. The generated result will appear here after AI processing.";
 
- img.onload = ()=>{
-  URL.revokeObjectURL(url);
+ selectedPhotoImage.onload = ()=>{
+
+  /* Ignore an old image if the user has already selected another one */
+  if(selectedPhotoUrl !== url) return;
+
+  selectedPhotoName.textContent = file.name || "Selected photo";
+
+  selectedPhotoDimensions.textContent =
+   `${selectedPhotoImage.naturalWidth} × ${selectedPhotoImage.naturalHeight} px · ${(file.size / 1024 / 1024).toFixed(2)} MB`;
+
+  selectedPhoto.classList.add("active");
+
   setStatus(
-   `Photo ready · ${img.naturalWidth} × ${img.naturalHeight}`
+   `Original photo ready · ${selectedPhotoImage.naturalWidth} × ${selectedPhotoImage.naturalHeight}`
   );
- };
 
- img.onerror = ()=>{
-  URL.revokeObjectURL(url);
-  selectedFile = null;
-  resetPhotoBtn.disabled = true;
-  setError("This image could not be opened. Try another JPG or PNG.");
-  setStatus("Could not open photo");
   updateGenerateButton();
  };
 
- img.src = url;
+ selectedPhotoImage.onerror = ()=>{
+
+  if(selectedPhotoUrl !== url) return;
+
+  clearSelectedPhoto();
+  fileInput.value = "";
+
+  setError("This image could not be opened. Try another JPG or PNG.");
+  setStatus("Could not open photo");
+
+  updateGenerateButton();
+ };
+
+ selectedPhotoImage.src = url;
+
  updateGenerateButton();
 }
 
@@ -1434,7 +1540,7 @@ async function generateColoringPage(){
   currentRequest = null;
   isGenerating = false;
 
-  /* Refresh balance even after an error, in case the Worker refunded a credit */
+  /* Refresh balance after the Worker response */
   try{
    const {data:sessionData} = await supabaseClient.auth.getSession();
 
