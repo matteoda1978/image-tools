@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Photo to Coloring Page Online Free | RitoccaPix</title>
-<meta name="description" content="Turn your photos into AI coloring pages online. Choose simple, balanced or detailed outlines, then download PNG or print on A4.">
+<meta name="description" content="Turn your photo into a detailed AI coloring page. Create one free coloring page after email verification, then download PNG or print on A4.">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://ritoccapix.com/photo-to-coloring-page.html">
 
@@ -278,6 +278,26 @@ button:disabled{opacity:.45;cursor:not-allowed}
 .account-panel{margin:0 0 18px}
 .account-panel h2{margin-bottom:8px}
 .account-intro{color:var(--muted);font-size:.86rem;margin:0 0 14px}
+.credit-guide{
+ margin:16px 0 0;padding:16px;border:1px solid var(--line);
+ border-radius:14px;background:#0d1525
+}
+.credit-guide h3,.packages h3{margin:0 0 8px;font-size:1rem}
+.credit-guide p,.packages-intro{color:var(--muted);font-size:.83rem;margin:0 0 12px}
+.credit-steps{display:grid;gap:9px}
+.credit-step{display:flex;gap:10px;align-items:flex-start;font-size:.84rem}
+.credit-step strong{color:var(--accent2);min-width:18px}
+.packages{margin-top:18px}
+.packages-intro{margin-bottom:12px}
+.package-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.package{
+ min-width:0;padding:12px;border:1px solid var(--line);
+ border-radius:12px;background:var(--panel2)
+}
+.package strong{display:block;font-size:1rem}
+.package span{display:block;color:var(--muted);font-size:.76rem}
+.package small{display:inline-block;margin-top:8px;color:var(--accent2);font-size:.68rem;font-weight:800}
+@media(max-width:520px){.package-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .account-grid{
  display:grid;grid-template-columns:1fr 1fr;gap:12px
 }
@@ -372,8 +392,8 @@ button:disabled{opacity:.45;cursor:not-allowed}
  <div class="eyebrow">AI creative tool · Free to try</div>
  <h1>Turn any photo into a coloring page</h1>
  <p>
-  Transform your photo into a clean black-and-white coloring illustration.
-  Choose your detail level and create your printable coloring page using credits.
+  Transform your photo into a detailed black-and-white coloring illustration.
+  One credit creates one coloring page. Get your first credit free after email verification.
  </p>
 </section>
 
@@ -422,9 +442,32 @@ button:disabled{opacity:.45;cursor:not-allowed}
 <section class="panel account-panel" aria-label="Your RitoccaPix account">
  <h2>Your account and credits</h2>
  <p class="account-intro">
-  Create an account or sign in to use the AI coloring page generator.
-  One free credit is added after your email address is verified.
+  Create your free account and verify your email address to receive one free credit.
+  Each credit lets you generate one AI coloring page from your photo.
  </p>
+
+ <div class="credit-guide">
+  <h3>How do credits work?</h3>
+  <p>One credit is used for one successful coloring-page generation.</p>
+  <div class="credit-steps">
+   <div class="credit-step"><strong>1.</strong><span>Create your free RitoccaPix account.</span></div>
+   <div class="credit-step"><strong>2.</strong><span>Verify your email address and receive one free credit.</span></div>
+   <div class="credit-step"><strong>3.</strong><span>Upload a photo and generate your coloring page.</span></div>
+   <div class="credit-step"><strong>4.</strong><span>Download the PNG or print your result on A4 paper.</span></div>
+  </div>
+ </div>
+
+ <div class="packages">
+  <h3>Credit packages coming soon</h3>
+  <p class="packages-intro">Need more coloring pages? Choose a package when purchases become available. No subscription or recurring payment.</p>
+  <div class="package-grid">
+   <div class="package"><strong>$0.75</strong><span>2 coloring pages · 2 credits</span><small>COMING SOON</small></div>
+   <div class="package"><strong>$1.29</strong><span>5 coloring pages · 5 credits</span><small>COMING SOON</small></div>
+   <div class="package"><strong>$2.49</strong><span>10 coloring pages · 10 credits</span><small>COMING SOON</small></div>
+   <div class="package"><strong>$4.99</strong><span>30 coloring pages · 30 credits</span><small>COMING SOON</small></div>
+   <div class="package"><strong>$5.99</strong><span>50 coloring pages · 50 credits</span><small>COMING SOON</small></div>
+  </div>
+ </div>
 
  <div id="authForm" class="auth-form">
   <div class="account-grid">
@@ -511,34 +554,11 @@ button:disabled{opacity:.45;cursor:not-allowed}
  </div>
 
  <div class="field">
-  <label>2. Select detail level</label>
-  <div class="options">
-
-   <label class="option">
-    <input type="radio" name="detail" value="simple">
-    <span>
-     <b>Simple</b>
-     <small>Fewer small details and simpler outlines — ideal for young children.</small>
-    </span>
-   </label>
-
-   <label class="option">
-    <input type="radio" name="detail" value="balanced" checked>
-    <span>
-     <b>Balanced</b>
-     <small>Recognizable subjects with a balanced amount of detail.</small>
-    </span>
-   </label>
-
-   <label class="option">
-    <input type="radio" name="detail" value="detailed">
-    <span>
-     <b>Detailed</b>
-     <small>More fine contours for older children and adults.</small>
-    </span>
-   </label>
-
-  </div>
+  <label>2. Coloring page style</label>
+  <p class="tips" style="margin-top:6px">
+   Detailed AI conversion is selected automatically to preserve the main
+   subject and important details of your original photo.
+  </p>
  </div>
 
  <div class="field">
@@ -1023,10 +1043,7 @@ privacyConsent.addEventListener("change",()=>{
 });
 
 function selectedDetail(){
- const selected =
-  document.querySelector('input[name="detail"]:checked');
-
- return selected ? selected.value : "balanced";
+ return "detailed";
 }
 
 function applyInvert(imageData){
@@ -1642,14 +1659,6 @@ printBtn.addEventListener("click",()=>{
 });
 
 /* Settings changes */
-document.querySelectorAll('input[name="detail"]').forEach(input=>{
- input.addEventListener("change",()=>{
-  if(hasResult){
-   setStatus("Settings changed · create the page again to apply them");
-  }
- });
-});
-
 strength.addEventListener("change",()=>{
  if(hasResult){
   setStatus("Settings changed · create the page again to apply them");
@@ -1667,4 +1676,3 @@ invertBg.addEventListener("change",()=>{
 <script src="menu.js"></script>
 
 </body>
-</html>
