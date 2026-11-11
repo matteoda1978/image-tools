@@ -559,6 +559,40 @@
       errorBox.style.display = "block";
     }
 
+    function showConversionFailures(failures) {
+      errorBox.replaceChildren();
+
+      errorBox.append(
+        document.createTextNode(
+          "Some files could not be converted: " + failures.join(" | ")
+        )
+      );
+
+      const hasLargeImage = failures.some(error =>
+        error.includes("Image exceeds the 20-megapixel limit.")
+      );
+
+      if (hasLargeImage) {
+        errorBox.append(
+          document.createTextNode(
+            " Images over 20 megapixels cannot be converted to PNG here. For larger WebP images, try our "
+          )
+        );
+
+        const link = document.createElement("a");
+        link.href = "webp-to-jpg.html";
+        link.className = "text-link";
+        link.textContent = "WebP to JPG Converter";
+
+        errorBox.append(
+          link,
+          document.createTextNode(" (supports up to 40 megapixels).")
+        );
+      }
+
+      errorBox.style.display = "block";
+    }
+
     function showMessage(text) {
       messageBox.textContent = text;
       messageBox.style.display = "block";
@@ -982,9 +1016,7 @@
         }
 
         if (failures.length) {
-          showError(
-            "Some files could not be converted: " + failures.join(" | ")
-          );
+          showConversionFailures(failures);
         }
 
         result.scrollIntoView({
