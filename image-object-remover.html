@@ -5,19 +5,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Free AI Object Remover Online | RitoccaPix</title>
-<meta name="description" content="Remove unwanted objects from photos online for free with AI. Brush over distractions and reconstruct the background directly in your browser.">
+<title>Remove Objects from Photos Online Free | RitoccaPix</title>
+<meta name="description" content="Remove unwanted objects from photos online for free with AI. Brush over people, objects or distractions and let AI reconstruct the background in your browser.">
 <meta name="theme-color" content="#0a0f1d">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://ritoccapix.com/image-object-remover.html">
 
 <meta property="og:site_name" content="RitoccaPix">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Free AI Object Remover Online | RitoccaPix">
-<meta property="og:description" content="Erase unwanted objects from photos with AI directly in your browser.">
+<meta property="og:title" content="Remove Objects from Photos Online Free | RitoccaPix">
+<meta property="og:description" content="Erase unwanted objects, people and distractions from photos with AI. No account required.">
 <meta property="og:url" content="https://ritoccapix.com/image-object-remover.html">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Free AI Object Remover Online | RitoccaPix">
+<meta name="twitter:title" content="Remove Objects from Photos Online Free | RitoccaPix">
 <meta name="twitter:description" content="Remove unwanted objects from photos with AI. Edit images in your browser and download the result for free.">
 
 <script type="application/ld+json">
@@ -28,7 +28,7 @@
   "url": "https://ritoccapix.com/image-object-remover.html",
   "applicationCategory": "MultimediaApplication",
   "operatingSystem": "Any",
-  "description": "A free browser-based AI object remover that uses an image mask and AI inpainting to reconstruct selected areas of photos.",
+  "description": "A free browser-based AI object remover that uses a brush selection and AI inpainting to reconstruct unwanted areas of photos.",
   "offers": {
     "@type": "Offer",
     "price": "0",
@@ -36,6 +36,7 @@
   },
   "featureList": [
     "AI object removal",
+    "Remove unwanted objects and photo distractions",
     "Brush-based image selection",
     "Undo brush strokes",
     "Original and edited image comparison",
@@ -63,7 +64,7 @@
       "name": "Is the AI object remover free?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. RitoccaPix provides this object removal tool free of charge in your browser."
+        "text": "Yes. RitoccaPix provides this object removal tool free of charge without requiring an account."
       }
     },
     {
@@ -79,7 +80,7 @@
       "name": "Which image formats are supported?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "The tool accepts JPG, PNG and WebP images. The edited result can be downloaded as a PNG file."
+        "text": "The tool accepts JPG, PNG and WebP images up to 25 MB and 40 megapixels. The edited result can be downloaded as a PNG file."
       }
     },
     {
@@ -466,11 +467,12 @@ footer a{
 
   <section class="hero">
     <span class="eyebrow">FREE ONLINE AI TOOL</span>
-    <h1>AI Object Remover</h1>
+    <h1>Remove Objects from Photos Online</h1>
     <p>
-      Remove unwanted objects, distractions, or small items from your photos.
-      Brush over what you want to erase and let AI reconstruct the selected
-      area using the surrounding image as context.
+      Remove unwanted objects, people in the background, cables, signs,
+      and other distractions from your photos with AI. Brush over the
+      area you want to erase and let AI try to reconstruct the background
+      directly in your browser. Free to use, with no account required.
     </p>
   </section>
 
@@ -482,8 +484,9 @@ footer a{
     </div>
 
     <p class="muted">
-      Choose a JPG, PNG, or WebP image. For smoother processing on phones,
-      very large photos are scaled down before editing.
+      Choose a JPG, PNG, or WebP image. The maximum file size is 25 MB
+      and the maximum image resolution is 40 megapixels. Very large
+      photos are scaled down before editing to help your browser process them.
     </p>
 
     <div class="controls">
@@ -503,9 +506,9 @@ footer a{
     </div>
 
     <p class="muted">
-      Paint over the entire object, including its edges. Use a few smaller
-      strokes for complex shapes. The red overlay marks the area AI will
-      try to replace.
+      Paint over the entire object, including its edges and visible shadow.
+      Use smaller strokes for detailed shapes. The red overlay marks the
+      area AI will try to replace.
     </p>
 
     <div class="toolbar">
@@ -569,22 +572,23 @@ footer a{
     </div>
 
     <p class="muted" style="font-size:12px;margin-bottom:0">
-      AI results are not always perfect. Detailed textures, large objects,
-      and complicated backgrounds may need several attempts with smaller
-      selections.
+      The editing canvas is limited to 1600 pixels on its longest side
+      to reduce memory use. AI results are not always perfect. Large
+      objects, detailed textures, and complicated backgrounds may need
+      several attempts with smaller selections.
     </p>
 
   </section>
 
   <section class="panel">
-    <h2>Tips for cleaner results</h2>
+    <h2>Tips for cleaner object removal</h2>
 
     <div class="feature-grid">
       <div class="feature">
         <h3>Cover the whole object</h3>
         <p>
           Include the edges and any visible shadow. A selection that is
-          too small can leave a halo behind.
+          too small can leave parts of the object or a visible outline behind.
         </p>
       </div>
 
@@ -615,8 +619,8 @@ footer a{
 
         <p class="muted" style="margin-bottom:0">
           Image processing runs locally in your browser using ONNX Runtime
-          Web. The AI model is downloaded from an external model host.
-          Your selected photo is not uploaded to a RitoccaPix
+          Web. The AI runtime and model are downloaded from external hosting
+          services. Your selected photo is not uploaded to a RitoccaPix
           image-processing server.
         </p>
       </div>
@@ -625,7 +629,8 @@ footer a{
     <div class="notice" style="margin-top:16px">
       The AI runtime and model may take some time to download the first
       time you use the tool. Processing speed depends on your device,
-      browser, photo size, and available memory.
+      browser, photo size, and available memory. Keep this page open
+      while the AI is working.
     </div>
   </section>
 
@@ -633,25 +638,26 @@ footer a{
     <h2>How to remove an object from a photo</h2>
 
     <p>
-      Removing an unwanted object from a photograph usually involves
-      selecting the area that needs editing and reconstructing the
-      background behind it. RitoccaPix uses an AI inpainting model to
-      attempt this reconstruction directly in your browser.
+      An unwanted object can distract from the main subject of a photograph.
+      AI object removal, also known as image inpainting, attempts to fill
+      the selected area using the surrounding parts of the image.
+      RitoccaPix uses an AI inpainting model to reconstruct the selected
+      area directly in your browser.
     </p>
 
     <ol>
       <li>Upload a JPG, PNG, or WebP photograph.</li>
-      <li>Adjust the brush size to match the object.</li>
+      <li>Adjust the brush size to match the object you want to remove.</li>
       <li>Paint over the object and its visible edges.</li>
       <li>Select <strong>Remove object with AI</strong>.</li>
-      <li>Compare the edited image with the original.</li>
+      <li>Compare the edited image with the original photograph.</li>
       <li>Download the result as a PNG file.</li>
     </ol>
 
     <p>
-      For the best results, start with small objects and relatively
-      simple backgrounds. If the reconstruction is not satisfactory,
-      return to the selection and try a smaller or more precise mask.
+      You can undo brush strokes before processing. If the reconstruction
+      is not satisfactory, return to your selection and try a smaller
+      or more precise mask.
     </p>
   </section>
 
@@ -659,17 +665,28 @@ footer a{
     <h2>What can you remove from a photo?</h2>
 
     <p>
-      The AI object remover can help with unwanted objects and visual
-      distractions such as small items, background clutter, signs,
-      cables, or other elements that interrupt a photograph.
-      Results depend on the image and the complexity of the area
-      being reconstructed.
+      The AI object remover can help remove unwanted elements and
+      distractions from photographs, including:
+    </p>
+
+    <ul>
+      <li>People or passers-by in the background.</li>
+      <li>Small objects that distract from the main subject.</li>
+      <li>Cables, wires, and other unwanted details.</li>
+      <li>Signs and visual clutter in the background.</li>
+      <li>Small items, marks, or objects that interrupt a photograph.</li>
+    </ul>
+
+    <p>
+      Results depend on the size of the selected area and the details
+      behind it. Removing a small object against a simple background
+      is generally easier than reconstructing a large area with complex
+      textures or important details.
     </p>
 
     <p>
-      The tool is designed for general photo cleanup. It is not a
-      guarantee of perfect restoration, especially when a large
-      object covers important details or a complex pattern.
+      The tool is designed for general photo cleanup. It cannot guarantee
+      perfect restoration in every image.
     </p>
   </section>
 
@@ -687,7 +704,7 @@ footer a{
     <div class="faq-item">
       <h3>Are my photos uploaded to a server?</h3>
       <p>
-        The image processing takes place locally in your browser.
+        Image processing takes place locally in your browser.
         The AI runtime and model are downloaded from external hosting
         services, but your selected photo is not uploaded to a
         RitoccaPix image-processing server.
@@ -697,8 +714,8 @@ footer a{
     <div class="faq-item">
       <h3>Which image formats are supported?</h3>
       <p>
-        You can open JPG, PNG, and WebP images. The edited image
-        is downloaded in PNG format.
+        You can open JPG, PNG, and WebP images up to 25 MB and
+        40 megapixels. The edited image is downloaded in PNG format.
       </p>
     </div>
 
@@ -726,6 +743,23 @@ footer a{
       <p>
         You can return to your selection and try the AI reconstruction
         again before downloading the final PNG.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>What is the maximum image size?</h3>
+      <p>
+        The tool accepts images up to 25 MB and 40 megapixels.
+        To help processing run in your browser, the working image
+        is scaled to a maximum of 1600 pixels on its longest side.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Do I need to install software or create an account?</h3>
+      <p>
+        No. The tool runs in a compatible web browser. You do not
+        need to install an application or create a RitoccaPix account.
       </p>
     </div>
   </section>
