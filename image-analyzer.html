@@ -4,29 +4,114 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Analyze an image online for free. Check dimensions, megapixels, file size, format, aspect ratio, orientation, estimated print size and transparency in your browser.">
+
+  <title>Free Image Analyzer Online – Dimensions, Size & Format | RitoccaPix</title>
+  <meta name="description" content="Analyze images online for free. Check image dimensions, megapixels, file size, format, aspect ratio, transparency and estimated print size. No upload or account required.">
   <meta name="robots" content="index, follow">
-  <title>Free Image Analyzer – Size, Dimensions & Format | RitoccaPix</title>
+  <meta name="theme-color" content="#0a0f1d">
   <link rel="canonical" href="https://ritoccapix.com/image-analyzer.html">
+
   <meta property="og:type" content="website">
   <meta property="og:title" content="Free Image Analyzer Online | RitoccaPix">
   <meta property="og:description" content="Check image dimensions, megapixels, file size, format, aspect ratio and transparency directly in your browser.">
   <meta property="og:url" content="https://ritoccapix.com/image-analyzer.html">
   <meta property="og:site_name" content="RitoccaPix">
+
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Free Image Analyzer Online | RitoccaPix">
-  <meta name="twitter:description" content="Check image dimensions, megapixels, file size, format, aspect ratio and transparency in your browser.">
+  <meta name="twitter:description" content="Analyze image dimensions, file size, megapixels, format and transparency for free in your browser.">
 
   <script type="application/ld+json">
   {
-    "@context":"https://schema.org",
-    "@type":"SoftwareApplication",
-    "name":"RitoccaPix Image Analyzer",
-    "applicationCategory":"MultimediaApplication",
-    "operatingSystem":"Any",
-    "url":"https://ritoccapix.com/image-analyzer.html",
-    "description":"A free browser-based tool for checking image dimensions, file size, format, aspect ratio, megapixels, orientation, estimated print size and transparency.",
-    "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "RitoccaPix Image Analyzer",
+    "url": "https://ritoccapix.com/image-analyzer.html",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "Any",
+    "description": "A free online image analyzer for checking dimensions, file size, format, megapixels, aspect ratio, orientation, transparency and estimated print size directly in the browser.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "featureList": [
+      "Image dimensions",
+      "File size analysis",
+      "Image format detection",
+      "Megapixel calculation",
+      "Aspect ratio calculation",
+      "Image orientation",
+      "Transparency sampling",
+      "Estimated print size at 300 PPI",
+      "Image preview",
+      "Copy and download analysis report"
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is the image analyzer free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. RitoccaPix Image Analyzer is free to use without creating an account or installing software."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which image formats can I analyze?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The analyzer supports image formats that your browser can decode, including common formats such as JPEG, PNG, GIF, WebP and AVIF. HEIC support depends on your browser and device."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does the analyzer upload my image?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. The selected image is opened locally in your browser. The analyzer does not upload the image to a RitoccaPix image-processing server."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a megapixel?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "One megapixel equals one million pixels. An image measuring 4000 by 3000 pixels contains 12 megapixels."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What does aspect ratio mean?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Aspect ratio describes the proportional relationship between image width and height. For example, a 3000 by 2000 pixel image has a 3:2 aspect ratio."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How is estimated print size calculated?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The estimated print size is calculated by dividing the image dimensions in pixels by 300. It is an estimate at 300 pixels per inch, not actual print metadata."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use the image analyzer on my phone?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. You can select an image from a compatible smartphone or tablet browser. Available image formats depend on the device and browser."
+        }
+      }
+    ]
   }
   </script>
 
@@ -34,6 +119,7 @@
 
   <style>
     *{box-sizing:border-box}
+
     :root{
       --bg:#0a0f1d;
       --card:#11192b;
@@ -43,92 +129,113 @@
       --muted:#9da8bd;
       --accent:#6ea8ff;
       --accent-hover:#8bbaff;
-      --danger:#451d29
+      --danger:#451d29;
+      --success:#16382b;
     }
+
     html{scroll-behavior:smooth}
+
     body{
       margin:0;
       font-family:Arial,Helvetica,sans-serif;
       background:var(--bg);
       color:var(--text);
-      line-height:1.6
+      line-height:1.6;
     }
+
     .container,main{
       width:min(920px,92%);
-      margin:0 auto
+      margin:0 auto;
     }
+
     header{
       padding:24px 0;
-      border-bottom:1px solid #1e293b
+      border-bottom:1px solid #1e293b;
     }
+
     .logo{
       font-size:23px;
       font-weight:800;
-      letter-spacing:-.5px
+      letter-spacing:-.5px;
     }
+
     .logo span{color:var(--accent)}
+
     .hero{
       text-align:center;
-      padding:42px 0 32px
+      padding:42px 0 32px;
     }
+
     .hero h1{
       margin:0;
       font-size:clamp(30px,5vw,46px);
       line-height:1.15;
-      letter-spacing:-1px
+      letter-spacing:-1px;
     }
+
     .hero p{
-      max-width:700px;
+      max-width:720px;
       margin:17px auto 0;
       color:var(--muted);
       font-size:17px;
-      line-height:1.7
+      line-height:1.7;
     }
+
     main{padding-bottom:50px}
+
     .tool,.content{
       background:var(--card);
       border:1px solid var(--border);
       border-radius:20px;
       padding:26px;
-      margin-bottom:24px
+      margin-bottom:24px;
     }
+
     .tool h2,.content h2{
       margin-top:0;
-      font-size:24px
+      font-size:24px;
     }
+
     .tool-intro,.muted{color:var(--muted)}
+
     .upload{
       border:2px dashed #465775;
       border-radius:16px;
       padding:32px 20px;
       text-align:center;
       background:var(--card2);
-      transition:border-color .2s,background .2s
+      transition:border-color .2s,background .2s;
     }
+
     .upload.dragover{
       border-color:var(--accent);
-      background:#14233b
+      background:#14233b;
     }
+
     .upload-icon{
       font-size:40px;
-      margin-bottom:8px
+      margin-bottom:8px;
     }
+
     .upload h3{
       margin:0 0 8px;
-      font-size:20px
+      font-size:20px;
     }
+
     .upload p{
       color:var(--muted);
-      margin:0 0 18px
+      margin:0 0 18px;
     }
+
     input[type=file]{
       display:block;
       width:100%;
       max-width:450px;
       margin:0 auto;
       font-size:14px;
-      color:var(--muted)
+      color:var(--muted);
     }
+
     input[type=file]::file-selector-button,.btn{
       border:0;
       border-radius:9px;
@@ -136,83 +243,106 @@
       background:var(--accent);
       color:#081326;
       font-weight:700;
-      cursor:pointer
+      cursor:pointer;
     }
+
     input[type=file]::file-selector-button{margin-right:12px}
+
     .btn:hover,input[type=file]::file-selector-button:hover{
-      background:var(--accent-hover)
+      background:var(--accent-hover);
     }
+
     .btn.secondary{
       background:#263650;
-      color:var(--text)
+      color:var(--text);
     }
+
     .btn.secondary:hover{background:#344765}
+
+    .btn:disabled{
+      opacity:.45;
+      cursor:not-allowed;
+    }
+
     .actions{
       display:flex;
       gap:10px;
       flex-wrap:wrap;
       margin-top:18px;
-      justify-content:center
+      justify-content:center;
     }
+
     button:focus-visible,input:focus-visible{
       outline:3px solid #fff;
-      outline-offset:3px
+      outline-offset:3px;
     }
+
     .notice,.error{
       margin-top:16px;
       padding:13px;
       border-radius:10px;
-      overflow-wrap:anywhere
+      overflow-wrap:anywhere;
     }
+
     .notice{
       background:#14233b;
-      color:#c8d9f5
+      color:#c8d9f5;
     }
+
     .error{
       display:none;
       background:var(--danger);
-      color:#fecaca
+      color:#fecaca;
     }
+
     .result{
       display:none;
-      margin-top:28px
+      margin-top:28px;
     }
+
     .result h2{margin-bottom:6px}
+
     .result-description{
       color:var(--muted);
-      margin-top:0
+      margin-top:0;
     }
+
     .stats{
       display:grid;
       grid-template-columns:repeat(2,minmax(0,1fr));
       gap:12px;
-      margin-top:22px
+      margin-top:22px;
     }
+
     .stat{
       min-width:0;
       background:var(--card2);
       border:1px solid var(--border);
       padding:15px;
-      border-radius:13px
+      border-radius:13px;
     }
+
     .stat strong{
       display:block;
       color:var(--muted);
       font-size:13px;
       font-weight:500;
-      margin-bottom:6px
+      margin-bottom:6px;
     }
+
     .stat span{
       display:block;
       font-size:16px;
       font-weight:700;
       overflow-wrap:anywhere;
-      word-break:break-word
+      word-break:break-word;
     }
+
     .preview{
       margin-top:26px;
-      text-align:center
+      text-align:center;
     }
+
     .preview img{
       display:none;
       max-width:100%;
@@ -221,46 +351,88 @@
       border-radius:12px;
       border:1px solid var(--border);
       object-fit:contain;
-      background:#fff
+      background:#fff;
     }
+
     .content h3{
       margin-top:25px;
-      font-size:19px
+      font-size:19px;
     }
+
     .content p,.content li{
       color:var(--muted);
-      line-height:1.8
+      line-height:1.8;
     }
-    .content ul{padding-left:22px}
+
+    .content ul,.content ol{padding-left:22px}
+
     .content strong{color:var(--text)}
+
+    .content a{
+      color:#a9caff;
+      text-decoration:underline;
+      text-underline-offset:3px;
+    }
+
+    .content a:hover{color:#fff}
+
     .faq-item{
       padding:15px 0;
-      border-bottom:1px solid var(--border)
+      border-bottom:1px solid var(--border);
     }
+
     .faq-item:last-child{border-bottom:0}
+
     .faq-item h3{margin:0 0 8px}
+
     .faq-item p{margin:0}
+
+    .related-links{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:16px;
+    }
+
+    .related-links a{
+      display:inline-block;
+      padding:9px 13px;
+      border:1px solid var(--border);
+      border-radius:9px;
+      background:var(--card2);
+      color:#b8d1ff;
+      text-decoration:none;
+      font-size:14px;
+    }
+
+    .related-links a:hover{background:#263650}
+
     footer{
       border-top:1px solid #1e293b;
       text-align:center;
       padding:25px 15px;
       color:#778398;
-      font-size:13px
+      font-size:13px;
     }
+
     footer a{
       color:var(--accent);
-      text-decoration:none
+      text-decoration:none;
     }
+
     footer a:hover{text-decoration:underline}
+
     @media(max-width:600px){
       header{padding:20px 0}
       .hero{padding:30px 0 24px}
       .hero h1{font-size:33px}
       .hero p{font-size:15px}
+
       .tool,.content{
         padding:18px;
-        border-radius:16px
+        border-radius:16px;
       }
+
       .stats{grid-template-columns:1fr}
       .upload{padding:26px 14px}
       .actions .btn{flex:1 1 140px}
@@ -285,21 +457,23 @@
 
     <section class="hero">
       <h1>Free Online Image Analyzer</h1>
+
       <p>
-        Check an image's dimensions, file size, format, megapixels,
-        aspect ratio, orientation and transparency.
-        The analysis runs in your browser, without uploading
-        the selected image to this tool's server.
+        Analyze an image online and instantly check its dimensions,
+        file size, format, megapixels, aspect ratio, orientation,
+        transparency and estimated print size. Everything is processed
+        directly in your browser, without uploading your selected
+        image to a RitoccaPix image-processing server.
       </p>
     </section>
 
     <section class="tool" aria-labelledby="tool-title">
 
-      <h2 id="tool-title">Image Analyzer</h2>
+      <h2 id="tool-title">Analyze Your Image</h2>
 
       <p class="tool-intro">
-        Choose an image or drag it into the area below.
-        Its technical details will appear automatically.
+        Select an image from your device or drag it into the upload area.
+        Its technical information will appear automatically.
       </p>
 
       <div class="upload" id="dropZone">
@@ -309,9 +483,8 @@
         <h3>Choose or drop an image</h3>
 
         <p>
-          JPG, PNG, WebP, GIF, AVIF and other formats
-          supported by your browser.
-          Maximum file size: 25 MB.
+          JPG, PNG, WebP, GIF, AVIF and other formats supported
+          by your browser. Maximum file size: 25 MB.
         </p>
 
         <input
@@ -324,9 +497,12 @@
       </div>
 
       <div class="notice">
-        Your image is read locally by your browser.
-        Transparency is checked on a reduced sample,
-        so very small transparent details may not be detected.
+        <strong>Privacy:</strong>
+        Your selected image is opened locally in your browser.
+        The analyzer does not upload it to a RitoccaPix
+        image-processing server.
+        Transparency is checked on a reduced sample, so very small
+        transparent details may not be detected.
       </div>
 
       <div class="error" id="error" role="alert"></div>
@@ -338,10 +514,10 @@
         aria-labelledby="result-title"
       >
 
-        <h2 id="result-title">Analysis Results</h2>
+        <h2 id="result-title">Image Analysis Results</h2>
 
         <p class="result-description">
-          Technical information for the selected image.
+          Technical information for your selected image.
         </p>
 
         <div class="stats">
@@ -357,12 +533,12 @@
           </div>
 
           <div class="stat">
-            <strong>Dimensions</strong>
+            <strong>Image dimensions</strong>
             <span id="dimensions">—</span>
           </div>
 
           <div class="stat">
-            <strong>File size</strong>
+            <strong>Original file size</strong>
             <span id="fileSize">—</span>
           </div>
 
@@ -400,10 +576,14 @@
 
         <div class="preview">
           <h3>Image Preview</h3>
-          <img id="previewImage" alt="Preview of the selected image">
+          <img
+            id="previewImage"
+            alt="Preview of the analyzed image"
+          >
         </div>
 
         <div class="actions">
+
           <button class="btn" type="button" id="copyButton">
             Copy analysis
           </button>
@@ -415,40 +595,53 @@
           <button class="btn secondary" type="button" id="clearButton">
             Clear image
           </button>
+
         </div>
 
-        <p class="muted" id="actionStatus" role="status" aria-live="polite"></p>
+        <p
+          class="muted"
+          id="actionStatus"
+          role="status"
+          aria-live="polite"
+        ></p>
 
       </section>
+
     </section>
 
     <section class="content">
 
-      <h2>What can the image analyzer tell you?</h2>
+      <h2>What Can the Image Analyzer Tell You?</h2>
 
       <p>
-        An image can look sharp on a phone but be too small for a large
-        print, or have a file size that is unnecessarily large for a
-        website. Checking its technical properties helps you decide
-        what to do next.
+        Every digital image has technical properties that affect how
+        it looks, how much storage it uses and where it can be used.
+        An image may look sharp on a phone but have insufficient
+        resolution for a large print. Another image may have
+        unnecessarily large dimensions or file size for a website.
+      </p>
+
+      <p>
+        The RitoccaPix Image Analyzer helps you understand these
+        properties before you edit, upload, share or print a photo.
       </p>
 
       <ul>
         <li>
-          <strong>Dimensions:</strong>
+          <strong>Image dimensions:</strong>
           the width and height of the decoded image, measured in pixels.
         </li>
 
         <li>
           <strong>File size:</strong>
-          the size of the original file selected from your device,
-          shown in bytes, KB or MB.
+          the size of the original selected file, displayed in bytes,
+          KB or MB.
         </li>
 
         <li>
           <strong>Megapixels:</strong>
-          the total pixel count divided by one million.
-          This describes image resolution, not necessarily image quality.
+          the total number of pixels divided by one million.
+          This describes resolution, not necessarily image quality.
         </li>
 
         <li>
@@ -470,41 +663,75 @@
 
         <li>
           <strong>Estimated print size:</strong>
-          an approximate print width and height at 300 pixels per inch
-          (PPI). This is a calculation, not embedded print metadata.
+          an approximate print width and height at 300 pixels
+          per inch (PPI).
         </li>
       </ul>
 
-      <h3>How to use the results</h3>
+      <h3>How to Use the Analysis Results</h3>
 
       <p>
-        If an image is too large to upload, use the
+        If an image is too large to upload or share, use the
         <a href="image-compressor.html">Image Compressor</a>
-        to reduce its file size. If its pixel dimensions do not fit
-        the intended use, try the
-        <a href="image-resizer.html">Image Resizer</a>.
+        to reduce its file size.
+      </p>
+
+      <p>
+        If its pixel dimensions do not fit your intended use,
+        try the <a href="image-resizer.html">Image Resizer</a>.
         If you need a different file type, use the
         <a href="image-converter.html">Image Converter</a>.
       </p>
 
-      <h3>Does the analyzer upload my image?</h3>
+      <h3>Understanding Megapixels</h3>
 
       <p>
-        No image upload is performed by this analyzer's processing code.
-        The selected file is opened locally in your browser to read
-        its dimensions and create a preview. The page may still load
-        shared website resources, such as navigation scripts;
-        this statement refers to the image-analysis feature itself.
+        A megapixel represents one million pixels.
+        For example, an image measuring 4000 × 3000 pixels
+        contains 12 million pixels, or 12 megapixels.
+        A higher megapixel count means more pixels, but it does
+        not automatically mean a better photograph.
+        Lens quality, focus, lighting, compression and other
+        factors also affect image quality.
       </p>
 
-      <h3>Understanding the transparency result</h3>
+      <h3>Understanding Aspect Ratios</h3>
 
       <p>
-        The tool draws a reduced version of the image to a browser canvas
-        and checks the sampled alpha values. A positive result means
-        transparency was found in the sample. A negative result means
-        none was found in that sample; it is not a guarantee that every
-        original pixel was checked.
+        The aspect ratio describes the relationship between an
+        image's width and height. Common examples include 1:1
+        for square images, 4:3 and 3:2 for photographs, and
+        16:9 for many video and screen formats.
+      </p>
+
+      <h3>Estimated Print Size at 300 PPI</h3>
+
+      <p>
+        The estimated print dimensions are calculated by dividing
+        the pixel width and height by 300. This provides a useful
+        reference for a print at 300 pixels per inch.
+        It is only an estimate: actual print size depends on
+        the print resolution selected by the software or printer.
+      </p>
+
+      <h3>Does the Analyzer Upload My Image?</h3>
+
+      <p>
+        No image upload is performed by this analyzer's processing
+        code. The selected file is opened locally in your browser
+        to read its dimensions, inspect a reduced transparency sample
+        and create a preview. This statement refers to the image
+        analysis feature itself, not to other shared website resources.
+      </p>
+
+      <h3>Understanding the Transparency Result</h3>
+
+      <p>
+        The tool draws a reduced version of the image to a browser
+        canvas and checks the sampled alpha values. A positive result
+        means transparency was found in the sample. A negative result
+        means none was found in that sample; it does not guarantee
+        that every original pixel was checked.
       </p>
 
     </section>
@@ -516,17 +743,18 @@
       <div class="faq-item">
         <h3>Is the image analyzer free?</h3>
         <p>
-          Yes. You can use it without creating an account
-          or installing software.
+          Yes. You can use RitoccaPix Image Analyzer without creating
+          an account or installing software.
         </p>
       </div>
 
       <div class="faq-item">
         <h3>Which image formats can I analyze?</h3>
         <p>
-          The tool can open formats that your browser supports.
+          The tool can open formats supported by your browser.
           Common examples include JPEG, PNG, GIF, WebP and AVIF.
-          Support for formats such as HEIC depends on the browser and device.
+          Support for formats such as HEIC depends on the browser
+          and device.
         </p>
       </div>
 
@@ -543,7 +771,8 @@
         <h3>What does a 3:2 aspect ratio mean?</h3>
         <p>
           It means the image is one and a half times as wide as it is high.
-          For example, 3000 × 2000 pixels has a 3:2 aspect ratio.
+          For example, an image measuring 3000 × 2000 pixels has
+          a 3:2 aspect ratio.
         </p>
       </div>
 
@@ -559,18 +788,58 @@
       <div class="faq-item">
         <h3>Why can't my image be opened?</h3>
         <p>
-          Your browser may not support its format, or the file may be damaged.
-          Try another browser or convert the image to a widely supported
-          format such as JPG or PNG.
+          Your browser may not support its format, or the file may
+          be damaged. Try another browser or convert the image
+          to a widely supported format such as JPG or PNG.
         </p>
       </div>
 
       <div class="faq-item">
         <h3>Can I use the analyzer on a phone?</h3>
         <p>
-          Yes. You can select an image from a compatible phone or tablet,
-          and the layout adapts to smaller screens.
+          Yes. You can select an image from a compatible phone
+          or tablet, and the layout adapts to smaller screens.
         </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Can I save or share the analysis?</h3>
+        <p>
+          Yes. Use Copy analysis to copy the technical report
+          to your clipboard, or Download report to save it
+          as a text file.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Does a higher megapixel count always mean better quality?</h3>
+        <p>
+          No. Megapixels describe the number of pixels in an image.
+          Focus, lighting, lens quality, noise and compression
+          also affect the final image quality.
+        </p>
+      </div>
+
+    </section>
+
+    <section class="content">
+
+      <h2>Explore More Free Image Tools</h2>
+
+      <p>
+        Once you have checked your image, you can use other
+        RitoccaPix tools to prepare it for websites, social media,
+        printing or sharing.
+      </p>
+
+      <div class="related-links">
+        <a href="image-compressor.html">Image Compressor</a>
+        <a href="image-resizer.html">Image Resizer</a>
+        <a href="image-optimizer.html">Image Optimizer</a>
+        <a href="image-converter.html">Image Converter</a>
+        <a href="webp-to-jpg.html">WebP to JPG</a>
+        <a href="webp-to-png.html">WebP to PNG</a>
+        <a href="image-collage.html">Image Collage Maker</a>
       </div>
 
     </section>
@@ -605,6 +874,7 @@
 
     let currentObjectUrl = null;
     let currentReport = "";
+    let analysisRequest = 0;
 
     function formatBytes(bytes) {
       if (bytes < 1024) return bytes + " bytes";
@@ -746,6 +1016,8 @@
     }
 
     function clearAnalyzer() {
+      analysisRequest++;
+
       releaseCurrentImage();
 
       imageInput.value = "";
@@ -759,6 +1031,8 @@
       clearAnalyzer();
 
       if (!file) return;
+
+      const thisRequest = analysisRequest;
 
       if (file.size > MAX_FILE_SIZE) {
         showError(
@@ -774,9 +1048,12 @@
 
       currentObjectUrl = URL.createObjectURL(file);
 
+      const thisObjectUrl = currentObjectUrl;
       const image = new Image();
 
       image.onload = function () {
+        if (thisRequest !== analysisRequest) return;
+
         const width = image.naturalWidth;
         const height = image.naturalHeight;
 
@@ -808,6 +1085,8 @@
           printWidth + " × " + printHeight + " inches";
 
         const transparency = checkTransparency(image);
+
+        if (thisRequest !== analysisRequest) return;
 
         setText("fileName", file.name || "Unnamed image");
         setText("fileFormat", getFormat(file));
@@ -848,10 +1127,11 @@
           "Note: transparency is checked on a reduced sample. Print size is an estimate at 300 PPI."
         ].join("\n");
 
-        previewImage.src = currentObjectUrl;
+        previewImage.src = thisObjectUrl;
         previewImage.style.display = "inline-block";
 
         result.style.display = "block";
+        errorBox.style.display = "none";
         actionStatus.textContent = "";
 
         result.scrollIntoView({
@@ -861,6 +1141,8 @@
       };
 
       image.onerror = function () {
+        if (thisRequest !== analysisRequest) return;
+
         showError(
           "Your browser could not open this image. " +
           "The format may not be supported, or the file may be damaged."
@@ -869,7 +1151,7 @@
         releaseCurrentImage();
       };
 
-      image.src = currentObjectUrl;
+      image.src = thisObjectUrl;
     }
 
     imageInput.addEventListener("change", function () {
@@ -906,6 +1188,10 @@
         if (!currentReport) return;
 
         try {
+          if (!navigator.clipboard || !navigator.clipboard.writeText) {
+            throw new Error("Clipboard API unavailable");
+          }
+
           await navigator.clipboard.writeText(currentReport);
 
           actionStatus.textContent =
@@ -954,7 +1240,10 @@
 
     window.addEventListener(
       "beforeunload",
-      releaseCurrentImage
+      function () {
+        analysisRequest++;
+        releaseCurrentImage();
+      }
     );
   </script>
 
