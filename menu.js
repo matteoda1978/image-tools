@@ -135,6 +135,14 @@
       font-weight: 700;
     }
 
+    .tools-menu a.account-link {
+      color: #a9c2ff;
+      font-weight: 700;
+      border-bottom: 1px solid #334155;
+      border-radius: 7px 7px 0 0;
+      margin-bottom: 6px;
+    }
+
     @media (max-width: 480px) {
       .tools-dropdown .logo {
         font-size: 20px;
@@ -151,11 +159,10 @@
   nav.classList.add("tools-dropdown");
 
   // Find the existing brand anywhere inside the header.
-  // This prevents creating a second RitoccaPix logo.
   const brandCandidates = header.querySelectorAll(".logo, .brand");
   let brand = brandCandidates.length ? brandCandidates[0] : null;
 
-  // Remove any accidental duplicate brand elements.
+  // Remove accidental duplicate brand elements.
   brandCandidates.forEach(function (candidate) {
     if (candidate !== brand) {
       candidate.remove();
@@ -176,8 +183,6 @@
     brand.setAttribute("aria-label", "RitoccaPix homepage");
   }
 
-  // Move the existing logo into the navigation.
-  // Moving it automatically removes it from its old position.
   nav.replaceChildren(brand);
 
   const button = document.createElement("button");
@@ -191,10 +196,14 @@
   const menu = document.createElement("div");
   menu.className = "tools-menu";
 
-  tools.forEach(function (tool) {
+  tools.forEach(function (tool, index) {
     const link = document.createElement("a");
     link.href = tool.url;
     link.textContent = tool.name;
+
+    if (index === 0) {
+      link.classList.add("account-link");
+    }
 
     if (currentPage === tool.url) {
       link.setAttribute("aria-current", "page");
