@@ -4,20 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Free Photo Collage Maker Online | RitoccaPix</title>
-<meta name="description" content="Create a photo collage online for free. Combine up to 12 photos with creative layouts, custom shapes, backgrounds and captions, then download as JPG or PNG.">
+<meta name="description" content="Create a photo collage online for free. Combine up to 12 photos with creative layouts, AI-assisted composition, custom shapes, backgrounds and captions.">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#0a0f1d">
 <link rel="canonical" href="https://ritoccapix.com/image-collage.html">
-
-<!-- Social sharing metadata -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="RitoccaPix">
 <meta property="og:title" content="Free Photo Collage Maker Online | RitoccaPix">
-<meta property="og:description" content="Create a free photo collage online. Arrange up to 12 photos with creative layouts, custom frames, spacing, backgrounds and captions, then download your collage.">
+<meta property="og:description" content="Create a free photo collage online. Arrange up to 12 photos with creative layouts, custom frames, AI-assisted composition, backgrounds and captions.">
 <meta property="og:url" content="https://ritoccapix.com/image-collage.html">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Free Photo Collage Maker Online | RitoccaPix">
-<meta name="twitter:description" content="Arrange up to 12 photos in a custom collage with creative layouts, backgrounds and captions. Create and download it free online." >
+<meta name="twitter:description" content="Arrange up to 12 photos in a custom collage with creative layouts, AI-assisted composition, backgrounds and captions.">
 <script src="menu.js" defer></script>
 <style>
 *{box-sizing:border-box}
@@ -43,8 +41,7 @@ main{max-width:1200px;margin:auto;padding:30px 16px 50px}
 #fileInput{display:none}
 .section{margin-top:22px}
 .section-label{font-size:12px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);font-weight:800;margin-bottom:10px}
-.layout-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
-.shape-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+.layout-grid,.shape-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
 .shape-btn{border:1px solid var(--border);background:var(--panel2);color:var(--muted);border-radius:10px;padding:10px 5px;cursor:pointer;font-size:12px;font-weight:700;min-height:66px}
 .shape-btn .shape-icon{display:block;font-size:23px;line-height:1.15;margin-bottom:5px}
 .shape-btn.active{border-color:var(--accent);background:#1a2b49;color:#fff}
@@ -82,6 +79,12 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 .smart-btn.secondary{background:#172235;border-color:#394761}
 .smart-btn.enhance{background:linear-gradient(110deg,#33406a,#242b4a)}
 .smart-box p{margin:5px 0 0;font-size:12px;color:var(--muted)}
+.ai-smart-box{padding:13px;background:#17243a;border:1px solid #4b6da0;border-radius:12px;margin-top:12px}
+.ai-smart-box h3{font-size:15px;margin:0 0 8px}
+.ai-smart-box p{margin:5px 0 0;font-size:12px;color:var(--muted)}
+.ai-consent{display:flex;gap:9px;align-items:flex-start;margin:12px 0;color:var(--muted);font-size:12px;line-height:1.5}
+.ai-consent input{margin-top:3px;flex:0 0 auto;accent-color:var(--accent)}
+.ai-prompt{margin-top:10px;display:block}
 .custom-tools{margin-top:22px;padding-top:17px;border-top:1px solid var(--border)}
 .custom-tools h3{font-size:16px;margin:0 0 6px}
 .custom-buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -118,7 +121,7 @@ footer a{color:var(--accent);text-decoration:none}
 <main>
 <section class="hero">
   <h1>Free Online Photo Collage Maker with Creative Layouts</h1>
-  <p>Turn your photos into a creative collage with overlapping images, varied frame sizes and magazine-style layouts. Adjust photo position, zoom, shapes and spacing, then download your finished design as a JPG or PNG. No software installation required.</p>
+  <p>Turn your photos into a creative collage with overlapping images, varied frame sizes and magazine-style layouts. Use local smart composition or AI-assisted layout suggestions, adjust photo position, zoom, shapes and spacing, then download your finished design as a JPG or PNG.</p>
 </section>
 
 <div class="workspace">
@@ -135,11 +138,24 @@ footer a{color:var(--accent);text-decoration:none}
   <p class="photo-help">Tap a thumbnail to select it, then use “Place photo in frame” to replace the photo in the selected frame.</p>
 
   <div class="section smart-box">
-    <h3>✦ Smart composition</h3>
-    <button id="smartLayout" class="smart-btn" type="button">Create a Smart Collage</button>
-    <button id="tryAnother" class="smart-btn secondary" type="button">Try Another Design</button>
+    <h3>✦ Smart composition (local)</h3>
+    <button id="smartLayout" class="smart-btn" type="button">Create a Local Smart Collage</button>
+    <button id="tryAnother" class="smart-btn secondary" type="button">Try Another Local Design</button>
     <button id="autoPlacePhotos" class="secondary-btn" type="button" style="width:100%;margin-top:2px">Auto-place photos in frames</button>
-    <p>Creates magazine-style layouts with a hero photo, varied frame sizes and asymmetrical arrangements. Photos stay on your device; this is a smart layout algorithm, not a generative AI service.</p>
+    <p>Creates magazine-style layouts using local layout rules. This option does not use AI and does not upload your photos.</p>
+  </div>
+
+  <div class="section ai-smart-box">
+    <h3>✦ AI Smart Collage</h3>
+    <p>Let AI analyse small photo previews and suggest a creative layout. Your original photos stay in your browser, and the final collage is assembled here using your original images.</p>
+    <label class="help ai-prompt" for="aiPrompt">Optional design direction</label>
+    <input id="aiPrompt" class="text-input" type="text" maxlength="240" placeholder="e.g. Travel magazine, family memories, clean and elegant">
+    <label class="ai-consent">
+      <input id="aiConsent" type="checkbox">
+      <span>I agree to send reduced photo previews (not the original files) to RitoccaPix's cloud AI service, powered by Google Gemini, to analyse the layout. The final collage is created in my browser. See the <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</span>
+    </label>
+    <button id="aiSmartLayout" class="smart-btn" type="button">Create AI Smart Collage</button>
+    <p>AI receives reduced JPEG previews only. No preview is uploaded until you tick the consent box and click the AI button. Local Smart Collage remains available without uploading photos.</p>
   </div>
 
   <div class="section">
@@ -166,7 +182,7 @@ footer a{color:var(--accent);text-decoration:none}
       <button class="layout-btn" data-layout="6" type="button"><div class="layout-preview lp6"><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="layout-name">6 photos</span></button>
       <button class="layout-btn" data-layout="9" type="button"><div class="layout-preview lp9"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="layout-name">9 photos</span></button>
     </div>
-    <p class="help">Choose a preset for a simple starting point, or use Smart Collage for a more creative arrangement.</p>
+    <p class="help">Choose a preset for a simple starting point, or use either Smart Collage option for a more creative arrangement.</p>
   </div>
 
   <div class="section">
@@ -271,35 +287,36 @@ footer a{color:var(--accent);text-decoration:none}
 <section class="content">
   <h2>How to create a creative photo collage</h2>
   <ol>
-    <li>Upload your photos from your device.</li>
-    <li>Click Create a Smart Collage to create an asymmetrical, magazine-style arrangement. Click Try Another Design to explore alternative compositions.</li>
+    <li>Upload up to 12 photos from your device.</li>
+    <li>Choose Create a Local Smart Collage for a private, browser-only layout, or use AI Smart Collage for an AI-assisted layout suggestion.</li>
+    <li>To use AI, enter an optional design direction, tick the consent box and click Create AI Smart Collage. Only reduced photo previews are sent for layout analysis.</li>
     <li>Choose an enhancement style and apply it to your collage photos.</li>
     <li>Choose a creative frame shape, then adjust the canvas format, frame spacing, background and caption.</li>
     <li>Download your finished collage as a high-resolution JPG or PNG.</li>
   </ol>
-  <p>Photos are processed locally in your browser. This tool does not upload your images to a server.</p>
+  <p>Local Smart Collage and final collage rendering run in your browser. If you choose AI Smart Collage, reduced-size photo previews are sent to our cloud AI service for layout analysis after you give consent. Original image files stay in your browser; the returned layout is applied locally.</p>
 </section>
 
 <section class="content">
   <h2>Make a photo collage online with your own style</h2>
   <p>Use RitoccaPix as a free photo collage creator for family memories, travel photos, creative projects or social media posts. Combine up to 12 pictures, give the main image more space, and mix rounded, circular, heart, star and other frame shapes for a design that feels less like a fixed grid.</p>
-  <p>Start with the smart composition tool if you want a magazine-style arrangement, then fine-tune the photo position, zoom, spacing, background and caption yourself. When your collage is ready, export it as a JPG or PNG. If you need to prepare an image first, use the <a href="image-resizer.html">online image resizer</a> or the <a href="image-compressor.html">image compressor</a>.</p>
+  <p>Start with the local smart composition tool or ask AI to suggest a layout, then fine-tune the photo position, zoom, spacing, background and caption yourself. When your collage is ready, export it as a JPG or PNG. If you need to prepare an image first, use the <a href="image-resizer.html">online image resizer</a> or the <a href="image-compressor.html">image compressor</a>.</p>
 </section>
 
 <section class="content">
   <h2>Frequently asked questions</h2>
   <h3>Does Smart Collage use artificial intelligence?</h3>
-  <p>Smart Collage uses layout rules to create varied, magazine-style arrangements; it does not use a generative AI model or send photos to a cloud AI service. Your photos remain on your device.</p>
+  <p>There are two options. Local Smart Collage uses layout rules and does not use an AI model. AI Smart Collage sends reduced photo previews to our cloud AI service, powered by Google Gemini, to analyse the photos and suggest a layout. It does not generate or replace your photos.</p>
   <h3>Can I center, zoom or show the whole photo?</h3>
   <p>Yes. Select a frame, adjust the zoom slider, drag the photo to reposition it, or use Fill frame, Fit whole photo, Center &amp; reset zoom, or Auto-fit all photos.</p>
   <h3>Does photo enhancement overwrite my original photos?</h3>
   <p>No. The original uploaded images remain unchanged. The selected enhancement is applied when the collage is drawn and exported.</p>
   <h3>Does this tool use a cloud AI service?</h3>
-  <p>No. Layout generation and photo appearance adjustments run in your browser. The composition feature uses smart layout rules and variation rather than a generative AI model.</p>
+  <p>Only if you choose AI Smart Collage, tick the consent box and click its button. Reduced-size photo previews are sent to the cloud AI service for layout analysis. The local composition option does not use a cloud service.</p>
   <h3>Can I use the tool on my phone?</h3>
   <p>Yes. You can upload photos, choose rounded, rectangular, circular, oval, heart, cloud or star-shaped frames, create layouts, apply enhancement styles and export your collage on supported mobile browsers.</p>
   <h3>Are my photos uploaded?</h3>
-  <p>No. Images are processed locally in your browser and are not uploaded by this tool.</p>
+  <p>In local mode, photos stay in your browser. If you explicitly choose AI Smart Collage and give consent, reduced-size JPEG previews are uploaded for layout analysis. Original image files are not sent to the AI service. The final collage is assembled in your browser.</p>
 </section>
 </main>
 
@@ -317,6 +334,9 @@ const ctx=canvas.getContext('2d');
 const fileInput=$('fileInput');
 const photoList=$('photoList');
 const photoCount=$('photoCount');
+
+const COLLAGE_AI_WORKER_URL='https://ritoccapix-collage-ai.ritoccapix.workers.dev';
+let aiCollageBusy=false;
 
 let images=[];
 let cells=[];
@@ -428,6 +448,8 @@ function updateControls(){
     $('removeCell').disabled=true;
     $('clearPhoto').disabled=true;
     $('centerPhoto').disabled=true;
+    $('fillFrame').disabled=true;
+    $('fitWholePhoto').disabled=true;
     return;
   }
 
@@ -458,7 +480,7 @@ function applyLayout(layout){
   });
   selectedCell=0;
 
-document.querySelectorAll('.layout-btn').forEach(button=>{
+  document.querySelectorAll('.layout-btn').forEach(button=>{
     button.classList.toggle('active',button.dataset.layout===layout);
   });
 
@@ -498,6 +520,7 @@ function assignPhotosToCells(){
   updateSelect();
 }
 
+/* Existing local smart composition algorithm: kept separate from AI. */
 function createSmartComposition(){
   if(!images.length){
     status('Choose at least one photo before creating a smart collage.');
@@ -507,10 +530,9 @@ function createSmartComposition(){
 
   const n=images.length;
   const variant=designVersion++;
-  // Smart layouts deliberately overlap; remove ordinary grid spacing for a full-bleed look.
   $('spacing').value='0';
   $('spacingValue').textContent='0 px';
-  const gap=0;
+
   const layouts={
     1:[[[0,-2,100,104,-1]],[[2,0,96,100,2]],[[0,3,100,94,-2]]],
     2:[
@@ -545,12 +567,7 @@ function createSmartComposition(){
     ]
   };
 
-  // More than six photos use a hero image plus a varied editorial mosaic,
-  // rather than forcing every photo into an identical square tile.
-  function makeGeneratedLayout(count, family){
-    // Layered poster compositions: large edge-to-edge hero, with smaller photos
-    // intentionally overlapping it and one another. Later items are drawn on top.
-    const out=[];
+  function makeGeneratedLayout(count,family){
     const heroSets=[
       [[-5,-4,72,82,-4],[53,-4,54,43,5],[57,30,49,48,-4],[-4,65,47,42,3],[35,66,45,39,-3],[68,64,38,42,4]],
       [[-4,-4,58,68,-4],[42,-4,64,67,4],[-5,47,47,57,3],[35,43,67,61,-3],[8,70,53,37,-2],[59,68,44,39,4]],
@@ -568,14 +585,12 @@ function createSmartComposition(){
   let chosen;
   if(n<=6){
     const choices=layouts[n]||layouts[6];
-    // Rotate through the available editorial designs, then vary the photo order.
     chosen=choices[variant%choices.length].map(box=>box.slice());
   }else{
     chosen=makeGeneratedLayout(n,variant%4);
   }
 
-  // Occasionally mirror the composition so the focal photo is not always on the same side.
-  if(n>=3 && variant%3===2){
+  if(n>=3&&variant%3===2){
     chosen=chosen.map(([x,y,w,h,r])=>[100-x-w,y,w,h,-r]);
   }
 
@@ -584,10 +599,12 @@ function createSmartComposition(){
     const j=Math.floor(Math.random()*(i+1));
     [order[i],order[j]]=[order[j],order[i]];
   }
+
   cells=chosen.map((box,i)=>{
     const [x,y,w,h,rotation]=box;
     return makeCell(x,y,w,h,order[i]??-1,rotation);
   });
+
   cells.forEach(cell=>{
     cell.zoom=1;
     cell.photoX=0;
@@ -603,7 +620,199 @@ function createSmartComposition(){
   renderPhotos();
   updateSelect();
   draw();
-  status('Layered creative collage '+(variant+1)+' is ready. Photos overlap to fill the canvas. Choose “Try Another Design” for a new composition.');
+  status('Local creative collage '+(variant+1)+' is ready. Photos overlap to fill the canvas. Choose Try Another Local Design for a new composition.');
+}
+
+/* Create a small JPEG preview. Original uploaded images are never sent. */
+function createThumbnailBase64(image,maxSide=640,quality=0.72){
+  return new Promise((resolve,reject)=>{
+    const width=image.naturalWidth||image.width;
+    const height=image.naturalHeight||image.height;
+
+    if(!width||!height){
+      reject(new Error('Could not read one of the selected photos.'));
+      return;
+    }
+
+    const scale=Math.min(1,maxSide/Math.max(width,height));
+    const previewCanvas=document.createElement('canvas');
+    previewCanvas.width=Math.max(1,Math.round(width*scale));
+    previewCanvas.height=Math.max(1,Math.round(height*scale));
+
+    const previewContext=previewCanvas.getContext('2d');
+    if(!previewContext){
+      reject(new Error('Could not prepare a photo preview.'));
+      return;
+    }
+
+    previewContext.drawImage(image,0,0,previewCanvas.width,previewCanvas.height);
+
+    previewCanvas.toBlob(blob=>{
+      if(!blob){
+        reject(new Error('Could not create a reduced photo preview.'));
+        return;
+      }
+
+      const reader=new FileReader();
+      reader.onload=()=>{
+        const dataUrl=String(reader.result||'');
+        const comma=dataUrl.indexOf(',');
+        if(comma<0){
+          reject(new Error('Could not encode the photo preview.'));
+          return;
+        }
+        resolve({
+          mimeType:'image/jpeg',
+          data:dataUrl.slice(comma+1)
+        });
+      };
+      reader.onerror=()=>reject(new Error('Could not read the reduced preview.'));
+      reader.readAsDataURL(blob);
+    },'image/jpeg',quality);
+  });
+}
+
+function validateAiCells(rawCells){
+  if(!Array.isArray(rawCells)||!rawCells.length){
+    throw new Error('The AI service did not return a valid collage layout.');
+  }
+
+  return rawCells.slice(0,12).map(item=>{
+    const x=Number(item.x);
+    const y=Number(item.y);
+    const w=Number(item.w);
+    const h=Number(item.h);
+    const rotation=Number(item.rotation)||0;
+    const photoIndex=Number(item.photoIndex);
+
+    if(![x,y,w,h].every(Number.isFinite)){
+      throw new Error('The AI service returned invalid frame coordinates. Please try again.');
+    }
+    if(w<=0||h<=0||w>120||h>120){
+      throw new Error('The AI service returned an invalid frame size. Please try again.');
+    }
+
+    const safePhotoIndex=Number.isInteger(photoIndex)&&photoIndex>=0&&photoIndex<images.length
+      ? photoIndex
+      : -1;
+
+    const cell=makeCell(x,y,w,h,safePhotoIndex,Math.max(-15,Math.min(15,rotation)));
+    cell.zoom=1;
+    cell.photoX=0;
+    cell.photoY=0;
+    cell.fit=true;
+    cell.fitMode='cover';
+    return cell;
+  });
+}
+
+async function createAiSmartComposition(){
+  const button=$('aiSmartLayout');
+
+  if(aiCollageBusy)return;
+
+  if(!images.length){
+    status('Choose at least one photo before creating an AI collage.');
+    fileInput.click();
+    return;
+  }
+
+  if(!$('aiConsent').checked){
+    status('Please tick the consent box before sending reduced previews for AI analysis.');
+    $('aiConsent').focus();
+    return;
+  }
+
+  aiCollageBusy=true;
+  button.disabled=true;
+  button.textContent='Analysing photo previews…';
+
+  try{
+    status('Preparing reduced photo previews…');
+
+    const thumbnails=await Promise.all(
+      images.slice(0,12).map(item=>createThumbnailBase64(item.image))
+    );
+
+    const prompt=$('aiPrompt').value.trim();
+
+    status('Sending reduced previews for AI layout analysis…');
+
+    const response=await fetch(COLLAGE_AI_WORKER_URL+'/analyze',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        images:thumbnails,
+        prompt,
+        format:selectedFormat
+      })
+    });
+
+    let result;
+    try{
+      result=await response.json();
+    }catch(error){
+      throw new Error('The AI service returned an unreadable response.');
+    }
+
+    if(!response.ok){
+      const message=result&&result.error
+        ? result.error
+        : response.status===429
+          ? 'Too many requests. Please wait a moment and try again.'
+          : 'AI layout analysis failed (HTTP '+response.status+').';
+      throw new Error(message);
+    }
+
+    const composition=
+      result.composition||
+      result.data?.composition||
+      result.data||
+      result;
+
+    const newCells=validateAiCells(composition.cells);
+
+    if(!newCells.some(cell=>cell.photoIndex>=0)){
+      newCells.forEach((cell,i)=>{
+        if(i<images.length)cell.photoIndex=i;
+      });
+    }
+
+    cells=newCells;
+
+    if(
+      typeof composition.backgroundColor==='string'&&
+      /^#[0-9a-fA-F]{6}$/.test(composition.backgroundColor)
+    ){
+      $('bgColor').value=composition.backgroundColor;
+    }
+
+    currentLayout='ai';
+    document.querySelectorAll('.layout-btn').forEach(item=>item.classList.remove('active'));
+
+    selectedCell=0;
+    selectedPhoto=cells.find(cell=>cell.photoIndex>=0)?.photoIndex??0;
+
+    renderPhotos();
+    updateSelect();
+    draw();
+
+    const title=typeof composition.title==='string'
+      ? composition.title
+      : 'AI Smart Collage';
+
+    status(title+' is ready. Your original photos were used locally to render the collage.');
+  }catch(error){
+    console.error('AI Smart Collage error:',error);
+    status(error.message||'Could not create the AI collage. Please try again.');
+  }finally{
+    aiCollageBusy=false;
+    button.disabled=false;
+    button.textContent='Create AI Smart Collage';
+
+    /* Require fresh consent for every AI request. */
+    $('aiConsent').checked=false;
+  }
 }
 
 fileInput.addEventListener('change',async()=>{
@@ -641,7 +850,7 @@ fileInput.addEventListener('change',async()=>{
   updateSelect();
   draw();
 
-  status(images.length+' photo(s) loaded. Use Create a Smart Collage or choose a layout.');
+  status(images.length+' photo(s) loaded. Use local Smart Collage, AI Smart Collage or choose a ready-made layout.');
 });
 
 document.querySelectorAll('.layout-btn').forEach(button=>{
@@ -664,6 +873,7 @@ document.querySelectorAll('.shape-btn').forEach(button=>{
 
 $('smartLayout').addEventListener('click',createSmartComposition);
 $('tryAnother').addEventListener('click',createSmartComposition);
+$('aiSmartLayout').addEventListener('click',createAiSmartComposition);
 
 document.querySelectorAll('.format-btn').forEach(button=>{
   button.addEventListener('click',()=>{
@@ -789,12 +999,13 @@ $('autoFitAll').addEventListener('click',()=>{
   });
   updateControls();
   draw();
-  status(count ? 'All '+count+' photos centered and fitted to their frames.' : 'Add photos to the collage first.');
+  status(count?'All '+count+' photos centered and fitted to their frames.':'Add photos to the collage first.');
 });
 
 $('autoPlacePhotos').addEventListener('click',()=>{
   if(!images.length){status('Upload photos first.');fileInput.click();return;}
   const count=Math.min(images.length,12);
+
   if(cells.length<count){
     if(templates[String(count)]){
       cells=templates[String(count)]();
@@ -808,6 +1019,7 @@ $('autoPlacePhotos').addEventListener('click',()=>{
       document.querySelectorAll('.layout-btn').forEach(button=>button.classList.remove('active'));
     }
   }
+
   cells.forEach((cell,i)=>{
     cell.photoIndex=i<count?i:-1;
     cell.zoom=1;
@@ -816,6 +1028,7 @@ $('autoPlacePhotos').addEventListener('click',()=>{
     cell.fit=true;
     cell.fitMode='cover';
   });
+
   selectedCell=0;
   selectedPhoto=0;
   renderPhotos();
@@ -848,6 +1061,8 @@ $('removeCell').addEventListener('click',()=>{
 $('resetLayout').addEventListener('click',()=>{
   if(currentLayout==='smart'){
     createSmartComposition();
+  }else if(currentLayout==='ai'){
+    applyLayout('blank');
   }else{
     applyLayout(templates[currentLayout]?currentLayout:'blank');
   }
@@ -1010,19 +1225,14 @@ function drawPhoto(img,r,cell,cornerRadius){
   const scale=baseScale*(cell.zoom||1);
   const dw=img.naturalWidth*scale;
   const dh=img.naturalHeight*scale;
-  const maxX=cell.fitMode==='contain'?Math.max(0,(dw-iw)/2):Math.max(0,(dw-iw)/2);
-  const maxY=cell.fitMode==='contain'?Math.max(0,(dh-ih)/2):Math.max(0,(dh-ih)/2);
+  const maxX=Math.max(0,(dw-iw)/2);
+  const maxY=Math.max(0,(dh-ih)/2);
 
   cell.photoX=Math.max(-maxX,Math.min(maxX,cell.photoX||0));
   cell.photoY=Math.max(-maxY,Math.min(maxY,cell.photoY||0));
 
   ctx.filter=styles[activeStyle]||'none';
-  ctx.drawImage(
-    img,
-    ix+(iw-dw)/2+cell.photoX,
-    iy+(ih-dh)/2+cell.photoY,
-    dw,dh
-  );
+  ctx.drawImage(img,ix+(iw-dw)/2+cell.photoX,iy+(ih-dh)/2+cell.photoY,dw,dh);
   ctx.filter='none';
   ctx.restore();
 }
@@ -1162,7 +1372,7 @@ canvas.addEventListener('pointerdown',event=>{
       point.y<=r.y+edgeY||
       point.y>=r.y+r.h-edgeY;
 
-    let mode=corner?'resize':nearEdge?'move':(cell.photoIndex>=0?'photo':'move');
+    const mode=corner?'resize':nearEdge?'move':(cell.photoIndex>=0?'photo':'move');
 
     dragging={
       mode,
@@ -1244,7 +1454,6 @@ function download(format){
     return;
   }
 
-  // Export a clean version without the editor selection handles.
   draw(false);
   const mime=format==='jpg'?'image/jpeg':'image/png';
 
@@ -1275,7 +1484,7 @@ $('downloadPng').addEventListener('click',()=>download('png'));
 cells=templates.blank();
 updateSelect();
 draw();
-status('Upload photos, then create a smart collage or choose a ready-made layout.');
+status('Upload photos, then create a local or AI smart collage, or choose a ready-made layout.');
 </script>
 </body>
 </html>
