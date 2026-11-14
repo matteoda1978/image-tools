@@ -2,6 +2,7 @@
 /* RitoccaPix - Responsive Dropdown Navigation */
 (function () {
   const tools = [
+    { name: "My Account", url: "account.html" },
     { name: "Image Resizer", url: "image-resizer.html" },
     { name: "Image Compressor", url: "image-compressor.html" },
     { name: "Compress Image to 100KB", url: "compress-image-to-100kb.html" },
