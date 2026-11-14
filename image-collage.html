@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,6 +17,7 @@
 <meta name="twitter:title" content="Free Photo Collage Maker Online | RitoccaPix">
 <meta name="twitter:description" content="Create creative photo collages with AI-assisted layouts and smart subject positioning.">
 <script src="menu.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 *{box-sizing:border-box}
@@ -394,61 +394,27 @@ footer a{color:var(--accent);text-decoration:none}
 <script>
 'use strict';
 
+const SUPABASE_URL="https://eckppexmaihbzbtunhnp.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY="sb_publishable_h4NECcXTuSS7R-BDSAwIVQ_WKKolNKW";
+
+if(!window.supabase||!window.supabase.createClient){
+  throw new Error('Supabase account service could not be loaded.');
+}
+
+const supabaseClient=window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY,
+  {
+    auth:{
+      persistSession:true,
+      autoRefreshToken:true,
+      detectSessionInUrl:true
+    }
+  }
+);
+
 const $=id=>document.getElementById(id);
-const canvas=$('canvas');
-const ctx=canvas.getContext('2d');
-const fileInput=$('fileInput');
-const photoList=$('photoList');
-const photoCount=$('photoCount');
-
-const COLLAGE_AI_WORKER_URL='https://ritoccapix-collage-ai.ritoccapix.workers.dev';
-
-let aiCollageBusy=false;
-let selectedAiStyle='big-small';
-
-let images=[];
-let cells=[];
-let selectedCell=0;
-let selectedPhoto=-1;
-let selectedFormat='square';
-let currentLayout='blank';
-let frameShape='rounded';
-let dragging=null;
-let designVersion=0;
-let activeStyle='original';
-
-const formats={
-  square:{width:1080,height:1080},
-  portrait:{width:1080,height:1350},
-  story:{width:1080,height:1920},
-  landscape:{width:1200,height:800}
-};
-
-const styles={
-  original:'none',
-  auto:'brightness(1.06) contrast(1.10) saturate(1.10)',
-  natural:'brightness(1.03) contrast(1.04) saturate(1.04)',
-  vivid:'brightness(1.04) contrast(1.14) saturate(1.35)',
-  warm:'brightness(1.05) contrast(1.07) saturate(1.12) sepia(0.16)',
-  cinematic:'brightness(0.98) contrast(1.18) saturate(0.88)',
-  bw:'grayscale(1) contrast(1.12)',
-  soft:'brightness(1.10) contrast(0.94) saturate(1.03)'
-};
-
-const aiStyleInstructions={
-  'big-small':`COMPOSITION STYLE: BIG & SMALL.
-Create one visually dominant main photo with the remaining photos arranged in smaller supporting frames around it. Use a clear visual hierarchy. Avoid hiding important people or faces.`,
-
-  'equal':`COMPOSITION STYLE: EQUAL PHOTOS.
-Give all photos approximately equal visual importance and similar frame areas. Use a balanced, clean and attractive arrangement. Do not create one dominant hero image.`,
-
-  'overlapping':`COMPOSITION STYLE: OVERLAPPING.
-Create a layered scrapbook or editorial composition. Photos may overlap, have varied sizes and slight rotations. Keep important subjects visible. Avoid placing overlaps across faces.`,
-
-  'creative':`COMPOSITION STYLE: CREATIVE MIX.
-Create an original asymmetrical editorial composition with different frame sizes, varied proportions and an intentional visual rhythm. Avoid a simple row or ordinary grid.`,
-
-  'mosaic':`COMPOSITION STYLE: MOSAIC.
+    'mosaic':`COMPOSITION STYLE: MOSAIC.
 Create a compact mosaic using varied rectangular frame sizes. Arrange all photos into a cohesive composition with minimal wasted space. Keep the overall design balanced.`
 };
 
@@ -620,17 +586,6 @@ function assignPhotosToCells(){
   selectedPhoto=order[0]??-1;
   renderPhotos();
   updateSelect();
-}
-
-function resetCellPhotoPosition(cell){
-  cell.zoom=1;
-  cell.photoX=0;
-  cell.photoY=0;
-  cell.fit=true;
-  cell.fitMode='cover';
-  cell.focalX=0.5;
-  cell.focalY=0.5;
-  cell.hasAiFocus=false;
 }
 
 /* Existing local smart composition algorithm: kept separate from AI. */
@@ -898,8 +853,7 @@ function validateAiCells(rawCells){
 
 function setAiStyle(style){
   if(!aiStyleInstructions[style])return;
-
-  selectedAiStyle=style;
+    selectedAiStyle=style;
 
   document.querySelectorAll('.style-btn').forEach(button=>{
     const active=button.dataset.aiStyle===style;
@@ -924,6 +878,7 @@ document.querySelectorAll('.style-btn').forEach(button=>{
   });
 });
 
+/* AI generation: authenticated Supabase session + unique request ID. */
 async function createAiSmartComposition(){
   const button=$('aiSmartLayout');
   const retryButton=$('aiTryAnother');
@@ -945,22 +900,41 @@ async function createAiSmartComposition(){
   aiCollageBusy=true;
   button.disabled=true;
   retryButton.disabled=true;
-  button.textContent='Analysing photo previews…';
+  button.textContent='Checking account…';
 
   try{
+    const {
+      data:sessionData,
+      error:sessionError
+    }=await supabaseClient.auth.getSession();
+
+    if(sessionError){
+      throw new Error('Unable to verify your account. Please sign in again.');
+    }
+
+    const session=sessionData?.session;
+
+    if(!session||!session.access_token){
+      throw new Error('Please sign in to use AI Smart Collage.');
+    }
+
+    if(!crypto.randomUUID){
+      throw new Error('Your browser does not support secure request identification. Please update your browser.');
+    }
+
+    const requestId=crypto.randomUUID();
+
+    button.textContent='Preparing photos…';
     status('Preparing reduced photo previews…');
 
     const thumbnails=await Promise.all(
-      images.slice(0,12).map(item=>createThumbnailBase64(item.image))
+      images.slice(0,12).map(item=>
+        createThumbnailBase64(item.image)
+      )
     );
 
     const userPrompt=$('aiPrompt').value.trim();
 
-    /*
-      The style instructions are included in the prompt so the current
-      Worker can receive them through its existing prompt field.
-      The selected style is also sent separately for a future Worker update.
-    */
     const completePrompt=[
       aiStyleInstructions[selectedAiStyle],
       'IMPORTANT SUBJECT PROTECTION:',
@@ -971,24 +945,31 @@ async function createAiSmartComposition(){
       'When a photo contains several people, try to preserve all of them.',
       'Prefer a wider crop when a tight crop would cut off a person.',
       'Do not invent, redraw, replace or modify the original photographs.',
-      userPrompt?'USER DESIGN DIRECTION: '+userPrompt:''
+      userPrompt ? 'USER DESIGN DIRECTION: '+userPrompt : ''
     ].filter(Boolean).join('\n\n');
 
+    button.textContent='Analysing photo previews…';
     status('Sending reduced previews for AI layout analysis…');
 
-    const response=await fetch(COLLAGE_AI_WORKER_URL+'/analyze',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        images:thumbnails,
-        prompt:completePrompt,
-        format:selectedFormat,
-        style:selectedAiStyle
-      })
-    });
+    const response=await fetch(
+      COLLAGE_AI_WORKER_URL+'/analyze',
+      {
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json',
+          'Authorization':'Bearer '+session.access_token
+        },
+        body:JSON.stringify({
+          requestId:requestId,
+          images:thumbnails,
+          prompt:completePrompt,
+          format:selectedFormat,
+          style:selectedAiStyle
+        })
+      }
+    );
 
     let result;
-
     try{
       result=await response.json();
     }catch(error){
@@ -996,13 +977,31 @@ async function createAiSmartComposition(){
     }
 
     if(!response.ok){
+      if(response.status===401){
+        throw new Error('Your session has expired. Please sign in again.');
+      }
+      if(response.status===402){
+        throw new Error('Not enough credits. Please top up your account to create an AI collage.');
+      }
+      if(response.status===409){
+        throw new Error('This request has already been processed. Please try again.');
+      }
+      if(response.status===429){
+        throw new Error('Too many requests. Please wait a moment and try again.');
+      }
+
       const message=result&&result.error
         ? result.error
-        : response.status===429
-          ? 'Too many requests. Please wait a moment and try again.'
-          : 'AI layout analysis failed (HTTP '+response.status+').';
+        : 'AI layout analysis failed (HTTP '+response.status+').';
 
       throw new Error(message);
+    }
+
+    if(!result||result.ok!==true){
+      throw new Error(
+        result?.error||
+        'The AI service did not confirm the generation.'
+      );
     }
 
     const composition=
@@ -1015,7 +1014,9 @@ async function createAiSmartComposition(){
 
     if(!newCells.some(cell=>cell.photoIndex>=0)){
       newCells.forEach((cell,i)=>{
-        if(i<images.length)cell.photoIndex=i;
+        if(i<images.length){
+          cell.photoIndex=i;
+        }
       });
     }
 
@@ -1035,15 +1036,12 @@ async function createAiSmartComposition(){
     });
 
     selectedCell=0;
-    selectedPhoto=cells.find(cell=>cell.photoIndex>=0)?.photoIndex??0;
+
+    selectedPhoto=
+      cells.find(cell=>cell.photoIndex>=0)?.photoIndex??0;
 
     renderPhotos();
     updateSelect();
-
-    /*
-      Apply returned focal points after the canvas dimensions and frame
-      geometry have been established.
-    */
     draw(false);
 
     cells.forEach(cell=>{
@@ -1054,29 +1052,46 @@ async function createAiSmartComposition(){
 
     draw();
 
-    const title=typeof composition.title==='string'
-      ? composition.title
-      : 'AI Smart Collage';
+    const title=
+      typeof composition.title==='string'
+        ? composition.title
+        : 'AI Smart Collage';
 
-    const focusCount=cells.filter(cell=>cell.hasAiFocus).length;
+    const focusCount=
+      cells.filter(cell=>cell.hasAiFocus).length;
+
+    let successMessage;
 
     if(focusCount){
-      status(title+' is ready. AI focal positioning was applied to '+focusCount+' photo(s). You can still adjust every photo manually.');
+      successMessage=
+        title+
+        ' is ready. AI focal positioning was applied to '+
+        focusCount+
+        ' photo(s). You can still adjust every photo manually.';
     }else{
-      status(title+' is ready. The AI layout was applied. This Worker response did not include focal-point coordinates, so photos use standard centering. You can adjust them manually.');
+      successMessage=
+        title+
+        ' is ready. The AI layout was applied. You can adjust every photo manually.';
     }
+
+    if(typeof result.balance==='number'){
+      successMessage+=' Remaining credits: '+result.balance+'.';
+    }
+
+    status(successMessage);
 
   }catch(error){
     console.error('AI Smart Collage error:',error);
-    status(error.message||'Could not create the AI collage. Please try again.');
+    status(
+      error.message||
+      'Could not create the AI collage. Please try again.'
+    );
   }finally{
     aiCollageBusy=false;
     button.disabled=false;
     retryButton.disabled=false;
     button.textContent='Create AI Smart Collage';
     retryButton.textContent='Try Another AI Design';
-
-    /* Require fresh consent for every AI request. */
     $('aiConsent').checked=false;
   }
 }
@@ -1348,7 +1363,7 @@ $('autoPlacePhotos').addEventListener('click',()=>{
 });
 
 $('addCell').addEventListener('click',()=>{
-  if(cells.length>=12){
+    if(cells.length>=12){
     status('You can add up to 12 frames.');
     return;
   }
