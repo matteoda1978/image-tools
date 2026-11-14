@@ -1,0 +1,331 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Account & Credits | RitoccaPix</title>
+<meta name="description" content="Access your RitoccaPix account and manage your shared AI credits.">
+<link rel="canonical" href="https://ritoccapix.com/account.html">
+<meta name="robots" content="noindex,follow">
+<script src="menu.js" defer></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b1424;color:#e8eef8;font-family:Arial,sans-serif;line-height:1.6}
+header{background:#101b2e;border-bottom:1px solid #263750;padding:14px 20px}
+header nav{min-height:44px}
+main{width:min(700px,calc(100% - 32px));margin:45px auto}
+h1{text-align:center;font-size:36px;margin-bottom:8px}
+.intro{text-align:center;color:#afbdd2;margin-bottom:28px}
+.panel{background:#132139;border:1px solid #2b405e;border-radius:16px;padding:28px}
+h2{margin-top:0}
+label{display:block;font-weight:bold;margin:15px 0 6px}
+input{width:100%;padding:13px;border:1px solid #405574;border-radius:9px;background:#0b1729;color:white;font-size:16px}
+.buttons{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
+button{padding:12px 20px;border:0;border-radius:9px;font-weight:bold;cursor:pointer}
+button:disabled{opacity:.5;cursor:wait}
+.primary{background:#7197f4;color:#081326}
+.secondary{background:#263b59;color:white;border:1px solid #49617f}
+.message{min-height:28px;margin-top:18px;color:#b9d0ff;overflow-wrap:anywhere}
+.error{color:#ffaaa9}
+.bonus{margin-top:22px;padding:16px;border-radius:10px;background:#0d1b30;border:1px solid #304967}
+.bonus strong{color:#a9c2ff}
+#accountState{display:none}
+#accountState.active{display:block}
+#authState.hidden{display:none}
+.email{overflow-wrap:anywhere;color:#c5d4ea}
+.balance{margin:22px 0;padding:20px;text-align:center;border-radius:12px;background:#0b1729;border:1px solid #344c6c}
+.balance strong{display:block;font-size:44px;color:#a9c2ff}
+.balance span{color:#b7c5d9}
+footer{text-align:center;color:#8292aa;margin:35px 0;font-size:13px}
+footer a{color:#a9c2ff}
+@media(max-width:520px){main{margin:28px auto}.buttons button{width:100%}}
+</style>
+</head>
+<body>
+
+<header><nav aria-label="Main navigation"></nav></header>
+
+<main>
+<h1>My RitoccaPix Account</h1>
+<p class="intro">One account and one shared credit balance for RitoccaPix AI tools.</p>
+
+<section class="panel">
+
+<div id="authState">
+<h2>Sign in or create an account</h2>
+<p>Use the same account across all RitoccaPix tools.</p>
+
+<label for="accountEmail">Email address</label>
+<input id="accountEmail" type="email" autocomplete="email" placeholder="you@example.com">
+
+<label for="accountPassword">Password</label>
+<input id="accountPassword" type="password" autocomplete="current-password" minlength="8" placeholder="At least 8 characters">
+
+<div class="buttons">
+<button id="registerBtn" class="primary" type="button">Create account</button>
+<button id="loginBtn" class="secondary" type="button">Sign in</button>
+</div>
+
+<div class="bonus">
+<strong>50 welcome credits</strong>
+<p>New users receive 50 credits once, after verifying their email address. Credits are shared across eligible AI tools.</p>
+</div>
+</div>
+
+<div id="accountState">
+<h2>You are signed in</h2>
+<p class="email">Account: <strong id="accountUserEmail"></strong></p>
+<div class="balance">
+<strong id="creditBalance">…</strong>
+<span id="creditLabel">credits available</span>
+</div>
+<p>Your balance is shared across RitoccaPix AI tools.</p>
+<div class="buttons">
+<button id="refreshBtn" class="secondary" type="button">Refresh balance</button>
+<button id="logoutBtn" class="secondary" type="button">Sign out</button>
+</div>
+</div>
+
+<p id="accountMessage" class="message" role="status" aria-live="polite"></p>
+</section>
+
+<footer>© <span id="year"></span> RitoccaPix · <a href="privacy.html">Privacy Policy</a></footer>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(()=>{
+"use strict";
+
+const SUPABASE_URL="https://eckppexmaihbzbtunhnp.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY="sb_publishable_h4NECcXTuSS7R-BDSAwIVQ_WKKolNKW";
+
+const $=id=>document.getElementById(id);
+const authState=$("authState");
+const accountState=$("accountState");
+const emailInput=$("accountEmail");
+const passwordInput=$("accountPassword");
+const registerBtn=$("registerBtn");
+const loginBtn=$("loginBtn");
+const refreshBtn=$("refreshBtn");
+const logoutBtn=$("logoutBtn");
+const accountUserEmail=$("accountUserEmail");
+const creditBalance=$("creditBalance");
+const creditLabel=$("creditLabel");
+const accountMessage=$("accountMessage");
+
+$("year").textContent=new Date().getFullYear();
+
+let currentSession=null;
+let busy=false;
+
+function message(text,isError=false){
+ accountMessage.textContent=text||"";
+ accountMessage.classList.toggle("error",Boolean(isError));
+}
+
+function setBusy(value){
+ busy=value;
+ registerBtn.disabled=value;
+ loginBtn.disabled=value;
+}
+
+if(!window.supabase||!window.supabase.createClient){
+ message("The account service could not be loaded. Please refresh.",true);
+ registerBtn.disabled=true;
+ loginBtn.disabled=true;
+ return;
+}
+
+const supabaseClient=window.supabase.createClient(
+ SUPABASE_URL,
+ SUPABASE_PUBLISHABLE_KEY,
+ {auth:{
+  persistSession:true,
+  autoRefreshToken:true,
+  detectSessionInUrl:true
+ }}
+);
+
+async function refreshBalance(){
+ if(!currentSession){
+  creditBalance.textContent="—";
+  return;
+ }
+
+ creditBalance.textContent="…";
+
+ const {data,error}=await supabaseClient
+  .from("credit_balances")
+  .select("balance")
+  .eq("user_id",currentSession.user.id)
+  .maybeSingle();
+
+ if(error){
+  console.error("Credit balance error:",error);
+  creditBalance.textContent="—";
+  message("Could not load your credit balance. Please refresh.",true);
+  return;
+ }
+
+ const balance=data?Number(data.balance)||0:0;
+ creditBalance.textContent=String(balance);
+ creditLabel.textContent=balance===1?"credit available":"credits available";
+}
+
+async function applySession(session){
+ currentSession=session||null;
+
+ if(currentSession){
+  authState.classList.add("hidden");
+  accountState.classList.add("active");
+  accountUserEmail.textContent=currentSession.user.email||"Account";
+  await refreshBalance();
+ }else{
+  authState.classList.remove("hidden");
+  accountState.classList.remove("active");
+  accountUserEmail.textContent="";
+  creditBalance.textContent="—";
+  creditLabel.textContent="credits available";
+ }
+}
+
+registerBtn.addEventListener("click",async()=>{
+ if(busy)return;
+
+ const email=emailInput.value.trim();
+ const password=passwordInput.value;
+
+ if(!email||!emailInput.validity.valid){
+  message("Please enter a valid email address.",true);
+  emailInput.focus();
+  return;
+ }
+ if(password.length<8){
+  message("Your password must contain at least 8 characters.",true);
+  passwordInput.focus();
+  return;
+ }
+
+ setBusy(true);
+ message("Creating your account…");
+
+ try{
+  const {data,error}=await supabaseClient.auth.signUp({
+   email,
+   password,
+   options:{
+    emailRedirectTo:"https://ritoccapix.com/account.html"
+   }
+  });
+
+  if(error)throw error;
+
+  if(data.session){
+   await applySession(data.session);
+   message("Your account is ready.");
+  }else{
+   message("Account created. Check your inbox and click the confirmation link. Your 50 welcome credits are added after email verification. Then return here to sign in.");
+  }
+ }catch(error){
+  console.error("Registration error:",error);
+  message(error.message||"Could not create your account.",true);
+ }finally{
+  setBusy(false);
+ }
+});
+
+loginBtn.addEventListener("click",async()=>{
+ if(busy)return;
+
+ const email=emailInput.value.trim();
+ const password=passwordInput.value;
+
+ if(!email||!emailInput.validity.valid){
+  message("Please enter your registered email address.",true);
+  emailInput.focus();
+  return;
+ }
+ if(!password){
+  message("Please enter your password.",true);
+  passwordInput.focus();
+  return;
+ }
+
+ setBusy(true);
+ message("Signing in…");
+
+ try{
+  const {data,error}=await supabaseClient.auth.signInWithPassword({email,password});
+  if(error)throw error;
+  await applySession(data.session);
+  message("You are signed in.");
+ }catch(error){
+  console.error("Sign-in error:",error);
+  message(error.message||"Sign-in failed. Check your email and password.",true);
+ }finally{
+  setBusy(false);
+ }
+});
+
+logoutBtn.addEventListener("click",async()=>{
+ logoutBtn.disabled=true;
+ try{
+  const {error}=await supabaseClient.auth.signOut();
+  if(error)throw error;
+  await applySession(null);
+  message("You have signed out.");
+ }catch(error){
+  console.error("Sign-out error:",error);
+  message(error.message||"Could not sign out.",true);
+ }finally{
+  logoutBtn.disabled=false;
+ }
+});
+
+refreshBtn.addEventListener("click",async()=>{
+ refreshBtn.disabled=true;
+ message("Refreshing your balance…");
+ try{
+  await refreshBalance();
+  message("Credit balance updated.");
+ }finally{
+  refreshBtn.disabled=false;
+ }
+});
+
+supabaseClient.auth.onAuthStateChange((event,session)=>{
+ if(event==="SIGNED_OUT"){
+  currentSession=null;
+  applySession(null);
+ }else if(["SIGNED_IN","INITIAL_SESSION","TOKEN_REFRESHED","USER_UPDATED"].includes(event)){
+  currentSession=session||null;
+  if(currentSession){
+   accountUserEmail.textContent=currentSession.user.email||"Account";
+   authState.classList.add("hidden");
+   accountState.classList.add("active");
+   setTimeout(()=>refreshBalance(),0);
+  }else{
+   applySession(null);
+  }
+ }
+});
+
+(async()=>{
+ try{
+  const {data,error}=await supabaseClient.auth.getSession();
+  if(error)throw error;
+  await applySession(data.session);
+  if(!data.session)message("Sign in or create an account to view your shared credits.");
+ }catch(error){
+  console.error("Session restore error:",error);
+  await applySession(null);
+  message("Could not restore your session. Please sign in again.",true);
+ }
+})();
+
+})();
+</script>
+</body>
+</html>
