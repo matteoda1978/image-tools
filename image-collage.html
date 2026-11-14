@@ -1,22 +1,24 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Free Photo Collage Maker Online | RitoccaPix</title>
-<meta name="description" content="Create a photo collage online for free. Combine up to 12 photos with creative layouts, AI-assisted composition, custom shapes, backgrounds and captions.">
+<meta name="description" content="Create a photo collage online for free. Combine up to 12 photos with creative layouts, AI-assisted composition, smart subject positioning, custom shapes and backgrounds.">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#0a0f1d">
 <link rel="canonical" href="https://ritoccapix.com/image-collage.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="RitoccaPix">
 <meta property="og:title" content="Free Photo Collage Maker Online | RitoccaPix">
-<meta property="og:description" content="Create a free photo collage online. Arrange up to 12 photos with creative layouts, custom frames, AI-assisted composition, backgrounds and captions.">
+<meta property="og:description" content="Create a free photo collage online with creative AI layouts, smart subject positioning and custom frames.">
 <meta property="og:url" content="https://ritoccapix.com/image-collage.html">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Free Photo Collage Maker Online | RitoccaPix">
-<meta name="twitter:description" content="Arrange up to 12 photos in a custom collage with creative layouts, AI-assisted composition, backgrounds and captions.">
+<meta name="twitter:description" content="Create creative photo collages with AI-assisted layouts and smart subject positioning.">
 <script src="menu.js" defer></script>
+
 <style>
 *{box-sizing:border-box}
 :root{--bg:#0a0f1d;--panel:#11192b;--panel2:#0c1323;--border:#26324a;--text:#f5f7ff;--muted:#9da8bd;--accent:#6ea8ff}
@@ -47,8 +49,8 @@ main{max-width:1200px;margin:auto;padding:30px 16px 50px}
 .shape-btn.active{border-color:var(--accent);background:#1a2b49;color:#fff}
 .shape-btn:hover{border-color:var(--accent);color:#fff}
 .layout-btn,.format-btn,.secondary-btn,.shuffle,.style-btn{border:1px solid var(--border);background:var(--panel2);color:var(--muted);border-radius:9px;padding:9px 5px;cursor:pointer;font-size:12px;font-weight:700}
-.layout-btn.active,.format-btn.active{border-color:var(--accent);background:#1a2b49;color:white}
-.layout-btn:hover,.format-btn:hover,.secondary-btn:hover,.shuffle:hover{border-color:var(--accent);color:white}
+.layout-btn.active,.format-btn.active,.style-btn.active{border-color:var(--accent);background:#1a2b49;color:white}
+.layout-btn:hover,.format-btn:hover,.secondary-btn:hover,.shuffle:hover,.style-btn:hover{border-color:var(--accent);color:white}
 .layout-preview{width:46px;height:34px;margin:0 auto 6px;display:grid;gap:2px}
 .layout-preview span{background:currentColor;border-radius:2px;min-width:0;min-height:0}
 .lp2{grid-template-columns:1fr 1fr}
@@ -85,6 +87,12 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 .ai-consent{display:flex;gap:9px;align-items:flex-start;margin:12px 0;color:var(--muted);font-size:12px;line-height:1.5}
 .ai-consent input{margin-top:3px;flex:0 0 auto;accent-color:var(--accent)}
 .ai-prompt{margin-top:10px;display:block}
+.ai-style-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:12px}
+.style-btn{min-height:66px;padding:9px;text-align:left;line-height:1.35}
+.style-btn strong{display:block;color:inherit;font-size:12px;margin-bottom:3px}
+.style-btn span{display:block;font-size:10px;font-weight:500;opacity:.8}
+.style-btn:last-child{grid-column:1/-1}
+.ai-focus-note{padding:9px 10px;margin-top:10px;background:#0d192b;border:1px solid #30445f;border-radius:9px;font-size:11px;color:var(--muted)}
 .custom-tools{margin-top:22px;padding-top:17px;border-top:1px solid var(--border)}
 .custom-tools h3{font-size:16px;margin:0 0 6px}
 .custom-buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -110,6 +118,7 @@ footer a{color:var(--accent);text-decoration:none}
 @media(max-width:520px){main{padding:24px 10px 35px}.panel,.preview-panel,.content{padding:13px}.canvas-wrap{padding:6px;min-height:180px}.downloads{grid-template-columns:1fr}.layout-grid{gap:5px}}
 </style>
 </head>
+
 <body>
 <header>
   <div class="container">
@@ -121,17 +130,19 @@ footer a{color:var(--accent);text-decoration:none}
 <main>
 <section class="hero">
   <h1>Free Online Photo Collage Maker with Creative Layouts</h1>
-  <p>Turn your photos into a creative collage with overlapping images, varied frame sizes and magazine-style layouts. Use local smart composition or AI-assisted layout suggestions, adjust photo position, zoom, shapes and spacing, then download your finished design as a JPG or PNG.</p>
+  <p>Turn your photos into a creative collage with overlapping images, varied frame sizes and magazine-style layouts. Choose local composition or AI-assisted designs, adjust photo position, zoom, shapes and spacing, then download your finished design as a JPG or PNG.</p>
 </section>
 
 <div class="workspace">
 <aside class="panel">
   <div class="panel-title">1. Add your photos</div>
+
   <label class="upload" for="fileInput">
     <div class="upload-icon">＋</div>
     <strong>Choose photos</strong>
     <span>JPG, PNG or WebP · Up to 12 images</span>
   </label>
+
   <input id="fileInput" type="file" accept="image/*" multiple>
   <div id="photoList" class="photo-list"></div>
   <div id="photoCount" class="photo-count">No photos selected</div>
@@ -142,20 +153,55 @@ footer a{color:var(--accent);text-decoration:none}
     <button id="smartLayout" class="smart-btn" type="button">Create a Local Smart Collage</button>
     <button id="tryAnother" class="smart-btn secondary" type="button">Try Another Local Design</button>
     <button id="autoPlacePhotos" class="secondary-btn" type="button" style="width:100%;margin-top:2px">Auto-place photos in frames</button>
-    <p>Creates magazine-style layouts using local layout rules. This option does not use AI and does not upload your photos.</p>
+    <p>Creates creative layouts using local layout rules. This option does not use AI and does not upload your photos.</p>
   </div>
 
   <div class="section ai-smart-box">
     <h3>✦ AI Smart Collage</h3>
-    <p>Let AI analyse small photo previews and suggest a creative layout. Your original photos stay in your browser, and the final collage is assembled here using your original images.</p>
+    <p>Choose how you want your photos arranged. AI analyses reduced previews and suggests a layout. Your original photos are used locally to create the final collage.</p>
+
+    <div class="section-label" style="margin-top:13px">Choose your composition style</div>
+
+    <div class="ai-style-grid" role="group" aria-label="AI collage composition style">
+      <button class="style-btn active" data-ai-style="big-small" type="button" aria-pressed="true">
+        <strong>1. Big &amp; Small</strong>
+        <span>One main photo with smaller supporting photos</span>
+      </button>
+      <button class="style-btn" data-ai-style="equal" type="button" aria-pressed="false">
+        <strong>2. Equal Photos</strong>
+        <span>All photos with similar dimensions</span>
+      </button>
+      <button class="style-btn" data-ai-style="overlapping" type="button" aria-pressed="false">
+        <strong>3. Overlapping</strong>
+        <span>Layered photos with rotations and depth</span>
+      </button>
+      <button class="style-btn" data-ai-style="creative" type="button" aria-pressed="false">
+        <strong>4. Creative Mix</strong>
+        <span>Asymmetrical editorial arrangement</span>
+      </button>
+      <button class="style-btn" data-ai-style="mosaic" type="button">
+        <strong>5. Mosaic</strong>
+        <span>A compact mosaic with varied photo areas</span>
+      </button>
+    </div>
+
     <label class="help ai-prompt" for="aiPrompt">Optional design direction</label>
-    <input id="aiPrompt" class="text-input" type="text" maxlength="240" placeholder="e.g. Travel magazine, family memories, clean and elegant">
+    <input id="aiPrompt" class="text-input" type="text" maxlength="240" placeholder="e.g. Family memories, summer holiday, elegant magazine">
+
+    <div class="ai-focus-note">
+      <strong>Smart subject positioning</strong><br>
+      The AI layout can provide a focal point for each photo. The editor uses that information to help keep faces and important subjects inside their frames. You can still adjust every photo manually.
+    </div>
+
     <label class="ai-consent">
       <input id="aiConsent" type="checkbox">
       <span>I agree to send reduced photo previews (not the original files) to RitoccaPix's cloud AI service, powered by Google Gemini, to analyse the layout. The final collage is created in my browser. See the <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</span>
     </label>
+
     <button id="aiSmartLayout" class="smart-btn" type="button">Create AI Smart Collage</button>
-    <p>AI receives reduced JPEG previews only. No preview is uploaded until you tick the consent box and click the AI button. Local Smart Collage remains available without uploading photos.</p>
+    <button id="aiTryAnother" class="smart-btn secondary" type="button">Try Another AI Design</button>
+
+    <p>AI receives reduced JPEG previews only. No preview is uploaded until you tick the consent box and click an AI button. Local Smart Collage remains available without uploading photos.</p>
   </div>
 
   <div class="section">
@@ -169,7 +215,7 @@ footer a{color:var(--accent);text-decoration:none}
       <button class="shape-btn" data-shape="cloud" type="button" aria-pressed="false"><span class="shape-icon">☁</span>Cloud</button>
       <button class="shape-btn" data-shape="star" type="button" aria-pressed="false"><span class="shape-icon">★</span>Star</button>
     </div>
-    <p class="help">Choose a shape, then pick a layout and add your photos. The shape is applied to every photo frame. Circle and heart are great for creative collages.</p>
+    <p class="help">Choose a shape, then pick a layout and add your photos. The shape is applied to every photo frame.</p>
   </div>
 
   <div class="section">
@@ -235,35 +281,43 @@ footer a{color:var(--accent);text-decoration:none}
   <div class="custom-tools">
     <h3>7. Edit your frames</h3>
     <p class="help">Drag inside a photo to reposition it. Drag near a frame edge to move the frame. Drag a corner handle to resize it. Rotated frames can be adjusted approximately by their visible bounds.</p>
+
     <div class="custom-buttons">
       <button id="addCell" class="secondary-btn" type="button">＋ Add frame</button>
       <button id="removeCell" class="secondary-btn" type="button">− Remove frame</button>
     </div>
+
     <div class="control">
       <div class="control-top"><label for="cellSelect">Selected frame</label></div>
       <select id="cellSelect" class="text-input"></select>
     </div>
+
     <div class="control">
       <div class="control-top"><label for="photoSelect">Photo to place</label></div>
       <select id="photoSelect" class="text-input"><option value="-1">No photo selected</option></select>
     </div>
+
     <div class="custom-buttons" style="margin-top:9px">
       <button id="placePhoto" class="secondary-btn" type="button">Place photo in frame</button>
       <button id="clearPhoto" class="secondary-btn" type="button">Remove photo</button>
     </div>
+
     <div class="control">
       <div class="control-top"><label for="cellZoom">Photo zoom</label><span id="cellZoomValue" class="value">1.0×</span></div>
       <input id="cellZoom" type="range" min="50" max="350" step="5" value="100">
       <p class="help">Drag a photo to reposition it. Zoom out to show more, or zoom in to crop closer.</p>
     </div>
+
     <div class="custom-buttons" style="margin-top:9px">
       <button id="fillFrame" class="secondary-btn" type="button">Fill frame</button>
       <button id="fitWholePhoto" class="secondary-btn" type="button">Fit whole photo</button>
     </div>
+
     <div class="custom-buttons" style="margin-top:8px">
       <button id="centerPhoto" class="secondary-btn" type="button">Center &amp; reset zoom</button>
       <button id="resetLayout" class="secondary-btn" type="button">Reset layout</button>
     </div>
+
     <button id="autoFitAll" class="secondary-btn" type="button" style="width:100%;margin-top:8px">Auto-fit all photos</button>
   </div>
 </aside>
@@ -273,13 +327,16 @@ footer a{color:var(--accent);text-decoration:none}
     <h2 class="preview-title">Collage preview</h2>
     <button id="shuffle" class="shuffle" type="button">Shuffle photos</button>
   </div>
+
   <div class="canvas-wrap">
     <canvas id="canvas" aria-label="Interactive collage preview"></canvas>
   </div>
+
   <div class="downloads">
     <button id="downloadJpg" class="download-btn download-jpg" type="button" disabled>Download JPG</button>
     <button id="downloadPng" class="download-btn download-png" type="button" disabled>Download PNG</button>
   </div>
+
   <p id="status" class="help" role="status" aria-live="polite">Upload photos to begin creating your collage.</p>
 </section>
 </div>
@@ -288,8 +345,8 @@ footer a{color:var(--accent);text-decoration:none}
   <h2>How to create a creative photo collage</h2>
   <ol>
     <li>Upload up to 12 photos from your device.</li>
-    <li>Choose Create a Local Smart Collage for a private, browser-only layout, or use AI Smart Collage for an AI-assisted layout suggestion.</li>
-    <li>To use AI, enter an optional design direction, tick the consent box and click Create AI Smart Collage. Only reduced photo previews are sent for layout analysis.</li>
+    <li>Choose Create a Local Smart Collage for a private, browser-only layout, or select one of the five AI Smart Collage styles.</li>
+    <li>For AI, choose Big &amp; Small, Equal Photos, Overlapping, Creative Mix or Mosaic. Enter an optional design direction, tick the consent box and click Create AI Smart Collage.</li>
     <li>Choose an enhancement style and apply it to your collage photos.</li>
     <li>Choose a creative frame shape, then adjust the canvas format, frame spacing, background and caption.</li>
     <li>Download your finished collage as a high-resolution JPG or PNG.</li>
@@ -299,22 +356,31 @@ footer a{color:var(--accent);text-decoration:none}
 
 <section class="content">
   <h2>Make a photo collage online with your own style</h2>
-  <p>Use RitoccaPix as a free photo collage creator for family memories, travel photos, creative projects or social media posts. Combine up to 12 pictures, give the main image more space, and mix rounded, circular, heart, star and other frame shapes for a design that feels less like a fixed grid.</p>
+  <p>Use RitoccaPix as a free photo collage creator for family memories, travel photos, creative projects or social media posts. Combine up to 12 pictures and choose from different composition styles, including balanced grids, layered photos, asymmetrical designs and mosaics.</p>
   <p>Start with the local smart composition tool or ask AI to suggest a layout, then fine-tune the photo position, zoom, spacing, background and caption yourself. When your collage is ready, export it as a JPG or PNG. If you need to prepare an image first, use the <a href="image-resizer.html">online image resizer</a> or the <a href="image-compressor.html">image compressor</a>.</p>
 </section>
 
 <section class="content">
   <h2>Frequently asked questions</h2>
+
   <h3>Does Smart Collage use artificial intelligence?</h3>
   <p>There are two options. Local Smart Collage uses layout rules and does not use an AI model. AI Smart Collage sends reduced photo previews to our cloud AI service, powered by Google Gemini, to analyse the photos and suggest a layout. It does not generate or replace your photos.</p>
+
+  <h3>What AI collage styles are available?</h3>
+  <p>You can choose Big &amp; Small, Equal Photos, Overlapping, Creative Mix or Mosaic. Each style gives the AI a different composition direction.</p>
+
+  <h3>Can AI help avoid cutting off faces?</h3>
+  <p>The editor supports AI-provided focal point information to position important subjects more carefully inside a frame. Results depend on the information returned by the AI service. You can always adjust the photo position and zoom manually.</p>
+
   <h3>Can I center, zoom or show the whole photo?</h3>
   <p>Yes. Select a frame, adjust the zoom slider, drag the photo to reposition it, or use Fill frame, Fit whole photo, Center &amp; reset zoom, or Auto-fit all photos.</p>
+
   <h3>Does photo enhancement overwrite my original photos?</h3>
   <p>No. The original uploaded images remain unchanged. The selected enhancement is applied when the collage is drawn and exported.</p>
+
   <h3>Does this tool use a cloud AI service?</h3>
-  <p>Only if you choose AI Smart Collage, tick the consent box and click its button. Reduced-size photo previews are sent to the cloud AI service for layout analysis. The local composition option does not use a cloud service.</p>
-  <h3>Can I use the tool on my phone?</h3>
-  <p>Yes. You can upload photos, choose rounded, rectangular, circular, oval, heart, cloud or star-shaped frames, create layouts, apply enhancement styles and export your collage on supported mobile browsers.</p>
+  <p>Only if you choose AI Smart Collage, tick the consent box and click an AI button. Reduced-size photo previews are sent to the cloud AI service for layout analysis. The local composition option does not use a cloud service.</p>
+
   <h3>Are my photos uploaded?</h3>
   <p>In local mode, photos stay in your browser. If you explicitly choose AI Smart Collage and give consent, reduced-size JPEG previews are uploaded for layout analysis. Original image files are not sent to the AI service. The final collage is assembled in your browser.</p>
 </section>
@@ -336,7 +402,9 @@ const photoList=$('photoList');
 const photoCount=$('photoCount');
 
 const COLLAGE_AI_WORKER_URL='https://ritoccapix-collage-ai.ritoccapix.workers.dev';
+
 let aiCollageBusy=false;
+let selectedAiStyle='big-small';
 
 let images=[];
 let cells=[];
@@ -367,8 +435,35 @@ const styles={
   soft:'brightness(1.10) contrast(0.94) saturate(1.03)'
 };
 
+const aiStyleInstructions={
+  'big-small':`COMPOSITION STYLE: BIG & SMALL.
+Create one visually dominant main photo with the remaining photos arranged in smaller supporting frames around it. Use a clear visual hierarchy. Avoid hiding important people or faces.`,
+
+  'equal':`COMPOSITION STYLE: EQUAL PHOTOS.
+Give all photos approximately equal visual importance and similar frame areas. Use a balanced, clean and attractive arrangement. Do not create one dominant hero image.`,
+
+  'overlapping':`COMPOSITION STYLE: OVERLAPPING.
+Create a layered scrapbook or editorial composition. Photos may overlap, have varied sizes and slight rotations. Keep important subjects visible. Avoid placing overlaps across faces.`,
+
+  'creative':`COMPOSITION STYLE: CREATIVE MIX.
+Create an original asymmetrical editorial composition with different frame sizes, varied proportions and an intentional visual rhythm. Avoid a simple row or ordinary grid.`,
+
+  'mosaic':`COMPOSITION STYLE: MOSAIC.
+Create a compact mosaic using varied rectangular frame sizes. Arrange all photos into a cohesive composition with minimal wasted space. Keep the overall design balanced.`
+};
+
 function makeCell(x,y,w,h,photoIndex=-1,rotation=0){
-  return {x,y,w,h,photoIndex,rotation,zoom:1,photoX:0,photoY:0,fit:true,fitMode:'cover'};
+  return {
+    x,y,w,h,photoIndex,rotation,
+    zoom:1,
+    photoX:0,
+    photoY:0,
+    fit:true,
+    fitMode:'cover',
+    focalX:0.5,
+    focalY:0.5,
+    hasAiFocus:false
+  };
 }
 
 const templates={
@@ -387,6 +482,7 @@ function status(message){
 function updatePhotoSelect(){
   const select=$('photoSelect');
   select.replaceChildren();
+
   const empty=document.createElement('option');
   empty.value='-1';
   empty.textContent='No photo selected';
@@ -398,29 +494,34 @@ function updatePhotoSelect(){
     option.textContent=(i+1)+'. '+item.name;
     select.appendChild(option);
   });
+
   select.value=String(selectedPhoto);
 }
 
 function renderPhotos(){
   photoList.replaceChildren();
+
   images.forEach((item,i)=>{
     const img=document.createElement('img');
     img.src=item.image.src;
     img.alt='Photo '+(i+1)+': '+item.name;
     img.title='Select '+item.name;
     img.className='photo-thumb'+(i===selectedPhoto?' active':'');
+
     img.addEventListener('click',()=>{
       selectedPhoto=i;
       updatePhotoSelect();
       renderPhotos();
       status('Photo selected. Choose a frame and press Place photo in frame to assign it.');
     });
+
     photoList.appendChild(img);
   });
 
   photoCount.textContent=images.length
     ? images.length+' photo'+(images.length===1?'':'s')+' loaded'
     : 'No photos selected';
+
   updatePhotoSelect();
 }
 
@@ -431,6 +532,7 @@ function updateSelect(){
   cells.forEach((cell,i)=>{
     const option=document.createElement('option');
     option.value=String(i);
+
     const photo=cell.photoIndex>=0&&images[cell.photoIndex];
     option.textContent='Frame '+(i+1)+(photo?' — '+images[cell.photoIndex].name:' — empty');
     select.appendChild(option);
@@ -440,6 +542,7 @@ function updateSelect(){
     selectedCell=Math.max(0,Math.min(selectedCell,cells.length-1));
     select.value=String(selectedCell);
   }
+
   updateControls();
 }
 
@@ -450,12 +553,15 @@ function updateControls(){
     $('centerPhoto').disabled=true;
     $('fillFrame').disabled=true;
     $('fitWholePhoto').disabled=true;
+    $('autoFitAll').disabled=!images.length;
     return;
   }
 
   const cell=cells[selectedCell];
+
   $('cellZoom').value=Math.max(50,Math.min(350,Math.round(cell.zoom*100)));
   $('cellZoomValue').textContent=cell.zoom.toFixed(1)+'×';
+
   $('removeCell').disabled=cells.length<=1;
   $('clearPhoto').disabled=cell.photoIndex<0;
   $('centerPhoto').disabled=cell.photoIndex<0;
@@ -466,6 +572,7 @@ function updateControls(){
 
 function selectCell(index){
   if(!cells.length)return;
+
   selectedCell=Math.max(0,Math.min(index,cells.length-1));
   $('cellSelect').value=String(selectedCell);
   updateControls();
@@ -475,9 +582,11 @@ function selectCell(index){
 function applyLayout(layout){
   currentLayout=layout;
   cells=templates[layout]();
+
   cells.forEach(cell=>{
     if(cell.photoIndex<0||!images[cell.photoIndex])cell.photoIndex=-1;
   });
+
   selectedCell=0;
 
   document.querySelectorAll('.layout-btn').forEach(button=>{
@@ -493,12 +602,9 @@ function rand(min,max){
   return min+Math.random()*(max-min);
 }
 
-function variedRotation(){
-  return rand(-5,5);
-}
-
 function assignPhotosToCells(){
   if(!images.length)return;
+
   const order=images.map((_,i)=>i);
 
   for(let i=order.length-1;i>0;i--){
@@ -508,16 +614,23 @@ function assignPhotosToCells(){
 
   cells.forEach((cell,i)=>{
     cell.photoIndex=i<order.length?order[i]:-1;
-    cell.zoom=1;
-    cell.photoX=0;
-    cell.photoY=0;
-    cell.fit=true;
-    cell.fitMode='cover';
+    resetCellPhotoPosition(cell);
   });
 
   selectedPhoto=order[0]??-1;
   renderPhotos();
   updateSelect();
+}
+
+function resetCellPhotoPosition(cell){
+  cell.zoom=1;
+  cell.photoX=0;
+  cell.photoY=0;
+  cell.fit=true;
+  cell.fitMode='cover';
+  cell.focalX=0.5;
+  cell.focalY=0.5;
+  cell.hasAiFocus=false;
 }
 
 /* Existing local smart composition algorithm: kept separate from AI. */
@@ -530,6 +643,7 @@ function createSmartComposition(){
 
   const n=images.length;
   const variant=designVersion++;
+
   $('spacing').value='0';
   $('spacingValue').textContent='0 px';
 
@@ -574,15 +688,26 @@ function createSmartComposition(){
       [[-5,-4,70,106,-3],[52,-4,54,35,4],[53,24,53,38,-4],[-4,68,40,38,4],[27,66,43,40,-3],[62,64,42,42,3]],
       [[-5,-4,54,66,-4],[39,-4,67,64,4],[-5,47,52,59,3],[36,44,67,61,-3],[13,69,50,39,-2],[59,66,45,41,4]]
     ];
+
     const base=heroSets[family%heroSets.length].map(box=>box.slice());
+
     for(let i=6;i<count;i++){
-      const spots=[[-3,4,34,35,rand(-7,7)],[66,4,38,32,rand(-7,7)],[-2,43,32,39,rand(-7,7)],[68,39,36,37,rand(-7,7)],[28,72,42,34,rand(-6,6)],[39,6,36,31,rand(-7,7)]];
+      const spots=[
+        [-3,4,34,35,rand(-7,7)],
+        [66,4,38,32,rand(-7,7)],
+        [-2,43,32,39,rand(-7,7)],
+        [68,39,36,37,rand(-7,7)],
+        [28,72,42,34,rand(-6,6)],
+        [39,6,36,31,rand(-7,7)]
+      ];
       base.push(spots[(i-6)%spots.length]);
     }
+
     return base.slice(0,count);
   }
 
   let chosen;
+
   if(n<=6){
     const choices=layouts[n]||layouts[6];
     chosen=choices[variant%choices.length].map(box=>box.slice());
@@ -595,6 +720,7 @@ function createSmartComposition(){
   }
 
   const order=images.map((_,i)=>i);
+
   for(let i=order.length-1;i>0;i--){
     const j=Math.floor(Math.random()*(i+1));
     [order[i],order[j]]=[order[j],order[i]];
@@ -605,22 +731,19 @@ function createSmartComposition(){
     return makeCell(x,y,w,h,order[i]??-1,rotation);
   });
 
-  cells.forEach(cell=>{
-    cell.zoom=1;
-    cell.photoX=0;
-    cell.photoY=0;
-    cell.fit=true;
-    cell.fitMode='cover';
-  });
+  cells.forEach(cell=>resetCellPhotoPosition(cell));
 
   currentLayout='smart';
   document.querySelectorAll('.layout-btn').forEach(button=>button.classList.remove('active'));
+
   selectedCell=0;
   selectedPhoto=order[0]??-1;
+
   renderPhotos();
   updateSelect();
   draw();
-  status('Local creative collage '+(variant+1)+' is ready. Photos overlap to fill the canvas. Choose Try Another Local Design for a new composition.');
+
+  status('Local creative collage '+(variant+1)+' is ready. Choose Try Another Local Design for a new composition.');
 }
 
 /* Create a small JPEG preview. Original uploaded images are never sent. */
@@ -636,10 +759,12 @@ function createThumbnailBase64(image,maxSide=640,quality=0.72){
 
     const scale=Math.min(1,maxSide/Math.max(width,height));
     const previewCanvas=document.createElement('canvas');
+
     previewCanvas.width=Math.max(1,Math.round(width*scale));
     previewCanvas.height=Math.max(1,Math.round(height*scale));
 
     const previewContext=previewCanvas.getContext('2d');
+
     if(!previewContext){
       reject(new Error('Could not prepare a photo preview.'));
       return;
@@ -654,22 +779,78 @@ function createThumbnailBase64(image,maxSide=640,quality=0.72){
       }
 
       const reader=new FileReader();
+
       reader.onload=()=>{
         const dataUrl=String(reader.result||'');
         const comma=dataUrl.indexOf(',');
+
         if(comma<0){
           reject(new Error('Could not encode the photo preview.'));
           return;
         }
+
         resolve({
           mimeType:'image/jpeg',
           data:dataUrl.slice(comma+1)
         });
       };
+
       reader.onerror=()=>reject(new Error('Could not read the reduced preview.'));
       reader.readAsDataURL(blob);
     },'image/jpeg',quality);
   });
+}
+
+/*
+  Optional AI focal-point support.
+
+  Expected per-cell fields from the Worker:
+  focalX: horizontal focal position from 0 to 1
+  focalY: vertical focal position from 0 to 1
+
+  These fields must be added to the Worker response schema before
+  the AI can return them reliably.
+*/
+function applyAiFocalPoint(cell,item){
+  const fx=Number(item.focalX);
+  const fy=Number(item.focalY);
+
+  if(!Number.isFinite(fx)||!Number.isFinite(fy)){
+    return;
+  }
+
+  cell.focalX=Math.max(0,Math.min(1,fx));
+  cell.focalY=Math.max(0,Math.min(1,fy));
+  cell.hasAiFocus=true;
+}
+
+function positionPhotoAtFocalPoint(cell){
+  if(!cell.hasAiFocus||cell.photoIndex<0||!images[cell.photoIndex]){
+    cell.photoX=0;
+    cell.photoY=0;
+    return;
+  }
+
+  const img=images[cell.photoIndex].image;
+  const r=getFrameRect(cell);
+
+  const border=Math.max(5,canvas.width*.008);
+  const iw=Math.max(1,r.w-border*2);
+  const ih=Math.max(1,r.h-border*2);
+
+  const scale=Math.max(iw/img.naturalWidth,ih/img.naturalHeight)*(cell.zoom||1);
+
+  const dw=img.naturalWidth*scale;
+  const dh=img.naturalHeight*scale;
+
+  const wantedX=(0.5-cell.focalX)*dw;
+  const wantedY=(0.5-cell.focalY)*dh;
+
+  const maxX=Math.max(0,(dw-iw)/2);
+  const maxY=Math.max(0,(dh-ih)/2);
+
+  cell.photoX=Math.max(-maxX,Math.min(maxX,wantedX));
+  cell.photoY=Math.max(-maxY,Math.min(maxY,wantedY));
 }
 
 function validateAiCells(rawCells){
@@ -688,6 +869,7 @@ function validateAiCells(rawCells){
     if(![x,y,w,h].every(Number.isFinite)){
       throw new Error('The AI service returned invalid frame coordinates. Please try again.');
     }
+
     if(w<=0||h<=0||w>120||h>120){
       throw new Error('The AI service returned an invalid frame size. Please try again.');
     }
@@ -696,18 +878,55 @@ function validateAiCells(rawCells){
       ? photoIndex
       : -1;
 
-    const cell=makeCell(x,y,w,h,safePhotoIndex,Math.max(-15,Math.min(15,rotation)));
+    const cell=makeCell(
+      x,y,w,h,
+      safePhotoIndex,
+      Math.max(-15,Math.min(15,rotation))
+    );
+
     cell.zoom=1;
     cell.photoX=0;
     cell.photoY=0;
     cell.fit=true;
     cell.fitMode='cover';
+
+    applyAiFocalPoint(cell,item);
+
     return cell;
   });
 }
 
+function setAiStyle(style){
+  if(!aiStyleInstructions[style])return;
+
+  selectedAiStyle=style;
+
+  document.querySelectorAll('.style-btn').forEach(button=>{
+    const active=button.dataset.aiStyle===style;
+    button.classList.toggle('active',active);
+    button.setAttribute('aria-pressed',String(active));
+  });
+
+  const names={
+    'big-small':'Big & Small',
+    'equal':'Equal Photos',
+    'overlapping':'Overlapping',
+    'creative':'Creative Mix',
+    'mosaic':'Mosaic'
+  };
+
+  status('AI composition style selected: '+names[style]+'.');
+}
+
+document.querySelectorAll('.style-btn').forEach(button=>{
+  button.addEventListener('click',()=>{
+    setAiStyle(button.dataset.aiStyle);
+  });
+});
+
 async function createAiSmartComposition(){
   const button=$('aiSmartLayout');
+  const retryButton=$('aiTryAnother');
 
   if(aiCollageBusy)return;
 
@@ -725,6 +944,7 @@ async function createAiSmartComposition(){
 
   aiCollageBusy=true;
   button.disabled=true;
+  retryButton.disabled=true;
   button.textContent='Analysing photo previews…';
 
   try{
@@ -734,7 +954,25 @@ async function createAiSmartComposition(){
       images.slice(0,12).map(item=>createThumbnailBase64(item.image))
     );
 
-    const prompt=$('aiPrompt').value.trim();
+    const userPrompt=$('aiPrompt').value.trim();
+
+    /*
+      The style instructions are included in the prompt so the current
+      Worker can receive them through its existing prompt field.
+      The selected style is also sent separately for a future Worker update.
+    */
+    const completePrompt=[
+      aiStyleInstructions[selectedAiStyle],
+      'IMPORTANT SUBJECT PROTECTION:',
+      'Analyse the visible content of each supplied photo.',
+      'Identify people, faces and important subjects.',
+      'Avoid placing frame boundaries across heads or faces.',
+      'Do not crop the top of heads or important body parts when a safer crop is possible.',
+      'When a photo contains several people, try to preserve all of them.',
+      'Prefer a wider crop when a tight crop would cut off a person.',
+      'Do not invent, redraw, replace or modify the original photographs.',
+      userPrompt?'USER DESIGN DIRECTION: '+userPrompt:''
+    ].filter(Boolean).join('\n\n');
 
     status('Sending reduced previews for AI layout analysis…');
 
@@ -743,12 +981,14 @@ async function createAiSmartComposition(){
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
         images:thumbnails,
-        prompt,
-        format:selectedFormat
+        prompt:completePrompt,
+        format:selectedFormat,
+        style:selectedAiStyle
       })
     });
 
     let result;
+
     try{
       result=await response.json();
     }catch(error){
@@ -761,6 +1001,7 @@ async function createAiSmartComposition(){
         : response.status===429
           ? 'Too many requests. Please wait a moment and try again.'
           : 'AI layout analysis failed (HTTP '+response.status+').';
+
       throw new Error(message);
     }
 
@@ -788,27 +1029,52 @@ async function createAiSmartComposition(){
     }
 
     currentLayout='ai';
-    document.querySelectorAll('.layout-btn').forEach(item=>item.classList.remove('active'));
+
+    document.querySelectorAll('.layout-btn').forEach(item=>{
+      item.classList.remove('active');
+    });
 
     selectedCell=0;
     selectedPhoto=cells.find(cell=>cell.photoIndex>=0)?.photoIndex??0;
 
     renderPhotos();
     updateSelect();
+
+    /*
+      Apply returned focal points after the canvas dimensions and frame
+      geometry have been established.
+    */
+    draw(false);
+
+    cells.forEach(cell=>{
+      if(cell.hasAiFocus){
+        positionPhotoAtFocalPoint(cell);
+      }
+    });
+
     draw();
 
     const title=typeof composition.title==='string'
       ? composition.title
       : 'AI Smart Collage';
 
-    status(title+' is ready. Your original photos were used locally to render the collage.');
+    const focusCount=cells.filter(cell=>cell.hasAiFocus).length;
+
+    if(focusCount){
+      status(title+' is ready. AI focal positioning was applied to '+focusCount+' photo(s). You can still adjust every photo manually.');
+    }else{
+      status(title+' is ready. The AI layout was applied. This Worker response did not include focal-point coordinates, so photos use standard centering. You can adjust them manually.');
+    }
+
   }catch(error){
     console.error('AI Smart Collage error:',error);
     status(error.message||'Could not create the AI collage. Please try again.');
   }finally{
     aiCollageBusy=false;
     button.disabled=false;
+    retryButton.disabled=false;
     button.textContent='Create AI Smart Collage';
+    retryButton.textContent='Try Another AI Design';
 
     /* Require fresh consent for every AI request. */
     $('aiConsent').checked=false;
@@ -829,12 +1095,15 @@ fileInput.addEventListener('change',async()=>{
 
   const loaded=await Promise.all(files.map(file=>new Promise(resolve=>{
     const reader=new FileReader();
+
     reader.onload=event=>{
       const img=new Image();
+
       img.onload=()=>resolve({image:img,name:file.name});
       img.onerror=()=>resolve(null);
       img.src=event.target.result;
     };
+
     reader.onerror=()=>resolve(null);
     reader.readAsDataURL(file);
   })));
@@ -843,7 +1112,11 @@ fileInput.addEventListener('change',async()=>{
   selectedPhoto=images.length?0:-1;
 
   cells.forEach(cell=>{
-    if(cell.photoIndex<0||cell.photoIndex>=images.length)cell.photoIndex=-1;
+    if(cell.photoIndex<0||cell.photoIndex>=images.length){
+      cell.photoIndex=-1;
+    }else{
+      resetCellPhotoPosition(cell);
+    }
   });
 
   renderPhotos();
@@ -851,23 +1124,28 @@ fileInput.addEventListener('change',async()=>{
   draw();
 
   status(images.length+' photo(s) loaded. Use local Smart Collage, AI Smart Collage or choose a ready-made layout.');
+
+  fileInput.value='';
 });
 
 document.querySelectorAll('.layout-btn').forEach(button=>{
-  button.addEventListener('click',()=>applyLayout(button.dataset.layout));
+  button.addEventListener('click',()=>{
+    applyLayout(button.dataset.layout);
+  });
 });
 
 document.querySelectorAll('.shape-btn').forEach(button=>{
   button.addEventListener('click',()=>{
     frameShape=button.dataset.shape;
+
     document.querySelectorAll('.shape-btn').forEach(item=>{
       const active=item===button;
       item.classList.toggle('active',active);
       item.setAttribute('aria-pressed',String(active));
     });
+
     draw();
-    const shapeName=button.textContent.trim();
-    status(shapeName+' photo frames selected. Choose a layout and add your photos.');
+    status(button.textContent.trim()+' photo frames selected.');
   });
 });
 
@@ -875,12 +1153,18 @@ $('smartLayout').addEventListener('click',createSmartComposition);
 $('tryAnother').addEventListener('click',createSmartComposition);
 $('aiSmartLayout').addEventListener('click',createAiSmartComposition);
 
+$('aiTryAnother').addEventListener('click',()=>{
+  createAiSmartComposition();
+});
+
 document.querySelectorAll('.format-btn').forEach(button=>{
   button.addEventListener('click',()=>{
     selectedFormat=button.dataset.format;
+
     document.querySelectorAll('.format-btn').forEach(item=>{
       item.classList.toggle('active',item===button);
     });
+
     draw();
   });
 });
@@ -890,8 +1174,10 @@ $('enhancePhotos').addEventListener('click',()=>{
     status('Upload photos before enhancing them.');
     return;
   }
+
   activeStyle=$('photoStyle').value;
   draw();
+
   status('Photo style applied: '+$('photoStyle').selectedOptions[0].text+'. Your original images remain unchanged.');
 });
 
@@ -924,97 +1210,123 @@ $('placePhoto').addEventListener('click',()=>{
 
   const cell=cells[selectedCell];
   cell.photoIndex=selectedPhoto;
-  cell.photoX=0;
-  cell.photoY=0;
-  cell.zoom=1;
-  cell.fit=true;
-  cell.fitMode='cover';
+  resetCellPhotoPosition(cell);
 
   updateSelect();
   draw();
+
   status('Photo placed in frame '+(selectedCell+1)+'.');
 });
 
 $('clearPhoto').addEventListener('click',()=>{
   if(!cells.length)return;
+
   const cell=cells[selectedCell];
   cell.photoIndex=-1;
-  cell.photoX=0;
-  cell.photoY=0;
+  resetCellPhotoPosition(cell);
+
   updateSelect();
   draw();
+
   status('Photo removed from the selected frame.');
 });
 
 $('centerPhoto').addEventListener('click',()=>{
   const cell=cells[selectedCell];
   if(!cell||cell.photoIndex<0)return;
-  cell.photoX=0;
-  cell.photoY=0;
-  cell.zoom=1;
-  cell.fit=true;
-  cell.fitMode='cover';
+
+  resetCellPhotoPosition(cell);
+
   updateControls();
   draw();
+
   status('Photo centered and zoom reset.');
 });
 
 $('fillFrame').addEventListener('click',()=>{
   const cell=cells[selectedCell];
   if(!cell||cell.photoIndex<0)return;
+
   cell.fitMode='cover';
   cell.zoom=1;
   cell.photoX=0;
   cell.photoY=0;
   cell.fit=true;
+  cell.hasAiFocus=false;
+
   updateControls();
   draw();
+
   status('Photo fills the frame. Drag it to adjust the crop.');
 });
 
 $('fitWholePhoto').addEventListener('click',()=>{
   const cell=cells[selectedCell];
   if(!cell||cell.photoIndex<0)return;
+
   cell.fitMode='contain';
   cell.zoom=1;
   cell.photoX=0;
   cell.photoY=0;
   cell.fit=true;
+  cell.hasAiFocus=false;
+
   updateControls();
   draw();
+
   status('Whole photo shown without cropping. Empty space may remain around it.');
 });
 
 $('autoFitAll').addEventListener('click',()=>{
   let count=0;
+
   cells.forEach(cell=>{
     if(cell.photoIndex>=0&&images[cell.photoIndex]){
-      cell.zoom=1;
-      cell.photoX=0;
-      cell.photoY=0;
-      cell.fit=true;
-      cell.fitMode='cover';
+      resetCellPhotoPosition(cell);
       count++;
     }
   });
+
   updateControls();
   draw();
-  status(count?'All '+count+' photos centered and fitted to their frames.':'Add photos to the collage first.');
+
+  status(count
+    ? 'All '+count+' photos centered and fitted to their frames.'
+    : 'Add photos to the collage first.'
+  );
 });
 
 $('autoPlacePhotos').addEventListener('click',()=>{
-  if(!images.length){status('Upload photos first.');fileInput.click();return;}
+  if(!images.length){
+    status('Upload photos first.');
+    fileInput.click();
+    return;
+  }
+
   const count=Math.min(images.length,12);
 
   if(cells.length<count){
     if(templates[String(count)]){
       cells=templates[String(count)]();
       currentLayout=String(count);
-      document.querySelectorAll('.layout-btn').forEach(button=>button.classList.toggle('active',button.dataset.layout===currentLayout));
+
+      document.querySelectorAll('.layout-btn').forEach(button=>{
+        button.classList.toggle('active',button.dataset.layout===currentLayout);
+      });
     }else{
       const cols=count<=3?count:3;
       const rows=Math.ceil(count/cols);
-      cells=Array.from({length:count},(_,i)=>makeCell((i%cols)*100/cols,Math.floor(i/cols)*100/rows,100/cols,100/rows,-1));
+
+      cells=Array.from({length:count},(_,i)=>
+        makeCell(
+          (i%cols)*100/cols,
+          Math.floor(i/cols)*100/rows,
+          100/cols,
+          100/rows,
+          -1
+        )
+      );
+
       currentLayout='custom';
       document.querySelectorAll('.layout-btn').forEach(button=>button.classList.remove('active'));
     }
@@ -1022,18 +1334,16 @@ $('autoPlacePhotos').addEventListener('click',()=>{
 
   cells.forEach((cell,i)=>{
     cell.photoIndex=i<count?i:-1;
-    cell.zoom=1;
-    cell.photoX=0;
-    cell.photoY=0;
-    cell.fit=true;
-    cell.fitMode='cover';
+    resetCellPhotoPosition(cell);
   });
 
   selectedCell=0;
   selectedPhoto=0;
+
   renderPhotos();
   updateSelect();
   draw();
+
   status(count+' photo(s) placed in frames and centered automatically.');
 });
 
@@ -1042,19 +1352,25 @@ $('addCell').addEventListener('click',()=>{
     status('You can add up to 12 frames.');
     return;
   }
+
   cells.push(makeCell(10,10,35,35,-1));
   selectedCell=cells.length-1;
+
   updateSelect();
   draw();
+
   status('New frame added. Move, resize or overlap it.');
 });
 
 $('removeCell').addEventListener('click',()=>{
   if(cells.length<=1)return;
+
   cells.splice(selectedCell,1);
   selectedCell=Math.min(selectedCell,cells.length-1);
+
   updateSelect();
   draw();
+
   status('Frame removed.');
 });
 
@@ -1075,6 +1391,7 @@ $('shuffle').addEventListener('click',()=>{
   }
 
   const order=images.map((_,i)=>i);
+
   for(let i=order.length-1;i>0;i--){
     const j=Math.floor(Math.random()*(i+1));
     [order[i],order[j]]=[order[j],order[i]];
@@ -1083,18 +1400,16 @@ $('shuffle').addEventListener('click',()=>{
   cells.forEach(cell=>{
     if(cell.photoIndex>=0&&cell.photoIndex<order.length){
       cell.photoIndex=order[cell.photoIndex];
-      cell.photoX=0;
-      cell.photoY=0;
-      cell.zoom=1;
-      cell.fit=true;
-      cell.fitMode='cover';
+      resetCellPhotoPosition(cell);
     }
   });
 
   selectedPhoto=selectedPhoto>=0?order[selectedPhoto]:-1;
+
   renderPhotos();
   updateSelect();
   draw();
+
   status('Photos shuffled.');
 });
 
@@ -1114,14 +1429,18 @@ $('caption').addEventListener('input',draw);
 $('cellZoom').addEventListener('input',()=>{
   const cell=cells[selectedCell];
   if(!cell)return;
+
   cell.zoom=Number($('cellZoom').value)/100;
   cell.fit=false;
+  cell.hasAiFocus=false;
+
   $('cellZoomValue').textContent=cell.zoom.toFixed(1)+'×';
   draw();
 });
 
 function roundedRect(x,y,w,h,r){
   r=Math.max(0,Math.min(r,w/2,h/2));
+
   ctx.beginPath();
   ctx.moveTo(x+r,y);
   ctx.lineTo(x+w-r,y);
@@ -1137,11 +1456,14 @@ function roundedRect(x,y,w,h,r){
 
 function shapePath(shape,x,y,w,h,r){
   ctx.beginPath();
+
   if(shape==='circle'){
     const radius=Math.min(w,h)/2;
     ctx.arc(x+w/2,y+h/2,radius,0,Math.PI*2);
+
   }else if(shape==='oval'){
     ctx.ellipse(x+w/2,y+h/2,w/2,h/2,0,0,Math.PI*2);
+
   }else if(shape==='heart'){
     ctx.moveTo(x+w*.5,y+h*.92);
     ctx.bezierCurveTo(x+w*.38,y+h*.81,x+w*.03,y+h*.57,x+w*.06,y+h*.32);
@@ -1149,15 +1471,24 @@ function shapePath(shape,x,y,w,h,r){
     ctx.bezierCurveTo(x+w*.61,y+h*.02,x+w*.91,y+h*.06,x+w*.94,y+h*.32);
     ctx.bezierCurveTo(x+w*.97,y+h*.57,x+w*.62,y+h*.81,x+w*.5,y+h*.92);
     ctx.closePath();
+
   }else if(shape==='star'){
-    const cx=x+w/2,cy=y+h/2,outer=Math.min(w,h)*.49,inner=outer*.43;
+    const cx=x+w/2,cy=y+h/2;
+    const outer=Math.min(w,h)*.49;
+    const inner=outer*.43;
+
     for(let i=0;i<10;i++){
       const a=-Math.PI/2+i*Math.PI/5;
       const rad=i%2===0?outer:inner;
-      const px=cx+Math.cos(a)*rad,py=cy+Math.sin(a)*rad;
-      if(i===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);
+      const px=cx+Math.cos(a)*rad;
+      const py=cy+Math.sin(a)*rad;
+
+      if(i===0)ctx.moveTo(px,py);
+      else ctx.lineTo(px,py);
     }
+
     ctx.closePath();
+
   }else if(shape==='cloud'){
     ctx.moveTo(x+w*.18,y+h*.78);
     ctx.bezierCurveTo(x+w*.03,y+h*.78,x+w*.01,y+h*.59,x+w*.14,y+h*.51);
@@ -1168,8 +1499,10 @@ function shapePath(shape,x,y,w,h,r){
     ctx.bezierCurveTo(x+w*.54,y+h*.91,x+w*.37,y+h*.88,x+w*.31,y+h*.79);
     ctx.quadraticCurveTo(x+w*.23,y+h*.84,x+w*.18,y+h*.78);
     ctx.closePath();
+
   }else if(shape==='rectangle'){
     ctx.rect(x,y,w,h);
+
   }else{
     roundedRect(x,y,w,h,r);
   }
@@ -1177,6 +1510,7 @@ function shapePath(shape,x,y,w,h,r){
 
 function getFrameRect(cell){
   const gap=Number($('spacing').value);
+
   return {
     x:cell.x/100*canvas.width+gap/2,
     y:cell.y/100*canvas.height+gap/2,
@@ -1190,6 +1524,7 @@ function drawPhoto(img,r,cell,cornerRadius){
 
   const cx=r.x+r.w/2;
   const cy=r.y+r.h/2;
+
   ctx.translate(cx,cy);
   ctx.rotate((cell.rotation||0)*Math.PI/180);
 
@@ -1210,6 +1545,7 @@ function drawPhoto(img,r,cell,cornerRadius){
   ctx.shadowOffsetY=0;
 
   const border=Math.max(5,canvas.width*.008);
+
   const ix=frameX+border;
   const iy=frameY+border;
   const iw=Math.max(1,r.w-border*2);
@@ -1223,8 +1559,10 @@ function drawPhoto(img,r,cell,cornerRadius){
   const containScale=Math.min(iw/img.naturalWidth,ih/img.naturalHeight);
   const baseScale=(cell.fitMode==='contain'?containScale:coverScale);
   const scale=baseScale*(cell.zoom||1);
+
   const dw=img.naturalWidth*scale;
   const dh=img.naturalHeight*scale;
+
   const maxX=Math.max(0,(dw-iw)/2);
   const maxY=Math.max(0,(dh-ih)/2);
 
@@ -1232,7 +1570,15 @@ function drawPhoto(img,r,cell,cornerRadius){
   cell.photoY=Math.max(-maxY,Math.min(maxY,cell.photoY||0));
 
   ctx.filter=styles[activeStyle]||'none';
-  ctx.drawImage(img,ix+(iw-dw)/2+cell.photoX,iy+(ih-dh)/2+cell.photoY,dw,dh);
+
+  ctx.drawImage(
+    img,
+    ix+(iw-dw)/2+cell.photoX,
+    iy+(ih-dh)/2+cell.photoY,
+    dw,
+    dh
+  );
+
   ctx.filter='none';
   ctx.restore();
 }
@@ -1242,6 +1588,7 @@ function drawCaption(){
   if(!text)return;
 
   const fontSize=Math.max(24,Math.round(canvas.width/28));
+
   ctx.save();
   ctx.font='800 '+fontSize+'px Arial';
   ctx.textAlign='center';
@@ -1249,6 +1596,7 @@ function drawCaption(){
 
   const maxWidth=canvas.width*.88;
   let output=text;
+
   while(ctx.measureText(output).width>maxWidth&&output.length>4){
     output=output.slice(0,-2)+'…';
   }
@@ -1262,13 +1610,16 @@ function drawCaption(){
   ctx.fillStyle='rgba(0,0,0,.72)';
   roundedRect(x-boxWidth/2,y-boxHeight/2,boxWidth,boxHeight,10);
   ctx.fill();
+
   ctx.fillStyle='#fff';
   ctx.fillText(output,x,y,maxWidth);
+
   ctx.restore();
 }
 
 function draw(includeSelection=true){
   const format=formats[selectedFormat];
+
   canvas.width=format.width;
   canvas.height=format.height;
 
@@ -1285,31 +1636,45 @@ function draw(includeSelection=true){
       drawPhoto(item.image,rect,cell,radius);
     }else{
       ctx.save();
+
       ctx.translate(rect.x+rect.w/2,rect.y+rect.h/2);
       ctx.rotate((cell.rotation||0)*Math.PI/180);
+
       shapePath(frameShape,-rect.w/2,-rect.h/2,rect.w,rect.h,frameShape==='rounded'?radius:0);
+
       ctx.fillStyle=$('bgColor').value;
       ctx.fill();
+
       ctx.strokeStyle='#7184a3';
       ctx.lineWidth=3;
       ctx.setLineDash([12,8]);
       ctx.stroke();
       ctx.setLineDash([]);
+
       ctx.fillStyle='#7184a3';
       ctx.textAlign='center';
       ctx.textBaseline='middle';
       ctx.font='bold '+Math.max(22,Math.round(canvas.width/45))+'px Arial';
       ctx.fillText('+',0,0);
+
       ctx.restore();
     }
 
     if(includeSelection&&i===selectedCell){
       ctx.save();
+
       ctx.strokeStyle='#6ea8ff';
       ctx.lineWidth=Math.max(4,canvas.width/300);
       ctx.strokeRect(rect.x,rect.y,rect.w,rect.h);
+
       const size=Math.max(24,canvas.width*.028);
-      [[rect.x,rect.y],[rect.x+rect.w,rect.y],[rect.x,rect.y+rect.h],[rect.x+rect.w,rect.y+rect.h]].forEach(([x,y])=>{
+
+      [
+        [rect.x,rect.y],
+        [rect.x+rect.w,rect.y],
+        [rect.x,rect.y+rect.h],
+        [rect.x+rect.w,rect.y+rect.h]
+      ].forEach(([x,y])=>{
         ctx.fillStyle='#fff';
         ctx.strokeStyle='#2563eb';
         ctx.lineWidth=4;
@@ -1318,18 +1683,22 @@ function draw(includeSelection=true){
         ctx.fill();
         ctx.stroke();
       });
+
       ctx.restore();
     }
   });
 
   drawCaption();
+
   $('downloadJpg').disabled=!images.length;
   $('downloadPng').disabled=!images.length;
+
   updateControls();
 }
 
 function pointerPoint(event){
   const rect=canvas.getBoundingClientRect();
+
   return {
     x:(event.clientX-rect.left)/rect.width*canvas.width,
     y:(event.clientY-rect.top)/rect.height*canvas.height
@@ -1341,8 +1710,10 @@ canvas.addEventListener('pointerdown',event=>{
 
   const point=pointerPoint(event);
   const rect=canvas.getBoundingClientRect();
+
   const scaleX=canvas.width/Math.max(1,rect.width);
   const scaleY=canvas.height/Math.max(1,rect.height);
+
   const handleX=16*scaleX;
   const handleY=16*scaleY;
   const edgeX=40*scaleX;
@@ -1351,6 +1722,7 @@ canvas.addEventListener('pointerdown',event=>{
   for(let i=cells.length-1;i>=0;i--){
     const cell=cells[i];
     const r=getFrameRect(cell);
+
     const corners=[
       {name:'nw',x:r.x,y:r.y},
       {name:'ne',x:r.x+r.w,y:r.y},
@@ -1359,27 +1731,41 @@ canvas.addEventListener('pointerdown',event=>{
     ];
 
     const corner=corners.find(item=>
-      Math.abs(point.x-item.x)<=handleX&&Math.abs(point.y-item.y)<=handleY
+      Math.abs(point.x-item.x)<=handleX&&
+      Math.abs(point.y-item.y)<=handleY
     );
 
-    const inside=point.x>=r.x&&point.x<=r.x+r.w&&point.y>=r.y&&point.y<=r.y+r.h;
+    const inside=
+      point.x>=r.x&&
+      point.x<=r.x+r.w&&
+      point.y>=r.y&&
+      point.y<=r.y+r.h;
+
     if(!corner&&!inside)continue;
 
     selectedCell=i;
+
     const nearEdge=
       point.x<=r.x+edgeX||
       point.x>=r.x+r.w-edgeX||
       point.y<=r.y+edgeY||
       point.y>=r.y+r.h-edgeY;
 
-    const mode=corner?'resize':nearEdge?'move':(cell.photoIndex>=0?'photo':'move');
+    const mode=corner
+      ?'resize'
+      :nearEdge
+        ?'move'
+        :(cell.photoIndex>=0?'photo':'move');
 
     dragging={
       mode,
       corner:corner?corner.name:null,
       startX:point.x,
       startY:point.y,
-      x:cell.x,y:cell.y,w:cell.w,h:cell.h,
+      x:cell.x,
+      y:cell.y,
+      w:cell.w,
+      h:cell.h,
       photoX:cell.photoX||0,
       photoY:cell.photoY||0,
       pointerId:event.pointerId
@@ -1400,22 +1786,28 @@ canvas.addEventListener('pointerdown',event=>{
 
 canvas.addEventListener('pointermove',event=>{
   if(!dragging)return;
+
   const point=pointerPoint(event);
   const cell=cells[selectedCell];
+
   if(!cell)return;
 
   const dx=point.x-dragging.startX;
   const dy=point.y-dragging.startY;
+
   const dxPercent=dx/canvas.width*100;
   const dyPercent=dy/canvas.height*100;
 
   if(dragging.mode==='photo'){
     cell.fit=false;
+    cell.hasAiFocus=false;
     cell.photoX=dragging.photoX+dx;
     cell.photoY=dragging.photoY+dy;
+
   }else if(dragging.mode==='move'){
     cell.x=Math.max(0,Math.min(100-cell.w,dragging.x+dxPercent));
     cell.y=Math.max(0,Math.min(100-cell.h,dragging.y+dyPercent));
+
   }else{
     const min=8;
     const right=dragging.x+dragging.w;
@@ -1444,6 +1836,7 @@ canvas.addEventListener('pointermove',event=>{
 function stopDragging(){
   dragging=null;
 }
+
 canvas.addEventListener('pointerup',stopDragging);
 canvas.addEventListener('pointercancel',stopDragging);
 canvas.addEventListener('lostpointercapture',stopDragging);
@@ -1455,6 +1848,7 @@ function download(format){
   }
 
   draw(false);
+
   const mime=format==='jpg'?'image/jpeg':'image/png';
 
   canvas.toBlob(blob=>{
@@ -1468,12 +1862,16 @@ function download(format){
     const url=URL.createObjectURL(blob);
     const link=document.createElement('a');
     const stamp=new Date().toISOString().replace(/[:.]/g,'-');
+
     link.href=url;
     link.download='ritoccapix-collage-'+stamp+'.'+format;
+
     document.body.appendChild(link);
     link.click();
     link.remove();
+
     setTimeout(()=>URL.revokeObjectURL(url),10000);
+
     status('Download started: '+link.download);
   },mime,format==='jpg'?.94:undefined);
 }
@@ -1484,6 +1882,7 @@ $('downloadPng').addEventListener('click',()=>download('png'));
 cells=templates.blank();
 updateSelect();
 draw();
+
 status('Upload photos, then create a local or AI smart collage, or choose a ready-made layout.');
 </script>
 </body>
