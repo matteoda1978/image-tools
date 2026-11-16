@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,11 +29,11 @@ header{padding:20px 0;border-bottom:1px solid #1e293b}
 .container{width:min(1200px,94%);margin:auto}
 .logo{font-size:24px;font-weight:800;letter-spacing:-.5px}
 .logo span{color:var(--accent)}
-main{max-width:1200px;margin:auto;padding:30px 16px 50px}
+main{max-width:1800px;margin:auto;padding:30px 24px 50px}
 .hero{text-align:center;margin:0 auto 28px}
 .hero h1{font-size:clamp(30px,5vw,44px);line-height:1.15;margin:0}
 .hero p{max-width:760px;margin:12px auto;color:var(--muted)}
-.workspace{display:grid;grid-template-columns:350px minmax(0,1fr);gap:20px;align-items:start}
+.workspace{display:grid;grid-template-columns:minmax(340px,390px) minmax(0,1fr);gap:24px;align-items:start;width:100%}
 .panel,.preview-panel,.content{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:18px;min-width:0}
 .panel-title,.preview-title{font-size:18px;font-weight:800;margin:0 0 14px}
 .upload{display:block;text-align:center;padding:20px 12px;border:2px dashed #465775;border-radius:12px;background:var(--panel2);cursor:pointer}
@@ -101,8 +102,8 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 .preview-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
 .preview-title{margin:0}
 .shuffle{padding:9px 11px;color:var(--text)}
-.canvas-wrap{background-color:var(--panel2);background-image:linear-gradient(45deg,#1a2538 25%,transparent 25%),linear-gradient(-45deg,#1a2538 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#1a2538 75%),linear-gradient(-45deg,transparent 75%,#1a2538 75%);background-size:20px 20px;background-position:0 0,0 10px,10px -10px,-10px 0;border:1px solid var(--border);border-radius:12px;padding:12px;min-height:250px;display:flex;align-items:center;justify-content:center;overflow:auto}
-#canvas{display:block;width:auto;height:auto;max-width:100%;max-height:680px;touch-action:none;box-shadow:0 12px 35px #0005;cursor:move}
+.canvas-wrap{background-color:var(--panel2);background-image:linear-gradient(45deg,#1a2538 25%,transparent 25%),linear-gradient(-45deg,#1a2538 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#1a2538 75%),linear-gradient(-45deg,transparent 75%,#1a2538 75%);background-size:20px 20px;background-position:0 0,0 10px,10px -10px,-10px 0;border:1px solid var(--border);border-radius:12px;padding:12px;min-height:420px;display:flex;align-items:center;justify-content:center;overflow:auto}
+#canvas{display:block;width:auto;height:auto;max-width:100%;max-height:min(82vh,1050px);touch-action:none;box-shadow:0 12px 35px #0005;cursor:move}
 .downloads{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
 .download-btn{border:0;border-radius:9px;padding:13px;font-weight:800;cursor:pointer;font-size:13px}
 .download-jpg{background:var(--accent);color:#081326}
@@ -114,7 +115,8 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 .content p,.content li{color:var(--muted);line-height:1.8}
 footer{border-top:1px solid #1e293b;text-align:center;color:#778398;font-size:13px;margin-top:30px;padding:24px 15px}
 footer a{color:var(--accent);text-decoration:none}
-@media(max-width:850px){.workspace{grid-template-columns:1fr}.preview-panel{order:1}.panel{order:2}#canvas{max-height:560px}}
+@media(max-width:1050px){.workspace{grid-template-columns:minmax(300px,350px) minmax(0,1fr);gap:16px}}
+@media(max-width:850px){main{padding:24px 12px 40px}.workspace{grid-template-columns:1fr}.preview-panel{order:1}.panel{order:2}#canvas{max-height:70vh;max-width:100%}.canvas-wrap{min-height:280px}}
 @media(max-width:520px){main{padding:24px 10px 35px}.panel,.preview-panel,.content{padding:13px}.canvas-wrap{padding:6px;min-height:180px}.downloads{grid-template-columns:1fr}.layout-grid{gap:5px}}
 </style>
 </head>
@@ -254,6 +256,7 @@ footer a{color:var(--accent);text-decoration:none}
       <option value="soft">Soft &amp; Bright</option>
     </select>
     <button id="enhancePhotos" class="smart-btn enhance" type="button" style="margin-top:10px">Enhance Collage Photos</button>
+
     <button id="restorePhotos" class="secondary-btn" type="button" style="width:100%">Restore Original Look</button>
     <p class="help">Enhancement changes the appearance of photos in the preview and exported image. Your uploaded originals are not overwritten.</p>
   </div>
@@ -414,7 +417,60 @@ const supabaseClient=window.supabase.createClient(
 );
 
 const $=id=>document.getElementById(id);
-    'mosaic':`COMPOSITION STYLE: MOSAIC.
+const canvas=$('canvas');
+const ctx=canvas.getContext('2d');
+const fileInput=$('fileInput');
+const photoList=$('photoList');
+const photoCount=$('photoCount');
+
+const COLLAGE_AI_WORKER_URL='https://ritoccapix-collage-ai.ritoccapix.workers.dev';
+
+let aiCollageBusy=false;
+let selectedAiStyle='big-small';
+
+let images=[];
+let cells=[];
+let selectedCell=0;
+let selectedPhoto=-1;
+let selectedFormat='square';
+let currentLayout='blank';
+let frameShape='rounded';
+let dragging=null;
+let designVersion=0;
+let activeStyle='original';
+
+const formats={
+  square:{width:1080,height:1080},
+  portrait:{width:1080,height:1350},
+  story:{width:1080,height:1920},
+  landscape:{width:1200,height:800}
+};
+
+const styles={
+  original:'none',
+  auto:'brightness(1.06) contrast(1.10) saturate(1.10)',
+  natural:'brightness(1.03) contrast(1.04) saturate(1.04)',
+  vivid:'brightness(1.04) contrast(1.14) saturate(1.35)',
+  warm:'brightness(1.05) contrast(1.07) saturate(1.12) sepia(0.16)',
+  cinematic:'brightness(0.98) contrast(1.18) saturate(0.88)',
+  bw:'grayscale(1) contrast(1.12)',
+  soft:'brightness(1.10) contrast(0.94) saturate(1.03)'
+};
+
+const aiStyleInstructions={
+  'big-small':`COMPOSITION STYLE: BIG & SMALL.
+Create one visually dominant main photo with the remaining photos arranged in smaller supporting frames around it. Use a clear visual hierarchy. Avoid hiding important people or faces.`,
+
+  'equal':`COMPOSITION STYLE: EQUAL PHOTOS.
+Give all photos approximately equal visual importance and similar frame areas. Use a balanced, clean and attractive arrangement. Do not create one dominant hero image.`,
+
+  'overlapping':`COMPOSITION STYLE: OVERLAPPING.
+Create a layered scrapbook or editorial composition. Photos may overlap, have varied sizes and slight rotations. Keep important subjects visible. Avoid placing overlaps across faces.`,
+
+  'creative':`COMPOSITION STYLE: CREATIVE MIX.
+Create an original asymmetrical editorial composition with different frame sizes, varied proportions and an intentional visual rhythm. Avoid a simple row or ordinary grid.`,
+
+  'mosaic':`COMPOSITION STYLE: MOSAIC.
 Create a compact mosaic using varied rectangular frame sizes. Arrange all photos into a cohesive composition with minimal wasted space. Keep the overall design balanced.`
 };
 
@@ -586,6 +642,17 @@ function assignPhotosToCells(){
   selectedPhoto=order[0]??-1;
   renderPhotos();
   updateSelect();
+}
+
+function resetCellPhotoPosition(cell){
+  cell.zoom=1;
+  cell.photoX=0;
+  cell.photoY=0;
+  cell.fit=true;
+  cell.fitMode='cover';
+  cell.focalX=0.5;
+  cell.focalY=0.5;
+  cell.hasAiFocus=false;
 }
 
 /* Existing local smart composition algorithm: kept separate from AI. */
