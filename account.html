@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>My Account & Credits | RitoccaPix</title>
-<meta name="description" content="Access your RitoccaPix account and manage your shared AI credits.">
+<meta name="description" content="Access your RitoccaPix account and manage your shared AI credits and tool balances.">
 <link rel="canonical" href="https://ritoccapix.com/account.html">
 <meta name="robots" content="noindex,follow">
 <script src="menu.js" defer></script>
@@ -14,7 +13,7 @@
 body{margin:0;background:#0b1424;color:#e8eef8;font-family:Arial,sans-serif;line-height:1.6}
 header{background:#101b2e;border-bottom:1px solid #263750;padding:14px 20px}
 header nav{min-height:44px}
-main{width:min(700px,calc(100% - 32px));margin:45px auto}
+main{width:min(750px,calc(100% - 32px));margin:45px auto}
 h1{text-align:center;font-size:36px;margin-bottom:8px}
 .intro{text-align:center;color:#afbdd2;margin-bottom:28px}
 .panel{background:#132139;border:1px solid #2b405e;border-radius:16px;padding:28px}
@@ -34,12 +33,38 @@ button:disabled{opacity:.5;cursor:wait}
 #accountState.active{display:block}
 #authState.hidden{display:none}
 .email{overflow-wrap:anywhere;color:#c5d4ea}
-.balance{margin:22px 0;padding:20px;text-align:center;border-radius:12px;background:#0b1729;border:1px solid #344c6c}
-.balance strong{display:block;font-size:44px;color:#a9c2ff}
+
+/* Bilancio Crediti Generali */
+.balance{margin:20px 0;padding:20px;text-align:center;border-radius:12px;background:#0b1729;border:1px solid #344c6c}
+.balance strong{display:block;font-size:38px;color:#a9c2ff}
 .balance span{color:#b7c5d9}
+
+/* Lista Strumenti a Scendere (Verticale) */
+.tools-section{margin-top:30px;border-top:1px solid #2b405e;padding-top:20px}
+.tools-section h3{font-size:18px;margin-bottom:15px;color:#cbd5e1}
+.tool-item{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;padding:14px;margin-bottom:10px;
+  background:#0b1729;border:1px solid #263852;border-radius:10px;
+}
+.tool-info{display:flex;align-items:center;gap:12px;min-width:0}
+.tool-icon{font-size:24px;flex-shrink:0}
+.tool-details strong{display:block;font-size:15px;color:#f8fafc}
+.tool-details small{color:#94a3b8;font-size:13px}
+.tool-status{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.badge{padding:5px 10px;border-radius:6px;font-size:12px;font-weight:bold;background:#1e293b;color:#38bdf8}
+.badge.empty{background:#291e1e;color:#f87171}
+.tool-btn{padding:7px 12px;font-size:13px;border-radius:7px;background:#263b59;color:white;text-decoration:none;border:1px solid #49617f}
+.tool-btn:hover{background:#334e75}
+
 footer{text-align:center;color:#8292aa;margin:35px 0;font-size:13px}
 footer a{color:#a9c2ff}
-@media(max-width:520px){main{margin:28px auto}.buttons button{width:100%}}
+@media(max-width:520px){
+  main{margin:28px auto}
+  .buttons button{width:100%}
+  .tool-item{flex-direction:column;align-items:flex-start}
+  .tool-status{width:100%;justify-content:space-between;margin-top:8px}
+}
 </style>
 </head>
 <body>
@@ -48,7 +73,7 @@ footer a{color:#a9c2ff}
 
 <main>
 <h1>My RitoccaPix Account</h1>
-<p class="intro">One account and one shared credit balance for RitoccaPix AI tools.</p>
+<p class="intro">One account, shared credits, and individual tool balances.</p>
 
 <section class="panel">
 
@@ -69,19 +94,58 @@ footer a{color:#a9c2ff}
 
 <div class="bonus">
 <strong>50 welcome credits</strong>
-<p>New users receive 50 credits once, after verifying their email address. Credits are shared across eligible AI tools.</p>
+<p>New users receive 50 credits once after email verification. Credits are shared across eligible AI tools.</p>
 </div>
 </div>
 
 <div id="accountState">
 <h2>You are signed in</h2>
 <p class="email">Account: <strong id="accountUserEmail"></strong></p>
+
+<!-- Credito Generale Sempre Visibile -->
 <div class="balance">
 <strong id="creditBalance">…</strong>
-<span id="creditLabel">credits available</span>
+<span id="creditLabel">shared credits available</span>
 </div>
-<p>Your balance is shared across RitoccaPix AI tools.</p>
-<div class="buttons">
+
+<!-- Lista Strumenti a Scendere -->
+<div class="tools-section">
+  <h3>Your Tool Balances</h3>
+
+  <!-- Strumento 1: Photo to Coloring Page -->
+  <div class="tool-item">
+    <div class="tool-info">
+      <span class="tool-icon">🎨</span>
+      <div class="tool-details">
+        <strong>Photo to Coloring Page</strong>
+        <small>Printable black & white illustrations</small>
+      </div>
+    </div>
+    <div class="tool-status">
+      <span class="badge" id="coloringBalanceBadge">0 left</span>
+      <a href="photo-to-coloring-page.html" class="tool-btn">Open Tool</a>
+    </div>
+  </div>
+
+  <!-- Strumento 2: AI Smart Collage -->
+  <div class="tool-item">
+    <div class="tool-info">
+      <span class="tool-icon">🖼️</span>
+      <div class="tool-details">
+        <strong>AI Smart Collage</strong>
+        <small>Editorial multi-photo layouts</small>
+      </div>
+    </div>
+    <div class="tool-status">
+      <span class="badge" id="collageBalanceBadge">0 left</span>
+      <a href="image-collage.html" class="tool-btn">Open Tool</a>
+    </div>
+  </div>
+
+  <!-- Qui puoi aggiungere comodamente gli altri strumenti a scendere in futuro -->
+</div>
+
+<div class="buttons" style="margin-top:25px;">
 <button id="refreshBtn" class="secondary" type="button">Refresh balance</button>
 <button id="logoutBtn" class="secondary" type="button">Sign out</button>
 </div>
@@ -114,6 +178,8 @@ const accountUserEmail=$("accountUserEmail");
 const creditBalance=$("creditBalance");
 const creditLabel=$("creditLabel");
 const accountMessage=$("accountMessage");
+const coloringBalanceBadge=$("coloringBalanceBadge");
+const collageBalanceBadge=$("collageBalanceBadge");
 
 $("year").textContent=new Date().getFullYear();
 
@@ -151,27 +217,53 @@ const supabaseClient=window.supabase.createClient(
 async function refreshBalance(){
  if(!currentSession){
   creditBalance.textContent="—";
+  coloringBalanceBadge.textContent="0 left";
+  collageBalanceBadge.textContent="0 left";
   return;
  }
 
  creditBalance.textContent="…";
 
- const {data,error}=await supabaseClient
+ const userId = currentSession.user.id;
+
+ // 1. Carica il saldo dei crediti generali
+ const {data:balData,error:balError}=await supabaseClient
   .from("credit_balances")
   .select("balance")
-  .eq("user_id",currentSession.user.id)
+  .eq("user_id",userId)
   .maybeSingle();
 
- if(error){
-  console.error("Credit balance error:",error);
+ if(balError){
+  console.error("Credit balance error:",balError);
   creditBalance.textContent="—";
-  message("Could not load your credit balance. Please refresh.",true);
-  return;
+ }else{
+  const balance=balData?Number(balData.balance)||0:0;
+  creditBalance.textContent=String(balance);
+  creditLabel.textContent=balance===1?"shared credit available":"shared credits available";
  }
 
- const balance=data?Number(data.balance)||0:0;
- creditBalance.textContent=String(balance);
- creditLabel.textContent=balance===1?"credit available":"credits available";
+ // 2. Carica i saldi specifici dei tool (tabella user_tool_balances creata prima)
+ const {data:toolData,error:toolError}=await supabaseClient
+  .from("user_tool_balances")
+  .select("coloring_photos_left, collage_photos_left")
+  .eq("user_id",userId)
+  .maybeSingle();
+
+ if(!toolError && toolData){
+  const coloringLeft = Number(toolData.coloring_photos_left) || 0;
+  const collageLeft = Number(toolData.collage_photos_left) || 0;
+
+  coloringBalanceBadge.textContent = coloringLeft + (coloringLeft === 1 ? " photo" : " photos");
+  coloringBalanceBadge.className = "badge " + (coloringLeft > 0 ? "" : "empty");
+
+  collageBalanceBadge.textContent = collageLeft + (collageLeft === 1 ? " collage" : " collages");
+  collageBalanceBadge.className = "badge " + (collageLeft > 0 ? "" : "empty");
+ } else {
+  coloringBalanceBadge.textContent = "0 left";
+  coloringBalanceBadge.className = "badge empty";
+  collageBalanceBadge.textContent = "0 left";
+  collageBalanceBadge.className = "badge empty";
+ }
 }
 
 async function applySession(session){
@@ -187,7 +279,9 @@ async function applySession(session){
   accountState.classList.remove("active");
   accountUserEmail.textContent="";
   creditBalance.textContent="—";
-  creditLabel.textContent="credits available";
+  creditLabel.textContent="shared credits available";
+  coloringBalanceBadge.textContent="0 left";
+  collageBalanceBadge.textContent="0 left";
  }
 }
 
