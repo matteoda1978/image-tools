@@ -1,8 +1,10 @@
-
-/* RitoccaPix - Responsive Dropdown Navigation */
+/* RitoccaPix - Responsive Navigation & Global Account Bar */
 (function () {
+  const SUPABASE_URL = "https://eckppexmaihbzbtunhnp.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_h4NECcXTuSS7R-BDSAwIVQ_WKKolNKW";
+
   const tools = [
-    { name: "My Account", url: "account.html" },
+    { name: "My Account & Credits", url: "account.html" },
     { name: "Image Resizer", url: "image-resizer.html" },
     { name: "Image Compressor", url: "image-compressor.html" },
     { name: "Compress Image to 100KB", url: "compress-image-to-100kb.html" },
@@ -24,27 +26,23 @@
 
   const header = document.querySelector("header");
   if (!header) return;
-
   const nav = header.querySelector("nav");
   if (!nav) return;
 
-  const currentPage =
-    window.location.pathname.split("/").pop() || "index.html";
+  const currentPage = window.location.pathname.split("/").pop() || "index.html";
 
   const style = document.createElement("style");
-
   style.textContent = `
     header nav.tools-dropdown {
       position: relative;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
+      gap: 10px;
       width: 100%;
       min-width: 0;
       box-sizing: border-box;
     }
-
     .tools-dropdown .logo {
       display: inline-flex;
       align-items: center;
@@ -57,39 +55,52 @@
       white-space: nowrap;
       flex-shrink: 0;
     }
-
-    .tools-dropdown .logo span {
-      color: #91aaff;
+    .tools-dropdown .logo span { color: #91aaff; }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
-
+    .tools-dropdown .account-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 14px;
+      border: 1px solid #45618a;
+      border-radius: 10px;
+      background: #1d3558;
+      color: #ffffff;
+      font: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .tools-dropdown .account-btn:hover { background: #284775; }
+    .tools-dropdown .account-btn.logged-in {
+      background: #142b24;
+      border-color: #347a5e;
+      color: #a7f3d0;
+    }
     .tools-dropdown .tools-toggle {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      padding: 11px 16px;
+      gap: 8px;
+      padding: 10px 14px;
       border: 1px solid #334155;
       border-radius: 10px;
       background: #17243b;
       color: #ffffff;
       font: inherit;
+      font-size: 14px;
       font-weight: 600;
       cursor: pointer;
       flex-shrink: 0;
     }
-
-    .tools-dropdown .tools-toggle:hover {
-      background: #243550;
-    }
-
-    .tools-dropdown .tools-arrow {
-      transition: transform 0.2s ease;
-    }
-
-    .tools-dropdown .tools-toggle[aria-expanded="true"] .tools-arrow {
-      transform: rotate(180deg);
-    }
-
+    .tools-dropdown .tools-toggle:hover { background: #243550; }
+    .tools-dropdown .tools-arrow { transition: transform 0.2s ease; }
+    .tools-dropdown .tools-toggle[aria-expanded="true"] .tools-arrow { transform: rotate(180deg); }
     .tools-menu {
       position: fixed;
       z-index: 999999;
@@ -106,11 +117,7 @@
       box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
       box-sizing: border-box;
     }
-
-    .tools-menu.open {
-      display: block;
-    }
-
+    .tools-menu.open { display: block; }
     .tools-menu a {
       display: block;
       width: 100%;
@@ -120,21 +127,10 @@
       text-decoration: none;
       font-size: 15px;
       line-height: 1.4;
-      overflow-wrap: anywhere;
       box-sizing: border-box;
     }
-
-    .tools-menu a:hover {
-      background: #243550;
-      color: #ffffff;
-    }
-
-    .tools-menu a[aria-current="page"] {
-      background: #1e3a5f;
-      color: #93c5fd;
-      font-weight: 700;
-    }
-
+    .tools-menu a:hover { background: #243550; color: #ffffff; }
+    .tools-menu a[aria-current="page"] { background: #1e3a5f; color: #93c5fd; font-weight: 700; }
     .tools-menu a.account-link {
       color: #a9c2ff;
       font-weight: 700;
@@ -142,112 +138,103 @@
       border-radius: 7px 7px 0 0;
       margin-bottom: 6px;
     }
-
     @media (max-width: 480px) {
-      .tools-dropdown .logo {
-        font-size: 20px;
-      }
-
-      .tools-dropdown .tools-toggle {
-        padding: 10px 12px;
-        font-size: 14px;
-      }
+      .tools-dropdown .logo { font-size: 19px; }
+      .tools-dropdown .account-btn, .tools-dropdown .tools-toggle { padding: 8px 10px; font-size: 13px; }
     }
   `;
-
   document.head.appendChild(style);
   nav.classList.add("tools-dropdown");
 
-  // Find the existing brand anywhere inside the header.
   const brandCandidates = header.querySelectorAll(".logo, .brand");
   let brand = brandCandidates.length ? brandCandidates[0] : null;
-
-  // Remove accidental duplicate brand elements.
-  brandCandidates.forEach(function (candidate) {
-    if (candidate !== brand) {
-      candidate.remove();
-    }
-  });
-
-  // Create a logo only if the header does not already have one.
+  brandCandidates.forEach(c => { if (c !== brand) c.remove(); });
   if (!brand) {
     brand = document.createElement("a");
     brand.innerHTML = 'Ritocca<span>Pix</span>';
     brand.href = currentPage === "index.html" ? "./" : "index.html";
-    brand.setAttribute("aria-label", "RitoccaPix homepage");
   }
-
   brand.classList.add("logo");
-
-  if (!brand.hasAttribute("aria-label")) {
-    brand.setAttribute("aria-label", "RitoccaPix homepage");
-  }
-
   nav.replaceChildren(brand);
+
+  const actionsWrap = document.createElement("div");
+  actionsWrap.className = "nav-actions";
+
+  const accountBtn = document.createElement("button");
+  accountBtn.type = "button";
+  accountBtn.id = "ritoccapixAccountButton";
+  accountBtn.className = "account-btn";
+  accountBtn.textContent = "Sign in";
+
+  accountBtn.addEventListener("click", () => {
+    if (document.getElementById("accountDialog")) {
+      document.dispatchEvent(new CustomEvent("ritoccapix:open-account"));
+    } else {
+      window.location.href = "account.html?redirect=" + encodeURIComponent(window.location.pathname);
+    }
+  });
 
   const button = document.createElement("button");
   button.type = "button";
   button.className = "tools-toggle";
   button.setAttribute("aria-expanded", "false");
   button.setAttribute("aria-haspopup", "true");
-  button.innerHTML =
-    'All Tools <span class="tools-arrow" aria-hidden="true">▾</span>';
+  button.innerHTML = 'Tools <span class="tools-arrow" aria-hidden="true">▾</span>';
+
+  actionsWrap.appendChild(accountBtn);
+  actionsWrap.appendChild(button);
+  nav.appendChild(actionsWrap);
+
+  document.dispatchEvent(new CustomEvent("ritoccapix:account-button-ready"));
+
+  async function syncGlobalAccountBadge() {
+    try {
+      if (!window.supabase || !window.supabase.createClient) return;
+      const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      const { data } = await client.auth.getSession();
+      const session = data?.session;
+      if (session && session.user) {
+        accountBtn.classList.add("logged-in");
+        const { data: balData } = await client
+          .from("credit_balances")
+          .select("balance")
+          .eq("user_id", session.user.id)
+          .maybeSingle();
+        const credits = Number(balData?.balance ?? 0);
+        accountBtn.textContent = "🪙 " + credits + " cr";
+      } else {
+        accountBtn.classList.remove("logged-in");
+        accountBtn.textContent = "Sign in";
+      }
+    } catch (e) {}
+  }
+  syncGlobalAccountBadge();
 
   const menu = document.createElement("div");
   menu.className = "tools-menu";
-
-  tools.forEach(function (tool, index) {
+  tools.forEach((tool, index) => {
     const link = document.createElement("a");
     link.href = tool.url;
     link.textContent = tool.name;
-
-    if (index === 0) {
-      link.classList.add("account-link");
-    }
-
-    if (currentPage === tool.url) {
-      link.setAttribute("aria-current", "page");
-    }
-
+    if (index === 0) link.classList.add("account-link");
+    if (currentPage === tool.url) link.setAttribute("aria-current", "page");
     menu.appendChild(link);
   });
 
   function positionMenu() {
     if (!menu.classList.contains("open")) return;
-
     const buttonRect = button.getBoundingClientRect();
     const margin = 8;
     const viewportWidth = document.documentElement.clientWidth;
     const viewportHeight = window.innerHeight;
-
-    menu.style.left = "8px";
-    menu.style.top = "8px";
     menu.style.maxHeight = Math.max(120, viewportHeight - 16) + "px";
-
-    const menuWidth = menu.getBoundingClientRect().width;
-
-    const left = Math.max(
-      margin,
-      Math.min(
-        buttonRect.left,
-        viewportWidth - menuWidth - margin
-      )
-    );
-
+    const menuWidth = menu.getBoundingClientRect().width || 280;
+    const left = Math.max(margin, Math.min(buttonRect.right - menuWidth, viewportWidth - menuWidth - margin));
     const menuHeight = menu.getBoundingClientRect().height;
     let top = buttonRect.bottom + margin;
-
-    if (top + menuHeight > viewportHeight - margin) {
-      top = buttonRect.top - menuHeight - margin;
-    }
-
-    top = Math.max(
-      margin,
-      Math.min(top, viewportHeight - menuHeight - margin)
-    );
-
+    if (top + menuHeight > viewportHeight - margin) top = buttonRect.top - menuHeight - margin;
     menu.style.left = left + "px";
-    menu.style.top = top + "px";
+    menu.style.top = Math.max(margin, top) + "px";
   }
 
   function closeMenu() {
@@ -255,41 +242,15 @@
     button.setAttribute("aria-expanded", "false");
   }
 
-  button.addEventListener("click", function (event) {
-    event.stopPropagation();
-
-    if (menu.classList.contains("open")) {
-      closeMenu();
-    } else {
-      menu.classList.add("open");
-      button.setAttribute("aria-expanded", "true");
-      positionMenu();
-    }
+  button.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (menu.classList.contains("open")) closeMenu();
+    else { menu.classList.add("open"); button.setAttribute("aria-expanded", "true"); positionMenu(); }
   });
 
-  menu.addEventListener("click", function (event) {
-    event.stopPropagation();
-
-    if (event.target.closest("a")) {
-      closeMenu();
-    }
-  });
-
+  menu.addEventListener("click", (e) => { e.stopPropagation(); if (e.target.closest("a")) closeMenu(); });
   document.addEventListener("click", closeMenu);
-
-  document.addEventListener("keydown", function (event) {
-    if (event.key === "Escape") {
-      closeMenu();
-      button.focus();
-    }
-  });
-
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") { closeMenu(); button.focus(); } });
   window.addEventListener("resize", positionMenu);
-
-  window.addEventListener("orientationchange", function () {
-    window.setTimeout(positionMenu, 150);
-  });
-
-  nav.appendChild(button);
   document.body.appendChild(menu);
 })();
