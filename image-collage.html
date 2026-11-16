@@ -133,6 +133,27 @@ footer a{color:var(--accent);text-decoration:none}
 .active-package button{border:1px solid var(--accent);border-radius:7px;padding:6px 9px;background:#1a2b49;color:#fff;cursor:pointer;font-weight:700}
 .active-package button.active{background:#244d38;border-color:#4d9b70}
 
+
+/* Shared RitoccaPix account dialog */
+.account-dialog{width:min(520px,calc(100% - 28px));max-width:520px;border:1px solid #334155;border-radius:16px;background:#101b2e;color:#e2e8f0;padding:0;box-shadow:0 24px 70px rgba(0,0,0,.55)}
+.account-dialog::backdrop{background:rgba(2,6,23,.78);backdrop-filter:blur(3px)}
+.account-dialog-inner{padding:22px}
+.account-dialog-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
+.account-dialog-head h2{margin:0;font-size:21px}
+.account-dialog-close{border:1px solid #475569;border-radius:8px;background:#1e293b;color:#fff;padding:7px 11px;cursor:pointer}
+.account-dialog-copy{color:#aab8ca;font-size:13px;line-height:1.5;margin:8px 0 16px}
+.account-dialog label{display:block;font-size:13px;font-weight:700;margin:12px 0 6px}
+.account-dialog input{width:100%;box-sizing:border-box;border:1px solid #475569;border-radius:8px;background:#0b1424;color:#fff;padding:11px;font:inherit}
+.account-dialog-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:15px}
+.account-dialog-actions button{flex:1 1 130px;border:1px solid #45618a;border-radius:8px;background:#1d3558;color:#fff;padding:11px;font-weight:700;cursor:pointer}
+.account-dialog-actions button:disabled{opacity:.55;cursor:wait}
+.account-dialog-actions .account-secondary{background:#1e293b;border-color:#475569}
+.account-dialog-status{margin:13px 0 0;min-height:20px;color:#a9c7ed;font-size:13px;line-height:1.45}
+.account-dialog-status.error{color:#fca5a5}
+.account-dialog-user{padding:12px;border:1px solid #334155;border-radius:9px;background:#17243b;font-size:13px;line-height:1.7;margin-top:12px}
+.account-dialog-user strong{color:#fff}
+.account-dialog-hidden{display:none!important}
+
 </style>
 </head>
 
@@ -143,6 +164,34 @@ footer a{color:var(--accent);text-decoration:none}
     <nav aria-label="Main navigation"></nav>
   </div>
 </header>
+
+<dialog class="account-dialog" id="accountDialog" aria-labelledby="accountDialogTitle">
+ <div class="account-dialog-inner">
+  <div class="account-dialog-head">
+   <h2 id="accountDialogTitle">Your RitoccaPix account</h2>
+   <button class="account-dialog-close" id="accountDialogClose" type="button" aria-label="Close account window">Close</button>
+  </div>
+  <p class="account-dialog-copy">Use the same account for all RitoccaPix AI tools. Create an account or sign in to use your shared credit balance and AI collage packages. New accounts receive the one-time 50-credit welcome bonus after email verification.</p>
+  <div id="collageAuthForm">
+   <label for="collageAccountEmail">Email address</label>
+   <input id="collageAccountEmail" type="email" autocomplete="email" placeholder="you@example.com">
+   <label for="collageAccountPassword">Password</label>
+   <input id="collageAccountPassword" type="password" autocomplete="current-password" minlength="8" placeholder="At least 8 characters">
+   <div class="account-dialog-actions">
+    <button id="collageRegisterButton" type="button">Create account</button>
+    <button id="collageLoginButton" class="account-secondary" type="button">Sign in</button>
+   </div>
+  </div>
+  <div id="collageLoggedInPanel" class="account-dialog-hidden">
+   <div class="account-dialog-user">Signed in as <strong id="collageAccountEmailLabel"></strong><br>Shared credit balance: <strong id="collageCreditBalance">…</strong> credits</div>
+   <div class="account-dialog-actions">
+    <button id="collageRefreshBalance" type="button">Refresh balance</button>
+    <button id="collageLogoutButton" class="account-secondary" type="button">Sign out</button>
+   </div>
+  </div>
+  <p id="collageAccountStatus" class="account-dialog-status" role="status" aria-live="polite"></p>
+ </div>
+</dialog>
 
 <main>
 <section class="hero">
@@ -449,6 +498,97 @@ const supabaseClient=window.supabase.createClient(
     }
   }
 );
+
+/* Shared RitoccaPix account: same Supabase project/session as Photo to Coloring Page. */
+const accountDialog=document.getElementById('accountDialog');
+const collageAuthForm=document.getElementById('collageAuthForm');
+const collageLoggedInPanel=document.getElementById('collageLoggedInPanel');
+const collageAccountEmail=document.getElementById('collageAccountEmail');
+const collageAccountPassword=document.getElementById('collageAccountPassword');
+const collageAccountStatus=document.getElementById('collageAccountStatus');
+const collageCreditBalance=document.getElementById('collageCreditBalance');
+let collageCurrentSession=null;
+let collageAuthBusy=false;
+
+function setCollageAccountStatus(message,isError=false){
+  collageAccountStatus.textContent=message||'';
+  collageAccountStatus.classList.toggle('error',Boolean(isError));
+}
+function setCollageAuthBusy(busy){
+  collageAuthBusy=busy;
+  ['collageRegisterButton','collageLoginButton','collageLogoutButton','collageRefreshBalance'].forEach(id=>{
+    const button=document.getElementById(id);if(button)button.disabled=busy;
+  });
+}
+async function refreshCollageCreditBalance(){
+  if(!collageCurrentSession){collageCreditBalance.textContent='—';return;}
+  collageCreditBalance.textContent='…';
+  const {data,error}=await supabaseClient.from('credit_balances').select('balance').eq('user_id',collageCurrentSession.user.id).maybeSingle();
+  if(error){console.error('Shared credit balance error:',error);collageCreditBalance.textContent='Unavailable';setCollageAccountStatus('Could not load your shared credit balance. Please refresh.',true);return;}
+  collageCreditBalance.textContent=String(Number(data?.balance)||0);
+}
+async function applyCollageAccountSession(session){
+  collageCurrentSession=session||null;
+  const navButton=document.getElementById('ritoccapixAccountButton');
+  if(collageCurrentSession){
+    collageAuthForm.classList.add('account-dialog-hidden');
+    collageLoggedInPanel.classList.remove('account-dialog-hidden');
+    document.getElementById('collageAccountEmailLabel').textContent=collageCurrentSession.user.email||'Account';
+    if(navButton)navButton.textContent='Account';
+    await refreshCollageCreditBalance();
+    await loadActiveCollagePackages(false);
+  }else{
+    collageAuthForm.classList.remove('account-dialog-hidden');
+    collageLoggedInPanel.classList.add('account-dialog-hidden');
+    document.getElementById('collageAccountEmailLabel').textContent='';
+    collageCreditBalance.textContent='—';
+    if(navButton)navButton.textContent='Accedi';
+    activeCollagePackages=[];selectedCollagePackageId='';renderActiveCollagePackages();
+  }
+}
+
+document.getElementById('accountDialogClose').addEventListener('click',()=>accountDialog.close());
+accountDialog.addEventListener('click',event=>{if(event.target===accountDialog)accountDialog.close();});
+document.addEventListener('ritoccapix:open-account',async()=>{
+  accountDialog.showModal();
+  const {data}=await supabaseClient.auth.getSession();
+  if(data?.session&&!collageCurrentSession)await applyCollageAccountSession(data.session);
+});
+document.addEventListener('ritoccapix:account-button-ready',()=>{
+  const navButton=document.getElementById('ritoccapixAccountButton');
+  if(navButton&&collageCurrentSession)navButton.textContent='Account';
+});
+document.getElementById('collageRegisterButton').addEventListener('click',async()=>{
+  if(collageAuthBusy)return;
+  const email=collageAccountEmail.value.trim();const password=collageAccountPassword.value;
+  if(!email||!collageAccountEmail.validity.valid){setCollageAccountStatus('Enter a valid email address.',true);collageAccountEmail.focus();return;}
+  if(password.length<8){setCollageAccountStatus('Your password must contain at least 8 characters.',true);collageAccountPassword.focus();return;}
+  setCollageAuthBusy(true);setCollageAccountStatus('Creating your account…');
+  try{
+    const {data,error}=await supabaseClient.auth.signUp({email,password,options:{emailRedirectTo:'https://ritoccapix.com/image-collage.html'}});
+    if(error)throw error;
+    if(data.session){await applyCollageAccountSession(data.session);setCollageAccountStatus('Account created. Your welcome credits are added after email verification.');}
+    else setCollageAccountStatus('Account created. Check your email and click the confirmation link, then return here to sign in.');
+  }catch(error){console.error('Collage registration error:',error);setCollageAccountStatus(error.message||'Could not create your account.',true);}
+  finally{setCollageAuthBusy(false);}
+});
+document.getElementById('collageLoginButton').addEventListener('click',async()=>{
+  if(collageAuthBusy)return;
+  const email=collageAccountEmail.value.trim();const password=collageAccountPassword.value;
+  if(!email||!collageAccountEmail.validity.valid){setCollageAccountStatus('Enter your registered email address.',true);collageAccountEmail.focus();return;}
+  if(!password){setCollageAccountStatus('Enter your password.',true);collageAccountPassword.focus();return;}
+  setCollageAuthBusy(true);setCollageAccountStatus('Signing in…');
+  try{const {data,error}=await supabaseClient.auth.signInWithPassword({email,password});if(error)throw error;await applyCollageAccountSession(data.session);setCollageAccountStatus('You are signed in.');}
+  catch(error){console.error('Collage sign-in error:',error);setCollageAccountStatus(error.message||'Sign-in failed. Check your email and password.',true);}
+  finally{setCollageAuthBusy(false);}
+});
+document.getElementById('collageLogoutButton').addEventListener('click',async()=>{
+  if(collageAuthBusy)return;setCollageAuthBusy(true);
+  try{const {error}=await supabaseClient.auth.signOut();if(error)throw error;await applyCollageAccountSession(null);setCollageAccountStatus('You have signed out.');}
+  catch(error){setCollageAccountStatus(error.message||'Could not sign out.',true);}
+  finally{setCollageAuthBusy(false);}
+});
+document.getElementById('collageRefreshBalance').addEventListener('click',async()=>{await refreshCollageCreditBalance();await loadActiveCollagePackages(false);});
 
 const $=id=>document.getElementById(id);
 const canvas=$('canvas');
@@ -1069,11 +1209,13 @@ async function purchaseCollagePackage(packageCode,button){
     }
     if(!result.packageId)throw new Error('The package purchase response could not be verified. Please refresh your account before trying again.');
     $('collageWalletStatus').textContent='Package activated. '+(result.generationsRemaining??result.generationsTotal??'')+' AI generation(s) available.';
+    await refreshCollageCreditBalance();
     await loadActiveCollagePackages(false);
     selectedCollagePackageId=result.packageId;
     renderActiveCollagePackages();
   }catch(error){
     $('collageWalletStatus').textContent=error.message||'Package purchase failed.';
+    if(String(error.message||'').toLowerCase().includes('sign in'))accountDialog.showModal();
   }finally{
     collagePackageBusy=false;
     buttons.forEach(item=>item.disabled=false);
@@ -1087,8 +1229,26 @@ document.querySelectorAll('.package-btn').forEach(button=>{
 });
 
 supabaseClient.auth.onAuthStateChange((event,session)=>{
-  if(session?.access_token){loadActiveCollagePackages(false);}
-  else{activeCollagePackages=[];selectedCollagePackageId='';renderActiveCollagePackages();}
+  if(session?.access_token){
+    collageCurrentSession=session;
+    collageAuthForm.classList.add('account-dialog-hidden');
+    collageLoggedInPanel.classList.remove('account-dialog-hidden');
+    document.getElementById('collageAccountEmailLabel').textContent=session.user?.email||'Account';
+    const navButton=document.getElementById('ritoccapixAccountButton');if(navButton)navButton.textContent='Account';
+    loadActiveCollagePackages(false);
+    refreshCollageCreditBalance();
+  }else{
+    collageCurrentSession=null;
+    const navButton=document.getElementById('ritoccapixAccountButton');if(navButton)navButton.textContent='Accedi';
+    activeCollagePackages=[];selectedCollagePackageId='';renderActiveCollagePackages();
+    collageAuthForm.classList.remove('account-dialog-hidden');collageLoggedInPanel.classList.add('account-dialog-hidden');collageCreditBalance.textContent='—';
+  }
+});
+
+/* Restore the existing shared Supabase session when this page opens. */
+supabaseClient.auth.getSession().then(({data,error})=>{
+  if(error){setCollageAccountStatus('Unable to verify your account. Please sign in again.',true);return;}
+  if(data?.session)applyCollageAccountSession(data.session);
 });
 
 /* AI generation: authenticated Supabase session + unique request ID. */
@@ -1137,6 +1297,7 @@ async function createAiSmartComposition(){
     const session=sessionData?.session;
 
     if(!session||!session.access_token){
+      accountDialog.showModal();
       throw new Error('Please sign in to use AI Smart Collage.');
     }
 
