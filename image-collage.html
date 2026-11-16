@@ -118,6 +118,21 @@ footer a{color:var(--accent);text-decoration:none}
 @media(max-width:1050px){.workspace{grid-template-columns:minmax(300px,350px) minmax(0,1fr);gap:16px}}
 @media(max-width:850px){main{padding:24px 12px 40px}.workspace{grid-template-columns:1fr}.preview-panel{order:1}.panel{order:2}#canvas{max-height:70vh;max-width:100%}.canvas-wrap{min-height:280px}}
 @media(max-width:520px){main{padding:24px 10px 35px}.panel,.preview-panel,.content{padding:13px}.canvas-wrap{padding:6px;min-height:180px}.downloads{grid-template-columns:1fr}.layout-grid{gap:5px}}
+
+.collage-packages{margin:14px 0;padding:13px;background:#0c1729;border:1px solid #304d75;border-radius:12px}
+.collage-packages h4{margin:0 0 5px;font-size:14px}
+.package-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin:10px 0}
+.package-btn{border:1px solid var(--border);border-radius:9px;background:var(--panel2);color:var(--text);padding:10px 7px;text-align:left;cursor:pointer}
+.package-btn:hover{border-color:var(--accent);background:#172947}
+.package-btn:disabled{opacity:.55;cursor:wait}
+.package-btn strong,.package-btn span{display:block}
+.package-btn strong{font-size:13px}
+.package-btn span{font-size:12px;color:var(--muted)}
+.active-packages{display:grid;gap:7px}
+.active-package{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:9px;border:1px solid var(--border);border-radius:8px;background:var(--panel2);font-size:12px}
+.active-package button{border:1px solid var(--accent);border-radius:7px;padding:6px 9px;background:#1a2b49;color:#fff;cursor:pointer;font-weight:700}
+.active-package button.active{background:#244d38;border-color:#4d9b70}
+
 </style>
 </head>
 
@@ -161,6 +176,25 @@ footer a{color:var(--accent);text-decoration:none}
   <div class="section ai-smart-box">
     <h3>✦ AI Smart Collage</h3>
     <p>Choose how you want your photos arranged. AI analyses reduced previews and suggests a layout. Your original photos are used locally to create the final collage.</p>
+
+    <div class="collage-packages" id="collagePackages">
+      <h4>AI generation packages</h4>
+      <p class="help">Choose a package using your shared RitoccaPix credits. Each AI design uses one generation. Your available credits are shared with other AI tools.</p>
+      <div class="package-grid">
+        <button class="package-btn" data-package-code="single" type="button"><strong>1 design</strong><span>15 credits</span></button>
+        <button class="package-btn" data-package-code="starter" type="button"><strong>3 designs</strong><span>40 credits</span></button>
+        <button class="package-btn" data-package-code="standard" type="button"><strong>5 designs</strong><span>70 credits</span></button>
+        <button class="package-btn" data-package-code="plus" type="button"><strong>10 designs</strong><span>125 credits</span></button>
+        <button class="package-btn" data-package-code="pro" type="button"><strong>25 designs</strong><span>250 credits</span></button>
+        <button class="package-btn" data-package-code="max" type="button"><strong>50 designs</strong><span>450 credits</span></button>
+      </div>
+      <p class="help">Payments coming soon! You can currently use your available account credits. Credit purchases and online payments will be available soon.</p>
+      <div class="package-active">
+        <div class="section-label">Your available AI packages</div>
+        <div id="activeCollagePackages" class="active-packages" aria-live="polite">Sign in to load your packages.</div>
+      </div>
+      <p id="collageWalletStatus" class="help" role="status" aria-live="polite"></p>
+    </div>
 
     <div class="section-label" style="margin-top:13px">Choose your composition style</div>
 
@@ -427,6 +461,9 @@ const COLLAGE_AI_WORKER_URL='https://ritoccapix-collage-ai.ritoccapix.workers.de
 
 let aiCollageBusy=false;
 let selectedAiStyle='big-small';
+let selectedCollagePackageId='';
+let activeCollagePackages=[];
+let collagePackageBusy=false;
 
 let images=[];
 let cells=[];
@@ -945,6 +982,115 @@ document.querySelectorAll('.style-btn').forEach(button=>{
   });
 });
 
+/* Shared-wallet AI collage package management. */
+const collagePackageNames={
+  single:'1 design',starter:'3 designs',standard:'5 designs',
+  plus:'10 designs',pro:'25 designs',max:'50 designs'
+};
+
+async function getCollageSession(){
+  const {data,error}=await supabaseClient.auth.getSession();
+  if(error)throw new Error('Unable to verify your account. Please sign in again.');
+  if(!data?.session?.access_token)throw new Error('Please sign in to manage AI collage packages.');
+  return data.session;
+}
+
+function renderActiveCollagePackages(){
+  const host=$('activeCollagePackages');
+  host.replaceChildren();
+  if(!activeCollagePackages.length){
+    host.textContent='No active AI collage packages. Choose a package above to get started.';
+    selectedCollagePackageId='';
+    return;
+  }
+  if(!activeCollagePackages.some(item=>item.packageId===selectedCollagePackageId)){
+    selectedCollagePackageId=activeCollagePackages[0].packageId;
+  }
+  activeCollagePackages.forEach(item=>{
+    const row=document.createElement('div');
+    row.className='active-package';
+    const label=document.createElement('span');
+    const name=collagePackageNames[item.packageCode]||item.packageCode||'AI package';
+    label.textContent=name+' · '+item.generationsRemaining+' remaining';
+    const choose=document.createElement('button');
+    choose.type='button';
+    choose.textContent=item.packageId===selectedCollagePackageId?'Selected':'Use package';
+    choose.classList.toggle('active',item.packageId===selectedCollagePackageId);
+    choose.addEventListener('click',()=>{
+      selectedCollagePackageId=item.packageId;
+      renderActiveCollagePackages();
+      $('collageWalletStatus').textContent=name+' selected for the next AI generation.';
+    });
+    row.append(label,choose);
+    host.appendChild(row);
+  });
+}
+
+async function loadActiveCollagePackages(showStatus=true){
+  const host=$('activeCollagePackages');
+  try{
+    const session=await getCollageSession();
+    const response=await fetch(COLLAGE_AI_WORKER_URL+'/packages',{
+      method:'GET',headers:{'Authorization':'Bearer '+session.access_token}
+    });
+    const result=await response.json().catch(()=>null);
+    if(!response.ok||!result?.ok)throw new Error(result?.error||'Could not load your AI packages.');
+    activeCollagePackages=Array.isArray(result.packages)?result.packages.filter(item=>item.packageId&&Number(item.generationsRemaining)>0):[];
+    renderActiveCollagePackages();
+    if(showStatus)$('collageWalletStatus').textContent='Your active AI collage packages have been updated.';
+  }catch(error){
+    activeCollagePackages=[];
+    selectedCollagePackageId='';
+    host.textContent=error.message||'Sign in to load your packages.';
+    if(showStatus)$('collageWalletStatus').textContent=error.message||'Could not load packages.';
+  }
+}
+
+async function purchaseCollagePackage(packageCode,button){
+  if(collagePackageBusy)return;
+  if(!crypto.randomUUID){$('collageWalletStatus').textContent='Your browser does not support secure request identification. Please update your browser.';return;}
+  collagePackageBusy=true;
+  const buttons=Array.from(document.querySelectorAll('.package-btn'));
+  buttons.forEach(item=>item.disabled=true);
+  const oldText=button.querySelector('strong')?.textContent||'Package';
+  button.querySelector('strong').textContent='Processing…';
+  $('collageWalletStatus').textContent='Checking your shared credit balance…';
+  try{
+    const session=await getCollageSession();
+    const response=await fetch(COLLAGE_AI_WORKER_URL+'/packages/purchase',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+session.access_token},
+      body:JSON.stringify({requestId:crypto.randomUUID(),packageCode})
+    });
+    const result=await response.json().catch(()=>null);
+    if(!response.ok||!result?.ok){
+      if(response.status===401)throw new Error('Your session has expired. Please sign in again.');
+      throw new Error(result?.error||'The package could not be purchased.');
+    }
+    if(!result.packageId)throw new Error('The package purchase response could not be verified. Please refresh your account before trying again.');
+    $('collageWalletStatus').textContent='Package activated. '+(result.generationsRemaining??result.generationsTotal??'')+' AI generation(s) available.';
+    await loadActiveCollagePackages(false);
+    selectedCollagePackageId=result.packageId;
+    renderActiveCollagePackages();
+  }catch(error){
+    $('collageWalletStatus').textContent=error.message||'Package purchase failed.';
+  }finally{
+    collagePackageBusy=false;
+    buttons.forEach(item=>item.disabled=false);
+    const strong=button.querySelector('strong');
+    if(strong)strong.textContent=oldText;
+  }
+}
+
+document.querySelectorAll('.package-btn').forEach(button=>{
+  button.addEventListener('click',()=>purchaseCollagePackage(button.dataset.packageCode,button));
+});
+
+supabaseClient.auth.onAuthStateChange((event,session)=>{
+  if(session?.access_token){loadActiveCollagePackages(false);}
+  else{activeCollagePackages=[];selectedCollagePackageId='';renderActiveCollagePackages();}
+});
+
 /* AI generation: authenticated Supabase session + unique request ID. */
 async function createAiSmartComposition(){
   const button=$('aiSmartLayout');
@@ -962,6 +1108,15 @@ async function createAiSmartComposition(){
     status('Please tick the consent box before sending reduced previews for AI analysis.');
     $('aiConsent').focus();
     return;
+  }
+
+  if(!selectedCollagePackageId){
+    await loadActiveCollagePackages(false);
+    if(!selectedCollagePackageId){
+      status('Choose or purchase an AI generation package before creating an AI collage.');
+      $('collagePackages').scrollIntoView({behavior:'smooth',block:'center'});
+      return;
+    }
   }
 
   aiCollageBusy=true;
@@ -1028,6 +1183,7 @@ async function createAiSmartComposition(){
         },
         body:JSON.stringify({
           requestId:requestId,
+          packageId:selectedCollagePackageId,
           images:thumbnails,
           prompt:completePrompt,
           format:selectedFormat,
@@ -1048,7 +1204,7 @@ async function createAiSmartComposition(){
         throw new Error('Your session has expired. Please sign in again.');
       }
       if(response.status===402){
-        throw new Error('Not enough credits. Please top up your account to create an AI collage.');
+        throw new Error(result?.error||'This package has no generations remaining. Select another package or purchase a new one.');
       }
       if(response.status===409){
         throw new Error('This request has already been processed. Please try again.');
@@ -1141,11 +1297,12 @@ async function createAiSmartComposition(){
         ' is ready. The AI layout was applied. You can adjust every photo manually.';
     }
 
-    if(typeof result.balance==='number'){
-      successMessage+=' Remaining credits: '+result.balance+'.';
+    if(typeof result.generationsRemaining==='number'){
+      successMessage+=' Package generations remaining: '+result.generationsRemaining+'.';
     }
 
     status(successMessage);
+    await loadActiveCollagePackages(false);
 
   }catch(error){
     console.error('AI Smart Collage error:',error);
@@ -1966,6 +2123,7 @@ updateSelect();
 draw();
 
 status('Upload photos, then create a local or AI smart collage, or choose a ready-made layout.');
+loadActiveCollagePackages(false);
 </script>
 </body>
 </html>
