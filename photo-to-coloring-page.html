@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -274,63 +273,34 @@ button:disabled{opacity:.45;cursor:not-allowed}
  color:var(--muted);font-size:.77rem;line-height:1.55;margin:12px 0 0
 }
 
-/* Account and credits */
-.account-panel{margin:0 0 18px}
-.account-panel h2{margin-bottom:8px}
-.account-intro{color:var(--muted);font-size:.86rem;margin:0 0 14px}
-.credit-guide{
- margin:16px 0 0;padding:16px;border:1px solid var(--line);
- border-radius:14px;background:#0d1525
+/* Credit packages info bar */
+.packages-banner{
+ margin:0 0 18px;padding:18px 20px;border:1px solid var(--line);
+ border-radius:20px;background:var(--panel)
 }
-.credit-guide h3,.packages h3{margin:0 0 8px;font-size:1rem}
-.credit-guide p,.packages-intro{color:var(--muted);font-size:.83rem;margin:0 0 12px}
-.credit-steps{display:grid;gap:9px}
-.credit-step{display:flex;gap:10px;align-items:flex-start;font-size:.84rem}
-.credit-step strong{color:var(--accent2);min-width:18px}
-.packages{margin-top:18px}
-.packages-intro{margin-bottom:12px}
-.package-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.packages-banner-head{
+ display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;
+ gap:12px;margin-bottom:14px
+}
+.packages-banner-head h2{margin:0;font-size:1.1rem}
+.packages-banner-head p{margin:3px 0 0;color:var(--muted);font-size:.84rem}
+.packages-cta{
+ display:inline-flex;align-items:center;justify-content:center;
+ padding:10px 16px;border-radius:11px;background:var(--accent);
+ color:#fff;text-decoration:none;font-weight:750;font-size:.88rem;
+ white-space:nowrap
+}
+.packages-cta:hover{filter:brightness(1.08)}
+.package-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px}
 .package{
  min-width:0;padding:12px;border:1px solid var(--line);
- border-radius:12px;background:var(--panel2)
+ border-radius:12px;background:var(--panel2);text-align:center
 }
-.package strong{display:block;font-size:1rem}
-.package span{display:block;color:var(--muted);font-size:.76rem}
-.package small{display:inline-block;margin-top:8px;color:var(--accent2);font-size:.68rem;font-weight:800}
-@media(max-width:520px){.package-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.account-grid{
- display:grid;grid-template-columns:1fr 1fr;gap:12px
-}
-.account-field label{
- display:block;font-size:.83rem;font-weight:700;margin-bottom:6px
-}
-.account-field input{
- width:100%;padding:11px 12px;border-radius:10px;
- border:1px solid var(--line);background:#0d1525;color:var(--text);
- font:inherit;min-width:0
-}
-.account-buttons{
- display:flex;flex-wrap:wrap;gap:9px;margin-top:12px
-}
-.account-buttons button{flex:1 1 130px}
-.account-status{
- margin-top:12px;padding:12px;border-radius:11px;
- background:#0d1525;border:1px solid var(--line);
- color:var(--muted);font-size:.85rem;overflow-wrap:anywhere
-}
-.account-status strong{color:var(--text)}
-.account-status .credit-number{
- color:var(--accent2);font-size:1.15rem;font-weight:850
-}
-.account-message{
- color:var(--accent2);font-size:.83rem;margin-top:10px;
- min-height:1.2em;overflow-wrap:anywhere
-}
-.account-message.error{color:var(--danger)}
-.account-logged-in{display:none}
-.account-logged-in.active{display:block}
-.auth-form.hidden{display:none}
-.auth-help{color:var(--muted);font-size:.78rem;margin-top:9px}
+.package strong{display:block;font-size:1.05rem;color:var(--accent2)}
+.package span{display:block;color:var(--text);font-size:.82rem;font-weight:600;margin-top:2px}
+.package small{display:block;margin-top:4px;color:var(--muted);font-size:.72rem}
+@media(max-width:760px){.package-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:480px){.package-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 [hidden]{display:none!important}
 
 @media(max-width:800px){
@@ -346,9 +316,6 @@ button:disabled{opacity:.45;cursor:not-allowed}
  .demo-grid{grid-template-columns:1fr}
  .demo-card img{height:260px}
 }
-@media(max-width:520px){
- .account-grid{grid-template-columns:1fr}
-}
 @media(max-width:420px){
  .wrap{padding:18px 12px 36px}
  .panel{padding:15px}
@@ -361,7 +328,7 @@ button:disabled{opacity:.45;cursor:not-allowed}
 }
 @media print{
  body{background:white!important;color:#111!important}
- .top,.hero,.controls,.account-panel,.below,.footer,.previewhead,.tips,.demo-section{display:none!important}
+ .top,.hero,.controls,.packages-banner,.below,.footer,.previewhead,.tips,.demo-section{display:none!important}
  .wrap{max-width:none;padding:0}
  .workspace{display:block}
  .previewpanel,.panel{padding:0;border:0;background:white}
@@ -393,7 +360,7 @@ button:disabled{opacity:.45;cursor:not-allowed}
  <h1>Turn any photo into a coloring page</h1>
  <p>
   Transform your photo into a detailed black-and-white coloring illustration.
-  One credit creates one coloring page. Get your first credit free after email verification.
+  One generation creates one coloring page. Sign in from the top bar to manage your shared RitoccaPix credits.
  </p>
 </section>
 
@@ -438,85 +405,22 @@ button:disabled{opacity:.45;cursor:not-allowed}
 
 </section>
 
-<!-- ACCOUNT -->
-<section class="panel account-panel" aria-label="Your RitoccaPix account">
- <h2>Your account and credits</h2>
- <p class="account-intro">
-  Create your free account and verify your email address to receive one free credit.
-  Each credit lets you generate one AI coloring page from your photo.
- </p>
-
- <div class="credit-guide">
-  <h3>How do credits work?</h3>
-  <p>One credit is used for one successful coloring-page generation.</p>
-  <div class="credit-steps">
-   <div class="credit-step"><strong>1.</strong><span>Create your free RitoccaPix account.</span></div>
-   <div class="credit-step"><strong>2.</strong><span>Verify your email address and receive one free credit.</span></div>
-   <div class="credit-step"><strong>3.</strong><span>Upload a photo and generate your coloring page.</span></div>
-   <div class="credit-step"><strong>4.</strong><span>Download the PNG or print your result on A4 paper.</span></div>
+<!-- SHARED CREDITS & PACKAGES -->
+<section class="packages-banner" aria-label="Coloring page credit packages">
+ <div class="packages-banner-head">
+  <div>
+   <h2>Coloring page credit packages</h2>
+   <p>Use your shared RitoccaPix credits across all AI tools. No subscription or recurring payment.</p>
   </div>
+  <a href="account.html" class="packages-cta" id="manageCreditsLink">Manage account &amp; credits</a>
  </div>
-
- <div class="packages">
-  <h3>Credit packages coming soon</h3>
-  <p class="packages-intro">Need more coloring pages? Choose a package when purchases become available. No subscription or recurring payment.</p>
-  <div class="package-grid">
-   <div class="package"><strong>$0.75</strong><span>2 coloring pages · 2 credits</span><small>COMING SOON</small></div>
-   <div class="package"><strong>$1.29</strong><span>5 coloring pages · 5 credits</span><small>COMING SOON</small></div>
-   <div class="package"><strong>$2.49</strong><span>10 coloring pages · 10 credits</span><small>COMING SOON</small></div>
-   <div class="package"><strong>$4.99</strong><span>30 coloring pages · 30 credits</span><small>COMING SOON</small></div>
-   <div class="package"><strong>$5.99</strong><span>50 coloring pages · 50 credits</span><small>COMING SOON</small></div>
-  </div>
+ <div class="package-grid">
+  <div class="package"><strong>75 credits</strong><span>2 coloring pages</span><small>37.5 cr / page</small></div>
+  <div class="package"><strong>129 credits</strong><span>5 coloring pages</span><small>25.8 cr / page</small></div>
+  <div class="package"><strong>249 credits</strong><span>10 coloring pages</span><small>24.9 cr / page</small></div>
+  <div class="package"><strong>499 credits</strong><span>30 coloring pages</span><small>16.6 cr / page</small></div>
+  <div class="package"><strong>599 credits</strong><span>50 coloring pages</span><small>12.0 cr / page</small></div>
  </div>
-
- <div id="authForm" class="auth-form">
-  <div class="account-grid">
-   <div class="account-field">
-    <label for="accountEmail">Email address</label>
-    <input id="accountEmail" type="email" autocomplete="email"
-     placeholder="you@example.com" required>
-   </div>
-   <div class="account-field">
-    <label for="accountPassword">Password</label>
-    <input id="accountPassword" type="password"
-     autocomplete="current-password" placeholder="At least 8 characters"
-     minlength="8" required>
-   </div>
-  </div>
-
-  <div class="account-buttons">
-   <button id="registerBtn" class="primary" type="button">
-    Create account
-   </button>
-   <button id="loginBtn" class="secondary" type="button">
-    Sign in
-   </button>
-  </div>
-
-  <p class="auth-help">
-   New accounts must verify their email address before using the free credit.
-  </p>
- </div>
-
- <div id="loggedInPanel" class="account-logged-in">
-  <div class="account-status">
-   Signed in as <strong id="accountUserEmail"></strong><br>
-   Available credits:
-   <span class="credit-number" id="creditBalance">—</span>
-   <span id="creditLabel">credits</span>
-  </div>
-  <div class="account-buttons">
-   <button id="refreshCreditsBtn" class="secondary" type="button">
-    Refresh balance
-   </button>
-   <button id="logoutBtn" class="secondary" type="button">
-    Sign out
-   </button>
-  </div>
- </div>
-
- <div id="accountMessage" class="account-message"
-  role="status" aria-live="polite"></div>
 </section>
 
 <main class="workspace">
@@ -682,7 +586,7 @@ button:disabled{opacity:.45;cursor:not-allowed}
   <summary>How do I get my free credit?</summary>
   <p>
    Create an account and verify your email address using the confirmation
-   link sent to your inbox. One free credit is added to your account after
+   link sent to your inbox. Free credits are added to your shared RitoccaPix account after
    your email is verified.
   </p>
  </details>
@@ -777,6 +681,7 @@ const strength = document.getElementById("lineStrength");
 const strengthValue = document.getElementById("strengthValue");
 const invertBg = document.getElementById("invertBg");
 const privacyConsent = document.getElementById("privacyConsent");
+const manageCreditsLink = document.getElementById("manageCreditsLink");
 
 /* Original photo preview elements */
 const selectedPhoto = document.getElementById("selectedPhoto");
@@ -784,19 +689,6 @@ const selectedPhotoImage = document.getElementById("selectedPhotoImage");
 const selectedPhotoName = document.getElementById("selectedPhotoName");
 const selectedPhotoDimensions =
  document.getElementById("selectedPhotoDimensions");
-
-const accountEmail = document.getElementById("accountEmail");
-const accountPassword = document.getElementById("accountPassword");
-const registerBtn = document.getElementById("registerBtn");
-const loginBtn = document.getElementById("loginBtn");
-const logoutBtn = document.getElementById("logoutBtn");
-const refreshCreditsBtn = document.getElementById("refreshCreditsBtn");
-const authForm = document.getElementById("authForm");
-const loggedInPanel = document.getElementById("loggedInPanel");
-const accountUserEmail = document.getElementById("accountUserEmail");
-const creditBalance = document.getElementById("creditBalance");
-const creditLabel = document.getElementById("creditLabel");
-const accountMessage = document.getElementById("accountMessage");
 
 let selectedFile = null;
 let selectedPhotoUrl = null;
@@ -806,15 +698,18 @@ let isGenerating = false;
 let currentRequest = null;
 let currentSession = null;
 let currentBalance = 0;
-let authBusy = false;
 
 document.getElementById("year").textContent =
  new Date().getFullYear();
 
+if(manageCreditsLink){
+ manageCreditsLink.href =
+  "account.html?redirect=" + encodeURIComponent(window.location.pathname);
+}
+
 if(!window.supabase || !window.supabase.createClient){
- setAccountMessage(
-  "The account service could not be loaded. Please refresh the page.",
-  true
+ setError(
+  "The account service could not be loaded. Please refresh the page."
  );
  generateBtn.disabled = true;
  return;
@@ -851,16 +746,6 @@ function setError(message){
 
 function setStatus(message){
  statusText.textContent = message;
-}
-
-function setAccountMessage(message,isError=false){
- accountMessage.textContent = message || "";
- accountMessage.classList.toggle("error",Boolean(isError));
-}
-
-function updateAccountButtons(disabled){
- registerBtn.disabled = disabled;
- loginBtn.disabled = disabled;
 }
 
 function updateGenerateButton(){
@@ -1077,8 +962,6 @@ async function refreshCreditBalance(){
 
  if(!currentSession){
   currentBalance = 0;
-  creditBalance.textContent = "—";
-  creditLabel.textContent = "credits";
   updateGenerateButton();
   return;
  }
@@ -1093,219 +976,39 @@ async function refreshCreditBalance(){
 
  if(error){
   console.error("Credit balance error:",error);
-  setAccountMessage(
-   "Could not load your credit balance. Please refresh and try again.",
-   true
-  );
   currentBalance = 0;
  }else if(!data){
   currentBalance = 0;
-  setAccountMessage(
-   "Your credit account is not ready yet. Please try again shortly.",
-   true
-  );
  }else{
   currentBalance = Number(data.balance) || 0;
-  setAccountMessage("");
  }
-
- creditBalance.textContent = String(currentBalance);
- creditLabel.textContent =
-  currentBalance === 1 ? "credit" : "credits";
 
  updateGenerateButton();
 }
 
-/* Update the account interface after login or logout */
+/* Update session state */
 async function applySession(session){
 
  currentSession = session || null;
 
  if(currentSession){
-
-  authForm.classList.add("hidden");
-  loggedInPanel.classList.add("active");
-
-  accountUserEmail.textContent =
-   currentSession.user.email || "Account";
-
-  creditBalance.textContent = "…";
-  creditLabel.textContent = "credits";
-
   await refreshCreditBalance();
-
-  if(currentBalance > 0){
-   setAccountMessage("You are signed in and ready to create.");
-  }else{
-   setAccountMessage(
-    "You are signed in, but there are no available credits."
+  if(!selectedFile){
+   setStatus(
+    currentBalance > 0
+     ? `Ready (${currentBalance} credits available) · Upload a photo to begin`
+     : "Signed in · No credits available"
    );
   }
-
  }else{
-
-  authForm.classList.remove("hidden");
-  loggedInPanel.classList.remove("active");
-
-  accountUserEmail.textContent = "";
-  creditBalance.textContent = "—";
-  creditLabel.textContent = "credits";
-
   currentBalance = 0;
-  setAccountMessage("Sign in or create an account to continue.");
+  if(!selectedFile){
+   setStatus("Sign in from the top bar and upload a photo to begin");
+  }
  }
 
  updateGenerateButton();
 }
-
-/* Create account */
-registerBtn.addEventListener("click",async()=>{
-
- if(authBusy) return;
-
- const email = accountEmail.value.trim();
- const password = accountPassword.value;
-
- if(!email || !accountEmail.validity.valid){
-  setAccountMessage("Please enter a valid email address.",true);
-  accountEmail.focus();
-  return;
- }
-
- if(password.length < 8){
-  setAccountMessage("Your password must contain at least 8 characters.",true);
-  accountPassword.focus();
-  return;
- }
-
- authBusy = true;
- updateAccountButtons(true);
- setAccountMessage("Creating your account…");
-
- try{
-
-  const {data,error} = await supabaseClient.auth.signUp({
-   email,
-   password,
-   options:{
-    emailRedirectTo:
-     "https://ritoccapix.com/photo-to-coloring-page.html"
-   }
-  });
-
-  if(error) throw error;
-
-  if(data.session){
-   await applySession(data.session);
-   setAccountMessage(
-    "Your account is ready. Check your email for any confirmation message."
-   );
-  }else{
-   setAccountMessage(
-    "Account created. Please check your inbox and click the confirmation link. Then return here and sign in."
-   );
-  }
-
- }catch(error){
-  console.error("Registration error:",error);
-  setAccountMessage(
-   error.message || "Could not create your account. Please try again.",
-   true
-  );
- }finally{
-  authBusy = false;
-  updateAccountButtons(false);
- }
-});
-
-/* Sign in */
-loginBtn.addEventListener("click",async()=>{
-
- if(authBusy) return;
-
- const email = accountEmail.value.trim();
- const password = accountPassword.value;
-
- if(!email || !accountEmail.validity.valid){
-  setAccountMessage("Please enter your registered email address.",true);
-  accountEmail.focus();
-  return;
- }
-
- if(!password){
-  setAccountMessage("Please enter your password.",true);
-  accountPassword.focus();
-  return;
- }
-
- authBusy = true;
- updateAccountButtons(true);
- setAccountMessage("Signing in…");
-
- try{
-
-  const {data,error} =
-   await supabaseClient.auth.signInWithPassword({
-    email,
-    password
-   });
-
-  if(error) throw error;
-
-  await applySession(data.session);
-
-  setAccountMessage("You are signed in.");
-
- }catch(error){
-  console.error("Login error:",error);
-  setAccountMessage(
-   error.message || "Sign-in failed. Check your email and password.",
-   true
-  );
- }finally{
-  authBusy = false;
-  updateAccountButtons(false);
- }
-});
-
-/* Sign out */
-logoutBtn.addEventListener("click",async()=>{
-
- logoutBtn.disabled = true;
-
- try{
-
-  const {error} = await supabaseClient.auth.signOut();
-
-  if(error) throw error;
-
-  await applySession(null);
-  setAccountMessage("You have signed out.");
-
- }catch(error){
-  console.error("Sign-out error:",error);
-  setAccountMessage(
-   error.message || "Could not sign out. Please try again.",
-   true
-  );
- }finally{
-  logoutBtn.disabled = false;
- }
-});
-
-/* Manually refresh credits */
-refreshCreditsBtn.addEventListener("click",async()=>{
-
- refreshCreditsBtn.disabled = true;
- setAccountMessage("Refreshing your credit balance…");
-
- try{
-  await refreshCreditBalance();
-  setAccountMessage("Credit balance updated.");
- }finally{
-  refreshCreditsBtn.disabled = false;
- }
-});
 
 /* Watch authentication changes */
 supabaseClient.auth.onAuthStateChange((event,session)=>{
@@ -1323,18 +1026,7 @@ supabaseClient.auth.onAuthStateChange((event,session)=>{
   event === "TOKEN_REFRESHED" ||
   event === "USER_UPDATED"
  ){
-  currentSession = session || null;
-
-  if(currentSession){
-   authForm.classList.add("hidden");
-   loggedInPanel.classList.add("active");
-   accountUserEmail.textContent =
-    currentSession.user.email || "Account";
-
-   refreshCreditBalance();
-  }else{
-   applySession(null);
-  }
+  applySession(session);
  }
 });
 
@@ -1350,10 +1042,6 @@ supabaseClient.auth.onAuthStateChange((event,session)=>{
  }catch(error){
   console.error("Session restore error:",error);
   await applySession(null);
-  setAccountMessage(
-   "Could not restore your session. Please sign in again.",
-   true
-  );
  }
 })();
 
@@ -1363,7 +1051,7 @@ async function generateColoringPage(){
  if(!selectedFile || isGenerating) return;
 
  if(!currentSession){
-  setError("Please sign in before generating a coloring page.");
+  setError("Please sign in from the top bar before generating a coloring page.");
   return;
  }
 
@@ -1537,7 +1225,6 @@ async function generateColoringPage(){
   setStatus(`Ready · ${canvas.width} × ${canvas.height} px`);
 
   setError("");
-  setAccountMessage("Coloring page created successfully.");
 
  }catch(error){
 
@@ -1676,3 +1363,4 @@ invertBg.addEventListener("change",()=>{
 <script src="menu.js"></script>
 
 </body>
+</html>
