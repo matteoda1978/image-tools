@@ -291,7 +291,7 @@ button:disabled{opacity:.45;cursor:not-allowed}
  white-space:nowrap
 }
 .packages-cta:hover{filter:brightness(1.08)}
-.package-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px}
+.package-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
 .package{
  min-width:0;padding:12px;border:1px solid var(--line);
  border-radius:12px;background:var(--panel2);text-align:center
@@ -415,6 +415,7 @@ button:disabled{opacity:.45;cursor:not-allowed}
   <a href="account.html" class="packages-cta" id="manageCreditsLink">Manage account &amp; credits</a>
  </div>
  <div class="package-grid">
+  <div class="package"><strong>50 credits</strong><span>1 coloring page</span><small>50 cr / page</small></div>
   <div class="package"><strong>75 credits</strong><span>2 coloring pages</span><small>37.5 cr / page</small></div>
   <div class="package"><strong>129 credits</strong><span>5 coloring pages</span><small>25.8 cr / page</small></div>
   <div class="package"><strong>249 credits</strong><span>10 coloring pages</span><small>24.9 cr / page</small></div>
@@ -665,6 +666,7 @@ const WORKER_URL =
  "https://ritoccapix-coloring-ai.ritoccapix.workers.dev/";
 
 const MAX_FILE_SIZE = 8 * 1024 * 1024;
+const COLORING_CREDIT_COST = 50;
 
 const fileInput = document.getElementById("fileInput");
 const replacePhotoBtn = document.getElementById("replacePhotoBtn");
@@ -753,19 +755,19 @@ function updateGenerateButton(){
   Boolean(selectedFile) &&
   privacyConsent.checked &&
   Boolean(currentSession) &&
-  currentBalance > 0 &&
+  currentBalance >= COLORING_CREDIT_COST &&
   !isGenerating;
 
  generateBtn.disabled = !canGenerate;
 
  if(!currentSession){
   generateBtn.textContent = "Sign in to use this tool";
- }else if(currentBalance <= 0){
-  generateBtn.textContent = "No credits available";
+ }else if(currentBalance < COLORING_CREDIT_COST){
+  generateBtn.textContent = "Need 50 credits";
  }else if(isGenerating){
   generateBtn.textContent = "Generating…";
  }else{
-  generateBtn.textContent = "Make coloring page with AI · 1 credit";
+  generateBtn.textContent = "Make coloring page with AI · 50 credits";
  }
 }
 
@@ -995,9 +997,9 @@ async function applySession(session){
   await refreshCreditBalance();
   if(!selectedFile){
    setStatus(
-    currentBalance > 0
+    currentBalance >= COLORING_CREDIT_COST
      ? `Ready (${currentBalance} credits available) · Upload a photo to begin`
-     : "Signed in · No credits available"
+     : `Signed in · Need ${COLORING_CREDIT_COST} credits (${currentBalance} available)`
    );
   }
  }else{
@@ -1055,8 +1057,8 @@ async function generateColoringPage(){
   return;
  }
 
- if(currentBalance < 1){
-  setError("You do not have any available credits.");
+ if(currentBalance < COLORING_CREDIT_COST){
+  setError("You need at least 50 credits to generate a coloring page.");
   updateGenerateButton();
   return;
  }
