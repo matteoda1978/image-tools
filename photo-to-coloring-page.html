@@ -146,12 +146,12 @@ button:disabled{opacity:.45;cursor:not-allowed}
 .previewhead h2{margin:0}
 .status{color:var(--muted);font-size:.82rem;overflow-wrap:anywhere}
 .stage{
- width:100%;min-width:0;min-height:440px;border:1px solid var(--line);
+ width:100%;min-width:0;min-height:560px;border:1px solid var(--line);
  border-radius:15px;background:#202a3d;display:flex;
  align-items:center;justify-content:center;padding:18px;overflow:hidden
 }
 .stage canvas{
- display:block;max-width:100%;max-height:68vh;object-fit:contain;
+ display:block;max-width:100%;max-height:78vh;object-fit:contain;
  background:white;box-shadow:0 8px 30px #0004
 }
 .placeholder{
@@ -200,13 +200,13 @@ button:disabled{opacity:.45;cursor:not-allowed}
 .privacy-note{color:var(--muted);font-size:.77rem;line-height:1.55;margin:12px 0 0}
 
 /* ======================================================
-   COLORING PACKAGES
-   Same compact card layout as AI Smart Collage
+   COMPACT COLORING PACKAGES
+   Positioned below the generation button
 ====================================================== */
 
 .packages-banner{
- margin:0 0 18px;
- padding:16px;
+ margin:18px 0 0;
+ padding:13px;
  background:#0c1729;
  border:1px solid #304d75;
  border-radius:12px
@@ -216,8 +216,8 @@ button:disabled{opacity:.45;cursor:not-allowed}
  flex-wrap:wrap;
  justify-content:space-between;
  align-items:center;
- gap:10px;
- margin-bottom:12px
+ gap:8px;
+ margin-bottom:10px
 }
 .packages-banner-head h2{
  margin:0;
@@ -227,20 +227,20 @@ button:disabled{opacity:.45;cursor:not-allowed}
  margin:3px 0 0;
  color:var(--muted);
  font-size:12px;
- line-height:1.5
+ line-height:1.45
 }
 .packages-cta{
  display:inline-flex;
  align-items:center;
  justify-content:center;
- padding:8px 11px;
+ padding:7px 9px;
  border-radius:8px;
  background:#1a2b49;
  border:1px solid var(--accent);
  color:#fff;
  text-decoration:none;
  font-weight:750;
- font-size:12px;
+ font-size:11px;
  white-space:nowrap
 }
 .packages-cta:hover{background:#244064}
@@ -248,111 +248,108 @@ button:disabled{opacity:.45;cursor:not-allowed}
 .wallet-info{
  display:grid;
  grid-template-columns:1fr 1fr;
- gap:8px;
- margin:12px 0 15px
+ gap:7px;
+ margin:10px 0 12px
 }
 .wallet-info>div{
  min-width:0;
- padding:10px;
+ padding:8px;
  border:1px solid var(--line);
- border-radius:9px;
+ border-radius:8px;
  background:var(--panel2)
 }
 .wallet-info span{
  display:block;
  color:var(--muted);
- font-size:11px;
+ font-size:10px;
  line-height:1.4;
- margin-bottom:4px
+ margin-bottom:3px
 }
 .wallet-info strong{
  display:block;
  color:var(--accent2);
- font-size:14px;
+ font-size:12px;
  line-height:1.35;
  overflow-wrap:anywhere
 }
 .package-section-title{
- font-size:14px;
+ font-size:12px;
  font-weight:800;
- margin:15px 0 8px
+ margin:12px 0 6px
 }
 .package-grid{
  display:grid;
  grid-template-columns:repeat(2,minmax(0,1fr));
- gap:8px;
- margin:10px 0
+ gap:7px;
+ margin:8px 0
 }
 .package-btn{
- display:flex;
- flex-direction:column;
- justify-content:center;
- align-items:flex-start;
- gap:3px;
+ display:block;
  min-width:0;
- min-height:82px;
  width:100%;
- padding:12px 11px;
+ min-height:0;
+ padding:9px 8px;
  border:1px solid var(--line);
  border-radius:9px;
  background:var(--panel2);
  color:var(--text);
  text-align:left;
  cursor:pointer;
- transition:border-color .15s ease,background .15s ease,transform .15s ease
+ transition:border-color .15s ease,background .15s ease
 }
 .package-btn:hover{
  border-color:var(--accent);
- background:#172947;
- transform:translateY(-1px)
+ background:#172947
 }
 .package-btn:disabled{
  opacity:.55;
- cursor:wait;
- transform:none
+ cursor:wait
+}
+.package-btn strong,.package-btn span,.package-btn small{
+ display:block
 }
 .package-btn strong{
- display:block;
- font-size:14px;
+ font-size:12px;
  line-height:1.35;
  font-weight:800;
  color:var(--text)
 }
 .package-btn span{
- display:block;
- font-size:13px;
+ font-size:11px;
  line-height:1.4;
- color:var(--accent2);
- font-weight:750
+ color:var(--muted);
+ font-weight:600;
+ margin-top:2px
 }
 .package-btn small{
  display:block;
  margin-top:2px;
  color:var(--muted);
- font-size:11px;
- line-height:1.35
+ font-size:10px;
+ line-height:1.3
 }
 .package-status{
  color:var(--muted);
- font-size:12px;
- margin-top:9px;
- min-height:1.3em
+ font-size:11px;
+ margin-top:8px;
+ min-height:1.3em;
+ line-height:1.45
 }
 .owned-packages{
  display:grid;
- gap:7px;
- margin-top:9px
+ gap:6px;
+ margin-top:8px
 }
 .owned-package{
  display:flex;
  justify-content:space-between;
  align-items:center;
  gap:8px;
- padding:10px;
+ padding:8px;
  border:1px solid var(--line);
  border-radius:8px;
  background:var(--panel2);
- font-size:12px
+ font-size:11px
 }
 .owned-package.selected{
  border-color:var(--accent);
@@ -361,7 +358,7 @@ button:disabled{opacity:.45;cursor:not-allowed}
 .owned-package label{
  display:flex;
  align-items:flex-start;
- gap:9px;
+ gap:8px;
  cursor:pointer;
  width:100%
 }
@@ -372,23 +369,26 @@ button:disabled{opacity:.45;cursor:not-allowed}
 }
 .owned-package strong{
  display:block;
- font-size:12px
+ font-size:11px
 }
 .owned-package small{
  display:block;
  color:var(--muted);
- font-size:11px;
+ font-size:10px;
  margin-top:2px
 }
 [hidden]{display:none!important}
 
 @media(max-width:800px){
  .workspace{grid-template-columns:1fr}
- .stage{min-height:320px;padding:14px}
- .stage canvas{max-height:60vh}
+ .stage{min-height:420px;padding:14px}
+ .stage canvas{max-height:70vh}
  .featuregrid{grid-template-columns:1fr}
  .top{margin-bottom:25px}
  .previewhead{align-items:flex-start;flex-direction:column}
+ .packages-banner{padding:14px}
+ .package-btn strong{font-size:13px}
+ .package-btn span{font-size:12px}
 }
 @media(max-width:600px){
  .demo-section{padding:14px}
@@ -399,19 +399,20 @@ button:disabled{opacity:.45;cursor:not-allowed}
  .wrap{padding:18px 12px 36px}
  .panel{padding:15px}
  .previewpanel{padding:13px}
- .stage{min-height:280px;padding:10px}
+ .stage{min-height:360px;padding:10px}
+ .stage canvas{max-height:68vh}
  .placeholder{padding:20px 10px;gap:10px}
  .placeholder b{font-size:1rem}
  .placeholder span{font-size:.85rem}
  .actions{grid-template-columns:1fr}
- .packages-banner{padding:12px}
+ .packages-banner{padding:11px}
  .packages-banner-head{align-items:flex-start}
  .packages-cta{width:100%}
  .wallet-info{grid-template-columns:1fr 1fr}
  .package-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
- .package-btn{min-height:78px;padding:10px 8px}
- .package-btn strong{font-size:13px}
- .package-btn span{font-size:12px}
+ .package-btn{padding:9px 7px}
+ .package-btn strong{font-size:12px}
+ .package-btn span{font-size:11px}
 }
 @media print{
  body{background:white!important;color:#111!important}
@@ -478,110 +479,6 @@ button:disabled{opacity:.45;cursor:not-allowed}
  </div>
 </section>
 
-<!-- COLORING PACKAGES -->
-<section class="packages-banner" aria-label="Coloring page packages">
-
- <div class="packages-banner-head">
-  <div>
-   <h2>Coloring page packages</h2>
-   <p>
-    Buy Coloring generations with your shared RitoccaPix credits.
-    Each generation uses one available page, not additional wallet credits.
-   </p>
-  </div>
-  <a href="account.html" class="packages-cta" id="manageCreditsLink">
-   Manage account &amp; credits
-  </a>
- </div>
-
- <div class="wallet-info">
-  <div>
-   <span>Shared wallet balance</span>
-   <strong id="walletBalance">Sign in to view your balance</strong>
-  </div>
-  <div>
-   <span>Available Coloring pages</span>
-   <strong id="totalColoringGenerations">—</strong>
-  </div>
- </div>
-
- <h3 class="package-section-title">Buy a Coloring package</h3>
-
- <div class="package-grid">
-
-  <button type="button"
-   class="package-btn buy-package"
-   data-package="single"
-   data-package-code="single">
-   <strong>1 coloring page</strong>
-   <span>50 credits</span>
-   <small>50 credits per page</small>
-  </button>
-
-  <button type="button"
-   class="package-btn buy-package"
-   data-package="starter"
-   data-package-code="starter">
-   <strong>2 coloring pages</strong>
-   <span>75 credits</span>
-   <small>37.5 credits per page</small>
-  </button>
-
-  <button type="button"
-   class="package-btn buy-package"
-   data-package="standard"
-   data-package-code="standard">
-   <strong>5 coloring pages</strong>
-   <span>129 credits</span>
-   <small>25.8 credits per page</small>
-  </button>
-
-  <button type="button"
-   class="package-btn buy-package"
-   data-package="plus"
-   data-package-code="plus">
-   <strong>10 coloring pages</strong>
-   <span>249 credits</span>
-   <small>24.9 credits per page</small>
-  </button>
-
-  <button type="button"
-   class="package-btn buy-package"
-   data-package="pro"
-   data-package-code="pro">
-   <strong>30 coloring pages</strong>
-   <span>499 credits</span>
-   <small>16.6 credits per page</small>
-  </button>
-
-  <button type="button"
-   class="package-btn buy-package"
-   data-package="max"
-   data-package-code="max">
-   <strong>50 coloring pages</strong>
-   <span>599 credits</span>
-   <small>12 credits per page</small>
-  </button>
-
- </div>
-
- <p class="package-status" id="packageMessage"
-  role="status" aria-live="polite">
-  Sign in to purchase a Coloring package.
- </p>
-
- <h3 class="package-section-title">Your available Coloring packages</h3>
-
- <p class="tips" style="margin-top:0">
-  Select the package you want to use for your next generation.
- </p>
-
- <div id="ownedPackages" class="owned-packages" aria-live="polite">
-  <p class="package-status">Sign in to load your packages.</p>
- </div>
-
-</section>
-
 <main class="workspace">
 
 <section class="panel controls" aria-label="Coloring page settings">
@@ -646,6 +543,110 @@ button:disabled{opacity:.45;cursor:not-allowed}
   Your photo is transmitted securely to our processing service and OpenAI
   to generate the result. Do not upload sensitive or confidential images.
  </p>
+
+ <!-- COLORING PACKAGES: MOVED BELOW THE GENERATION BUTTON -->
+ <section class="packages-banner" aria-label="Coloring page packages">
+
+  <div class="packages-banner-head">
+   <div>
+    <h2>Coloring page packages</h2>
+    <p>
+     Buy Coloring generations with your shared RitoccaPix credits.
+     Each generation uses one available page, not additional wallet credits.
+    </p>
+   </div>
+   <a href="account.html" class="packages-cta" id="manageCreditsLink">
+    Manage account &amp; credits
+   </a>
+  </div>
+
+  <div class="wallet-info">
+   <div>
+    <span>Shared wallet balance</span>
+    <strong id="walletBalance">Sign in to view your balance</strong>
+   </div>
+   <div>
+    <span>Available Coloring pages</span>
+    <strong id="totalColoringGenerations">—</strong>
+   </div>
+  </div>
+
+  <h3 class="package-section-title">Buy a Coloring package</h3>
+
+  <div class="package-grid">
+
+   <button type="button"
+    class="package-btn buy-package"
+    data-package="single"
+    data-package-code="single">
+    <strong>1 coloring page</strong>
+    <span>50 credits</span>
+    <small>50 credits per page</small>
+   </button>
+
+   <button type="button"
+    class="package-btn buy-package"
+    data-package="starter"
+    data-package-code="starter">
+    <strong>2 coloring pages</strong>
+    <span>75 credits</span>
+    <small>37.5 credits per page</small>
+   </button>
+
+   <button type="button"
+    class="package-btn buy-package"
+    data-package="standard"
+    data-package-code="standard">
+    <strong>5 coloring pages</strong>
+    <span>129 credits</span>
+    <small>25.8 credits per page</small>
+   </button>
+
+   <button type="button"
+    class="package-btn buy-package"
+    data-package="plus"
+    data-package-code="plus">
+    <strong>10 coloring pages</strong>
+    <span>249 credits</span>
+    <small>24.9 credits per page</small>
+   </button>
+
+   <button type="button"
+    class="package-btn buy-package"
+    data-package="pro"
+    data-package-code="pro">
+    <strong>30 coloring pages</strong>
+    <span>499 credits</span>
+    <small>16.6 credits per page</small>
+   </button>
+
+   <button type="button"
+    class="package-btn buy-package"
+    data-package="max"
+    data-package-code="max">
+    <strong>50 coloring pages</strong>
+    <span>599 credits</span>
+    <small>12 credits per page</small>
+   </button>
+
+  </div>
+
+  <p class="package-status" id="packageMessage"
+   role="status" aria-live="polite">
+   Sign in to purchase a Coloring package.
+  </p>
+
+  <h3 class="package-section-title">Your available Coloring packages</h3>
+
+  <p class="tips" style="margin-top:0">
+   Select the package you want to use for your next generation.
+  </p>
+
+  <div id="ownedPackages" class="owned-packages" aria-live="polite">
+   <p class="package-status">Sign in to load your packages.</p>
+  </div>
+
+ </section>
 </section>
 
 <section class="panel previewpanel">
