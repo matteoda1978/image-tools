@@ -199,89 +199,189 @@ button:disabled{opacity:.45;cursor:not-allowed}
 .message{color:var(--danger);font-size:.83rem;margin-top:10px;min-height:1.2em}
 .privacy-note{color:var(--muted);font-size:.77rem;line-height:1.55;margin:12px 0 0}
 
-/* Coloring packages - matching AI Smart Collage */
+/* ======================================================
+   COLORING PACKAGES
+   Same compact card layout as AI Smart Collage
+====================================================== */
+
 .packages-banner{
- margin:0 0 18px;padding:13px;
+ margin:0 0 18px;
+ padding:16px;
  background:#0c1729;
  border:1px solid #304d75;
  border-radius:12px
 }
 .packages-banner-head{
- display:flex;flex-wrap:wrap;justify-content:space-between;
- align-items:center;gap:10px;margin-bottom:10px
+ display:flex;
+ flex-wrap:wrap;
+ justify-content:space-between;
+ align-items:center;
+ gap:10px;
+ margin-bottom:12px
 }
-.packages-banner-head h2{margin:0;font-size:14px}
+.packages-banner-head h2{
+ margin:0;
+ font-size:14px
+}
 .packages-banner-head p{
- margin:3px 0 0;color:var(--muted);font-size:12px;line-height:1.5
+ margin:3px 0 0;
+ color:var(--muted);
+ font-size:12px;
+ line-height:1.5
 }
 .packages-cta{
- display:inline-flex;align-items:center;justify-content:center;
- padding:8px 11px;border-radius:8px;background:#1a2b49;
- border:1px solid var(--accent);color:#fff;text-decoration:none;
- font-weight:750;font-size:12px;white-space:nowrap
+ display:inline-flex;
+ align-items:center;
+ justify-content:center;
+ padding:8px 11px;
+ border-radius:8px;
+ background:#1a2b49;
+ border:1px solid var(--accent);
+ color:#fff;
+ text-decoration:none;
+ font-weight:750;
+ font-size:12px;
+ white-space:nowrap
 }
 .packages-cta:hover{background:#244064}
+
 .wallet-info{
- display:flex;flex-wrap:wrap;justify-content:space-between;
- align-items:center;gap:8px;padding:9px 10px;margin-bottom:10px;
- border:1px solid var(--line);border-radius:9px;background:var(--panel2)
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:8px;
+ margin:12px 0 15px
 }
-.wallet-info strong{color:var(--accent2);font-size:13px}
-.wallet-info span{color:var(--muted);font-size:11px}
-.package-section-title{font-size:13px;font-weight:800;margin:13px 0 7px}
+.wallet-info>div{
+ min-width:0;
+ padding:10px;
+ border:1px solid var(--line);
+ border-radius:9px;
+ background:var(--panel2)
+}
+.wallet-info span{
+ display:block;
+ color:var(--muted);
+ font-size:11px;
+ line-height:1.4;
+ margin-bottom:4px
+}
+.wallet-info strong{
+ display:block;
+ color:var(--accent2);
+ font-size:14px;
+ line-height:1.35;
+ overflow-wrap:anywhere
+}
+.package-section-title{
+ font-size:14px;
+ font-weight:800;
+ margin:15px 0 8px
+}
 .package-grid{
- display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
- gap:7px;margin:10px 0
+ display:grid;
+ grid-template-columns:repeat(2,minmax(0,1fr));
+ gap:8px;
+ margin:10px 0
 }
 .package-btn{
- min-width:0;width:100%;
+ display:flex;
+ flex-direction:column;
+ justify-content:center;
+ align-items:flex-start;
+ gap:3px;
+ min-width:0;
+ min-height:82px;
+ width:100%;
+ padding:12px 11px;
  border:1px solid var(--line);
  border-radius:9px;
  background:var(--panel2);
  color:var(--text);
- padding:10px 7px;
  text-align:left;
- cursor:pointer
+ cursor:pointer;
+ transition:border-color .15s ease,background .15s ease,transform .15s ease
 }
 .package-btn:hover{
  border-color:var(--accent);
- background:#172947
+ background:#172947;
+ transform:translateY(-1px)
 }
-.package-btn:disabled{opacity:.55;cursor:wait}
-.package-btn strong,.package-btn span,.package-btn small{display:block}
-.package-btn strong{font-size:13px}
-.package-btn span{font-size:12px;color:var(--muted);font-weight:600;margin-top:2px}
-.package-btn small{display:block;margin-top:3px;color:var(--muted);font-size:11px}
-.package-active{display:grid;gap:7px}
-.active-packages,.owned-packages{display:grid;gap:7px;margin-top:9px}
+.package-btn:disabled{
+ opacity:.55;
+ cursor:wait;
+ transform:none
+}
+.package-btn strong{
+ display:block;
+ font-size:14px;
+ line-height:1.35;
+ font-weight:800;
+ color:var(--text)
+}
+.package-btn span{
+ display:block;
+ font-size:13px;
+ line-height:1.4;
+ color:var(--accent2);
+ font-weight:750
+}
+.package-btn small{
+ display:block;
+ margin-top:2px;
+ color:var(--muted);
+ font-size:11px;
+ line-height:1.35
+}
+.package-status{
+ color:var(--muted);
+ font-size:12px;
+ margin-top:9px;
+ min-height:1.3em
+}
+.owned-packages{
+ display:grid;
+ gap:7px;
+ margin-top:9px
+}
 .owned-package{
- display:flex;justify-content:space-between;align-items:center;
- gap:8px;padding:9px;border:1px solid var(--line);
- border-radius:8px;background:var(--panel2);font-size:12px
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:8px;
+ padding:10px;
+ border:1px solid var(--line);
+ border-radius:8px;
+ background:var(--panel2);
+ font-size:12px
 }
 .owned-package.selected{
  border-color:var(--accent);
  background:#172947
 }
 .owned-package label{
- display:flex;align-items:flex-start;gap:9px;
- cursor:pointer;width:100%
+ display:flex;
+ align-items:flex-start;
+ gap:9px;
+ cursor:pointer;
+ width:100%
 }
 .owned-package input{
- margin-top:4px;accent-color:var(--accent);flex:0 0 auto
+ margin-top:4px;
+ accent-color:var(--accent);
+ flex:0 0 auto
 }
-.owned-package strong{display:block;font-size:12px}
+.owned-package strong{
+ display:block;
+ font-size:12px
+}
 .owned-package small{
- display:block;color:var(--muted);font-size:11px;margin-top:2px
-}
-.package-status{
- color:var(--muted);font-size:12px;margin-top:9px;min-height:1.3em
+ display:block;
+ color:var(--muted);
+ font-size:11px;
+ margin-top:2px
 }
 [hidden]{display:none!important}
 
-@media(max-width:760px){
- .package-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-}
 @media(max-width:800px){
  .workspace{grid-template-columns:1fr}
  .stage{min-height:320px;padding:14px}
@@ -304,9 +404,14 @@ button:disabled{opacity:.45;cursor:not-allowed}
  .placeholder b{font-size:1rem}
  .placeholder span{font-size:.85rem}
  .actions{grid-template-columns:1fr}
- .packages-banner{padding:11px}
+ .packages-banner{padding:12px}
  .packages-banner-head{align-items:flex-start}
  .packages-cta{width:100%}
+ .wallet-info{grid-template-columns:1fr 1fr}
+ .package-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+ .package-btn{min-height:78px;padding:10px 8px}
+ .package-btn strong{font-size:13px}
+ .package-btn span{font-size:12px}
 }
 @media print{
  body{background:white!important;color:#111!important}
@@ -391,11 +496,11 @@ button:disabled{opacity:.45;cursor:not-allowed}
 
  <div class="wallet-info">
   <div>
-   <span>Shared wallet balance</span><br>
+   <span>Shared wallet balance</span>
    <strong id="walletBalance">Sign in to view your balance</strong>
   </div>
   <div>
-   <span>Available Coloring pages</span><br>
+   <span>Available Coloring pages</span>
    <strong id="totalColoringGenerations">—</strong>
   </div>
  </div>
@@ -408,8 +513,8 @@ button:disabled{opacity:.45;cursor:not-allowed}
    class="package-btn buy-package"
    data-package="single"
    data-package-code="single">
-   <strong>50 credits</strong>
-   <span>1 coloring page</span>
+   <strong>1 coloring page</strong>
+   <span>50 credits</span>
    <small>50 credits per page</small>
   </button>
 
@@ -417,8 +522,8 @@ button:disabled{opacity:.45;cursor:not-allowed}
    class="package-btn buy-package"
    data-package="starter"
    data-package-code="starter">
-   <strong>75 credits</strong>
-   <span>2 coloring pages</span>
+   <strong>2 coloring pages</strong>
+   <span>75 credits</span>
    <small>37.5 credits per page</small>
   </button>
 
@@ -426,8 +531,8 @@ button:disabled{opacity:.45;cursor:not-allowed}
    class="package-btn buy-package"
    data-package="standard"
    data-package-code="standard">
-   <strong>129 credits</strong>
-   <span>5 coloring pages</span>
+   <strong>5 coloring pages</strong>
+   <span>129 credits</span>
    <small>25.8 credits per page</small>
   </button>
 
@@ -435,8 +540,8 @@ button:disabled{opacity:.45;cursor:not-allowed}
    class="package-btn buy-package"
    data-package="plus"
    data-package-code="plus">
-   <strong>249 credits</strong>
-   <span>10 coloring pages</span>
+   <strong>10 coloring pages</strong>
+   <span>249 credits</span>
    <small>24.9 credits per page</small>
   </button>
 
@@ -444,8 +549,8 @@ button:disabled{opacity:.45;cursor:not-allowed}
    class="package-btn buy-package"
    data-package="pro"
    data-package-code="pro">
-   <strong>499 credits</strong>
-   <span>30 coloring pages</span>
+   <strong>30 coloring pages</strong>
+   <span>499 credits</span>
    <small>16.6 credits per page</small>
   </button>
 
@@ -453,8 +558,8 @@ button:disabled{opacity:.45;cursor:not-allowed}
    class="package-btn buy-package"
    data-package="max"
    data-package-code="max">
-   <strong>599 credits</strong>
-   <span>50 coloring pages</span>
+   <strong>50 coloring pages</strong>
+   <span>599 credits</span>
    <small>12 credits per page</small>
   </button>
 
