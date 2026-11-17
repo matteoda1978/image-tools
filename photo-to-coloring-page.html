@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -198,7 +199,7 @@ button:disabled{opacity:.45;cursor:not-allowed}
 .message{color:var(--danger);font-size:.83rem;margin-top:10px;min-height:1.2em}
 .privacy-note{color:var(--muted);font-size:.77rem;line-height:1.55;margin:12px 0 0}
 
-/* Coloring packages and shared wallet - compact Collage style */
+/* Coloring packages - matching AI Smart Collage */
 .packages-banner{
  margin:0 0 18px;padding:13px;
  background:#0c1729;
@@ -230,36 +231,52 @@ button:disabled{opacity:.45;cursor:not-allowed}
 .package-section-title{font-size:13px;font-weight:800;margin:13px 0 7px}
 .package-grid{
  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
- gap:7px;margin:9px 0
+ gap:7px;margin:10px 0
 }
-.package{
- min-width:0;padding:10px 8px;border:1px solid var(--line);
- border-radius:9px;background:var(--panel2);text-align:left
+.package-btn{
+ min-width:0;width:100%;
+ border:1px solid var(--line);
+ border-radius:9px;
+ background:var(--panel2);
+ color:var(--text);
+ padding:10px 7px;
+ text-align:left;
+ cursor:pointer
 }
-.package strong,.package span{display:block}
-.package strong{font-size:13px;color:var(--text)}
-.package span{font-size:12px;color:var(--muted);font-weight:600;margin-top:2px}
-.package small{display:block;margin-top:3px;color:var(--muted);font-size:11px}
-.package button{
- width:100%;margin-top:8px;padding:7px 8px;
- font-size:12px;background:#1a2b49;border:1px solid var(--accent);
- border-radius:7px;color:#fff
+.package-btn:hover{
+ border-color:var(--accent);
+ background:#172947
 }
-.package button:hover{background:#244064}
-.package button:disabled{opacity:.45}
-.owned-packages{display:grid;gap:7px;margin-top:9px}
+.package-btn:disabled{opacity:.55;cursor:wait}
+.package-btn strong,.package-btn span,.package-btn small{display:block}
+.package-btn strong{font-size:13px}
+.package-btn span{font-size:12px;color:var(--muted);font-weight:600;margin-top:2px}
+.package-btn small{display:block;margin-top:3px;color:var(--muted);font-size:11px}
+.package-active{display:grid;gap:7px}
+.active-packages,.owned-packages{display:grid;gap:7px;margin-top:9px}
 .owned-package{
- padding:9px;border:1px solid var(--line);
- border-radius:8px;background:var(--panel2)
+ display:flex;justify-content:space-between;align-items:center;
+ gap:8px;padding:9px;border:1px solid var(--line);
+ border-radius:8px;background:var(--panel2);font-size:12px
 }
-.owned-package.selected{border-color:var(--accent);background:#172947}
+.owned-package.selected{
+ border-color:var(--accent);
+ background:#172947
+}
 .owned-package label{
- display:flex;align-items:flex-start;gap:9px;cursor:pointer
+ display:flex;align-items:flex-start;gap:9px;
+ cursor:pointer;width:100%
 }
-.owned-package input{margin-top:4px;accent-color:var(--accent)}
+.owned-package input{
+ margin-top:4px;accent-color:var(--accent);flex:0 0 auto
+}
 .owned-package strong{display:block;font-size:12px}
-.owned-package small{display:block;color:var(--muted);font-size:11px;margin-top:2px}
-.package-status{color:var(--muted);font-size:12px;margin-top:9px;min-height:1.3em}
+.owned-package small{
+ display:block;color:var(--muted);font-size:11px;margin-top:2px
+}
+.package-status{
+ color:var(--muted);font-size:12px;margin-top:9px;min-height:1.3em
+}
 [hidden]{display:none!important}
 
 @media(max-width:760px){
@@ -386,56 +403,78 @@ button:disabled{opacity:.45;cursor:not-allowed}
  <h3 class="package-section-title">Buy a Coloring package</h3>
 
  <div class="package-grid">
-  <div class="package">
+
+  <button type="button"
+   class="package-btn buy-package"
+   data-package="single"
+   data-package-code="single">
    <strong>50 credits</strong>
    <span>1 coloring page</span>
    <small>50 credits per page</small>
-   <button type="button" class="buy-package" data-package="single">Buy package</button>
-  </div>
-  <div class="package">
+  </button>
+
+  <button type="button"
+   class="package-btn buy-package"
+   data-package="starter"
+   data-package-code="starter">
    <strong>75 credits</strong>
    <span>2 coloring pages</span>
    <small>37.5 credits per page</small>
-   <button type="button" class="buy-package" data-package="starter">Buy package</button>
-  </div>
-  <div class="package">
+  </button>
+
+  <button type="button"
+   class="package-btn buy-package"
+   data-package="standard"
+   data-package-code="standard">
    <strong>129 credits</strong>
    <span>5 coloring pages</span>
    <small>25.8 credits per page</small>
-   <button type="button" class="buy-package" data-package="standard">Buy package</button>
-  </div>
-  <div class="package">
+  </button>
+
+  <button type="button"
+   class="package-btn buy-package"
+   data-package="plus"
+   data-package-code="plus">
    <strong>249 credits</strong>
    <span>10 coloring pages</span>
    <small>24.9 credits per page</small>
-   <button type="button" class="buy-package" data-package="plus">Buy package</button>
-  </div>
-  <div class="package">
+  </button>
+
+  <button type="button"
+   class="package-btn buy-package"
+   data-package="pro"
+   data-package-code="pro">
    <strong>499 credits</strong>
    <span>30 coloring pages</span>
    <small>16.6 credits per page</small>
-   <button type="button" class="buy-package" data-package="pro">Buy package</button>
-  </div>
-  <div class="package">
+  </button>
+
+  <button type="button"
+   class="package-btn buy-package"
+   data-package="max"
+   data-package-code="max">
    <strong>599 credits</strong>
    <span>50 coloring pages</span>
    <small>12 credits per page</small>
-   <button type="button" class="buy-package" data-package="max">Buy package</button>
-  </div>
+  </button>
+
  </div>
 
- <div id="packageMessage" class="package-status" role="status" aria-live="polite">
+ <p class="package-status" id="packageMessage"
+  role="status" aria-live="polite">
   Sign in to purchase a Coloring package.
- </div>
+ </p>
 
  <h3 class="package-section-title">Your available Coloring packages</h3>
+
  <p class="tips" style="margin-top:0">
   Select the package you want to use for your next generation.
  </p>
 
- <div id="ownedPackages" class="owned-packages">
+ <div id="ownedPackages" class="owned-packages" aria-live="polite">
   <p class="package-status">Sign in to load your packages.</p>
  </div>
+
 </section>
 
 <main class="workspace">
