@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +9,7 @@
 <link rel="canonical" href="https://ritoccapix.com/account.html">
 <meta name="robots" content="noindex,follow">
 <script src="menu.js" defer></script>
+
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#0b1424;color:#e8eef8;font-family:Arial,sans-serif;line-height:1.6}
@@ -34,18 +36,16 @@ button:disabled{opacity:.5;cursor:wait}
 #authState.hidden{display:none}
 .email{overflow-wrap:anywhere;color:#c5d4ea}
 
-/* Bilancio Crediti Generali */
 .balance{margin:20px 0;padding:20px;text-align:center;border-radius:12px;background:#0b1729;border:1px solid #344c6c}
 .balance strong{display:block;font-size:38px;color:#a9c2ff}
 .balance span{color:#b7c5d9}
 
-/* Lista Strumenti a Scendere (Verticale) */
 .tools-section{margin-top:30px;border-top:1px solid #2b405e;padding-top:20px}
 .tools-section h3{font-size:18px;margin-bottom:15px;color:#cbd5e1}
 .tool-item{
-  display:flex;align-items:center;justify-content:space-between;
-  gap:12px;padding:14px;margin-bottom:10px;
-  background:#0b1729;border:1px solid #263852;border-radius:10px;
+ display:flex;align-items:center;justify-content:space-between;
+ gap:12px;padding:14px;margin-bottom:10px;
+ background:#0b1729;border:1px solid #263852;border-radius:10px;
 }
 .tool-info{display:flex;align-items:center;gap:12px;min-width:0}
 .tool-icon{font-size:24px;flex-shrink:0}
@@ -54,21 +54,24 @@ button:disabled{opacity:.5;cursor:wait}
 .tool-status{display:flex;align-items:center;gap:10px;flex-shrink:0}
 .badge{padding:5px 10px;border-radius:6px;font-size:12px;font-weight:bold;background:#1e293b;color:#38bdf8}
 .badge.empty{background:#291e1e;color:#f87171}
+.badge.available{background:#15352e;color:#6ee7b7}
+.badge.warning{background:#3b2d18;color:#fbbf24}
 .tool-btn{padding:7px 12px;font-size:13px;border-radius:7px;background:#263b59;color:white;text-decoration:none;border:1px solid #49617f}
 .tool-btn:hover{background:#334e75}
-
 footer{text-align:center;color:#8292aa;margin:35px 0;font-size:13px}
 footer a{color:#a9c2ff}
+
 @media(max-width:520px){
-  main{margin:28px auto}
-  .buttons button{width:100%}
-  .tool-item{flex-direction:column;align-items:flex-start}
-  .tool-status{width:100%;justify-content:space-between;margin-top:8px}
+ main{margin:28px auto}
+ .panel{padding:20px}
+ .buttons button{width:100%}
+ .tool-item{flex-direction:column;align-items:flex-start}
+ .tool-status{width:100%;justify-content:space-between;margin-top:8px}
 }
 </style>
 </head>
-<body>
 
+<body>
 <header><nav aria-label="Main navigation"></nav></header>
 
 <main>
@@ -102,47 +105,41 @@ footer a{color:#a9c2ff}
 <h2>You are signed in</h2>
 <p class="email">Account: <strong id="accountUserEmail"></strong></p>
 
-<!-- Credito Generale Sempre Visibile -->
 <div class="balance">
 <strong id="creditBalance">…</strong>
 <span id="creditLabel">shared credits available</span>
 </div>
 
-<!-- Lista Strumenti a Scendere -->
 <div class="tools-section">
-  <h3>Your Tool Balances</h3>
+<h3>Your Tool Balances</h3>
 
-  <!-- Strumento 1: Photo to Coloring Page -->
-  <div class="tool-item">
-    <div class="tool-info">
-      <span class="tool-icon">🎨</span>
-      <div class="tool-details">
-        <strong>Photo to Coloring Page</strong>
-        <small>Printable black & white illustrations</small>
-      </div>
-    </div>
-    <div class="tool-status">
-      <span class="badge" id="coloringBalanceBadge">0 left</span>
-      <a href="photo-to-coloring-page.html" class="tool-btn">Open Tool</a>
-    </div>
-  </div>
+<div class="tool-item">
+<div class="tool-info">
+<span class="tool-icon">🎨</span>
+<div class="tool-details">
+<strong>Photo to Coloring Page</strong>
+<small>Printable black & white illustrations · 50 credits per generation</small>
+</div>
+</div>
+<div class="tool-status">
+<span class="badge" id="coloringBalanceBadge">Loading…</span>
+<a href="photo-to-coloring-page.html" class="tool-btn">Open Tool</a>
+</div>
+</div>
 
-  <!-- Strumento 2: AI Smart Collage -->
-  <div class="tool-item">
-    <div class="tool-info">
-      <span class="tool-icon">🖼️</span>
-      <div class="tool-details">
-        <strong>AI Smart Collage</strong>
-        <small>Editorial multi-photo layouts</small>
-      </div>
-    </div>
-    <div class="tool-status">
-      <span class="badge" id="collageBalanceBadge">0 left</span>
-      <a href="image-collage.html" class="tool-btn">Open Tool</a>
-    </div>
-  </div>
-
-  <!-- Qui puoi aggiungere comodamente gli altri strumenti a scendere in futuro -->
+<div class="tool-item">
+<div class="tool-info">
+<span class="tool-icon">🖼️</span>
+<div class="tool-details">
+<strong>AI Smart Collage</strong>
+<small>Editorial multi-photo layouts · Uses purchased packages</small>
+</div>
+</div>
+<div class="tool-status">
+<span class="badge" id="collageBalanceBadge">Loading…</span>
+<a href="image-collage.html" class="tool-btn">Open Tool</a>
+</div>
+</div>
 </div>
 
 <div class="buttons" style="margin-top:25px;">
@@ -158,6 +155,7 @@ footer a{color:#a9c2ff}
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
 (()=>{
 "use strict";
@@ -165,7 +163,13 @@ footer a{color:#a9c2ff}
 const SUPABASE_URL="https://eckppexmaihbzbtunhnp.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY="sb_publishable_h4NECcXTuSS7R-BDSAwIVQ_WKKolNKW";
 
+/* Existing deployed AI Smart Collage Worker */
+const COLLAGE_WORKER_URL="https://ritoccapix-collage-ai.ritoccapix.workers.dev";
+
+const COLORING_CREDITS_PER_GENERATION=50;
+
 const $=id=>document.getElementById(id);
+
 const authState=$("authState");
 const accountState=$("accountState");
 const emailInput=$("accountEmail");
@@ -197,6 +201,19 @@ function setBusy(value){
  loginBtn.disabled=value;
 }
 
+function setBadge(element,text,status){
+ element.textContent=text;
+ element.className="badge";
+ if(status==="empty")element.classList.add("empty");
+ if(status==="available")element.classList.add("available");
+ if(status==="warning")element.classList.add("warning");
+}
+
+function resetToolBalances(){
+ setBadge(coloringBalanceBadge,"—","empty");
+ setBadge(collageBalanceBadge,"—","empty");
+}
+
 if(!window.supabase||!window.supabase.createClient){
  message("The account service could not be loaded. Please refresh.",true);
  registerBtn.disabled=true;
@@ -214,55 +231,119 @@ const supabaseClient=window.supabase.createClient(
  }}
 );
 
-async function refreshBalance(){
- if(!currentSession){
-  creditBalance.textContent="—";
-  coloringBalanceBadge.textContent="0 left";
-  collageBalanceBadge.textContent="0 left";
-  return;
- }
-
- creditBalance.textContent="…";
-
- const userId = currentSession.user.id;
-
- // 1. Carica il saldo dei crediti generali
- const {data:balData,error:balError}=await supabaseClient
+/* Load the shared wallet balance */
+async function loadSharedBalance(userId){
+ const {data,error}=await supabaseClient
   .from("credit_balances")
   .select("balance")
   .eq("user_id",userId)
   .maybeSingle();
 
- if(balError){
-  console.error("Credit balance error:",balError);
+ if(error){
+  console.error("Credit balance error:",error);
   creditBalance.textContent="—";
- }else{
-  const balance=balData?Number(balData.balance)||0:0;
-  creditBalance.textContent=String(balance);
-  creditLabel.textContent=balance===1?"shared credit available":"shared credits available";
+  creditLabel.textContent="Could not load shared credits";
+  throw new Error("Could not load your shared credit balance.");
  }
 
- // 2. Carica i saldi specifici dei tool (tabella user_tool_balances creata prima)
- const {data:toolData,error:toolError}=await supabaseClient
-  .from("user_tool_balances")
-  .select("coloring_photos_left, collage_photos_left")
-  .eq("user_id",userId)
-  .maybeSingle();
+ const balance=data?Number(data.balance)||0:0;
 
- if(!toolError && toolData){
-  const coloringLeft = Number(toolData.coloring_photos_left) || 0;
-  const collageLeft = Number(toolData.collage_photos_left) || 0;
+ creditBalance.textContent=String(balance);
+ creditLabel.textContent=balance===1
+  ?"shared credit available"
+  :"shared credits available";
 
-  coloringBalanceBadge.textContent = coloringLeft + (coloringLeft === 1 ? " photo" : " photos");
-  coloringBalanceBadge.className = "badge " + (coloringLeft > 0 ? "" : "empty");
+ /* Coloring Page costs 50 shared credits per generation */
+ const coloringAvailable=Math.floor(balance/COLORING_CREDITS_PER_GENERATION);
+ const remainder=balance%COLORING_CREDITS_PER_GENERATION;
 
-  collageBalanceBadge.textContent = collageLeft + (collageLeft === 1 ? " collage" : " collages");
-  collageBalanceBadge.className = "badge " + (collageLeft > 0 ? "" : "empty");
- } else {
-  coloringBalanceBadge.textContent = "0 left";
-  coloringBalanceBadge.className = "badge empty";
-  collageBalanceBadge.textContent = "0 left";
-  collageBalanceBadge.className = "badge empty";
+ const coloringText=
+  coloringAvailable+" "+(coloringAvailable===1?"image":"images")+
+  " available · "+remainder+"/50 credits";
+
+ setBadge(
+  coloringBalanceBadge,
+  coloringText,
+  coloringAvailable>0?"available":"empty"
+ );
+
+ return balance;
+}
+
+/* Load active package generations from the deployed Collage Worker */
+async function loadCollagePackages(session){
+ setBadge(collageBalanceBadge,"Loading…","warning");
+
+ const response=await fetch(COLLAGE_WORKER_URL+"/packages",{
+  method:"GET",
+  headers:{
+   "Authorization":"Bearer "+session.access_token,
+   "Accept":"application/json"
+  },
+  cache:"no-store"
+ });
+
+ let result;
+
+ try{
+  result=await response.json();
+ }catch(error){
+  throw new Error("The Collage service returned an invalid response.");
+ }
+
+ if(!response.ok){
+  console.error("Collage packages HTTP error:",response.status,result);
+  throw new Error(
+   "Collage packages could not be loaded (HTTP "+response.status+")."
+  );
+ }
+
+ if(!result||result.ok!==true||!Array.isArray(result.packages)){
+  console.error("Unexpected Collage packages response:",result);
+  throw new Error("The Collage service returned an unexpected package list.");
+ }
+
+ const packages=result.packages;
+
+ const totalGenerations=packages.reduce((total,item)=>{
+  const remaining=Number(
+   item.generationsRemaining??item.generations_remaining??0
+  );
+  return total+(Number.isFinite(remaining)&&remaining>0?remaining:0);
+ },0);
+
+ setBadge(
+  collageBalanceBadge,
+  totalGenerations+" "+(totalGenerations===1?"generation":"generations")+" available",
+  totalGenerations>0?"available":"empty"
+ );
+
+ return totalGenerations;
+}
+
+/* Refresh all balances without consuming credits or package generations */
+async function refreshBalance(){
+ if(!currentSession)return;
+
+ creditBalance.textContent="…";
+ creditLabel.textContent="Loading shared credits…";
+ setBadge(coloringBalanceBadge,"Loading…","warning");
+ setBadge(collageBalanceBadge,"Loading…","warning");
+
+ const results=await Promise.allSettled([
+  loadSharedBalance(currentSession.user.id),
+  loadCollagePackages(currentSession)
+ ]);
+
+ const errors=results
+  .filter(result=>result.status==="rejected")
+  .map(result=>result.reason?.message||"An error occurred.");
+
+ if(errors.length){
+  console.error("Balance refresh errors:",errors);
+  message(errors.join(" "),true);
+ }else{
+  message("Credit and package balances updated.");
  }
 }
 
@@ -280,11 +361,11 @@ async function applySession(session){
   accountUserEmail.textContent="";
   creditBalance.textContent="—";
   creditLabel.textContent="shared credits available";
-  coloringBalanceBadge.textContent="0 left";
-  collageBalanceBadge.textContent="0 left";
+  resetToolBalances();
  }
 }
 
+/* Registration */
 registerBtn.addEventListener("click",async()=>{
  if(busy)return;
 
@@ -296,6 +377,7 @@ registerBtn.addEventListener("click",async()=>{
   emailInput.focus();
   return;
  }
+
  if(password.length<8){
   message("Your password must contain at least 8 characters.",true);
   passwordInput.focus();
@@ -330,6 +412,7 @@ registerBtn.addEventListener("click",async()=>{
  }
 });
 
+/* Login */
 loginBtn.addEventListener("click",async()=>{
  if(busy)return;
 
@@ -341,6 +424,7 @@ loginBtn.addEventListener("click",async()=>{
   emailInput.focus();
   return;
  }
+
  if(!password){
   message("Please enter your password.",true);
   passwordInput.focus();
@@ -353,6 +437,7 @@ loginBtn.addEventListener("click",async()=>{
  try{
   const {data,error}=await supabaseClient.auth.signInWithPassword({email,password});
   if(error)throw error;
+
   await applySession(data.session);
   message("You are signed in.");
  }catch(error){
@@ -363,11 +448,14 @@ loginBtn.addEventListener("click",async()=>{
  }
 });
 
+/* Logout */
 logoutBtn.addEventListener("click",async()=>{
  logoutBtn.disabled=true;
+
  try{
   const {error}=await supabaseClient.auth.signOut();
   if(error)throw error;
+
   await applySession(null);
   message("You have signed out.");
  }catch(error){
@@ -378,23 +466,28 @@ logoutBtn.addEventListener("click",async()=>{
  }
 });
 
+/* Manual refresh */
 refreshBtn.addEventListener("click",async()=>{
+ if(!currentSession)return;
+
  refreshBtn.disabled=true;
- message("Refreshing your balance…");
+ message("Refreshing your balances…");
+
  try{
   await refreshBalance();
-  message("Credit balance updated.");
  }finally{
   refreshBtn.disabled=false;
  }
 });
 
+/* Supabase authentication state */
 supabaseClient.auth.onAuthStateChange((event,session)=>{
  if(event==="SIGNED_OUT"){
   currentSession=null;
   applySession(null);
  }else if(["SIGNED_IN","INITIAL_SESSION","TOKEN_REFRESHED","USER_UPDATED"].includes(event)){
   currentSession=session||null;
+
   if(currentSession){
    accountUserEmail.textContent=currentSession.user.email||"Account";
    authState.classList.add("hidden");
@@ -406,12 +499,17 @@ supabaseClient.auth.onAuthStateChange((event,session)=>{
  }
 });
 
+/* Restore existing session */
 (async()=>{
  try{
   const {data,error}=await supabaseClient.auth.getSession();
   if(error)throw error;
+
   await applySession(data.session);
-  if(!data.session)message("Sign in or create an account to view your shared credits.");
+
+  if(!data.session){
+   message("Sign in or create an account to view your shared credits.");
+  }
  }catch(error){
   console.error("Session restore error:",error);
   await applySession(null);
