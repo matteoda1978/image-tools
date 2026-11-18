@@ -1,24 +1,25 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Free JPEG Optimizer Online | RitoccaPix</title>
-  <meta name="description" content="Optimize JPG images online for free. Adjust JPEG quality, compare original and optimized file sizes, and download the result. No software or account needed.">
+  <title>Free JPEG Optimizer Online – Optimize JPG Images | RitoccaPix</title>
+  <meta name="description" content="Optimize JPEG and JPG images online for free. Reduce image file size, adjust compression quality, compare results and download optimized photos. No account needed.">
   <meta name="robots" content="index,follow">
   <meta name="theme-color" content="#07111f">
   <link rel="canonical" href="https://ritoccapix.com/image-optimizer.html">
 
   <meta property="og:type" content="website">
-  <meta property="og:title" content="JPEG Optimizer Online – Compress JPG for Web | RitoccaPix">
-  <meta property="og:description" content="Compress and optimize JPG images online for free. Reduce JPEG file size for websites, compare quality and preview results before downloading.">
+  <meta property="og:title" content="Free JPEG Optimizer Online – Optimize JPG Images | RitoccaPix">
+  <meta property="og:description" content="Optimize JPG images online for free. Adjust image quality, compare file sizes and preview your optimized photos before downloading.">
   <meta property="og:url" content="https://ritoccapix.com/image-optimizer.html">
   <meta property="og:site_name" content="RitoccaPix">
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="JPEG Optimizer Online – Compress JPG for Web | RitoccaPix">
-  <meta name="twitter:description" content="Compress and optimize JPG images online for free. Compare image quality and file size, then download your optimized image directly from your browser.">
+  <meta name="twitter:title" content="Free JPEG Optimizer Online – Optimize JPG Images | RitoccaPix">
+  <meta name="twitter:description" content="Reduce JPEG file size online. Adjust compression quality, compare image previews and download your optimized JPG directly from your browser.">
 
   <style>
     :root {
@@ -198,10 +199,23 @@
       border-radius: 9px;
     }
 
+    select:focus-visible,
+    input:focus-visible,
+    button:focus-visible,
+    a:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
     input[type="range"] {
       width: 100%;
       accent-color: var(--green);
       cursor: pointer;
+    }
+
+    input[type="range"]:disabled {
+      opacity: .45;
+      cursor: not-allowed;
     }
 
     .settings {
@@ -470,12 +484,12 @@
     "@graph": [
       {
         "@type": "WebApplication",
-        "name": "JPEG Optimization Online",
+        "name": "Free JPEG Optimizer Online",
         "url": "https://ritoccapix.com/image-optimizer.html",
         "applicationCategory": "MultimediaApplication",
         "operatingSystem": "Any",
         "browserRequirements": "Requires a modern browser with Canvas support",
-        "description": "Free online JPEG optimization tool for adjusting JPG compression quality, comparing file sizes and previewing optimized images in the browser.",
+        "description": "Free online JPEG and JPG optimizer for adjusting image compression quality, comparing file sizes and previewing optimized images in the browser.",
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -487,34 +501,34 @@
         "mainEntity": [
           {
             "@type": "Question",
-            "name": "What is JPEG optimization?",
+            "name": "What does a JPEG optimizer do?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "JPEG optimization reduces a JPG image's file size by choosing a suitable compression quality while checking the visual result. Lower quality can create smaller files but may introduce visible artifacts."
+              "text": "A JPEG optimizer reduces the file size of a JPG image by re-encoding it at a selected compression quality. The aim is to create a smaller file while keeping enough visual detail for its intended use."
             }
           },
           {
             "@type": "Question",
-            "name": "How can I optimize a JPEG image online?",
+            "name": "How do I optimize a JPG image online?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Select a JPEG image, choose an optimization preset or adjust the quality slider, click Optimize Image, compare the original and optimized previews, then download the result."
+              "text": "Select a JPG, JPEG, PNG or WebP image, choose an output format, adjust the quality setting or select a preset, click Optimize Image, compare the previews and download the result."
             }
           },
           {
             "@type": "Question",
-            "name": "How can I compress a JPEG without losing too much quality?",
+            "name": "How can I reduce JPEG file size without losing too much quality?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Start with the Balanced or High Quality preset, inspect fine details in the optimized preview, and lower the quality gradually only if you need a smaller file. JPEG compression is lossy, so no setting guarantees zero quality loss."
+              "text": "Start with the Balanced or High Quality preset, inspect fine details in the optimized preview and lower the quality gradually if you need a smaller file. JPEG compression is lossy, so some quality loss may occur."
             }
           },
           {
             "@type": "Question",
-            "name": "Is this JPEG optimizer free?",
+            "name": "Is this online JPEG optimizer free?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Yes. RitoccaPix provides this image optimizer free of charge."
+              "text": "Yes. The RitoccaPix JPEG optimizer is free to use. No account or software installation is required."
             }
           },
           {
@@ -522,15 +536,23 @@
             "name": "Are my images uploaded to a server?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Image processing takes place locally in your browser. The tool does not send your selected image to a RitoccaPix processing server."
+              "text": "Image processing takes place locally in your browser. The selected image is not sent to a RitoccaPix image-processing server."
             }
           },
           {
             "@type": "Question",
-            "name": "Will optimizing a JPEG reduce image quality?",
+            "name": "Can I optimize PNG and WebP images too?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "JPEG uses lossy compression. Lower quality settings can reduce file size further but may introduce visible artifacts. Preview the result before downloading."
+              "text": "Yes. You can open JPEG, PNG and WebP images and choose JPEG, WebP or PNG as the output format. The quality slider applies to JPEG and WebP, not PNG."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Will the optimized image always be smaller?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. The result depends on the original image, output format and quality setting. If re-encoding in the same format would make the file larger, the tool keeps the original file."
             }
           }
         ]
@@ -559,17 +581,21 @@
 <main>
   <section class="hero">
     <span class="eyebrow">Free Online Image Tool</span>
-    <h1>Free JPEG Optimizer – Compress JPG Images for the Web</h1>
+    <h1>Free JPEG Optimizer Online</h1>
     <p>
-      Compress and optimize JPG images for websites, email and online forms.
-      Adjust JPEG quality, compare the original and optimized file sizes, and
-      preview the result before downloading. Your image is processed directly in your browser.
+      Optimize JPG and JPEG images online without installing software.
+      Reduce image file size, adjust compression quality and compare the
+      original with the optimized result before downloading. Your image is
+      processed directly in your browser.
     </p>
   </section>
 
   <section class="panel" aria-labelledby="optimizerHeading">
     <h2 id="optimizerHeading">Optimize Your Image</h2>
-    <p>Choose a JPG, JPEG, PNG or WebP image. For JPEG optimization, start with a preset, adjust quality, then compare file size and image detail.</p>
+    <p>
+      Choose a JPG, JPEG, PNG or WebP image. Select an output format,
+      adjust the quality and preview the result before downloading.
+    </p>
 
     <div class="upload-area">
       <div class="upload-icon" aria-hidden="true">🖼️</div>
@@ -592,7 +618,9 @@
           <option value="image/webp">WebP</option>
           <option value="image/png">PNG</option>
         </select>
-        <span class="hint">JPEG and WebP use the quality setting. PNG export is lossless.</span>
+        <span class="hint">
+          JPEG and WebP use lossy quality settings. PNG export is lossless.
+        </span>
       </div>
 
       <div class="setting">
@@ -601,7 +629,9 @@
           <span id="qualityValue">80%</span>
         </div>
         <input id="quality" type="range" min="10" max="100" value="80">
-        <span class="hint">Lower quality often creates a smaller file.</span>
+        <span class="hint" id="qualityHint">
+          Lower quality often creates a smaller file. Preview the result before downloading.
+        </span>
       </div>
     </div>
 
@@ -665,165 +695,223 @@
   </section>
 
   <section class="panel content">
-    <h2>Free JPEG Optimizer Online</h2>
+    <h2>Optimize JPEG Images Online for Free</h2>
     <p>
-      RitoccaPix helps you optimize JPEG images online without installing
-      desktop software. Reduce the size of JPG files for websites, email,
-      online forms and everyday sharing.
+      Large image files can take longer to upload, use more storage and add
+      weight to web pages. A JPEG optimizer helps reduce the size of photo
+      files by adjusting how image data is compressed.
     </p>
     <p>
-      Select an image, choose the output format and set the quality level.
-      The tool creates a new file that you can preview and download.
-      Your original file is not changed.
-    </p>
-
-    <h3>What is JPEG optimization?</h3>
-    <p>
-      JPEG optimization means reducing the size of a JPG file while keeping
-      enough visual detail for its intended use. It is useful when a photo is
-      too large for a website, an email attachment or an online form. This tool
-      re-encodes the image at the selected quality and lets you compare the
-      result before saving it. It does not upscale the image or change its pixel
-      dimensions.
+      With RitoccaPix, you can optimize JPG and JPEG images online, compare
+      the original and optimized previews, and download the version that
+      works best for your needs. You do not need to install an application
+      or create an account.
     </p>
 
-    <h3>Why optimize JPEG images?</h3>
+    <h3>What does a JPEG optimizer do?</h3>
+    <p>
+      A JPEG optimizer re-encodes an image using a selected compression
+      quality. JPEG is a lossy format, which means that some image information
+      can be discarded to reduce file size. Lower quality settings usually
+      create smaller files, but can make details, edges and textures look less
+      clear.
+    </p>
+    <p>
+      The best result is not necessarily the smallest file. It is the smallest
+      file that still looks good for the way you plan to use it.
+    </p>
+
+    <h3>Why optimize JPG images?</h3>
     <ul>
-      <li>Reduce image file sizes before adding photos to a website.</li>
-      <li>Prepare smaller images for email attachments and online forms.</li>
-      <li>Adjust the balance between image quality and file size.</li>
-      <li>Compare the original and optimized images before downloading.</li>
+      <li>Reduce photo file sizes before adding images to a website.</li>
+      <li>Prepare smaller JPEG files for email attachments.</li>
+      <li>Make images easier to upload to online forms with file-size limits.</li>
+      <li>Save storage space when keeping or sharing many photos.</li>
+      <li>Compare image quality and file size before choosing the final version.</li>
     </ul>
 
-    <h3>How to use this online JPG optimizer</h3>
+    <h3>How to optimize a JPEG image online</h3>
     <ol>
-      <li>Select an image from your device.</li>
+      <li>Select a JPG, JPEG, PNG or WebP image from your device.</li>
       <li>Choose JPEG, WebP or PNG as the output format.</li>
-      <li>Adjust image quality or select an optimization preset.</li>
-      <li>Click “Optimize Image” and review the result.</li>
-      <li>Download the optimized file if you are happy with it.</li>
+      <li>Select a preset or adjust the image quality slider.</li>
+      <li>Click Optimize Image to create the new file.</li>
+      <li>Compare the original and optimized previews and check the file sizes.</li>
+      <li>Download the optimized image if you are happy with the result.</li>
     </ol>
 
-    <h3>Compress JPEG images without over-compressing</h3>
+    <h3>JPEG quality settings: which one should you use?</h3>
     <p>
-      If you need to compress a JPEG, do not choose the lowest quality by
-      default. Start with Balanced, check edges, text and fine details in the
-      preview, then reduce quality only as much as needed. For a strict upload
-      limit such as 100 KB, use the dedicated
-      <a href="compress-image-to-100kb.html">Compress Image to 100KB tool</a>.
-      For several files at once, use the
-      <a href="image-compressor.html">Image Compressor</a> instead.
+      The quality setting controls the balance between file size and visual
+      detail when exporting to JPEG or WebP. These presets are starting points,
+      not guaranteed file sizes or universal quality standards.
     </p>
-
-    <h3>JPEG quality settings: which should you choose?</h3>
     <ul>
-      <li><strong>60% — Email / Smaller File:</strong> a useful starting point when file size matters most; inspect for visible artifacts.</li>
-      <li><strong>75% — Website:</strong> a practical starting point for many web photos.</li>
-      <li><strong>80% — Balanced:</strong> a general-purpose balance between size and detail.</li>
-      <li><strong>92% — High Quality:</strong> preserves more detail in many images, usually with a larger file.</li>
+      <li><strong>60% — Email / Smaller File:</strong> useful when reducing file size is the priority. Check for visible artifacts.</li>
+      <li><strong>75% — Website:</strong> a practical starting point for many photographs used online.</li>
+      <li><strong>80% — Balanced:</strong> a general-purpose compromise between file size and image detail.</li>
+      <li><strong>92% — High Quality:</strong> keeps more visual detail in many images, usually with a larger file.</li>
     </ul>
-    <p>These values are starting points, not guarantees. The best setting depends on the image and the intended display size.</p>
-
-    <h3>Choose the right image quality</h3>
     <p>
-      JPEG compression is lossy: a lower quality setting can reduce file size
-      but may make compression artifacts more visible. Higher settings usually
-      preserve more detail but produce larger files. The best setting depends
-      on the image and how you intend to use it.
+      Different images compress differently. A detailed photograph, a simple
+      graphic and an image with fine textures may produce very different file
+      sizes at the same quality setting. Always inspect the preview.
+    </p>
+
+    <h3>JPEG vs WebP vs PNG: which format should you choose?</h3>
+    <p>
+      The best output format depends on the type of image and where you plan
+      to use it.
+    </p>
+    <ul>
+      <li><strong>JPEG / JPG:</strong> widely supported and commonly used for photographs. It uses lossy compression.</li>
+      <li><strong>WebP:</strong> a modern web image format that can produce smaller files for many photographs and graphics. Results depend on the image and quality setting.</li>
+      <li><strong>PNG:</strong> useful for graphics, sharp edges and images that need transparency. This tool exports PNG without using the lossy quality slider.</li>
+    </ul>
+    <p>
+      When converting a transparent PNG to JPEG, transparent areas are filled
+      with white because JPEG does not support transparency.
+    </p>
+
+    <h3>Optimize images for websites and email</h3>
+    <p>
+      Large photos can make web pages heavier and email attachments harder to
+      send. Optimizing an image before uploading or sharing it can help reduce
+      its file size. For website photographs, try the Website or Balanced
+      preset and inspect the result at the size visitors will actually see.
     </p>
     <p>
-      PNG is useful for graphics and images that need transparency. WebP can
-      provide smaller files for many web images, depending on the source and
-      chosen settings. Always check the preview before using the result.
+      For email or online forms, a smaller file may be more convenient.
+      Try the Email / Smaller File preset, then check whether the image still
+      looks clear enough. If a form specifies an exact maximum file size,
+      compare the result with that limit before uploading.
+    </p>
+
+    <h3>JPEG optimization vs image resizing</h3>
+    <p>
+      Optimizing an image changes how it is encoded and can reduce its file
+      size. Resizing changes the image's pixel dimensions, such as reducing a
+      large photo from 4000 × 3000 pixels to 1600 × 1200 pixels. These are
+      different operations and can be used together.
+    </p>
+    <p>
+      This JPEG optimizer keeps the original pixel dimensions. If you need
+      to change width or height, use the
+      <a href="image-resizer.html">Image Resizer</a>.
+      If you want to process several images in one operation, try the
+      <a href="image-compressor.html">Image Compressor</a>.
+    </p>
+
+    <h3>Need a specific image file size?</h3>
+    <p>
+      This optimizer lets you choose a quality level, but it does not promise
+      an exact output size in KB. The final size depends on the image, format
+      and compression settings. If you need an image close to a specific upload
+      limit, use the
+      <a href="compress-image-to-100kb.html">Compress Image to 100KB tool</a>.
+    </p>
+
+    <h3>Are images uploaded when using this optimizer?</h3>
+    <p>
+      No. Image processing takes place locally in your browser using the
+      browser's image and canvas features. Your selected image is not sent to
+      a RitoccaPix image-processing server. The original file on your device
+      is not overwritten.
     </p>
 
     <h3>Frequently Asked Questions</h3>
 
     <div class="faq">
-      <h3>What is JPEG optimization?</h3>
+      <h3>What does a JPEG optimizer do?</h3>
       <p>
-        JPEG optimization reduces a JPG file's size by adjusting compression
-        quality. The goal is to make the file easier to store, email or use on
-        a website while keeping acceptable visual detail.
+        A JPEG optimizer reduces the file size of a JPG image by re-encoding
+        it at a selected compression quality. The aim is to create a smaller
+        file while keeping enough visual detail for its intended use.
       </p>
     </div>
 
     <div class="faq">
-      <h3>How can I compress a JPEG without losing too much quality?</h3>
+      <h3>How do I optimize a JPG image online?</h3>
       <p>
-        Start with Balanced or High Quality, compare the preview at the size you
-        expect people to view it, and lower the quality gradually if the file is
-        still too large. JPEG compression is lossy, so inspect the result before
-        downloading.
+        Select a JPG, JPEG, PNG or WebP image, choose an output format,
+        adjust the quality setting or select a preset, click Optimize Image,
+        compare the previews and download the result.
       </p>
     </div>
 
     <div class="faq">
-      <h3>Is this JPEG optimizer free?</h3>
+      <h3>How can I reduce JPEG file size without losing too much quality?</h3>
       <p>
-        Yes. You can use the RitoccaPix JPEG optimizer online for free.
-        No account or software installation is required.
+        Start with the Balanced or High Quality preset, inspect fine details
+        in the optimized preview and lower the quality gradually if you need
+        a smaller file. JPEG compression is lossy, so some quality loss may occur.
+      </p>
+    </div>
+
+    <div class="faq">
+      <h3>Is this online JPEG optimizer free?</h3>
+      <p>
+        Yes. The RitoccaPix JPEG optimizer is free to use. No account or
+        software installation is required.
       </p>
     </div>
 
     <div class="faq">
       <h3>Are my images uploaded to a server?</h3>
       <p>
-        No. Image processing takes place locally in your browser. The selected
+        Image processing takes place locally in your browser. The selected
         image is not sent to a RitoccaPix image-processing server.
       </p>
     </div>
 
     <div class="faq">
-      <h3>Can I optimize a PNG or WebP image?</h3>
+      <h3>Can I optimize PNG and WebP images too?</h3>
       <p>
-        Yes. You can open JPEG, PNG and WebP images, then select JPEG, WebP
-        or PNG as the output format. PNG export does not use the lossy quality
-        slider.
+        Yes. You can open JPEG, PNG and WebP images and choose JPEG, WebP
+        or PNG as the output format. The quality slider applies to JPEG
+        and WebP, not PNG.
       </p>
     </div>
 
     <div class="faq">
       <h3>Will the optimized image always be smaller?</h3>
       <p>
-        Not always. Results depend on the original image, output format and
-        quality setting. If the new file is larger, the tool will tell you
-        instead of claiming a file-size reduction.
-      </p>
-    </div>
-
-    <div class="faq">
-      <h3>Does JPEG optimization reduce image quality?</h3>
-      <p>
-        JPEG uses lossy compression, so lower quality settings can reduce
-        visible detail. Preview the optimized image and choose the quality
-        that works best for your needs.
+        No. The result depends on the original image, output format and
+        quality setting. If re-encoding in the same format would make the
+        file larger, the tool keeps the original file.
       </p>
     </div>
 
     <h3>Explore More Free Image Tools</h3>
-    <p>Continue working with your images using other RitoccaPix tools.</p>
+    <p>
+      Use these tools to resize, compress, convert or prepare your images
+      for different websites and upload requirements.
+    </p>
 
     <div class="related-tools">
       <a class="related-card" href="image-compressor.html">
         <strong>Image Compressor</strong>
-        <span>Compress multiple images or work toward a target file size.</span>
+        <span>Compress multiple images and reduce their file sizes.</span>
       </a>
       <a class="related-card" href="compress-image-to-100kb.html">
         <strong>Compress Image to 100KB</strong>
-        <span>Try the dedicated tool when you need a small file for a form or upload limit.</span>
+        <span>Prepare an image for forms and upload limits.</span>
       </a>
       <a class="related-card" href="image-resizer.html">
         <strong>Image Resizer</strong>
-        <span>Change image dimensions to the size you need.</span>
+        <span>Change image dimensions and prepare photos for different uses.</span>
       </a>
       <a class="related-card" href="image-converter.html">
         <strong>Image Converter</strong>
-        <span>Convert images between supported formats.</span>
+        <span>Convert images between supported file formats.</span>
+      </a>
+      <a class="related-card" href="image-social.html">
+        <strong>Social Media Image Maker</strong>
+        <span>Prepare images for social media formats and layouts.</span>
       </a>
       <a class="related-card" href="index.html">
         <strong>All Free Image Tools</strong>
-        <span>Browse the complete collection of online tools.</span>
+        <span>Browse the complete collection of online image tools.</span>
       </a>
     </div>
   </section>
@@ -848,6 +936,7 @@
   const outputFormat = $("outputFormat");
   const qualityInput = $("quality");
   const qualityValue = $("qualityValue");
+  const qualityHint = $("qualityHint");
   const optimizeButton = $("optimizeButton");
   const resetButton = $("resetButton");
   const statusBox = $("status");
@@ -858,6 +947,7 @@
   let originalUrl = null;
   let optimizedUrl = null;
   let originalImage = null;
+  let fileLoadToken = 0;
 
   const presets = {
     website: { quality: 75, format: "image/webp" },
@@ -905,6 +995,7 @@
   }
 
   function clearAll() {
+    fileLoadToken++;
     sourceFile = null;
     originalImage = null;
 
@@ -927,7 +1018,9 @@
     return new Promise((resolve, reject) => {
       const image = new Image();
       image.onload = () => resolve(image);
-      image.onerror = () => reject(new Error("The selected image could not be opened."));
+      image.onerror = () => reject(
+        new Error("The selected image could not be opened.")
+      );
       image.src = url;
     });
   }
@@ -935,8 +1028,22 @@
   function isSupportedImage(file) {
     const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
     const extension = file.name.split(".").pop().toLowerCase();
+
     return allowedTypes.includes(file.type) &&
       ["jpg", "jpeg", "png", "webp"].includes(extension);
+  }
+
+  function updateQualityControl() {
+    const isPng = outputFormat.value === "image/png";
+
+    qualityInput.disabled = isPng;
+    qualityValue.textContent = isPng
+      ? "Not used"
+      : qualityInput.value + "%";
+
+    qualityHint.textContent = isPng
+      ? "PNG export is lossless. The quality slider does not apply to PNG."
+      : "Lower quality often creates a smaller file. Preview the result before downloading.";
   }
 
   async function handleFile(file) {
@@ -944,13 +1051,21 @@
 
     if (!file) return;
 
+    const currentToken = ++fileLoadToken;
+
     if (!isSupportedImage(file)) {
-      setStatus("Please select a valid JPG, JPEG, PNG or WebP image.", "error");
+      setStatus(
+        "Please select a valid JPG, JPEG, PNG or WebP image.",
+        "error"
+      );
       return;
     }
 
     if (file.size > 50 * 1024 * 1024) {
-      setStatus("This file is larger than 50 MB. Please choose a smaller image.", "error");
+      setStatus(
+        "This file is larger than 50 MB. Please choose a smaller image.",
+        "error"
+      );
       return;
     }
 
@@ -958,7 +1073,11 @@
     originalUrl = URL.createObjectURL(file);
 
     try {
-      originalImage = await loadImage(originalUrl);
+      const loadedImage = await loadImage(originalUrl);
+
+      if (currentToken !== fileLoadToken) return;
+
+      originalImage = loadedImage;
 
       $("originalPreview").src = originalUrl;
       $("originalInfo").textContent =
@@ -966,15 +1085,24 @@
         originalImage.naturalHeight + " px · " + formatBytes(file.size);
 
       optimizeButton.disabled = false;
-      setStatus("Image ready. Choose your settings and click Optimize Image.", "success");
+
+      setStatus(
+        "Image ready. Choose your settings and click Optimize Image.",
+        "success"
+      );
     } catch (error) {
+      if (currentToken !== fileLoadToken) return;
+
       clearAll();
-      setStatus(error.message || "Could not open this image. Please try another file.", "error");
+      setStatus(
+        error.message || "Could not open this image. Please try another file.",
+        "error"
+      );
     }
   }
 
   function updateQualityLabel() {
-    qualityValue.textContent = qualityInput.value + "%";
+    updateQualityControl();
 
     document.querySelectorAll("[data-preset]").forEach(button => {
       button.classList.remove("active");
@@ -987,23 +1115,35 @@
 
     qualityInput.value = preset.quality;
     outputFormat.value = preset.format;
-    qualityValue.textContent = preset.quality + "%";
+    updateQualityControl();
 
     document.querySelectorAll("[data-preset]").forEach(button => {
-      button.classList.toggle("active", button.dataset.preset === name);
+      button.classList.toggle(
+        "active",
+        button.dataset.preset === name
+      );
     });
 
     clearResult();
-    setStatus("Preset selected. Click Optimize Image to process your file.", sourceFile ? "success" : "");
+
+    setStatus(
+      "Preset selected. Click Optimize Image to process your file.",
+      sourceFile ? "success" : ""
+    );
   }
 
   function canvasToBlob(canvas, mime, quality) {
     return new Promise((resolve, reject) => {
       canvas.toBlob(blob => {
         if (!blob) {
-          reject(new Error("Your browser could not create this output format. Try JPEG or WebP."));
+          reject(
+            new Error(
+              "Your browser could not create this output format. Try JPEG or WebP."
+            )
+          );
           return;
         }
+
         resolve(blob);
       }, mime, quality);
     });
@@ -1029,7 +1169,12 @@
       canvas.height = originalImage.naturalHeight;
 
       const context = canvas.getContext("2d", { alpha: true });
-      if (!context) throw new Error("Your browser does not support image processing.");
+
+      if (!context) {
+        throw new Error(
+          "Your browser does not support image processing."
+        );
+      }
 
       if (mime === "image/jpeg") {
         context.fillStyle = "#ffffff";
@@ -1042,13 +1187,15 @@
         ? await canvasToBlob(canvas, mime)
         : await canvasToBlob(canvas, mime, quality);
 
-      // Some browsers may return PNG when a requested encoder is unsupported.
       if (blob.type !== mime) {
-        throw new Error("Your browser could not export this format. Please choose another output format.");
+        throw new Error(
+          "Your browser could not export this format. Please choose another output format."
+        );
       }
 
       let keptOriginal = false;
       const sourceMime = sourceFile.type.toLowerCase();
+
       if (sourceMime === mime && blob.size >= sourceFile.size) {
         blob = sourceFile;
         keptOriginal = true;
@@ -1079,17 +1226,21 @@
       if (difference > 0) {
         saving.textContent = percentage.toFixed(1) + "% smaller";
         saving.className = "saving";
+
         $("resultNote").textContent =
           "Your optimized image is " + formatBytes(difference) +
           " smaller than the original.";
       } else if (difference < 0) {
-        saving.textContent = Math.abs(percentage).toFixed(1) + "% larger";
+        saving.textContent =
+          Math.abs(percentage).toFixed(1) + "% larger";
         saving.className = "";
+
         $("resultNote").textContent =
-          "This converted output is larger than the original. Try another format or a lower quality setting. The tool keeps the original automatically when re-encoding in the same format would increase file size.";
+          "This converted output is larger than the original. Try another format or a lower quality setting. When re-encoding in the same format would increase file size, the tool keeps the original automatically.";
       } else {
         saving.textContent = "Same size";
         saving.className = "";
+
         $("resultNote").textContent = keptOriginal
           ? "Re-encoding did not reduce the file size, so the original file was kept to avoid an unnecessary larger download."
           : "The output has approximately the same size as the original.";
@@ -1099,12 +1250,24 @@
       downloadLink.download = outputName;
       result.style.display = "block";
 
-      setStatus("Optimization complete. Preview your image and download it when ready.", "success");
-      result.scrollIntoView({ behavior: "smooth", block: "start" });
+      setStatus(
+        "Optimization complete. Preview your image and download it when ready.",
+        "success"
+      );
+
+      result.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
 
     } catch (error) {
       clearResult();
-      setStatus(error.message || "Optimization failed. Please try another image or format.", "error");
+
+      setStatus(
+        error.message ||
+        "Optimization failed. Please try another image or format.",
+        "error"
+      );
     } finally {
       optimizeButton.disabled = !sourceFile;
       resetButton.disabled = false;
@@ -1133,7 +1296,10 @@
 
   uploadArea.addEventListener("drop", event => {
     const files = event.dataTransfer && event.dataTransfer.files;
-    if (files && files.length) handleFile(files[0]);
+
+    if (files && files.length) {
+      handleFile(files[0]);
+    }
   });
 
   qualityInput.addEventListener("input", () => {
@@ -1145,11 +1311,15 @@
     document.querySelectorAll("[data-preset]").forEach(button => {
       button.classList.remove("active");
     });
+
+    updateQualityControl();
     clearResult();
   });
 
   document.querySelectorAll("[data-preset]").forEach(button => {
-    button.addEventListener("click", () => applyPreset(button.dataset.preset));
+    button.addEventListener("click", () => {
+      applyPreset(button.dataset.preset);
+    });
   });
 
   optimizeButton.addEventListener("click", optimizeImage);
