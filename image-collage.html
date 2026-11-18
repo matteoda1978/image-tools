@@ -236,6 +236,7 @@ footer a{color:var(--accent);text-decoration:none}
         <button class="package-btn" data-package-code="pro" type="button"><strong>25 designs</strong><span>250 credits</span></button>
         <button class="package-btn" data-package-code="max" type="button"><strong>50 designs</strong><span>450 credits</span></button>
       </div>
+      <p class="help credit-value-note">Credit value: 1 credit = $0.01 USD · 100 credits = $1.00 USD</p>
       <p class="help">Payments coming soon! You can currently use your available account credits. Credit purchases and online payments will be available soon.</p>
       <div class="package-active">
         <div class="section-label">Your available AI packages</div>
@@ -279,7 +280,7 @@ footer a{color:var(--accent);text-decoration:none}
 
     <label class="ai-consent">
       <input id="aiConsent" type="checkbox">
-      <span>I agree to send reduced photo previews (not the original files) to RitoccaPix's cloud AI service, powered by Google Gemini, to analyse the layout. The final collage is created in my browser. See the <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</span>
+      <span>I agree to send reduced photo previews (not the original files) to RitoccaPix's cloud AI service, powered by OpenAI, to analyse the layout. The final collage is created in my browser. See the <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</span>
     </label>
 
     <button id="aiSmartLayout" class="smart-btn" type="button">Create AI Smart Collage</button>
@@ -449,7 +450,7 @@ footer a{color:var(--accent);text-decoration:none}
   <h2>Frequently asked questions</h2>
 
   <h3>Does Smart Collage use artificial intelligence?</h3>
-  <p>There are two options. Local Smart Collage uses layout rules and does not use an AI model. AI Smart Collage sends reduced photo previews to our cloud AI service, powered by Google Gemini, to analyse the photos and suggest a layout. It does not generate or replace your photos.</p>
+  <p>There are two options. Local Smart Collage uses layout rules and does not use an AI model. AI Smart Collage sends reduced photo previews to our cloud AI service, powered by OpenAI, to analyse the photos and suggest a layout. It does not generate or replace your photos.</p>
 
   <h3>What AI collage styles are available?</h3>
   <p>You can choose Big &amp; Small, Equal Photos, Overlapping, Creative Mix or Mosaic. Each style gives the AI a different composition direction.</p>
@@ -820,130 +821,6 @@ function assignPhotosToCells(){
   updateSelect();
 }
 
-function resetCellPhotoPosition(cell){
-  cell.zoom=1;
-  cell.photoX=0;
-  cell.photoY=0;
-  cell.fit=true;
-  cell.fitMode='cover';
-  cell.focalX=0.5;
-  cell.focalY=0.5;
-  cell.hasAiFocus=false;
-}
-
-/* Existing local smart composition algorithm: kept separate from AI. */
-function createSmartComposition(){
-  if(!images.length){
-    status('Choose at least one photo before creating a smart collage.');
-    fileInput.click();
-    return;
-  }
-
-  const n=images.length;
-  const variant=designVersion++;
-
-  $('spacing').value='0';
-  $('spacingValue').textContent='0 px';
-
-  const layouts={
-    1:[[[0,-2,100,104,-1]],[[2,0,96,100,2]],[[0,3,100,94,-2]]],
-    2:[
-      [[-3,-2,70,105,-4],[55,14,49,78,5]],
-      [[-2,1,104,58,-2],[15,45,83,59,3]],
-      [[-4,8,57,96,4],[48,-4,58,101,-3]],
-      [[-3,-3,58,106,-5],[43,7,62,98,4]]
-    ],
-    3:[
-      [[-5,-3,75,107,-4],[54,-4,52,48,5],[58,43,49,63,-3]],
-      [[-3,-5,106,62,-2],[2,43,60,62,4],[51,37,54,68,-4]],
-      [[-5,3,63,103,3],[43,-5,62,65,-4],[39,48,65,58,4]],
-      [[-4,-4,59,66,-4],[43,-5,62,66,4],[15,43,77,64,-2]]
-    ],
-    4:[
-      [[-5,-5,69,80,-4],[52,-4,54,53,4],[56,39,49,66,-3],[-4,66,57,39,3]],
-      [[-4,-5,56,64,-4],[42,-4,63,64,4],[-5,48,57,59,3],[45,48,61,59,-3]],
-      [[-5,-3,72,55,-3],[54,-5,53,75,4],[-4,46,49,59,4],[38,57,66,48,-4]],
-      [[-5,-5,53,108,-4],[38,-5,66,54,4],[38,42,67,65,-3],[-4,72,48,34,3]]
-    ],
-    5:[
-      [[-5,-5,68,77,-4],[51,-4,55,45,4],[55,32,50,53,-3],[-4,65,50,42,3],[38,66,38,39,-4]],
-      [[-4,-5,57,61,-4],[43,-4,62,61,4],[-4,43,43,62,3],[30,44,43,62,-4],[58,48,47,57,3]],
-      [[-5,-4,68,106,-3],[53,-4,53,37,4],[54,27,52,38,-4],[-4,69,49,38,4],[38,66,66,40,-3]],
-      [[-5,-4,53,66,-4],[39,-4,66,63,4],[-5,47,53,60,3],[39,43,66,61,-3],[18,70,66,36,2]]
-    ],
-    6:[
-      [[-5,-5,70,79,-4],[51,-5,56,42,4],[55,29,51,48,-3],[-5,65,43,42,3],[30,67,45,38,-4],[66,64,39,42,4]],
-      [[-5,-4,56,62,-4],[42,-5,63,61,4],[-5,43,42,62,3],[29,43,43,62,-4],[57,43,47,60,3],[23,68,57,38,-2]],
-      [[-5,-5,66,105,-3],[51,-5,53,36,4],[53,24,53,38,-4],[-5,69,39,37,4],[27,66,42,39,-3],[62,63,42,42,3]],
-      [[-5,-4,54,66,-4],[39,-5,66,64,4],[-5,48,51,57,3],[36,44,66,60,-3],[14,68,49,39,-2],[59,67,44,39,4]]
-    ]
-  };
-
-  function makeGeneratedLayout(count,family){
-    const heroSets=[
-      [[-5,-4,72,82,-4],[53,-4,54,43,5],[57,30,49,48,-4],[-4,65,47,42,3],[35,66,45,39,-3],[68,64,38,42,4]],
-      [[-4,-4,58,68,-4],[42,-4,64,67,4],[-5,47,47,57,3],[35,43,67,61,-3],[8,70,53,37,-2],[59,68,44,39,4]],
-      [[-5,-4,70,106,-3],[52,-4,54,35,4],[53,24,53,38,-4],[-4,68,40,38,4],[27,66,43,40,-3],[62,64,42,42,3]],
-      [[-5,-4,54,66,-4],[39,-4,67,64,4],[-5,47,52,59,3],[36,44,67,61,-3],[13,69,50,39,-2],[59,66,45,41,4]]
-    ];
-
-    const base=heroSets[family%heroSets.length].map(box=>box.slice());
-
-    for(let i=6;i<count;i++){
-      const spots=[
-        [-3,4,34,35,rand(-7,7)],
-        [66,4,38,32,rand(-7,7)],
-        [-2,43,32,39,rand(-7,7)],
-        [68,39,36,37,rand(-7,7)],
-        [28,72,42,34,rand(-6,6)],
-        [39,6,36,31,rand(-7,7)]
-      ];
-      base.push(spots[(i-6)%spots.length]);
-    }
-
-    return base.slice(0,count);
-  }
-
-  let chosen;
-
-  if(n<=6){
-    const choices=layouts[n]||layouts[6];
-    chosen=choices[variant%choices.length].map(box=>box.slice());
-  }else{
-    chosen=makeGeneratedLayout(n,variant%4);
-  }
-
-  if(n>=3&&variant%3===2){
-    chosen=chosen.map(([x,y,w,h,r])=>[100-x-w,y,w,h,-r]);
-  }
-
-  const order=images.map((_,i)=>i);
-
-  for(let i=order.length-1;i>0;i--){
-    const j=Math.floor(Math.random()*(i+1));
-    [order[i],order[j]]=[order[j],order[i]];
-  }
-
-  cells=chosen.map((box,i)=>{
-    const [x,y,w,h,rotation]=box;
-    return makeCell(x,y,w,h,order[i]??-1,rotation);
-  });
-
-  cells.forEach(cell=>resetCellPhotoPosition(cell));
-
-  currentLayout='smart';
-  document.querySelectorAll('.layout-btn').forEach(button=>button.classList.remove('active'));
-
-  selectedCell=0;
-  selectedPhoto=order[0]??-1;
-
-  renderPhotos();
-  updateSelect();
-  draw();
-
-  status('Local creative collage '+(variant+1)+' is ready. Choose Try Another Local Design for a new composition.');
-}
-
 /* Create a small JPEG preview. Original uploaded images are never sent. */
 function createThumbnailBase64(image,maxSide=640,quality=0.72){
   return new Promise((resolve,reject)=>{
@@ -998,8 +875,7 @@ function createThumbnailBase64(image,maxSide=640,quality=0.72){
     },'image/jpeg',quality);
   });
 }
-
-/*
+  /*
   Optional AI focal-point support.
 
   Expected per-cell fields from the Worker:
