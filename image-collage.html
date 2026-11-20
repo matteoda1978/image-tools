@@ -719,6 +719,120 @@ function aiCollagePendingMessage(record){
   return 'A previous AI collage request is awaiting transaction verification. Do not start another AI generation, because it could use another package generation. Reference: '+reference+'. Please contact RitoccaPix support before trying again.';
 }
 
+function getAiCollageRecoveredKey(userId){
+  return 'ritoccapix_ai_collage_recovered_v1:'+String(userId||'');
+}
+
+async function applyAiComposition(composition,result={}){
+  const newCells=validateAiCells(composition.cells);
+
+  if(!newCells.some(cell=>cell.photoIndex>=0)){
+    newCells.forEach((cell,i)=>{
+      if(i<images.length)cell.photoIndex=i;
+    });
+  }
+
+  cells=newCells;
+
+  if(typeof composition.backgroundColor==='string'&&/^#[0-9a-fA-F]{6}$/.test(composition.backgroundColor)){
+    $('bgColor').value=composition.backgroundColor;
+  }
+
+  currentLayout='ai';
+  document.querySelectorAll('.layout-btn').forEach(item=>item.classList.remove('active'));
+  selectedCell=0;
+  selectedPhoto=cells.find(cell=>cell.photoIndex>=0)?.photoIndex??0;
+  renderPhotos();
+  updateSelect();
+  draw(false);
+  cells.forEach(cell=>{if(cell.hasAiFocus)positionPhotoAtFocalPoint(cell);});
+  draw();
+
+  const title=typeof composition.title==='string'?composition.title:'AI Smart Collage';
+  const focusCount=cells.filter(cell=>cell.hasAiFocus).length;
+  let successMessage=focusCount
+    ? title+' is ready. AI focal positioning was applied to '+focusCount+' photo(s). You can still adjust every photo manually.'
+    : title+' is ready. The AI layout was applied. You can adjust every photo manually.';
+  if(typeof result.generationsRemaining==='number')successMessage+=' Package generations remaining: '+result.generationsRemaining+'.';
+  status(successMessage);
+  await loadActiveCollagePackages(false);
+}
+
+async function recoverPendingAiCollage(session,pendingRecord){
+  buttonStatus('Checking the previous AI generation…');
+  let response;
+  try{
+    response=await fetch(COLLAGE_AI_WORKER_URL+'/recover',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+session.access_token},
+      body:JSON.stringify({requestId:pendingRecord.requestId})
+    });
+  }catch(error){
+    aiCollageRecoveryPending=true;
+    throw new Error(aiCollagePendingMessage(pendingRecord)+' The recovery service could not be reached; try recovery again later.');
+  }
+
+  const result=await response.json().catch(()=>null);
+  if(!response.ok||!result?.ok){
+    aiCollageRecoveryPending=true;
+    if(result?.generationId)pendingRecord.generationId=result.generationId;
+    saveAiCollagePending(session.user?.id,pendingRecord);
+    throw new Error(aiCollagePendingMessage(pendingRecord));
+  }
+
+  if(result.state==='not_found'){
+    clearAiCollagePending(session.user?.id,pendingRecord.requestId);
+    status('The server confirms that no generation was reserved for the previous request. You can now start a new AI collage.');
+    return true;
+  }
+
+  if(result.state==='pending'){
+    pendingRecord.generationId=result.generationId||pendingRecord.generationId||null;
+    saveAiCollagePending(session.user?.id,pendingRecord);
+    aiCollageRecoveryPending=true;
+    throw new Error(aiCollagePendingMessage(pendingRecord)+' The result has not yet been safely recorded; no refund or second charge has been made.');
+  }
+
+  if(result.state==='failed'){
+    clearAiCollagePending(session.user?.id,pendingRecord.requestId);
+    aiCollageRecoveryPending=false;
+    await loadActiveCollagePackages(false);
+    status('The previous AI generation failed. Its package generation has been restored. You can try again.');
+    return true;
+  }
+
+  if(result.state==='generated'&&result.composition){
+    clearAiCollagePending(session.user?.id,pendingRecord.requestId);
+    aiCollageRecoveryPending=false;
+    if(images.length){
+      if(typeof pendingRecord.imageCount==='number'&&images.length!==pendingRecord.imageCount){
+        localStorage.setItem(getAiCollageRecoveredKey(session.user?.id),JSON.stringify({composition:result.composition,generationsRemaining:result.generationsRemaining??null,imageCount:pendingRecord.imageCount}));
+        status('The previous collage was recovered. Upload the same photos in the same order used before the interruption to restore its layout.');
+        return true;
+      }
+      if(!confirm('The previous AI collage has been recovered. Are these the same photos, in the same order, as before the interruption?')){
+        localStorage.setItem(getAiCollageRecoveredKey(session.user?.id),JSON.stringify({composition:result.composition,generationsRemaining:result.generationsRemaining??null,imageCount:pendingRecord.imageCount??images.length}));
+        status('The recovered layout is saved. Re-select the original photos in the original order to apply it.');
+        return true;
+      }
+      await applyAiComposition(result.composition,result);
+      return true;
+    }
+    localStorage.setItem(getAiCollageRecoveredKey(session.user?.id),JSON.stringify({composition:result.composition,generationsRemaining:result.generationsRemaining??null,imageCount:pendingRecord.imageCount??null}));
+    status('The previous AI collage was recovered. Re-upload the same photos in the same order to restore its layout. No new AI generation was started.');
+    return true;
+  }
+
+  aiCollageRecoveryPending=true;
+  throw new Error(aiCollagePendingMessage(pendingRecord));
+}
+
+function buttonStatus(message){
+  status(message);
+  const button=document.getElementById('aiSmartLayout');
+  if(button)button.textContent='Recovering previous generation…';
+}
+
 let images=[];
 let cells=[];
 let selectedCell=0;
@@ -1361,27 +1475,6 @@ async function createAiSmartComposition(){
 
   if(aiCollageBusy)return;
 
-  if(!images.length){
-    status('Choose at least one photo before creating an AI collage.');
-    fileInput.click();
-    return;
-  }
-
-  if(!$('aiConsent').checked){
-    status('Please tick the consent box before sending reduced previews for AI analysis.');
-    $('aiConsent').focus();
-    return;
-  }
-
-  if(!selectedCollagePackageId){
-    await loadActiveCollagePackages(false);
-    if(!selectedCollagePackageId){
-      status('Choose or purchase an AI generation package before creating an AI collage.');
-      $('collagePackages').scrollIntoView({behavior:'smooth',block:'center'});
-      return;
-    }
-  }
-
   aiCollageBusy=true;
   button.disabled=true;
   retryButton.disabled=true;
@@ -1408,7 +1501,29 @@ async function createAiSmartComposition(){
     const pendingRequest=readAiCollagePending(session.user?.id);
     if(pendingRequest){
       aiCollageRecoveryPending=true;
-      throw new Error(aiCollagePendingMessage(pendingRequest));
+      await recoverPendingAiCollage(session,pendingRequest);
+      return;
+    }
+
+    if(!images.length){
+      status('Choose at least one photo before creating an AI collage.');
+      fileInput.click();
+      return;
+    }
+
+    if(!$('aiConsent').checked){
+      status('Please tick the consent box before sending reduced previews for AI analysis.');
+      $('aiConsent').focus();
+      return;
+    }
+
+    if(!selectedCollagePackageId){
+      await loadActiveCollagePackages(false);
+      if(!selectedCollagePackageId){
+        status('Choose or purchase an AI generation package before creating an AI collage.');
+        $('collagePackages').scrollIntoView({behavior:'smooth',block:'center'});
+        return;
+      }
     }
 
     if(!crypto.randomUUID){
@@ -1416,6 +1531,7 @@ async function createAiSmartComposition(){
     }
 
     const requestId=crypto.randomUUID();
+    try{localStorage.removeItem(getAiCollageRecoveredKey(session.user?.id));}catch(error){}
 
     button.textContent='Preparing photos…';
     status('Preparing reduced photo previews…');
@@ -1448,6 +1564,7 @@ async function createAiSmartComposition(){
       requestId,
       packageId:selectedCollagePackageId,
       generationId:null,
+      imageCount:images.length,
       createdAt:new Date().toISOString()
     };
 
@@ -1507,12 +1624,12 @@ async function createAiSmartComposition(){
         throw new Error(result?.error||'This package has no generations remaining. Select another package or purchase a new one.');
       }
       if(response.status===409){
-        throw new Error(aiCollagePendingRecovery
+        throw new Error(aiCollageRecoveryPending
           ? 'This request is already recorded, but its final result has not been verified. Do not retry. Reference: '+(result?.generationId||requestId)+'. Please contact RitoccaPix support.'
           : 'This request has already been processed. Please refresh your account before starting another generation.');
       }
       if(response.status===429){
-        throw new Error(aiCollagePendingRecovery
+        throw new Error(aiCollageRecoveryPending
           ? 'The AI request could not be verified. Do not retry, because a package generation may already be reserved. Reference: '+requestId+'. Please contact RitoccaPix support.'
           : 'Too many requests. Please wait a moment and try again.');
       }
@@ -1543,76 +1660,7 @@ async function createAiSmartComposition(){
       result.data||
       result;
 
-    const newCells=validateAiCells(composition.cells);
-
-    if(!newCells.some(cell=>cell.photoIndex>=0)){
-      newCells.forEach((cell,i)=>{
-        if(i<images.length){
-          cell.photoIndex=i;
-        }
-      });
-    }
-
-    cells=newCells;
-
-    if(
-      typeof composition.backgroundColor==='string'&&
-      /^#[0-9a-fA-F]{6}$/.test(composition.backgroundColor)
-    ){
-      $('bgColor').value=composition.backgroundColor;
-    }
-
-    currentLayout='ai';
-
-    document.querySelectorAll('.layout-btn').forEach(item=>{
-      item.classList.remove('active');
-    });
-
-    selectedCell=0;
-
-    selectedPhoto=
-      cells.find(cell=>cell.photoIndex>=0)?.photoIndex??0;
-
-    renderPhotos();
-    updateSelect();
-    draw(false);
-
-    cells.forEach(cell=>{
-      if(cell.hasAiFocus){
-        positionPhotoAtFocalPoint(cell);
-      }
-    });
-
-    draw();
-
-    const title=
-      typeof composition.title==='string'
-        ? composition.title
-        : 'AI Smart Collage';
-
-    const focusCount=
-      cells.filter(cell=>cell.hasAiFocus).length;
-
-    let successMessage;
-
-    if(focusCount){
-      successMessage=
-        title+
-        ' is ready. AI focal positioning was applied to '+
-        focusCount+
-        ' photo(s). You can still adjust every photo manually.';
-    }else{
-      successMessage=
-        title+
-        ' is ready. The AI layout was applied. You can adjust every photo manually.';
-    }
-
-    if(typeof result.generationsRemaining==='number'){
-      successMessage+=' Package generations remaining: '+result.generationsRemaining+'.';
-    }
-
-    status(successMessage);
-    await loadActiveCollagePackages(false);
+    await applyAiComposition(composition,result);
 
   }catch(error){
     console.error('AI Smart Collage error:',error);
@@ -1671,6 +1719,33 @@ fileInput.addEventListener('change',async()=>{
   renderPhotos();
   updateSelect();
   draw();
+
+  try{
+    const client=await ensureSupabaseClient();
+    const {data}=await client.auth.getSession();
+    const userId=data?.session?.user?.id;
+    if(userId){
+      const key=getAiCollageRecoveredKey(userId);
+      const raw=localStorage.getItem(key);
+      if(raw){
+        const recovered=JSON.parse(raw);
+        if(!recovered.imageCount||recovered.imageCount===images.length){
+          if(confirm('A recovered AI layout is available. Are these the original photos in the original order?')){
+            await applyAiComposition(recovered.composition,{generationsRemaining:recovered.generationsRemaining});
+            localStorage.removeItem(key);
+            fileInput.value='';
+            return;
+          }
+        }else{
+          status('The recovered AI layout needs '+recovered.imageCount+' original photo(s). You selected '+images.length+'. Select the original photos in the original order.');
+          fileInput.value='';
+          return;
+        }
+      }
+    }
+  }catch(recoveryError){
+    console.warn('Could not check recovered collage layout:',recoveryError);
+  }
 
   status(images.length+' photo(s) loaded. Use local Smart Collage, AI Smart Collage or choose a ready-made layout.');
 
