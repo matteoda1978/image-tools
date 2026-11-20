@@ -663,10 +663,61 @@ const photoCount=$('photoCount');
 const COLLAGE_AI_WORKER_URL='https://ritoccapix-collage-ai.ritoccapix.workers.dev';
 
 let aiCollageBusy=false;
+let aiCollageRecoveryPending=false;
 let selectedAiStyle='big-small';
 let selectedCollagePackageId='';
 let activeCollagePackages=[];
 let collagePackageBusy=false;
+
+/* Prevent a second charge while an earlier AI request has an uncertain outcome. */
+const AI_COLLAGE_PENDING_KEY_PREFIX='ritoccapix_ai_collage_pending_v1:';
+
+function getAiCollagePendingKey(userId){
+  return AI_COLLAGE_PENDING_KEY_PREFIX+String(userId||'');
+}
+
+function readAiCollagePending(userId){
+  if(!userId)return null;
+  try{
+    const raw=localStorage.getItem(getAiCollagePendingKey(userId));
+    return raw?JSON.parse(raw):null;
+  }catch(error){
+    console.warn('Could not read pending AI collage request:',error);
+    return null;
+  }
+}
+
+function saveAiCollagePending(userId,record){
+  aiCollageRecoveryPending=true;
+  if(!userId)return;
+  try{
+    localStorage.setItem(
+      getAiCollagePendingKey(userId),
+      JSON.stringify(record)
+    );
+  }catch(error){
+    console.warn('Could not persist pending AI collage request:',error);
+  }
+}
+
+function clearAiCollagePending(userId,requestId){
+  if(!userId)return;
+  try{
+    const key=getAiCollagePendingKey(userId);
+    const current=readAiCollagePending(userId);
+    if(!requestId||!current||current.requestId===requestId){
+      localStorage.removeItem(key);
+    }
+  }catch(error){
+    console.warn('Could not clear pending AI collage request:',error);
+  }
+  aiCollageRecoveryPending=false;
+}
+
+function aiCollagePendingMessage(record){
+  const reference=record?.generationId||record?.requestId||'not available';
+  return 'A previous AI collage request is awaiting transaction verification. Do not start another AI generation, because it could use another package generation. Reference: '+reference+'. Please contact RitoccaPix support before trying again.';
+}
 
 let images=[];
 let cells=[];
@@ -1354,6 +1405,12 @@ async function createAiSmartComposition(){
       throw new Error('Please sign in to use AI Smart Collage.');
     }
 
+    const pendingRequest=readAiCollagePending(session.user?.id);
+    if(pendingRequest){
+      aiCollageRecoveryPending=true;
+      throw new Error(aiCollagePendingMessage(pendingRequest));
+    }
+
     if(!crypto.randomUUID){
       throw new Error('Your browser does not support secure request identification. Please update your browser.');
     }
@@ -1387,33 +1444,62 @@ async function createAiSmartComposition(){
     button.textContent='Analysing photo previews…';
     status('Sending reduced previews for AI layout analysis…');
 
-    const response=await fetch(
-      COLLAGE_AI_WORKER_URL+'/analyze',
-      {
-        method:'POST',
-        headers:{
-          'Content-Type':'application/json',
-          'Authorization':'Bearer '+session.access_token
-        },
-        body:JSON.stringify({
-          requestId:requestId,
-          packageId:selectedCollagePackageId,
-          images:thumbnails,
-          prompt:completePrompt,
-          format:selectedFormat,
-          style:selectedAiStyle
-        })
-      }
-    );
+    const pendingRecord={
+      requestId,
+      packageId:selectedCollagePackageId,
+      generationId:null,
+      createdAt:new Date().toISOString()
+    };
+
+    /* Persist before sending: a lost network response must not trigger a second charge. */
+    saveAiCollagePending(session.user?.id,pendingRecord);
+
+    let response;
+    try{
+      response=await fetch(
+        COLLAGE_AI_WORKER_URL+'/analyze',
+        {
+          method:'POST',
+          headers:{
+            'Content-Type':'application/json',
+            'Authorization':'Bearer '+session.access_token
+          },
+          body:JSON.stringify({
+            requestId:requestId,
+            packageId:selectedCollagePackageId,
+            images:thumbnails,
+            prompt:completePrompt,
+            format:selectedFormat,
+            style:selectedAiStyle
+          })
+        }
+      );
+    }catch(fetchError){
+      throw new Error('The connection was interrupted after the AI request was sent. Its result cannot yet be verified. Do not retry or start another AI generation. Reference: '+requestId+'. Please contact RitoccaPix support.');
+    }
 
     let result;
     try{
       result=await response.json();
     }catch(error){
-      throw new Error('The AI service returned an unreadable response.');
+      throw new Error('The AI service returned an unreadable response. The request may already have used a package generation. Do not retry. Reference: '+requestId+'. Please contact RitoccaPix support.');
+    }
+
+    if(result?.finalizationPending===true){
+      pendingRecord.generationId=result.generationId||null;
+      saveAiCollagePending(session.user?.id,pendingRecord);
+      throw new Error(aiCollagePendingMessage(pendingRecord));
     }
 
     if(!response.ok){
+      if(result?.generationRestored===true){
+        clearAiCollagePending(session.user?.id,requestId);
+      }else if([400,401,402,403,404].includes(response.status)){
+        clearAiCollagePending(session.user?.id,requestId);
+      }else{
+        pendingRecord.generationId=result?.generationId||null;
+        saveAiCollagePending(session.user?.id,pendingRecord);
+      }
       if(response.status===401){
         throw new Error('Your session has expired. Please sign in again.');
       }
@@ -1421,25 +1507,35 @@ async function createAiSmartComposition(){
         throw new Error(result?.error||'This package has no generations remaining. Select another package or purchase a new one.');
       }
       if(response.status===409){
-        throw new Error('This request has already been processed. Please try again.');
+        throw new Error(aiCollagePendingRecovery
+          ? 'This request is already recorded, but its final result has not been verified. Do not retry. Reference: '+(result?.generationId||requestId)+'. Please contact RitoccaPix support.'
+          : 'This request has already been processed. Please refresh your account before starting another generation.');
       }
       if(response.status===429){
-        throw new Error('Too many requests. Please wait a moment and try again.');
+        throw new Error(aiCollagePendingRecovery
+          ? 'The AI request could not be verified. Do not retry, because a package generation may already be reserved. Reference: '+requestId+'. Please contact RitoccaPix support.'
+          : 'Too many requests. Please wait a moment and try again.');
       }
 
       const message=result&&result.error
         ? result.error
         : 'AI layout analysis failed (HTTP '+response.status+').';
 
-      throw new Error(message);
+      throw new Error(aiCollageRecoveryPending
+        ? 'The AI request could not be verified. Do not retry, because a package generation may already be reserved. Reference: '+(result?.generationId||requestId)+'. Please contact RitoccaPix support.'
+        : message);
     }
 
     if(!result||result.ok!==true){
+      pendingRecord.generationId=result?.generationId||null;
+      saveAiCollagePending(session.user?.id,pendingRecord);
       throw new Error(
         result?.error||
-        'The AI service did not confirm the generation.'
+        'The AI service did not confirm the generation. Do not retry until the transaction has been checked. Reference: '+requestId+'.'
       );
     }
+
+    clearAiCollagePending(session.user?.id,requestId);
 
     const composition=
       result.composition||
@@ -1526,8 +1622,8 @@ async function createAiSmartComposition(){
     );
   }finally{
     aiCollageBusy=false;
-    button.disabled=false;
-    retryButton.disabled=false;
+    button.disabled=aiCollageRecoveryPending;
+    retryButton.disabled=aiCollageRecoveryPending;
     button.textContent='Create AI Smart Collage';
     retryButton.textContent='Try Another AI Design';
     $('aiConsent').checked=false;
