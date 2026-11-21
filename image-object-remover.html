@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Remove Objects from Photos Online Free | RitoccaPix</title>
-<meta name="description" content="Remove unwanted objects from photos online for free with AI. Brush over people, objects or distractions and let AI reconstruct the background in your browser.">
+<meta name="description" content="Remove unwanted objects and people from photos with free browser AI or optional OpenAI Cloud AI. Choose your method, paint over distractions and download the result.">
 <meta name="theme-color" content="#0a0f1d">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://ritoccapix.com/image-object-remover.html">
@@ -14,11 +14,11 @@
 <meta property="og:site_name" content="RitoccaPix">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Remove Objects from Photos Online Free | RitoccaPix">
-<meta property="og:description" content="Erase unwanted objects, people and distractions from photos with AI. No account required.">
+<meta property="og:description" content="Remove unwanted objects and people from photos with browser AI or optional OpenAI Cloud AI.">
 <meta property="og:url" content="https://ritoccapix.com/image-object-remover.html">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Remove Objects from Photos Online Free | RitoccaPix">
-<meta name="twitter:description" content="Remove unwanted objects from photos with AI. Edit images in your browser and download the result for free.">
+<meta name="twitter:description" content="Choose browser or cloud AI to remove unwanted objects from photos and download the edited result.">
 
 <script type="application/ld+json">
 {
@@ -28,20 +28,21 @@
   "url": "https://ritoccapix.com/image-object-remover.html",
   "applicationCategory": "MultimediaApplication",
   "operatingSystem": "Any",
-  "description": "A free browser-based AI object remover that uses a brush selection and AI inpainting to reconstruct unwanted areas of photos.",
+  "description": "An AI object removal tool offering local browser processing with MIGAN and optional cloud processing with OpenAI.",
   "offers": {
     "@type": "Offer",
     "price": "0",
     "priceCurrency": "EUR"
   },
   "featureList": [
-    "AI object removal",
+    "Browser-based AI object removal",
+    "Optional OpenAI Cloud AI object removal",
     "Remove unwanted objects and photo distractions",
     "Brush-based image selection",
     "Undo brush strokes",
     "Original and edited image comparison",
     "PNG download",
-    "Browser-based image processing"
+    "Local image processing option"
   ]
 }
 </script>
@@ -56,7 +57,7 @@
       "name": "How do I remove an object from a photo?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Upload a JPG, PNG or WebP image, paint over the object you want to remove, and select Remove object with AI. Review the result and download the edited PNG."
+        "text": "Choose Browser AI or Cloud AI, upload a JPG, PNG or WebP image, paint over the object you want to remove, and select Remove object with AI. Review the result and download the edited PNG."
       }
     },
     {
@@ -64,7 +65,7 @@
       "name": "Is the AI object remover free?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. RitoccaPix provides this object removal tool free of charge without requiring an account."
+        "text": "The Browser AI option runs locally in your browser and does not require an account. Cloud AI is currently available in test mode and requires a verified RitoccaPix account. No credits are deducted during the test."
       }
     },
     {
@@ -72,7 +73,7 @@
       "name": "Are my photos uploaded to a server?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Image processing takes place locally in your browser. The AI runtime and model are downloaded from external hosting services, but your selected photo is not uploaded to a RitoccaPix image-processing server."
+        "text": "With Browser AI, your photo is processed locally in your browser and is not uploaded for image processing. If you choose Cloud AI, your photo and selection mask are sent to the RitoccaPix Cloudflare Worker and OpenAI for processing."
       }
     },
     {
@@ -85,10 +86,10 @@
     },
     {
       "@type": "Question",
-      "name": "Why is the result not always perfect?",
+      "name": "Do I need an account?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "AI reconstruction depends on the selected area, surrounding details and image complexity. Smaller selections and several separate attempts can produce better results."
+        "text": "No account is required for Browser AI. Cloud AI requires a RitoccaPix account with a verified email address."
       }
     }
   ]
@@ -178,17 +179,12 @@ header{
   font-size:14px;
 }
 .tools-menu a:hover,
-.tools-menu a[aria-current=page]{
-  background:var(--panel2);
-}
+.tools-menu a[aria-current=page]{background:var(--panel2)}
 main{
   width:min(100% - 32px,1040px);
   margin:32px auto 60px;
 }
-.hero{
-  text-align:center;
-  margin-bottom:26px;
-}
+.hero{text-align:center;margin-bottom:26px}
 .eyebrow{
   display:inline-block;
   color:#c8d4ff;
@@ -220,15 +216,8 @@ h1{
   padding:clamp(16px,3vw,26px);
   margin-bottom:20px;
 }
-h2{
-  font-size:21px;
-  line-height:1.3;
-  margin:0 0 8px;
-}
-h3{
-  font-size:16px;
-  margin:0 0 7px;
-}
+h2{font-size:21px;line-height:1.3;margin:0 0 8px}
+h3{font-size:16px;margin:0 0 7px}
 .muted{color:var(--muted)}
 .step{
   display:flex;
@@ -260,29 +249,15 @@ h3{
   background:linear-gradient(135deg,#7c9cff,#9d7bff);
   transition:filter .15s,transform .15s;
 }
-.action:hover:not(:disabled){
-  filter:brightness(1.09);
-  transform:translateY(-1px);
-}
+.action:hover:not(:disabled){filter:brightness(1.09);transform:translateY(-1px)}
 .action.secondary{
   background:var(--panel2);
   border:1px solid var(--border);
   color:var(--text);
 }
-.action:disabled{
-  opacity:.42;
-  cursor:not-allowed;
-  transform:none;
-}
-input[type=file]{
-  max-width:100%;
-  color:var(--muted);
-  font:inherit;
-}
-input[type=range]{
-  accent-color:var(--accent);
-  width:min(100%,260px);
-}
+.action:disabled{opacity:.42;cursor:not-allowed;transform:none}
+input[type=file]{max-width:100%;color:var(--muted);font:inherit}
+input[type=range]{accent-color:var(--accent);width:min(100%,260px)}
 label{font-size:14px}
 .canvas-wrap{
   min-height:220px;
@@ -295,24 +270,14 @@ label{font-size:14px}
   border-radius:14px;
   position:relative;
 }
-canvas{
-  display:block;
-  max-width:100%;
-  height:auto;
-  cursor:crosshair;
-  touch-action:none;
-}
+canvas{display:block;max-width:100%;height:auto;cursor:crosshair;touch-action:none}
 #placeholder{
   padding:42px 18px;
   text-align:center;
   color:var(--muted);
   max-width:420px;
 }
-.placeholder-icon{
-  font-size:35px;
-  display:block;
-  margin-bottom:7px;
-}
+.placeholder-icon{font-size:35px;display:block;margin-bottom:7px}
 .status{
   margin-top:14px;
   padding:12px 14px;
@@ -323,14 +288,8 @@ canvas{
   overflow-wrap:anywhere;
   font-size:14px;
 }
-.status.error{
-  color:var(--danger);
-  border-color:#75404a;
-}
-.status.success{
-  color:var(--good);
-  border-color:#2d624b;
-}
+.status.error{color:var(--danger);border-color:#75404a}
+.status.success{color:var(--good);border-color:#2d624b}
 .notice{
   padding:12px 14px;
   background:#101a2d;
@@ -347,11 +306,7 @@ canvas{
   flex-wrap:wrap;
 }
 .toolbar small{color:var(--muted)}
-.privacy{
-  display:flex;
-  gap:10px;
-  align-items:flex-start;
-}
+.privacy{display:flex;gap:10px;align-items:flex-start}
 .privacy .symbol{font-size:20px}
 .feature-grid{
   display:grid;
@@ -364,34 +319,19 @@ canvas{
   border:1px solid var(--border);
   border-radius:12px;
 }
-.feature p{
-  margin:0;
-  color:var(--muted);
-  font-size:14px;
-}
-.content-panel p,
-.content-panel li{
-  color:var(--muted);
-}
+.feature p{margin:0;color:var(--muted);font-size:14px}
+.content-panel p,.content-panel li{color:var(--muted)}
 .content-panel a{
   color:#b7c8ff;
   text-decoration:underline;
   text-underline-offset:3px;
 }
 .content-panel a:hover{color:white}
-.faq-item{
-  padding:15px 0;
-  border-bottom:1px solid var(--border);
-}
+.faq-item{padding:15px 0;border-bottom:1px solid var(--border)}
 .faq-item:last-child{border-bottom:0;padding-bottom:0}
 .faq-item h3{margin-bottom:6px}
 .faq-item p{margin:0;color:var(--muted)}
-.related-links{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  margin-top:14px;
-}
+.related-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
 .related-links a{
   display:inline-block;
   padding:9px 12px;
@@ -403,6 +343,31 @@ canvas{
   font-size:14px;
 }
 .related-links a:hover{background:var(--panel2)}
+.engine-options{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  margin:14px 0;
+}
+.engine-option{
+  display:flex;
+  align-items:flex-start;
+  gap:11px;
+  padding:15px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:#0e1627;
+  cursor:pointer;
+}
+.engine-option input{margin-top:5px;accent-color:var(--accent)}
+.engine-option strong{display:block;color:var(--text)}
+.engine-option small{display:block;color:var(--muted);margin-top:4px}
+.engine-option:has(input:checked){
+  border-color:var(--accent);
+  background:#17243b;
+}
+.engine-panel .notice{margin-bottom:0}
+.engine-panel a{color:#c8d4ff}
 footer{
   text-align:center;
   color:var(--muted);
@@ -410,17 +375,14 @@ footer{
   border-top:1px solid var(--border);
   font-size:13px;
 }
-footer a{
-  color:#b7c8ff;
-  margin:0 8px;
-}
+footer a{color:#b7c8ff;margin:0 8px}
 [hidden]{display:none!important}
 @media(max-width:650px){
   .header-inner{padding:11px 12px}
   .brand{font-size:21px}
   .menu-button{padding:9px 10px;font-size:13px}
   main{margin-top:24px}
-  .feature-grid{grid-template-columns:1fr}
+  .feature-grid,.engine-options{grid-template-columns:1fr}
   .canvas-wrap{min-height:180px}
   .controls .action{flex:1 1 auto}
   .hero p{font-size:16px}
@@ -470,16 +432,45 @@ footer a{
     <h1>Remove Objects from Photos Online</h1>
     <p>
       Remove unwanted objects, people in the background, cables, signs,
-      and other distractions from your photos with AI. Brush over the
-      area you want to erase and let AI try to reconstruct the background
-      directly in your browser. Free to use, with no account required.
+      and other distractions from your photos. Choose local Browser AI
+      or optional OpenAI Cloud AI, paint over the area you want to erase,
+      and download the edited result.
+    </p>
+  </section>
+
+  <section class="panel engine-panel" aria-labelledby="engineHeading">
+    <div class="step">
+      <span class="step-number">1</span>
+      <h2 id="engineHeading">Choose your AI method</h2>
+    </div>
+
+    <div class="engine-options">
+      <label class="engine-option" for="engineLocal">
+        <input type="radio" id="engineLocal" name="aiEngine" value="local" checked>
+        <span>
+          <strong>Browser AI — MIGAN / ONNX</strong>
+          <small>Runs on your device. No account required and your photo is not uploaded for processing.</small>
+        </span>
+      </label>
+
+      <label class="engine-option" for="engineCloud">
+        <input type="radio" id="engineCloud" name="aiEngine" value="cloud">
+        <span>
+          <strong>Cloud AI — OpenAI</strong>
+          <small>Cloud processing. Requires a RitoccaPix account with a verified email.</small>
+        </span>
+      </label>
+    </div>
+
+    <p id="engineDescription" class="notice" aria-live="polite">
+      Browser AI uses MIGAN / ONNX on your device. Your photo is not uploaded for image processing, and no account is required.
     </p>
   </section>
 
   <section class="panel" aria-labelledby="uploadHeading">
 
     <div class="step">
-      <span class="step-number">1</span>
+      <span class="step-number">2</span>
       <h2 id="uploadHeading">Upload your photo</h2>
     </div>
 
@@ -501,7 +492,7 @@ footer a{
     </div>
 
     <div class="step">
-      <span class="step-number">2</span>
+      <span class="step-number">3</span>
       <h2>Brush over the object</h2>
     </div>
 
@@ -568,7 +559,7 @@ footer a{
     </div>
 
     <div id="status" class="status" role="status" aria-live="polite">
-      Upload a photo to get started.
+      Choose an AI method and upload a photo to get started.
     </div>
 
     <p class="muted" style="font-size:12px;margin-bottom:0">
@@ -615,22 +606,23 @@ footer a{
       <span class="symbol" aria-hidden="true">🔒</span>
 
       <div>
-        <h2>Your photo stays in your browser</h2>
+        <h2>Choose how your photo is processed</h2>
 
         <p class="muted" style="margin-bottom:0">
-          Image processing runs locally in your browser using ONNX Runtime
-          Web. The AI runtime and model are downloaded from external hosting
-          services. Your selected photo is not uploaded to a RitoccaPix
-          image-processing server.
+          Browser AI processes your photo locally on your device using
+          MIGAN / ONNX. Your photo is not uploaded for image processing.
+          If you choose Cloud AI, your photo and selection mask are sent
+          to the RitoccaPix Cloudflare Worker and OpenAI for editing.
+          Cloud AI requires a verified account and is currently in test
+          mode, with no credits deducted.
         </p>
       </div>
     </div>
 
     <div class="notice" style="margin-top:16px">
-      The AI runtime and model may take some time to download the first
-      time you use the tool. Processing speed depends on your device,
-      browser, photo size, and available memory. Keep this page open
-      while the AI is working.
+      Browser AI may need to download the AI runtime and model the first
+      time you use it. Cloud AI sends the selected image to an online AI
+      service. Keep this page open while either method is working.
     </div>
   </section>
 
@@ -641,11 +633,12 @@ footer a{
       An unwanted object can distract from the main subject of a photograph.
       AI object removal, also known as image inpainting, attempts to fill
       the selected area using the surrounding parts of the image.
-      RitoccaPix uses an AI inpainting model to reconstruct the selected
-      area directly in your browser.
+      RitoccaPix offers two processing methods: local Browser AI with
+      MIGAN / ONNX and optional Cloud AI with OpenAI.
     </p>
 
     <ol>
+      <li>Choose Browser AI or Cloud AI.</li>
       <li>Upload a JPG, PNG, or WebP photograph.</li>
       <li>Adjust the brush size to match the object you want to remove.</li>
       <li>Paint over the object and its visible edges.</li>
@@ -696,18 +689,20 @@ footer a{
     <div class="faq-item">
       <h3>Is the AI object remover free?</h3>
       <p>
-        Yes. You can use the RitoccaPix object remover free of charge
-        in a compatible browser, without creating an account.
+        Browser AI runs locally in your browser and does not require an
+        account. Cloud AI is currently available in test mode and requires
+        a verified RitoccaPix account. No credits are deducted during
+        the current test.
       </p>
     </div>
 
     <div class="faq-item">
       <h3>Are my photos uploaded to a server?</h3>
       <p>
-        Image processing takes place locally in your browser.
-        The AI runtime and model are downloaded from external hosting
-        services, but your selected photo is not uploaded to a
-        RitoccaPix image-processing server.
+        With Browser AI, your photo is processed locally in your browser
+        and is not uploaded for image processing. If you choose Cloud AI,
+        your photo and selection mask are sent to the RitoccaPix Cloudflare
+        Worker and OpenAI for processing.
       </p>
     </div>
 
@@ -734,7 +729,7 @@ footer a{
       <p>
         The tool can work in compatible mobile browsers. However,
         AI processing can require significant memory, so performance
-        depends on your device.
+        depends on your device and the selected AI method.
       </p>
     </div>
 
@@ -756,10 +751,18 @@ footer a{
     </div>
 
     <div class="faq-item">
-      <h3>Do I need to install software or create an account?</h3>
+      <h3>Do I need an account?</h3>
       <p>
-        No. The tool runs in a compatible web browser. You do not
-        need to install an application or create a RitoccaPix account.
+        No account is required for Browser AI. Cloud AI requires a
+        RitoccaPix account with a verified email address.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Does Cloud AI use my credits?</h3>
+      <p>
+        No. Cloud AI is currently in test mode and does not deduct
+        credits from your RitoccaPix account.
       </p>
     </div>
   </section>
@@ -793,6 +796,8 @@ footer a{
   </p>
 </footer>
 
+<!-- Supabase is used only when Cloud AI is selected. -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort.min.js"></script>
 
 <script>
@@ -807,9 +812,7 @@ const toolsMenu = $("toolsMenu");
 
 menuButton.addEventListener("click", event => {
   event.stopPropagation();
-
   const open = toolsMenu.classList.toggle("open");
-
   menuButton.setAttribute("aria-expanded", String(open));
 });
 
@@ -830,6 +833,45 @@ document.addEventListener("keydown", event => {
   }
 });
 
+/* Cloud AI configuration */
+const SUPABASE_URL =
+  "https://eckppexmaihbzbtunhnp.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_h4NECcXTuSS7R-BDSAwIVQ_WKKolNKW";
+
+const OBJECT_REMOVER_WORKER =
+  "https://ritoccapix-object-remover.ritoccapix.workers.dev";
+
+let supabaseClient = null;
+
+function getSupabaseClient() {
+  if (supabaseClient) return supabaseClient;
+
+  if (
+    !window.supabase ||
+    typeof window.supabase.createClient !== "function"
+  ) {
+    throw new Error(
+      "The account service could not be loaded. Please reload the page and try again."
+    );
+  }
+
+  supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY,
+    {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true
+      }
+    }
+  );
+
+  return supabaseClient;
+}
+
 /* AI model */
 const MODEL_URL =
   "https://huggingface.co/andraniksargsyan/migan/resolve/1538c135034b8cfe7a8472f34d09c8a5a45b17a7/migan_pipeline_v2.onnx";
@@ -838,6 +880,8 @@ const MODEL_URL =
 const MAX_FILE_SIZE = 25 * 1024 * 1024;
 const MAX_PIXELS = 40_000_000;
 const MAX_WORKING_SIDE = 1600;
+const MAX_CLOUD_IMAGE_BYTES = 8 * 1024 * 1024;
+const MAX_CLOUD_MASK_BYTES = 3 * 1024 * 1024;
 
 /* Elements */
 const fileInput = $("fileInput");
@@ -862,6 +906,10 @@ const resetViewButton = $("resetViewButton");
 const statusBox = $("status");
 const imageInfo = $("imageInfo");
 
+const engineLocal = $("engineLocal");
+const engineCloud = $("engineCloud");
+const engineDescription = $("engineDescription");
+
 /* State */
 let originalImage = null;
 let originalUrl = null;
@@ -878,6 +926,7 @@ let strokes = [];
 let loadNumber = 0;
 let processing = false;
 let showingOriginal = false;
+let selectedEngine = "local";
 
 let currentFileName = "ritoccapix-edited";
 
@@ -885,6 +934,45 @@ function status(message, type="") {
   statusBox.textContent = message;
   statusBox.className = "status" + (type ? " " + type : "");
 }
+
+function updateEngineDescription() {
+  selectedEngine = engineCloud.checked ? "cloud" : "local";
+
+  if (selectedEngine === "cloud") {
+    engineDescription.textContent =
+      "Cloud AI sends your photo and selection mask to RitoccaPix and OpenAI for processing. A verified RitoccaPix account is required. Test mode: no credits are deducted.";
+
+    removeButton.textContent = "Remove object with Cloud AI";
+
+  } else {
+    engineDescription.textContent =
+      "Browser AI uses MIGAN / ONNX on your device. Your photo is not uploaded for image processing, and no account is required.";
+
+    removeButton.textContent = "Remove object with Browser AI";
+  }
+}
+
+engineLocal.addEventListener("change", () => {
+  if (processing) return;
+  updateEngineDescription();
+
+  if (originalImage) {
+    status(
+      "Browser AI selected. Your photo will be processed locally on your device."
+    );
+  }
+});
+
+engineCloud.addEventListener("change", () => {
+  if (processing) return;
+  updateEngineDescription();
+
+  if (originalImage) {
+    status(
+      "Cloud AI selected. A verified RitoccaPix account is required. No credits are deducted in test mode."
+    );
+  }
+});
 
 function updateButtons() {
   const loaded = !!originalImage;
@@ -906,6 +994,9 @@ function updateButtons() {
 
   fileInput.disabled = processing;
   brushSize.disabled = processing;
+
+  engineLocal.disabled = processing;
+  engineCloud.disabled = processing;
 }
 
 function drawPhoto() {
@@ -1026,7 +1117,6 @@ function paint(point) {
   }
 
   lastPoint = point;
-
   drawPhoto();
 }
 
@@ -1039,7 +1129,6 @@ canvas.addEventListener("pointerdown", event => {
   drawing = true;
   lastPoint = null;
 
-  /* One undo snapshot per stroke */
   strokes.push(
     maskCtx.getImageData(
       0,
@@ -1052,7 +1141,6 @@ canvas.addEventListener("pointerdown", event => {
   canvas.setPointerCapture(event.pointerId);
 
   paint(getPoint(event));
-
   updateButtons();
 });
 
@@ -1060,7 +1148,6 @@ canvas.addEventListener("pointermove", event => {
   if (!drawing || processing) return;
 
   event.preventDefault();
-
   paint(getPoint(event));
 });
 
@@ -1134,7 +1221,6 @@ fileInput.addEventListener("change", () => {
   revokeOriginalUrl();
 
   const url = URL.createObjectURL(file);
-
   originalUrl = url;
 
   const img = new Image();
@@ -1169,10 +1255,6 @@ fileInput.addEventListener("change", () => {
 
     originalImage = img;
 
-    /*
-      Working image is limited to 1600 pixels
-      on its longest side to reduce memory use.
-    */
     const scale = Math.min(
       1,
       MAX_WORKING_SIDE /
@@ -1292,7 +1374,6 @@ resetButton.addEventListener("click", () => {
   loadNumber++;
 
   originalImage = null;
-
   revokeOriginalUrl();
 
   fileInput.value = "";
@@ -1319,6 +1400,321 @@ resetButton.addEventListener("click", () => {
 
   status("Upload a photo to get started.");
 });
+
+/* Convert a canvas to a Blob */
+function canvasToBlob(sourceCanvas, type, quality) {
+  return new Promise((resolve, reject) => {
+    sourceCanvas.toBlob(blob => {
+      if (!blob) {
+        reject(new Error("Could not prepare the image."));
+        return;
+      }
+
+      resolve(blob);
+    }, type, quality);
+  });
+}
+
+/* Convert Blob to a Base64 data URL */
+function blobToDataUrl(blob) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+
+    reader.onload = () => resolve(reader.result);
+
+    reader.onerror = () => {
+      reject(new Error("Could not encode the image for upload."));
+    };
+
+    reader.readAsDataURL(blob);
+  });
+}
+
+/*
+  Prepare the Cloud AI image and mask.
+
+  Worker/OpenAI mask convention:
+  - transparent pixels = area to edit
+  - opaque white pixels = area to preserve
+
+  The on-screen red brush mask is converted to that format.
+*/
+async function prepareCloudPayload(width, height) {
+  const imageCanvas = document.createElement("canvas");
+  imageCanvas.width = width;
+  imageCanvas.height = height;
+
+  const imageCtx = imageCanvas.getContext(
+    "2d",
+    {willReadFrequently:true}
+  );
+
+  imageCtx.fillStyle = "#ffffff";
+  imageCtx.fillRect(0, 0, width, height);
+
+  imageCtx.drawImage(
+    originalImage,
+    0,
+    0,
+    width,
+    height
+  );
+
+  let imageBlob = null;
+
+  const qualities = [0.92, 0.86, 0.80, 0.74, 0.68, 0.60, 0.52];
+
+  for (const quality of qualities) {
+    imageBlob = await canvasToBlob(
+      imageCanvas,
+      "image/jpeg",
+      quality
+    );
+
+    if (imageBlob.size <= MAX_CLOUD_IMAGE_BYTES) {
+      break;
+    }
+  }
+
+  if (!imageBlob || imageBlob.size > MAX_CLOUD_IMAGE_BYTES) {
+    throw new Error(
+      "The photo is too large to send to Cloud AI. Please use a smaller image."
+    );
+  }
+
+  const maskCanvasForCloud = document.createElement("canvas");
+  maskCanvasForCloud.width = width;
+  maskCanvasForCloud.height = height;
+
+  const cloudMaskCtx = maskCanvasForCloud.getContext(
+    "2d",
+    {willReadFrequently:true}
+  );
+
+  const sourceMask = maskCtx.getImageData(
+    0,
+    0,
+    width,
+    height
+  ).data;
+
+  const outputMask = cloudMaskCtx.createImageData(
+    width,
+    height
+  );
+
+  for (let i = 0; i < width * height; i++) {
+    const offset = i * 4;
+    const selected = sourceMask[offset + 3] > 0;
+
+    outputMask.data[offset] = 255;
+    outputMask.data[offset + 1] = 255;
+    outputMask.data[offset + 2] = 255;
+
+    /*
+      Selected brush pixels become transparent.
+      All unselected pixels remain opaque white.
+    */
+    outputMask.data[offset + 3] = selected ? 0 : 255;
+  }
+
+  cloudMaskCtx.putImageData(outputMask, 0, 0);
+
+  const maskBlob = await canvasToBlob(
+    maskCanvasForCloud,
+    "image/png"
+  );
+
+  if (maskBlob.size > MAX_CLOUD_MASK_BYTES) {
+    throw new Error(
+      "The selection mask is too large. Try a smaller selection or a smaller photo."
+    );
+  }
+
+  return {
+    image: await blobToDataUrl(imageBlob),
+    mask: await blobToDataUrl(maskBlob)
+  };
+}
+
+/* Load the edited Cloud AI image */
+function loadImageFromSource(source) {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+
+    image.onload = () => resolve(image);
+
+    image.onerror = () => {
+      reject(new Error("The Cloud AI result could not be opened."));
+    };
+
+    image.src = source;
+  });
+}
+
+/* Cloud AI processing */
+async function runCloudAI(width, height) {
+  processing = true;
+  updateButtons();
+
+  try {
+    status(
+      "Checking your RitoccaPix account…"
+    );
+
+    const client = getSupabaseClient();
+
+    const sessionResult = await client.auth.getSession();
+
+    if (sessionResult.error) {
+      throw new Error(
+        "Unable to check your account session. Please sign in again."
+      );
+    }
+
+    const session = sessionResult.data?.session;
+
+    if (!session || !session.access_token) {
+      status(
+        "Please sign in to your RitoccaPix account to use Cloud AI."
+      );
+
+      window.location.href =
+        "account.html?redirect=" +
+        encodeURIComponent("image-object-remover.html");
+
+      return;
+    }
+
+    const user = session.user;
+
+    if (
+      !user ||
+      (!user.email_confirmed_at && !user.confirmed_at)
+    ) {
+      throw new Error(
+        "Please verify your RitoccaPix email address before using Cloud AI."
+      );
+    }
+
+    status(
+      "Preparing your photo and selection for Cloud AI…"
+    );
+
+    const payload = await prepareCloudPayload(width, height);
+
+    if (
+      !originalImage ||
+      canvas.width !== width ||
+      canvas.height !== height
+    ) {
+      throw new Error(
+        "The current photo changed. Please try again."
+      );
+    }
+
+    status(
+      "Cloud AI is processing your photo. This may take a little while…"
+    );
+
+    const response = await fetch(
+      OBJECT_REMOVER_WORKER + "/remove",
+      {
+        method: "POST",
+        headers: {
+          "Authorization": "Bearer " + session.access_token,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      }
+    );
+
+    let result;
+
+    try {
+      result = await response.json();
+    } catch {
+      throw new Error(
+        "The Cloud AI service returned an invalid response."
+      );
+    }
+
+    if (!response.ok) {
+      throw new Error(
+        result && result.error
+          ? result.error
+          : "Cloud AI could not process this image. Please try again."
+      );
+    }
+
+    if (!result || !result.image) {
+      throw new Error(
+        "Cloud AI returned an empty image. Please try again."
+      );
+    }
+
+    let imageSource = result.image;
+
+    if (!imageSource.startsWith("data:image/")) {
+      imageSource = "data:image/png;base64," + imageSource;
+    }
+
+    const editedImage = await loadImageFromSource(imageSource);
+
+    const outputCanvas = document.createElement("canvas");
+    outputCanvas.width = width;
+    outputCanvas.height = height;
+
+    const outputCtx = outputCanvas.getContext("2d");
+
+    outputCtx.drawImage(
+      editedImage,
+      0,
+      0,
+      width,
+      height
+    );
+
+    const outputBlob = await canvasToBlob(
+      outputCanvas,
+      "image/png"
+    );
+
+    resultCanvas = outputCanvas;
+    resultBlob = outputBlob;
+    showingOriginal = false;
+
+    drawPhoto();
+    updateButtons();
+
+    status(
+      "Cloud AI object removal complete. Test mode is active: no credits were deducted. Compare the result or download your PNG.",
+      "success"
+    );
+
+  } catch (error) {
+    console.error(
+      "RitoccaPix Cloud AI Object Remover:",
+      error
+    );
+
+    resultBlob = null;
+    resultCanvas = null;
+
+    updateButtons();
+
+    status(
+      error && error.message
+        ? error.message
+        : "Cloud AI could not process the image. Please try again.",
+      "error"
+    );
+
+  } finally {
+    processing = false;
+    updateButtons();
+  }
+}
 
 /* ONNX Runtime */
 function getOrt() {
@@ -1434,7 +1830,6 @@ function buildComposite(
 
   fctx.putImageData(maskImage, 0, 0);
 
-  /* Small blur to soften the edit boundary */
   const blurred = document.createElement("canvas");
 
   blurred.width = width;
@@ -1530,6 +1925,17 @@ removeButton.addEventListener("click", async () => {
     return;
   }
 
+  /*
+    Cloud AI uses the same brush selection, but sends
+    the image and a converted transparent PNG mask to
+    the dedicated Cloudflare Worker.
+  */
+  if (selectedEngine === "cloud") {
+    await runCloudAI(width, height);
+    return;
+  }
+
+  /* Existing local MIGAN / ONNX processing */
   processing = true;
   updateButtons();
 
@@ -1590,7 +1996,7 @@ removeButton.addEventListener("click", async () => {
     );
 
     status(
-      "AI is reconstructing the selected area. Keep this tab open…"
+      "Browser AI is reconstructing the selected area. Keep this tab open…"
     );
 
     const outputs = await session.run({
@@ -1665,13 +2071,13 @@ removeButton.addEventListener("click", async () => {
     updateButtons();
 
     status(
-      "Object removal complete. Compare the result with the original, then download your PNG.",
+      "Browser AI object removal complete. Compare the result with the original, then download your PNG.",
       "success"
     );
 
   } catch (error) {
     console.error(
-      "RitoccaPix AI Object Remover:",
+      "RitoccaPix Browser AI Object Remover:",
       error
     );
 
@@ -1691,10 +2097,6 @@ removeButton.addEventListener("click", async () => {
     );
 
   } finally {
-    /*
-      Release temporary tensors after inference.
-      The loaded AI session remains available for the next edit.
-    */
     if (imageTensor && imageTensor.dispose) {
       imageTensor.dispose();
     }
@@ -1717,7 +2119,6 @@ downloadButton.addEventListener("click", () => {
   if (!resultBlob) return;
 
   const url = URL.createObjectURL(resultBlob);
-
   const link = document.createElement("a");
 
   link.href = url;
@@ -1738,13 +2139,17 @@ downloadButton.addEventListener("click", () => {
 
 /* Runtime availability */
 window.addEventListener("load", () => {
-  if (!window.ort) {
+  if (!window.ort && selectedEngine === "local") {
     status(
-      "The AI runtime could not be loaded. Check your connection and reload the page.",
+      "Browser AI runtime could not be loaded. You can still choose Cloud AI, or check your connection and reload the page.",
       "error"
     );
   }
 });
+
+/* Initial UI state */
+updateEngineDescription();
+updateButtons();
 
 })();
 </script>
