@@ -963,17 +963,17 @@ function applyLanguage(language) {
   elements.attachButton.title = t("attachTitle");
   elements.attachButton.setAttribute("aria-label",t("attachTitle"));
 
-  document.getElementById("notice").innerHTML =
-    "<strong>" + t("noticeTitle") + "</strong> " + t("notice");
+  const notice = document.getElementById("notice");
+  notice.replaceChildren();
+
+  const noticeStrong = document.createElement("strong");
+  noticeStrong.textContent = t("noticeTitle");
+  notice.append(noticeStrong,document.createTextNode(" " + t("notice")));
 
   if (!state.busy) {
     elements.connectionStatus.textContent =
       state.history.length ? t("ready") : t("connection");
   }
-
-  // The selected language is also sent to the AI service.
-  // Start a new lesson when changing language so old-language
-  // conversation history is not mixed with the new language.
 }
 
 elements.languageSelect.addEventListener("change",() => {
@@ -985,8 +985,7 @@ elements.languageSelect.addEventListener("change",() => {
 
   state.history = [];
   clearAttachment();
-  elements.chatArea.innerHTML = "";
-  elements.chatArea.appendChild(elements.welcome);
+  elements.chatArea.replaceChildren(elements.welcome);
   elements.welcome.classList.remove("hidden");
   elements.messageInput.value = "";
 
@@ -998,25 +997,118 @@ elements.languageSelect.addEventListener("change",() => {
    MATHEMATICAL NOTATION
 ----------------------------------------- */
 
+const superscriptMap = {
+  "0":"⁰","1":"¹","2":"²","3":"³","4":"⁴",
+  "5":"⁵","6":"⁶","7":"⁷","8":"⁸","9":"⁹",
+  "+":"⁺","-":"⁻","=":"⁼","(":"⁽",")":"⁾",
+  "n":"ⁿ","i":"ⁱ"
+};
+
+const subscriptMap = {
+  "0":"₀","1":"₁","2":"₂","3":"₃","4":"₄",
+  "5":"₅","6":"₆","7":"₇","8":"₈","9":"₉",
+  "+":"₊","-":"₋","=":"₌","(":"₍",")":"₎",
+  "a":"ₐ","e":"ₑ","i":"ᵢ","o":"ₒ","x":"ₓ"
+};
+
+function convertScriptNotation(text,marker,map) {
+  const escaped = marker === "^" ? "\\^" : "_";
+  const pattern = new RegExp(
+    escaped + "\\{([^{}]+)\\}|" + escaped + "([A-Za-z0-9+\\-=()]+)",
+    "g"
+  );
+
+  return text.replace(pattern,(match,braced,simple) => {
+    const content = braced || simple || "";
+    const converted = [...content].map(char => map[char] || char).join("");
+    return converted;
+  });
+}
+
 function normalizeMath(text) {
-  return String(text ?? "")
-    // Remove common math delimiters before displaying the expression.
-    // Supports $...$, $$...$$, \( ... \), and \[ ... \].
-    .replace(/\$\$([\s\S]+?)\$\$/g,"$1")
-    .replace(/\\\(([\s\S]+?)\\\)/g,"$1")
-    .replace(/\\\[([\s\S]+?)\\\]/g,"$1")
-    .replace(/\\?\$([^$\n]+?)\\?\$/g,"$1")
-    .replace(/\\times\b/g,"×")
-    .replace(/\\div\b/g,"÷")
-    .replace(/\\cdot\b/g,"·")
-    .replace(/\\pm\b/g,"±")
-    .replace(/\\leq\b|\\le\b/g,"≤")
-    .replace(/\\geq\b|\\ge\b/g,"≥")
-    .replace(/\\neq\b/g,"≠")
-    .replace(/\\approx\b/g,"≈")
-    .replace(/\\pi\b/g,"π")
-    .replace(/\\infty\b/g,"∞")
-    .replace(/\\sqrt\{([^{}]+)\}/g,"√($1)");
+  let value = String(text ?? "");
+
+  // Remove math delimiters without removing the formula itself.
+  value = value
+    .replace(/\$\$([\s\S]*?)\$\$/g,"$1")
+    .replace(/\\\(([\s\S]*?)\\\)/g,"$1")
+    .replace(/\\\[([\s\S]*?)\\\]/g,"$1")
+    .replace(/(^|[^\\])\$([^$\n]+)\$/g,"$1$2");
+
+  // Convert LaTeX fractions to a stable token for the formatter.
+  // The formatter will render them as stacked numerator/denominator.
+  value = value
+    .replace(/\\dfrac\b/g,"\\frac")
+    .replace(/\\tfrac\b/g,"\\frac");
+
+  // Common mathematical symbols.
+  const replacements = [
+    [/\\times\b/g,"×"],
+    [/\\div\b/g,"÷"],
+    [/\\cdot\b/g,"·"],
+    [/\\pm\b/g,"±"],
+    [/\\mp\b/g,"∓"],
+    [/\\leq\b|\\le\b/g,"≤"],
+    [/\\geq\b|\\ge\b/g,"≥"],
+    [/\\neq\b|\\ne\b/g,"≠"],
+    [/\\approx\b/g,"≈"],
+    [/\\equiv\b/g,"≡"],
+    [/\\pi\b/g,"π"],
+    [/\\theta\b/g,"θ"],
+    [/\\alpha\b/g,"α"],
+    [/\\beta\b/g,"β"],
+    [/\\gamma\b/g,"γ"],
+    [/\\delta\b/g,"δ"],
+    [/\\lambda\b/g,"λ"],
+    [/\\mu\b/g,"μ"],
+    [/\\sigma\b/g,"σ"],
+    [/\\omega\b/g,"ω"],
+    [/\\infty\b/g,"∞"],
+    [/\\degree\b/g,"°"],
+    [/\\%/g,"%"],
+    [/\\therefore\b/g,"∴"],
+    [/\\because\b/g,"∵"],
+    [/\\rightarrow\b|\\to\b/g,"→"],
+    [/\\leftarrow\b/g,"←"],
+    [/\\Rightarrow\b/g,"⇒"],
+    [/\\in\b/g,"∈"],
+    [/\\notin\b/g,"∉"],
+    [/\\subset\b/g,"⊂"],
+    [/\\cup\b/g,"∪"],
+    [/\\cap\b/g,"∩"]
+  ];
+
+  replacements.forEach(([pattern,replacement]) => {
+    value = value.replace(pattern,replacement);
+  });
+
+  // Square roots with simple contents.
+  value = value.replace(/\\sqrt\{([^{}]+)\}/g,"√($1)");
+
+  // Remove sizing and spacing commands.
+  value = value
+    .replace(/\\left\b|\\right\b/g,"")
+    .replace(/\\[,;:!]/g," ")
+    .replace(/\\quad\b|\\qquad\b/g," ")
+    .replace(/\\(?:displaystyle|textstyle|scriptstyle|mathrm|mathbf|mathit|operatorname)\b/g,"");
+
+  // Keep the text inside \text{...}.
+  value = value.replace(/\\text\{([^{}]*)\}/g,"$1");
+
+  // Convert powers and indices into Unicode notation.
+  value = convertScriptNotation(value,"^",superscriptMap);
+  value = convertScriptNotation(value,"_",subscriptMap);
+
+  // Clean up common LaTeX environments and alignment marks.
+  value = value
+    .replace(/\\begin\{(?:aligned|array|matrix|pmatrix|bmatrix|cases)\}/g,"")
+    .replace(/\\end\{(?:aligned|array|matrix|pmatrix|bmatrix|cases)\}/g,"")
+    .replace(/\\\\/g,"\n")
+    .replace(/&/g,"")
+    .replace(/\\(?:,|;|!)/g," ")
+    .replace(/[ \t]{2,}/g," ");
+
+  return value;
 }
 
 /* -----------------------------------------
@@ -1024,31 +1116,36 @@ function normalizeMath(text) {
 ----------------------------------------- */
 
 function appendFormattedText(target,value) {
-  let content = normalizeMath(String(value ?? ""));
-  content = content.replace(/^\\?\*\s+/gm,"• ");
+  const content = normalizeMath(String(value ?? ""))
+    .replace(/^\\?\*\s+/gm,"• ");
 
   const tokenPattern =
-    /(?<bold>\\?\*\\?\*[\s\S]*?\\?\*\\?\*)|(?<fraction>\$?\\(?:dfrac|tfrac|frac)\{([^{}]+)\}\{([^{}]+)\}\$?)/g;
+    /(?<bold>\\?\*\\?\*[\s\S]*?\\?\*\\?\*)|(?<fraction>\\frac\{([^{}]+)\}\{([^{}]+)\})/g;
 
   let lastIndex = 0;
   let match;
 
   while ((match = tokenPattern.exec(content)) !== null) {
     if (match.index > lastIndex) {
-      target.appendChild(document.createTextNode(content.slice(lastIndex,match.index)));
+      target.appendChild(
+        document.createTextNode(content.slice(lastIndex,match.index))
+      );
     }
 
     if (match.groups.bold) {
       const strong = document.createElement("strong");
+
       const inner = match.groups.bold
         .replace(/^\\?\*\\?\*/,"")
         .replace(/\\?\*\\?\*$/,"");
+
       appendFormattedText(strong,inner);
       target.appendChild(strong);
 
     } else if (match.groups.fraction) {
       const fraction = document.createElement("span");
       fraction.className = "math-fraction";
+      fraction.setAttribute("aria-label",match[3] + " divided by " + match[4]);
 
       const numerator = document.createElement("span");
       numerator.className = "math-numerator";
@@ -1061,14 +1158,15 @@ function appendFormattedText(target,value) {
       fraction.appendChild(numerator);
       fraction.appendChild(denominator);
       target.appendChild(fraction);
-
     }
 
     lastIndex = tokenPattern.lastIndex;
   }
 
   if (lastIndex < content.length) {
-    target.appendChild(document.createTextNode(content.slice(lastIndex)));
+    target.appendChild(
+      document.createTextNode(content.slice(lastIndex))
+    );
   }
 }
 
@@ -1084,45 +1182,192 @@ const speechLanguages = {
   de:"de-DE"
 };
 
+const speechMathWords = {
+  en:{
+    divided:" divided by ",
+    times:" times ",
+    plus:" plus ",
+    minus:" minus ",
+    squared:" squared",
+    cubed:" cubed",
+    power:" to the power of ",
+    root:" square root of ",
+    lessEqual:" less than or equal to ",
+    greaterEqual:" greater than or equal to ",
+    notEqual:" not equal to ",
+    approximately:" approximately ",
+    infinity:" infinity ",
+    pi:" pi "
+  },
+  it:{
+    divided:" diviso ",
+    times:" per ",
+    plus:" più ",
+    minus:" meno ",
+    squared:" al quadrato",
+    cubed:" al cubo",
+    power:" elevato alla potenza ",
+    root:" radice quadrata di ",
+    lessEqual:" minore o uguale a ",
+    greaterEqual:" maggiore o uguale a ",
+    notEqual:" diverso da ",
+    approximately:" circa ",
+    infinity:" infinito ",
+    pi:" pi greco "
+  },
+  es:{
+    divided:" dividido por ",
+    times:" por ",
+    plus:" más ",
+    minus:" menos ",
+    squared:" al cuadrado",
+    cubed:" al cubo",
+    power:" elevado a la potencia ",
+    root:" raíz cuadrada de ",
+    lessEqual:" menor o igual que ",
+    greaterEqual:" mayor o igual que ",
+    notEqual:" distinto de ",
+    approximately:" aproximadamente ",
+    infinity:" infinito ",
+    pi:" pi "
+  },
+  fr:{
+    divided:" divisé par ",
+    times:" fois ",
+    plus:" plus ",
+    minus:" moins ",
+    squared:" au carré",
+    cubed:" au cube",
+    power:" à la puissance ",
+    root:" racine carrée de ",
+    lessEqual:" inférieur ou égal à ",
+    greaterEqual:" supérieur ou égal à ",
+    notEqual:" différent de ",
+    approximately:" environ ",
+    infinity:" infini ",
+    pi:" pi "
+  },
+  de:{
+    divided:" geteilt durch ",
+    times:" mal ",
+    plus:" plus ",
+    minus:" minus ",
+    squared:" hoch zwei",
+    cubed:" hoch drei",
+    power:" hoch ",
+    root:" Quadratwurzel aus ",
+    lessEqual:" kleiner oder gleich ",
+    greaterEqual:" größer oder gleich ",
+    notEqual:" ungleich ",
+    approximately:" ungefähr ",
+    infinity:" unendlich ",
+    pi:" pi "
+  }
+};
+
 function normalizeSpeechText(text) {
+  const words = speechMathWords[state.language] || speechMathWords.en;
   let value = String(text || "");
 
-  value = value.replace(/\*\*(.*?)\*\*/g,"$1");
-  value = value.replace(/\*(.*?)\*/g,"$1");
-  value = value.replace(/`([^`]+)`/g,"$1");
+  // Remove Markdown decoration.
+  value = value
+    .replace(/\*\*(.*?)\*\*/gs,"$1")
+    .replace(/\*(.*?)\*/gs,"$1")
+    .replace(/`([^`]+)`/g,"$1");
 
+  // Remove math delimiters.
+  value = value
+    .replace(/\$\$?/g,"")
+    .replace(/\\\(/g,"")
+    .replace(/\\\)/g,"")
+    .replace(/\\\[/g,"")
+    .replace(/\\\]/g,"");
+
+  // Speak LaTeX fractions naturally.
   value = value.replace(
     /\\(?:dfrac|tfrac|frac)\{([^{}]+)\}\{([^{}]+)\}/g,
-    "$1 divided by $2"
+    (_,numerator,denominator) =>
+      numerator + words.divided + denominator
   );
 
-  value = value.replace(/\$\$?/g,"");
-  value = value.replace(/\\\(/g,"").replace(/\\\)/g,"");
-  value = value.replace(/\\\[/g,"").replace(/\\\]/g,"");
+  // Speak LaTeX square roots.
+  value = value.replace(
+    /\\sqrt\{([^{}]+)\}/g,
+    (_,content) => words.root + content
+  );
 
+  // Speak LaTeX powers before converting other symbols.
+  value = value.replace(
+    /([A-Za-z0-9]+)\^\{([^{}]+)\}/g,
+    (_,base,power) => {
+      if (power === "2") return base + words.squared;
+      if (power === "3") return base + words.cubed;
+      return base + words.power + power;
+    }
+  );
+
+  value = value.replace(
+    /([A-Za-z0-9]+)\^([0-9])/g,
+    (_,base,power) => {
+      if (power === "2") return base + words.squared;
+      if (power === "3") return base + words.cubed;
+      return base + words.power + power;
+    }
+  );
+
+  // Convert Unicode superscripts into spoken powers.
+  const superscriptValues = {
+    "⁰":"0","¹":"1","²":"2","³":"3","⁴":"4",
+    "⁵":"5","⁶":"6","⁷":"7","⁸":"8","⁹":"9",
+    "⁺":"+","⁻":"-","⁼":"=","⁽":"(","⁾":")"
+  };
+
+  value = value.replace(
+    /([A-Za-z0-9π]+)([⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻⁼⁽⁾]+)/g,
+    (_,base,powerText) => {
+      const power = [...powerText]
+        .map(char => superscriptValues[char] || char)
+        .join("");
+
+      if (power === "2") return base + words.squared;
+      if (power === "3") return base + words.cubed;
+
+      return base + words.power + power;
+    }
+  );
+
+  // Convert common LaTeX operators and symbols.
   value = value
-    .replace(/\\times\b/g," times ")
-    .replace(/\\cdot\b/g," times ")
-    .replace(/\\div\b/g," divided by ")
-    .replace(/\\pm\b/g," plus or minus ")
-    .replace(/\\leq\b|\\le\b/g," less than or equal to ")
-    .replace(/\\geq\b|\\ge\b/g," greater than or equal to ")
-    .replace(/\\neq\b/g," not equal to ")
-    .replace(/\\approx\b/g," approximately ")
-    .replace(/\\pi\b/g," pi ")
-    .replace(/\\sqrt\{([^{}]+)\}/g," square root of $1 ");
+    .replace(/\\times\b|\\cdot\b/g,words.times)
+    .replace(/\\div\b/g,words.divided)
+    .replace(/\\pm\b/g,words.plus + "or" + words.minus)
+    .replace(/\\leq\b|\\le\b/g,words.lessEqual)
+    .replace(/\\geq\b|\\ge\b/g,words.greaterEqual)
+    .replace(/\\neq\b|\\ne\b/g,words.notEqual)
+    .replace(/\\approx\b/g,words.approximately)
+    .replace(/\\infty\b/g,words.infinity)
+    .replace(/\\pi\b/g,words.pi);
 
+  // Convert visible mathematical symbols.
   value = value
-    .replace(/×/g," times ")
-    .replace(/÷/g," divided by ")
-    .replace(/·/g," times ")
-    .replace(/≤/g," less than or equal to ")
-    .replace(/≥/g," greater than or equal to ")
-    .replace(/≠/g," not equal to ")
-    .replace(/≈/g," approximately ")
-    .replace(/√/g," square root ");
+    .replace(/×/g,words.times)
+    .replace(/÷/g,words.divided)
+    .replace(/·/g,words.times)
+    .replace(/≤/g,words.lessEqual)
+    .replace(/≥/g,words.greaterEqual)
+    .replace(/≠/g,words.notEqual)
+    .replace(/≈/g,words.approximately)
+    .replace(/∞/g,words.infinity)
+    .replace(/π/g,words.pi)
+    .replace(/√\s*\(([^)]+)\)/g,(_,content) => words.root + content)
+    .replace(/√/g,words.root);
 
-  value = value.replace(/[★✦▤◉①②③④⑤]/g," ");
+  // Remove remaining formatting-only LaTeX commands.
+  value = value
+    .replace(/\\left\b|\\right\b/g,"")
+    .replace(/\\text\{([^{}]*)\}/g,"$1")
+    .replace(/\\[a-zA-Z]+/g," ")
+    .replace(/[★✦▤◉①②③④⑤]/g," ");
 
   return value.replace(/\s+/g," ").trim();
 }
@@ -1149,7 +1394,6 @@ function speakTutorReply(text) {
 
   window.speechSynthesis.cancel();
 
-  // Use the language explicitly selected by the student.
   const language = speechLanguages[state.language] || "en-US";
   const utterance = new SpeechSynthesisUtterance(speechText);
 
@@ -1307,8 +1551,6 @@ elements.fileInput.addEventListener("change",event => {
   renderAttachmentInfo();
 });
 
-// Keep the current lesson document separate from a newly selected file.
-// This lets the tutor inspect the same source again on later turns.
 function renderAttachmentInfo() {
   const activeFile = state.attachment || state.documentAttachment;
 
@@ -1331,7 +1573,6 @@ function clearSelectedAttachment() {
   elements.fileInput.value = "";
 }
 
-// The Remove control clears both the pending file and the lesson reference.
 function clearAttachment() {
   clearSelectedAttachment();
   state.documentAttachment = null;
@@ -1411,8 +1652,6 @@ async function sendMessage() {
   const typing = addTypingIndicator();
 
   try {
-    // Encode a newly selected file once. Otherwise reuse the document
-    // already attached to this lesson on every subsequent request.
     let encodedAttachment = state.documentAttachment;
 
     if (attachment) {
@@ -1465,7 +1704,6 @@ async function sendMessage() {
 
     state.history = state.history.slice(-MAX_HISTORY_MESSAGES);
 
-    // Replace the lesson reference only after a successful response.
     if (attachment && encodedAttachment) {
       state.documentAttachment = encodedAttachment;
     }
@@ -1509,8 +1747,7 @@ elements.resetChat.addEventListener("click",() => {
   state.history = [];
   clearAttachment();
 
-  elements.chatArea.innerHTML = "";
-  elements.chatArea.appendChild(elements.welcome);
+  elements.chatArea.replaceChildren(elements.welcome);
   elements.welcome.classList.remove("hidden");
 
   elements.messageInput.value = "";
