@@ -58,6 +58,7 @@ button:disabled{opacity:.5;cursor:wait}
 .badge.warning{background:#3b2d18;color:#fbbf24}
 .tool-btn{padding:7px 12px;font-size:13px;border-radius:7px;background:#263b59;color:white;text-decoration:none;border:1px solid #49617f}
 .tool-btn:hover{background:#334e75}
+.tool-note{margin:5px 0 15px;color:#94a3b8;font-size:12px}
 footer{text-align:center;color:#8292aa;margin:35px 0;font-size:13px}
 footer a{color:#a9c2ff}
 
@@ -140,6 +141,22 @@ footer a{color:#a9c2ff}
 <a href="image-collage.html" class="tool-btn">Open Tool</a>
 </div>
 </div>
+
+<div class="tool-item">
+<div class="tool-info">
+<span class="tool-icon">🧹</span>
+<div class="tool-details">
+<strong>AI Object Remover</strong>
+<small>Remove unwanted objects from photos · Purchased photo removals</small>
+</div>
+</div>
+<div class="tool-status">
+<span class="badge" id="objectRemoverBalanceBadge">Loading…</span>
+<a href="image-object-remover.html" class="tool-btn">Open Tool</a>
+</div>
+</div>
+
+<p class="tool-note">Object Remover purchases are separate from shared credits. Purchased photo removals never expire.</p>
 </div>
 
 <div class="buttons" style="margin-top:25px;">
@@ -166,6 +183,9 @@ const SUPABASE_PUBLISHABLE_KEY="sb_publishable_h4NECcXTuSS7R-BDSAwIVQ_WKKolNKW";
 /* Existing deployed AI Smart Collage Worker */
 const COLLAGE_WORKER_URL="https://ritoccapix-collage-ai.ritoccapix.workers.dev";
 
+/* Dedicated AI Object Remover Worker */
+const OBJECT_REMOVER_WORKER_URL="https://ritoccapix-object-remover.ritoccapix.workers.dev";
+
 const COLORING_CREDITS_PER_GENERATION=50;
 
 const $=id=>document.getElementById(id);
@@ -184,6 +204,7 @@ const creditLabel=$("creditLabel");
 const accountMessage=$("accountMessage");
 const coloringBalanceBadge=$("coloringBalanceBadge");
 const collageBalanceBadge=$("collageBalanceBadge");
+const objectRemoverBalanceBadge=$("objectRemoverBalanceBadge");
 
 $("year").textContent=new Date().getFullYear();
 
@@ -212,6 +233,7 @@ function setBadge(element,text,status){
 function resetToolBalances(){
  setBadge(coloringBalanceBadge,"—","empty");
  setBadge(collageBalanceBadge,"—","empty");
+ setBadge(objectRemoverBalanceBadge,"—","empty");
 }
 
 if(!window.supabase||!window.supabase.createClient){
@@ -321,6 +343,53 @@ async function loadCollagePackages(session){
  return totalGenerations;
 }
 
+/* Load the separate purchased-removals balance */
+async function loadObjectRemoverBalance(session){
+ setBadge(objectRemoverBalanceBadge,"Loading…","warning");
+
+ const response=await fetch(OBJECT_REMOVER_WORKER_URL+"/balance",{
+  method:"GET",
+  headers:{
+   "Authorization":"Bearer "+session.access_token,
+   "Accept":"application/json"
+  },
+  cache:"no-store"
+ });
+
+ let result;
+
+ try{
+  result=await response.json();
+ }catch(error){
+  throw new Error("The Object Remover service returned an invalid response.");
+ }
+
+ if(!response.ok){
+  console.error("Object Remover balance HTTP error:",response.status,result);
+  throw new Error("Object Remover balance could not be loaded (HTTP "+response.status+").");
+ }
+
+ if(
+  !result ||
+  result.success!==true ||
+  !Number.isInteger(result.available_removals) ||
+  result.available_removals<0
+ ){
+  console.error("Unexpected Object Remover balance response:",result);
+  throw new Error("The Object Remover service returned an unexpected balance.");
+ }
+
+ const available=result.available_removals;
+
+ setBadge(
+  objectRemoverBalanceBadge,
+  available+" "+(available===1?"photo removal":"photo removals")+" available",
+  available>0?"available":"empty"
+ );
+
+ return available;
+}
+
 /* Refresh all balances without consuming credits or package generations */
 async function refreshBalance(){
  if(!currentSession)return;
@@ -329,10 +398,12 @@ async function refreshBalance(){
  creditLabel.textContent="Loading shared credits…";
  setBadge(coloringBalanceBadge,"Loading…","warning");
  setBadge(collageBalanceBadge,"Loading…","warning");
+ setBadge(objectRemoverBalanceBadge,"Loading…","warning");
 
  const results=await Promise.allSettled([
   loadSharedBalance(currentSession.user.id),
-  loadCollagePackages(currentSession)
+  loadCollagePackages(currentSession),
+  loadObjectRemoverBalance(currentSession)
  ]);
 
  const errors=results
