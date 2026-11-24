@@ -1,24 +1,25 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Remove Objects from Photos Online Free | RitoccaPix</title>
-<meta name="description" content="Remove unwanted objects and people from photos with free browser AI or optional OpenAI Cloud AI. Choose your method, paint over distractions and download the result.">
+<title>AI Object Remover – Remove Objects from Photos | RitoccaPix</title>
+<meta name="description" content="Remove unwanted objects and people from photos with free browser AI or optional Cloud AI. Choose your method, paint over distractions and download the result.">
 <meta name="theme-color" content="#0a0f1d">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://ritoccapix.com/image-object-remover.html">
 
 <meta property="og:site_name" content="RitoccaPix">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Remove Objects from Photos Online Free | RitoccaPix">
-<meta property="og:description" content="Remove unwanted objects and people from photos with browser AI or optional OpenAI Cloud AI.">
+<meta property="og:title" content="AI Object Remover – Remove Objects from Photos | RitoccaPix">
+<meta property="og:description" content="Remove unwanted objects and people from photos with free browser AI or optional Cloud AI.">
 <meta property="og:url" content="https://ritoccapix.com/image-object-remover.html">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Remove Objects from Photos Online Free | RitoccaPix">
-<meta name="twitter:description" content="Choose browser or cloud AI to remove unwanted objects from photos and download the edited result.">
+<meta name="twitter:title" content="AI Object Remover | RitoccaPix">
+<meta name="twitter:description" content="Remove unwanted objects from photos with Browser AI or Cloud AI.">
+
+<script src="menu.js" defer></script>
 
 <script type="application/ld+json">
 {
@@ -28,15 +29,18 @@
   "url": "https://ritoccapix.com/image-object-remover.html",
   "applicationCategory": "MultimediaApplication",
   "operatingSystem": "Any",
-  "description": "An AI object removal tool offering local browser processing with MIGAN and optional cloud processing with OpenAI.",
+  "description": "An AI object removal tool offering free local browser processing with MIGAN and optional cloud processing with OpenAI using purchased photo removals.",
   "offers": {
     "@type": "Offer",
     "price": "0",
-    "priceCurrency": "EUR"
+    "priceCurrency": "USD",
+    "description": "Free local Browser AI processing. Cloud AI requires purchased photo removals."
   },
   "featureList": [
-    "Browser-based AI object removal",
+    "Free browser-based AI object removal",
     "Optional OpenAI Cloud AI object removal",
+    "Purchased Cloud AI photo removals",
+    "Purchased removals never expire",
     "Remove unwanted objects and photo distractions",
     "Brush-based image selection",
     "Undo brush strokes",
@@ -65,7 +69,15 @@
       "name": "Is the AI object remover free?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "The Browser AI option runs locally in your browser and does not require an account. Cloud AI is currently available in test mode and requires a verified RitoccaPix account. No credits are deducted during the test."
+        "text": "Browser AI runs locally in your browser and is free to use without an account. Cloud AI requires a verified RitoccaPix account and one purchased photo removal for each successful edit."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do purchased photo removals expire?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Purchased photo removals never expire. One purchased removal is used for each successful Cloud AI edit."
       }
     },
     {
@@ -89,7 +101,7 @@
       "name": "Do I need an account?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No account is required for Browser AI. Cloud AI requires a RitoccaPix account with a verified email address."
+        "text": "No account is required for Browser AI. Cloud AI requires a RitoccaPix account with a verified email address and an available purchased photo removal."
       }
     }
   ]
@@ -116,7 +128,7 @@ body{
   color:var(--text);
   line-height:1.6;
 }
-header{
+.site-header{
   position:sticky;
   top:0;
   z-index:50;
@@ -142,44 +154,23 @@ header{
   white-space:nowrap;
 }
 .brand span{color:var(--accent)}
-.nav-wrap{position:relative}
-.menu-button,.action{
-  font:inherit;
-  cursor:pointer;
-  font-weight:700;
-  border-radius:11px;
+.header-actions{
+  display:flex;
+  align-items:center;
+  gap:12px;
 }
-.menu-button{
-  padding:10px 14px;
+.account-link{
+  display:inline-block;
+  padding:9px 13px;
   color:var(--text);
   background:var(--panel);
   border:1px solid var(--border);
-}
-.tools-menu{
-  display:none;
-  position:absolute;
-  top:calc(100% + 10px);
-  right:0;
-  width:min(310px,calc(100vw - 24px));
-  max-height:70vh;
-  overflow:auto;
-  padding:8px;
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:14px;
-  box-shadow:0 18px 45px #0008;
-}
-.tools-menu.open{display:block}
-.tools-menu a{
-  display:block;
-  color:var(--text);
+  border-radius:10px;
   text-decoration:none;
-  padding:10px 12px;
-  border-radius:9px;
   font-size:14px;
+  font-weight:700;
 }
-.tools-menu a:hover,
-.tools-menu a[aria-current=page]{background:var(--panel2)}
+.account-link:hover{background:var(--panel2)}
 main{
   width:min(100% - 32px,1040px);
   margin:32px auto 60px;
@@ -243,6 +234,10 @@ h3{font-size:16px;margin:0 0 7px}
   margin:15px 0;
 }
 .action{
+  font:inherit;
+  cursor:pointer;
+  font-weight:700;
+  border-radius:11px;
   padding:11px 15px;
   border:0;
   color:white;
@@ -368,6 +363,24 @@ canvas{display:block;max-width:100%;height:auto;cursor:crosshair;touch-action:no
 }
 .engine-panel .notice{margin-bottom:0}
 .engine-panel a{color:#c8d4ff}
+.pricing-intro{color:var(--muted);margin:5px 0 18px}
+.pricing-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:12px;
+}
+.price-card{
+  padding:16px;
+  background:#0e1627;
+  border:1px solid var(--border);
+  border-radius:12px;
+  text-align:center;
+}
+.price-card strong{display:block;font-size:24px;color:var(--text)}
+.price-card .quantity{font-size:14px;color:var(--muted)}
+.price-card .unit-price{font-size:13px;color:#b7c8ff;margin-top:5px}
+.price-card.featured{border-color:var(--accent)}
+.checkout-note{margin-top:16px}
 footer{
   text-align:center;
   color:var(--muted);
@@ -380,9 +393,9 @@ footer a{color:#b7c8ff;margin:0 8px}
 @media(max-width:650px){
   .header-inner{padding:11px 12px}
   .brand{font-size:21px}
-  .menu-button{padding:9px 10px;font-size:13px}
+  .account-link{padding:8px 10px;font-size:13px}
   main{margin-top:24px}
-  .feature-grid,.engine-options{grid-template-columns:1fr}
+  .feature-grid,.engine-options,.pricing-grid{grid-template-columns:1fr}
   .canvas-wrap{min-height:180px}
   .controls .action{flex:1 1 auto}
   .hero p{font-size:16px}
@@ -392,35 +405,12 @@ footer a{color:#b7c8ff;margin:0 8px}
 
 <body>
 
-<header>
+<header class="site-header">
   <div class="header-inner">
     <a class="brand" href="index.html" aria-label="RitoccaPix home">Ritocca<span>Pix</span></a>
-
-    <div class="nav-wrap">
-      <button class="menu-button" id="menuButton" type="button"
-        aria-expanded="false" aria-controls="toolsMenu">
-        All Tools ▼
-      </button>
-
-      <nav class="tools-menu" id="toolsMenu" aria-label="Image tools">
-        <a href="image-resizer.html">Image Resizer</a>
-        <a href="image-compressor.html">Image Compressor</a>
-        <a href="compress-image-to-100kb.html">Compress Image to 100KB</a>
-        <a href="image-converter.html">Image Converter</a>
-        <a href="heic-to-jpg.html">HEIC to JPG</a>
-        <a href="webp-to-jpg.html">WebP to JPG</a>
-        <a href="webp-to-png.html">WebP to PNG</a>
-        <a href="image-analyzer.html">Image Analyzer</a>
-        <a href="image-collage.html">Image Collage Maker</a>
-        <a href="image-optimizer.html">Image Optimizer</a>
-        <a href="image-object-remover.html" aria-current="page">AI Object Remover</a>
-        <a href="image-smart.html">Smart Image Tools</a>
-        <a href="image-social.html">Social Media Image Tools</a>
-        <a href="pixel-avatar-maker.html">Pixel Avatar Maker</a>
-        <a href="social-video-maker.html">Social Video Maker</a>
-        <a href="ai-study-assistant.html">AI Study Assistant</a>
-        <a href="photo-to-coloring-page.html">Photo to Coloring Page</a>
-      </nav>
+    <div class="header-actions">
+      <nav aria-label="Main navigation"></nav>
+      <a class="account-link" href="account.html">Account</a>
     </div>
   </div>
 </header>
@@ -432,7 +422,7 @@ footer a{color:#b7c8ff;margin:0 8px}
     <h1>Remove Objects from Photos Online</h1>
     <p>
       Remove unwanted objects, people in the background, cables, signs,
-      and other distractions from your photos. Choose local Browser AI
+      and other distractions from your photos. Choose free local Browser AI
       or optional OpenAI Cloud AI, paint over the area you want to erase,
       and download the edited result.
     </p>
@@ -449,7 +439,7 @@ footer a{color:#b7c8ff;margin:0 8px}
         <input type="radio" id="engineLocal" name="aiEngine" value="local" checked>
         <span>
           <strong>Browser AI — MIGAN / ONNX</strong>
-          <small>Runs on your device. No account required and your photo is not uploaded for processing.</small>
+          <small>Free and runs on your device. No account required and your photo is not uploaded for processing.</small>
         </span>
       </label>
 
@@ -457,7 +447,7 @@ footer a{color:#b7c8ff;margin:0 8px}
         <input type="radio" id="engineCloud" name="aiEngine" value="cloud">
         <span>
           <strong>Cloud AI — OpenAI</strong>
-          <small>Cloud processing. Requires a RitoccaPix account with a verified email.</small>
+          <small>Cloud processing. Requires a verified RitoccaPix account and one purchased photo removal per successful edit.</small>
         </span>
       </label>
     </div>
@@ -465,6 +455,57 @@ footer a{color:#b7c8ff;margin:0 8px}
     <p id="engineDescription" class="notice" aria-live="polite">
       Browser AI uses MIGAN / ONNX on your device. Your photo is not uploaded for image processing, and no account is required.
     </p>
+  </section>
+
+  <section class="panel" aria-labelledby="pricingHeading">
+    <h2 id="pricingHeading">Cloud AI photo removal packages</h2>
+    <p class="pricing-intro">
+      Cloud AI uses a separate balance of purchased photo removals.
+      One removal is used for each successful Cloud AI edit. Purchased
+      removals never expire and are separate from your shared RitoccaPix credits.
+    </p>
+
+    <div class="pricing-grid">
+      <div class="price-card">
+        <span class="quantity">1 photo removal</span>
+        <strong>$0.30</strong>
+        <div class="unit-price">$0.30 per removal</div>
+      </div>
+
+      <div class="price-card">
+        <span class="quantity">5 photo removals</span>
+        <strong>$1.29</strong>
+        <div class="unit-price">$0.258 per removal</div>
+      </div>
+
+      <div class="price-card">
+        <span class="quantity">10 photo removals</span>
+        <strong>$2.29</strong>
+        <div class="unit-price">$0.229 per removal</div>
+      </div>
+
+      <div class="price-card featured">
+        <span class="quantity">25 photo removals</span>
+        <strong>$3.99</strong>
+        <div class="unit-price">$0.160 per removal</div>
+      </div>
+
+      <div class="price-card">
+        <span class="quantity">50 photo removals</span>
+        <strong>$6.99</strong>
+        <div class="unit-price">$0.140 per removal</div>
+      </div>
+
+      <div class="price-card">
+        <span class="quantity">100 photo removals</span>
+        <strong>$11.99</strong>
+        <div class="unit-price">$0.120 per removal</div>
+      </div>
+    </div>
+
+    <div class="notice checkout-note">
+      Purchased removals never expire. Cloud AI purchases are not available yet because checkout is not connected. Browser AI remains free and available without an account.
+    </div>
   </section>
 
   <section class="panel" aria-labelledby="uploadHeading">
@@ -613,8 +654,8 @@ footer a{color:#b7c8ff;margin:0 8px}
           MIGAN / ONNX. Your photo is not uploaded for image processing.
           If you choose Cloud AI, your photo and selection mask are sent
           to the RitoccaPix Cloudflare Worker and OpenAI for editing.
-          Cloud AI requires a verified account and is currently in test
-          mode, with no credits deducted.
+          Cloud AI requires a verified account and one available purchased
+          photo removal for each successful edit. Purchased removals never expire.
         </p>
       </div>
     </div>
@@ -689,10 +730,35 @@ footer a{color:#b7c8ff;margin:0 8px}
     <div class="faq-item">
       <h3>Is the AI object remover free?</h3>
       <p>
-        Browser AI runs locally in your browser and does not require an
-        account. Cloud AI is currently available in test mode and requires
-        a verified RitoccaPix account. No credits are deducted during
-        the current test.
+        Browser AI runs locally in your browser and is free to use without
+        an account. Cloud AI requires a verified RitoccaPix account and
+        one purchased photo removal for each successful edit.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Do purchased photo removals expire?</h3>
+      <p>
+        No. Purchased photo removals never expire. They are kept in a
+        separate Object Remover balance and are not shared wallet credits.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>How many removals are used for each Cloud AI edit?</h3>
+      <p>
+        One purchased photo removal is used for each successful Cloud AI
+        edit. The shared RitoccaPix wallet and credits used by other tools
+        are not deducted.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Can I purchase photo removals now?</h3>
+      <p>
+        The package prices are displayed above, but checkout is not
+        connected yet. Purchases are therefore not available at this time.
+        Free local Browser AI remains available.
       </p>
     </div>
 
@@ -754,15 +820,8 @@ footer a{color:#b7c8ff;margin:0 8px}
       <h3>Do I need an account?</h3>
       <p>
         No account is required for Browser AI. Cloud AI requires a
-        RitoccaPix account with a verified email address.
-      </p>
-    </div>
-
-    <div class="faq-item">
-      <h3>Does Cloud AI use my credits?</h3>
-      <p>
-        No. Cloud AI is currently in test mode and does not deduct
-        credits from your RitoccaPix account.
+        RitoccaPix account with a verified email address and an
+        available purchased photo removal.
       </p>
     </div>
   </section>
@@ -793,6 +852,7 @@ footer a{color:#b7c8ff;margin:0 8px}
   <p>
     <a href="index.html">Home</a>
     <a href="privacy.html">Privacy Policy</a>
+    <a href="account.html">Account</a>
   </p>
 </footer>
 
@@ -806,30 +866,21 @@ footer a{color:#b7c8ff;margin:0 8px}
 
 const $ = id => document.getElementById(id);
 
-/* Navigation */
-const menuButton = $("menuButton");
-const toolsMenu = $("toolsMenu");
+/*
+  Add Account to the shared menu created by menu.js.
+  The standard menu remains responsible for its own navigation behavior.
+*/
+document.addEventListener("DOMContentLoaded", () => {
+  const toolsMenu = document.querySelector(".tools-menu");
 
-menuButton.addEventListener("click", event => {
-  event.stopPropagation();
-  const open = toolsMenu.classList.toggle("open");
-  menuButton.setAttribute("aria-expanded", String(open));
-});
-
-document.addEventListener("click", event => {
   if (
-    !toolsMenu.contains(event.target) &&
-    !menuButton.contains(event.target)
+    toolsMenu &&
+    !toolsMenu.querySelector('a[href="account.html"]')
   ) {
-    toolsMenu.classList.remove("open");
-    menuButton.setAttribute("aria-expanded", "false");
-  }
-});
-
-document.addEventListener("keydown", event => {
-  if (event.key === "Escape") {
-    toolsMenu.classList.remove("open");
-    menuButton.setAttribute("aria-expanded", "false");
+    const accountItem = document.createElement("a");
+    accountItem.href = "account.html";
+    accountItem.textContent = "Account";
+    toolsMenu.appendChild(accountItem);
   }
 });
 
@@ -940,13 +991,13 @@ function updateEngineDescription() {
 
   if (selectedEngine === "cloud") {
     engineDescription.textContent =
-      "Cloud AI sends your photo and selection mask to RitoccaPix and OpenAI for processing. A verified RitoccaPix account is required. Test mode: no credits are deducted.";
+      "Cloud AI sends your photo and selection mask to RitoccaPix and OpenAI for processing. A verified RitoccaPix account and one available purchased photo removal are required for each successful edit. Purchased removals never expire. Checkout is not connected yet.";
 
     removeButton.textContent = "Remove object with Cloud AI";
 
   } else {
     engineDescription.textContent =
-      "Browser AI uses MIGAN / ONNX on your device. Your photo is not uploaded for image processing, and no account is required.";
+      "Browser AI uses MIGAN / ONNX on your device. It is free, your photo is not uploaded for image processing, and no account is required.";
 
     removeButton.textContent = "Remove object with Browser AI";
   }
@@ -969,7 +1020,7 @@ engineCloud.addEventListener("change", () => {
 
   if (originalImage) {
     status(
-      "Cloud AI selected. A verified RitoccaPix account is required. No credits are deducted in test mode."
+      "Cloud AI selected. A verified RitoccaPix account and an available purchased photo removal are required."
     );
   }
 });
@@ -1614,7 +1665,7 @@ async function runCloudAI(width, height) {
     }
 
     status(
-      "Cloud AI is processing your photo. This may take a little while…"
+      "Cloud AI is processing your photo. One purchased photo removal will be used if the edit succeeds…"
     );
 
     const response = await fetch(
@@ -1688,7 +1739,7 @@ async function runCloudAI(width, height) {
     updateButtons();
 
     status(
-      "Cloud AI object removal complete. Test mode is active: no credits were deducted. Compare the result or download your PNG.",
+      "Cloud AI object removal complete. One purchased photo removal has been used. Your shared RitoccaPix wallet credits were not affected. Compare the result or download your PNG.",
       "success"
     );
 
