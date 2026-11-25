@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,17 +30,17 @@
   "url": "https://ritoccapix.com/image-object-remover.html",
   "applicationCategory": "MultimediaApplication",
   "operatingSystem": "Any",
-  "description": "An AI object removal tool offering free local browser processing with MIGAN and optional cloud processing with OpenAI using purchased photo removals.",
+  "description": "An AI object removal tool offering free local browser processing with MIGAN and optional cloud processing with OpenAI using purchased photo removals paid for with shared RitoccaPix wallet credits.",
   "offers": {
     "@type": "Offer",
     "price": "0",
     "priceCurrency": "USD",
-    "description": "Free local Browser AI processing. Cloud AI requires purchased photo removals."
+    "description": "Free local Browser AI processing. Cloud AI uses purchased photo removals."
   },
   "featureList": [
     "Free browser-based AI object removal",
     "Optional OpenAI Cloud AI object removal",
-    "Purchased Cloud AI photo removals",
+    "Cloud AI removals purchased with shared wallet credits",
     "Purchased removals never expire",
     "Remove unwanted objects and photo distractions",
     "Brush-based image selection",
@@ -69,7 +70,7 @@
       "name": "Is the AI object remover free?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Browser AI runs locally in your browser and is free to use without an account. Cloud AI requires a verified RitoccaPix account and one purchased photo removal for each successful edit."
+        "text": "Browser AI runs locally in your browser and is free to use without an account. Cloud AI requires a verified RitoccaPix account and one available Object Remover removal for each successful edit."
       }
     },
     {
@@ -77,7 +78,15 @@
       "name": "Do purchased photo removals expire?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No. Purchased photo removals never expire. One purchased removal is used for each successful Cloud AI edit."
+        "text": "No. Purchased photo removals never expire. One removal is used for each successful Cloud AI edit."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I buy Object Remover packages?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Object Remover packages are purchased using credits from your shared RitoccaPix wallet. One credit has a reference value of 0.01 US dollars. Buying a package deducts wallet credits and adds photo removals to your separate Object Remover balance."
       }
     },
     {
@@ -363,24 +372,128 @@ canvas{display:block;max-width:100%;height:auto;cursor:crosshair;touch-action:no
 }
 .engine-panel .notice{margin-bottom:0}
 .engine-panel a{color:#c8d4ff}
-.pricing-intro{color:var(--muted);margin:5px 0 18px}
-.pricing-grid{
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:12px;
+
+/* Shared wallet and Object Remover packages */
+.packages-banner{
+  background:#101a2d;
+  border:1px solid #34476b;
+  border-radius:15px;
+  padding:18px;
+  margin-top:15px;
 }
-.price-card{
-  padding:16px;
-  background:#0e1627;
+.packages-banner-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-bottom:15px;
+}
+.packages-banner-head p{
+  color:var(--muted);
+  font-size:14px;
+  margin:5px 0 0;
+}
+.wallet-info{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  margin:14px 0;
+}
+.wallet-stat{
+  padding:15px;
+  background:#0b1220;
   border:1px solid var(--border);
   border-radius:12px;
-  text-align:center;
 }
-.price-card strong{display:block;font-size:24px;color:var(--text)}
-.price-card .quantity{font-size:14px;color:var(--muted)}
-.price-card .unit-price{font-size:13px;color:#b7c8ff;margin-top:5px}
-.price-card.featured{border-color:var(--accent)}
-.checkout-note{margin-top:16px}
+.wallet-stat span{
+  display:block;
+  color:var(--muted);
+  font-size:13px;
+}
+.wallet-stat strong{
+  display:block;
+  font-size:29px;
+  line-height:1.3;
+  margin-top:4px;
+  color:var(--text);
+  overflow-wrap:anywhere;
+}
+.wallet-stat small{
+  display:block;
+  color:var(--muted);
+  font-size:12px;
+  margin-top:3px;
+}
+.package-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:11px;
+  margin-top:15px;
+}
+.package-card{
+  display:flex;
+  flex-direction:column;
+  padding:14px;
+  background:#0b1220;
+  border:1px solid var(--border);
+  border-radius:12px;
+  min-width:0;
+}
+.package-card.featured{border-color:var(--accent)}
+.package-card .package-quantity{
+  color:var(--muted);
+  font-size:13px;
+}
+.package-card .package-number{
+  font-size:25px;
+  font-weight:800;
+  margin:4px 0;
+}
+.package-card .package-cost{
+  color:#c8d4ff;
+  font-size:14px;
+  font-weight:700;
+}
+.package-card .package-unit{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:3px;
+  min-height:20px;
+}
+.package-card button{
+  margin-top:12px;
+  width:100%;
+  padding:10px 8px;
+  font-size:13px;
+}
+.package-card button:disabled{cursor:not-allowed}
+.wallet-note{
+  color:var(--muted);
+  font-size:13px;
+  margin:14px 0 0;
+}
+.wallet-note a{color:#c8d4ff}
+.package-status{
+  display:none;
+  margin-top:13px;
+  padding:11px 13px;
+  border:1px solid var(--border);
+  background:#0b1220;
+  border-radius:9px;
+  font-size:13px;
+  overflow-wrap:anywhere;
+}
+.package-status.visible{display:block}
+.package-status.error{color:var(--danger);border-color:#75404a}
+.package-status.success{color:var(--good);border-color:#2d624b}
+.account-required{
+  display:none;
+  color:var(--muted);
+  font-size:13px;
+  margin-top:12px;
+}
+.account-required.visible{display:block}
 footer{
   text-align:center;
   color:var(--muted);
@@ -395,7 +508,8 @@ footer a{color:#b7c8ff;margin:0 8px}
   .brand{font-size:21px}
   .account-link{padding:8px 10px;font-size:13px}
   main{margin-top:24px}
-  .feature-grid,.engine-options,.pricing-grid{grid-template-columns:1fr}
+  .feature-grid,.engine-options,.package-grid{grid-template-columns:1fr}
+  .wallet-info{grid-template-columns:1fr 1fr}
   .canvas-wrap{min-height:180px}
   .controls .action{flex:1 1 auto}
   .hero p{font-size:16px}
@@ -447,7 +561,7 @@ footer a{color:#b7c8ff;margin:0 8px}
         <input type="radio" id="engineCloud" name="aiEngine" value="cloud">
         <span>
           <strong>Cloud AI — OpenAI</strong>
-          <small>Cloud processing. Requires a verified RitoccaPix account and one purchased photo removal per successful edit.</small>
+          <small>Cloud processing. Requires a verified RitoccaPix account and one available Object Remover removal per successful edit.</small>
         </span>
       </label>
     </div>
@@ -459,52 +573,102 @@ footer a{color:#b7c8ff;margin:0 8px}
 
   <section class="panel" aria-labelledby="pricingHeading">
     <h2 id="pricingHeading">Cloud AI photo removal packages</h2>
-    <p class="pricing-intro">
-      Cloud AI uses a separate balance of purchased photo removals.
-      One removal is used for each successful Cloud AI edit. Purchased
-      removals never expire and are separate from your shared RitoccaPix credits.
+    <p class="pricing-intro muted">
+      Buy Object Remover packages using credits from your shared RitoccaPix wallet.
+      Package purchases deduct wallet credits and add photo removals to your
+      separate Object Remover balance. Each successful Cloud AI edit uses one
+      available removal. No second wallet deduction is made.
     </p>
 
-    <div class="pricing-grid">
-      <div class="price-card">
-        <span class="quantity">1 photo removal</span>
-        <strong>$0.30</strong>
-        <div class="unit-price">$0.30 per removal</div>
+    <div class="packages-banner">
+      <div class="packages-banner-head">
+        <div>
+          <h3>Your Object Remover account</h3>
+          <p>Sign in with your verified RitoccaPix account to view your balances and purchase removals.</p>
+        </div>
+        <a class="account-link" href="account.html?redirect=image-object-remover.html">Account / Add credits</a>
       </div>
 
-      <div class="price-card">
-        <span class="quantity">5 photo removals</span>
-        <strong>$1.29</strong>
-        <div class="unit-price">$0.258 per removal</div>
+      <div class="wallet-info">
+        <div class="wallet-stat">
+          <span>Shared wallet balance</span>
+          <strong id="walletBalance">—</strong>
+          <small>Credits available across your RitoccaPix AI tools</small>
+        </div>
+        <div class="wallet-stat">
+          <span>Object Remover balance</span>
+          <strong id="removalBalance">—</strong>
+          <small>Photo removals available for Cloud AI</small>
+        </div>
       </div>
 
-      <div class="price-card">
-        <span class="quantity">10 photo removals</span>
-        <strong>$2.29</strong>
-        <div class="unit-price">$0.229 per removal</div>
+      <h3>Choose a removal package</h3>
+      <p class="muted" style="font-size:13px;margin:4px 0 0">
+        Package prices are charged in shared wallet credits.
+      </p>
+
+      <div class="package-grid">
+        <div class="package-card">
+          <span class="package-quantity">1 photo removal</span>
+          <strong class="package-number">1</strong>
+          <span class="package-cost">30 credits</span>
+          <span class="package-unit">30 credits per removal</span>
+          <button class="action secondary purchase-button" data-package="removal_1" type="button">Buy 1 removal</button>
+        </div>
+
+        <div class="package-card">
+          <span class="package-quantity">5 photo removals</span>
+          <strong class="package-number">5</strong>
+          <span class="package-cost">129 credits</span>
+          <span class="package-unit">25.8 credits per removal</span>
+          <button class="action secondary purchase-button" data-package="removal_5" type="button">Buy 5 removals</button>
+        </div>
+
+        <div class="package-card">
+          <span class="package-quantity">10 photo removals</span>
+          <strong class="package-number">10</strong>
+          <span class="package-cost">229 credits</span>
+          <span class="package-unit">22.9 credits per removal</span>
+          <button class="action secondary purchase-button" data-package="removal_10" type="button">Buy 10 removals</button>
+        </div>
+
+        <div class="package-card featured">
+          <span class="package-quantity">25 photo removals</span>
+          <strong class="package-number">25</strong>
+          <span class="package-cost">399 credits</span>
+          <span class="package-unit">15.96 credits per removal</span>
+          <button class="action purchase-button" data-package="removal_25" type="button">Buy 25 removals</button>
+        </div>
+
+        <div class="package-card">
+          <span class="package-quantity">50 photo removals</span>
+          <strong class="package-number">50</strong>
+          <span class="package-cost">699 credits</span>
+          <span class="package-unit">13.98 credits per removal</span>
+          <button class="action secondary purchase-button" data-package="removal_50" type="button">Buy 50 removals</button>
+        </div>
+
+        <div class="package-card">
+          <span class="package-quantity">100 photo removals</span>
+          <strong class="package-number">100</strong>
+          <span class="package-cost">1,199 credits</span>
+          <span class="package-unit">11.99 credits per removal</span>
+          <button class="action secondary purchase-button" data-package="removal_100" type="button">Buy 100 removals</button>
+        </div>
       </div>
 
-      <div class="price-card featured">
-        <span class="quantity">25 photo removals</span>
-        <strong>$3.99</strong>
-        <div class="unit-price">$0.160 per removal</div>
-      </div>
+      <p class="wallet-note">
+        Credit reference value: 1 credit = $0.01 USD · 100 credits = $1.00 USD.
+        Credits and purchased Object Remover removals never expire.
+        Need more wallet credits? Visit your <a href="account.html">Account page</a>.
+      </p>
 
-      <div class="price-card">
-        <span class="quantity">50 photo removals</span>
-        <strong>$6.99</strong>
-        <div class="unit-price">$0.140 per removal</div>
-      </div>
+      <p id="accountRequired" class="account-required">
+        Sign in with a verified email address to purchase packages.
+        <a href="account.html?redirect=image-object-remover.html">Sign in to your account</a>.
+      </p>
 
-      <div class="price-card">
-        <span class="quantity">100 photo removals</span>
-        <strong>$11.99</strong>
-        <div class="unit-price">$0.120 per removal</div>
-      </div>
-    </div>
-
-    <div class="notice checkout-note">
-      Purchased removals never expire. Cloud AI purchases are not available yet because checkout is not connected. Browser AI remains free and available without an account.
+      <div id="packageStatus" class="package-status" role="status" aria-live="polite"></div>
     </div>
   </section>
 
@@ -732,33 +896,52 @@ footer a{color:#b7c8ff;margin:0 8px}
       <p>
         Browser AI runs locally in your browser and is free to use without
         an account. Cloud AI requires a verified RitoccaPix account and
-        one purchased photo removal for each successful edit.
+        one available Object Remover removal for each successful edit.
       </p>
     </div>
 
     <div class="faq-item">
       <h3>Do purchased photo removals expire?</h3>
       <p>
-        No. Purchased photo removals never expire. They are kept in a
-        separate Object Remover balance and are not shared wallet credits.
+        No. Purchased photo removals never expire. They are tracked in a
+        separate Object Remover balance. Your shared wallet credits are
+        deducted when you buy a package, not again when you use a removal.
       </p>
     </div>
 
     <div class="faq-item">
       <h3>How many removals are used for each Cloud AI edit?</h3>
       <p>
-        One purchased photo removal is used for each successful Cloud AI
-        edit. The shared RitoccaPix wallet and credits used by other tools
-        are not deducted.
+        One available Object Remover removal is used for each successful
+        Cloud AI edit. Your shared RitoccaPix wallet is not charged again
+        when you process the photo.
       </p>
     </div>
 
     <div class="faq-item">
-      <h3>Can I purchase photo removals now?</h3>
+      <h3>How do Object Remover packages work?</h3>
       <p>
-        The package prices are displayed above, but checkout is not
-        connected yet. Purchases are therefore not available at this time.
-        Free local Browser AI remains available.
+        Packages are purchased with credits from your shared RitoccaPix
+        wallet. The package cost is deducted from your wallet and the
+        corresponding number of photo removals is added to your
+        Object Remover balance. For example, 5 removals cost 129 credits.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>What is the value of one wallet credit?</h3>
+      <p>
+        The displayed reference value is 1 credit = $0.01 USD.
+        This means 100 credits have a reference value of $1.00 USD.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Can I use my wallet credits in other AI tools?</h3>
+      <p>
+        Yes. Your shared RitoccaPix wallet is used across supported AI
+        tools. Object Remover package purchases use wallet credits and
+        convert them into dedicated photo removals for this tool.
       </p>
     </div>
 
@@ -819,9 +1002,9 @@ footer a{color:#b7c8ff;margin:0 8px}
     <div class="faq-item">
       <h3>Do I need an account?</h3>
       <p>
-        No account is required for Browser AI. Cloud AI requires a
-        RitoccaPix account with a verified email address and an
-        available purchased photo removal.
+        No account is required for Browser AI. Cloud AI and package
+        purchases require a RitoccaPix account with a verified email
+        address.
       </p>
     </div>
   </section>
@@ -856,7 +1039,6 @@ footer a{color:#b7c8ff;margin:0 8px}
   </p>
 </footer>
 
-<!-- Supabase is used only when Cloud AI is selected. -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort.min.js"></script>
 
@@ -866,10 +1048,6 @@ footer a{color:#b7c8ff;margin:0 8px}
 
 const $ = id => document.getElementById(id);
 
-/*
-  Add Account to the shared menu created by menu.js.
-  The standard menu remains responsible for its own navigation behavior.
-*/
 document.addEventListener("DOMContentLoaded", () => {
   const toolsMenu = document.querySelector(".tools-menu");
 
@@ -921,6 +1099,571 @@ function getSupabaseClient() {
   );
 
   return supabaseClient;
+}
+
+/* Package configuration */
+const REMOVAL_PACKAGES = {
+  removal_1: {
+    removals: 1,
+    credits: 30
+  },
+  removal_5: {
+    removals: 5,
+    credits: 129
+  },
+  removal_10: {
+    removals: 10,
+    credits: 229
+  },
+  removal_25: {
+    removals: 25,
+    credits: 399
+  },
+  removal_50: {
+    removals: 50,
+    credits: 699
+  },
+  removal_100: {
+    removals: 100,
+    credits: 1199
+  }
+};
+
+/* Account and package UI */
+const walletBalanceElement = $("walletBalance");
+const removalBalanceElement = $("removalBalance");
+const packageStatusElement = $("packageStatus");
+const accountRequiredElement = $("accountRequired");
+const purchaseButtons = Array.from(
+  document.querySelectorAll(".purchase-button")
+);
+
+let currentAccountSession = null;
+let currentWalletBalance = null;
+let currentRemovalBalance = null;
+let purchaseInProgress = false;
+let balanceRequestInProgress = false;
+
+function setPackageStatus(message, type = "") {
+  packageStatusElement.textContent = message;
+  packageStatusElement.className =
+    "package-status visible" + (type ? " " + type : "");
+}
+
+function clearPackageStatus() {
+  packageStatusElement.textContent = "";
+  packageStatusElement.className = "package-status";
+}
+
+function displayBalances() {
+  walletBalanceElement.textContent =
+    currentWalletBalance === null
+      ? "—"
+      : Number(currentWalletBalance).toLocaleString("en-US");
+
+  removalBalanceElement.textContent =
+    currentRemovalBalance === null
+      ? "—"
+      : Number(currentRemovalBalance).toLocaleString("en-US");
+
+  updatePurchaseButtons();
+}
+
+function updatePurchaseButtons() {
+  purchaseButtons.forEach(button => {
+    const packageCode = button.dataset.package;
+    const pack = REMOVAL_PACKAGES[packageCode];
+
+    if (!pack) {
+      button.disabled = true;
+      return;
+    }
+
+    const signedIn = !!(
+      currentAccountSession &&
+      currentAccountSession.access_token
+    );
+
+    const enoughCredits =
+      currentWalletBalance !== null &&
+      Number(currentWalletBalance) >= pack.credits;
+
+    button.disabled =
+      !signedIn ||
+      !enoughCredits ||
+      purchaseInProgress;
+
+    if (purchaseInProgress && button.dataset.package === purchaseInProgress) {
+      button.textContent = "Processing…";
+    } else {
+      button.textContent = "Buy " + pack.removals +
+        (pack.removals === 1 ? " removal" : " removals");
+    }
+  });
+
+  accountRequiredElement.classList.toggle(
+    "visible",
+    !currentAccountSession
+  );
+}
+
+function extractBalanceData(data) {
+  /*
+    Accept the normal top-level Worker response and common
+    nested response shapes without inventing a balance.
+  */
+  const source =
+    data?.data && typeof data.data === "object"
+      ? data.data
+      : data;
+
+  const wallet =
+    source?.wallet_balance ??
+    source?.shared_wallet_balance ??
+    source?.credits_balance ??
+    source?.balance;
+
+  const removals =
+    source?.available_removals ??
+    source?.removal_balance ??
+    source?.object_remover_balance ??
+    source?.availableRemovals;
+
+  return {
+    wallet:
+      wallet !== undefined && wallet !== null
+        ? Number(wallet)
+        : null,
+    removals:
+      removals !== undefined && removals !== null
+        ? Number(removals)
+        : null
+  };
+}
+
+async function getCurrentSession() {
+  const client = getSupabaseClient();
+  const result = await client.auth.getSession();
+
+  if (result.error) {
+    throw new Error("Unable to check your account session. Please sign in again.");
+  }
+
+  currentAccountSession = result.data?.session || null;
+  updatePurchaseButtons();
+
+  return currentAccountSession;
+}
+
+async function refreshAccountBalances(options = {}) {
+  if (balanceRequestInProgress && !options.force) return;
+
+  balanceRequestInProgress = true;
+
+  try {
+    const session = await getCurrentSession();
+
+    if (!session || !session.access_token) {
+      currentWalletBalance = null;
+      currentRemovalBalance = null;
+      displayBalances();
+      return false;
+    }
+
+    const response = await fetch(
+      OBJECT_REMOVER_WORKER + "/balance",
+      {
+        method: "GET",
+        headers: {
+          "Authorization": "Bearer " + session.access_token
+        },
+        cache: "no-store"
+      }
+    );
+
+    let data;
+
+    try {
+      data = await response.json();
+    } catch {
+      throw new Error("The balance service returned an invalid response.");
+    }
+
+    if (!response.ok || data?.success === false) {
+      throw new Error(
+        data?.error ||
+        "Could not load your Object Remover balances."
+      );
+    }
+
+    const balances = extractBalanceData(data);
+
+    if (
+      balances.wallet === null ||
+      balances.removals === null ||
+      !Number.isFinite(balances.wallet) ||
+      !Number.isFinite(balances.removals)
+    ) {
+      throw new Error(
+        "The balance service did not return both wallet and Object Remover balances. Please check the Worker response."
+      );
+    }
+
+    currentWalletBalance = balances.wallet;
+    currentRemovalBalance = balances.removals;
+
+    displayBalances();
+
+    return true;
+
+  } catch (error) {
+    console.error("Object Remover balance:", error);
+
+    /*
+      Do not replace a previously loaded balance with zero
+      when a temporary balance request fails.
+    */
+    if (
+      currentWalletBalance === null ||
+      currentRemovalBalance === null
+    ) {
+      walletBalanceElement.textContent = "Unavailable";
+      removalBalanceElement.textContent = "Unavailable";
+    }
+
+    setPackageStatus(
+      error?.message ||
+      "Unable to load your balances. Please try again.",
+      "error"
+    );
+
+    return false;
+
+  } finally {
+    balanceRequestInProgress = false;
+    updatePurchaseButtons();
+  }
+}
+
+function getPurchaseRequestId(packageCode) {
+  const storageKey =
+    "ritoccapix_object_remover_purchase_" + packageCode;
+
+  let requestId = null;
+
+  try {
+    requestId = sessionStorage.getItem(storageKey);
+  } catch {}
+
+  if (requestId) return requestId;
+
+  if (
+    !window.crypto ||
+    typeof window.crypto.randomUUID !== "function"
+  ) {
+    throw new Error(
+      "Your browser does not support secure purchase requests. Please use an updated browser."
+    );
+  }
+
+  requestId = window.crypto.randomUUID();
+
+  try {
+    sessionStorage.setItem(storageKey, requestId);
+  } catch {}
+
+  return requestId;
+}
+
+function clearPurchaseRequestId(packageCode) {
+  try {
+    sessionStorage.removeItem(
+      "ritoccapix_object_remover_purchase_" + packageCode
+    );
+  } catch {}
+}
+
+function isEmailVerified(session) {
+  const user = session?.user;
+
+  return !!(
+    user &&
+    (user.email_confirmed_at || user.confirmed_at)
+  );
+}
+
+async function purchasePackage(packageCode) {
+  const pack = REMOVAL_PACKAGES[packageCode];
+
+  if (!pack || purchaseInProgress) return;
+
+  clearPackageStatus();
+
+  try {
+    const session = await getCurrentSession();
+
+    if (!session || !session.access_token) {
+      setPackageStatus(
+        "Please sign in to your RitoccaPix account before purchasing a package.",
+        "error"
+      );
+
+      window.location.href =
+        "account.html?redirect=" +
+        encodeURIComponent("image-object-remover.html");
+
+      return;
+    }
+
+    if (!isEmailVerified(session)) {
+      setPackageStatus(
+        "Please verify your RitoccaPix email address before purchasing Object Remover packages.",
+        "error"
+      );
+      return;
+    }
+
+    if (currentWalletBalance === null) {
+      const loaded = await refreshAccountBalances({force:true});
+
+      if (!loaded) {
+        setPackageStatus(
+          "Your wallet balance could not be checked. Please try again.",
+          "error"
+        );
+        return;
+      }
+    }
+
+    if (Number(currentWalletBalance) < pack.credits) {
+      setPackageStatus(
+        "You need " + pack.credits +
+        " wallet credits for this package. Your current balance is " +
+        currentWalletBalance +
+        ". Add credits from your Account page.",
+        "error"
+      );
+      return;
+    }
+
+    const confirmed = window.confirm(
+      "Buy " + pack.removals +
+      (pack.removals === 1 ? " photo removal" : " photo removals") +
+      " for " + pack.credits +
+      " shared wallet credits?\n\n" +
+      "Your wallet will be charged " + pack.credits +
+      " credits and your Object Remover balance will increase by " +
+      pack.removals + ".\n\n" +
+      "Purchased removals never expire."
+    );
+
+    if (!confirmed) return;
+
+    purchaseInProgress = packageCode;
+    updatePurchaseButtons();
+
+    setPackageStatus(
+      "Processing your purchase. Please do not close this page…"
+    );
+
+    /*
+      Keep the same request ID if the request has an ambiguous
+      network failure. This allows the Worker/RPC idempotency
+      mechanism to prevent duplicate purchases on retry.
+    */
+    const requestId = getPurchaseRequestId(packageCode);
+
+    const response = await fetch(
+      OBJECT_REMOVER_WORKER + "/purchase",
+      {
+        method: "POST",
+        headers: {
+          "Authorization": "Bearer " + session.access_token,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          package_code: packageCode,
+          request_id: requestId
+        })
+      }
+    );
+
+    let result;
+
+    try {
+      result = await response.json();
+    } catch {
+      throw new Error(
+        "The purchase service returned an invalid response. You can safely retry the same package."
+      );
+    }
+
+    if (!response.ok || result?.success === false) {
+      const errorMessage =
+        result?.error ||
+        result?.message ||
+        "The package purchase could not be completed.";
+
+      /*
+        Keep the request ID for uncertain server/network failures.
+        Clear it for definitive validation, authentication or
+        insufficient-credit failures.
+      */
+      if (
+        response.status === 400 ||
+        response.status === 401 ||
+        response.status === 402 ||
+        response.status === 403 ||
+        response.status === 404
+      ) {
+        clearPurchaseRequestId(packageCode);
+      }
+
+      if (response.status === 402) {
+        throw new Error(
+          "You do not have enough shared wallet credits for this package. Add credits from your Account page."
+        );
+      }
+
+      if (response.status === 401) {
+        throw new Error(
+          "Your session has expired. Please sign in again."
+        );
+      }
+
+      if (response.status === 403) {
+        throw new Error(
+          "Your account must have a verified email address before purchasing."
+        );
+      }
+
+      throw new Error(errorMessage);
+    }
+
+    /*
+      Purchase confirmed. Clear the idempotency key so a
+      later intentional purchase creates a new transaction.
+    */
+    clearPurchaseRequestId(packageCode);
+
+    /*
+      Prefer the returned balances if the Worker includes them.
+      Otherwise retrieve the authoritative values from /balance.
+    */
+    const purchaseBalances = extractBalanceData(result);
+
+    if (
+      purchaseBalances.wallet !== null &&
+      purchaseBalances.removals !== null &&
+      Number.isFinite(purchaseBalances.wallet) &&
+      Number.isFinite(purchaseBalances.removals)
+    ) {
+      currentWalletBalance = purchaseBalances.wallet;
+      currentRemovalBalance = purchaseBalances.removals;
+      displayBalances();
+    } else {
+      currentWalletBalance = null;
+      currentRemovalBalance = null;
+      displayBalances();
+
+      await refreshAccountBalances({force:true});
+    }
+
+    setPackageStatus(
+      "Purchase successful! " + pack.removals +
+      (pack.removals === 1 ? " photo removal has" : " photo removals have") +
+      " been added to your Object Remover balance. " +
+      pack.credits +
+      " shared wallet credits have been used. Your removals never expire.",
+      "success"
+    );
+
+  } catch (error) {
+    console.error("Object Remover purchase:", error);
+
+    setPackageStatus(
+      error?.message ||
+      "The purchase could not be completed. Please try again.",
+      "error"
+    );
+
+    /*
+      If the result was ambiguous, refresh the server balances.
+      The request ID remains stored so retrying is idempotent.
+    */
+    await refreshAccountBalances({force:true});
+
+  } finally {
+    purchaseInProgress = false;
+    updatePurchaseButtons();
+  }
+}
+
+purchaseButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    purchasePackage(button.dataset.package);
+  });
+});
+
+/* Load account balances when the page starts */
+async function initializeAccountPanel() {
+  try {
+    const session = await getCurrentSession();
+
+    if (!session) {
+      currentWalletBalance = null;
+      currentRemovalBalance = null;
+      displayBalances();
+
+      walletBalanceElement.textContent = "Sign in";
+      removalBalanceElement.textContent = "Sign in";
+
+      return;
+    }
+
+    await refreshAccountBalances({force:true});
+
+  } catch (error) {
+    console.error("Object Remover account initialization:", error);
+
+    walletBalanceElement.textContent = "Unavailable";
+    removalBalanceElement.textContent = "Unavailable";
+
+    setPackageStatus(
+      error?.message || "Could not initialize your account.",
+      "error"
+    );
+  }
+}
+
+try {
+  const client = getSupabaseClient();
+
+  client.auth.onAuthStateChange((event, session) => {
+    currentAccountSession = session || null;
+
+    if (event === "SIGNED_OUT") {
+      currentWalletBalance = null;
+      currentRemovalBalance = null;
+      displayBalances();
+
+      walletBalanceElement.textContent = "Sign in";
+      removalBalanceElement.textContent = "Sign in";
+      clearPackageStatus();
+
+      return;
+    }
+
+    if (
+      event === "SIGNED_IN" ||
+      event === "TOKEN_REFRESHED" ||
+      event === "USER_UPDATED"
+    ) {
+      refreshAccountBalances({force:true});
+    }
+  });
+} catch (error) {
+  console.warn("Account listener initialization:", error);
 }
 
 /* AI model */
@@ -991,7 +1734,7 @@ function updateEngineDescription() {
 
   if (selectedEngine === "cloud") {
     engineDescription.textContent =
-      "Cloud AI sends your photo and selection mask to RitoccaPix and OpenAI for processing. A verified RitoccaPix account and one available purchased photo removal are required for each successful edit. Purchased removals never expire. Checkout is not connected yet.";
+      "Cloud AI sends your photo and selection mask to RitoccaPix and OpenAI for processing. A verified RitoccaPix account and one available Object Remover removal are required for each successful edit. Package purchases use your shared wallet credits.";
 
     removeButton.textContent = "Remove object with Cloud AI";
 
@@ -1020,7 +1763,7 @@ engineCloud.addEventListener("change", () => {
 
   if (originalImage) {
     status(
-      "Cloud AI selected. A verified RitoccaPix account and an available purchased photo removal are required."
+      "Cloud AI selected. A verified RitoccaPix account and an available Object Remover removal are required."
     );
   }
 });
@@ -1481,15 +2224,7 @@ function blobToDataUrl(blob) {
   });
 }
 
-/*
-  Prepare the Cloud AI image and mask.
-
-  Worker/OpenAI mask convention:
-  - transparent pixels = area to edit
-  - opaque white pixels = area to preserve
-
-  The on-screen red brush mask is converted to that format.
-*/
+/* Prepare the Cloud AI image and mask */
 async function prepareCloudPayload(width, height) {
   const imageCanvas = document.createElement("canvas");
   imageCanvas.width = width;
@@ -1561,11 +2296,6 @@ async function prepareCloudPayload(width, height) {
     outputMask.data[offset] = 255;
     outputMask.data[offset + 1] = 255;
     outputMask.data[offset + 2] = 255;
-
-    /*
-      Selected brush pixels become transparent.
-      All unselected pixels remain opaque white.
-    */
     outputMask.data[offset + 3] = selected ? 0 : 255;
   }
 
@@ -1609,12 +2339,9 @@ async function runCloudAI(width, height) {
   updateButtons();
 
   try {
-    status(
-      "Checking your RitoccaPix account…"
-    );
+    status("Checking your RitoccaPix account…");
 
     const client = getSupabaseClient();
-
     const sessionResult = await client.auth.getSession();
 
     if (sessionResult.error) {
@@ -1649,6 +2376,12 @@ async function runCloudAI(width, height) {
     }
 
     status(
+      "Checking your available Object Remover balance…"
+    );
+
+    await refreshAccountBalances({force:true});
+
+    status(
       "Preparing your photo and selection for Cloud AI…"
     );
 
@@ -1665,7 +2398,7 @@ async function runCloudAI(width, height) {
     }
 
     status(
-      "Cloud AI is processing your photo. One purchased photo removal will be used if the edit succeeds…"
+      "Cloud AI is processing your photo. One available Object Remover removal will be used if the edit succeeds…"
     );
 
     const response = await fetch(
@@ -1738,8 +2471,15 @@ async function runCloudAI(width, height) {
     drawPhoto();
     updateButtons();
 
+    /*
+      The Worker has completed the removal. Refresh the dedicated
+      removal balance. A balance refresh failure must not make a
+      successful image edit appear to have failed.
+    */
+    await refreshAccountBalances({force:true});
+
     status(
-      "Cloud AI object removal complete. One purchased photo removal has been used. Your shared RitoccaPix wallet credits were not affected. Compare the result or download your PNG.",
+      "Cloud AI object removal complete. One Object Remover removal has been used. Your shared wallet credits were not charged again. Compare the result or download your PNG.",
       "success"
     );
 
@@ -1832,11 +2572,6 @@ function makeMaskTensor(ort, maskPixels, width, height) {
 
   const data = new Uint8Array(plane);
 
-  /*
-    MIGAN mask convention:
-    0 = area to inpaint
-    255 = area to preserve
-  */
   for (let i = 0; i < plane; i++) {
     data[i] = maskPixels[i * 4 + 3] > 0
       ? 0
@@ -1976,11 +2711,6 @@ removeButton.addEventListener("click", async () => {
     return;
   }
 
-  /*
-    Cloud AI uses the same brush selection, but sends
-    the image and a converted transparent PNG mask to
-    the dedicated Cloudflare Worker.
-  */
   if (selectedEngine === "cloud") {
     await runCloudAI(width, height);
     return;
@@ -2201,6 +2931,7 @@ window.addEventListener("load", () => {
 /* Initial UI state */
 updateEngineDescription();
 updateButtons();
+initializeAccountPanel();
 
 })();
 </script>
