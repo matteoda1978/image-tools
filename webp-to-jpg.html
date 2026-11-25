@@ -18,7 +18,7 @@
 
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Free WebP to JPG Converter Online | RitoccaPix">
-  <meta name="twitter:description" content="Convert WebP images to JPG online. Adjust quality, choose a background color and download your converted images.">
+  <meta name="twitter:description" content="Convert WebP to JPG online. Adjust quality, choose a background color and download your converted images.">
 
   <script type="application/ld+json">
   {
@@ -1008,7 +1008,7 @@
         const link = document.createElement("a");
         link.href = item.url;
         link.download = item.name;
-        link.textContent = "Download " + item.name;
+        link.textContent = "Download JPG";
 
         details.append(heading, dimensions, sizes, link);
         card.append(img, details);
@@ -1114,8 +1114,9 @@
             };
           }
         } else {
-          const one = converted[0];
-          downloadBlob(one.blob, one.name);
+          showMessage(
+            "JPG conversion complete. Preview your image and click Download JPG when you are ready."
+          );
         }
 
         if (failures.length) {
@@ -1125,7 +1126,7 @@
           );
         } else if (converted.length === 1) {
           showMessage(
-            "JPG created and downloaded. Your original image was not changed."
+            "JPG is ready. Preview it above and click Download JPG when you are ready. Your original image was not changed."
           );
         }
 
